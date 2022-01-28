@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -22,52 +22,56 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCrossConnectionPeering and their operations over its parent. </summary>
     public partial class ExpressRouteCrossConnectionPeeringCollection : ArmCollection, IEnumerable<ExpressRouteCrossConnectionPeering>, IAsyncEnumerable<ExpressRouteCrossConnectionPeering>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRouteCrossConnectionPeeringsRestOperations _expressRouteCrossConnectionPeeringsRestClient;
+        private readonly ClientDiagnostics _expressRouteCrossConnectionPeeringClientDiagnostics;
+        private readonly ExpressRouteCrossConnectionPeeringsRestOperations _expressRouteCrossConnectionPeeringRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringCollection"/> class for mocking. </summary>
         protected ExpressRouteCrossConnectionPeeringCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ExpressRouteCrossConnectionPeeringCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCrossConnectionPeeringsRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteCrossConnectionPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionPeering.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ExpressRouteCrossConnectionPeering.ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
+            _expressRouteCrossConnectionPeeringRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_expressRouteCrossConnectionPeeringClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionPeeringApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ExpressRouteCrossConnection.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ExpressRouteCrossConnection.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ExpressRouteCrossConnection.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates a peering in the specified ExpressRouteCrossConnection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update ExpressRouteCrossConnection peering operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="peeringParameters"/> is null. </exception>
-        public virtual ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation CreateOrUpdate(string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (peeringParameters == null)
             {
                 throw new ArgumentNullException(nameof(peeringParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteCrossConnectionPeeringsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken);
-                var operation = new ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
+                var response = _expressRouteCrossConnectionPeeringRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken);
+                var operation = new ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ArmClient, _expressRouteCrossConnectionPeeringClientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -80,28 +84,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a peering in the specified ExpressRouteCrossConnection. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update ExpressRouteCrossConnection peering operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="peeringParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, ExpressRouteCrossConnectionPeeringData peeringParameters, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (peeringParameters == null)
             {
                 throw new ArgumentNullException(nameof(peeringParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expressRouteCrossConnectionPeeringsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
+                var response = await _expressRouteCrossConnectionPeeringRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ArmClient, _expressRouteCrossConnectionPeeringClientDiagnostics, Pipeline, _expressRouteCrossConnectionPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,22 +118,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified peering for the ExpressRouteCrossConnection. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<ExpressRouteCrossConnectionPeering> Get(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
             scope.Start();
             try
             {
-                var response = _expressRouteCrossConnectionPeeringsRestClient.Get(Id.ResourceGroupName, Id.Name, peeringName, cancellationToken);
+                var response = _expressRouteCrossConnectionPeeringRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnectionPeering(Parent, response.Value), response.GetRawResponse());
+                    throw _expressRouteCrossConnectionPeeringClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,22 +143,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified peering for the ExpressRouteCrossConnection. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteCrossConnectionPeering>> GetAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expressRouteCrossConnectionPeeringsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, peeringName, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteCrossConnectionPeeringRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCrossConnectionPeering(Parent, response.Value), response.GetRawResponse());
+                    throw await _expressRouteCrossConnectionPeeringClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,22 +168,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<ExpressRouteCrossConnectionPeering> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _expressRouteCrossConnectionPeeringsRestClient.Get(Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteCrossConnectionPeering>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCrossConnectionPeering(this, response.Value), response.GetRawResponse());
+                var response = _expressRouteCrossConnectionPeeringRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteCrossConnectionPeering>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,22 +193,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public async virtual Task<Response<ExpressRouteCrossConnectionPeering>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExistsAsync");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _expressRouteCrossConnectionPeeringsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteCrossConnectionPeering>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCrossConnectionPeering(this, response.Value), response.GetRawResponse());
+                var response = await _expressRouteCrossConnectionPeeringRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ExpressRouteCrossConnectionPeering>(null, response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,15 +218,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string peeringName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CheckIfExists");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
             try
             {
@@ -249,15 +241,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CheckIfExistsAsync");
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
             try
             {
@@ -278,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<ExpressRouteCrossConnectionPeering> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
+                using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCrossConnectionPeeringsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRouteCrossConnectionPeeringRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -293,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRouteCrossConnectionPeering> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
+                using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCrossConnectionPeeringsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _expressRouteCrossConnectionPeeringRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ExpressRouteCrossConnectionPeering>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
+                using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRouteCrossConnectionPeeringsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCrossConnectionPeeringRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRouteCrossConnectionPeering>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
+                using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _expressRouteCrossConnectionPeeringsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCrossConnectionPeeringRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionPeering(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ExpressRouteCrossConnectionPeering, ExpressRouteCrossConnectionPeeringData> Construct() { }
     }
 }

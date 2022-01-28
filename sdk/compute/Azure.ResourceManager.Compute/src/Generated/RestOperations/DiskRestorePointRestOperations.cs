@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskRestorePointRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of DiskRestorePointRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public DiskRestorePointRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DiskRestorePointRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2021-08-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmRestorePointName, true);
             uri.AppendPath("/diskRestorePoints/", false);
             uri.AppendPath(diskRestorePointName, true);
-            uri.AppendQuery("api-version", "2020-12-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -66,14 +66,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get disk restorePoint resource. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePointData>> GetAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
+        public async Task<Response<DiskRestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,14 +115,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get disk restorePoint resource. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePointData> Get(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
+        public Response<DiskRestorePointData> Get(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -135,7 +145,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -153,7 +163,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByRestorePointRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
+        internal HttpMessage CreateListByRestorePointRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +179,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(vmRestorePointName, true);
             uri.AppendPath("/diskRestorePoints", false);
-            uri.AppendQuery("api-version", "2020-12-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -177,13 +187,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
+        public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -197,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -214,13 +229,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePointList> ListByRestorePoint(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
+        public Response<DiskRestorePointList> ListByRestorePoint(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -234,7 +254,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -250,7 +270,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGrantAccessRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData)
+        internal HttpMessage CreateGrantAccessRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -268,7 +288,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/diskRestorePoints/", false);
             uri.AppendPath(diskRestorePointName, true);
             uri.AppendPath("/beginGetAccess", false);
-            uri.AppendQuery("api-version", "2020-12-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -280,15 +300,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/>, or <paramref name="grantAccessData"/> is null. </exception>
-        public async Task<Response> GrantAccessAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/>, or <paramref name="grantAccessData"/> is null. </exception>
+        public async Task<Response> GrantAccessAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -310,7 +335,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var message = CreateGrantAccessRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
+            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -323,15 +348,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/>, or <paramref name="grantAccessData"/> is null. </exception>
-        public Response GrantAccess(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/>, or <paramref name="grantAccessData"/> is null. </exception>
+        public Response GrantAccess(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -353,7 +383,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var message = CreateGrantAccessRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
+            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -365,7 +395,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateRevokeAccessRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
+        internal HttpMessage CreateRevokeAccessRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -383,7 +413,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/diskRestorePoints/", false);
             uri.AppendPath(diskRestorePointName, true);
             uri.AppendPath("/endGetAccess", false);
-            uri.AppendQuery("api-version", "2020-12-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -391,14 +421,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public async Task<Response> RevokeAccessAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
+        public async Task<Response> RevokeAccessAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -416,7 +451,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var message = CreateRevokeAccessRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
+            using var message = CreateRevokeAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -429,14 +464,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public Response RevokeAccess(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
+        public Response RevokeAccess(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -454,7 +494,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(diskRestorePointName));
             }
 
-            using var message = CreateRevokeAccessRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
+            using var message = CreateRevokeAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -466,7 +506,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByRestorePointNextPageRequest(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
+        internal HttpMessage CreateListByRestorePointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -482,16 +522,21 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePointList>> ListByRestorePointNextPageAsync(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
+        public async Task<Response<DiskRestorePointList>> ListByRestorePointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -506,7 +551,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateListByRestorePointNextPageRequest(nextLink, subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -524,16 +569,21 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePointList> ListByRestorePointNextPage(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
+        public Response<DiskRestorePointList> ListByRestorePointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
@@ -548,7 +598,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateListByRestorePointNextPageRequest(nextLink, subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

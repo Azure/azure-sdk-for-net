@@ -32,6 +32,17 @@ namespace Azure.Security.KeyVault
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, id.Segments.Length));
         }
 
+        public static KeyVaultIdentifier ParseWithCollection(Uri id, string collection)
+        {
+            KeyVaultIdentifier identifier = Parse(id);
+            if (!string.Equals(identifier.Collection, collection, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", id, collection, identifier.Collection));
+            }
+
+            return identifier;
+        }
+
         public static bool TryParse(Uri id, out KeyVaultIdentifier identifier)
         {
             if (id is null)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            Optional<IReadOnlyList<DedicatedHostAllocatableVM>> allocatableVMs = default;
+            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
+                    List<DedicatedHostAllocatableVm> array = new List<DedicatedHostAllocatableVm>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item));
+                        array.Add(DedicatedHostAllocatableVm.DeserializeDedicatedHostAllocatableVm(item));
                     }
                     allocatableVMs = array;
                     continue;

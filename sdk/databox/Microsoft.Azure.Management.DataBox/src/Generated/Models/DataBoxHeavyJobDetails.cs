@@ -53,9 +53,22 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// the chain of custody logs</param>
         /// <param name="keyEncryptionKey">Details about which key encryption
         /// type is being used.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// <param name="expectedDataSizeInTeraBytes">The expected size of the
         /// data, which needs to be transferred in this job, in
         /// terabytes.</param>
+        /// <param name="actions">Available actions on the job.</param>
+        /// <param name="lastMitigationActionOnJob">Last mitigation action
+        /// performed on the job.</param>
+        /// <param name="datacenterAddress">Datacenter address to ship to, for
+        /// the given sku and storage location.</param>
+        /// <param name="dataCenterCode">DataCenter code. Possible values
+        /// include: 'Invalid', 'BY2', 'BY1', 'ORK70', 'AM2', 'AMS20', 'BY21',
+        /// 'BY24', 'MWH01', 'AMS06', 'SSE90', 'SYD03', 'SYD23', 'CBR20',
+        /// 'YTO20', 'CWL20', 'LON24', 'BOM01', 'BL20', 'BL7', 'SEL20',
+        /// 'TYO01', 'BN1', 'SN5', 'CYS04', 'TYO22', 'YTO21', 'YQB20', 'FRA22',
+        /// 'MAA01', 'CPQ02', 'CPQ20', 'SIN20', 'HKG20', 'SG2', 'MEL23',
+        /// 'SEL21', 'OSA20', 'SHA03', 'BJB', 'JNB22', 'JNB21', 'MNZ21', 'SN8',
+        /// 'AUH20', 'ZRH20', 'PUS20', 'AdHoc', 'CH1', 'DSM05'</param>
         /// <param name="copyProgress">Copy progress per account.</param>
         /// <param name="devicePassword">Set Device password for unlocking
         /// Databox Heavy. Should not be passed for
@@ -67,8 +80,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// cannot have the following characters : IilLoO0 Password can have
         /// only alphabets, numbers and these characters :
         /// @#\-$%^!+=;:_()]+</param>
-        public DataBoxHeavyJobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTerabytes = default(int?), IList<CopyProgress> copyProgress = default(IList<CopyProgress>), string devicePassword = default(string))
-            : base(contactDetails, jobStages, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTerabytes)
+        public DataBoxHeavyJobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTeraBytes = default(int?), IList<CustomerResolutionCode?> actions = default(IList<CustomerResolutionCode?>), LastMitigationActionOnJob lastMitigationActionOnJob = default(LastMitigationActionOnJob), DatacenterAddressResponse datacenterAddress = default(DatacenterAddressResponse), string dataCenterCode = default(string), IList<CopyProgress> copyProgress = default(IList<CopyProgress>), string devicePassword = default(string))
+            : base(contactDetails, jobStages, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, datacenterAddress, dataCenterCode)
         {
             CopyProgress = copyProgress;
             DevicePassword = devicePassword;

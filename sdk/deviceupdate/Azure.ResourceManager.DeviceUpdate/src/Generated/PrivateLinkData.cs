@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the PrivateLink data model. </summary>
-    public partial class PrivateLinkData : ProxyResource
+    public partial class PrivateLinkData : Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkData. </summary>
         public PrivateLinkData()
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>

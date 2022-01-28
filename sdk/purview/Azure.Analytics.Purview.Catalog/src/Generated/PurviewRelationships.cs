@@ -19,9 +19,8 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -32,7 +31,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a new relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -94,12 +93,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -110,7 +111,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create a new relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -172,12 +173,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -188,7 +191,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update an existing relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -250,12 +253,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -266,7 +271,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Update an existing relationship between entities. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
@@ -328,12 +333,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Update(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateUpdateRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -345,7 +352,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -387,12 +394,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -404,7 +413,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -446,12 +455,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -462,7 +473,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -478,12 +489,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -494,7 +507,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
@@ -510,12 +523,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Delete(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -524,9 +539,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -541,9 +556,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(RequestContent content)
+        internal HttpMessage CreateUpdateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -558,9 +573,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateGetPurviewRelationshipRequest(string guid, bool? extendedInfo)
+        internal HttpMessage CreateGetPurviewRelationshipRequest(string guid, bool? extendedInfo, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -578,9 +593,9 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string guid)
+        internal HttpMessage CreateDeleteRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();

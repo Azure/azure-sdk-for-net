@@ -43,7 +43,6 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/synapse/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
@@ -58,6 +57,7 @@
     "deserializes",
     "diagnoser",
     "dont",
+    "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
@@ -65,6 +65,7 @@
     "finalizers",
     "illumos",
     "ints",
+    "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
@@ -72,22 +73,24 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
     "referer",
     "renormalize",
     "retriable",
+    "signup",
+    "skus",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
@@ -95,10 +98,16 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "skus",
         "vmss",
         "unattend",
         "ssdlrs",
@@ -108,14 +117,32 @@
         "vhds",
         "swappable",
         "ssdzrs",
-        "dscp"
+        "dscp",
+        "vmguest"
       ]
     },
     {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
-        "nigiri"
+        "nigiri",
+        "qnas"
+      ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Cpus",
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
       ]
     },
     {
@@ -140,13 +167,13 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
         "Owasp",
         "Pfsmm",
         "Snat",
-        "Skus",
         "Sstp",
         "TLSDHEDSS",
         "TLSDHERSA",
@@ -163,9 +190,11 @@
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
+        "echsm",
         "getsas",
         "listsas",
         "oaep",
+        "rsahsm",
         "setsas",
         "mhsm",
         "mhsmip"
@@ -178,10 +207,14 @@
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "Droppeded",
         "CIAS",
-        "Vcores",
-        "Unrestorable"
+        "Droppeded",
+        "Nchar",
+        "Ntext",
+        "Nvarchar",
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
       ]
     },
     {
@@ -220,8 +253,49 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "updation",
+        "usql",
+        "vertica",
+        "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
       ]
     },
     {
@@ -233,6 +307,20 @@
         "Eugps",
         "Plregon",
         "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
       ]
     }
   ],

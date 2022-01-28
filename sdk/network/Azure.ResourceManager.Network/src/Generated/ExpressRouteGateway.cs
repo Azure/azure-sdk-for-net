@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,15 +16,21 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a ExpressRouteGateway along with the instance operations that can be performed on it. </summary>
     public partial class ExpressRouteGateway : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRouteGatewaysRestOperations _expressRouteGatewaysRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ExpressRouteGateway"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRouteGatewayName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _expressRouteGatewayClientDiagnostics;
+        private readonly ExpressRouteGatewaysRestOperations _expressRouteGatewayRestClient;
         private readonly ExpressRouteGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGateway"/> class for mocking. </summary>
@@ -32,42 +39,29 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteGateway"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmResource options, ExpressRouteGatewayData resource) : base(options, resource.Id)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ExpressRouteGateway(ArmClient armClient, ExpressRouteGatewayData data) : this(armClient, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGateway"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ExpressRouteGateway(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ExpressRouteGateway"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteGatewaysRestClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _expressRouteGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string expressRouteGatewayApiVersion);
+            _expressRouteGatewayRestClient = new ExpressRouteGatewaysRestOperations(_expressRouteGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteGatewayApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteGateways";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -84,18 +78,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Get");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Get");
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _expressRouteGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                    throw await _expressRouteGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteGateway> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Get");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Get");
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _expressRouteGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
+                    throw _expressRouteGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,30 +127,50 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteGatewayDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteGatewayDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Delete");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Delete");
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayDeleteOperation(_clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _expressRouteGatewayRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteGatewayDeleteOperation(_expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,16 +185,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteGatewayDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteGatewayDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Delete");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Delete");
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ExpressRouteGatewayDeleteOperation(_clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _expressRouteGatewayRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ExpressRouteGatewayDeleteOperation(_expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -185,23 +205,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteGatewayUpdateTagsOperation> UpdateAsync(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteGatewayUpdateOperation> UpdateAsync(bool waitForCompletion, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Update");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Update");
             scope.Start();
             try
             {
-                var response = await _expressRouteGatewaysRestClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var response = await _expressRouteGatewayRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ExpressRouteGatewayUpdateOperation(ArmClient, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,23 +234,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
-        public virtual ExpressRouteGatewayUpdateTagsOperation Update(TagsObject expressRouteGatewayParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteGatewayUpdateOperation Update(bool waitForCompletion, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayParameters == null)
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGateway.Update");
+            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.Update");
             scope.Start();
             try
             {
-                var response = _expressRouteGatewaysRestClient.UpdateTags(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
-                var operation = new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var response = _expressRouteGatewayRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
+                var operation = new ExpressRouteGatewayUpdateOperation(ArmClient, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -246,7 +266,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of ExpressRouteConnections in the ExpressRouteGateway. </summary>
         /// <returns> An object representing collection of ExpressRouteConnections and their operations over a ExpressRouteGateway. </returns>
-        public ExpressRouteConnectionCollection GetExpressRouteConnections()
+        public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
         {
             return new ExpressRouteConnectionCollection(this);
         }

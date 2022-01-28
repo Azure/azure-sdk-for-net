@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PrivateEndpoint> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of PrivateEndpointCreateOrUpdateOperation for mocking. </summary>
         protected PrivateEndpointCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateEndpointCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateEndpointCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PrivateEndpoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateEndpointCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PrivateEndpoint IOperationSource<PrivateEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateEndpoint(_operationBase, PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement));
+            var data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement);
+            return new PrivateEndpoint(_armClient, data);
         }
 
         async ValueTask<PrivateEndpoint> IOperationSource<PrivateEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateEndpoint(_operationBase, PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement));
+            var data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement);
+            return new PrivateEndpoint(_armClient, data);
         }
     }
 }

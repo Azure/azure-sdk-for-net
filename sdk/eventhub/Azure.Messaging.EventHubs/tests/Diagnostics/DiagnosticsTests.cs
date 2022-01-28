@@ -276,10 +276,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
 
-            var expectedLinks = new List<string>() { "id", "id2" };
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
             var links = sendScope.Links.ToList();
 
-            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
             Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
         }
 
@@ -334,10 +334,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
 
-            var expectedLinks = new List<string>() { "id", "id2" };
+            var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink("id"), new ClientDiagnosticListener.ProducedLink("id2") };
             var links = sendScope.Links.ToList();
 
-            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Length), "The amount of links should be the same as the amount of events that were sent.");
             Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
         }
 
@@ -388,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
-                var targetId = (++diagnosticId).ToString();
+                var targetId = new ClientDiagnosticListener.ProducedLink((++diagnosticId).ToString());
                 Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
 
@@ -457,6 +457,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
+                                                                    TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options) => Mock.Of<TransportClient>();
         }

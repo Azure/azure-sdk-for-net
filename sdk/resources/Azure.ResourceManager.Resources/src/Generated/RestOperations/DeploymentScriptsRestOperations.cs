@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class DeploymentScriptsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentScriptsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public DeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2020-10-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateCreateRequest(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript)
+        internal Azure.Core.HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -67,13 +67,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a deployment script. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentScript));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, deploymentScript);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,13 +105,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a deployment script. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
-        public Response Create(string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scriptName"/>, or <paramref name="deploymentScript"/> is null. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -120,7 +130,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentScript));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, scriptName, deploymentScript);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scriptName, deploymentScript);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +142,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string scriptName, IDictionary<string, string> tags)
+        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -166,13 +176,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptData>> UpdateAsync(string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public async Task<Response<DeploymentScriptData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -182,7 +197,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, scriptName, tags);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -199,13 +214,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScriptData> Update(string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public Response<DeploymentScriptData> Update(string subscriptionId, string resourceGroupName, string scriptName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -215,7 +235,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, scriptName, tags);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scriptName, tags);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -231,7 +251,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -244,7 +264,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -252,12 +272,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a deployment script with a given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptData>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public async Task<Response<DeploymentScriptData>> GetAsync(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -267,7 +292,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, scriptName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scriptName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,12 +311,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a deployment script with a given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<DeploymentScriptData> Get(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public Response<DeploymentScriptData> Get(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -301,7 +331,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, scriptName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scriptName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -319,7 +349,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -332,7 +362,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -340,12 +370,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -355,7 +390,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, scriptName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scriptName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -368,12 +403,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -383,7 +423,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, scriptName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scriptName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -395,7 +435,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest()
+        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -405,7 +445,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -413,10 +453,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -433,10 +480,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeploymentScriptListResult> ListBySubscription(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeploymentScriptListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -452,7 +506,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetLogsRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -466,7 +520,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
             uri.AppendPath("/logs", false);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -474,12 +528,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<ScriptLogsList>> GetLogsAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public async Task<Response<ScriptLogsList>> GetLogsAsync(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -489,7 +548,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetLogsRequest(resourceGroupName, scriptName);
+            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, scriptName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -506,12 +565,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<ScriptLogsList> GetLogs(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public Response<ScriptLogsList> GetLogs(string subscriptionId, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -521,7 +585,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetLogsRequest(resourceGroupName, scriptName);
+            using var message = CreateGetLogsRequest(subscriptionId, resourceGroupName, scriptName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -537,7 +601,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetLogsDefaultRequest(string resourceGroupName, string scriptName, int? tail)
+        internal Azure.Core.HttpMessage CreateGetLogsDefaultRequest(string subscriptionId, string resourceGroupName, string scriptName, int? tail)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -551,7 +615,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts/", false);
             uri.AppendPath(scriptName, true);
             uri.AppendPath("/logs/default", false);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (tail != null)
             {
                 uri.AppendQuery("tail", tail.Value, true);
@@ -563,13 +627,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public async Task<Response<ScriptLogData>> GetLogsDefaultAsync(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public async Task<Response<ScriptLogData>> GetLogsDefaultAsync(string subscriptionId, string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -579,7 +648,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetLogsDefaultRequest(resourceGroupName, scriptName, tail);
+            using var message = CreateGetLogsDefaultRequest(subscriptionId, resourceGroupName, scriptName, tail);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -598,13 +667,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="scriptName"/> is null. </exception>
-        public Response<ScriptLogData> GetLogsDefault(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="scriptName"/> is null. </exception>
+        public Response<ScriptLogData> GetLogsDefault(string subscriptionId, string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -614,7 +688,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            using var message = CreateGetLogsDefaultRequest(resourceGroupName, scriptName, tail);
+            using var message = CreateGetLogsDefaultRequest(subscriptionId, resourceGroupName, scriptName, tail);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -632,7 +706,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -644,7 +718,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
-            uri.AppendQuery("api-version", "2020-10-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -652,17 +726,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists deployments scripts. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -679,17 +758,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists deployments scripts. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DeploymentScriptListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<DeploymentScriptListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -705,7 +789,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
+        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -721,16 +805,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -748,16 +837,21 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeploymentScriptListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<DeploymentScriptListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -773,7 +867,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -789,21 +883,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -821,21 +920,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DeploymentScriptListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<DeploymentScriptListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
             }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

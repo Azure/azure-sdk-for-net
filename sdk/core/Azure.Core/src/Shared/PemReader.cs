@@ -146,13 +146,17 @@ namespace Azure.Core
                 }
 
                 using X509Certificate2 certificateWithoutPrivateKey = new X509Certificate2(cer, (string)null, keyStorageFlags);
-                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
 
+                X509Certificate2 certificate = (X509Certificate2)s_rsaCopyWithPrivateKeyMethod.Invoke(null, new object[] { certificateWithoutPrivateKey, privateKey });
                 // On .NET Framework the PrivateKey member is not initialized after calling CopyWithPrivateKey.
+
+                // This class only compiles against NET6.0 in tests and never in SDK libraries suppress the warning
+#pragma warning disable SYSLIB0028 // Use CopyWithPrivateKey instead
                 if (certificate.PrivateKey is null)
                 {
                     certificate.PrivateKey = privateKey;
                 }
+#pragma warning restore SYSLIB0028
 
                 // Make sure the private key doesn't get disposed now that it's used.
                 privateKey = null;

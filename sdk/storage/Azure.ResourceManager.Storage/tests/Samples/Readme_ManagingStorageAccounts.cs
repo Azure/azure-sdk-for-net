@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
+using Azure.Core;
 #endregion
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #endregion
             #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             //now we can create a storage account with defined account name and parameters
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+            StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(true, accountName, parameters);
             StorageAccount storageAccount = accountCreateOperation.Value;
             #endregion
         }
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             {
                 Console.WriteLine(storageAccount.Id.Name);
             }
-            if (await accountCollection.CheckIfExistsAsync("bar"))
+            if (await accountCollection.ExistsAsync("bar"))
             {
                 Console.WriteLine("storage account 'bar' exists");
             }
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_StorageAccounts_DeleteStorageAccount
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
-            await storageAccount.DeleteAsync();
+            await storageAccount.DeleteAsync(true);
             #endregion
         }
         [Test]

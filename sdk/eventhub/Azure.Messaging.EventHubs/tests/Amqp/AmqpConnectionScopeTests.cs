@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Tests
                certificateValidationCallback = certCallback
             };
 
-            await mockScope.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            await mockScope.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(mockScope.LastConnectionConfiguration.IsEquivalentTo(expected), Is.True);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => scope.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => scope.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
             scope.Dispose();
 
-            Assert.That(() => scope.OpenManagementLinkAsync(TimeSpan.FromDays(1), CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => scope.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -299,6 +299,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<RequestResponseAmqpLink>>("CreateManagementLinkAsync",
                     ItExpr.Is<AmqpConnection>(value => value == mockConnection),
                     ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
                 .Returns(Task.FromResult(mockLink))
                 .Verifiable();
@@ -307,11 +308,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(link, Is.EqualTo(mockLink), "The mock return was incorrect");
 
             mockScope.VerifyAll();
@@ -355,17 +357,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(mockConnection));
 
             mockScope
-                .Protected()
-                .Setup<Task>("OpenAmqpObjectAsync",
-                    ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
-                .Returns(Task.CompletedTask);
+                 .Protected()
+                 .Setup<Task>("OpenAmqpObjectAsync",
+                     ItExpr.IsAny<AmqpObject>(),
+                     ItExpr.IsAny<TimeSpan?>(),
+                     ItExpr.IsAny<CancellationToken>())
+                 .Returns(Task.CompletedTask);
 
             var activeLinks = GetActiveLinks(mockScope.Object);
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
@@ -398,7 +401,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var idleTimeout = TimeSpan.FromSeconds(30);
 
             using var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, identifier, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, identifier, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -421,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var idleTimeout = TimeSpan.FromSeconds(30);
 
             using var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, identifier, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, identifier, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -447,7 +450,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, null, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, null, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -471,7 +474,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
             scope.Dispose();
 
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, null, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, null, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -529,6 +532,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.Is<Uri>(value => value.AbsoluteUri.StartsWith(endpoint.AbsoluteUri)),
                     ItExpr.Is<EventPosition>(value => value == position),
                     ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<uint>(value => value == prefetchCount),
                     ItExpr.Is<long?>(value => value == prefetchSizeInBytes),
                     ItExpr.Is<long?>(value => value == ownerLevel),
@@ -542,11 +546,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, consumerIdentifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, consumerIdentifier, cancellationSource.Token);
             Assert.That(link, Is.EqualTo(mockLink), "The mock return was incorrect");
 
             mockScope.VerifyAll();
@@ -613,10 +618,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkSource = (Source)link.Settings.Source;
@@ -696,10 +702,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
             Assert.That(link.GetSettingPropertyOrDefault<long>(AmqpProperty.ConsumerOwnerLevel, long.MinValue), Is.EqualTo(long.MinValue), "The owner level should have been used.");
         }
@@ -765,10 +772,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
             Assert.That(link.Settings.DesiredCapabilities, Is.Null, "There should have not have been a set of desired capabilities created, as we're not tracking the last event.");
         }
@@ -834,14 +842,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
             var activeLinks = GetActiveLinks(mockScope.Object);
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
@@ -933,10 +942,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1017,10 +1027,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1108,7 +1119,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => scope.OpenProducerLinkAsync(partitionId, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => scope.OpenProducerLinkAsync(partitionId, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -1129,7 +1140,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout, identifier);
             scope.Dispose();
 
-            Assert.That(() => scope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => scope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -1184,6 +1195,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.Is<TransportProducerFeatures>(value => value == features),
                     ItExpr.Is<PartitionPublishingOptionsInternal>(value => value == options),
                     ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<string>(value => value == producerIdentifier),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
                 .Returns(Task.FromResult(mockLink))
@@ -1193,11 +1205,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), producerIdentifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), TimeSpan.FromDays(1), producerIdentifier, cancellationSource.Token);
             Assert.That(link, Is.EqualTo(mockLink), "The mock return was incorrect");
 
             mockScope.VerifyAll();
@@ -1266,10 +1279,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
@@ -1338,10 +1352,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
@@ -1410,10 +1425,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, (PartitionPublishingOptionsInternal)options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, (PartitionPublishingOptionsInternal)options, TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
@@ -1488,10 +1504,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(partitionId, features, options, TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkTarget = (Target)link.Settings.Target;
@@ -1557,14 +1574,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
             var activeLinks = GetActiveLinks(mockScope.Object);
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
@@ -1653,10 +1671,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1734,10 +1753,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1824,7 +1844,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
             var mockScope = new DisposeOnAuthorizationTimerCallbackMockScope(endpoint, endpoint, eventHub, credential.Object, transport, null, idleTimeout);
 
-            var link = await mockScope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), null, cancellationSource.Token);
+            var link = await mockScope.OpenProducerLinkAsync(null, TransportProducerFeatures.None, new PartitionPublishingOptionsInternal(), TimeSpan.FromDays(1), TimeSpan.FromDays(1), null, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope);
@@ -1918,6 +1938,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<RequestResponseAmqpLink>>("CreateManagementLinkAsync",
                     ItExpr.Is<AmqpConnection>(value => value == mockConnection),
                     ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
                 .Returns(Task.FromResult(mockLink))
                 .Verifiable();
@@ -1926,13 +1947,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
             // Create the mock management link to force lazy creation of the connection.
 
-            await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
 
             mockScope.Object.Dispose();
             Assert.That(connectionClosed, Is.True, "The link should have been closed when the scope was disposed.");
@@ -1995,17 +2017,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
             var activeLinks = GetActiveLinks(mockScope.Object);
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var producerLink = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
+            var producerLink = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 0, null, null, false, identifier, cancellationSource.Token);
             Assert.That(producerLink, Is.Not.Null, "The producer link produced was null");
 
-            var managementLink = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            var managementLink = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), TimeSpan.FromDays(1), cancellationSource.Token);
             Assert.That(managementLink, Is.Not.Null, "The management link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(2), "There should be active links being tracked.");
@@ -2073,14 +2096,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
-                    ItExpr.IsAny<TimeSpan>())
+                    ItExpr.IsAny<TimeSpan?>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
 
             var managedAuthorizations = GetActiveLinks(mockScope.Object);
             Assert.That(managedAuthorizations, Is.Not.Null, "The set of managed authorizations was null.");
             Assert.That(managedAuthorizations.Count, Is.Zero, "There should be no managed authorizations when none have been created.");
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 12, 555, 777, true, identifier, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), 12, 555, 777, true, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The producer link produced was null");
 
             Assert.That(managedAuthorizations.Count, Is.EqualTo(1), "There should be a managed authorization being tracked.");
@@ -2393,7 +2417,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                  string scopeIdentifier,
                                                                                  TimeSpan timeout) => Task.FromResult(_mockConnection);
 
-            protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan timeout) => Task.CompletedTask;
+            protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan? timeout = default, CancellationToken cancellationToken = default) => Task.CompletedTask;
 
             protected override TimerCallback CreateAuthorizationRefreshHandler(AmqpConnection connection,
                                                                                AmqpObject amqpLink,
@@ -2486,7 +2510,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(MockConnection.Object);
             }
 
-            protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan timeout) => Task.CompletedTask;
+            protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan? timeout = default, CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
 
         private class ConnectionConfiguration

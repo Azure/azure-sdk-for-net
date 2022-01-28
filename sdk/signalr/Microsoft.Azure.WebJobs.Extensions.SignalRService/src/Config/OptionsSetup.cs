@@ -42,6 +42,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public void Configure(ServiceManagerOptions options)
         {
+            if (_configuration.TryGetJsonObjectSerializer(out var serializer))
+            {
+                options.UseJsonObjectSerializer(serializer);
+            }
+
             options.ConnectionString = _configuration.GetConnectionString(_connectionStringKey) ?? _configuration[_connectionStringKey];
             var endpoints = _configuration.GetSection(Constants.AzureSignalREndpoints).GetEndpoints(_azureComponentFactory);
             // Fall back to use a section to configure Azure identity

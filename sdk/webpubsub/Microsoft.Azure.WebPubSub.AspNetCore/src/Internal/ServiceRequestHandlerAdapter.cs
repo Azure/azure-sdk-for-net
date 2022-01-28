@@ -16,17 +16,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
     internal class ServiceRequestHandlerAdapter
     {
-        private readonly WebPubSubOptions _options;
+        private readonly RequestValidator _requestValidator;
         private readonly IServiceProvider _provider;
         private readonly ILogger _logger;
 
         // <hubName, HubImpl>
         private readonly Dictionary<string, WebPubSubHub> _hubRegistry = new(StringComparer.OrdinalIgnoreCase);
 
-        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options, ILogger<ServiceRequestHandlerAdapter> logger)
+        public ServiceRequestHandlerAdapter(IServiceProvider provider, RequestValidator requestValidator, ILogger<ServiceRequestHandlerAdapter> logger)
         {
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
-            _options = options.Value;
+            _requestValidator = requestValidator ?? throw new ArgumentNullException(nameof(requestValidator));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted).ConfigureAwait(false);
+                var serviceRequest = await request.ReadWebPubSubEventAsync(_requestValidator, context.RequestAborted).ConfigureAwait(false);
                 Log.StartToHandleRequest(_logger, serviceRequest.ConnectionContext);
 
                 switch (serviceRequest)
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             // default as null is allowed.
                             if (response != null)
                             {
-                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.States);
+                                SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
                                 await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
                             }
                             break;
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             // default as null is allowed.
                             if (response != null)
                             {
-                                SetConnectionState(ref context, messageRequest.ConnectionContext, response.States);
+                                SetConnectionState(ref context, messageRequest.ConnectionContext, response.ConnectionStates);
                             }
                             if (response.Data != null)
                             {
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, object> newStates)
+        private static void SetConnectionState(ref HttpContext context, WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
         {
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)

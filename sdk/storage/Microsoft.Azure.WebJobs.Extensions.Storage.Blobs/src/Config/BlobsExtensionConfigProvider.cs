@@ -44,6 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private BlobTriggerQueueWriter _blobTriggerQueueWriter;
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly HttpRequestProcessor _httpRequestProcessor;
+        private readonly IFunctionDataCache _functionDataCache;
 
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
+            IFunctionDataCache functionDataCache,
             ILoggerFactory loggerFactory)
         {
             _blobServiceClientProvider = blobServiceClientProvider;
@@ -62,7 +64,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             _converterManager = converterManager;
             _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory;
             _httpRequestProcessor = httpRequestProcessor;
+            _functionDataCache = functionDataCache;
             _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
+        }
+
+        public BlobsExtensionConfigProvider(
+            BlobServiceClientProvider blobServiceClientProvider,
+            BlobTriggerAttributeBindingProvider triggerBinder,
+            IContextGetter<IBlobWrittenWatcher> contextAccessor,
+            INameResolver nameResolver,
+            IConverterManager converterManager,
+            BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
+            HttpRequestProcessor httpRequestProcessor,
+            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
+        {
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -96,6 +111,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
             rule.BindToInput<BlobClient>((attr, cts) => CreateBlobReference<BlobClient>(attr, cts));
             rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
+
+            // If caching is enabled, create a binding for that
+            if (_functionDataCache != null && _functionDataCache.IsEnabled)
+            {
+                rule.When("Access", FileAccess.Read).
+                    BindToInput<ICacheAwareReadObject>((attr, ctx) => CreateCacheAwareReadObjectAsync(attr, ctx));
+
+                rule.When("Access", FileAccess.Write).
+                    BindToInput<ICacheAwareWriteObject>((attr, ctx) => CreateCacheAwareWriteObjectAsync(attr, ctx));
+            }
 
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
             rule.When("Access", FileAccess.Write).
@@ -159,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             string content = await input.Content.ReadAsStringAsync().ConfigureAwait(false);
             var headers = input.Headers;
 
-            return await _httpRequestProcessor.ProcessAsync(input, functionName, ProcessEventsAsync, cancellationToken).ConfigureAwait(false);
+            return await _httpRequestProcessor.ProcessAsync(input, functionName, ProcessEventsAsync, BindingType.Unknown, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -338,6 +363,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             }
         }
 
+        private async Task<ICacheAwareWriteObject> CreateCacheAwareWriteObjectAsync(
+            BlobAttribute blobAttribute,
+            ValueBindingContext context)
+        {
+            var cancellationToken = context.CancellationToken;
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
+
+            switch (blobAttribute.Access)
+            {
+                case FileAccess.Write:
+                    var writeStream = await WriteBlobArgumentBinding.BindStreamCacheAwareAsync(blob,
+                        context, _blobWrittenWatcherGetter.Value, _functionDataCache).ConfigureAwait(false);
+                    return writeStream;
+
+                default:
+                    throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
+            }
+        }
+
+        private async Task<ICacheAwareReadObject> CreateCacheAwareReadObjectAsync(
+            BlobAttribute blobAttribute,
+            ValueBindingContext context)
+        {
+            var cancellationToken = context.CancellationToken;
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
+
+            switch (blobAttribute.Access)
+            {
+                case FileAccess.Read:
+                    var readStream = await ReadBlobArgumentBinding.TryBindCacheAwareAsync(blob, context, _functionDataCache).ConfigureAwait(false);
+                    return readStream;
+
+                default:
+                    throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
+            }
+        }
+
         private async Task<Stream> CreateStreamAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
@@ -353,7 +415,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
                 case FileAccess.Write:
                     var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
-                    context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
+                        context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
                     return writeStream;
 
                 default:

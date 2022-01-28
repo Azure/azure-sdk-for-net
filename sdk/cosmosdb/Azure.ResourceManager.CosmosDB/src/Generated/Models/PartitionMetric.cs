@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metric values for a single partition. </summary>
-    public partial class PartitionMetric : Metric
+    public partial class PartitionMetric : BaseMetric
     {
         /// <summary> Initializes a new instance of PartitionMetric. </summary>
         internal PartitionMetric()

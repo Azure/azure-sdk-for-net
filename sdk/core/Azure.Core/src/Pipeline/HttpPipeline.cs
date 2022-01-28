@@ -101,7 +101,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="context">Context specifying the message options.</param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext context)
+        public HttpMessage CreateMessage(RequestContext? context)
         {
             var message = CreateMessage();
             message.AddPolicies(context);

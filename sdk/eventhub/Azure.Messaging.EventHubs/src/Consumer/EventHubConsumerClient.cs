@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
     ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
-    ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubConsumerClient : IAsyncDisposable
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>

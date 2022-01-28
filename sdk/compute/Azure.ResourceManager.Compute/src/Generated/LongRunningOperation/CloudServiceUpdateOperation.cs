@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<CloudService> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of CloudServiceUpdateOperation for mocking. </summary>
         protected CloudServiceUpdateOperation()
         {
         }
 
-        internal CloudServiceUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CloudServiceUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CloudService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServiceUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         CloudService IOperationSource<CloudService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new CloudService(_operationBase, CloudServiceData.DeserializeCloudServiceData(document.RootElement));
+            var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
+            return new CloudService(_armClient, data);
         }
 
         async ValueTask<CloudService> IOperationSource<CloudService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new CloudService(_operationBase, CloudServiceData.DeserializeCloudServiceData(document.RootElement));
+            var data = CloudServiceData.DeserializeCloudServiceData(document.RootElement);
+            return new CloudService(_armClient, data);
         }
     }
 }

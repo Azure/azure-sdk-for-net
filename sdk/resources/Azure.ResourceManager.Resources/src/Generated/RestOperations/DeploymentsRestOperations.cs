@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class DeploymentsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public DeploymentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DeploymentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2021-04-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal Azure.Core.HttpMessage CreateDeleteAtScopeRequest(string scope, string deploymentName)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/validate", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/exportTemplate", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string deploymentName, DeploymentWhatIfProperties properties, string location)
+        internal Azure.Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -909,13 +909,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> WhatIfAtSubscriptionScopeAsync(string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> WhatIfAtSubscriptionScopeAsync(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
@@ -925,7 +930,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateWhatIfAtSubscriptionScopeRequest(deploymentName, properties, location);
+            using var message = CreateWhatIfAtSubscriptionScopeRequest(subscriptionId, deploymentName, properties, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -938,13 +943,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the subscription. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="properties"/> is null. </exception>
-        public Response WhatIfAtSubscriptionScope(string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
+        public Response WhatIfAtSubscriptionScope(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (deploymentName == null)
             {
                 throw new ArgumentNullException(nameof(deploymentName));
@@ -954,7 +964,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateWhatIfAtSubscriptionScopeRequest(deploymentName, properties, location);
+            using var message = CreateWhatIfAtSubscriptionScopeRequest(subscriptionId, deploymentName, properties, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -966,7 +976,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateWhatIfRequest(string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location)
+        internal Azure.Core.HttpMessage CreateWhatIfRequest(string subscriptionId, string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -980,7 +990,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/whatIf", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -996,14 +1006,19 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group the template will be deployed to. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> WhatIfAsync(string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> WhatIfAsync(string subscriptionId, string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1017,7 +1032,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateWhatIfRequest(resourceGroupName, deploymentName, properties, location);
+            using var message = CreateWhatIfRequest(subscriptionId, resourceGroupName, deploymentName, properties, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1030,14 +1045,19 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group the template will be deployed to. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response WhatIf(string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="properties"/> is null. </exception>
+        public Response WhatIf(string subscriptionId, string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -1051,7 +1071,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateWhatIfRequest(resourceGroupName, deploymentName, properties, location);
+            using var message = CreateWhatIfRequest(subscriptionId, resourceGroupName, deploymentName, properties, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1071,7 +1091,7 @@ namespace Azure.ResourceManager.Resources
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Resources/calculateTemplateHash", false);
-            uri.AppendQuery("api-version", "2021-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -22,52 +22,56 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of Subnet and their operations over its parent. </summary>
     public partial class SubnetCollection : ArmCollection, IEnumerable<Subnet>, IAsyncEnumerable<Subnet>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SubnetsRestOperations _subnetsRestClient;
+        private readonly ClientDiagnostics _subnetClientDiagnostics;
+        private readonly SubnetsRestOperations _subnetRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubnetCollection"/> class for mocking. </summary>
         protected SubnetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SubnetCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubnetCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SubnetCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Subnet.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Subnet.ResourceType, out string subnetApiVersion);
+            _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualNetwork.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VirtualNetwork.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualNetwork.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
             {
                 throw new ArgumentNullException(nameof(subnetParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
-                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var response = _subnetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
+                var operation = new SubnetCreateOrUpdateOperation(ArmClient, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -80,28 +84,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
             {
                 throw new ArgumentNullException(nameof(subnetParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _subnetsRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var response = await _subnetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SubnetCreateOrUpdateOperation(ArmClient, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,22 +119,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<Subnet> Get(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Get");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Get(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken);
+                var response = _subnetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
+                    throw _subnetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Subnet(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,22 +145,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public async virtual Task<Response<Subnet>> GetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.Get");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _subnetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subnet(Parent, response.Value), response.GetRawResponse());
+                    throw await _subnetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Subnet(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,22 +171,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<Subnet> GetIfExists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Get(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                var response = _subnetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Subnet>(null, response.GetRawResponse());
+                return Response.FromValue(new Subnet(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,22 +197,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public async virtual Task<Response<Subnet>> GetIfExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetIfExistsAsync");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<Subnet>(null, response.GetRawResponse())
-                    : Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                var response = await _subnetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Subnet>(null, response.GetRawResponse());
+                return Response.FromValue(new Subnet(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,15 +223,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.CheckIfExists");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
             try
             {
@@ -255,15 +247,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetCollection.CheckIfExistsAsync");
+            using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
             try
             {
@@ -284,12 +274,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<Subnet> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetAll");
+                using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _subnetsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subnetRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,12 +289,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<Subnet> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetAll");
+                using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _subnetsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subnetRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,12 +312,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<Subnet>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetAll");
+                using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _subnetsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subnetRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,12 +327,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<Subnet>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubnetCollection.GetAll");
+                using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _subnetsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subnetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subnet(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -367,8 +357,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, Subnet, SubnetData> Construct() { }
     }
 }

@@ -179,7 +179,7 @@ namespace Azure.Core
             }
         }
 
-        protected async ValueTask<Response> ApplyStateAsync(bool async, Response response, bool hasCompleted, bool hasSucceeded, RequestFailedException? requestFailedException)
+        protected async ValueTask<Response> ApplyStateAsync(bool async, Response response, bool hasCompleted, bool hasSucceeded, RequestFailedException? requestFailedException, bool throwIfFailed = true)
         {
             RawResponse = response;
 
@@ -198,7 +198,13 @@ namespace Azure.Core
                 (async
                     ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
                     : _diagnostics.CreateRequestFailedException(response));
-            throw OperationFailedException;
+
+            if (throwIfFailed)
+            {
+                throw OperationFailedException;
+            }
+
+            return response;
         }
 
         protected static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)

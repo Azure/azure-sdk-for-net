@@ -56,6 +56,7 @@ namespace Compute.Tests
 
                     // Add an extension to the VM
                     var vmExtension = GetHealthVMExtension();
+                    vmExtension.Location = vm.Location;
                     var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);
                     ValidateVMExtension(vmExtension, response);
 

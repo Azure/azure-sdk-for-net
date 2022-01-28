@@ -5,13 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -29,73 +25,31 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        private static TenantExtensionClient GetExtensionClient(Tenant tenant)
         {
-            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        /// <summary> Calculate the hash of the given template. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="template"> The template provided to calculate hash. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public static async Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Tenant tenant, object template, CancellationToken cancellationToken = default)
-        {
-            if (template == null)
+            return tenant.GetCachedClient((armClient) =>
             {
-                throw new ArgumentNullException(nameof(template));
-            }
-
-            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CalculateTemplateHashDeployment");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// <summary> Calculate the hash of the given template. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="template"> The template provided to calculate hash. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public static Response<TemplateHashResult> CalculateTemplateHashDeployment(this Tenant tenant, object template, CancellationToken cancellationToken = default)
-        {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
-
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CalculateTemplateHashDeployment");
-                scope.Start();
-                try
-                {
-                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
-                    var response = restOperations.CalculateTemplateHash(template, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return new TenantExtensionClient(armClient, tenant.Id);
             }
             );
+        }
+
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public static async Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Tenant tenant, object template, CancellationToken cancellationToken = default)
+        {
+            return await GetExtensionClient(tenant).CalculateTemplateHashDeploymentAsync(template, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public static Response<TemplateHashResult> CalculateTemplateHashDeployment(this Tenant tenant, object template, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(tenant).CalculateTemplateHashDeployment(template, cancellationToken);
         }
     }
 }

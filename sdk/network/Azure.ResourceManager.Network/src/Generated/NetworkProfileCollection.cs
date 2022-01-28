@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -23,52 +23,56 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkProfile and their operations over its parent. </summary>
     public partial class NetworkProfileCollection : ArmCollection, IEnumerable<NetworkProfile>, IAsyncEnumerable<NetworkProfile>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NetworkProfilesRestOperations _networkProfilesRestClient;
+        private readonly ClientDiagnostics _networkProfileClientDiagnostics;
+        private readonly NetworkProfilesRestOperations _networkProfileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkProfileCollection"/> class for mocking. </summary>
         protected NetworkProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkProfileCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkProfileCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _networkProfilesRestClient = new NetworkProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfile.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkProfile.ResourceType, out string networkProfileApiVersion);
+            _networkProfileRestClient = new NetworkProfilesRestOperations(_networkProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkProfileApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates a network profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network profile operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkProfileCreateOrUpdateOperation CreateOrUpdate(string networkProfileName, NetworkProfileData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NetworkProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.CreateOrUpdate(Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
-                var operation = new NetworkProfileCreateOrUpdateOperation(Parent, response);
+                var response = _networkProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
+                var operation = new NetworkProfileCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,28 +85,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates a network profile. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network profile operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkProfileCreateOrUpdateOperation> CreateOrUpdateAsync(string networkProfileName, NetworkProfileData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkProfileCreateOrUpdateOperation(Parent, response);
+                var response = await _networkProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkProfileCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,22 +120,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<NetworkProfile> Get(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
+                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkProfile(Parent, response.Value), response.GetRawResponse());
+                    throw _networkProfileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,22 +146,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public async virtual Task<Response<NetworkProfile>> GetAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.Get");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkProfile(Parent, response.Value), response.GetRawResponse());
+                    throw await _networkProfileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,22 +172,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<NetworkProfile> GetIfExists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkProfilesRestClient.Get(Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkProfile>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,22 +198,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public async virtual Task<Response<NetworkProfile>> GetIfExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExistsAsync");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkProfilesRestClient.GetAsync(Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkProfile>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkProfile(this, response.Value), response.GetRawResponse());
+                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkProfile(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,15 +224,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CheckIfExists");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -256,15 +248,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.CheckIfExistsAsync");
+            using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +275,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkProfile> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkProfileRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +290,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkProfile> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _networkProfilesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkProfileRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +313,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkProfile>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkProfileRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,12 +328,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkProfile>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
+                using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _networkProfilesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkProfileRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkProfile(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -352,52 +342,6 @@ namespace Azure.ResourceManager.Network
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="NetworkProfile" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(NetworkProfile.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="NetworkProfile" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkProfileCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(NetworkProfile.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<NetworkProfile> IEnumerable<NetworkProfile>.GetEnumerator()
@@ -414,8 +358,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkProfile, NetworkProfileData> Construct() { }
     }
 }
