@@ -1525,7 +1525,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="DeleteBlobContainer"/> operation marks the
         /// specified blob container for deletion. The container and any blobs
         /// contained within it are later deleted during garbage collection
-        /// which could take up to 30 seconds.
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1563,7 +1563,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="DeleteBlobContainerAsync"/> operation marks the
         /// specified container for deletion. The container and any blobs
         /// contained within it are later deleted during garbage collection
-        /// which could take up to 30 seconds.
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
