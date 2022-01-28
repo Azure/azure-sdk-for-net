@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics
             this.ConfigureLogging();
 
             //Default Audience to Azure Public Cloud
-            Audience ??= TextAnalyticsAudience.AzureResourceManagerPublicCloud;
+            Audience ??= TextAnalyticsAudience.AzurePublicCloud;
         }
 
         internal static string GetVersionString(ServiceVersion version)
