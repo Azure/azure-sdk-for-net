@@ -43,8 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception)
             {
-                // ignored, see https://github.com/aspnet/KestrelHttpServer/issues/1513
-                // Kestrel 2.0.0 should have fix it, but it does not seem important for our tests
+                // https://github.com/aspnet/KestrelHttpServer/issues/1513
             }
         }
     }
