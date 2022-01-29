@@ -194,7 +194,7 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
+        public void AddClassifier(int[] statusCodes, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }

@@ -51,6 +51,16 @@ namespace Azure.Core
                    (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
         }
 
+        internal bool IsError(HttpMessage message)
+        {
+            if (message.TryClassify(message.Response.Status, out bool isError))
+            {
+                return isError;
+            }
+
+            return IsError(message);
+        }
+
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>

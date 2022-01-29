@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
@@ -39,10 +40,6 @@ namespace Azure
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
 
         /// <summary>
-        /// </summary>
-        public ResponseClassifier? ResponseClassifier { get; set; }
-
-        /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
         /// The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/>
@@ -54,6 +51,33 @@ namespace Azure
         {
             Policies ??= new();
             Policies.Add((position, policy));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="statusCodes"></param>
+        /// <param name="isError"></param>
+        public void AddClassifier(int[] statusCodes, bool isError)
+        {
+            CopyOrMerge(statusCodes, ref isError ? ref ErrorCodes : ref NonErrorCodes);
+        }
+
+        internal int[]? ErrorCodes;// { get; private set; }
+        internal int[]? NonErrorCodes;// { get; private set; }
+
+        private static void CopyOrMerge(int[] source, ref int[]? target)
+        {
+            if (target == null)
+            {
+                target = new int[source.Length];
+                Array.Copy(source, target, source.Length);
+            }
+            else // merge arrays
+            {
+                var origLength = target.Length;
+                Array.Resize(ref target, source.Length + target.Length);
+                Array.Copy(source, 0, target, origLength, source.Length);
+            }
         }
     }
 }
