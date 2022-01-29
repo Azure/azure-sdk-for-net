@@ -70,7 +70,7 @@ param(
   [Parameter(Mandatory = $false)]
   [string]$ClientSecret
 )
-
+Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers Metadata-Helpers.ps1)
 
@@ -107,14 +107,15 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   }
   
   # Get the first code owners of the package.
-  $msauthor = "ramyar"
   Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
   $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath 
   if (!$author) {
     $author = "ramya-rao-a" 
     $msauthor = "ramyar"
   }
-  $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
+  else {
+    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
+  }
   # Default value
   if (!$msauthor) {
     $msauthor = $author
