@@ -137,17 +137,14 @@ namespace Azure.Core.TestFramework
             request.Headers.SetValue("x-recording-id", _recording.RecordingId);
             request.Headers.SetValue("x-recording-mode", _recording.Mode.ToString().ToLower());
 
-            // Ensure x-recording-upstream-base-uri header is only set once, since the same HttpMessage will be reused on retries
-            if (!request.Headers.Contains("x-recording-upstream-base-uri"))
+            // Intentionally reset the upstream URI in case the request URI changes between retries - e.g. when using GeoRedundant secondary Storage
+            var baseUri = new RequestUriBuilder()
             {
-                var baseUri = new RequestUriBuilder()
-                {
-                    Scheme = request.Uri.Scheme,
-                    Host = request.Uri.Host,
-                    Port = request.Uri.Port,
-                };
-                request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
-            }
+                Scheme = request.Uri.Scheme,
+                Host = request.Uri.Host,
+                Port = request.Uri.Port,
+            };
+            request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
 
             // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
             request.Uri.Host = TestProxy.IpAddress;
