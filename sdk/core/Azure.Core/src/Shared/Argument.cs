@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure;
 
 namespace Azure.Core
 {
@@ -213,6 +214,7 @@ namespace Azure.Core
             return value;
         }
 
+#nullable enable
         public static void AssertHasOnlySupportedHeaders(RequestConditions? requestConditions, string paramName, string[] supportedHeaders)
         {
             if (requestConditions != null)
@@ -223,6 +225,7 @@ namespace Azure.Core
                 AssertHasNoUnsupportedHeader(requestConditions.IfUnmodifiedSince, paramName, supportedHeaders, HttpHeader.Names.IfUnmodifiedSince);
             }
         }
+#nullable disable
 
         private static void AssertHasNoUnsupportedHeader<T>(T? value, string paramName, string[] supportedHeaders, string unsupportedHeader) where T : struct
         {
