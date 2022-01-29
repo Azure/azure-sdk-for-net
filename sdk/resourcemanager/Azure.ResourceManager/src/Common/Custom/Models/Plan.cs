@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("Azure.ResourceManager.Resources.Models.CreatedByType")]
 namespace Azure.ResourceManager.Models
 {
     /// <summary>
