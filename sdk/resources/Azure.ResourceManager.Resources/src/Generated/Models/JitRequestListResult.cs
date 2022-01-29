@@ -12,25 +12,25 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of JIT requests. </summary>
-    public partial class JitRequestDefinitionListResult
+    public partial class JitRequestListResult
     {
-        /// <summary> Initializes a new instance of JitRequestDefinitionListResult. </summary>
-        internal JitRequestDefinitionListResult()
+        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
+        internal JitRequestListResult()
         {
-            Value = new ChangeTrackingList<JitRequestDefinitionData>();
+            Value = new ChangeTrackingList<JitRequestData>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
         /// <param name="value"> The array of Jit request definition. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal JitRequestDefinitionListResult(IReadOnlyList<JitRequestDefinitionData> value, string nextLink)
+        internal JitRequestListResult(IReadOnlyList<JitRequestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array of Jit request definition. </summary>
-        public IReadOnlyList<JitRequestDefinitionData> Value { get; }
+        public IReadOnlyList<JitRequestData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

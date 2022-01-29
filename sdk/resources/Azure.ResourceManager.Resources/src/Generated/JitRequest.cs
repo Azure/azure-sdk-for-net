@@ -19,42 +19,42 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a JitRequestDefinition along with the instance operations that can be performed on it. </summary>
-    public partial class JitRequestDefinition : ArmResource
+    /// <summary> A Class representing a JitRequest along with the instance operations that can be performed on it. </summary>
+    public partial class JitRequest : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JitRequestDefinition"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="JitRequest"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jitRequestName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/jitRequests/{jitRequestName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _jitRequestDefinitionJitRequestsClientDiagnostics;
-        private readonly JitRequestsRestOperations _jitRequestDefinitionJitRequestsRestClient;
-        private readonly JitRequestDefinitionData _data;
+        private readonly ClientDiagnostics _jitRequestClientDiagnostics;
+        private readonly JitRequestsRestOperations _jitRequestRestClient;
+        private readonly JitRequestData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="JitRequestDefinition"/> class for mocking. </summary>
-        protected JitRequestDefinition()
+        /// <summary> Initializes a new instance of the <see cref="JitRequest"/> class for mocking. </summary>
+        protected JitRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JitRequestDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "JitRequest"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JitRequestDefinition(ArmClient armClient, JitRequestDefinitionData data) : this(armClient, data.Id)
+        internal JitRequest(ArmClient armClient, JitRequestData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JitRequestDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JitRequest"/> class. </summary>
         /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JitRequestDefinition(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal JitRequest(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _jitRequestDefinitionJitRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string jitRequestDefinitionJitRequestsApiVersion);
-            _jitRequestDefinitionJitRequestsRestClient = new JitRequestsRestOperations(_jitRequestDefinitionJitRequestsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestDefinitionJitRequestsApiVersion);
+            _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
+            _jitRequestRestClient = new JitRequestsRestOperations(_jitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JitRequestDefinitionData Data
+        public virtual JitRequestData Data
         {
             get
             {
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the JIT request. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JitRequestDefinition>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequest>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Get");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Get");
             scope.Start();
             try
             {
-                var response = await _jitRequestDefinitionJitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jitRequestDefinitionJitRequestsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, response.Value), response.GetRawResponse());
+                    throw await _jitRequestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the JIT request. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JitRequestDefinition> Get(CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Get");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Get");
             scope.Start();
             try
             {
-                var response = _jitRequestDefinitionJitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _jitRequestDefinitionJitRequestsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitRequestDefinition(ArmClient, response.Value), response.GetRawResponse());
+                    throw _jitRequestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.GetAvailableLocations");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.GetAvailableLocations");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the JIT request. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<JitRequestDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<JitRequestDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Delete");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Delete");
             scope.Start();
             try
             {
-                var response = await _jitRequestDefinitionJitRequestsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new JitRequestDefinitionDeleteOperation(response);
+                var response = await _jitRequestRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new JitRequestDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the JIT request. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual JitRequestDefinitionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual JitRequestDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Delete");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Delete");
             scope.Start();
             try
             {
-                var response = _jitRequestDefinitionJitRequestsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new JitRequestDefinitionDeleteOperation(response);
+                var response = _jitRequestRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new JitRequestDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -209,19 +209,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<JitRequestDefinition>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequest>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.AddTag");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _jitRequestDefinitionJitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,19 +235,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<JitRequestDefinition> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.AddTag");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _jitRequestDefinitionJitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<JitRequestDefinition>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequest>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.SetTags");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.SetTags");
             scope.Start();
             try
             {
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _jitRequestDefinitionJitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<JitRequestDefinition> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.SetTags");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.SetTags");
             scope.Start();
             try
             {
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _jitRequestDefinitionJitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<JitRequestDefinition>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequest>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.RemoveTag");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _jitRequestDefinitionJitRequestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<JitRequestDefinition> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.RemoveTag");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _jitRequestDefinitionJitRequestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new JitRequest(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -367,14 +367,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Updates the JIT request. </summary>
         /// <param name="tags"> Jit request tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JitRequestDefinition>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequest>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Update");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
             scope.Start();
             try
             {
-                var response = await _jitRequestDefinitionJitRequestsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, response.Value), response.GetRawResponse());
+                var response = await _jitRequestRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -386,14 +386,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Updates the JIT request. </summary>
         /// <param name="tags"> Jit request tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JitRequestDefinition> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequest> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _jitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("JitRequestDefinition.Update");
+            using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequest.Update");
             scope.Start();
             try
             {
-                var response = _jitRequestDefinitionJitRequestsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new JitRequestDefinition(ArmClient, response.Value), response.GetRawResponse());
+                var response = _jitRequestRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                return Response.FromValue(new JitRequest(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

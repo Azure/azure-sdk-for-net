@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JitRequestDefinition> GetJitRequestDefinitionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<JitRequest> GetJitRequestDefinitionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetJitRequestDefinitionsAsync(cancellationToken);
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JitRequestDefinition> GetJitRequestDefinitions(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<JitRequest> GetJitRequestDefinitions(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetJitRequestDefinitions(cancellationToken);
         }
