@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
                 {
                     Tags =
                     {
-                        { "test", "env" }
+                        { "test", "env" },
+                        { "DeleteAfter", DateTime.UtcNow.AddDays(1).ToString("o") }
                     }
                 });
             return operation.Value;
