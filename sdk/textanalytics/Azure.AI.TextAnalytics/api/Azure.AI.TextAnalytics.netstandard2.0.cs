@@ -889,9 +889,9 @@ namespace Azure.AI.TextAnalytics
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TextAnalyticsAudience(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureResourceManagerChina { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureResourceManagerGovernment { get { throw null; } }
-        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureResourceManagerPublicCloud { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureChina { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzurePublicCloud { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzurerGovernment { get { throw null; } }
         public bool Equals(Azure.AI.TextAnalytics.TextAnalyticsAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
