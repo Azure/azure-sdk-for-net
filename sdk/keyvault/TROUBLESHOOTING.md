@@ -58,8 +58,8 @@ See our [DefaultAzureCredential] documentation to see the order credentials are 
 tenant for one credential that gets read before another credential. For example, you might be logged into Visual Studio
 under the wrong tenant even though you're logged into the Azure CLI under the right tenant.
 
-You can also explicitly set the tenant ID for a multi-tenant application if you reference `Azure.Identity` version
-1.5.0 or newer and any of the following Key Vault SDK package versions or newer:
+Automatic tenant discovery support has been added when referencing package `Azure.Identity` version
+1.5.0 or newer, and any of the following Key Vault SDK package versions or newer:
 
 Package | Minimum Version
 --- | ---
@@ -68,17 +68,8 @@ Package | Minimum Version
 `Azure.Security.KeyVault.Keys` | 4.3.0-beta.2
 `Azure.Security.KeyVault.Secrets` | 4.3.0-beta.2
 
-You can then set the `AZURE_TENANT_ID` environment variable prior to starting your application, set the `TenantId` property
-of supported credential providers, or set any of the tenant ID properties for [DefaultAzureCredential] you want to support:
-
-```C#
-string tenantId = "{tenant ID}";
-DefaultAzureCredential credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions()
-{
-    VisualStudioTenantId = tenantId,
-    VisualStudioCodeTenantId = tenantId,
-});
-```
+Upgrading to the package versions should resolve any "Invalid Issuer" errors as long as the application or user is a
+member of the resource's tenant.
 
 #### Other Authentication Issues
 
