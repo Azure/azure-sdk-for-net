@@ -224,10 +224,8 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
-            var context = new RequestContext()
-            {
-                ResponseClassifier = new Consider404SuccessResponseClassifier()
-            };
+            var context = new RequestContext();
+            context.AddClassifier(new int[] { 404 }, isError: false);
             var message = pipeline.CreateMessage(context);
 
             await pipeline.SendAsync(message, context.CancellationToken);

@@ -36,16 +36,25 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesResponseClassifier()
+        public void AppliesResponseClassifierErrors()
         {
             HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
-            RequestContext context = new RequestContext()
-            {
-                ResponseClassifier = new TestResponseClassifier()
-            };
-
+            RequestContext context = new RequestContext();
+            context.AddClassifier(new int[] { 204 }, isError: true);
             message.ApplyRequestContext(context);
-            Assert.AreEqual(context.ResponseClassifier.GetType(), message.ResponseClassifier.GetType());
+            Assert.IsTrue(message.TryClassify(204, out bool isError));
+            Assert.IsTrue(isError);
+        }
+
+        [Test]
+        public void AppliesResponseClassifierNonErrors()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            RequestContext context = new RequestContext();
+            context.AddClassifier(new int[] { 404 }, isError: false);
+            message.ApplyRequestContext(context);
+            Assert.IsTrue(message.TryClassify(404, out bool isError));
+            Assert.IsFalse(isError);
         }
 
         #region Helpers

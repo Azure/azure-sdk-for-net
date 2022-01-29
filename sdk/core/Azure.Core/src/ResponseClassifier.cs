@@ -58,7 +58,7 @@ namespace Azure.Core
                 return isError;
             }
 
-            return IsError(message);
+            return IsErrorResponse(message);
         }
 
         /// <summary>
