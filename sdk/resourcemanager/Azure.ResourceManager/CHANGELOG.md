@@ -10,6 +10,7 @@
 
 ### Breaking Changes
 
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
 - GenericResourceCollection: Parent changes from Subscription to Tenant.
 - GenericResourceCollection: GetAll method replaced by GetGenericResources in Subscription, GetByResourceGroup method replaced by GetGenericResources in ResourceGroup.
 - GenericResourceData: Now inherits from TrackedResourceExtended which also has ExtendedLocation and inherits from TrackedResource.
