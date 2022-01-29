@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.CosmosDB
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateTableParameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.CosmosDB
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(updateThroughputParameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
