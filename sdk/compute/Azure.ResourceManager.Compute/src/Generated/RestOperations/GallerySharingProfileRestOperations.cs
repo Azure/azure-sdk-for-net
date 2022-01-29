@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sharingUpdate);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
