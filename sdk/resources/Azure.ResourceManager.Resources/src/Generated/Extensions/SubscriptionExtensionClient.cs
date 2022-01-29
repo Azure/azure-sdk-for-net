@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Resources
     {
         private ClientDiagnostics _applicationClientDiagnostics;
         private ApplicationsRestOperations _applicationRestClient;
-        private ClientDiagnostics _jitRequestDefinitionJitRequestsClientDiagnostics;
-        private JitRequestsRestOperations _jitRequestDefinitionJitRequestsRestClient;
+        private ClientDiagnostics _jitRequestClientDiagnostics;
+        private JitRequestsRestOperations _jitRequestRestClient;
         private ClientDiagnostics _deploymentScriptClientDiagnostics;
         private DeploymentScriptsRestOperations _deploymentScriptRestClient;
         private ClientDiagnostics _templateSpecClientDiagnostics;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Resources
 
         private ClientDiagnostics ApplicationClientDiagnostics => _applicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", Application.ResourceType.Namespace, DiagnosticOptions);
         private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(ApplicationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Application.ResourceType));
-        private ClientDiagnostics JitRequestDefinitionJitRequestsClientDiagnostics => _jitRequestDefinitionJitRequestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestDefinition.ResourceType.Namespace, DiagnosticOptions);
-        private JitRequestsRestOperations JitRequestDefinitionJitRequestsRestClient => _jitRequestDefinitionJitRequestsRestClient ??= new JitRequestsRestOperations(JitRequestDefinitionJitRequestsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequestDefinition.ResourceType));
+        private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
+        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(JitRequestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequest.ResourceType));
         private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
         private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(DeploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentScript.ResourceType));
         private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpec.ResourceType.Namespace, DiagnosticOptions);
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JitRequestDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JitRequestDefinition> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JitRequest> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitRequestDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<JitRequest>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetJitRequestDefinitions");
+                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await JitRequestDefinitionJitRequestsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestDefinition(ArmClient, value)), null, response.GetRawResponse());
+                    var response = await JitRequestRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitRequestDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JitRequestDefinition> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JitRequest> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<JitRequestDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<JitRequest> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JitRequestDefinitionJitRequestsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetJitRequestDefinitions");
+                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = JitRequestDefinitionJitRequestsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestDefinition(ArmClient, value)), null, response.GetRawResponse());
+                    var response = JitRequestRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JitRequest(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

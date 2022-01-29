@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the JitRequestDefinition data model. </summary>
-    public partial class JitRequestDefinitionData : TrackedResource
+    /// <summary> A class representing the JitRequest data model. </summary>
+    public partial class JitRequestData : TrackedResource
     {
-        /// <summary> Initializes a new instance of JitRequestDefinitionData. </summary>
+        /// <summary> Initializes a new instance of JitRequestData. </summary>
         /// <param name="location"> The location. </param>
-        public JitRequestDefinitionData(AzureLocation location) : base(location)
+        public JitRequestData(AzureLocation location) : base(location)
         {
             JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestDefinitionData. </summary>
+        /// <summary> Initializes a new instance of JitRequestData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location)
+        internal JitRequestData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
