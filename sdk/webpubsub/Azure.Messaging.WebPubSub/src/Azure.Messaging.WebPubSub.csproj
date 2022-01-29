@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -32,9 +33,6 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>
