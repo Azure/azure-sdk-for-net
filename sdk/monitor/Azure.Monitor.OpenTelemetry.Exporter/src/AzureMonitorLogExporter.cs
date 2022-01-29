@@ -40,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 var resource = this.ParentProvider.GetResource();
                 resourceParser.UpdateRoleNameAndInstance(resource);
-                var telemetryItems = AzureMonitorConverter.Convert(batch, resourceParser.RoleName, resourceParser.RoleInstance, instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resourceParser.RoleName, resourceParser.RoleInstance, instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
