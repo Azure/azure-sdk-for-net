@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
         public static async Task<Response<ValidateSecretOutput>> ValidateSecretAsync(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).ValidateSecretAsync(validateSecretInput, cancellationToken).ConfigureAwait(false);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="validateSecretInput"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="validateSecretInput"/> is null. </exception>
         public static Response<ValidateSecretOutput> ValidateSecret(this Subscription subscription, ValidateSecretInput validateSecretInput, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).ValidateSecret(validateSecretInput, cancellationToken);

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
         public PoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-09-01";
+            this.apiVersion = apiVersion ?? "2021-06-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -435,10 +435,11 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }

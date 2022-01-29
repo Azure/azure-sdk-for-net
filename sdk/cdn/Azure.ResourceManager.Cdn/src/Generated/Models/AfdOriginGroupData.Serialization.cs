@@ -66,8 +66,9 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Azure.Core.ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> profileName = default;
             Optional<LoadBalancingSettingsParameters> loadBalancingSettings = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
@@ -106,6 +107,11 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("profileName"))
+                        {
+                            profileName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("loadBalancingSettings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdOriginGroupData(id, name, type, systemData, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedAfdOriginErrorDetectionSettings.Value, Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdOriginGroupData(id, name, type, systemData, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedAfdOriginErrorDetectionSettings.Value, Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

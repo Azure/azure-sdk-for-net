@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, Models.Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, Models.Sku sku, PolicySettings policySettings, RateLimitRuleList rateLimitRules, CustomRuleList customRules, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, type, systemData, tags, location)
         {
             Etag = etag;
             Sku = sku;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<Sku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Azure.Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> ruleSetType = default;

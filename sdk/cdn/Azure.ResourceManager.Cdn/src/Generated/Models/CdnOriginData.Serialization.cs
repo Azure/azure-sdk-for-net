@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Azure.Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> hostName = default;
             Optional<int?> httpPort = default;

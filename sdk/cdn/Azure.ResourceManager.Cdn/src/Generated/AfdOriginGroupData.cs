@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
@@ -31,8 +32,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, LoadBalancingSettingsParameters loadBalancingSettings, HealthProbeParameters healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedAfdOriginErrorDetectionSettings, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdOriginGroupData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string profileName, LoadBalancingSettingsParameters loadBalancingSettings, HealthProbeParameters healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedAfdOriginErrorDetectionSettings, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
+            ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
             TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Cdn
             DeploymentStatus = deploymentStatus;
         }
 
+        /// <summary> The name of the profile which holds the origin group. </summary>
+        public string ProfileName { get; }
         /// <summary> Load balancing settings for a backend pool. </summary>
         public LoadBalancingSettingsParameters LoadBalancingSettings { get; set; }
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>

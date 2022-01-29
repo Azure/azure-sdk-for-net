@@ -30,11 +30,6 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
-            {
-                writer.WritePropertyName("originResponseTimeoutSeconds");
-                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
-            }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState");
@@ -50,9 +45,9 @@ namespace Azure.ResourceManager.Cdn
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Azure.Core.ResourceType type = default;
             SystemData systemData = default;
-            Optional<int> originResponseTimeoutSeconds = default;
+            Optional<string> profileName = default;
             Optional<EnabledState> enabledState = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
@@ -103,14 +98,9 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("originResponseTimeoutSeconds"))
+                        if (property0.NameEquals("profileName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            originResponseTimeoutSeconds = property0.Value.GetInt32();
+                            profileName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))
@@ -152,7 +142,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdEndpointData(id, name, type, systemData, tags, location, Optional.ToNullable(originResponseTimeoutSeconds), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), hostName.Value);
+            return new AfdEndpointData(id, name, type, systemData, tags, location, profileName.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), hostName.Value);
         }
     }
 }

@@ -32,6 +32,16 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            {
+                writer.WritePropertyName("originResponseTimeoutSeconds");
+                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -39,20 +49,28 @@ namespace Azure.ResourceManager.Cdn
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
             Models.Sku sku = default;
+            Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Azure.Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
-            Optional<string> frontdoorId = default;
+            Optional<string> frontDoorId = default;
+            Optional<int> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
                     sku = Models.Sku.DeserializeSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kind"))
+                {
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -109,21 +127,41 @@ namespace Azure.ResourceManager.Cdn
                             resourceState = new ProfileResourceState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("identity"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("frontdoorId"))
+                        if (property0.NameEquals("frontDoorId"))
                         {
-                            frontdoorId = property0.Value.GetString();
+                            frontDoorId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("originResponseTimeoutSeconds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, Optional.ToNullable(resourceState), provisioningState.Value, frontdoorId.Value);
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), identity, provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

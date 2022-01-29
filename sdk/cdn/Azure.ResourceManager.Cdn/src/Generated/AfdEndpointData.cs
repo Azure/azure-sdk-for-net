@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
-        internal AfdEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? originResponseTimeoutSeconds, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, type, systemData, tags, location)
+        internal AfdEndpointData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string profileName, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string hostName) : base(id, name, type, systemData, tags, location)
         {
-            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+            ProfileName = profileName;
             EnabledState = enabledState;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             HostName = hostName;
         }
 
-        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        /// <summary> The name of the profile which holds the endpoint. </summary>
+        public string ProfileName { get; }
         /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public EnabledState? EnabledState { get; set; }
         /// <summary> Provisioning status. </summary>
