@@ -23,6 +23,19 @@ flatten-payloads: false
 
 resource-model-requires-type: false
 
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  WAN: Wan
+  WANs: Wans
+  VPN: Vpn
+  P2SVPN: P2SVpn
+
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
