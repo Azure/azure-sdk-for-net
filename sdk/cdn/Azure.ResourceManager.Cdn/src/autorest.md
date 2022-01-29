@@ -259,4 +259,11 @@ directive:
   - from: swagger-document
     where: $.definitions.cidrIpAddress.properties.baseIpAddress
     transform: $['x-ms-client-name'] = 'baseIPAddress'
+  - from: swagger-document
+    where: $.definitions.ValidateSecretOutput.properties.status
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "validationStatus",
+          "modelAsString": true
+      }
 ```

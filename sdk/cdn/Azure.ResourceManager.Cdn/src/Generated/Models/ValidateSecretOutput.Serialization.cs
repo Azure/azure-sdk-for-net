@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ValidateSecretOutput DeserializeValidateSecretOutput(JsonElement element)
         {
-            Optional<Status> status = default;
+            Optional<ValidationStatus> status = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))

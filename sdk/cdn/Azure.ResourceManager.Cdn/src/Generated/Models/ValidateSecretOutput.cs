@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ValidateSecretOutput. </summary>
         /// <param name="status"> The validation status. </param>
         /// <param name="message"> Detailed error message. </param>
-        internal ValidateSecretOutput(Status? status, string message)
+        internal ValidateSecretOutput(ValidationStatus? status, string message)
         {
             Status = status;
             Message = message;
         }
 
         /// <summary> The validation status. </summary>
-        public Status? Status { get; }
+        public ValidationStatus? Status { get; }
         /// <summary> Detailed error message. </summary>
         public string Message { get; }
     }
