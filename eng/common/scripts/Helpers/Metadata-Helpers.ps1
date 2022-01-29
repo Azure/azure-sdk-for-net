@@ -49,7 +49,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
 
 function GetPrimaryCodeOwner ($TargetDirectory) 
 {
-    $codeOwnerArray = ."$PSScriptRoot/../get-codeowners.ps1" -TargetDirectory $TargetDirectory
+    $codeOwnerArray = &"$PSScriptRoot/../get-codeowners.ps1" -TargetDirectory $TargetDirectory
     if ($codeOwnerArray) {
         Write-Host "Code Owners are $codeOwnerArray."
         return $codeOwnerArray[0]
