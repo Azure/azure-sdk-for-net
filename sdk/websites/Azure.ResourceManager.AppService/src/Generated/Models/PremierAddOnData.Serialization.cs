@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> sku = default;
             Optional<string> product = default;
             Optional<string> vendor = default;
@@ -112,6 +114,11 @@ namespace Azure.ResourceManager.AppService
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PremierAddOnData(id, name, type, tags, location, kind.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnData(id, name, type, systemData, tags, location, kind.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value);
         }
     }
 }

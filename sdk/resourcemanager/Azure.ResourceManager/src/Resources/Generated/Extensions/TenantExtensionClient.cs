@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -55,17 +56,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Provider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Provider> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProvidersClientDiagnostics.CreateScope("TenantExtensionClient.GetTenantProviders");
                 scope.Start();
                 try
                 {
                     var response = await ProvidersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -73,14 +74,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProvidersClientDiagnostics.CreateScope("TenantExtensionClient.GetTenantProviders");
                 scope.Start();
                 try
                 {
                     var response = await ProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -98,17 +99,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Provider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Provider> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<Provider> FirstPageFunc(int? pageSizeHint)
+            Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProvidersClientDiagnostics.CreateScope("TenantExtensionClient.GetTenantProviders");
                 scope.Start();
                 try
                 {
                     var response = ProvidersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -116,14 +117,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProvidersClientDiagnostics.CreateScope("TenantExtensionClient.GetTenantProviders");
                 scope.Start();
                 try
                 {
                     var response = ProvidersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,32 +133,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of Providers for a <see cref="Subscription" /> represented as generic resources. </summary>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetProvidersAsGenericResourcesAsync(string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(Provider.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(ArmClient.GetSubscription(Id), filters, expand, top, cancellationToken);
-        }
-
-        /// <summary> Filters the list of Providers for a <see cref="Subscription" /> represented as generic resources. </summary>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetProvidersAsGenericResources(string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(Provider.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(ArmClient.GetSubscription(Id), filters, expand, top, cancellationToken);
         }
 
         /// RequestPath: /providers/{resourceProviderNamespace}
@@ -169,7 +144,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async virtual Task<Response<Provider>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -178,7 +153,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await ProvidersRestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -196,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<Provider> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -205,7 +180,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = ProvidersRestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -294,32 +269,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of Tenants for a <see cref="Subscription" /> represented as generic resources. </summary>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetTenantsAsGenericResourcesAsync(string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(Tenant.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContextAsync(ArmClient.GetSubscription(Id), filters, expand, top, cancellationToken);
-        }
-
-        /// <summary> Filters the list of Tenants for a <see cref="Subscription" /> represented as generic resources. </summary>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetTenantsAsGenericResources(string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(Tenant.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.GetAtContext(ArmClient.GetSubscription(Id), filters, expand, top, cancellationToken);
         }
     }
 }

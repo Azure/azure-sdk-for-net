@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagResourceData(ResourceIdentifier id, string name, ResourceType type, Tag properties) : base(id, name, type)
+        internal TagResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Tag properties) : base(id, name, type, systemData)
         {
             Properties = properties;
         }

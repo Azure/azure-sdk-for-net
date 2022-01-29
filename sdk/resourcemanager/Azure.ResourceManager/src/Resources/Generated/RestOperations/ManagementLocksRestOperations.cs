@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockObjectData parameters)
+        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ManagementLockObjectData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        ManagementLockObjectData value = default;
+                        ManagementLockData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagementLockObjectData.DeserializeManagementLockObjectData(document.RootElement);
+                        value = ManagementLockData.DeserializeManagementLockData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<ManagementLockObjectData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockObjectData parameters, CancellationToken cancellationToken = default)
+        public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        ManagementLockObjectData value = default;
+                        ManagementLockData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagementLockObjectData.DeserializeManagementLockObjectData(document.RootElement);
+                        value = ManagementLockData.DeserializeManagementLockData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
-        public async Task<Response<ManagementLockObjectData>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockData>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -252,13 +252,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ManagementLockObjectData value = default;
+                        ManagementLockData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagementLockObjectData.DeserializeManagementLockObjectData(document.RootElement);
+                        value = ManagementLockData.DeserializeManagementLockData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagementLockObjectData)null, message.Response);
+                    return Response.FromValue((ManagementLockData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
-        public Response<ManagementLockObjectData> GetByScope(string scope, string lockName, CancellationToken cancellationToken = default)
+        public Response<ManagementLockData> GetByScope(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ManagementLockObjectData value = default;
+                        ManagementLockData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagementLockObjectData.DeserializeManagementLockObjectData(document.RootElement);
+                        value = ManagementLockData.DeserializeManagementLockData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ManagementLockObjectData)null, message.Response);
+                    return Response.FromValue((ManagementLockData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

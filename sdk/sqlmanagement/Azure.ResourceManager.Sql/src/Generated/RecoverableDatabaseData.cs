@@ -23,11 +23,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="edition"> The edition of the database. </param>
         /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
         /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date of the database (ISO8601 format). </param>
-        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType type, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupDate) : base(id, name, type)
+        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupDate) : base(id, name, type, systemData)
         {
             Edition = edition;
             ServiceLevelObjective = serviceLevelObjective;

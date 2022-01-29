@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> applicationResourceId = default;
             Optional<string> publisherTenantId = default;
             Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
@@ -98,6 +100,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new JitRequestDefinitionData(id, name, type, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestDefinitionData(id, name, type, systemData, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }

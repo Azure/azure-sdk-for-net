@@ -145,14 +145,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ManagementLockObject
-        /// <summary> Gets an object representing a ManagementLockObject along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementLock
+        /// <summary> Gets an object representing a ManagementLock along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementLockObject" /> object. </returns>
-        public virtual ManagementLockObject GetManagementLockObject(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementLock" /> object. </returns>
+        public virtual ManagementLock GetManagementLock(ResourceIdentifier id)
         {
-            ManagementLockObject.ValidateResourceId(id);
-            return new ManagementLockObject(this, id);
+            ManagementLock.ValidateResourceId(id);
+            return new ManagementLock(this, id);
         }
         #endregion
 

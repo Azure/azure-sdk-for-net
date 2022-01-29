@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -37,12 +38,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static ManagedHsmResource DeserializeManagedHsmResource(JsonElement element)
         {
             Optional<ManagedHsmSku> sku = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -53,16 +54,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -95,8 +86,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new ManagedHsmResource(id, name, type, tags, location, sku.Value, systemData.Value);
+            return new ManagedHsmResource(id, name, type, systemData, tags, location, sku.Value);
         }
     }
 }
