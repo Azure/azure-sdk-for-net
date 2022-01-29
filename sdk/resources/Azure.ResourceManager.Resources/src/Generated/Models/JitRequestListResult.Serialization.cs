@@ -12,11 +12,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class JitRequestDefinitionListResult
+    public partial class JitRequestListResult
     {
-        internal static JitRequestDefinitionListResult DeserializeJitRequestDefinitionListResult(JsonElement element)
+        internal static JitRequestListResult DeserializeJitRequestListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JitRequestDefinitionData>> value = default;
+            Optional<IReadOnlyList<JitRequestData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JitRequestDefinitionData> array = new List<JitRequestDefinitionData>();
+                    List<JitRequestData> array = new List<JitRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitRequestDefinitionData.DeserializeJitRequestDefinitionData(item));
+                        array.Add(JitRequestData.DeserializeJitRequestData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new JitRequestDefinitionListResult(Optional.ToList(value), nextLink.Value);
+            return new JitRequestListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
