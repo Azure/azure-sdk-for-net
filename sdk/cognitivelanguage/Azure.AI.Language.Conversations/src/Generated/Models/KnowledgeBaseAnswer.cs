@@ -23,17 +23,17 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
-        /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
+        /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> ID of the QnA result. </param>
         /// <param name="source"> Source of QnA result. </param>
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="answerSpan"> Answer span object of QnA with respect to user&apos;s question. </param>
-        internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidenceScore, int? id, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan answerSpan)
+        internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidence, int? id, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan answerSpan)
         {
             Questions = questions;
             Answer = answer;
-            ConfidenceScore = confidenceScore;
+            Confidence = confidence;
             Id = id;
             Source = source;
             Metadata = metadata;
@@ -45,8 +45,6 @@ namespace Azure.AI.Language.Conversations
         public IReadOnlyList<string> Questions { get; }
         /// <summary> Answer text. </summary>
         public string Answer { get; }
-        /// <summary> Answer confidence score, value ranges from 0 to 1. </summary>
-        public double? ConfidenceScore { get; }
         /// <summary> ID of the QnA result. </summary>
         public int? Id { get; }
         /// <summary> Source of QnA result. </summary>

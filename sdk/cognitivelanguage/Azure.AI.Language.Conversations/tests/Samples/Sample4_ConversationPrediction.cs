@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
-                Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+                Console.WriteLine($"Confidence:{intent.Confidence}");
                 Console.WriteLine();
             }
 
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Offset: {entity.Offset}");
                 Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Confidence: {entity.Confidence}");
                 Console.WriteLine();
             }
             #endregion
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
-                Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
+                Console.WriteLine($"Confidence:{intent.Confidence}");
                 Console.WriteLine();
             }
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Offset: {entity.Offset}");
                 Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Confidence: {entity.Confidence}");
                 Console.WriteLine();
             }
             #endregion

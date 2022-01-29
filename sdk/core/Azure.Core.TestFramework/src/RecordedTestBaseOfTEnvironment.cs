@@ -11,18 +11,18 @@ namespace Azure.Core.TestFramework
     public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
 #pragma warning restore SA1649 // File name should match first type name
     {
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync, mode, useLegacyTransport)
         {
             TestEnvironment = new TEnvironment();
             TestEnvironment.Mode = Mode;
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
             // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
             TestEnvironment.Mode = Mode;
 
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
             TestEnvironment.SetRecording(Recording);
         }
 

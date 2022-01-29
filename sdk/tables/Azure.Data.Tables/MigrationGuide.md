@@ -38,7 +38,7 @@ and namespaces that begin with `Microsoft.Azure.CosmosDB` or `Microsoft.Azure.St
 
 ### Constructing the clients
 
-Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to
+Previously in `Microsoft.Azure.Cosmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to
 perform service level operations.
 
 ```C#

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
 
         internal static CustomIpPrefixData DeserializeCustomIpPrefixData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             Optional<string> etag = default;
             Optional<IList<string>> zones = default;
             Optional<string> id = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

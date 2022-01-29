@@ -264,6 +264,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader, Stream content)
             => await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 new DataLakeFileUploadOptions
                 {
                     HttpHeaders = s_pathHttpHeaders,

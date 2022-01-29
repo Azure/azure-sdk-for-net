@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceAdministratorListResult DeserializeManagedInstanceAdministratorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstanceAdministrator>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceAdministratorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstanceAdministrator> array = new List<ManagedInstanceAdministrator>();
+                    List<ManagedInstanceAdministratorData> array = new List<ManagedInstanceAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceAdministrator.DeserializeManagedInstanceAdministrator(item));
+                        array.Add(ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(item));
                     }
                     value = array;
                     continue;

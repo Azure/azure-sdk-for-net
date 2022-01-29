@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal AvailabilitySetCreateOrUpdateOperation(ArmResource operationsBase, Response<AvailabilitySetData> response)
+        internal AvailabilitySetCreateOrUpdateOperation(ArmClient armClient, Response<AvailabilitySetData> response)
         {
-            _operation = new OperationOrResponseInternals<AvailabilitySet>(Response.FromValue(new AvailabilitySet(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<AvailabilitySet>(Response.FromValue(new AvailabilitySet(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

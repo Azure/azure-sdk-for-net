@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -483,9 +482,11 @@ namespace Azure.Data.Tables.Tests
                 $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
                 TableName);
             var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName);
+            var fromTableServiceClient = new TableServiceClient(_url, cred).GetTableClient(TableName);
             yield return new object[] { sharedKeyClient, cred };
             yield return new object[] { connStringClient, cred };
             yield return new object[] { devStorageClient, devCred };
+            yield return new object[] { fromTableServiceClient, cred };
         }
 
         [TestCaseSource(nameof(TableClients))]
@@ -498,6 +499,7 @@ namespace Azure.Data.Tables.Tests
             var actualSas = client.GenerateSasUri(permissions, expires);
 
             Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
         [Test]

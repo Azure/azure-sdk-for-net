@@ -11,6 +11,7 @@ using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using SkuTier = Azure.ResourceManager.Storage.Models.SkuTier;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
     [ClientTestFixture]
     public class StorageTestBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
             ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

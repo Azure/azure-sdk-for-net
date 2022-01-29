@@ -18,4 +18,5 @@ extends:
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         Location: 'chinaeast2'
+    Clouds: 'Public'
     SupportedClouds: 'Public,Canary,UsGov,China'

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualNetworkPeering> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualNetworkPeeringCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworkPeeringCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworkPeeringCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkPeeringCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualNetworkPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkPeeringCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualNetworkPeering IOperationSource<VirtualNetworkPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualNetworkPeering(_operationBase, VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement));
+            var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
+            return new VirtualNetworkPeering(_armClient, data);
         }
 
         async ValueTask<VirtualNetworkPeering> IOperationSource<VirtualNetworkPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualNetworkPeering(_operationBase, VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement));
+            var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
+            return new VirtualNetworkPeering(_armClient, data);
         }
     }
 }

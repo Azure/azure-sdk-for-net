@@ -87,7 +87,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         public Func<string, EventPosition> InitialOffsetProvider { get; set; }
 
         /// <summary>
-        /// Returns whether the EventProcessorHost will call IEventProcessor.OnEvents(null) when a receive
+        /// Returns whether the EventProcessorHost will call <c>IEventProcessor.ProcessEventsAsync(PartitionContext context, Enumerable.Empty&lt;EventData&gt;())</c>when a receive
         /// timeout occurs (true) or not (false).
         /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }

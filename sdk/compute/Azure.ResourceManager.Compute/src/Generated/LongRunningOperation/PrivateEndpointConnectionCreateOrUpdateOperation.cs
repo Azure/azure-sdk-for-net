@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<PrivateEndpointConnection> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionCreateOrUpdateOperation for mocking. </summary>
         protected PrivateEndpointConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateEndpointConnectionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         PrivateEndpointConnection IOperationSource<PrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PrivateEndpointConnection(_operationBase, PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement));
+            var data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+            return new PrivateEndpointConnection(_armClient, data);
         }
 
         async ValueTask<PrivateEndpointConnection> IOperationSource<PrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PrivateEndpointConnection(_operationBase, PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement));
+            var data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+            return new PrivateEndpointConnection(_armClient, data);
         }
     }
 }

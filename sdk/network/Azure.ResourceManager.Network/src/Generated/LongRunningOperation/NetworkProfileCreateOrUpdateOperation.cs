@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkProfileCreateOrUpdateOperation(ArmResource operationsBase, Response<NetworkProfileData> response)
+        internal NetworkProfileCreateOrUpdateOperation(ArmClient armClient, Response<NetworkProfileData> response)
         {
-            _operation = new OperationOrResponseInternals<NetworkProfile>(Response.FromValue(new NetworkProfile(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NetworkProfile>(Response.FromValue(new NetworkProfile(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

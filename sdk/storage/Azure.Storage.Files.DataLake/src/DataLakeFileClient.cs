@@ -3934,6 +3934,7 @@ namespace Azure.Storage.Files.DataLake
 
             return await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 options,
                 options.ProgressHandler,
                 async,
@@ -3986,7 +3987,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region ScheduleDeletion
         /// <summary>
-        /// Schedules the file for deletation.
+        /// Schedules the file for deletion.
         /// </summary>
         /// <param name="options">
         /// Schedule deletion parameters.
@@ -4012,7 +4013,7 @@ namespace Azure.Storage.Files.DataLake
                 .EnsureCompleted();
 
         /// <summary>
-        /// Schedules the file for deletation.
+        /// Schedules the file for deletion.
         /// </summary>
         /// <param name="options">
         /// Schedule deletion parameters.

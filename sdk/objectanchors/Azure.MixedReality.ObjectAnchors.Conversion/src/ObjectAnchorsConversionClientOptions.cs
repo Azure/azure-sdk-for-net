@@ -19,7 +19,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal string Version { get; }
 
         /// <summary>
-        /// Gets the list of supported asset file types
+        /// Gets the list of supported asset file types.
         /// </summary>
         internal HashSet<AssetFileType> SupportedAssetFileTypes { get; }
 

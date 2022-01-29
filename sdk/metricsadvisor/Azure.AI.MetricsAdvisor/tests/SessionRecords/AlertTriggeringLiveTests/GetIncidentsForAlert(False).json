@@ -34,8 +34,8 @@
             "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
             "incidentId": "30612c95b4c216ef418956c5c6162691-17bbd8dec00",
-            "startTime": "2021-09-07T00:00:00Z",
-            "lastTime": "2021-09-07T00:00:00Z",
+            "startTime": "2021-09-07T00:00:00.0000000Z",
+            "lastTime": "2021-09-07T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "Tianjin",
@@ -54,8 +54,8 @@
             "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
             "incidentId": "4ec127166abf8387b2874bae49734ab1-17bbd8dec00",
-            "startTime": "2021-09-06T00:00:00Z",
-            "lastTime": "2021-09-07T00:00:00Z",
+            "startTime": "2021-09-06T00:00:00.0000000Z",
+            "lastTime": "2021-09-07T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "__SUM__",
@@ -74,8 +74,8 @@
             "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
             "anomalyDetectionConfigurationId": "efaee305-f049-43ec-9f9b-76026d55c14a",
             "incidentId": "efe6bdf61f01a37d8ddbb133afde0756-17bbd8dec00",
-            "startTime": "2021-09-07T00:00:00Z",
-            "lastTime": "2021-09-07T00:00:00Z",
+            "startTime": "2021-09-07T00:00:00.0000000Z",
+            "lastTime": "2021-09-07T00:00:00.0000000Z",
             "rootNode": {
               "dimension": {
                 "region": "Istanbul",

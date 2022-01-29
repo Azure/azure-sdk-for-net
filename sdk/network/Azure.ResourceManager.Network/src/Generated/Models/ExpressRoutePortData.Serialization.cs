@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Network
         internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<ResourceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
             Optional<string> etherType = default;
             Optional<string> allocationDate = default;
-            Optional<IList<ExpressRouteLink>> links = default;
+            Optional<IList<ExpressRouteLinkData>> links = default;
             Optional<IReadOnlyList<WritableSubResource>> circuits = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> resourceGuid = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -213,10 +214,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ExpressRouteLink> array = new List<ExpressRouteLink>();
+                            List<ExpressRouteLinkData> array = new List<ExpressRouteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteLink.DeserializeExpressRouteLink(item));
+                                array.Add(ExpressRouteLinkData.DeserializeExpressRouteLinkData(item));
                             }
                             links = array;
                             continue;

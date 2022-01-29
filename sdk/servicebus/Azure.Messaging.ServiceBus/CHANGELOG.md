@@ -2,13 +2,13 @@
 
 ## 7.6.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Add a delay when retrying if we are being throttled by the service.
+
+### Features Added
+
+- Support for cancellation tokens has been improved for AMQP operations, enabling earlier detection of cancellation requests without needing to wait for the configured timeout to elapse.
 
 ## 7.5.0 (2021-11-10)
 

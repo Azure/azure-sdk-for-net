@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -70,9 +75,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IFunctionsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual IFunctionsOperations Functions { get; private set; }
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IStreamingJobsOperations.
+        /// </summary>
+        public virtual IStreamingJobsOperations StreamingJobs { get; private set; }
 
         /// <summary>
         /// Gets the IInputsOperations.
@@ -85,24 +95,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public virtual IOutputsOperations Outputs { get; private set; }
 
         /// <summary>
-        /// Gets the IStreamingJobsOperations.
-        /// </summary>
-        public virtual IStreamingJobsOperations StreamingJobs { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubscriptionsOperations.
-        /// </summary>
-        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
-
-        /// <summary>
         /// Gets the ITransformationsOperations.
         /// </summary>
         public virtual ITransformationsOperations Transformations { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IFunctionsOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IFunctionsOperations Functions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionsOperations.
+        /// </summary>
+        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
         /// <summary>
         /// Gets the IClustersOperations.
@@ -355,16 +360,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// </summary>
         private void Initialize()
         {
-            Functions = new FunctionsOperations(this);
+            Operations = new Operations(this);
+            StreamingJobs = new StreamingJobsOperations(this);
             Inputs = new InputsOperations(this);
             Outputs = new OutputsOperations(this);
-            StreamingJobs = new StreamingJobsOperations(this);
-            Subscriptions = new SubscriptionsOperations(this);
             Transformations = new TransformationsOperations(this);
-            Operations = new Operations(this);
+            Functions = new FunctionsOperations(this);
+            Subscriptions = new SubscriptionsOperations(this);
             Clusters = new ClustersOperations(this);
             PrivateEndpoints = new PrivateEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -394,22 +400,22 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionBinding>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionBinding>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionProperties>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionProperties>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionRetrieveDefaultDefinitionParameters>("bindingType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionRetrieveDefaultDefinitionParameters>("bindingType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Serialization>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Serialization>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputProperties>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputProperties>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StreamInputDataSource>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StreamInputDataSource>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReferenceInputDataSource>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReferenceInputDataSource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<OutputDataSource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<OutputDataSource>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionBinding>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionBinding>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReferenceInputDataSource>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReferenceInputDataSource>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StreamInputDataSource>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StreamInputDataSource>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FunctionRetrieveDefaultDefinitionParameters>("bindingType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FunctionRetrieveDefaultDefinitionParameters>("bindingType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

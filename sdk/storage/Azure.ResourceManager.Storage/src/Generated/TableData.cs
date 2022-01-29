@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tableName"> Table name under the specified account. </param>
-        internal TableData(ResourceIdentifier id, string name, ResourceType type, string tableName) : base(id, name, type)
+        internal TableData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string tableName) : base(id, name, type, systemData)
         {
             TableName = tableName;
         }

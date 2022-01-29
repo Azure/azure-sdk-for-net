@@ -14,7 +14,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0-beta.5
+Install-Package Azure.ResourceManager -Version 1.0.0-beta.7
 ```
 
 ### Prerequisites
@@ -39,6 +39,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 
 // Code omitted for brevity
 
@@ -87,7 +88,7 @@ This object provides most of the logical collection operations.
 | Iterate/List | GetAll() |
 | Index | Get(string name) |
 | Add | CreateOrUpdate(string name, [Resource]Data data) |
-| Contains | CheckIfExists(string name) |
+| Contains | Exists(string name) |
 | TryGet | GetIfExists(string name) |
 
 For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
@@ -138,13 +139,9 @@ However, keep in mind that some of those properties could be null. You can usual
 ### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-// Assume we don't know what type of resource id we have we can cast to the base type
 ResourceIdentifier id = new ResourceIdentifier(resourceId);
-string property;
-if (id.TryGetSubscriptionId(out property))
-    Console.WriteLine($"Subscription: {property}");
-if (id.TryGetResourceGroupName(out property))
-    Console.WriteLine($"ResourceGroup: {property}");
+Console.WriteLine($"Subscription: {id.SubscriptionId}");
+Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 // Parent is only null when we reach the top of the chain which is a Tenant
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 // Name will never be null
@@ -198,13 +195,13 @@ Console.WriteLine(availabilitySet.Data.Name);
 
 ## Check if a [Resource] exists
 
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Collection class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `Exists()` methods, which can be invoked from any [Resource]Collection class.
 
-`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
+`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `Exists()` and `ExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
 
 Before these methods were introduced you would need to catch the `RequestFailedException` and inspect the status code for 404.
 
-```C# Snippet:Readme_OldCheckIfExistsRG
+```C# Snippet:Readme_OldExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
@@ -222,12 +219,12 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 Now with these convenience methods we can simply do the following.
 
-```C# Snippet:Readme_CheckIfExistssRG
+```C# Snippet:Readme_ExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
-bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+bool exists = await subscription.GetResourceGroups().ExistsAsync(rgName);
 
 if (exists)
 {
@@ -243,7 +240,7 @@ else
 }
 ```
 
-Another way to do this is by using `GetIfExists()` which will avoid the race condition mentioned above:
+Another way to do this is by using `GetIfExistsAsync()` which will avoid the race condition mentioned above:
 
 ```C# Snippet:Readme_TryGetRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
@@ -274,9 +271,9 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
+AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -310,7 +307,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-await resourceGroup.DeleteAsync();
+await resourceGroup.DeleteAsync(true);
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
@@ -351,6 +348,9 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
+
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<FirewallPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of FirewallPolicyCreateOrUpdateOperation for mocking. </summary>
         protected FirewallPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal FirewallPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal FirewallPolicyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<FirewallPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FirewallPolicyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         FirewallPolicy IOperationSource<FirewallPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
+            var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);
+            return new FirewallPolicy(_armClient, data);
         }
 
         async ValueTask<FirewallPolicy> IOperationSource<FirewallPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
+            var data = FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement);
+            return new FirewallPolicy(_armClient, data);
         }
     }
 }

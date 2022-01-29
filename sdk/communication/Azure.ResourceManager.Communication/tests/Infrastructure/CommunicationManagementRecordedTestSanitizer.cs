@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Communication.Tests
     {
         public string SubscriptionId { get; set; }
 
-        public CommunicationManagementRecordedTestSanitizer(): base()
+        public CommunicationManagementRecordedTestSanitizer() : base()
         {
             // Lazy sanitize fields in the request and response bodies
             AddJsonPathSanitizer("$..token");
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         /// <summary>Fetch the value to replace with the Subscription ID. This value is not in the same format, but could easierly be change to be.</summary>
-        private string SanitizeSubscriptionIdString(string text) => SubscriptionId.IsNullOrEmpty() ? text : text.Replace(SubscriptionId, SanitizeValue.ToLower());
+        private string SanitizeSubscriptionIdString(string text) => SubscriptionId.IsNullOrEmpty() || text.IsNullOrEmpty() ? text : text.Replace(SubscriptionId, SanitizeValue.ToLower());
 
         public override string SanitizeTextBody(string contentType, string body) => base.SanitizeTextBody(contentType, SanitizeSubscriptionIdString(body));
 

@@ -22,9 +22,8 @@ namespace Azure.Template.Generated
         private static readonly string[] AuthorizationScopes = new string[] { "https://dev.azuresdkgenerated.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -34,28 +33,25 @@ namespace Azure.Template.Generated
         }
 
         /// <summary> Initializes a new instance of TemplateServiceClient. </summary>
+        /// <param name="endpoint"> The endpoint of your template service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public TemplateServiceClient(TokenCredential credential, Uri endpoint = null, TemplateServiceClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TemplateServiceClient(Uri endpoint, TokenCredential credential, TemplateServiceClientOptions options = null)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            endpoint ??= new Uri("http://localhost:3000");
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateServiceClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
 
         /// <summary> Create or update resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -75,12 +71,12 @@ namespace Azure.Template.Generated
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -91,7 +87,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Create or update resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -111,12 +107,12 @@ namespace Azure.Template.Generated
         public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Create");
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -127,18 +123,20 @@ namespace Azure.Template.Generated
 
         /// <summary> Delete resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(resourceId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteRequest(resourceId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -149,18 +147,20 @@ namespace Azure.Template.Generated
 
         /// <summary> Delete resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
 #pragma warning disable AZC0002
         public virtual Response Delete(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.Delete");
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(resourceId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteRequest(resourceId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -171,7 +171,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Retrieves information about the resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -183,15 +183,17 @@ namespace Azure.Template.Generated
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTemplateServiceAsync(string resourceId, RequestContext context = null)
+        public virtual async Task<Response> GetResourceAsync(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetResourceRequest(resourceId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -202,7 +204,7 @@ namespace Azure.Template.Generated
 
         /// <summary> Retrieves information about the resource. </summary>
         /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -214,15 +216,17 @@ namespace Azure.Template.Generated
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTemplateService(string resourceId, RequestContext context = null)
+        public virtual Response GetResource(string resourceId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateServiceClient.GetTemplateService");
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            using var scope = ClientDiagnostics.CreateScope("TemplateServiceClient.GetResource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTemplateServiceRequest(resourceId);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetResourceRequest(resourceId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -232,7 +236,7 @@ namespace Azure.Template.Generated
         }
 
         /// <summary> Retrieves the list of resources. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -251,15 +255,15 @@ namespace Azure.Template.Generated
         public virtual AsyncPageable<BinaryData> GetResourcesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "TemplateServiceClient.GetResources");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourcesRequest()
-                        : CreateGetResourcesNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetResourcesRequest(context)
+                        : CreateGetResourcesNextPageRequest(nextLink, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -267,7 +271,7 @@ namespace Azure.Template.Generated
         }
 
         /// <summary> Retrieves the list of resources. </summary>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -286,24 +290,24 @@ namespace Azure.Template.Generated
         public virtual Pageable<BinaryData> GetResources(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "TemplateServiceClient.GetResources");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "TemplateServiceClient.GetResources");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourcesRequest()
-                        : CreateGetResourcesNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetResourcesRequest(context)
+                        : CreateGetResourcesNextPageRequest(nextLink, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -317,9 +321,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetResourcesRequest()
+        internal HttpMessage CreateGetResourcesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -331,9 +335,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceId)
+        internal HttpMessage CreateDeleteRequest(string resourceId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -345,9 +349,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetTemplateServiceRequest(string resourceId)
+        internal HttpMessage CreateGetResourceRequest(string resourceId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -360,9 +364,9 @@ namespace Azure.Template.Generated
             return message;
         }
 
-        internal HttpMessage CreateGetResourcesNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetResourcesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

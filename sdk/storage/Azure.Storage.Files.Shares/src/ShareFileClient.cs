@@ -2124,6 +2124,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2157,6 +2159,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2199,6 +2203,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2243,6 +2249,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2285,6 +2293,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2329,6 +2339,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2380,6 +2392,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and allowModifications is false.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInteral(
@@ -4543,6 +4557,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream stream,
             ShareFileUploadOptions options,
@@ -4583,6 +4598,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream stream,
             ShareFileUploadOptions options,
@@ -4833,115 +4849,89 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            Errors.VerifyStreamPosition(content, nameof(content));
-
-            // partitioned uploads don't support pre-calculated hashes
-            if (hashingOptions?.PrecalculatedHash != default)
-            {
-                throw Errors.PrecalculatedHashNotSupportedOnSplit();
-            }
-
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Upload)}");
-            try
-            {
-                scope.Start();
-
-                // Try to upload the file as a single range
-                Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
-                var length = content?.Length - content?.Position;
-                if (length <= singleRangeThreshold)
+            var uploader = GetPartitionedUploader(
+                new StorageTransferOptions
                 {
-                    return await UploadRangeInternal(
-                        new HttpRange(0, length),
-                        content,
+                    // shares can't suppot parallel upload
+                    MaximumConcurrency = 1,
+                    MaximumTransferSize = singleRangeThreshold,
+                    InitialTransferSize = singleRangeThreshold
+                },
+                hashingOptions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(Upload)}");
+
+            return await uploader.UploadInternal(
+                content,
+                expectedContentLength: default,
+                new ShareFileUploadData
+                {
+                    Conditions = conditions,
+                },
+                progressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+        #endregion Upload
+
+        #region PartitionedUploader
+        internal class ShareFileUploadData
+        {
+            public ShareFileRequestConditions Conditions { get; set; }
+            public Response<ShareFileUploadInfo> LastUploadRangeResponse { get; set; }
+        }
+
+        internal PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>(
+                GetPartitionedUploaderBehaviors(this),
+                transferOptions,
+                hashingOptions,
+                arrayPool,
+                operationName);
+
+        // static because it makes mocking easier in tests
+        internal static PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors GetPartitionedUploaderBehaviors(ShareFileClient client)
+            => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors
+            {
+                SingleUpload = async (stream, data, progressHandler, hashingOptions, operationName, async, cancellationToken) =>
+                {
+                    return await client.UploadRangeInternal(
+                        new HttpRange(offset: 0, length: stream.Length),
+                        stream,
                         new ShareFileUploadRangeOptions
                         {
-                            TransactionalHashingOptions = hashingOptions,
+                            Conditions = data.Conditions,
                             ProgressHandler = progressHandler,
-                            Conditions = conditions
+                            TransactionalHashingOptions = hashingOptions,
                         },
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
-                }
-
-                // Otherwise naively split the file into ranges and upload them individually
-                var response = default(Response<ShareFileUploadInfo>);
-                var pool = default(MemoryPool<byte>);
-                // erase potential precalculated hash now that we're splitting; we'll have to recalculate.
-                hashingOptions = hashingOptions == default
-                    ? default
-                    : new UploadTransactionalHashingOptions
-                    {
-                        Algorithm = hashingOptions.Algorithm
-                    };
-
-                long initalPosition = content.Position;
-
-                try
+                },
+                UploadPartition = async (stream, offset, data, progressHandler, hashingOptions, async, cancellationToken) =>
                 {
-                    pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
-                        MemoryPool<byte>.Shared :
-                        new StorageMemoryPool(singleRangeThreshold, 1);
-                    for (; ; )
-                    {
-                        // Get the next chunk of content
-                        var parentPosition = content.Position;
-                        IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
-                        if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
+                    data.LastUploadRangeResponse = await client.UploadRangeInternal(
+                        new HttpRange(offset: offset, length: stream.Length),
+                        stream,
+                        new ShareFileUploadRangeOptions
                         {
-                            throw Errors.UnableAccessArray();
-                        }
-                        var count = async ?
-                            await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
-                            content.Read(segment.Array, 0, singleRangeThreshold);
-
-                        // Stop when we've exhausted the content
-                        if (count <= 0)
-                        { break; }
-
-                        // Upload the chunk
-                        var partition = new StreamPartition(
-                            buffer.Memory,
-                            parentPosition,
-                            count,
-                            () => buffer.Dispose(),
-                            cancellationToken);
-                        response = await UploadRangeInternal(
-                            new HttpRange(partition.ParentPosition - initalPosition, partition.Length),
-                            partition,
-                            new ShareFileUploadRangeOptions
-                            {
-                                TransactionalHashingOptions = hashingOptions,
-                                ProgressHandler = progressHandler,
-                                Conditions = conditions
-                            },
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                }
-                finally
-                {
-                    if (pool is StorageMemoryPool)
-                    {
-                        pool.Dispose();
-                    }
-                }
-                return response;
-            }
-            catch (Exception ex)
-            {
-                ClientConfiguration.Pipeline.LogException(ex);
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-        #endregion Upload
+                            Conditions = data.Conditions,
+                            ProgressHandler = progressHandler,
+                            TransactionalHashingOptions = hashingOptions,
+                        },
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                CommitPartitionedUpload = (partitions, data, async, cancellationToken) => Task.FromResult(data.LastUploadRangeResponse),
+                Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName ??
+                    $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(ShareFileClient.Upload)}")
+            };
+        #endregion
 
         #region GetRangeList
         /// <summary>
@@ -5820,6 +5810,200 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion ForceCloseHandles
+
+        #region Rename
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileClient> Rename(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileClient>> RenameAsync(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileClient>> RenameInternal(
+            string destinationPath,
+            ShareFileRenameOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(destinationPath)}: {destinationPath}\n" +
+                    $"{nameof(options)}: {options}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Rename)}");
+
+                try
+                {
+                    scope.Start();
+
+                    ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
+
+                    // Build destination URI
+                    ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
+
+                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
+                    // especially SAS, to be encoded.
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                    }
+                    else
+                    {
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                    }
+
+                    // Build destFileClient
+                    ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+
+                    ResponseWithHeaders<FileRenameHeaders> response;
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        IgnoreReadOnly = options?.IgnoreReadOnly
+                    };
+
+                    if (async)
+                    {
+                        response = await destFileClient.FileRestClient.RenameAsync(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = destFileClient.FileRestClient.Rename(
+                            renameSource: Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        destFileClient,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Rename
 
         #region OpenWrite
         /// <summary>

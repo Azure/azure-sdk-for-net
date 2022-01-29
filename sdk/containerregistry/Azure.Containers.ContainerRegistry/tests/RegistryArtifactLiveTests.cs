@@ -161,7 +161,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
 
             bool gotV1Tag = false;
             await foreach (ArtifactTagProperties tag in tags)
@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
             var pages = tags.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -216,7 +216,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync();
             var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
 
             int pageCount = 0;
@@ -271,7 +271,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync(ArtifactTagOrderBy.LastUpdatedOnDescending);
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(ArtifactTagOrder.LastUpdatedOnDescending);
 
             // Assert
             await foreach (ArtifactTagProperties tag in tags)

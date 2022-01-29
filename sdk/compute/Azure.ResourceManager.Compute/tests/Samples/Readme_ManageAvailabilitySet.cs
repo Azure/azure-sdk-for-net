@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -25,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
 
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation rgLro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ResourceGroupCreateOrUpdateOperation rgLro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgLro.Value;
             #region Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetData input = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(availabilitySetName, input);
+            AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
             AvailabilitySet availabilitySet = lro.Value;
             #endregion Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
         }
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // delete the availability set
-            await availabilitySet.DeleteAsync();
+            await availabilitySet.DeleteAsync(true);
             #endregion Snippet:Managing_Availability_Set_DeleteAnAvailabilitySet
         }
 
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
             string availabilitySetName = "myAvailabilitySet";
-            bool exists = await resourceGroup.GetAvailabilitySets().CheckIfExistsAsync(availabilitySetName);
+            bool exists = await resourceGroup.GetAvailabilitySets().ExistsAsync(availabilitySetName);
 
             if (exists)
             {

@@ -52,6 +52,121 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireRemovesTheRequestedItem()
+        {
+            var wasFactoryCalled = false;
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            Func<string, TransportProducer> producerFactory = partition =>
+            {
+                wasFactoryCalled = true;
+                return transportProducer;
+            };
+
+            var transportProducerPool = new TransportProducerPool(producerFactory, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(wasFactoryCalled, Is.False, "No producer should not have been created.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0");
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+            Assert.That(wasFactoryCalled, Is.False, "The requested partition should not have been created.");
+
+            // Request the producer again and validate a new producer is created.
+
+            Assert.That(transportProducerPool.GetPooledProducer("0"), Is.Not.Null, "The requested partition should be available.");
+            Assert.That(wasFactoryCalled, Is.True, "A new producer for the requested partition should have been created.");
+        }
+
+        /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireCoseNotCloseTheRemovedItemWhenInUse()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Request the producer and hold the reference to ensure that it is flagged as being in use.
+
+            await using var poolItem = transportProducerPool.GetPooledProducer("0");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: false);
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+        }
+
+        /// <summary>
+        ///   The pool periodically removes and closes expired items.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ExpireClosesTheRemovedItemWhenForced()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["1"] = new TransportProducerPool.PoolItem("1", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("2", transportProducer),
+            };
+
+            var transportProducerPool = new TransportProducerPool(partition => transportProducer, pool: startingPool, eventHubProducer: transportProducer);
+
+            // Validate the initial state.
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The requested partition should appear in the pool.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(0), "The producer should not have been closed.");
+
+            // Request the producer and hold the reference to ensure that it is flagged as being in use.
+
+            await using var poolItem = transportProducerPool.GetPooledProducer("0");
+
+            // Expire the producer and validate the removal state.
+
+            await transportProducerPool.ExpirePooledProducerAsync("0", forceClose: true);
+
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "The requested partition should have been removed.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "The producer should have been closed.");
+        }
+
+        /// <summary>
         ///   When a <see cref="TransportProducerPool.PoolItem" /> is requested
         ///   its <see cref="TransportProducerPool.PoolItem.RemoveAfter" /> will be increased.
         /// </summary>
@@ -309,6 +424,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
+                                                                    TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {
