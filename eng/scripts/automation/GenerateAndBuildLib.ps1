@@ -63,10 +63,11 @@ function New-DataPlanePackageFolder() {
       # update the input-file url if needed.
     if ($inputfile -ne "") {
         Write-Host "Updating autorest.md file."
-        $inputfileRex = "input-file *:.*.json"
+        $inputfileRex = "input-file *:"
         $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
         if (Test-Path -Path $file) {
-            (Get-Content $file) -replace $inputfileRex, "$inputfile" | Set-Content $file
+            (Get-Content $file) -notmatch "- .*.json" |Out-File $file
+            (Get-Content $file) -replace $inputfileRex, ("input-file:" + [Environment]::NewLine + "- " + "$inputfile") | Set-Content $file
             if ( $? -ne $True) {
             Write-Error "Failed to update autorest.md. exit code: $?"
             exit 1
