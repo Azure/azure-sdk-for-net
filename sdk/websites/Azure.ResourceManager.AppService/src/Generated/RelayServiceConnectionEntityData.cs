@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="entityName"></param>
         /// <param name="entityConnectionString"></param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostname"></param>
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
-        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType type, string kind, string entityName, string entityConnectionString, string resourceType, string resourceConnectionString, string hostname, int? port, string biztalkUri) : base(id, name, type, kind)
+        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string entityName, string entityConnectionString, string resourceType, string resourceConnectionString, string hostname, int? port, string biztalkUri) : base(id, name, type, systemData, kind)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;

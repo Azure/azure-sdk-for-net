@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -23,11 +24,6 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(CustomHttpsParameters))
-            {
-                writer.WritePropertyName("customHttpsParameters");
-                writer.WriteObjectValue(CustomHttpsParameters);
-            }
             if (Optional.IsDefined(ValidationData))
             {
                 writer.WritePropertyName("validationData");
@@ -39,29 +35,18 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnCustomDomainData DeserializeCdnCustomDomainData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> hostName = default;
             Optional<CustomDomainResourceState> resourceState = default;
             Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
             Optional<CustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
-            Optional<CustomDomainHttpsOptions> customHttpsParameters = default;
             Optional<string> validationData = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -75,6 +60,11 @@ namespace Azure.ResourceManager.Cdn
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -121,16 +111,6 @@ namespace Azure.ResourceManager.Cdn
                             customHttpsProvisioningSubstate = new CustomHttpsProvisioningSubstate(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("customHttpsParameters"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            customHttpsParameters = CustomDomainHttpsOptions.DeserializeCustomDomainHttpsOptions(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("validationData"))
                         {
                             validationData = property0.Value.GetString();
@@ -145,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, provisioningState.Value);
+            return new CdnCustomDomainData(id, name, type, systemData, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), validationData.Value, provisioningState.Value);
         }
     }
 }

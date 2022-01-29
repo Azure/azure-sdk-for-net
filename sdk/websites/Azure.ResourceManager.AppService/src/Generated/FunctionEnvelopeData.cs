@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionAppId"> Function App ID. </param>
         /// <param name="scriptRootPathHref"> Script root path URI. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="invokeUrlTemplate"> The invocation URL. </param>
         /// <param name="language"> The function language. </param>
         /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
-        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType type, string kind, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, object config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled) : base(id, name, type, kind)
+        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, object config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled) : base(id, name, type, systemData, kind)
         {
             FunctionAppId = functionAppId;
             ScriptRootPathHref = scriptRootPathHref;

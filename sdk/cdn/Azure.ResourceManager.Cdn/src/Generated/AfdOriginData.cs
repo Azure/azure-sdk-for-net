@@ -7,12 +7,13 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdOrigin data model. </summary>
-    public partial class AfdOriginData : ProxyResource
+    public partial class AfdOriginData : Resource
     {
         /// <summary> Initializes a new instance of AfdOriginData. </summary>
         public AfdOriginData()
@@ -23,8 +24,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="azureOrigin"> Resource reference to the Azure origin resource. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
@@ -34,12 +34,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
-        /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string originGroupName, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, object sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdOriginData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, object sharedPrivateLinkResource, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
         {
-            OriginGroupName = originGroupName;
             AzureOrigin = azureOrigin;
             HostName = hostName;
             HttpPort = httpPort;
@@ -49,13 +47,10 @@ namespace Azure.ResourceManager.Cdn
             Weight = weight;
             SharedPrivateLinkResource = sharedPrivateLinkResource;
             EnabledState = enabledState;
-            EnforceCertificateNameCheck = enforceCertificateNameCheck;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
         }
 
-        /// <summary> The name of the origin group which contains this origin. </summary>
-        public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
         public WritableSubResource AzureOrigin { get; set; }
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
@@ -74,8 +69,6 @@ namespace Azure.ResourceManager.Cdn
         public object SharedPrivateLinkResource { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; set; }
-        /// <summary> Whether to enable certificate name check at origin level. </summary>
-        public bool? EnforceCertificateNameCheck { get; set; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>

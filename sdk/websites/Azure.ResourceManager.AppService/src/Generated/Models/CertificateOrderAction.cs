@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,10 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdAt"> Time at which the certificate action was performed. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType type, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdAt) : base(id, name, type, kind)
+        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdAt) : base(id, name, type, systemData, kind)
         {
             ActionType = actionType;
             CreatedAt = createdAt;

@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,9 +23,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="value"> String representation of the identity. </param>
-        internal IdentifierData(ResourceIdentifier id, string name, ResourceType type, string kind, string value) : base(id, name, type, kind)
+        internal IdentifierData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string value) : base(id, name, type, systemData, kind)
         {
             Value = value;
         }

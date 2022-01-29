@@ -7,30 +7,31 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users. </summary>
-    public partial class EdgeNode : ProxyResource
+    public partial class EdgeNode : Resource
     {
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         public EdgeNode()
         {
-            IPAddressGroups = new ChangeTrackingList<IPAddressGroup>();
+            IpAddressGroups = new ChangeTrackingList<IpAddressGroup>();
         }
 
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="iPAddressGroups"> List of ip address groups. </param>
-        internal EdgeNode(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IList<IPAddressGroup> iPAddressGroups) : base(id, name, type, systemData)
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="ipAddressGroups"> List of ip address groups. </param>
+        internal EdgeNode(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<IpAddressGroup> ipAddressGroups) : base(id, name, type, systemData)
         {
-            IPAddressGroups = iPAddressGroups;
+            IpAddressGroups = ipAddressGroups;
         }
 
         /// <summary> List of ip address groups. </summary>
-        public IList<IPAddressGroup> IPAddressGroups { get; }
+        public IList<IpAddressGroup> IpAddressGroups { get; }
     }
 }

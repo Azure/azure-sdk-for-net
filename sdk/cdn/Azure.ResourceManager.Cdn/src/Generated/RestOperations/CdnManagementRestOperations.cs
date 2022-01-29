@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(checkNameAvailabilityInput);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(checkNameAvailabilityInput);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(validateProbeInput);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

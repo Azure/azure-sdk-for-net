@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -17,21 +18,23 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            {
+                writer.WritePropertyName("originResponseTimeoutSeconds");
+                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+            }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState");
@@ -43,31 +46,21 @@ namespace Azure.ResourceManager.Cdn
 
         internal static AfdEndpointData DeserializeAfdEndpointData(JsonElement element)
         {
-            string location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
-            Optional<string> profileName = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            Optional<int> originResponseTimeoutSeconds = default;
             Optional<EnabledState> enabledState = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
             Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -76,14 +69,9 @@ namespace Azure.ResourceManager.Cdn
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -101,6 +89,11 @@ namespace Azure.ResourceManager.Cdn
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,9 +103,14 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profileName"))
+                        if (property0.NameEquals("originResponseTimeoutSeconds"))
                         {
-                            profileName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))
@@ -154,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdEndpointData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), profileName.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), hostName.Value);
+            return new AfdEndpointData(id, name, type, systemData, tags, location, Optional.ToNullable(originResponseTimeoutSeconds), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), hostName.Value);
         }
     }
 }

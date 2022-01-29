@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Managed instance sku. </summary>
         public Sku Sku { get; set; }
         /// <summary> Managed instance identity. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets the provisioning state. </summary>

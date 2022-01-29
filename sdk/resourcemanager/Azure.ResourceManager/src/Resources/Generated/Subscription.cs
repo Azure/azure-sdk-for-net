@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -490,17 +491,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the linked resources for the subscription. </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLinkData> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceLink> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceLinkData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceLink>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -508,14 +509,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ResourceLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -532,17 +533,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the linked resources for the subscription. </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLinkData> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceLink> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceLinkData> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceLink> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -550,14 +551,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ResourceLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("Subscription.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -627,17 +628,17 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: Features_ListAll
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FeatureData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FeatureData> GetFeaturesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Feature> GetFeaturesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FeatureData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
                     var response = await _featureRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -645,14 +646,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<FeatureData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
                     var response = await _featureRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -668,17 +669,17 @@ namespace Azure.ResourceManager.Resources
         /// OperationId: Features_ListAll
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeatureData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FeatureData> GetFeatures(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Feature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Feature> GetFeatures(CancellationToken cancellationToken = default)
         {
-            Page<FeatureData> FirstPageFunc(int? pageSizeHint)
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
                     var response = _featureRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -686,14 +687,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<FeatureData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _featureClientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
                     var response = _featureRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

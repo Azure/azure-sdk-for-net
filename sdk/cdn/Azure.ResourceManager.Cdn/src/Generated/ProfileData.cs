@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -16,15 +17,11 @@ namespace Azure.ResourceManager.Cdn
     public partial class ProfileData : TrackedResource
     {
         /// <summary> Initializes a new instance of ProfileData. </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="sku"/> is null. </exception>
-        public ProfileData(string location, Sku sku) : base(location)
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public ProfileData(AzureLocation location, Models.Sku sku) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (sku == null)
             {
                 throw new ArgumentNullException(nameof(sku));
@@ -37,40 +34,28 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </param>
         /// <param name="resourceState"> Resource status of the profile. </param>
-        /// <param name="identity"> Managed service identity. </param>
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
-        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        internal ProfileData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, Sku sku, string kind, ProfileResourceState? resourceState, ManagedServiceIdentity identity, string provisioningState, string frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, type, systemData, location, tags)
+        /// <param name="frontdoorId"> The Id of the frontdoor. </param>
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
-            Kind = kind;
             ResourceState = resourceState;
-            Identity = identity;
             ProvisioningState = provisioningState;
-            FrontDoorId = frontDoorId;
-            OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
+            FrontdoorId = frontdoorId;
         }
 
-        /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
-        public Sku Sku { get; set; }
-        /// <summary> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </summary>
-        public string Kind { get; }
+        /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
+        public Models.Sku Sku { get; set; }
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
-        /// <summary> Managed service identity. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning status of the profile. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Id of the frontdoor. </summary>
-        public string FrontDoorId { get; }
-        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        public string FrontdoorId { get; }
     }
 }

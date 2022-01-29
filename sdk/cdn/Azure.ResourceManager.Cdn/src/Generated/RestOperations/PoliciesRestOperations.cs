@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
         public PoliciesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-06-01";
+            this.apiVersion = apiVersion ?? "2020-09-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Cdn
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cdnWebApplicationFirewallPolicy);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cdnWebApplicationFirewallPolicyPatchParameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -435,12 +435,11 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/", false);
+            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/", false);
             uri.AppendPath(policyName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -520,7 +519,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

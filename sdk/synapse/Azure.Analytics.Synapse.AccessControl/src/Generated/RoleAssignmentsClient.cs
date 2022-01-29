@@ -19,10 +19,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         private static readonly string[] AuthorizationScopes = new string[] { "https://dev.azuresynapse.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -42,7 +41,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -110,7 +109,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
             try
             {
@@ -185,7 +184,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
             try
             {
@@ -242,7 +241,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
             try
             {
@@ -299,7 +298,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
             try
             {
@@ -361,7 +360,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
@@ -423,7 +422,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
@@ -475,7 +474,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -527,7 +526,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -571,7 +570,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -615,7 +614,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {

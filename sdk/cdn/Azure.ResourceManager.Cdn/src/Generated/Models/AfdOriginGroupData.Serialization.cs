@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -63,11 +64,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static AfdOriginGroupData DeserializeAfdOriginGroupData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
-            Optional<string> profileName = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<LoadBalancingSettingsParameters> loadBalancingSettings = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
@@ -77,16 +77,6 @@ namespace Azure.ResourceManager.Cdn
             Optional<DeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -102,6 +92,11 @@ namespace Azure.ResourceManager.Cdn
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,11 +106,6 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profileName"))
-                        {
-                            profileName = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("loadBalancingSettings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdOriginGroupData(id, name, type, systemData.Value, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedAfdOriginErrorDetectionSettings.Value, Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdOriginGroupData(id, name, type, systemData, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedAfdOriginErrorDetectionSettings.Value, Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

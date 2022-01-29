@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="source"> The source of the run command script. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine run command instance view. </param>
-        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, tags, location)
+        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, systemData, tags, location)
         {
             Source = source;
             Parameters = parameters;
