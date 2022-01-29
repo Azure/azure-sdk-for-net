@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task StorageAccountGetOperations()
         {
-            RestApiCollection operationCollection = Client.GetRestApis("Microsoft.Storage");
+            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
             List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(apiList.Count() > 1);
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task StorageAccountOperations()
         {
-            RestApiCollection operationCollection = Client.GetRestApis("Microsoft.Storage");
+            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
             List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
             bool exist1 = false;
             bool exist2 = false;
