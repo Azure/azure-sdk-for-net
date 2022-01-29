@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
