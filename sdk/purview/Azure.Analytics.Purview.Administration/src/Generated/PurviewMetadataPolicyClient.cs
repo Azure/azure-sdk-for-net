@@ -22,10 +22,9 @@ namespace Azure.Analytics.Purview.Administration
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _collectionName;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -118,7 +117,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             Argument.AssertNotNull(policyId, nameof(policyId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
@@ -216,7 +215,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             Argument.AssertNotNull(policyId, nameof(policyId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
             try
             {
@@ -283,7 +282,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             Argument.AssertNotNull(policyId, nameof(policyId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
@@ -350,7 +349,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             Argument.AssertNotNull(policyId, nameof(policyId));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
+            using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
             try
             {
@@ -418,7 +417,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -487,7 +486,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

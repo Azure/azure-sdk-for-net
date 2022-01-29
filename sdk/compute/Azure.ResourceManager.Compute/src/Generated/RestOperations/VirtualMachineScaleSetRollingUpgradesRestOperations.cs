@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/rollingUpgrades/cancel", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/osRollingUpgrade", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/extensionRollingUpgrade", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

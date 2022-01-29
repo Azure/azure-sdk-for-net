@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
                 content.JsonWriter.WriteObjectValue(properties);
                 request.Content = content;
             }
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ProviderListResult>> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderInfoListResult>> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListAtTenantScopeRequest(top, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ProviderInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ProviderListResult> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ProviderInfoListResult> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListAtTenantScopeRequest(top, expand);
             _pipeline.Send(message, cancellationToken);
@@ -439,9 +439,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ProviderInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async Task<Response<ProviderData>> GetAtTenantScopeAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderInfo>> GetAtTenantScopeAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -579,9 +579,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ProviderInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ProviderInfo.DeserializeProviderInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public Response<ProviderData> GetAtTenantScope(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ProviderInfo> GetAtTenantScope(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -607,9 +607,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ProviderInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ProviderInfo.DeserializeProviderInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ProviderListResult>> ListAtTenantScopeNextPageAsync(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProviderInfoListResult>> ListAtTenantScopeNextPageAsync(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -732,9 +732,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ProviderInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ProviderListResult> ListAtTenantScopeNextPage(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ProviderInfoListResult> ListAtTenantScopeNextPage(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -761,9 +761,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ProviderInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

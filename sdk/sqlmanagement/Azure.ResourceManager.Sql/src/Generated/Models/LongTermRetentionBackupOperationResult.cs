@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="operationType"> Operation type. </param>
         /// <param name="fromBackupResourceId"> Source backup resource id. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
-        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, type)
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, type, systemData)
         {
             RequestId = requestId;
             OperationType = operationType;

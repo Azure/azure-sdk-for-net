@@ -26,13 +26,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
         /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
         /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerRegions"> Partner region information for the failover group. </param>
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
-        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType type, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs) : base(id, name, type)
+        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs) : base(id, name, type, systemData)
         {
             ReadWriteEndpoint = readWriteEndpoint;
             ReadOnlyEndpoint = readOnlyEndpoint;

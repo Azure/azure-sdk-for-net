@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Management.Models
 {
@@ -18,8 +18,9 @@ namespace Azure.ResourceManager.Management.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> displayName = default;
-            Optional<SubResource> parent = default;
+            Optional<DescendantParentGroupInfo> parent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -35,6 +36,11 @@ namespace Azure.ResourceManager.Management.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -60,17 +66,17 @@ namespace Azure.ResourceManager.Management.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                parent = null;
                                 continue;
                             }
-                            parent = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DescendantInfo(id, name, type, displayName.Value, parent);
+            return new DescendantInfo(id, name, type, systemData, displayName.Value, parent.Value);
         }
     }
 }

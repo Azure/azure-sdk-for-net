@@ -19,9 +19,8 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -96,7 +95,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -176,7 +175,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -256,7 +255,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -336,7 +335,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -397,7 +396,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
@@ -458,7 +457,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
@@ -492,7 +491,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
@@ -526,7 +525,7 @@ namespace Azure.Analytics.Purview.Catalog
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ListFeatures()
         {
-            FeatureData testFeature = null;
+            Feature testFeature = null;
             Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             await foreach (var feature in subscription.GetFeaturesAsync())
             {
