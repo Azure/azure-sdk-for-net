@@ -1,8 +1,8 @@
 # Release History
 
-## 1.0.0-beta.6 (2021-01-29)
+## 1.0.0-beta.6 (2022-01-29)
 
-### Features Added
+### Breaking Changes
 
 - waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
 - Removed GetAllAsGenericResources in [Resource]Collections.
