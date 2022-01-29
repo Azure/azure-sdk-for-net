@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] {
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
-            }, responseClassifier: new Only500RetryErrorResponseClassifier());
+            }, responseClassifier: new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -272,7 +272,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(
                 new MockResponse(404));
 
-            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new Only500RetryErrorResponseClassifier());
+            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -324,7 +324,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        private class Only500RetryErrorResponseClassifier : ResponseClassifier
+        private class CustomResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(HttpMessage message)
             {
@@ -338,7 +338,7 @@ namespace Azure.Core.Tests
 
             public override bool IsErrorResponse(HttpMessage message)
             {
-                return message.Response.Status == 500;
+                return IsRetriableResponse(message);
             }
         }
         #endregion

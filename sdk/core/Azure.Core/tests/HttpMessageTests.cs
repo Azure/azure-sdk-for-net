@@ -56,12 +56,5 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.TryClassify(404, out bool isError));
             Assert.IsFalse(isError);
         }
-
-        #region Helpers
-        public class TestResponseClassifier : ResponseClassifier
-        {
-        };
-
-        #endregion
     }
 }
