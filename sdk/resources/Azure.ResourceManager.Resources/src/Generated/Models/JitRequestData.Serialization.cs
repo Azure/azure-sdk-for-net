@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class JitRequestDefinitionData : IUtf8JsonSerializable
+    public partial class JitRequestData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
-        internal static JitRequestDefinitionData DeserializeJitRequestDefinitionData(JsonElement element)
+        internal static JitRequestData DeserializeJitRequestData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new JitRequestDefinitionData(id, name, type, systemData, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestData(id, name, type, systemData, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }
