@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="location"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
-        internal AzureMachineLearningSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey, ResourceIdentifier resourceId, TimeSpan? timeout, AzureLocation location, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
+        internal AzureMachineLearningSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey, ResourceIdentifier resourceId, TimeSpan? timeout, AzureLocation? location, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;

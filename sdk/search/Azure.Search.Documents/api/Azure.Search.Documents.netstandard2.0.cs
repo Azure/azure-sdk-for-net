@@ -358,7 +358,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public AzureMachineLearningSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, System.Uri scoringUri, string authenticationKey) { }
         public string AuthenticationKey { get { throw null; } }
         public int? DegreeOfParallelism { get { throw null; } set { } }
-        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.Uri ScoringUri { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }

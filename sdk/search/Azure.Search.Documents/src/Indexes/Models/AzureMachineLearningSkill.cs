@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
         [CodeGenMember("Region")]
-        public AzureLocation Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
@@ -202,7 +202,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> key = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<TimeSpan?> timeout = default;
-            Optional<AzureLocation> region = default;
+            Optional<AzureLocation?> region = default;
             Optional<int?> degreeOfParallelism = default;
             string odataType = default;
             Optional<string> name = default;
@@ -256,7 +256,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        region = null;
                         continue;
                     }
                     region = new AzureLocation(property.Value.GetString());
