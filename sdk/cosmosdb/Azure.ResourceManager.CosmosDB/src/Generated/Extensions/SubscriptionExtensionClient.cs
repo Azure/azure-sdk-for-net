@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.CosmosDB
         private DatabaseAccountsRestOperations _databaseAccountRestClient;
         private ClientDiagnostics _restorableDatabaseAccountClientDiagnostics;
         private RestorableDatabaseAccountsRestOperations _restorableDatabaseAccountRestClient;
+        private ClientDiagnostics _clusterResourceCassandraClustersClientDiagnostics;
+        private CassandraClustersRestOperations _clusterResourceCassandraClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class for mocking. </summary>
         protected SubscriptionExtensionClient()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.CosmosDB
         private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(DatabaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccount.ResourceType));
         private ClientDiagnostics RestorableDatabaseAccountClientDiagnostics => _restorableDatabaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
         private RestorableDatabaseAccountsRestOperations RestorableDatabaseAccountRestClient => _restorableDatabaseAccountRestClient ??= new RestorableDatabaseAccountsRestOperations(RestorableDatabaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorableDatabaseAccount.ResourceType));
+        private ClientDiagnostics ClusterResourceCassandraClustersClientDiagnostics => _clusterResourceCassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, DiagnosticOptions);
+        private CassandraClustersRestOperations ClusterResourceCassandraClustersRestClient => _clusterResourceCassandraClustersRestClient ??= new CassandraClustersRestOperations(ClusterResourceCassandraClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -130,6 +134,52 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     var response = RestorableDatabaseAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(ArmClient, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> List all managed Cassandra clusters in this subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterResource> GetClusterResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ClusterResourceCassandraClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetClusterResources");
+                scope.Start();
+                try
+                {
+                    var response = await ClusterResourceCassandraClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(ArmClient, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> List all managed Cassandra clusters in this subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterResource> GetClusterResources(CancellationToken cancellationToken = default)
+        {
+            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ClusterResourceCassandraClustersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetClusterResources");
+                scope.Start();
+                try
+                {
+                    var response = ClusterResourceCassandraClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

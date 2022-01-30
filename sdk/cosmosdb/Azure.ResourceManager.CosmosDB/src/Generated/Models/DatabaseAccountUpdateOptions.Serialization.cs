@@ -183,6 +183,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("disableLocalAuth");
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity");
+                writer.WriteObjectValue(Capacity);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

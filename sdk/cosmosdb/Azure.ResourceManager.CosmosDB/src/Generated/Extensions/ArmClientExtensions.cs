@@ -277,6 +277,18 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region CosmosDBLocation
+        /// <summary> Gets an object representing a CosmosDBLocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBLocation" /> object. </returns>
+        public static CosmosDBLocation GetCosmosDBLocation(this ArmClient armClient, ResourceIdentifier id)
+        {
+            CosmosDBLocation.ValidateResourceId(id);
+            return new CosmosDBLocation(armClient, id);
+        }
+        #endregion
+
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -310,6 +322,30 @@ namespace Azure.ResourceManager.CosmosDB
         {
             RestorableDatabaseAccount.ValidateResourceId(id);
             return new RestorableDatabaseAccount(armClient, id);
+        }
+        #endregion
+
+        #region ClusterResource
+        /// <summary> Gets an object representing a ClusterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
+        public static ClusterResource GetClusterResource(this ArmClient armClient, ResourceIdentifier id)
+        {
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(armClient, id);
+        }
+        #endregion
+
+        #region DataCenterResource
+        /// <summary> Gets an object representing a DataCenterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCenterResource" /> object. </returns>
+        public static DataCenterResource GetDataCenterResource(this ArmClient armClient, ResourceIdentifier id)
+        {
+            DataCenterResource.ValidateResourceId(id);
+            return new DataCenterResource(armClient, id);
         }
         #endregion
     }

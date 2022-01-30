@@ -146,6 +146,8 @@ directive:
       $["Operation"]["x-ms-client-name"] = "ApplicationOperation";
       $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
       $["Operation"]["properties"]["display"] = undefined;
+      $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
+      $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
 ```
 
 ### Tag: package-track2-preview

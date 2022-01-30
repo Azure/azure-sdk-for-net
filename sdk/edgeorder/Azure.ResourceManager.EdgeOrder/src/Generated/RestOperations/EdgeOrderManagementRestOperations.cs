@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(productFamiliesRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configurationsRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(addressResource);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(addressUpdateParameter);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(orderItemResource);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(orderItemUpdateParameter);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cancellationReason);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(returnOrderItemDetails);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2126,7 +2126,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2216,7 +2216,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2296,7 +2296,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2376,7 +2376,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2460,7 +2460,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2642,7 +2642,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
