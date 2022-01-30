@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
-        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, type, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

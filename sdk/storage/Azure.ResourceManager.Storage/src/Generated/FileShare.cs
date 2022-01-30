@@ -313,16 +313,16 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LeaseShareResponse>> LeaseAsync(string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LeaseShareResponse>> LeaseAsync(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Lease");
             scope.Start();
             try
             {
-                var response = await _fileShareRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -333,16 +333,16 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LeaseShareResponse> Lease(string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<LeaseShareResponse> Lease(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Lease");
             scope.Start();
             try
             {
-                var response = _fileShareRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, parameters, cancellationToken);
+                var response = _fileShareRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken);
                 return response;
             }
             catch (Exception e)

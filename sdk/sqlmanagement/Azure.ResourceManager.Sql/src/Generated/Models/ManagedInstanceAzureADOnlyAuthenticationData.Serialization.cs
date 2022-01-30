@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<bool> azureADOnlyAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,6 +49,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -72,7 +79,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceAzureADOnlyAuthenticationData(id, name, type, Optional.ToNullable(azureADOnlyAuthentication));
+            return new ManagedInstanceAzureADOnlyAuthenticationData(id, name, type, systemData, Optional.ToNullable(azureADOnlyAuthentication));
         }
     }
 }

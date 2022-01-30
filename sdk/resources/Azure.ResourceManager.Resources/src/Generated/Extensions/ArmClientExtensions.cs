@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region JitRequestDefinition
-        /// <summary> Gets an object representing a JitRequestDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region JitRequest
+        /// <summary> Gets an object representing a JitRequest along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JitRequestDefinition" /> object. </returns>
-        public static JitRequestDefinition GetJitRequestDefinition(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JitRequest" /> object. </returns>
+        public static JitRequest GetJitRequest(this ArmClient armClient, ResourceIdentifier id)
         {
-            JitRequestDefinition.ValidateResourceId(id);
-            return new JitRequestDefinition(armClient, id);
+            JitRequest.ValidateResourceId(id);
+            return new JitRequest(armClient, id);
         }
         #endregion
 

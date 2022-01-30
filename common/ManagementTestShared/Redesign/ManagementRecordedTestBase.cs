@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.TestFramework
         private ArmClient _cleanupClient;
         private bool _waitForCleanup;
 
-        protected ManagementRecordedTestBase(bool isAsync, bool useLegacyTransport = true) : base(isAsync, useLegacyTransport: useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode, bool useLegacyTransport = true) : base(isAsync, mode, useLegacyTransport)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.Credential,
-                TestEnvironment.SubscriptionId,
+                subscriptionId ?? TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
                 options);
         }

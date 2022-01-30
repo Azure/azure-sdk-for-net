@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,13 +28,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="windowsOutboundIpAddresses"></param>
         /// <param name="linuxOutboundIpAddresses"></param>
         /// <param name="externalInboundIpAddresses"></param>
         /// <param name="internalInboundIpAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType type, string kind, IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, type, kind)
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, type, systemData, kind)
         {
             WindowsOutboundIpAddresses = windowsOutboundIpAddresses;
             LinuxOutboundIpAddresses = linuxOutboundIpAddresses;

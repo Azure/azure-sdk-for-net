@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzurePowerShellScript DeserializeAzurePowerShellScript(JsonElement element)
         {
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DeploymentScriptManagedIdentity> identity = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
             Optional<StorageAccountConfiguration> storageAccountSettings = default;
             Optional<CleanupOptions> cleanupPreference = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = DeploymentScriptManagedIdentity.DeserializeDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -170,16 +170,6 @@ namespace Azure.ResourceManager.Resources.Models
                     kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -193,6 +183,11 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -343,7 +338,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzurePowerShellScript(id, name, type, identity.Value, location, Optional.ToDictionary(tags), kind, systemData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
+            return new AzurePowerShellScript(id, name, type, systemData, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
         }
     }
 }

@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="log"> Script execution logs in text format. </param>
-        internal ScriptLogData(ResourceIdentifier id, string name, ResourceType type, string log) : base(id, name, type)
+        internal ScriptLogData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string log) : base(id, name, type, systemData)
         {
             Log = log;
         }

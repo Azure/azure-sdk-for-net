@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             ResourceIdentifier id = new ResourceIdentifier(Id);
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             Resources.Models.Sku sku = new Resources.Models.Sku("NameForSku", SkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
-            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, new Dictionary<string, string>(), AzureLocation.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null, null, null, null);
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, null, new Dictionary<string, string>(), AzureLocation.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data, indented: true) + Environment.NewLine;
             Assert.AreEqual(expected, json);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
             var kind = "KindForResource";
             var managedBy = "ManagedByForResource";
             var sku = new Resources.Models.Sku("NameForSku", SkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
-            GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, new Dictionary<string, string>(), AzureLocation.EastUS, null, plan, null, kind, managedBy, sku, null, null, null, null);
+            GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, null, new Dictionary<string, string>(), AzureLocation.EastUS, null, plan, null, kind, managedBy, sku, null, null, null, null);
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Tests
         {
             string expected = "{\"properties\":{\"tags\":{},\"location\":\"eastus\"}}";
             ResourceIdentifier id = new ResourceIdentifier(Id);
-            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, new Dictionary<string, string>(), AzureLocation.EastUS, null, null, null, null, null, null, null, null, null, null);
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, null, new Dictionary<string, string>(), AzureLocation.EastUS, null, null, null, null, null, null, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data);
             Assert.AreEqual(expected, json);

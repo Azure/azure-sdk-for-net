@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<int> approximateMessageCount = default;
             foreach (var property in element.EnumerateObject())
@@ -55,6 +57,11 @@ namespace Azure.ResourceManager.Storage
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new StorageQueueData(id, name, type, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
+            return new StorageQueueData(id, name, type, systemData, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
         }
     }
 }

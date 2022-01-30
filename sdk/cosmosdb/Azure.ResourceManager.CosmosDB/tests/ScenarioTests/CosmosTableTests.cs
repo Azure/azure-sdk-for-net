@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyTables(table, table2);
 
-            TableCreateUpdateOptions updateOptions = new TableCreateUpdateOptions(table.Id, _databaseName, table.Data.Type,
+            TableCreateUpdateOptions updateOptions = new TableCreateUpdateOptions(table.Id, _databaseName, table.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, table.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
