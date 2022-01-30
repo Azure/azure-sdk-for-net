@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName);
+                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
                 }
             };
 #else
@@ -102,7 +102,6 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"  Offset: {entity.Offset}");
                             Console.WriteLine($"  Length: {entity.Length}");
                             Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                            Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                         }
                         Console.WriteLine("");
                     }
