@@ -1,10 +1,15 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2022-01-30)
 
 ### Features Added
 
+- Bump API version to `2021-08-01`
+
 ### Breaking Changes
+
+- `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
+- Move optional body parameters right after required parameters
 
 ### Bugs Fixed
 
