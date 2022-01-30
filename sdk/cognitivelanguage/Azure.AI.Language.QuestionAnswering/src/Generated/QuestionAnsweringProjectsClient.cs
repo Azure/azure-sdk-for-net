@@ -1262,7 +1262,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        /// <summary> Add Active Learning feedback. </summary>
+        /// <summary> Update Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -1319,7 +1319,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
         }
 
-        /// <summary> Add Active Learning feedback. </summary>
+        /// <summary> Update Active Learning feedback. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2150,6 +2150,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   resultUrl: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   expirationDateTime: string (ISO 8601 Format),
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       message: string,
+        ///       target: string,
+        ///       details: [Error],
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
+        ///         message: string,
+        ///         details: Dictionary&lt;string, string&gt;,
+        ///         target: string,
+        ///         innererror: InnerErrorModel
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -2197,6 +2222,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   resultUrl: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   expirationDateTime: string (ISO 8601 Format),
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       message: string,
+        ///       target: string,
+        ///       details: [Error],
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
+        ///         message: string,
+        ///         details: Dictionary&lt;string, string&gt;,
+        ///         target: string,
+        ///         innererror: InnerErrorModel
+        ///       }
+        ///     }
+        ///   ]
+        /// }
+        /// </code>
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
@@ -2954,7 +3004,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
+            message.ResponseClassifier = ResponseClassifier200202.Instance;
             return message;
         }
 
@@ -3416,6 +3466,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             {
                 return message.Response.Status switch
                 {
+                    202 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200202 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200202();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
                     202 => false,
                     _ => true
                 };
