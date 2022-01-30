@@ -11,10 +11,6 @@
 - `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
 - Move optional body parameters right after required parameters
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.5 (2021-12-28)
 
 ### Features Added
