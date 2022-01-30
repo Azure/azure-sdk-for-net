@@ -10,10 +10,6 @@
 
 - `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2021-12-28)
 
 ### Features Added
