@@ -22,6 +22,16 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region ClusterResource
+        /// <summary> Gets an object representing a ClusterResourceCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="ClusterResourceCollection" /> object. </returns>
+        public static ClusterResourceCollection GetClusterResources(this ResourceGroup resourceGroup)
+        {
+            return new ClusterResourceCollection(resourceGroup);
+        }
+        #endregion
+
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
             return resourceGroup.GetCachedClient((armClient) =>

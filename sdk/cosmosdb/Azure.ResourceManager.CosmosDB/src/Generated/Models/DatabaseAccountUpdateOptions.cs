@@ -78,5 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public IList<string> NetworkAclBypassResourceIds { get; }
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
+        /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
+        public Capacity Capacity { get; set; }
     }
 }
