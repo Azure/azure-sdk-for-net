@@ -14,14 +14,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region RestorableDatabaseAccount
-        /// <summary> Gets an object representing a RestorableDatabaseAccountCollection along with the instance operations that can be performed on it. </summary>
+        #region CosmosDBLocation
+        /// <summary> Gets an object representing a CosmosDBLocationCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <returns> Returns a <see cref="RestorableDatabaseAccountCollection" /> object. </returns>
-        public static RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts(this Subscription subscription, string location)
+        /// <returns> Returns a <see cref="CosmosDBLocationCollection" /> object. </returns>
+        public static CosmosDBLocationCollection GetCosmosDBLocations(this Subscription subscription)
         {
-            return new RestorableDatabaseAccountCollection(subscription, location);
+            return new CosmosDBLocationCollection(subscription);
         }
         #endregion
 
@@ -64,6 +63,22 @@ namespace Azure.ResourceManager.CosmosDB
         public static Pageable<RestorableDatabaseAccount> GetRestorableDatabaseAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetRestorableDatabaseAccounts(cancellationToken);
+        }
+
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterResource> GetClusterResourcesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetClusterResourcesAsync(cancellationToken);
+        }
+
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterResource> GetClusterResources(this Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetClusterResources(cancellationToken);
         }
     }
 }
