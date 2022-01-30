@@ -85,6 +85,18 @@ namespace Azure.ResourceManager.Storage
         }
         #endregion
 
+        #region LocalUser
+        /// <summary> Gets an object representing a LocalUser along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocalUser" /> object. </returns>
+        public static LocalUser GetLocalUser(this ArmClient armClient, ResourceIdentifier id)
+        {
+            LocalUser.ValidateResourceId(id);
+            return new LocalUser(armClient, id);
+        }
+        #endregion
+
         #region EncryptionScope
         /// <summary> Gets an object representing a EncryptionScope along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
