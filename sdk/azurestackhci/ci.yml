@@ -19,7 +19,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/azure.resourcemanager.stackhci/
+    - sdk/azurestackhci/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
