@@ -4,10 +4,12 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
+using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
@@ -99,6 +101,47 @@ namespace Azure.Storage.Tests
             }
             // If enableTenantDiscovery is true, all but the first request should be authorized.
             Assert.True(transport.Requests.Skip(enableTenantDiscovery ? 1 : 0).All(r => r.Headers.TryGetValue("Authorization", out _)));
+        }
+
+        [Test]
+        public async Task UsesScopeFromBearerChallange()
+        {
+            // Arrange
+            bool firstRequest = true;
+            string unauthorizedScope = "https://disk.compute.azure.com/.default";
+            string authorizedScope = "https://storage.azure.com";
+
+            string[] unauthorizedScopes = new string[] { unauthorizedScope };
+            string[] authorizedScopes = new string[] { authorizedScope + "/.default" };
+            MockCredential mockCredential = new MockCredential()
+            {
+                GetTokenCallback = (trc, _) =>
+                {
+                    Assert.AreEqual(authorizedScopes, trc.Scopes);
+                }
+            };
+
+            StorageBearerTokenChallengeAuthorizationPolicy tokenChallengeAuthorizationPolicy = new StorageBearerTokenChallengeAuthorizationPolicy(mockCredential, unauthorizedScopes, enableTenantDiscovery: true);
+            MockResponse challengeResponse = new MockResponse((int)HttpStatusCode.Unauthorized);
+            challengeResponse.AddHeader(
+                new HttpHeader(
+                    HttpHeader.Names.WwwAuthenticate,
+                    $"Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id={authorizedScope}"));
+
+            MockTransport transport = CreateMockTransport(
+                _ =>
+                {
+                    MockResponse response = firstRequest switch
+                    {
+                        true => challengeResponse,
+                        false => new MockResponse(200)
+                    };
+                    firstRequest = false;
+                    return response;
+                });
+
+            // Act
+            await SendGetRequest(transport, tokenChallengeAuthorizationPolicy, uri: new Uri("https://example.com"));
         }
     }
 }
