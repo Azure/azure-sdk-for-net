@@ -31,5 +31,14 @@ namespace Azure.ResourceManager.Cdn
             return new CdnWebApplicationFirewallPolicyCollection(resourceGroup);
         }
         #endregion
+
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((armClient) =>
+            {
+                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+            }
+            );
+        }
     }
 }

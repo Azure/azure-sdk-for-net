@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         private readonly OperationInternals<AddressResource> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AddressResourceUpdateOperation for mocking. </summary>
         protected AddressResourceUpdateOperation()
         {
         }
 
-        internal AddressResourceUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AddressResourceUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AddressResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AddressResourceUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AddressResourceData.DeserializeAddressResourceData(document.RootElement);
-            return new AddressResource(_operationBase, data);
+            return new AddressResource(_armClient, data);
         }
 
         async ValueTask<AddressResource> IOperationSource<AddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AddressResourceData.DeserializeAddressResourceData(document.RootElement);
-            return new AddressResource(_operationBase, data);
+            return new AddressResource(_armClient, data);
         }
     }
 }

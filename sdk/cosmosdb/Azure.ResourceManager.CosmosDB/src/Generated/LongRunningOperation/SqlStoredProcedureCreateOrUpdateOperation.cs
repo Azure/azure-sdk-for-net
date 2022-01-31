@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly OperationInternals<SqlStoredProcedure> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SqlStoredProcedureCreateOrUpdateOperation for mocking. </summary>
         protected SqlStoredProcedureCreateOrUpdateOperation()
         {
         }
 
-        internal SqlStoredProcedureCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SqlStoredProcedureCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SqlStoredProcedure>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlStoredProcedureCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
-            return new SqlStoredProcedure(_operationBase, data);
+            return new SqlStoredProcedure(_armClient, data);
         }
 
         async ValueTask<SqlStoredProcedure> IOperationSource<SqlStoredProcedure>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
-            return new SqlStoredProcedure(_operationBase, data);
+            return new SqlStoredProcedure(_armClient, data);
         }
     }
 }

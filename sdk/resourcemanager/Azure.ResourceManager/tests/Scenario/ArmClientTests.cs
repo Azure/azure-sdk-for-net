@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Tests
 
         private static string GetDefaultResourceGroupVersion(ResourceGroupCollection rgCollection)
         {
-            var restClient = rgCollection.GetType().GetField("_resourceGroupsRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
+            var restClient = rgCollection.GetType().GetField("_resourceGroupRestClient", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(rgCollection) as ResourceGroupsRestOperations;
             return restClient.GetType().GetField("apiVersion", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(restClient) as string;
         }
 
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Tests
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var client = new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential);
+            var client = GetArmClient(subscriptionId: Recording.Random.NewGuid().ToString());
             var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
             Assert.AreEqual(404, ex.Status);
         }
@@ -211,9 +212,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public void TestArmClientParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(baseUri: null, null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(defaultSubscriptionId: null, null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(default(TokenCredential)); });
+            Assert.DoesNotThrow(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, default(Uri)); });
         }
 
         [RecordedTest]
@@ -260,13 +261,10 @@ namespace Azure.ResourceManager.Tests
         public void ValidateMgmtTelemetry()
         {
             var options = new ArmClientOptions();
-            var pipeline = ManagementPipelineBuilder.Build(new MockCredential(), new Uri("http://foo.com"), options);
-            Assert.IsNull(GetPolicyFromPipeline(pipeline, nameof(MgmtTelemetryPolicy)));
-
+            options.Diagnostics.IsTelemetryEnabled = true;
             var client = GetArmClient(options);
             Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
 
-            options = new ArmClientOptions();
             options.Diagnostics.IsTelemetryEnabled = false;
             client = GetArmClient(options);
             Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));

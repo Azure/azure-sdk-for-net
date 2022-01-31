@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly KubeEnvironmentsRestOperations _kubeEnvironmentsRestClient;
+
+        private readonly ClientDiagnostics _kubeEnvironmentClientDiagnostics;
+        private readonly KubeEnvironmentsRestOperations _kubeEnvironmentRestClient;
         private readonly KubeEnvironmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="KubeEnvironment"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "KubeEnvironment"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KubeEnvironment(ArmResource options, KubeEnvironmentData data) : base(options, data.Id)
+        internal KubeEnvironment(ArmClient armClient, KubeEnvironmentData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _kubeEnvironmentsRestClient = new KubeEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="KubeEnvironment"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal KubeEnvironment(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal KubeEnvironment(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _kubeEnvironmentsRestClient = new KubeEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="KubeEnvironment"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal KubeEnvironment(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _kubeEnvironmentsRestClient = new KubeEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
+            _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(_kubeEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<KubeEnvironment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Get");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Get");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                    throw await _kubeEnvironmentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new KubeEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +114,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KubeEnvironment> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Get");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Get");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                    throw _kubeEnvironmentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.GetAvailableLocations");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -174,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.GetAvailableLocations");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -195,12 +174,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<KubeEnvironmentDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Delete");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Delete");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KubeEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _kubeEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _kubeEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new KubeEnvironmentDeleteOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,12 +199,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual KubeEnvironmentDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Delete");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Delete");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KubeEnvironmentDeleteOperation(_clientDiagnostics, Pipeline, _kubeEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _kubeEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new KubeEnvironmentDeleteOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -251,12 +230,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Update");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new KubeEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,12 +258,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironment.Update");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Update");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken);
-                return Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
+                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kubeEnvironmentEnvelope, cancellationToken);
+                return Response.FromValue(new KubeEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

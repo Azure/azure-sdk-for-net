@@ -8,6 +8,7 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -23,11 +24,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprint"> Certificate Thumbprint. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType type, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint) : base(id, name, type, kind)
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint) : base(id, name, type, systemData, kind)
         {
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;

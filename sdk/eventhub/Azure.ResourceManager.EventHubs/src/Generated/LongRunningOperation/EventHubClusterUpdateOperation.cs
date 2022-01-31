@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         private readonly OperationInternals<EventHubCluster> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of EventHubClusterUpdateOperation for mocking. </summary>
         protected EventHubClusterUpdateOperation()
         {
         }
 
-        internal EventHubClusterUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubClusterUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubClusterUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
-            return new EventHubCluster(_operationBase, data);
+            return new EventHubCluster(_armClient, data);
         }
 
         async ValueTask<EventHubCluster> IOperationSource<EventHubCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
-            return new EventHubCluster(_operationBase, data);
+            return new EventHubCluster(_armClient, data);
         }
     }
 }

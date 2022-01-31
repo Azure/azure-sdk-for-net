@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal JobCredentialCreateOrUpdateOperation(ArmResource operationsBase, Response<JobCredentialData> response)
+        internal JobCredentialCreateOrUpdateOperation(ArmClient armClient, Response<JobCredentialData> response)
         {
-            _operation = new OperationOrResponseInternals<JobCredential>(Response.FromValue(new JobCredential(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<JobCredential>(Response.FromValue(new JobCredential(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

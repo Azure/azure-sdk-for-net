@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Tests
             string location)
         {
             ResourceIdentifier id = new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget");
-            return new GenericResourceData(id, id.Name, id.ResourceType, tags, location, null, plan, null, kind, managedBy, sku, null, null, null, null);
+            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, plan, null, kind, managedBy, sku, null, null, null, null);
         }
     }
 }

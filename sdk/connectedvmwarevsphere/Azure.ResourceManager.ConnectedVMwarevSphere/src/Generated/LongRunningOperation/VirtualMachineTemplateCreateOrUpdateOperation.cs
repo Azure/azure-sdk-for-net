@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         private readonly OperationInternals<VirtualMachineTemplate> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualMachineTemplateCreateOrUpdateOperation for mocking. </summary>
         protected VirtualMachineTemplateCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualMachineTemplateCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineTemplateCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualMachineTemplate>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualMachineTemplateCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
-            return new VirtualMachineTemplate(_operationBase, data);
+            return new VirtualMachineTemplate(_armClient, data);
         }
 
         async ValueTask<VirtualMachineTemplate> IOperationSource<VirtualMachineTemplate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
-            return new VirtualMachineTemplate(_operationBase, data);
+            return new VirtualMachineTemplate(_armClient, data);
         }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing collection of FileShare and their operations over its parent. </summary>
     public partial class FileShareCollection : ArmCollection, IEnumerable<FileShare>, IAsyncEnumerable<FileShare>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FileSharesRestOperations _fileSharesRestClient;
+        private readonly ClientDiagnostics _fileShareClientDiagnostics;
+        private readonly FileSharesRestOperations _fileShareRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FileShareCollection"/> class for mocking. </summary>
         protected FileShareCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal FileShareCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(FileShare.ResourceType, out string apiVersion);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _fileShareClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", FileShare.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(FileShare.ResourceType, out string fileShareApiVersion);
+            _fileShareRestClient = new FileSharesRestOperations(_fileShareClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileShareApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken);
-                var operation = new FileShareCreateOrUpdateOperation(this, response);
+                var response = _fileShareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken);
+                var operation = new FileShareCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new FileShareCreateOrUpdateOperation(this, response);
+                var response = await _fileShareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken).ConfigureAwait(false);
+                var operation = new FileShareCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Get");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken);
+                var response = _fileShareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                    throw _fileShareClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Get");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                    throw await _fileShareClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken);
+                var response = _fileShareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<FileShare>(null, response.GetRawResponse());
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<FileShare>(null, response.GetRawResponse());
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Exists");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
-            using var scope = _clientDiagnostics.CreateScope("FileShareCollection.Exists");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.Storage
         {
             Page<FileShare> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetAll");
+                using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _fileSharesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _fileShareRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.Storage
             }
             Page<FileShare> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetAll");
+                using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _fileSharesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _fileShareRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.Storage
         {
             async Task<Page<FileShare>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetAll");
+                using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _fileSharesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _fileShareRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.Storage
             }
             async Task<Page<FileShare>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FileShareCollection.GetAll");
+                using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _fileSharesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _fileShareRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FileShare(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -371,8 +371,5 @@ namespace Azure.ResourceManager.Storage
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, FileShare, FileShareData> Construct() { }
     }
 }

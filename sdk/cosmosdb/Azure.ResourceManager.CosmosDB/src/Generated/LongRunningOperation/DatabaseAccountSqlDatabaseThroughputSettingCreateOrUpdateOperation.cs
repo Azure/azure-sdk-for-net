@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly OperationInternals<DatabaseAccountSqlDatabaseThroughputSetting> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation for mocking. </summary>
         protected DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation()
         {
         }
 
-        internal DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DatabaseAccountSqlDatabaseThroughputSetting>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
-            return new DatabaseAccountSqlDatabaseThroughputSetting(_operationBase, data);
+            return new DatabaseAccountSqlDatabaseThroughputSetting(_armClient, data);
         }
 
         async ValueTask<DatabaseAccountSqlDatabaseThroughputSetting> IOperationSource<DatabaseAccountSqlDatabaseThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement);
-            return new DatabaseAccountSqlDatabaseThroughputSetting(_operationBase, data);
+            return new DatabaseAccountSqlDatabaseThroughputSetting(_armClient, data);
         }
     }
 }

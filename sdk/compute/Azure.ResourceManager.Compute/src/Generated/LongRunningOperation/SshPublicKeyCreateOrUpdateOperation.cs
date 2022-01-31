@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal SshPublicKeyCreateOrUpdateOperation(ArmResource operationsBase, Response<SshPublicKeyData> response)
+        internal SshPublicKeyCreateOrUpdateOperation(ArmClient armClient, Response<SshPublicKeyData> response)
         {
-            _operation = new OperationOrResponseInternals<SshPublicKey>(Response.FromValue(new SshPublicKey(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SshPublicKey>(Response.FromValue(new SshPublicKey(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

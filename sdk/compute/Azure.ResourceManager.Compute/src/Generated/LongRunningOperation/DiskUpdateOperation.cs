@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<Disk> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DiskUpdateOperation for mocking. </summary>
         protected DiskUpdateOperation()
         {
         }
 
-        internal DiskUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DiskUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DiskUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskData.DeserializeDiskData(document.RootElement);
-            return new Disk(_operationBase, data);
+            return new Disk(_armClient, data);
         }
 
         async ValueTask<Disk> IOperationSource<Disk>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskData.DeserializeDiskData(document.RootElement);
-            return new Disk(_operationBase, data);
+            return new Disk(_armClient, data);
         }
     }
 }

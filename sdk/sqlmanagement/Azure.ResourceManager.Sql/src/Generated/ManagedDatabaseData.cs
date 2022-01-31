@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="collation"> Collation of the managed database. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="autoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationDate, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, type, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationDate, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, type, systemData, tags, location)
         {
             Collation = collation;
             Status = status;

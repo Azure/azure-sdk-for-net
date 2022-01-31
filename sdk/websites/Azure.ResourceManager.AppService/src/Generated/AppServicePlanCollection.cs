@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of AppServicePlan and their operations over its parent. </summary>
     public partial class AppServicePlanCollection : ArmCollection, IEnumerable<AppServicePlan>, IAsyncEnumerable<AppServicePlan>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AppServicePlansRestOperations _appServicePlansRestClient;
+        private readonly ClientDiagnostics _appServicePlanClientDiagnostics;
+        private readonly AppServicePlansRestOperations _appServicePlanRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AppServicePlanCollection"/> class for mocking. </summary>
         protected AppServicePlanCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServicePlanCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AppServicePlan.ResourceType, out string apiVersion);
-            _appServicePlansRestClient = new AppServicePlansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlan.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(AppServicePlan.ResourceType, out string appServicePlanApiVersion);
+            _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,12 +70,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appServicePlan));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken);
-                var operation = new AppServicePlanCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _appServicePlansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
+                var response = _appServicePlanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken);
+                var operation = new AppServicePlanCreateOrUpdateOperation(ArmClient, _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,12 +105,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(appServicePlan));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServicePlanCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _appServicePlansRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
+                var response = await _appServicePlanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServicePlanCreateOrUpdateOperation(ArmClient, _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.Get");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                    throw _appServicePlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.Get");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                    throw await _appServicePlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appServicePlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<AppServicePlan>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +212,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appServicePlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<AppServicePlan>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServicePlan(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServicePlan(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
+            using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +284,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<AppServicePlan> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appServicePlanRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +299,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<AppServicePlan> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlansRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appServicePlanRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +325,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<AppServicePlan>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appServicePlanRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +340,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<AppServicePlan>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
+                using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlansRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appServicePlanRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlan(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,52 +354,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="AppServicePlan" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(AppServicePlan.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="AppServicePlan" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AppServicePlanCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(AppServicePlan.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<AppServicePlan> IEnumerable<AppServicePlan>.GetEnumerator()
@@ -417,8 +370,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AppServicePlan, AppServicePlanData> Construct() { }
     }
 }

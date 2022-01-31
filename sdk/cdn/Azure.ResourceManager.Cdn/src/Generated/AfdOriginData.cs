@@ -7,12 +7,13 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdOrigin data model. </summary>
-    public partial class AfdOriginData : ProxyResource
+    public partial class AfdOriginData : Resource
     {
         /// <summary> Initializes a new instance of AfdOriginData. </summary>
         public AfdOriginData()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="azureOrigin"> Resource reference to the Azure origin resource. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>

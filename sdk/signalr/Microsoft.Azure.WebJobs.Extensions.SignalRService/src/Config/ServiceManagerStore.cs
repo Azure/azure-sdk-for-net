@@ -65,7 +65,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 services.AddSingleton(_router);
             }
-            services.SetHubProtocol(_configuration);
             services.AddSingleton(services.ToList() as IReadOnlyCollection<ServiceDescriptor>);
             return services.BuildServiceProvider()
                .GetRequiredService<IInternalServiceHubContextStore>();

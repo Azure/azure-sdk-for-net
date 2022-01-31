@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> The state of Sql Agent. </param>
-        internal SqlAgentConfigurationData(ResourceIdentifier id, string name, ResourceType type, SqlAgentConfigurationPropertiesState? state) : base(id, name, type)
+        internal SqlAgentConfigurationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SqlAgentConfigurationPropertiesState? state) : base(id, name, type, systemData)
         {
             State = state;
         }

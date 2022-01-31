@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<AfdOrigin> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdOriginCreateOrUpdateOperation for mocking. </summary>
         protected AfdOriginCreateOrUpdateOperation()
         {
         }
 
-        internal AfdOriginCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdOriginCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AfdOrigin>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdOriginCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdOriginData.DeserializeAfdOriginData(document.RootElement);
-            return new AfdOrigin(_operationBase, data);
+            return new AfdOrigin(_armClient, data);
         }
 
         async ValueTask<AfdOrigin> IOperationSource<AfdOrigin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdOriginData.DeserializeAfdOriginData(document.RootElement);
-            return new AfdOrigin(_operationBase, data);
+            return new AfdOrigin(_armClient, data);
         }
     }
 }
