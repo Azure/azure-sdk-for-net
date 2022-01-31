@@ -19,7 +19,7 @@ namespace Azure.Storage.Tests
     {
         public StorageBearerTokenChallengeAuthorizationPolicyTests(bool isAsync) : base(isAsync) { }
 
-        private string[] scopes = { "scope1", "scope2" };
+        private string[] scopes = { "https://storage.azure.com/.default" };
         private string expectedTenantId;
         private MockCredential cred;
 
