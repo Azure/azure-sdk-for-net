@@ -19,11 +19,6 @@ namespace Azure.Communication
         private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
         /// <summary>
-        /// Default time span in seconds before token expiry that causes the <see cref="TokenRefresher"/> to be called.
-        /// </summary>
-        internal const int DefaultExpiringOffsetSeconds = 600;
-
-        /// <summary>
         /// Determines whether the token should be proactively renewed prior to its expiry or on demand.
         /// </summary>
         internal bool RefreshProactively { get; }
@@ -42,11 +37,6 @@ namespace Azure.Communication
             get => _asyncTokenRefresher = _asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(TokenRefresher(cancellationToken)));
             set => _asyncTokenRefresher = value;
         }
-
-        /// <summary>
-        /// The time span before token expiry that causes the <see cref="TokenRefresher"/> to be called if <see cref="RefreshProactively"/> is true.
-        /// </summary>
-        public TimeSpan RefreshIntervalBeforeTokenExpiry { get; set; } = new TimeSpan(0, 0, 0, DefaultExpiringOffsetSeconds);
 
         /// <summary>
         /// The callback function that acquires a fresh token from the Communication Identity API, e.g. by calling the CommunicationIdentityClient.
