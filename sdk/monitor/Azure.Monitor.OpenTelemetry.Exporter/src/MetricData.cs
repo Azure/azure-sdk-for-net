@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
-using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
