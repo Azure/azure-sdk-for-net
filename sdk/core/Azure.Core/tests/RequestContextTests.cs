@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class RequestContextTests
+    public class RequestContextTests : SyncAsyncPolicyTestBase
     {
+        public RequestContextTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         [Test]
         public void CanCastFromErrorOptions()
         {
@@ -213,7 +219,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task CanSuppressLogging()
+        public async Task CanSuppressLoggingAsError()
         {
             // logging setup
             var listener = new TestEventListener();
@@ -240,11 +246,31 @@ namespace Azure.Core.Tests
             Assert.AreEqual(e.GetProperty<int>("status"), 404);
         }
 
-        //[NonParallelizable]
-        //public void CanSuppressTracing()
-        //{
-        //   TODO: implement
-        //}
+        [Test]
+        [NonParallelizable]
+        public async Task CanSuppressTracingAsError()
+        {
+            Activity activity = null;
+            using var testListener = new TestDiagnosticListener("Azure.Core");
+
+            // pipeline setup
+            MockTransport mockTransport = new MockTransport(_ =>
+            {
+                activity = Activity.Current;
+                MockResponse mockResponse = new MockResponse(409);
+                return mockResponse;
+            });
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Microsoft.Azure.Core.Cool.Tests", HttpMessageSanitizer.Default) });
+            var context = new RequestContext();
+            context.AddClassifier(new int[] { 409 }, isError: false);
+            var message = pipeline.CreateMessage(context);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+
+            CollectionAssert.DoesNotContain(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
+        }
 
         #region Helpers
         private class TestOptions : ClientOptions
