@@ -27,7 +27,8 @@ RUN apt-get update \
         dbus-x11 \
         gnome-keyring \
         python \
-        curl
+        curl \
+        git
 
 # Below taken from https://hub.docker.com/_/microsoft-dotnet-sdk
 # https://github.com/dotnet/dotnet-docker/blob/ca43690e6e4ac9c21a990a012dc2eb07e78daf08/src/sdk/5.0/focal/amd64/Dockerfile
