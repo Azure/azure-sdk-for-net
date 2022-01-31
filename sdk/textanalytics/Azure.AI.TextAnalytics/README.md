@@ -124,7 +124,7 @@ For each supported operation, `TextAnalyticsClient` provides a method that accep
 Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single document.  An operation's return value also may optionally include information about the document and how it was processed.
 
 ### Return value Collection
-A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the document batch and how it was processed.
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was successful or unsuccessful for the given document. It may optionally include information about the document batch and how it was processed.
 
 ### Long-Running Operations
 
@@ -336,7 +336,7 @@ Run a predictive model to identify a collection of entities found in the passed-
 string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
                     Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped
                     down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                    Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
+                    Microsoft originally moved its headquarters to Bellevue, Washington in January 1979, but is now
                     headquartered in Redmond";
 
 try

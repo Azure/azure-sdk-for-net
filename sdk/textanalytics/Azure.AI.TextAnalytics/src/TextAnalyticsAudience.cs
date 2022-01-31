@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsAudience AzureChina { get; } = new TextAnalyticsAudience(AzureChinaValue);
 
         /// <summary> Azure Government. </summary>
-        public static TextAnalyticsAudience AzurerGovernment { get; } = new TextAnalyticsAudience(AzureGovernmentValue);
+        public static TextAnalyticsAudience AzureGovernment { get; } = new TextAnalyticsAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
         public static TextAnalyticsAudience AzurePublicCloud { get; } = new TextAnalyticsAudience(AzurePublicCloudValue);
