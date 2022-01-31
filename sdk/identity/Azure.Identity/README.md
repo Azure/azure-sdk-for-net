@@ -78,7 +78,7 @@ The `DefaultAzureCredential` will attempt to authenticate via the following mech
  - Azure PowerShell - If the developer has authenticated an account via the Azure PowerShell `Connect-AzAccount` command, the `DefaultAzureCredential` will authenticate with that account.
  - Interactive - If enabled the `DefaultAzureCredential` will interactively authenticate the developer via the current system's default browser.
 
-> Override the default Azure Active Directory tenant by using the setting the `AZURE_TENANT_ID` environment variable or providing the `DefaultAzureCredential` constructor with `DefaultAzureCredentialOptions` and provide the tenant Id like `new DefaultAzureCredentialOptions( VisualStudioCodeTenantId = tenantId)`.
+> Override the default Azure Active Directory tenant by setting the `AZURE_TENANT_ID` environment variable or by configuring one of the TenantId properties on `DefaultAzureCredentialOptions`. For example: `new DefaultAzureCredentialOptions( VisualStudioCodeTenantId = tenantId)`.
 
 ## Examples
 
