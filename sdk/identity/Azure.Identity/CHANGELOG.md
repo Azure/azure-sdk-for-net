@@ -56,7 +56,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
-- Tomas Pajurek _([tpajurek-dtml](https://github.com/tpajurek-dtml))_
+- Tomas Pajurek _([tpajurek-dtml](https://github.com/tomas-pajurek))_
 
 ### Features Added
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class PrivateLinkResourceData : Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
-        internal PrivateLinkResourceData()
+        public PrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
