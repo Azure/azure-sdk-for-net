@@ -68,15 +68,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
         }
 
-        public TelemetryItem(ref MetricPoint metricPoint)
-        {
-            this.Name = PartA_Name_Mapping[TelemetryType.Metric];
-            this.Time = FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime);
-            this.Tags = new ChangeTrackingDictionary<string, string>();
-
-            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-        }
-
         internal void SetResource(string roleName, string roleInstance)
         {
             Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;

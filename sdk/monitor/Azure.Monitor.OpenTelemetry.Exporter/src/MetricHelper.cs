@@ -23,7 +23,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     foreach (ref var metricPoint in metric.GetMetricPoints())
                     {
-                        telemetryItem = new TelemetryItem(ref metricPoint);
+                        string name = "Metric";
+                        string utcTime = TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime);
+                        telemetryItem = new TelemetryItem(name, utcTime);
+                        telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
                         telemetryItem.InstrumentationKey = instrumentationKey;
                         telemetryItem.SetResource(roleName, roleInstance);
 
