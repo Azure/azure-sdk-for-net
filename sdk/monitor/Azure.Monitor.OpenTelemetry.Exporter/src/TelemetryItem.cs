@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             [TelemetryType.Dependency] = "RemoteDependency",
             [TelemetryType.Message] = "Message",
             [TelemetryType.Event] = "Event",
+            [TelemetryType.Metric] = "Metric",
         };
 
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
