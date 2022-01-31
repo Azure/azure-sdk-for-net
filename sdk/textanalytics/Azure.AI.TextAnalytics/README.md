@@ -336,7 +336,7 @@ Run a predictive model to identify a collection of entities found in the passed-
 string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
                     Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped
                     down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                    Microsoft originally moved its headquarters to Bellevue, Washington in January 1979, but is now
+                    Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
                     headquartered in Redmond";
 
 try
