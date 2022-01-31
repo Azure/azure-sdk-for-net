@@ -62,8 +62,8 @@ namespace Azure
             CopyOrMerge(statusCodes, ref isError ? ref ErrorCodes : ref NonErrorCodes);
         }
 
-        internal int[]? ErrorCodes;// { get; private set; }
-        internal int[]? NonErrorCodes;// { get; private set; }
+        internal int[]? ErrorCodes;
+        internal int[]? NonErrorCodes;
 
         private static void CopyOrMerge(int[] source, ref int[]? target)
         {
