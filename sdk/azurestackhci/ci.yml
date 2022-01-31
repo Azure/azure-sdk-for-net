@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/azure.resourcemanager.stackhci/
+    - sdk/azurestackhci/
 
 pr:
   branches:
