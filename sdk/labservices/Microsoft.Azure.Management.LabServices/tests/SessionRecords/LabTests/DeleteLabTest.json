@@ -16,7 +16,7 @@
           "FxVersion/4.700.21.51404",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22543",
-          "Microsoft.Azure.Management.LabServices.LabServicesClient/4.1.0.0"
+          "Microsoft.Azure.Management.LabServices.LabServicesClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
