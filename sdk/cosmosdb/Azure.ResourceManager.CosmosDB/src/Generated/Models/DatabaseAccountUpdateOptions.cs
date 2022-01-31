@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         public string Location { get; set; }
         /// <summary> Identity for the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
@@ -78,5 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public IList<string> NetworkAclBypassResourceIds { get; }
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
+        /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
+        public Capacity Capacity { get; set; }
     }
 }

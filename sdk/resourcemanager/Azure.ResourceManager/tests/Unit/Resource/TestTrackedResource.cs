@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Tests
         }
 
         public TestTrackedResource(ResourceIdentifier id, string location)
-            :base(id, id.Name, id.ResourceType, null, location)
+            :base(id, id.Name, id.ResourceType, null, null, location)
         {
         }
     }

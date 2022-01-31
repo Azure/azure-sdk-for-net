@@ -19,10 +19,9 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -83,7 +82,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
@@ -149,7 +148,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageGraph");
             scope.Start();
             try
             {
@@ -214,7 +213,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try
             {
@@ -279,7 +278,7 @@ namespace Azure.Analytics.Purview.Catalog
             Argument.AssertNotNull(guid, nameof(guid));
             Argument.AssertNotNull(direction, nameof(direction));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.NextPageLineage");
             scope.Start();
             try
             {
