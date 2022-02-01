@@ -27,8 +27,28 @@ namespace Azure.AI.Personalizer
                 {
                     List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
 
-                    return new DecisionContextDocument(action.Id, actionFeatures);
+                    return new DecisionContextDocument(action.Id, actionFeatures, null, null);
                 }).ToArray();
+        }
+
+        /// <summary> Initializes a new instance of DecisionContext. </summary>
+        /// <param name="rankRequest"> Personalizer multi-slot rank options </param>
+        /// <param name="slotIdToFeatures"> A map from slot id to its features </param>
+        public DecisionContext(PersonalizerRankMultiSlotOptions rankRequest, Dictionary<string, IList<object>> slotIdToFeatures)
+        {
+            this.ContextFeatures = rankRequest.ContextFeatures.Select(f => JsonSerializer.Serialize(f)).ToList();
+
+            this.Documents = rankRequest.Actions
+                .Select(action =>
+                {
+                    List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
+
+                    return new DecisionContextDocument(action.Id, actionFeatures, null, null);
+                }).ToArray();
+            this.Slots = rankRequest.Slots?
+                .Select(
+                    slot => new DecisionContextDocument(null, null, slot.Id, serializeFeatures(slotIdToFeatures[slot.Id]))
+                ).ToArray();
         }
 
         /// <summary> Properties from url </summary>
@@ -45,5 +65,16 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("_slots")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DecisionContextDocument[] Slots { get; set; }
+
+        private static List<string> serializeFeatures(IList<object> features)
+        {
+            List<string> result = new List<string>();
+            foreach (object feature in features)
+            {
+                result.Add(JsonSerializer.Serialize(feature));
+            }
+
+            return result;
+        }
     }
 }

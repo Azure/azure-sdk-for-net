@@ -5,6 +5,7 @@ using System.Text.Json;
 using Rl.Net;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Personalizer
 {
@@ -86,6 +87,55 @@ namespace Azure.AI.Personalizer
             personalizerRankResult.RewardActionId = originalActions.ElementAt(chosenActionIndex)?.Id;
 
             return personalizerRankResult;
+        }
+
+        public static PersonalizerMultiSlotRankResult GenerateMultiSlotRankResponse(IList<PersonalizerRankableAction> actions, MultiSlotResponseDetailed multiSlotResponse, string eventId)
+        {
+            Dictionary<long, string> actionIndexToActionId = actions
+                .Select((action, index) => new { action, index = (long)index })
+                .ToDictionary(obj => obj.index, obj => obj.action.Id);
+
+            List<PersonalizerSlotResult> slots = multiSlotResponse
+                .Select(slotRanking => new PersonalizerSlotResult(slotRanking.SlotId, actionIndexToActionId[slotRanking.ChosenAction]))
+                .ToList();
+
+            return new PersonalizerMultiSlotRankResult(slots, eventId);
+        }
+
+        public static int[] ExtractBaselineActionsFromRankRequest(PersonalizerRankMultiSlotOptions request)
+        {
+            Dictionary<string, int> actionIdToIndex = GetActionIdToIndexMapping(request.Actions);
+            return request.Slots
+                .Select(slot => actionIdToIndex[slot.BaselineAction]).ToArray();
+        }
+
+        public static Dictionary<string, int> GetActionIdToIndexMapping(IList<PersonalizerRankableAction> actions)
+        {
+            return actions
+                .Select((action, index) => new { action, index })
+                .ToDictionary(obj => obj.action.Id, obj => obj.index);
+        }
+
+        public static IList<object> GetIncludedActionsForSlot(PersonalizerSlotOptions slot, Dictionary<string, int> actionIdToActionIndex)
+        {
+            IList<object> res = new ChangeTrackingList<object>();
+            if (slot.Features != null)
+            {
+                foreach (object feature in slot.Features)
+                {
+                    res.Add(feature);
+                }
+            }
+            if (slot.ExcludedActions != null)
+            {
+                List<int> excludeActionIndices = slot.ExcludedActions.Select(id => actionIdToActionIndex[id]).ToList();
+                var allActionIndices = new HashSet<int>(actionIdToActionIndex.Values);
+                List<int> includedActionIndices = allActionIndices.Except(excludeActionIndices).ToList();
+                var includedActions = (new { _inc = includedActionIndices });
+                res.Add(includedActions);
+            }
+
+            return res;
         }
     }
 }

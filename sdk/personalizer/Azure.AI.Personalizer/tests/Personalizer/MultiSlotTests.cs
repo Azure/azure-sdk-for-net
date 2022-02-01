@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
@@ -13,7 +14,7 @@ namespace Azure.AI.Personalizer.Tests
         {
         }
 
-        private static IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>()
+        public static IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>()
         {
             new PersonalizerRankableAction(
                 id: "NewsArticle",
@@ -57,13 +58,13 @@ namespace Azure.AI.Personalizer.Tests
             excludedActions: new List<string>() { "EntertainmentArticle" }
             );
 
-        private static IList<PersonalizerSlotOptions> slots = new List<PersonalizerSlotOptions>()
+        public static IList<PersonalizerSlotOptions> slots = new List<PersonalizerSlotOptions>()
         {
             slot1,
             slot2
         };
 
-        private static IList<object> contextFeatures = new List<object>()
+        public static IList<object> contextFeatures = new List<object>()
         {
             new { User = new { ProfileType = "AnonymousUser", LatLong = "47.6,-122.1"} },
             new { Environment = new { DayOfMonth = "28", MonthOfYear = "8", Weather = "Sunny"} },
@@ -75,6 +76,18 @@ namespace Azure.AI.Personalizer.Tests
         public async Task MultiSlotTest()
         {
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false);
+            await MultiSlotTestInner(client);
+        }
+
+        [Test]
+        public async Task MultiSlotLocalInferenceTest()
+        {
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true);
+            await MultiSlotTestInner(client);
+        }
+
+        private async Task MultiSlotTestInner(PersonalizerClient client)
+        {
             await RankMultiSlotNullParameters(client);
             await RankMultiSlotNoOptions(client);
             await RankMultiSlot(client);

@@ -266,7 +266,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await MultiSlotRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rankProcessor.Rank(options);
+                }
+                else
+                {
+                    return await MultiSlotRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -316,7 +323,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return MultiSlotRestClient.Rank(options, cancellationToken);
+                if (_isLocalInference)
+                {
+                    return _rankProcessor.Rank(options);
+                }
+                else
+                {
+                    return MultiSlotRestClient.Rank(options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -545,8 +559,8 @@ namespace Azure.AI.Personalizer
                 //ToDo: TASK 13057958 Working on changes to support token authentication in RLClient
                 //config["http.token.key"] = authValue;
             }
-            config["interaction.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.1/logs/interactions";
-            config["observation.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.1/logs/observations";
+            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.1/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.1/logs/observations";
             //ToDo: TASK 13057958 Working on changes to support model api in RL.Net
             config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.1/model";
             config["vw.commandline"] = _personalizerPolicy.Arguments;

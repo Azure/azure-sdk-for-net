@@ -1,0 +1,620 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-9c74aaef3c2d614ab5f080d13d24efa5-d8a8ad2a3170a94c-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "77242a1418c89aed2ca4cffffac5f01d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "17aa5251-25e6-42f1-a927-2498bac39e06",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "350",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:54:18 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7343"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT10M",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "1601-01-01T00:00:00",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-10-30T14:41:23"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "358",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0baceb84bc11f9409b3f6363a2a6e9b8-3de509323a27f945-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6c2e10c38025c73b07ed276898c74db7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "rewardWaitTime": "PT10M",
+        "defaultReward": 0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.200000003,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "1601-01-01T00:00:00Z",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-10-30T14:41:23Z"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "197ee618-d5cd-4381-9438-74969f602adb",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "351",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:54:29 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10620"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT10M",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "1601-01-01T00:00:00",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-10-30T14:41:23Z"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/policy",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "107",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-19a0e4612ac1da4581f72b6d18ea8e81-8920b4421300a543-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2aa28569500ac4cb522cdcabf5ab4e76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "multiSlot",
+        "arguments": "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d64f301a-1d7e-4bca-8b41-bec966ada9d4",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "130",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:55:08 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "9284"
+      },
+      "ResponseBody": {
+        "name": "8c31472ec8f14f65b37a0b1a14d743c7",
+        "arguments": "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "511",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0c60895e3f2edd4697e2bd613367eb10-cdbbc916d02fc949-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "983383f511bd939def5d6fdbf0840165",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "actions": [
+          {
+            "id": "NewsArticle",
+            "features": [
+              {
+                "Type": "News"
+              }
+            ]
+          },
+          {
+            "id": "SportsArticle",
+            "features": [
+              {
+                "Type": "Sports"
+              }
+            ]
+          },
+          {
+            "id": "EntertainmentArticle",
+            "features": [
+              {
+                "Type": "Entertainment"
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": "Main Article",
+            "features": [
+              {
+                "Size": "Large",
+                "Position": "Top Middle"
+              }
+            ],
+            "excludedActions": [
+              "SportsArticle",
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "features": [
+              {
+                "Size": "Small",
+                "Position": "Bottom Right"
+              }
+            ],
+            "excludedActions": [
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "SportsArticle"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "eb35cecc-49a1-477d-a636-7542ebca562d",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "166",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:55:45 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6687"
+      },
+      "ResponseBody": {
+        "slots": [
+          {
+            "id": "Main Article",
+            "rewardActionId": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "rewardActionId": "SportsArticle"
+          }
+        ],
+        "eventId": "2ae3324436df4819aa636316fd5c9e22-8Io5X"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "771",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-dc7d4c7f96b2ef4bbdcb172245f6c48c-b8ca17898f77d54b-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "75961857c5237312446a1af9a48fd15c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "contextFeatures": [
+          {
+            "User": {
+              "ProfileType": "AnonymousUser",
+              "LatLong": "47.6,-122.1"
+            }
+          },
+          {
+            "Environment": {
+              "DayOfMonth": "28",
+              "MonthOfYear": "8",
+              "Weather": "Sunny"
+            }
+          },
+          {
+            "Device": {
+              "Mobile": true,
+              "Windows": true
+            }
+          },
+          {
+            "RecentActivity": {
+              "ItemsInCart": 3
+            }
+          }
+        ],
+        "actions": [
+          {
+            "id": "NewsArticle",
+            "features": [
+              {
+                "Type": "News"
+              }
+            ]
+          },
+          {
+            "id": "SportsArticle",
+            "features": [
+              {
+                "Type": "Sports"
+              }
+            ]
+          },
+          {
+            "id": "EntertainmentArticle",
+            "features": [
+              {
+                "Type": "Entertainment"
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": "Main Article",
+            "features": [
+              {
+                "Size": "Large",
+                "Position": "Top Middle"
+              }
+            ],
+            "excludedActions": [
+              "SportsArticle",
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "features": [
+              {
+                "Size": "Small",
+                "Position": "Bottom Right"
+              }
+            ],
+            "excludedActions": [
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "SportsArticle"
+          }
+        ],
+        "deferActivation": false
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "75a2d446-8415-4c5e-8898-ac0d56b05a19",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "166",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:55:46 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "656"
+      },
+      "ResponseBody": {
+        "slots": [
+          {
+            "id": "Main Article",
+            "rewardActionId": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "rewardActionId": "SportsArticle"
+          }
+        ],
+        "eventId": "3c8158a8634e45938889eef503eca7c1-8Io5Y"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "798",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5ce193a77854fa4f8cbede3b8b961658-db3b4a8ec090dd4e-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1473b19eb49357f9e70e3aade0f0d4cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "contextFeatures": [
+          {
+            "User": {
+              "ProfileType": "AnonymousUser",
+              "LatLong": "47.6,-122.1"
+            }
+          },
+          {
+            "Environment": {
+              "DayOfMonth": "28",
+              "MonthOfYear": "8",
+              "Weather": "Sunny"
+            }
+          },
+          {
+            "Device": {
+              "Mobile": true,
+              "Windows": true
+            }
+          },
+          {
+            "RecentActivity": {
+              "ItemsInCart": 3
+            }
+          }
+        ],
+        "actions": [
+          {
+            "id": "NewsArticle",
+            "features": [
+              {
+                "Type": "News"
+              }
+            ]
+          },
+          {
+            "id": "SportsArticle",
+            "features": [
+              {
+                "Type": "Sports"
+              }
+            ]
+          },
+          {
+            "id": "EntertainmentArticle",
+            "features": [
+              {
+                "Type": "Entertainment"
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": "Main Article",
+            "features": [
+              {
+                "Size": "Large",
+                "Position": "Top Middle"
+              }
+            ],
+            "excludedActions": [
+              "SportsArticle",
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "features": [
+              {
+                "Size": "Small",
+                "Position": "Bottom Right"
+              }
+            ],
+            "excludedActions": [
+              "EntertainmentArticle"
+            ],
+            "baselineAction": "SportsArticle"
+          }
+        ],
+        "eventId": "sdkTestEventId",
+        "deferActivation": false
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "5a5ee1b3-3e35-4e59-a67b-1179972d8abb",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "142",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 Oct 2021 14:55:47 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "438"
+      },
+      "ResponseBody": {
+        "slots": [
+          {
+            "id": "Main Article",
+            "rewardActionId": "NewsArticle"
+          },
+          {
+            "id": "Side Bar",
+            "rewardActionId": "SportsArticle"
+          }
+        ],
+        "eventId": "sdkTestEventId"
+      }
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-544c75c6622f6042b29c0e5559b2491d-92512bae864a3745-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "dc54762ad9152f5271c05453f7a4ee60",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "reward": [
+          {
+            "slotId": "testSlot",
+            "value": 1
+          }
+        ]
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "147e62d7-78a6-4c0b-9712-5d15e21a90a9",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Fri, 15 Oct 2021 14:55:47 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "417"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-76c0680ef4b76c49a79cd70ba19fdbcd-7b068eb1e129124c-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3e3c138bed11a2d11f3e8d158a649254",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "reward": [
+          {
+            "slotId": "testSlot",
+            "value": 1
+          }
+        ]
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "514ad45a-8228-44b0-b988-833e3f9f6c0c",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Fri, 15 Oct 2021 14:55:47 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "41"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/activate",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d9cc3eb2ee96b04cbcea9ee817a9e6c7-c6c37aa27c2f804e-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20211014.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2dce4d96f53ac4475e43a2d360a66042",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "50174a48-9297-4f7f-bc69-99fd75a90600",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Fri, 15 Oct 2021 14:55:48 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "PERSONALIZER_API_KEY_MULTI_SLOT": "Sanitized",
+    "PERSONALIZER_ENDPOINT_MULTI_SLOT": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "2030725436"
+  }
+}

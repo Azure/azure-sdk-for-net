@@ -11,22 +11,40 @@ namespace Azure.AI.Personalizer
     {
         /// <summary> Initializes a new instance of DecisionContextDocument. </summary>
         /// <param name="id"> Id of the decision context document </param>
-        /// <param name="Json"> The json features </param>
-        public DecisionContextDocument(string id, List<string> Json)
+        /// <param name="json"> The json features </param>
+        /// <param name="slotId"> The slot Id </param>
+        /// <param name="slotJson"> The slot json features </param>
+        public DecisionContextDocument(string id, List<string> json, string slotId, List<string> slotJson)
         {
             ID = id;
-            JSON = Json;
+            JSON = json;
+            SlotId = slotId;
+            SlotJson = slotJson;
         }
-            /// <summary>
-            /// Supply _tag for online evaluation
-            /// </summary>
-            [JsonPropertyName("_tag")]
+
+        /// <summary>
+        /// Supply _tag for online evaluation
+        /// </summary>
+        [JsonPropertyName("_tag")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ID
         {
-            get;
-            set;
+            get { return this?.Marginal?.ID; }
+            set
+            {
+                this.Marginal = value == null ? null : new DecisionContextDocumentId
+                {
+                    ID = value
+                };
+            }
         }
+
+        /// <summary>
+        /// Provide feature for marginal feature based on document id.
+        /// </summary>
+        [JsonPropertyName("i")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public DecisionContextDocumentId Marginal { get; set; }
 
         /// <summary>
         /// Provide source set feature.
@@ -63,6 +81,6 @@ namespace Azure.AI.Personalizer
         [JsonPropertyName("sj")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> SlotJson { get; }
+        public List<string> SlotJson { get; set; }
     }
 }
