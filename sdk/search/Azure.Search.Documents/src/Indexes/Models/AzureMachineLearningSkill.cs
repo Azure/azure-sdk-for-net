@@ -5,46 +5,41 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
-    /// The Azure Machine Learning skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model.
-    /// Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment.
+    /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-aml-skill">AzureMachineLearningSkill</see> allows you to extend AI enrichment with a
+    /// custom <see href="https://docs.microsoft.com/azure/machine-learning/overview-what-is-azure-machine-learning">Azure Machine Learning</see> (AML) model.
+    /// <para>Once an AML model is <see href="https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace">trained and deployed</see>,
+    /// an AML skill integrates it into AI enrichment.</para>
     /// </summary>
     public partial class AzureMachineLearningSkill : IUtf8JsonSerializable
     {
-        /// <summary> (Required for key authentication) The key for the AML service. </summary>
+        /// <summary>The key for the Azure Machine Learning service. This is required for key-based authentication.</summary>
         [CodeGenMember("AuthenticationKey")]
         public string AuthenticationKey { get; }
 
-        /// <summary> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent.
+        /// <summary>The scoring URI of the Azure Machine Learning service to which the JSON payload will be sent.
+        /// This is required when using no authentication or key-based authentication.
         /// <para>Only the https URI scheme is allowed.</para>
         /// </summary>
         [CodeGenMember("ScoringUri")]
         public Uri ScoringUri { get; }
 
-        /// <summary> (Required for token authentication). The Azure Resource Manager resource ID of the AML service.
+        /// <summary>The <see href="https://docs.microsoft.com/dotnet/api/azure.core.resourceidentifier">Azure Resource Manager resource ID</see> of the Azure Machine Learning service.
+        /// This is required for token-based authentication.
         /// <para>It should be in the format "subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}".</para>
         /// </summary>
         [CodeGenMember("ResourceId")]
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
-        [CodeGenMember("Region")]
-        public AzureLocation? Location { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
+        /// <summary> The <see href="https://docs.microsoft.com/dotnet/api/azure.core.azurelocation">region</see> the Azure Machine Learning service is deployed in.
+        /// This is optional for token-based authentication.
         /// </summary>
-        /// <param name="inputs">Inputs of the skills could be a column in the source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill.</param>
-        /// <param name="scoringUri">The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed.</param>
-        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri scoringUri) :
-            this(inputs, outputs)
-        {
-            ScoringUri = scoringUri ?? throw new ArgumentNullException(nameof(scoringUri));
-        }
+        [CodeGenMember("Region")]
+        public AzureLocation? Location { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
@@ -53,10 +48,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs">The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill.</param>
         /// <param name="authenticationKey">The key for the AML service.</param>
         /// <param name="scoringUri">The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed.</param>
-        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey) :
-            this(inputs, outputs, scoringUri)
+        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey = default) :
+            this(inputs, outputs)
         {
-            AuthenticationKey = authenticationKey ?? throw new ArgumentNullException(nameof(authenticationKey));
+            ScoringUri = scoringUri ?? throw new ArgumentNullException(nameof(scoringUri));
+            AuthenticationKey = authenticationKey;
         }
 
         /// <summary>
@@ -64,16 +60,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill.</param>
-        /// <param name="resourceId">The Azure Resource Manager resource Id of the Aml service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}.</param>
-        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string resourceId) :
+        /// <param name="resourceId">The Azure Resource Manager resource Id of the AML service.
+        /// It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}.</param>
+        /// <param name="location">The region the AML service is deployed in.</param>
+        public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, ResourceIdentifier resourceId, AzureLocation? location = default) :
             this(inputs, outputs)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-
-            ResourceId = new ResourceIdentifier(resourceId);
+            ResourceId = resourceId ?? throw new ArgumentNullException(nameof(resourceId));
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of AmlSkill. </summary>
