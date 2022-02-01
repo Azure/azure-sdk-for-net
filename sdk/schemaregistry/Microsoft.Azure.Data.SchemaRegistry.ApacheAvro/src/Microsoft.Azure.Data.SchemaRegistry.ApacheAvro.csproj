@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
-    <PackageReference Include="Azure.Core.Experimental" />  
     <PackageReference Include="Azure.Data.SchemaRegistry" />  
   </ItemGroup>
 
@@ -21,5 +20,8 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
 </Project>
