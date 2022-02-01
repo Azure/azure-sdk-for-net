@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Core;
-using static System.Net.WebRequestMethods;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <para>Once an AML model is <see href="https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace">trained and deployed</see>,
     /// an AML skill integrates it into AI enrichment.</para>
     /// </summary>
-    public partial class AzureMachineLearningSkill : IUtf8JsonSerializable
+    public partial class AzureMachineLearningSkill
     {
         /// <summary>The key for the Azure Machine Learning service. This is required for key-based authentication.</summary>
         [CodeGenMember("AuthenticationKey")]
@@ -28,18 +26,30 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("ScoringUri")]
         public Uri ScoringUri { get; }
 
+        [CodeGenMember("ResourceId")]
+        internal string RawResourceId
+        {
+            get => ResourceId?.ToString();
+            set => ResourceId = (value == null) ? null : new ResourceIdentifier(value);
+        }
+
         /// <summary>The <see href="https://docs.microsoft.com/dotnet/api/azure.core.resourceidentifier">Azure Resource Manager resource ID</see> of the Azure Machine Learning service.
         /// This is required for token-based authentication.
         /// <para>It should be in the format "subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}".</para>
         /// </summary>
-        [CodeGenMember("ResourceId")]
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; private set; }
+
+        [CodeGenMember("Region")]
+        internal string RawLocation
+        {
+            get => Location?.ToString();
+            set => Location = (value == null) ? default : new AzureLocation(value);
+        }
 
         /// <summary> The <see href="https://docs.microsoft.com/dotnet/api/azure.core.azurelocation">region</see> the Azure Machine Learning service is deployed in.
         /// This is optional for token-based authentication.
         /// </summary>
-        [CodeGenMember("Region")]
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
@@ -86,228 +96,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             ODataType = "#Microsoft.Skills.Custom.AmlSkill";
-        }
-
-        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ScoringUri))
-            {
-                if (ScoringUri != null)
-                {
-                    writer.WritePropertyName("uri");
-                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
-                }
-                else
-                {
-                    writer.WriteNull("uri");
-                }
-            }
-            if (Optional.IsDefined(AuthenticationKey))
-            {
-                if (AuthenticationKey != null)
-                {
-                    writer.WritePropertyName("key");
-                    writer.WriteStringValue(AuthenticationKey);
-                }
-                else
-                {
-                    writer.WriteNull("key");
-                }
-            }
-            if (Optional.IsDefined(ResourceId))
-            {
-                if (ResourceId != null)
-                {
-                    writer.WritePropertyName("resourceId");
-                    writer.WriteStringValue(ResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("resourceId");
-                }
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout");
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("region");
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsDefined(DegreeOfParallelism))
-            {
-                if (DegreeOfParallelism != null)
-                {
-                    writer.WritePropertyName("degreeOfParallelism");
-                    writer.WriteNumberValue(DegreeOfParallelism.Value);
-                }
-                else
-                {
-                    writer.WriteNull("degreeOfParallelism");
-                }
-            }
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Context))
-            {
-                writer.WritePropertyName("context");
-                writer.WriteStringValue(Context);
-            }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
-        internal static AzureMachineLearningSkill DeserializeAzureMachineLearningSkill(JsonElement element)
-        {
-            Optional<Uri> uri = default;
-            Optional<string> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<TimeSpan?> timeout = default;
-            Optional<AzureLocation?> region = default;
-            Optional<int?> degreeOfParallelism = default;
-            string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("uri"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        uri = null;
-                        continue;
-                    }
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("key"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        key = null;
-                        continue;
-                    }
-                    key = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceId = null;
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("timeout"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        timeout = null;
-                        continue;
-                    }
-                    timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("region"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        region = null;
-                        continue;
-                    }
-                    region = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("degreeOfParallelism"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        degreeOfParallelism = null;
-                        continue;
-                    }
-                    degreeOfParallelism = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("context"))
-                {
-                    context = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputs"))
-                {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
-                    }
-                    inputs = array;
-                    continue;
-                }
-                if (property.NameEquals("outputs"))
-                {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
-                    }
-                    outputs = array;
-                    continue;
-                }
-            }
-            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Optional.ToNullable(timeout), region, Optional.ToNullable(degreeOfParallelism));
         }
     }
 }
