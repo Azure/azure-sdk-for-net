@@ -420,7 +420,7 @@ namespace Azure.Communication.Identity
                 });
 
             var ex = Assert.Throws<InvalidOperationException>(() => tokenCredential.GetToken());
-            Assert.That(ex?.Message, Is.EqualTo("The token returned from the token_refresher is expired."));
+            Assert.That(ex?.Message, Is.EqualTo("The token returned from the tokenRefresher is expired."));
             string RefreshToken(CancellationToken _)
             {
                 return expiredToken;

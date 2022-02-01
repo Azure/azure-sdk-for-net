@@ -140,7 +140,7 @@ namespace Azure.Communication
                         ? await RefreshAsync(cancellationToken).ConfigureAwait(false)
                         : Refresh(cancellationToken);
                     if (!IsTokenValid(result))
-                        throw new InvalidOperationException("The token returned from the token_refresher is expired.");
+                        throw new InvalidOperationException("The token returned from the tokenRefresher is expired.");
 
                     lock (_syncLock)
                     {
