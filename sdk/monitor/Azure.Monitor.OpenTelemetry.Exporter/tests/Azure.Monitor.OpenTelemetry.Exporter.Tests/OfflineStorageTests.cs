@@ -192,7 +192,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             return new TelemetryItem(activity, ref monitorTags);
         }
