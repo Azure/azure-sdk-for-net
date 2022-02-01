@@ -24,7 +24,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="objectIdentifier"> Returns the Object ID of the user who updated the ImmutabilityPolicy. </param>
         /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </param>
         /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
-        internal UpdateHistoryProperty(ImmutabilityPolicyUpdateType? update, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn)
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
+        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </param>
+        internal UpdateHistoryProperty(ImmutabilityPolicyUpdateType? update, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
             Update = update;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
@@ -32,6 +34,8 @@ namespace Azure.ResourceManager.Storage.Models
             ObjectIdentifier = objectIdentifier;
             TenantId = tenantId;
             Upn = upn;
+            AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
         }
 
         /// <summary> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </summary>
@@ -46,5 +50,9 @@ namespace Azure.ResourceManager.Storage.Models
         public string TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </summary>
         public string Upn { get; }
+        /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </summary>
+        public bool? AllowProtectedAppendWrites { get; }
+        /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </summary>
+        public bool? AllowProtectedAppendWritesAll { get; }
     }
 }

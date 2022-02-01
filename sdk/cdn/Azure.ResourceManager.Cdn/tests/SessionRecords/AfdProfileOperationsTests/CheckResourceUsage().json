@@ -95,7 +95,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "78",
+        "Content-Length": "88",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210924.1",
@@ -108,6 +108,7 @@
         "sku": {
           "name": "Standard_AzureFrontDoor"
         },
+        "tags": {},
         "location": "Global",
         "properties": {}
       },

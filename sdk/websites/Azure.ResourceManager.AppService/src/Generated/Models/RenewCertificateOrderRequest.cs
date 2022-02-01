@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,11 +22,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        internal RenewCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType type, string kind, int? keySize, string csr, bool? isPrivateKeyExternal) : base(id, name, type, kind)
+        internal RenewCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? keySize, string csr, bool? isPrivateKeyExternal) : base(id, name, type, systemData, kind)
         {
             KeySize = keySize;
             Csr = csr;
