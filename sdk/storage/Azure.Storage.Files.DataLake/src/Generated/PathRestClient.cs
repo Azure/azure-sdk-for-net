@@ -170,7 +170,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="encryptionContext"> Encryption context contains metadata necessary to decrypt file.  Not valid for directories. </param>
+        /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
@@ -210,7 +210,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="encryptionContext"> Encryption context contains metadata necessary to decrypt file.  Not valid for directories. </param>
+        /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
