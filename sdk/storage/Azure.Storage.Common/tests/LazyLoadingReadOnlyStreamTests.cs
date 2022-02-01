@@ -30,11 +30,12 @@ namespace Azure.Storage.Tests
         // int just fills the generic requirements, we don't care about data type and go straight for the raw response
         private static Mock<LazyLoadingReadOnlyStream<int>.DownloadInternalAsync> GetDownloadBehavior(byte[] data)
         {
+            // just mocking a response from injectable behavior
             var downloadMock = new Mock<LazyLoadingReadOnlyStream<int>.DownloadInternalAsync>();
             downloadMock.Setup(_ => _(It.IsAny<HttpRange>(), It.IsAny<DownloadTransactionalHashingOptions>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
                 .Returns<HttpRange, DownloadTransactionalHashingOptions, bool, CancellationToken>((range, hashOptions, async, CancellationToken) =>
                 {
-                    var mockResponse = new Mock<Response<IDownloadedContent>>(MockBehavior.Loose);
+                    var mockResponse = new Mock<Response<IDownloadedContent>>(MockBehavior.Strict);
                     mockResponse.SetupGet(r => r.Value)
                         .Returns(new DownloadedContent(new MemoryStream(data, (int)range.Offset, (int)(range.Length ?? (data.Length - range.Offset)))));
                     mockResponse.Setup(r => r.GetRawResponse())
@@ -48,11 +49,12 @@ namespace Azure.Storage.Tests
         // int just fills the generic requirements, we don't care about data type and go straight for the raw response
         private static Mock<LazyLoadingReadOnlyStream<int>.GetPropertiesAsync> GetPropertiesBehavior(int totalResourceLength)
         {
+            // just mocking a response from injectable behavior
             var propertiesMock = new Mock<LazyLoadingReadOnlyStream<int>.GetPropertiesAsync>();
             propertiesMock.Setup(_ => _(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
                 .Returns<bool, CancellationToken>((value, cancellationToken) =>
                 {
-                    var mockResponse = new Mock<Response<int>>(MockBehavior.Loose);
+                    var mockResponse = new Mock<Response<int>>(MockBehavior.Strict);
                     mockResponse.Setup(r => r.GetRawResponse())
                         .Returns(() => new MockResponse(200).AddHeader("Content-Length", totalResourceLength.ToString()));
                     return Task.FromResult(mockResponse.Object);
