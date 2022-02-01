@@ -21,8 +21,10 @@ namespace Azure.Messaging
         public virtual string? ContentType { get; set; }
 
         /// <summary>
-        /// Gets whether the message is read only or not.
+        /// Gets whether the message is read only or not. This
+        /// can be overriden by inheriting classes to specify whether or
+        /// not the message can be modified.
         /// </summary>
-        public virtual bool IsReadOnly { get; set; }
+        public virtual bool IsReadOnly { get; }
     }
 }

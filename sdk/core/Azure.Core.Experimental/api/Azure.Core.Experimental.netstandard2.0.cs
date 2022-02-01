@@ -109,6 +109,6 @@ namespace Azure.Messaging
         public MessageWithMetadata() { }
         public virtual string? ContentType { get { throw null; } set { } }
         public virtual System.BinaryData? Data { get { throw null; } set { } }
-        public virtual bool IsReadOnly { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }
