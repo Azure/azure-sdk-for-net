@@ -38,7 +38,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                if (ex.InnerException?.Source == "System.Net.Http")
+                {
+                    HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                }
             }
 
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
@@ -62,7 +65,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                if (ex.InnerException?.Source == "System.Net.Http")
+                {
+                    HttpPipelineHelper.SaveTelemetryToStorage(storage, message);
+                }
             }
 
             return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
