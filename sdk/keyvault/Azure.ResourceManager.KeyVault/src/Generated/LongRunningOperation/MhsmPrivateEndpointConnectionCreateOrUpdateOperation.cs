@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
         }
 
-        internal MhsmPrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, Response<MhsmPrivateEndpointConnectionData> response)
+        internal MhsmPrivateEndpointConnectionCreateOrUpdateOperation(ArmClient armClient, Response<MhsmPrivateEndpointConnectionData> response)
         {
-            _operation = new OperationOrResponseInternals<MhsmPrivateEndpointConnection>(Response.FromValue(new MhsmPrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<MhsmPrivateEndpointConnection>(Response.FromValue(new MhsmPrivateEndpointConnection(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

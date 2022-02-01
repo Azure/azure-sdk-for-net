@@ -23,9 +23,10 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing collection of DisasterRecovery and their operations over its parent. </summary>
     public partial class DisasterRecoveryCollection : ArmCollection, IEnumerable<DisasterRecovery>, IAsyncEnumerable<DisasterRecovery>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
-        private readonly DisasterRecoveriesRestOperations _disasterRecoveriesRestClient;
+        private readonly ClientDiagnostics _disasterRecoveryClientDiagnostics;
+        private readonly DisasterRecoveriesRestOperations _disasterRecoveryRestClient;
+        private readonly ClientDiagnostics _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics;
+        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryDisasterRecoveryConfigsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryCollection"/> class for mocking. </summary>
         protected DisasterRecoveryCollection()
@@ -36,10 +37,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DisasterRecoveryCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DisasterRecovery.ResourceType, out string apiVersion);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _disasterRecoveriesRestClient = new DisasterRecoveriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _disasterRecoveryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryApiVersion);
+            _disasterRecoveryRestClient = new DisasterRecoveriesRestOperations(_disasterRecoveryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +71,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
+            using var scope = _disasterRecoveryClientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _disasterRecoveriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(this, response);
+                var response = _disasterRecoveryRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
+                var operation = new DisasterRecoveryCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +103,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
+            using var scope = _disasterRecoveryClientDiagnostics.CreateScope("DisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(this, response);
+                var response = await _disasterRecoveryRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DisasterRecoveryCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,14 +129,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                    throw _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +154,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                    throw await _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DisasterRecovery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +179,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _disasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +204,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _disasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DisasterRecovery>(null, response.GetRawResponse());
-                return Response.FromValue(new DisasterRecovery(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DisasterRecovery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +229,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +252,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
 
-            using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
+            using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +273,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<DisasterRecovery> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _disasterRecoveryConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +288,12 @@ namespace Azure.ResourceManager.EventHubs
             }
             Page<DisasterRecovery> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _disasterRecoveryConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +311,12 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<DisasterRecovery>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _disasterRecoveryConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +326,12 @@ namespace Azure.ResourceManager.EventHubs
             }
             async Task<Page<DisasterRecovery>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
+                using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _disasterRecoveryConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DisasterRecovery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -353,8 +356,5 @@ namespace Azure.ResourceManager.EventHubs
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DisasterRecovery, DisasterRecoveryData> Construct() { }
     }
 }

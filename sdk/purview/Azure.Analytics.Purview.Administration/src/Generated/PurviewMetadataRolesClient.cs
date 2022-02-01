@@ -21,9 +21,8 @@ namespace Azure.Analytics.Purview.Administration
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -72,7 +71,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -80,7 +79,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataRolesRequest(context)
                         : CreateGetMetadataRolesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -127,7 +126,7 @@ namespace Azure.Analytics.Purview.Administration
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -135,7 +134,7 @@ namespace Azure.Analytics.Purview.Administration
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetMetadataRolesRequest(context)
                         : CreateGetMetadataRolesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of PacketCapture and their operations over its parent. </summary>
     public partial class PacketCaptureCollection : ArmCollection, IEnumerable<PacketCapture>, IAsyncEnumerable<PacketCapture>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PacketCapturesRestOperations _packetCapturesRestClient;
+        private readonly ClientDiagnostics _packetCaptureClientDiagnostics;
+        private readonly PacketCapturesRestOperations _packetCaptureRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PacketCaptureCollection"/> class for mocking. </summary>
         protected PacketCaptureCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal PacketCaptureCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(PacketCapture.ResourceType, out string apiVersion);
-            _packetCapturesRestClient = new PacketCapturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _packetCaptureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PacketCapture.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(PacketCapture.ResourceType, out string packetCaptureApiVersion);
+            _packetCaptureRestClient = new PacketCapturesRestOperations(_packetCaptureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, packetCaptureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _packetCapturesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken);
-                var operation = new PacketCaptureCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                var response = _packetCaptureRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken);
+                var operation = new PacketCaptureCreateOrUpdateOperation(ArmClient, _packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _packetCapturesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PacketCaptureCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _packetCapturesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
+                var response = await _packetCaptureRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new PacketCaptureCreateOrUpdateOperation(ArmClient, _packetCaptureClientDiagnostics, Pipeline, _packetCaptureRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.Get");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.Get");
             scope.Start();
             try
             {
-                var response = _packetCapturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
+                var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                    throw _packetCaptureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.Get");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.Get");
             scope.Start();
             try
             {
-                var response = await _packetCapturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
+                var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                    throw await _packetCaptureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _packetCapturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
+                var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<PacketCapture>(null, response.GetRawResponse());
-                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _packetCapturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<PacketCapture>(null, response.GetRawResponse());
-                return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCapture(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.Exists");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.Exists");
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<PacketCapture> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetAll");
+                using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _packetCapturesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(this, value)), null, response.GetRawResponse());
+                    var response = _packetCaptureRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<PacketCapture>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PacketCaptureCollection.GetAll");
+                using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _packetCapturesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(this, value)), null, response.GetRawResponse());
+                    var response = await _packetCaptureRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,8 +321,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, PacketCapture, PacketCaptureData> Construct() { }
     }
 }

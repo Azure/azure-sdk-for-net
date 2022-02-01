@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -22,8 +21,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of DdosCustomPolicy and their operations over its parent. </summary>
     public partial class DdosCustomPolicyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DdosCustomPoliciesRestOperations _ddosCustomPoliciesRestClient;
+        private readonly ClientDiagnostics _ddosCustomPolicyClientDiagnostics;
+        private readonly DdosCustomPoliciesRestOperations _ddosCustomPolicyRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DdosCustomPolicyCollection"/> class for mocking. </summary>
         protected DdosCustomPolicyCollection()
@@ -34,9 +33,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal DdosCustomPolicyCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DdosCustomPolicy.ResourceType, out string apiVersion);
-            _ddosCustomPoliciesRestClient = new DdosCustomPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _ddosCustomPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosCustomPolicy.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(DdosCustomPolicy.ResourceType, out string ddosCustomPolicyApiVersion);
+            _ddosCustomPolicyRestClient = new DdosCustomPoliciesRestOperations(_ddosCustomPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ddosCustomPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,12 +64,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ddosCustomPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ddosCustomPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var response = _ddosCustomPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
+                var operation = new DdosCustomPolicyCreateOrUpdateOperation(ArmClient, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -97,12 +96,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ddosCustomPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _ddosCustomPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var response = await _ddosCustomPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DdosCustomPolicyCreateOrUpdateOperation(ArmClient, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,14 +122,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken);
+                var response = _ddosCustomPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                    throw _ddosCustomPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,14 +147,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _ddosCustomPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DdosCustomPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,14 +172,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _ddosCustomPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
+                var response = _ddosCustomPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,14 +197,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _ddosCustomPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicy(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
+            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -259,54 +258,5 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
-
-        /// <summary> Filters the list of <see cref="DdosCustomPolicy" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DdosCustomPolicy.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="DdosCustomPolicy" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(DdosCustomPolicy.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData> Construct() { }
     }
 }

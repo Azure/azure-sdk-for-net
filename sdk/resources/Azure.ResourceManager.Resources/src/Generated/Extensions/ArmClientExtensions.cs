@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         public static Deployment GetDeployment(this ArmClient armClient, ResourceIdentifier id)
         {
             Deployment.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Deployment(clientOptions, credential, uri, pipeline, id));
+            return new Deployment(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         public static Application GetApplication(this ArmClient armClient, ResourceIdentifier id)
         {
             Application.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Application(clientOptions, credential, uri, pipeline, id));
+            return new Application(armClient, id);
         }
         #endregion
 
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Resources
         public static ApplicationDefinition GetApplicationDefinition(this ArmClient armClient, ResourceIdentifier id)
         {
             ApplicationDefinition.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ApplicationDefinition(clientOptions, credential, uri, pipeline, id));
+            return new ApplicationDefinition(armClient, id);
         }
         #endregion
 
-        #region JitRequestDefinition
-        /// <summary> Gets an object representing a JitRequestDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region JitRequest
+        /// <summary> Gets an object representing a JitRequest along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JitRequestDefinition" /> object. </returns>
-        public static JitRequestDefinition GetJitRequestDefinition(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JitRequest" /> object. </returns>
+        public static JitRequest GetJitRequest(this ArmClient armClient, ResourceIdentifier id)
         {
-            JitRequestDefinition.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new JitRequestDefinition(clientOptions, credential, uri, pipeline, id));
+            JitRequest.ValidateResourceId(id);
+            return new JitRequest(armClient, id);
         }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
         public static DeploymentScript GetDeploymentScript(this ArmClient armClient, ResourceIdentifier id)
         {
             DeploymentScript.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DeploymentScript(clientOptions, credential, uri, pipeline, id));
+            return new DeploymentScript(armClient, id);
         }
         #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
         public static ScriptLog GetScriptLog(this ArmClient armClient, ResourceIdentifier id)
         {
             ScriptLog.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ScriptLog(clientOptions, credential, uri, pipeline, id));
+            return new ScriptLog(armClient, id);
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         public static TemplateSpec GetTemplateSpec(this ArmClient armClient, ResourceIdentifier id)
         {
             TemplateSpec.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TemplateSpec(clientOptions, credential, uri, pipeline, id));
+            return new TemplateSpec(armClient, id);
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
         public static TemplateSpecVersion GetTemplateSpecVersion(this ArmClient armClient, ResourceIdentifier id)
         {
             TemplateSpecVersion.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TemplateSpecVersion(clientOptions, credential, uri, pipeline, id));
+            return new TemplateSpecVersion(armClient, id);
         }
         #endregion
     }

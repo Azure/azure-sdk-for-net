@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ServiceEndpointPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyCreateOrUpdateOperation for mocking. </summary>
         protected ServiceEndpointPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal ServiceEndpointPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServiceEndpointPolicyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServiceEndpointPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPolicyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);
-            return new ServiceEndpointPolicy(_operationBase, data);
+            return new ServiceEndpointPolicy(_armClient, data);
         }
 
         async ValueTask<ServiceEndpointPolicy> IOperationSource<ServiceEndpointPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);
-            return new ServiceEndpointPolicy(_operationBase, data);
+            return new ServiceEndpointPolicy(_armClient, data);
         }
     }
 }

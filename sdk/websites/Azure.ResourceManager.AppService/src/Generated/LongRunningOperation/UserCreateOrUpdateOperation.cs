@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal UserCreateOrUpdateOperation(ArmResource operationsBase, Response<UserData> response)
+        internal UserCreateOrUpdateOperation(ArmClient armClient, Response<UserData> response)
         {
-            _operation = new OperationOrResponseInternals<User>(Response.FromValue(new User(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<User>(Response.FromValue(new User(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

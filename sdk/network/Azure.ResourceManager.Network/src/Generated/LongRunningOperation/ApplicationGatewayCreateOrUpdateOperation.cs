@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ApplicationGateway> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ApplicationGatewayCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationGatewayCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationGatewayCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationGatewayCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ApplicationGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationGatewayCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement);
-            return new ApplicationGateway(_operationBase, data);
+            return new ApplicationGateway(_armClient, data);
         }
 
         async ValueTask<ApplicationGateway> IOperationSource<ApplicationGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement);
-            return new ApplicationGateway(_operationBase, data);
+            return new ApplicationGateway(_armClient, data);
         }
     }
 }

@@ -28,12 +28,17 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedDatabasesRestOperations _managedDatabasesRestClient;
-        private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
+
+        private readonly ClientDiagnostics _managedDatabaseClientDiagnostics;
+        private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics;
+        private readonly ManagedDatabaseColumnsRestOperations _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient;
+        private readonly ClientDiagnostics _managedDatabaseQueriesClientDiagnostics;
         private readonly ManagedDatabaseQueriesRestOperations _managedDatabaseQueriesRestClient;
+        private readonly ClientDiagnostics _managedDatabaseSecurityEventsClientDiagnostics;
         private readonly ManagedDatabaseSecurityEventsRestOperations _managedDatabaseSecurityEventsRestClient;
-        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics;
+        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient;
         private readonly ManagedDatabaseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabase"/> class for mocking. </summary>
@@ -42,56 +47,32 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedDatabase"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedDatabase(ArmResource options, ManagedDatabaseData data) : base(options, data.Id)
+        internal ManagedDatabase(ArmClient armClient, ManagedDatabaseData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabase"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedDatabase(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ManagedDatabase(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ManagedDatabase"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedDatabase(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _managedDatabasesRestClient = new ManagedDatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
+            _managedDatabaseRestClient = new ManagedDatabasesRestOperations(_managedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumn.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            _managedDatabaseQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(_managedDatabaseQueriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _managedDatabaseSecurityEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(_managedDatabaseSecurityEventsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -128,14 +109,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Get");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
+                    throw await _managedDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +132,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedDatabase> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Get");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabase(this, response.Value), response.GetRawResponse());
+                    throw _managedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetAvailableLocations");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -190,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetAvailableLocations");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -211,12 +192,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ManagedDatabaseDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Delete");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Delete");
             scope.Start();
             try
             {
-                var response = await _managedDatabasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedDatabaseDeleteOperation(_clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _managedDatabaseRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedDatabaseDeleteOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,12 +217,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ManagedDatabaseDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Delete");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Delete");
             scope.Start();
             try
             {
-                var response = _managedDatabasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ManagedDatabaseDeleteOperation(_clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _managedDatabaseRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ManagedDatabaseDeleteOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,15 +243,15 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.AddTag");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,15 +269,15 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.AddTag");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -316,7 +297,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.SetTags");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.SetTags");
             scope.Start();
             try
             {
@@ -324,8 +305,8 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -345,7 +326,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.SetTags");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.SetTags");
             scope.Start();
             try
             {
@@ -353,8 +334,8 @@ namespace Azure.ResourceManager.Sql
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,15 +352,15 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -396,15 +377,15 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabase(this, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ManagedDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -428,12 +409,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Update");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = await _managedDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedDatabaseUpdateOperation(this, _clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _managedDatabaseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedDatabaseUpdateOperation(ArmClient, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -460,12 +441,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.Update");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.Update");
             scope.Start();
             try
             {
-                var response = _managedDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ManagedDatabaseUpdateOperation(this, _clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _managedDatabaseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new ManagedDatabaseUpdateOperation(ArmClient, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -492,11 +473,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -507,11 +488,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -538,11 +519,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -553,11 +534,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -581,7 +562,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
+            using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
             scope.Start();
             try
             {
@@ -607,7 +588,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
+            using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseQuery");
             scope.Start();
             try
             {
@@ -639,7 +620,7 @@ namespace Azure.ResourceManager.Sql
 
             async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
                 scope.Start();
                 try
                 {
@@ -654,7 +635,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<QueryStatistics>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
                 scope.Start();
                 try
                 {
@@ -688,7 +669,7 @@ namespace Azure.ResourceManager.Sql
 
             Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
                 scope.Start();
                 try
                 {
@@ -703,7 +684,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<QueryStatistics> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
+                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabase.GetQueryStatistics");
                 scope.Start();
                 try
                 {
@@ -734,12 +715,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
             scope.Start();
             try
             {
-                var response = await _managedDatabasesRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedDatabaseCompleteRestoreOperation(_clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _managedDatabaseRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedDatabaseCompleteRestoreOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -766,12 +747,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabase.CompleteRestore");
             scope.Start();
             try
             {
-                var response = _managedDatabasesRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ManagedDatabaseCompleteRestoreOperation(_clientDiagnostics, Pipeline, _managedDatabasesRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _managedDatabaseRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new ManagedDatabaseCompleteRestoreOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -797,7 +778,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
+                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -812,7 +793,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SecurityEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
+                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -842,7 +823,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
+                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -857,7 +838,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SecurityEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
+                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabase.GetManagedDatabaseSecurityEventsByDatabase");
                 scope.Start();
                 try
                 {
@@ -886,11 +867,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -901,11 +882,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -930,11 +911,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -945,11 +926,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -975,11 +956,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1003,11 +984,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1030,11 +1011,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1045,11 +1026,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1074,11 +1055,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1089,11 +1070,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1119,11 +1100,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1147,11 +1128,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)

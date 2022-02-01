@@ -138,6 +138,11 @@
 # PRLabel: %Cognitive - Metrics Advisor
 /sdk/metricsadvisor/                            @kinelski
 
+# PRLabel: %Cognitive - Anomaly Detector
+/sdk/anomalydetector/                           @conhua @mengaims @juaduan @moreOver0
+
+# ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
+/sdk/anomalydetector/Azure.AI.AnomalyDetector     @conhua @mengaims @juaduan @moreOver0
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
@@ -279,7 +284,7 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai
+/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai @Aashish93-stack
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention

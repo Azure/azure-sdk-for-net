@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            {
+                writer.WritePropertyName("allowProtectedAppendWritesAll");
+                writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -30,6 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> hasLegalHold = default;
             IList<string> tags = default;
+            Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"))
@@ -52,8 +58,18 @@ namespace Azure.ResourceManager.Storage.Models
                     tags = array;
                     continue;
                 }
+                if (property.NameEquals("allowProtectedAppendWritesAll"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    allowProtectedAppendWritesAll = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new LegalHold(Optional.ToNullable(hasLegalHold), tags);
+            return new LegalHold(Optional.ToNullable(hasLegalHold), tags, Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

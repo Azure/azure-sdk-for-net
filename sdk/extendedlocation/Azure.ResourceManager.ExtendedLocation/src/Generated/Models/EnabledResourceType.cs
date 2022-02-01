@@ -24,20 +24,17 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
         /// <param name="extensionType"> Cluster Extension Type. </param>
         /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
-        internal EnabledResourceType(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string clusterExtensionId, string extensionType, IList<EnabledResourceTypePropertiesTypesMetadataItem> typesMetadata) : base(id, name, type)
+        internal EnabledResourceType(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string clusterExtensionId, string extensionType, IList<EnabledResourceTypePropertiesTypesMetadataItem> typesMetadata) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             ClusterExtensionId = clusterExtensionId;
             ExtensionType = extensionType;
             TypesMetadata = typesMetadata;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Cluster Extension ID. </summary>
         public string ClusterExtensionId { get; set; }
         /// <summary> Cluster Extension Type. </summary>

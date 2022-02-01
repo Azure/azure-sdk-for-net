@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Subscription
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note that this
+        /// is not the same as subscription name and this doesn’t have any other
+        /// lifecycle need beyond the request for subscription creation.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -64,10 +66,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PutAliasResponse>> CreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionAliasResponse>> CreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PutAliasResponse> _response = await BeginCreateWithHttpMessagesAsync(aliasName, body, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SubscriptionAliasResponse> _response = await BeginCreateWithHttpMessagesAsync(aliasName, body, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,7 +77,9 @@ namespace Microsoft.Azure.Management.Subscription
         /// Get Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note that this
+        /// is not the same as subscription name and this doesn’t have any other
+        /// lifecycle need beyond the request for subscription creation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -98,13 +102,13 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PutAliasResponse>> GetWithHttpMessagesAsync(string aliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionAliasResponse>> GetWithHttpMessagesAsync(string aliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (aliasName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "aliasName");
             }
-            string apiVersion = "2020-09-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -214,7 +218,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PutAliasResponse>();
+            var _result = new AzureOperationResponse<SubscriptionAliasResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -227,7 +231,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PutAliasResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionAliasResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -250,7 +254,9 @@ namespace Microsoft.Azure.Management.Subscription
         /// Delete Alias.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note that this
+        /// is not the same as subscription name and this doesn’t have any other
+        /// lifecycle need beyond the request for subscription creation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -276,7 +282,7 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "aliasName");
             }
-            string apiVersion = "2020-09-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -401,7 +407,7 @@ namespace Microsoft.Azure.Management.Subscription
         }
 
         /// <summary>
-        /// Get Alias Subscription.
+        /// List Alias Subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -418,9 +424,9 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PutAliasListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionAliasListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2020-09-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -528,7 +534,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PutAliasListResult>();
+            var _result = new AzureOperationResponse<SubscriptionAliasListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -541,7 +547,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PutAliasListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionAliasListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -564,7 +570,9 @@ namespace Microsoft.Azure.Management.Subscription
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note that this
+        /// is not the same as subscription name and this doesn’t have any other
+        /// lifecycle need beyond the request for subscription creation.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -589,7 +597,7 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PutAliasResponse>> BeginCreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionAliasResponse>> BeginCreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (aliasName == null)
             {
@@ -599,11 +607,7 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            if (body != null)
-            {
-                body.Validate();
-            }
-            string apiVersion = "2020-09-01";
+            string apiVersion = "2021-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -720,7 +724,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PutAliasResponse>();
+            var _result = new AzureOperationResponse<SubscriptionAliasResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -733,7 +737,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PutAliasResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionAliasResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -751,7 +755,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PutAliasResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionAliasResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

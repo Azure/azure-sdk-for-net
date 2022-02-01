@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of SiteExtensionInfo and their operations over its parent. </summary>
     public partial class SiteSiteextensionCollection : ArmCollection, IEnumerable<SiteSiteextension>, IAsyncEnumerable<SiteSiteextension>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSiteextensionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSiteextensionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSiteextensionCollection"/> class for mocking. </summary>
         protected SiteSiteextensionCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteSiteextensionCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteSiteextension.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteSiteextensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSiteextension.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteSiteextension.ResourceType, out string siteSiteextensionWebAppsApiVersion);
+            _siteSiteextensionWebAppsRestClient = new WebAppsRestOperations(_siteSiteextensionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSiteextensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
-                var operation = new SiteSiteextensionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
+                var response = _siteSiteextensionWebAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
+                var operation = new SiteSiteextensionCreateOrUpdateOperation(ArmClient, _siteSiteextensionWebAppsClientDiagnostics, Pipeline, _siteSiteextensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSiteextensionCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
+                var response = await _siteSiteextensionWebAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSiteextensionCreateOrUpdateOperation(ArmClient, _siteSiteextensionWebAppsClientDiagnostics, Pipeline, _siteSiteextensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
+                var response = _siteSiteextensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
+                    throw _siteSiteextensionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSiteextension(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSiteextensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
+                    throw await _siteSiteextensionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteSiteextension(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
+                var response = _siteSiteextensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteSiteextension>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSiteextension(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSiteextensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteSiteextension>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSiteextension(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
             scope.Start();
             try
             {
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteSiteextension> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSiteextensionWebAppsRestClient.ListSiteExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteSiteextension> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteExtensionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteSiteextensionWebAppsRestClient.ListSiteExtensionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteSiteextension>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSiteExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSiteextensionWebAppsRestClient.ListSiteExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteSiteextension>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListSiteExtensionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSiteextensionWebAppsRestClient.ListSiteExtensionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -359,8 +359,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSiteextension, SiteExtensionInfoData> Construct() { }
     }
 }

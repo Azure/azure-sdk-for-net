@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of RouteFilterRule and their operations over its parent. </summary>
     public partial class RouteFilterRuleCollection : ArmCollection, IEnumerable<RouteFilterRule>, IAsyncEnumerable<RouteFilterRule>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RouteFilterRulesRestOperations _routeFilterRulesRestClient;
+        private readonly ClientDiagnostics _routeFilterRuleClientDiagnostics;
+        private readonly RouteFilterRulesRestOperations _routeFilterRuleRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilterRuleCollection"/> class for mocking. </summary>
         protected RouteFilterRuleCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RouteFilterRuleCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(RouteFilterRule.ResourceType, out string apiVersion);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterRule.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(RouteFilterRule.ResourceType, out string routeFilterRuleApiVersion);
+            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(_routeFilterRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.CreateOrUpdate");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routeFilterRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
+                var response = _routeFilterRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken);
+                var operation = new RouteFilterRuleCreateOrUpdateOperation(ArmClient, _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeFilterRuleParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.CreateOrUpdate");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _routeFilterRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
+                var response = await _routeFilterRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new RouteFilterRuleCreateOrUpdateOperation(ArmClient, _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _routeFilterRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken);
+                var response = _routeFilterRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                    throw _routeFilterRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RouteFilterRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _routeFilterRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
+                var response = await _routeFilterRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                    throw await _routeFilterRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RouteFilterRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _routeFilterRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken);
+                var response = _routeFilterRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<RouteFilterRule>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilterRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _routeFilterRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _routeFilterRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<RouteFilterRule>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteFilterRule(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<RouteFilterRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
+                using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _routeFilterRulesRestClient.ListByRouteFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _routeFilterRuleRestClient.ListByRouteFilter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<RouteFilterRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
+                using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _routeFilterRulesRestClient.ListByRouteFilterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _routeFilterRuleRestClient.ListByRouteFilterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<RouteFilterRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
+                using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _routeFilterRulesRestClient.ListByRouteFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _routeFilterRuleRestClient.ListByRouteFilterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<RouteFilterRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
+                using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _routeFilterRulesRestClient.ListByRouteFilterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _routeFilterRuleRestClient.ListByRouteFilterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, RouteFilterRule, RouteFilterRuleData> Construct() { }
     }
 }

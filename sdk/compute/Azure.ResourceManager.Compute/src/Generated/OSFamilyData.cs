@@ -23,9 +23,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
+        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, OSFamilyProperties properties) : base(id, name, type, systemData)
         {
             Location = location;
             Properties = properties;

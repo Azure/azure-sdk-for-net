@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal TemplateSpecCreateOrUpdateOperation(ArmResource operationsBase, Response<TemplateSpecData> response)
+        internal TemplateSpecCreateOrUpdateOperation(ArmClient armClient, Response<TemplateSpecData> response)
         {
-            _operation = new OperationOrResponseInternals<TemplateSpec>(Response.FromValue(new TemplateSpec(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<TemplateSpec>(Response.FromValue(new TemplateSpec(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

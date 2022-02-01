@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of VirtualApplianceSite and their operations over its parent. </summary>
     public partial class VirtualApplianceSiteCollection : ArmCollection, IEnumerable<VirtualApplianceSite>, IAsyncEnumerable<VirtualApplianceSite>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualApplianceSitesRestOperations _virtualApplianceSitesRestClient;
+        private readonly ClientDiagnostics _virtualApplianceSiteClientDiagnostics;
+        private readonly VirtualApplianceSitesRestOperations _virtualApplianceSiteRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteCollection"/> class for mocking. </summary>
         protected VirtualApplianceSiteCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualApplianceSiteCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(VirtualApplianceSite.ResourceType, out string apiVersion);
-            _virtualApplianceSitesRestClient = new VirtualApplianceSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _virtualApplianceSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualApplianceSite.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VirtualApplianceSite.ResourceType, out string virtualApplianceSiteApiVersion);
+            _virtualApplianceSiteRestClient = new VirtualApplianceSitesRestOperations(_virtualApplianceSiteClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplianceSiteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken);
-                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualApplianceSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
+                var response = _virtualApplianceSiteRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken);
+                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(ArmClient, _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _virtualApplianceSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
+                var response = await _virtualApplianceSiteRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualApplianceSiteCreateOrUpdateOperation(ArmClient, _virtualApplianceSiteClientDiagnostics, Pipeline, _virtualApplianceSiteRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken);
+                var response = _virtualApplianceSiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
+                    throw _virtualApplianceSiteClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualApplianceSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
+                    throw await _virtualApplianceSiteClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualApplianceSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSitesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
+                var response = _virtualApplianceSiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<VirtualApplianceSite>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualApplianceSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSitesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplianceSiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<VirtualApplianceSite>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplianceSite(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualApplianceSite(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
+            using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<VirtualApplianceSite> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
+                using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSitesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualApplianceSiteRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualApplianceSite> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
+                using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSitesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualApplianceSiteRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<VirtualApplianceSite>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
+                using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSitesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualApplianceSiteRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualApplianceSite>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
+                using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSitesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualApplianceSiteRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplianceSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData> Construct() { }
     }
 }

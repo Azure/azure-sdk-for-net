@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Storage
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly FileSharesRestOperations _fileSharesRestClient;
+
+        private readonly ClientDiagnostics _fileShareClientDiagnostics;
+        private readonly FileSharesRestOperations _fileShareRestClient;
         private readonly FileShareData _data;
 
         /// <summary> Initializes a new instance of the <see cref="FileShare"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of the <see cref = "FileShare"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FileShare(ArmResource options, FileShareData data) : base(options, data.Id)
+        internal FileShare(ArmClient armClient, FileShareData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="FileShare"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FileShare(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal FileShare(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="FileShare"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FileShare(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _fileSharesRestClient = new FileSharesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _fileShareClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string fileShareApiVersion);
+            _fileShareRestClient = new FileSharesRestOperations(_fileShareClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileShareApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -111,14 +90,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FileShare>> GetAsync(string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Get");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Get");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                    throw await _fileShareClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,14 +112,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FileShare> Get(string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Get");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Get");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, expand, xMsSnapshot, cancellationToken);
+                var response = _fileShareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, expand, xMsSnapshot, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                    throw _fileShareClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +133,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.GetAvailableLocations");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -172,7 +151,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.GetAvailableLocations");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -192,11 +171,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<FileShareDeleteOperation> DeleteAsync(bool waitForCompletion, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Delete");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Delete");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken).ConfigureAwait(false);
                 var operation = new FileShareDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -216,11 +195,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual FileShareDeleteOperation Delete(bool waitForCompletion, string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Delete");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Delete");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken);
+                var response = _fileShareRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken);
                 var operation = new FileShareDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -244,12 +223,12 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Update");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Update");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                var response = await _fileShareRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,12 +248,12 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(fileShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Update");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Update");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken);
-                return Response.FromValue(new FileShare(this, response.Value), response.GetRawResponse());
+                var response = _fileShareRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken);
+                return Response.FromValue(new FileShare(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -294,11 +273,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Restore");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Restore");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, deletedShare, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, deletedShare, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -319,11 +298,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(deletedShare));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Restore");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Restore");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, deletedShare, cancellationToken);
+                var response = _fileShareRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, deletedShare, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -334,16 +313,16 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LeaseShareResponse>> LeaseAsync(string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LeaseShareResponse>> LeaseAsync(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Lease");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Lease");
             scope.Start();
             try
             {
-                var response = await _fileSharesRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -354,16 +333,16 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="parameters"> Lease Share request body. </param>
+        /// <param name="xMsSnapshot"> Optional. Specify the snapshot time to lease a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LeaseShareResponse> Lease(string xMsSnapshot = null, LeaseShareRequest parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<LeaseShareResponse> Lease(LeaseShareRequest parameters = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Lease");
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShare.Lease");
             scope.Start();
             try
             {
-                var response = _fileSharesRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, xMsSnapshot, parameters, cancellationToken);
+                var response = _fileShareRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, xMsSnapshot, cancellationToken);
                 return response;
             }
             catch (Exception e)

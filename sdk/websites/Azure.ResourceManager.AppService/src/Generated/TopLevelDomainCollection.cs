@@ -15,8 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -25,8 +23,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of TopLevelDomain and their operations over its parent. </summary>
     public partial class TopLevelDomainCollection : ArmCollection, IEnumerable<TopLevelDomain>, IAsyncEnumerable<TopLevelDomain>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopLevelDomainsRestOperations _topLevelDomainsRestClient;
+        private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
+        private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomainCollection"/> class for mocking. </summary>
         protected TopLevelDomainCollection()
@@ -37,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal TopLevelDomainCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(TopLevelDomain.ResourceType, out string apiVersion);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", TopLevelDomain.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(TopLevelDomain.ResourceType, out string topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,14 +63,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken);
+                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                    throw _topLevelDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -93,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                    throw await _topLevelDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new TopLevelDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,14 +116,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
+                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,14 +141,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<TopLevelDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -191,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -215,12 +213,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<TopLevelDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topLevelDomainsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _topLevelDomainRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,12 +228,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<TopLevelDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topLevelDomainsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _topLevelDomainRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,12 +254,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<TopLevelDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topLevelDomainsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _topLevelDomainRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,12 +269,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<TopLevelDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topLevelDomainsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _topLevelDomainRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,52 +283,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="TopLevelDomain" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(TopLevelDomain.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="TopLevelDomain" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomainCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(TopLevelDomain.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<TopLevelDomain> IEnumerable<TopLevelDomain>.GetEnumerator()
@@ -347,8 +299,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, TopLevelDomain, TopLevelDomainData> Construct() { }
     }
 }

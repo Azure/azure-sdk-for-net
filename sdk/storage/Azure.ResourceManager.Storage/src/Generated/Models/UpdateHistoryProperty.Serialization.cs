@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> objectIdentifier = default;
             Optional<string> tenantId = default;
             Optional<string> upn = default;
+            Optional<bool> allowProtectedAppendWrites = default;
+            Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("update"))
@@ -68,8 +70,28 @@ namespace Azure.ResourceManager.Storage.Models
                     upn = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("allowProtectedAppendWrites"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    allowProtectedAppendWrites = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("allowProtectedAppendWritesAll"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    allowProtectedAppendWritesAll = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new UpdateHistoryProperty(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, tenantId.Value, upn.Value);
+            return new UpdateHistoryProperty(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, tenantId.Value, upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

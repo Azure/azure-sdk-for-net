@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ExtendedLocation
 
         internal static CustomLocationData DeserializeCustomLocationData(JsonElement element)
         {
-            Optional<LocationIdentity> identity = default;
-            Optional<SystemData> systemData = default;
+            Optional<SystemAssignedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<CustomLocationPropertiesAuthentication> authentication = default;
             Optional<IList<string>> clusterExtensionIds = default;
             Optional<string> displayName = default;
@@ -104,17 +104,7 @@ namespace Azure.ResourceManager.ExtendedLocation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = LocationIdentity.DeserializeLocationIdentity(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -145,6 +135,11 @@ namespace Azure.ResourceManager.ExtendedLocation
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -215,7 +210,7 @@ namespace Azure.ResourceManager.ExtendedLocation
                     continue;
                 }
             }
-            return new CustomLocationData(id, name, type, tags, location, identity.Value, systemData, authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value);
+            return new CustomLocationData(id, name, type, systemData, tags, location, identity, authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value);
         }
     }
 }

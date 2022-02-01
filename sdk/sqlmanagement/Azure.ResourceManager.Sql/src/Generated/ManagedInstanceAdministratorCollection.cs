@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ManagedInstanceAdministrator and their operations over its parent. </summary>
     public partial class ManagedInstanceAdministratorCollection : ArmCollection, IEnumerable<ManagedInstanceAdministrator>, IAsyncEnumerable<ManagedInstanceAdministrator>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedInstanceAdministratorsRestOperations _managedInstanceAdministratorsRestClient;
+        private readonly ClientDiagnostics _managedInstanceAdministratorClientDiagnostics;
+        private readonly ManagedInstanceAdministratorsRestOperations _managedInstanceAdministratorRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAdministratorCollection"/> class for mocking. </summary>
         protected ManagedInstanceAdministratorCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceAdministratorCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedInstanceAdministrator.ResourceType, out string apiVersion);
-            _managedInstanceAdministratorsRestClient = new ManagedInstanceAdministratorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedInstanceAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceAdministrator.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceAdministrator.ResourceType, out string managedInstanceAdministratorApiVersion);
+            _managedInstanceAdministratorRestClient = new ManagedInstanceAdministratorsRestOperations(_managedInstanceAdministratorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
-                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstanceAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var response = _managedInstanceAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
+                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(ArmClient, _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstanceAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
+                var response = await _managedInstanceAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(ArmClient, _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceAdministrator> Get(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
+                var response = _managedInstanceAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(this, response.Value), response.GetRawResponse());
+                    throw _managedInstanceAdministratorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceAdministrator>> GetAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceAdministrator(this, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceAdministratorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstanceAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceAdministrator> GetIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstanceAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
+                var response = _managedInstanceAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceAdministrator>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdministrator(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
+            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedInstanceAdministrator> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
+                using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceAdministratorsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceAdministratorRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
+                using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceAdministratorsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceAdministratorRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedInstanceAdministrator>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
+                using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceAdministratorsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceAdministratorRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
+                using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceAdministratorsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceAdministratorRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,8 +341,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceAdministrator, ManagedInstanceAdministratorData> Construct() { }
     }
 }

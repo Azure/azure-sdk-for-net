@@ -5,7 +5,7 @@ namespace Azure.ResourceManager.ServiceBus
         public static Azure.ResourceManager.ServiceBus.DisasterRecovery GetDisasterRecovery(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceBus.MigrationConfigProperties GetMigrationConfigProperties(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceBus.NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceBus.NetworkRuleSet GetNetworkRuleSet(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.DisasterRecovery>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRuleCollection GetNamespaceDisasterRecoveryConfigAuthorizationRules() { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRuleCollection GetNamespaceDisasterRecoveryAuthorizationRules() { throw null; }
     }
     public partial class DisasterRecoveryCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.DisasterRecovery>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.DisasterRecovery>, System.Collections.IEnumerable
     {
@@ -58,9 +58,8 @@ namespace Azure.ResourceManager.ServiceBus
         public string AlternateName { get { throw null; } set { } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ProvisioningStateDR? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ProvisioningStateDisasterRecovery? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.RoleDisasterRecovery? Role { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class MigrationConfigProperties : Azure.ResourceManager.Core.ArmResource
     {
@@ -104,7 +103,6 @@ namespace Azure.ResourceManager.ServiceBus
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public string PostMigrationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public string TargetNamespace { get { throw null; } set { } }
     }
     public partial class NamespaceAuthorizationRule : Azure.ResourceManager.Core.ArmResource
@@ -142,33 +140,33 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NamespaceDisasterRecoveryConfigAuthorizationRule : Azure.ResourceManager.Core.ArmResource
+    public partial class NamespaceDisasterRecoveryAuthorizationRule : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected NamespaceDisasterRecoveryConfigAuthorizationRule() { }
+        protected NamespaceDisasterRecoveryAuthorizationRule() { }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.AccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NamespaceDisasterRecoveryConfigAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>, System.Collections.IEnumerable
+    public partial class NamespaceDisasterRecoveryAuthorizationRuleCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>, System.Collections.IEnumerable
     {
-        protected NamespaceDisasterRecoveryConfigAuthorizationRuleCollection() { }
+        protected NamespaceDisasterRecoveryAuthorizationRuleCollection() { }
         public virtual Azure.Response<bool> Exists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryConfigAuthorizationRule>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> Get(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NamespaceQueueAuthorizationRule : Azure.ResourceManager.Core.ArmResource
@@ -247,7 +245,6 @@ namespace Azure.ResourceManager.ServiceBus
         protected NetworkRuleSet() { }
         public virtual Azure.ResourceManager.ServiceBus.NetworkRuleSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public Azure.ResourceManager.Core.ArmResource Parent { get { throw null; } }
         public virtual Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, Azure.ResourceManager.ServiceBus.NetworkRuleSetData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, Azure.ResourceManager.ServiceBus.NetworkRuleSetData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName) { throw null; }
@@ -260,9 +257,8 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.ServiceBus.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetIpRules> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetIPRules> IPRules { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
     }
@@ -303,7 +299,6 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public static partial class ResourceGroupExtensions
     {
@@ -313,7 +308,6 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public ServiceBusAuthorizationRuleData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRights> Rights { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class ServiceBusNamespace : Azure.ResourceManager.Core.ArmResource
     {
@@ -357,8 +351,6 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> Get(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>> GetAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> GetIfExists(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -373,14 +365,13 @@ namespace Azure.ResourceManager.ServiceBus
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.Sku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -440,7 +431,6 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? RequiresSession { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
     public partial class ServiceBusRule : Azure.ResourceManager.Core.ArmResource
@@ -481,7 +471,6 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.CorrelationFilter CorrelationFilter { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.FilterType? FilterType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.SqlFilter SqlFilter { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class ServiceBusSubscription : Azure.ResourceManager.Core.ArmResource
     {
@@ -536,7 +525,6 @@ namespace Azure.ResourceManager.ServiceBus
         public long? MessageCount { get { throw null; } }
         public bool? RequiresSession { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
     public partial class ServiceBusTopic : Azure.ResourceManager.Core.ArmResource
@@ -591,7 +579,6 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
         public int? SubscriptionCount { get { throw null; } }
         public bool? SupportOrdering { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
     public static partial class SubscriptionExtensions
@@ -599,8 +586,6 @@ namespace Azure.ResourceManager.ServiceBus
         public static Azure.Response<Azure.ResourceManager.ServiceBus.Models.CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.ServiceBus.Models.CheckNameAvailability parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.ServiceBus.Models.CheckNameAvailability parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> GetServiceBusNamespaces(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetServiceBusNamespacesAsGenericResources(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetServiceBusNamespacesAsGenericResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> GetServiceBusNamespacesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -775,14 +760,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         SqlFilter = 0,
         CorrelationFilter = 1,
     }
-    public partial class Identity
-    {
-        public Identity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
     public enum KeyType
     {
         PrimaryKey = 0,
@@ -955,11 +932,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSet>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSet>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkRuleSetIpRules
+    public partial class NetworkRuleSetIPRules
     {
-        public NetworkRuleSetIpRules() { }
+        public NetworkRuleSetIPRules() { }
         public Azure.ResourceManager.ServiceBus.Models.NetworkRuleIPAction? Action { get { throw null; } set { } }
-        public string IpMask { get { throw null; } set { } }
+        public string IPMask { get { throw null; } set { } }
     }
     public partial class NetworkRuleSetVirtualNetworkRules
     {
@@ -1024,7 +1001,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.PrivateLinkResource> Value { get { throw null; } }
     }
-    public enum ProvisioningStateDR
+    public enum ProvisioningStateDisasterRecovery
     {
         Accepted = 0,
         Succeeded = 1,
@@ -1097,12 +1074,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.Sku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
@@ -1155,13 +1132,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceBusSku
-    {
-        public ServiceBusSku(Azure.ResourceManager.ServiceBus.Models.SkuName name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.SkuName Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.SkuTier? Tier { get { throw null; } set { } }
-    }
     public partial class ServiceBusSubscriptionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.ServiceBus.ServiceBusSubscription>
     {
         protected ServiceBusSubscriptionCreateOrUpdateOperation() { }
@@ -1209,6 +1179,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class Sku
+    {
+        public Sku(Azure.ResourceManager.ServiceBus.Models.SkuName name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.SkuName Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.SkuTier? Tier { get { throw null; } set { } }
     }
     public enum SkuName
     {

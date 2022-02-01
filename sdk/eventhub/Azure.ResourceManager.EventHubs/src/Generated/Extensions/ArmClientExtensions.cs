@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs
         public static EventHubCluster GetEventHubCluster(this ArmClient armClient, ResourceIdentifier id)
         {
             EventHubCluster.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHubCluster(clientOptions, credential, uri, pipeline, id));
+            return new EventHubCluster(armClient, id);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
         public static EventHubNamespace GetEventHubNamespace(this ArmClient armClient, ResourceIdentifier id)
         {
             EventHubNamespace.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHubNamespace(clientOptions, credential, uri, pipeline, id));
+            return new EventHubNamespace(armClient, id);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs
         public static NetworkRuleSet GetNetworkRuleSet(this ArmClient armClient, ResourceIdentifier id)
         {
             NetworkRuleSet.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NetworkRuleSet(clientOptions, credential, uri, pipeline, id));
+            return new NetworkRuleSet(armClient, id);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs
         public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             NamespaceAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new NamespaceAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs
         public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             EventHubAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new EventHubAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
         public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
             DisasterRecoveryAuthorizationRule.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return new DisasterRecoveryAuthorizationRule(armClient, id);
         }
         #endregion
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
             PrivateEndpointConnection.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs
         public static EventHub GetEventHub(this ArmClient armClient, ResourceIdentifier id)
         {
             EventHub.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHub(clientOptions, credential, uri, pipeline, id));
+            return new EventHub(armClient, id);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventHubs
         public static DisasterRecovery GetDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
         {
             DisasterRecovery.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecovery(clientOptions, credential, uri, pipeline, id));
+            return new DisasterRecovery(armClient, id);
         }
         #endregion
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs
         public static ConsumerGroup GetConsumerGroup(this ArmClient armClient, ResourceIdentifier id)
         {
             ConsumerGroup.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ConsumerGroup(clientOptions, credential, uri, pipeline, id));
+            return new ConsumerGroup(armClient, id);
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
         public static SchemaGroup GetSchemaGroup(this ArmClient armClient, ResourceIdentifier id)
         {
             SchemaGroup.ValidateResourceId(id);
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SchemaGroup(clientOptions, credential, uri, pipeline, id));
+            return new SchemaGroup(armClient, id);
         }
         #endregion
     }

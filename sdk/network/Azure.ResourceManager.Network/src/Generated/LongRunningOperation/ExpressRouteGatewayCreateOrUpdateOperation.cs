@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteGateway> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteGatewayCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteGatewayCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteGatewayCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteGatewayCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);
-            return new ExpressRouteGateway(_operationBase, data);
+            return new ExpressRouteGateway(_armClient, data);
         }
 
         async ValueTask<ExpressRouteGateway> IOperationSource<ExpressRouteGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);
-            return new ExpressRouteGateway(_operationBase, data);
+            return new ExpressRouteGateway(_armClient, data);
         }
     }
 }
