@@ -46,6 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
             Entities = new ChangeTrackingList<DocumentEntity>();
             Styles = new ChangeTrackingList<DocumentStyle>();
+            Languages = new ChangeTrackingList<DocumentLanguage>();
             Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
 
@@ -59,8 +60,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
         /// <param name="entities"> Extracted entities. </param>
         /// <param name="styles"> Extracted font styles. </param>
+        /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<AnalyzedDocument> documents)
+        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
@@ -71,6 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             KeyValuePairs = keyValuePairs;
             Entities = entities;
             Styles = styles;
+            Languages = languages;
             Documents = documents;
         }
         /// <summary> Model ID used to produce this result. </summary>
