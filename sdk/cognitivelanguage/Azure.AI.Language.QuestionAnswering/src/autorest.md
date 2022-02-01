@@ -46,6 +46,15 @@ directive:
         }
     ];
 ```
+### DocString edit
+
+``` yaml
+directive:
+  - from: swagger-document
+    where: $["paths"]["/query-knowledgebases/projects/{projectName}/feedback"]["post"]
+    transform: >
+        $["summary"] = "Add Active Learning feedback";
+```
 
 ### C# customizations
 
