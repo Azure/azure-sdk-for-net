@@ -261,7 +261,7 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Microsoft.Azure.Core.Cool.Tests", HttpMessageSanitizer.Default) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
             var context = new RequestContext();
             context.AddClassifier(new int[] { 409 }, isError: false);
             var message = pipeline.CreateMessage(context);
@@ -275,19 +275,6 @@ namespace Azure.Core.Tests
         #region Helpers
         private class TestOptions : ClientOptions
         {
-        }
-
-        private class Consider404SuccessResponseClassifier : ResponseClassifier
-        {
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                if (message.Response.Status == 404)
-                {
-                    return false;
-                }
-
-                return base.IsErrorResponse(message);
-            }
         }
         #endregion
     }

@@ -54,9 +54,14 @@ namespace Azure
         }
 
         /// <summary>
+        /// Adds a custom classifier to the <see cref="ResponseClassifier"/> used in this call to the service method.
+        /// The custom classifier is applied before the default classifier.
+        /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
+        /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
+        /// this status code is received.
         /// </summary>
-        /// <param name="statusCodes"></param>
-        /// <param name="isError"></param>
+        /// <param name="statusCodes">The status codes to classify differently in this call.</param>
+        /// <param name="isError">Whether or not the passed-in status codes will be considered errors.</param>
         public void AddClassifier(int[] statusCodes, bool isError)
         {
             CopyOrMerge(statusCodes, ref isError ? ref ErrorCodes : ref NonErrorCodes);

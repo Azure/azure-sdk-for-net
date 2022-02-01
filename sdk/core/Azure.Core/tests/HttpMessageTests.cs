@@ -56,5 +56,15 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.TryClassify(404, out bool isError));
             Assert.IsFalse(isError);
         }
+
+        [Test]
+        public void DoesNotClassify()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
+            RequestContext context = new RequestContext();
+            context.AddClassifier(new int[] { 404 }, isError: false);
+            message.ApplyRequestContext(context);
+            Assert.IsFalse(message.TryClassify(202, out bool isError));
+        }
     }
 }
