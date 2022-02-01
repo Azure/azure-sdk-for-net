@@ -36,50 +36,26 @@ and `--blob-container`. In the first argument, specify Azure Blob Storage connec
 upload payload and manifest file there. The second argument contains the name of the blob container where the files 
 will be uploaded.
 
-```shell
-dotnet run -- --connection-string "_your_azure_storage_connection_string_" --blob-container "_blob_container_name_"
-```
-
 ### Enumerate existing updates
 
 To enumerate existing updates, use **EnumerateUpdates** sample. The sample doesn't require any special argument to run.
-
-```shell
-dotnet run --
-```
 
 ### Retrieve existing update
 
 To view existing update metadata, use **GetUpdate** sample. The sample requires you to specify `--update-version` argument.
 
-```shell
-dotnet run -- --update-version "_update_version_"
-```
-
 ### Delete existing update
 
 To delete existing update, use **DeleteUpdate** sample. The sample requires you to specify `--update-version` argument.
-
-```shell
-dotnet run -- --update-version "_update_version_"
-```
 
 ### Deploy update to device group
 
 To deploy an update to a device group, use **DeployUpdate** sample. The sample requires you to specify `--update-version` 
 and `--device-group` arguments.
 
-```shell
-dotnet run -- --update-version "_update_version_" --device-group "_device_group_"
-```
-
 ### Get device information
 
 To display device information, use **GetDevice** sample. The sample requires you to specify `--device` argument.
-
-```shell
-dotnet run -- --device "_device_id_"
-```
 
 ## Common
 
