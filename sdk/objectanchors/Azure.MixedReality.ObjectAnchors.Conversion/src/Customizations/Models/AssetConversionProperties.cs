@@ -63,7 +63,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public ConversionErrorCode ErrorCode { get; }
 
         /// <summary>
-        /// The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, etc.
+        /// The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc.
         /// </summary>
         public AssetFileType InputAssetFileType { get; internal set; }
 

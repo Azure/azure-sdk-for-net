@@ -20,7 +20,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="jobIdInternal"> Identifier for the AOA asset conversion job. </param>
         /// <param name="outputModelUriString"> The URI for downloading the generated AOA Model. </param>
         /// <param name="conversionStatus"></param>
-        /// <param name="assetFileTypeString"> The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, etc. </param>
+        /// <param name="assetFileTypeString"> The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc. </param>
         /// <param name="inputAssetUriString"> The Uri to the Asset to be ingested by the AOA asset conversion service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountIdInternal"> Identifier for the Account owning the asset conversion job. </param>
         /// <param name="conversionConfiguration"> Represents an ingestion configuration. </param>
