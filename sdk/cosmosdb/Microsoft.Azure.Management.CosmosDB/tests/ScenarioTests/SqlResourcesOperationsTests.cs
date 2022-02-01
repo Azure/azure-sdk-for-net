@@ -304,7 +304,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     clientEncryptionKeyName,
                     clientEncryptionKeyCreateUpdateParameters);
 
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
 
                 ClientEncryptionKeyGetResults clientEncryptionKeyRetrieved = client.GetClientEncryptionKeyWithHttpMessagesAsync(
                     this.fixture.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     clientEncryptionKeyName,
                     clientEncryptionKeyCreateUpdateParameters);
 
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
                 clientEncryptionKeyRetrieved = client.GetClientEncryptionKeyWithHttpMessagesAsync(
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
@@ -366,7 +366,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     clientEncryptionKeyName2,
                     clientEncryptionKeyCreateUpdateParameters);
 
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
 
                 IEnumerable<ClientEncryptionKeyGetResults> clientEncryptionKeyList = client.ListClientEncryptionKeysWithHttpMessagesAsync(
                     this.fixture.ResourceGroupName,
