@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
@@ -29,13 +30,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResGroup = await (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(groupName, new ResourceGroupData(Location))).WaitForCompletionAsync();
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = await (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(configurationStoreName, configurationStoreData)).WaitForCompletionAsync();
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
                 LinkResource = await ConfigStore.GetPrivateLinkResources().GetAsync("configurationStores");
             }
         }
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<Resources.Models.Location> locations = await LinkResource.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations = await LinkResource.GetAvailableLocationsAsync();
 
             Assert.IsTrue(locations.Count() >= 0);
         }

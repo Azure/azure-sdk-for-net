@@ -40,12 +40,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
         }
 
         protected async Task Initialize()
         {
+            Location = "westcentralus";
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedVaults();
@@ -65,18 +66,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            Location = "North Central US";
 
-            ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(true, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultCollection = ResourceGroup.GetVaults();
-            VaultName = Recording.GenerateAssetName("sdktestvault");
+            VaultName = Recording.GenerateAssetName("sdktest-vault-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new Permissions
+            var permissions = new AccessPermissions
             {
                 Keys = { new KeyPermissions("all") },
                 Secrets = { new SecretPermissions("all") },

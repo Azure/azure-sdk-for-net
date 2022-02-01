@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualHub> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualHubCreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualHub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VirtualHub IOperationSource<VirtualHub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
+            var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
+            return new VirtualHub(_armClient, data);
         }
 
         async ValueTask<VirtualHub> IOperationSource<VirtualHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
+            var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
+            return new VirtualHub(_armClient, data);
         }
     }
 }

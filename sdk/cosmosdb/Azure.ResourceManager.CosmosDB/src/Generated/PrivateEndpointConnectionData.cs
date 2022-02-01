@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
@@ -23,11 +23,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState) : base(id, name, type, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

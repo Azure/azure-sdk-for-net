@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PublicIPAddress> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of PublicIPAddressCreateOrUpdateOperation for mocking. </summary>
         protected PublicIPAddressCreateOrUpdateOperation()
         {
         }
 
-        internal PublicIPAddressCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PublicIPAddressCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PublicIPAddress>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PublicIPAddressCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         PublicIPAddress IOperationSource<PublicIPAddress>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new PublicIPAddress(_operationBase, PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement));
+            var data = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
+            return new PublicIPAddress(_armClient, data);
         }
 
         async ValueTask<PublicIPAddress> IOperationSource<PublicIPAddress>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new PublicIPAddress(_operationBase, PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement));
+            var data = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
+            return new PublicIPAddress(_armClient, data);
         }
     }
 }

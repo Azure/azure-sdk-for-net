@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<EncryptionProtector> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of EncryptionProtectorCreateOrUpdateOperation for mocking. </summary>
         protected EncryptionProtectorCreateOrUpdateOperation()
         {
         }
 
-        internal EncryptionProtectorCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EncryptionProtectorCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<EncryptionProtector>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EncryptionProtectorCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         EncryptionProtector IOperationSource<EncryptionProtector>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EncryptionProtector(_operationBase, EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement));
+            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+            return new EncryptionProtector(_armClient, data);
         }
 
         async ValueTask<EncryptionProtector> IOperationSource<EncryptionProtector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EncryptionProtector(_operationBase, EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement));
+            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+            return new EncryptionProtector(_armClient, data);
         }
     }
 }

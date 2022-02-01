@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
         /// <param name="interval"> Sync interval of the sync group. </param>
         /// <param name="lastSyncTime"> Last sync time of the sync group. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, Models.Sku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.Sku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type, systemData)
         {
             Sku = sku;
             Interval = interval;

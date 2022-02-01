@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VpnSite> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VpnSiteCreateOrUpdateOperation for mocking. </summary>
         protected VpnSiteCreateOrUpdateOperation()
         {
         }
 
-        internal VpnSiteCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnSiteCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VpnSite>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnSiteCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VpnSite IOperationSource<VpnSite>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VpnSite(_operationBase, VpnSiteData.DeserializeVpnSiteData(document.RootElement));
+            var data = VpnSiteData.DeserializeVpnSiteData(document.RootElement);
+            return new VpnSite(_armClient, data);
         }
 
         async ValueTask<VpnSite> IOperationSource<VpnSite>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VpnSite(_operationBase, VpnSiteData.DeserializeVpnSiteData(document.RootElement));
+            var data = VpnSiteData.DeserializeVpnSiteData(document.RootElement);
+            return new VpnSite(_armClient, data);
         }
     }
 }

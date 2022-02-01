@@ -44,7 +44,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Mtv1);
 
                 Assert.NotNull(createdService.Identity);
                 Assert.Equal("SystemAssigned", createdService.Identity.Type);
@@ -113,7 +114,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Mtv1);
 
                 Assert.NotNull(createdService.Identity);
                 Assert.NotNull(createdService.Identity.Type);

@@ -107,6 +107,17 @@ jobs:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
 
+      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+        displayName: 'Upload Package SBOM'
+        condition: succeededOrFailed()
+        inputs:
+          BuildDropPath: $(Build.ArtifactStagingDirectory)
+
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
+          ArtifactName: 'manifest'
+
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
@@ -124,7 +135,13 @@ jobs:
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
       vmImage: MMSUbuntu20.04
-    steps:
+    steps:      
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+              Paths:
+                - "/*"
+                - "!SessionRecords"
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -162,6 +179,8 @@ jobs:
           workingDirectory: '$(Agent.BuildDirectory)'
       - task: PowerShell@2
         displayName: "Verify generated code"
+        env:
+          EnableSourceLink: false
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
@@ -169,7 +188,7 @@ jobs:
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true
-          failOnStderr:  false
+          failOnStderr: false
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml

@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task ProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -192,7 +192,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt);
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task SessionProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -250,7 +250,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
                     new ServiceBusSessionProcessorOptions

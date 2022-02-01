@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<Snapshot> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SnapshotUpdateOperation for mocking. </summary>
         protected SnapshotUpdateOperation()
         {
         }
 
-        internal SnapshotUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SnapshotUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Snapshot>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         Snapshot IOperationSource<Snapshot>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
+            var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
+            return new Snapshot(_armClient, data);
         }
 
         async ValueTask<Snapshot> IOperationSource<Snapshot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Snapshot(_operationBase, SnapshotData.DeserializeSnapshotData(document.RootElement));
+            var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
+            return new Snapshot(_armClient, data);
         }
     }
 }

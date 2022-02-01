@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -24,11 +24,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="administratorType"> Type of the managed instance administrator. </param>
         /// <param name="login"> Login name of the managed instance administrator. </param>
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
-        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType type, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId) : base(id, name, type)
+        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId) : base(id, name, type, systemData)
         {
             AdministratorType = administratorType;
             Login = login;

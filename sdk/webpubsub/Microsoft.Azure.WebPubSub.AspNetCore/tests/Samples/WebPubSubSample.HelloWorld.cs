@@ -17,8 +17,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         {
             services.AddWebPubSub(o =>
             {
-                o.ValidationOptions.Add("<connection-string>");
-            });
+                o.ServiceEndpoint = new("<connection-string>");
+            }).AddWebPubSubServiceClient<SampleHub>();
         }
         #endregion
 
@@ -34,6 +34,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 
         private sealed class SampleHub : WebPubSubHub
         {
+            internal WebPubSubServiceClient<SampleHub> _serviceClient;
+
+            // Need to ensure is injected by call `AddServiceHub<SampleHub>` in ConfigureServices.
+            public SampleHub(WebPubSubServiceClient<SampleHub> serviceClient)
+            {
+                _serviceClient = serviceClient;
+            }
+
             #region Snippet:WebPubSubConnectMethods
             public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {

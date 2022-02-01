@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -26,6 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="isEnabled"> Whether maintenance windows are enabled for the database. </param>
         /// <param name="maintenanceWindowCycles"> Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}. </param>
         /// <param name="minDurationInMinutes"> Minimum duration of maintenance window. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="minCycles"> Minimum number of maintenance windows cycles to be set on the database. </param>
         /// <param name="timeGranularityInMinutes"> Time granularity in minutes for maintenance windows. </param>
         /// <param name="allowMultipleMaintenanceWindowsPerCycle"> Whether we allow multiple maintenance windows per cycle. </param>
-        internal MaintenanceWindowOptionsData(ResourceIdentifier id, string name, ResourceType type, bool? isEnabled, IList<MaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, type)
+        internal MaintenanceWindowOptionsData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? isEnabled, IList<MaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, type, systemData)
         {
             IsEnabled = isEnabled;
             MaintenanceWindowCycles = maintenanceWindowCycles;

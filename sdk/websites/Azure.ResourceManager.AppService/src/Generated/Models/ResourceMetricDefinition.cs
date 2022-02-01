@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,13 +25,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="unit"> Unit of the metric. </param>
         /// <param name="primaryAggregationType"> Primary aggregation type. </param>
         /// <param name="metricAvailabilities"> List of time grains supported for the metric together with retention period. </param>
         /// <param name="resourceUri"> Resource URI. </param>
         /// <param name="properties"> Resource metric definition properties. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType type, string kind, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, string resourceUri, IReadOnlyDictionary<string, string> properties) : base(id, name, type, kind)
+        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, string resourceUri, IReadOnlyDictionary<string, string> properties) : base(id, name, type, systemData, kind)
         {
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;

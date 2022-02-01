@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,11 +22,22 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A Class representing a ElasticPool along with the instance operations that can be performed on it. </summary>
     public partial class ElasticPool : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ElasticPoolsRestOperations _elasticPoolsRestClient;
-        private readonly DatabasesRestOperations _databasesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ElasticPool"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _elasticPoolClientDiagnostics;
+        private readonly ElasticPoolsRestOperations _elasticPoolRestClient;
+        private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
+        private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _elasticPoolActivitiesClientDiagnostics;
         private readonly ElasticPoolActivitiesRestOperations _elasticPoolActivitiesRestClient;
+        private readonly ClientDiagnostics _elasticPoolDatabaseActivitiesClientDiagnostics;
         private readonly ElasticPoolDatabaseActivitiesRestOperations _elasticPoolDatabaseActivitiesRestClient;
+        private readonly ClientDiagnostics _elasticPoolOperationsClientDiagnostics;
         private readonly ElasticPoolRestOperations _elasticPoolOperationsRestClient;
         private readonly ElasticPoolData _data;
 
@@ -36,54 +47,38 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ElasticPool"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ElasticPool(ArmResource options, ElasticPoolData resource) : base(options, resource.Id)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ElasticPool(ArmClient armClient, ElasticPoolData data) : this(armClient, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _elasticPoolsRestClient = new ElasticPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ElasticPool"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ElasticPool(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ElasticPool(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _elasticPoolsRestClient = new ElasticPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ElasticPool"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ElasticPool(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _elasticPoolsRestClient = new ElasticPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
+            _elasticPoolRestClient = new ElasticPoolsRestOperations(_elasticPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
+            _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
+            _elasticPoolActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(_elasticPoolActivitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _elasticPoolDatabaseActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(_elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(_elasticPoolOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/elasticPools";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +95,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
         /// OperationId: ElasticPools_Get
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ElasticPool>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Get");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Get");
             scope.Start();
             try
             {
-                var response = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ElasticPool(this, response.Value), response.GetRawResponse());
+                    throw await _elasticPoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ElasticPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,14 +131,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticPool> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Get");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Get");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ElasticPool(this, response.Value), response.GetRawResponse());
+                    throw _elasticPoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ElasticPool(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,17 +150,37 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
@@ -168,14 +189,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ElasticPoolDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ElasticPoolDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Delete");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticPoolDeleteOperation(_clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _elasticPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticPoolDeleteOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,16 +214,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ElasticPoolDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ElasticPoolDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Delete");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Delete");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticPoolDeleteOperation(_clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _elasticPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ElasticPoolDeleteOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +240,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<ElasticPool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.AddTag");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,20 +266,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<ElasticPool> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.AddTag");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,19 +293,19 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.SetTags");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -307,19 +322,19 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.SetTags");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -334,20 +349,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<ElasticPool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.RemoveTag");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -362,20 +374,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<ElasticPool> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.RemoveTag");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ElasticPool(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new ElasticPool(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -388,23 +397,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
         /// OperationId: ElasticPools_Update
         /// <summary> Updates an elastic pool. </summary>
-        /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ElasticPoolUpdateOperation> UpdateAsync(ElasticPoolUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ElasticPoolUpdateOperation> UpdateAsync(bool waitForCompletion, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Update");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Update");
             scope.Start();
             try
             {
-                var response = await _elasticPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticPoolUpdateOperation(this, _clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _elasticPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticPoolUpdateOperation(ArmClient, _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,23 +429,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
         /// OperationId: ElasticPools_Update
         /// <summary> Updates an elastic pool. </summary>
-        /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The elastic pool update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ElasticPoolUpdateOperation Update(ElasticPoolUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ElasticPoolUpdateOperation Update(bool waitForCompletion, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Update");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Update");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ElasticPoolUpdateOperation(this, _clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _elasticPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new ElasticPoolUpdateOperation(ArmClient, _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -458,11 +467,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SqlDatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListByElasticPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListByElasticPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -473,11 +482,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SqlDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListByElasticPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListByElasticPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -499,11 +508,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SqlDatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListByElasticPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListByElasticPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -514,11 +523,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SqlDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("ElasticPool.GetDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListByElasticPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListByElasticPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -536,6 +545,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
@@ -546,11 +556,11 @@ namespace Azure.ResourceManager.Sql
 
             async Task<Page<SqlMetric>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetrics");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetMetrics");
                 scope.Start();
                 try
                 {
-                    var response = await _elasticPoolsRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _elasticPoolRestClient.ListMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -568,6 +578,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns elastic pool  metrics. </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
@@ -578,11 +589,11 @@ namespace Azure.ResourceManager.Sql
 
             Page<SqlMetric> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetrics");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetMetrics");
                 scope.Start();
                 try
                 {
-                    var response = _elasticPoolsRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    var response = _elasticPoolRestClient.ListMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -604,11 +615,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetricDefinitions");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _elasticPoolsRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _elasticPoolRestClient.ListMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -630,11 +641,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetMetricDefinitions");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.GetMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _elasticPoolsRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _elasticPoolRestClient.ListMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -652,14 +663,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Failovers an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ElasticPoolFailoverOperation> FailoverAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ElasticPoolFailoverOperation> FailoverAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Failover");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Failover");
             scope.Start();
             try
             {
-                var response = await _elasticPoolsRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticPoolFailoverOperation(_clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _elasticPoolRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticPoolFailoverOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -677,16 +688,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Failovers an elastic pool. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ElasticPoolFailoverOperation Failover(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ElasticPoolFailoverOperation Failover(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.Failover");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPool.Failover");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticPoolFailoverOperation(_clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _elasticPoolRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ElasticPoolFailoverOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -706,7 +717,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ElasticPoolActivity>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
+                using var scope = _elasticPoolActivitiesClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
                 scope.Start();
                 try
                 {
@@ -732,7 +743,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ElasticPoolActivity> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
+                using var scope = _elasticPoolActivitiesClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolActivities");
                 scope.Start();
                 try
                 {
@@ -758,7 +769,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ElasticPoolDatabaseActivity>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
+                using var scope = _elasticPoolDatabaseActivitiesClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
                 scope.Start();
                 try
                 {
@@ -784,7 +795,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ElasticPoolDatabaseActivity> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
+                using var scope = _elasticPoolDatabaseActivitiesClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolDatabaseActivities");
                 scope.Start();
                 try
                 {
@@ -808,7 +819,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> CancelElasticPoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.CancelElasticPoolOperation");
+            using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.CancelElasticPoolOperation");
             scope.Start();
             try
             {
@@ -830,7 +841,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelElasticPoolOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ElasticPool.CancelElasticPoolOperation");
+            using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.CancelElasticPoolOperation");
             scope.Start();
             try
             {
@@ -854,7 +865,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ElasticPoolOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
+                using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -869,7 +880,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ElasticPoolOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
+                using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -895,7 +906,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ElasticPoolOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
+                using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {
@@ -910,7 +921,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ElasticPoolOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
+                using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPool.GetElasticPoolOperations");
                 scope.Start();
                 try
                 {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,15 +16,21 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A Class representing a Snapshot along with the instance operations that can be performed on it. </summary>
     public partial class Snapshot : ArmResource
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SnapshotsRestOperations _snapshotsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="Snapshot"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string snapshotName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _snapshotClientDiagnostics;
+        private readonly SnapshotsRestOperations _snapshotRestClient;
         private readonly SnapshotData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Snapshot"/> class for mocking. </summary>
@@ -32,42 +39,29 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Snapshot"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Snapshot(ArmResource options, SnapshotData resource) : base(options, resource.Id)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal Snapshot(ArmClient armClient, SnapshotData data) : this(armClient, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _snapshotsRestClient = new SnapshotsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="Snapshot"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Snapshot(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Snapshot(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _snapshotsRestClient = new SnapshotsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Snapshot"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Snapshot(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _snapshotsRestClient = new SnapshotsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string snapshotApiVersion);
+            _snapshotRestClient = new SnapshotsRestOperations(_snapshotClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, snapshotApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/snapshots";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -84,18 +78,24 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
         /// <summary> Gets information about a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Snapshot>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Get");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Get");
             scope.Start();
             try
             {
-                var response = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
+                    throw await _snapshotClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Snapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Snapshot> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Get");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Get");
             scope.Start();
             try
             {
-                var response = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
+                    throw _snapshotClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Snapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,30 +127,50 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Delete");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Delete");
             scope.Start();
             try
             {
-                var response = await _snapshotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _snapshotRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SnapshotDeleteOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,16 +185,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SnapshotDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Delete");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Delete");
             scope.Start();
             try
             {
-                var response = _snapshotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _snapshotRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SnapshotDeleteOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -191,20 +211,17 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<Snapshot>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.AddTag");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,20 +237,17 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<Snapshot> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.AddTag");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,19 +264,19 @@ namespace Azure.ResourceManager.Compute
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.SetTags");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,19 +293,19 @@ namespace Azure.ResourceManager.Compute
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.SetTags");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,20 +320,17 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<Snapshot>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.RemoveTag");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -334,20 +345,17 @@ namespace Azure.ResourceManager.Compute
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<Snapshot> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.RemoveTag");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new Snapshot(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new Snapshot(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,23 +365,23 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Updates (patches) a snapshot. </summary>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<SnapshotUpdateOperation> UpdateAsync(SnapshotUpdate snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotUpdateOperation> UpdateAsync(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
                 throw new ArgumentNullException(nameof(snapshot));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Update");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Update");
             scope.Start();
             try
             {
-                var response = await _snapshotsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _snapshotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var response = await _snapshotRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
+                var operation = new SnapshotUpdateOperation(ArmClient, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,23 +394,23 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Updates (patches) a snapshot. </summary>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public virtual SnapshotUpdateOperation Update(SnapshotUpdate snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SnapshotUpdateOperation Update(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
                 throw new ArgumentNullException(nameof(snapshot));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Update");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Update");
             scope.Start();
             try
             {
-                var response = _snapshotsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
-                var operation = new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _snapshotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var response = _snapshotRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
+                var operation = new SnapshotUpdateOperation(ArmClient, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -415,23 +423,23 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a snapshot. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<SnapshotGrantAccessOperation> GrantAccessAsync(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotGrantAccessOperation> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.GrantAccess");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GrantAccess");
             scope.Start();
             try
             {
-                var response = await _snapshotsRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var response = await _snapshotRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
+                var operation = new SnapshotGrantAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -444,23 +452,23 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a snapshot. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual SnapshotGrantAccessOperation GrantAccess(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SnapshotGrantAccessOperation GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.GrantAccess");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GrantAccess");
             scope.Start();
             try
             {
-                var response = _snapshotsRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                var operation = new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var response = _snapshotRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
+                var operation = new SnapshotGrantAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -475,14 +483,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.RevokeAccess");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RevokeAccess");
             scope.Start();
             try
             {
-                var response = await _snapshotsRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _snapshotRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SnapshotRevokeAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -497,16 +505,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotRevokeAccessOperation RevokeAccess(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SnapshotRevokeAccessOperation RevokeAccess(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.RevokeAccess");
+            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RevokeAccess");
             scope.Start();
             try
             {
-                var response = _snapshotsRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _snapshotsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _snapshotRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SnapshotRevokeAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

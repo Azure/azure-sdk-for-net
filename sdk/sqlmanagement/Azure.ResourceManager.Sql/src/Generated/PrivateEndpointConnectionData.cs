@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, type, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

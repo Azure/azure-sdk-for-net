@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<GalleryImage> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of GalleryImageUpdateOperation for mocking. </summary>
         protected GalleryImageUpdateOperation()
         {
         }
 
-        internal GalleryImageUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryImageUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<GalleryImage>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryImageUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         GalleryImage IOperationSource<GalleryImage>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
+            var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+            return new GalleryImage(_armClient, data);
         }
 
         async ValueTask<GalleryImage> IOperationSource<GalleryImage>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GalleryImage(_operationBase, GalleryImageData.DeserializeGalleryImageData(document.RootElement));
+            var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
+            return new GalleryImage(_armClient, data);
         }
     }
 }

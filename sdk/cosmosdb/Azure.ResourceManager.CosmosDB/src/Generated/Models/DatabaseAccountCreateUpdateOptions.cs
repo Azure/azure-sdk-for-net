@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateUpdateOptions(Location location, IEnumerable<DatabaseAccountLocation> locations) : base(location)
+        public DatabaseAccountCreateUpdateOptions(AzureLocation location, IEnumerable<DatabaseAccountLocation> locations) : base(location)
         {
             if (locations == null)
             {
@@ -42,6 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
@@ -72,7 +71,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, DatabaseAccountKind? kind, ResourceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters) : base(id, name, type, tags, location)
+        /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
+        internal DatabaseAccountCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountLocation> locations, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<DatabaseAccountCapability> capabilities, IList<VirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, string keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, CreateMode? createMode, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, RestoreParameters restoreParameters, Capacity capacity) : base(id, name, type, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -102,12 +102,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
             DisableLocalAuth = disableLocalAuth;
             RestoreParameters = restoreParameters;
+            Capacity = capacity;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
         public DatabaseAccountKind? Kind { get; set; }
         /// <summary> Identity for the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
@@ -160,5 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
         public RestoreParameters RestoreParameters { get; set; }
+        /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
+        public Capacity Capacity { get; set; }
     }
 }

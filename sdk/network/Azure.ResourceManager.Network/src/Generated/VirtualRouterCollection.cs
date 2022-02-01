@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -23,52 +23,56 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualRouter and their operations over its parent. </summary>
     public partial class VirtualRouterCollection : ArmCollection, IEnumerable<VirtualRouter>, IAsyncEnumerable<VirtualRouter>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualRoutersRestOperations _virtualRoutersRestClient;
+        private readonly ClientDiagnostics _virtualRouterClientDiagnostics;
+        private readonly VirtualRoutersRestOperations _virtualRouterRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualRouterCollection"/> class for mocking. </summary>
         protected VirtualRouterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualRouterCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal VirtualRouterCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualRoutersRestClient = new VirtualRoutersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualRouterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouter.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(VirtualRouter.ResourceType, out string virtualRouterApiVersion);
+            _virtualRouterRestClient = new VirtualRoutersRestOperations(_virtualRouterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates or updates the specified Virtual Router. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualRouterCreateOrUpdateOperation CreateOrUpdate(string virtualRouterName, VirtualRouterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual VirtualRouterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualRoutersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken);
-                var operation = new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var response = _virtualRouterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken);
+                var operation = new VirtualRouterCreateOrUpdateOperation(ArmClient, _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -81,28 +85,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified Virtual Router. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualRouterCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualRouterName, VirtualRouterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualRouterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualRoutersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualRoutersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var response = await _virtualRouterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualRouterCreateOrUpdateOperation(ArmClient, _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,22 +120,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual Response<VirtualRouter> Get(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.Get");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualRoutersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken);
+                var response = _virtualRouterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualRouter(Parent, response.Value), response.GetRawResponse());
+                    throw _virtualRouterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualRouter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,22 +146,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouter>> GetAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.Get");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualRoutersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualRouterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualRouter(Parent, response.Value), response.GetRawResponse());
+                    throw await _virtualRouterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualRouter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,22 +172,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual Response<VirtualRouter> GetIfExists(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExists");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualRoutersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualRouter>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualRouter(this, response.Value), response.GetRawResponse());
+                var response = _virtualRouterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<VirtualRouter>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualRouter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,22 +198,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public async virtual Task<Response<VirtualRouter>> GetIfExistsAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExistsAsync");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualRoutersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualRouter>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualRouter(this, response.Value), response.GetRawResponse());
+                var response = await _virtualRouterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<VirtualRouter>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualRouter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,15 +224,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.CheckIfExists");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Exists");
             scope.Start();
             try
             {
@@ -256,15 +248,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.CheckIfExistsAsync");
+            using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +275,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<VirtualRouter> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
+                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualRoutersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualRouterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +290,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualRouter> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
+                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualRoutersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _virtualRouterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +313,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<VirtualRouter>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
+                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualRoutersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualRouterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,12 +328,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualRouter>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
+                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualRoutersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualRouterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -352,52 +342,6 @@ namespace Azure.ResourceManager.Network
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="VirtualRouter" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(VirtualRouter.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="VirtualRouter" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(VirtualRouter.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<VirtualRouter> IEnumerable<VirtualRouter>.GetEnumerator()
@@ -414,8 +358,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualRouter, VirtualRouterData> Construct() { }
     }
 }

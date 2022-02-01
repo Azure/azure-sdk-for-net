@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="partnerServer"> Resource partner server. </param>
         /// <param name="partnerDatabase"> Resource partner database. </param>
         /// <param name="partnerLocation"> Resource partner location. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED). </param>
-        internal ReplicationLinkData(ResourceIdentifier id, string name, ResourceType type, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startTime, int? percentComplete, ReplicationState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, type)
+        internal ReplicationLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startTime, int? percentComplete, ReplicationState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, type, systemData)
         {
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;

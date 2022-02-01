@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
         /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType type, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ErrorEntity customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, type, kind)
+        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ErrorEntity customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, type, systemData, kind)
         {
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
             CustomDomainVerificationTest = customDomainVerificationTest;

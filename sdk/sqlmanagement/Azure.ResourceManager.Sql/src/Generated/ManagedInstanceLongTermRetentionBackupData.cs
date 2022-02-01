@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="managedInstanceName"> The managed instance that the backup database belongs to. </param>
         /// <param name="managedInstanceCreateTime"> The create time of the instance. </param>
         /// <param name="databaseName"> The name of the database the backup belong to. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupTime"> The time the backup was taken. </param>
         /// <param name="backupExpirationTime"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType type, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type)
+        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateTime = managedInstanceCreateTime;

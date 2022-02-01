@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebAppsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public WebAppsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-02-01")
+        public WebAppsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            this.apiVersion = apiVersion ?? "2021-02-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1470,7 +1470,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1876,7 +1876,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1981,7 +1981,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2080,7 +2080,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(appSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2185,7 +2185,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2284,7 +2284,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2389,7 +2389,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2692,7 +2692,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(azureStorageAccounts);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2797,7 +2797,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -2896,7 +2896,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3001,7 +3001,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3086,7 +3086,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3181,7 +3181,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3277,7 +3277,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3386,7 +3386,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3482,7 +3482,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3595,7 +3595,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionStrings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3700,7 +3700,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3795,7 +3795,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -3898,7 +3898,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteLogsConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4007,7 +4007,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(metadata);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4112,7 +4112,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4207,7 +4207,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4296,7 +4296,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pushSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4401,7 +4401,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4496,7 +4496,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4599,7 +4599,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotConfigNames);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4704,7 +4704,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4714,7 +4714,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> GetConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4735,13 +4735,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -4753,7 +4753,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> GetConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> GetConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4774,19 +4774,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4807,7 +4807,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4818,7 +4818,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> CreateOrUpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4843,9 +4843,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4860,7 +4860,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> CreateOrUpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> CreateOrUpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4885,9 +4885,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4895,7 +4895,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4916,7 +4916,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -4927,7 +4927,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> UpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> UpdateConfigurationAsync(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4952,9 +4952,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4969,7 +4969,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> UpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> UpdateConfiguration(string subscriptionId, string resourceGroupName, string name, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -4994,9 +4994,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5021,7 +5021,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5117,7 +5117,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5128,7 +5128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSnapshotAsync(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> GetConfigurationSnapshotAsync(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -5153,13 +5153,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -5172,7 +5172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> GetConfigurationSnapshot(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> GetConfigurationSnapshot(string subscriptionId, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -5197,13 +5197,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -5228,7 +5228,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5323,7 +5323,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5418,7 +5418,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/zip");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5513,7 +5513,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5609,7 +5609,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5719,7 +5719,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5818,7 +5818,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -5915,7 +5915,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6010,7 +6010,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6106,7 +6106,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6220,7 +6220,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deployment);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6336,7 +6336,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6435,7 +6435,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6544,7 +6544,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6649,7 +6649,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6745,7 +6745,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6859,7 +6859,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -6975,7 +6975,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7077,7 +7077,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7192,7 +7192,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7295,7 +7295,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7390,7 +7390,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7485,7 +7485,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7580,7 +7580,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7676,7 +7676,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7790,7 +7790,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(functionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7896,7 +7896,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -7998,7 +7998,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(key);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8128,7 +8128,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8235,7 +8235,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8342,7 +8342,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8447,7 +8447,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8542,7 +8542,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8627,7 +8627,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8719,7 +8719,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(key);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8849,7 +8849,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -8954,7 +8954,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9050,7 +9050,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9164,7 +9164,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(hostNameBinding);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9280,7 +9280,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9380,7 +9380,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9506,7 +9506,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9634,7 +9634,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9746,7 +9746,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9871,7 +9871,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -9966,7 +9966,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10062,7 +10062,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10176,7 +10176,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10292,7 +10292,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10392,7 +10392,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10507,7 +10507,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10603,7 +10603,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10714,7 +10714,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10829,7 +10829,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -10936,7 +10936,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11043,7 +11043,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11151,7 +11151,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11273,7 +11273,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11382,7 +11382,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11497,7 +11497,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11617,7 +11617,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11750,7 +11750,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11865,7 +11865,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -11960,7 +11960,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12055,7 +12055,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12155,7 +12155,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(migrationOptions);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12264,7 +12264,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(migrationRequestEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12359,7 +12359,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12454,7 +12454,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12557,7 +12557,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12668,7 +12668,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12757,7 +12757,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12869,7 +12869,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -12975,7 +12975,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13126,7 +13126,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13239,7 +13239,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13332,7 +13332,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13420,7 +13420,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13536,7 +13536,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13676,7 +13676,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13791,7 +13791,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13882,7 +13882,7 @@ namespace Azure.ResourceManager.AppService
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -13979,7 +13979,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14074,7 +14074,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14170,7 +14170,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14284,7 +14284,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(premierAddOn);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14400,7 +14400,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14500,7 +14500,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(premierAddOn);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14615,7 +14615,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14718,7 +14718,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(access);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14823,7 +14823,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -14919,7 +14919,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15033,7 +15033,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15141,7 +15141,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15240,7 +15240,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15335,7 +15335,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15431,7 +15431,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15541,7 +15541,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15638,7 +15638,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15741,7 +15741,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15849,7 +15849,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -15970,7 +15970,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16075,7 +16075,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16171,7 +16171,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16285,7 +16285,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(publicCertificate);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16401,7 +16401,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16502,7 +16502,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(publishingProfileOptions);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16603,7 +16603,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16696,7 +16696,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16789,7 +16789,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16890,7 +16890,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(restoreRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -16991,7 +16991,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(restoreRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17088,7 +17088,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17184,7 +17184,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17294,7 +17294,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17392,7 +17392,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17487,7 +17487,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17583,7 +17583,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17697,7 +17697,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17813,7 +17813,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -17919,7 +17919,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18042,7 +18042,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18155,7 +18155,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18266,7 +18266,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18383,7 +18383,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18491,7 +18491,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18613,7 +18613,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18726,7 +18726,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18859,7 +18859,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -18978,7 +18978,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19085,7 +19085,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19200,7 +19200,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19317,7 +19317,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19432,7 +19432,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(csmPublishingAccessPoliciesEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19549,7 +19549,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19660,7 +19660,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(appSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19777,7 +19777,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -19888,7 +19888,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20005,7 +20005,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20116,7 +20116,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20233,7 +20233,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20344,7 +20344,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(azureStorageAccounts);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20461,7 +20461,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20572,7 +20572,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20689,7 +20689,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20786,7 +20786,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -20893,7 +20893,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21001,7 +21001,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21122,7 +21122,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21230,7 +21230,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21355,7 +21355,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionStrings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21472,7 +21472,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21579,7 +21579,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21694,7 +21694,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteLogsConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21815,7 +21815,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(metadata);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -21932,7 +21932,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22039,7 +22039,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22140,7 +22140,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pushSettings);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22257,7 +22257,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22364,7 +22364,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22375,7 +22375,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> GetConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22400,13 +22400,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -22419,7 +22419,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="slot"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> GetConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> GetConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22444,19 +22444,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig)
+        internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -22479,7 +22479,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22491,7 +22491,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> CreateOrUpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> CreateOrUpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22520,9 +22520,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -22538,7 +22538,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> CreateOrUpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> CreateOrUpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22567,9 +22567,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -22577,7 +22577,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig)
+        internal HttpMessage CreateUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -22600,7 +22600,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteConfig);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22612,7 +22612,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> UpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> UpdateConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22641,9 +22641,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -22659,7 +22659,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="siteConfig"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> UpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigAutoGeneratedData siteConfig, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> UpdateConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22688,9 +22688,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -22717,7 +22717,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22825,7 +22825,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -22837,7 +22837,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public async Task<Response<SiteConfigAutoGeneratedData>> GetConfigurationSnapshotSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteConfigData>> GetConfigurationSnapshotSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22866,13 +22866,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -22886,7 +22886,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="snapshotId"/> is null. </exception>
-        public Response<SiteConfigAutoGeneratedData> GetConfigurationSnapshotSlot(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
+        public Response<SiteConfigData> GetConfigurationSnapshotSlot(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -22915,13 +22915,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteConfigAutoGeneratedData value = default;
+                        SiteConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteConfigAutoGeneratedData.DeserializeSiteConfigAutoGeneratedData(document.RootElement);
+                        value = SiteConfigData.DeserializeSiteConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteConfigAutoGeneratedData)null, message.Response);
+                    return Response.FromValue((SiteConfigData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -22948,7 +22948,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23055,7 +23055,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23162,7 +23162,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/zip");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23269,7 +23269,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23377,7 +23377,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23499,7 +23499,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23610,7 +23610,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23719,7 +23719,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23826,7 +23826,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -23934,7 +23934,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24060,7 +24060,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deployment);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24188,7 +24188,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24299,7 +24299,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24420,7 +24420,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24537,7 +24537,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24645,7 +24645,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24771,7 +24771,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -24899,7 +24899,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25013,7 +25013,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25140,7 +25140,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25255,7 +25255,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25362,7 +25362,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25469,7 +25469,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25576,7 +25576,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25684,7 +25684,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25810,7 +25810,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(functionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -25928,7 +25928,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26042,7 +26042,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(key);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26184,7 +26184,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26303,7 +26303,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26422,7 +26422,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26539,7 +26539,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26646,7 +26646,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26743,7 +26743,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26847,7 +26847,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(key);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -26989,7 +26989,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27106,7 +27106,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27214,7 +27214,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27340,7 +27340,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(hostNameBinding);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27468,7 +27468,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27580,7 +27580,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27718,7 +27718,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27858,7 +27858,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -27982,7 +27982,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28119,7 +28119,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28226,7 +28226,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28334,7 +28334,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28460,7 +28460,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28588,7 +28588,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28700,7 +28700,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28827,7 +28827,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -28935,7 +28935,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29058,7 +29058,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29185,7 +29185,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29304,7 +29304,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29423,7 +29423,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29543,7 +29543,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29677,7 +29677,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29798,7 +29798,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -29925,7 +29925,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30057,7 +30057,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30202,7 +30202,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30329,7 +30329,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30436,7 +30436,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30543,7 +30543,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30650,7 +30650,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30761,7 +30761,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30876,7 +30876,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -30999,7 +30999,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31100,7 +31100,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31224,7 +31224,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31346,7 +31346,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31509,7 +31509,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31634,7 +31634,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31739,7 +31739,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31839,7 +31839,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -31967,7 +31967,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32119,7 +32119,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32246,7 +32246,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32349,7 +32349,7 @@ namespace Azure.ResourceManager.AppService
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32458,7 +32458,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32565,7 +32565,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32673,7 +32673,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32799,7 +32799,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(premierAddOn);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -32927,7 +32927,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33039,7 +33039,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(premierAddOn);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33166,7 +33166,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33281,7 +33281,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(access);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33398,7 +33398,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33506,7 +33506,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33632,7 +33632,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33752,7 +33752,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33863,7 +33863,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -33970,7 +33970,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34078,7 +34078,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34200,7 +34200,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34309,7 +34309,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34424,7 +34424,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34544,7 +34544,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34677,7 +34677,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34794,7 +34794,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -34902,7 +34902,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35028,7 +35028,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(publicCertificate);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35156,7 +35156,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35269,7 +35269,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(publishingProfileOptions);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35382,7 +35382,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35487,7 +35487,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35592,7 +35592,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35705,7 +35705,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(restoreRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35818,7 +35818,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(restoreRequest);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -35927,7 +35927,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36035,7 +36035,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36157,7 +36157,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36267,7 +36267,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36378,7 +36378,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36499,7 +36499,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36608,7 +36608,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36715,7 +36715,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36822,7 +36822,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -36941,7 +36941,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteSourceControl);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37056,7 +37056,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37161,7 +37161,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteSourceControl);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37282,7 +37282,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37391,7 +37391,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37496,7 +37496,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37593,7 +37593,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37692,7 +37692,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37789,7 +37789,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37886,7 +37886,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -37994,7 +37994,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38116,7 +38116,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38227,7 +38227,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38347,7 +38347,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38480,7 +38480,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38591,7 +38591,7 @@ namespace Azure.ResourceManager.AppService
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38700,7 +38700,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38818,7 +38818,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -38944,7 +38944,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39072,7 +39072,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39184,7 +39184,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39314,7 +39314,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39452,7 +39452,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39596,7 +39596,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39733,7 +39733,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39841,7 +39841,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -39964,7 +39964,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40073,7 +40073,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(slotSwapEntity);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40170,7 +40170,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40265,7 +40265,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40360,7 +40360,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40467,7 +40467,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteSourceControl);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40570,7 +40570,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40663,7 +40663,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteSourceControl);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40772,7 +40772,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40869,7 +40869,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -40962,7 +40962,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41047,7 +41047,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41134,7 +41134,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41219,7 +41219,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41304,7 +41304,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41400,7 +41400,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41510,7 +41510,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41609,7 +41609,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41717,7 +41717,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41838,7 +41838,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -41937,7 +41937,7 @@ namespace Azure.ResourceManager.AppService
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42034,7 +42034,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42140,7 +42140,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42254,7 +42254,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42370,7 +42370,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42470,7 +42470,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42588,7 +42588,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42714,7 +42714,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42846,7 +42846,7 @@ namespace Azure.ResourceManager.AppService
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionEnvelope);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -42971,7 +42971,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43067,7 +43067,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43169,7 +43169,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43247,7 +43247,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43337,7 +43337,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43435,7 +43435,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43533,7 +43533,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43631,7 +43631,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43729,7 +43729,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43827,7 +43827,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -43925,7 +43925,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44023,7 +44023,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44121,7 +44121,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44219,7 +44219,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44317,7 +44317,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44415,7 +44415,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44513,7 +44513,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44621,7 +44621,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44739,7 +44739,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44857,7 +44857,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -44955,7 +44955,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45055,7 +45055,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45153,7 +45153,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45251,7 +45251,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45359,7 +45359,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45467,7 +45467,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45565,7 +45565,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45663,7 +45663,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45761,7 +45761,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45869,7 +45869,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -45977,7 +45977,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46085,7 +46085,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46193,7 +46193,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46301,7 +46301,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46409,7 +46409,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46517,7 +46517,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46625,7 +46625,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46733,7 +46733,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46841,7 +46841,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -46949,7 +46949,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47057,7 +47057,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47175,7 +47175,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47303,7 +47303,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47431,7 +47431,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47539,7 +47539,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47649,7 +47649,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47757,7 +47757,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47865,7 +47865,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -47983,7 +47983,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48101,7 +48101,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48209,7 +48209,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48317,7 +48317,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48435,7 +48435,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48543,7 +48543,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48651,7 +48651,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48759,7 +48759,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48877,7 +48877,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -48987,7 +48987,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49095,7 +49095,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49203,7 +49203,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49301,7 +49301,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49399,7 +49399,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49497,7 +49497,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49605,7 +49605,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -49705,7 +49705,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

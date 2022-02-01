@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -22,52 +22,59 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of ServiceBusTopic and their operations over its parent. </summary>
     public partial class ServiceBusTopicCollection : ArmCollection, IEnumerable<ServiceBusTopic>, IAsyncEnumerable<ServiceBusTopic>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopicsRestOperations _topicsRestClient;
+        private readonly ClientDiagnostics _serviceBusTopicTopicsClientDiagnostics;
+        private readonly TopicsRestOperations _serviceBusTopicTopicsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicCollection"/> class for mocking. </summary>
         protected ServiceBusTopicCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceBusTopicCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _topicsRestClient = new TopicsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serviceBusTopicTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopic.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServiceBusTopic.ResourceType, out string serviceBusTopicTopicsApiVersion);
+            _serviceBusTopicTopicsRestClient = new TopicsRestOperations(_serviceBusTopicTopicsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusTopicTopicsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ServiceBusNamespace.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ServiceBusNamespace.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_CreateOrUpdate
         /// <summary> Creates a topic in the specified namespace. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="parameters"> Parameters supplied to create a topic resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual TopicCreateOrUpdateOperation CreateOrUpdate(string topicName, ServiceBusTopicData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ServiceBusTopicCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken);
-                var operation = new TopicCreateOrUpdateOperation(Parent, response);
+                var response = _serviceBusTopicTopicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken);
+                var operation = new ServiceBusTopicCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -79,29 +86,30 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_CreateOrUpdate
         /// <summary> Creates a topic in the specified namespace. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="parameters"> Parameters supplied to create a topic resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<TopicCreateOrUpdateOperation> CreateOrUpdateAsync(string topicName, ServiceBusTopicData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ServiceBusTopicCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new TopicCreateOrUpdateOperation(Parent, response);
+                var response = await _serviceBusTopicTopicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusTopicCreateOrUpdateOperation(ArmClient, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,25 +121,26 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_Get
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<ServiceBusTopic> Get(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken);
+                var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusTopic(Parent, response.Value), response.GetRawResponse());
+                    throw _serviceBusTopicTopicsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,25 +149,26 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_Get
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusTopic>> GetAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusTopic(Parent, response.Value), response.GetRawResponse());
+                    throw await _serviceBusTopicTopicsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,22 +180,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<ServiceBusTopic> GetIfExists(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _topicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,22 +205,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public async virtual Task<Response<ServiceBusTopic>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExistsAsync");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _topicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusTopic(this, response.Value), response.GetRawResponse());
+                var response = await _serviceBusTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusTopic>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopic(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,15 +230,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string topicName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CheckIfExists");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {
@@ -249,15 +253,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.CheckIfExistsAsync");
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
             try
             {
@@ -271,6 +273,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_ListByNamespace
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -280,12 +285,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<ServiceBusTopic> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topicsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusTopicTopicsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -295,12 +300,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<ServiceBusTopic> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _topicsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _serviceBusTopicTopicsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,6 +316,9 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: Topics_ListByNamespace
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -320,12 +328,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<ServiceBusTopic>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topicsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusTopicTopicsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,12 +343,12 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<ServiceBusTopic>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
+                using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _topicsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusTopicTopicsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopic(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -365,8 +373,5 @@ namespace Azure.ResourceManager.ServiceBus
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ServiceBusTopic, ServiceBusTopicData> Construct() { }
     }
 }

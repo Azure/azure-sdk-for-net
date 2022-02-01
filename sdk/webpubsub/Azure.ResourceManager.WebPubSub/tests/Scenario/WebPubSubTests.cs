@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeTearDown]
         public async Task GlobleTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubData data = new WebPubSubData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
                 Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var webPubSub = await CreateWebPubSub(webPubSubName);
             Assert.IsNotNull(webPubSub.Data);
             Assert.AreEqual(webPubSubName, webPubSub.Data.Name);
-            Assert.AreEqual(Location.WestUS2, webPubSub.Data.Location);
+            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Data.Location);
         }
 
         [Test]
@@ -107,8 +108,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            Assert.IsTrue(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName));
-            Assert.IsFalse(_resourceGroup.GetWebPubSubs().CheckIfExists(webPubSubName + "1"));
+            Assert.IsTrue(_resourceGroup.GetWebPubSubs().Exists(webPubSubName));
+            Assert.IsFalse(_resourceGroup.GetWebPubSubs().Exists(webPubSubName + "1"));
         }
 
         [Test]
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(webPubSubName);
             Assert.IsNotNull(webPubSub.Value.Data);
             Assert.AreEqual(webPubSubName, webPubSub.Value.Data.Name);
-            Assert.AreEqual(Location.WestUS2, webPubSub.Value.Data.Location);
+            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Value.Data.Location);
         }
 
         [Test]
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateWebPubSub(webPubSubName);
-            await webPubSub.DeleteAsync();
+            await webPubSub.DeleteAsync(true);
         }
     }
 }

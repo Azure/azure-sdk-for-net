@@ -6,23 +6,24 @@ using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(Location.WestUS, new Models.Sku { Name = skuName });
+        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = skuName });
 
         public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Models.Sku { Name = skuName });
 
-        public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(Location.WestUS)
+        public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(AzureLocation.WestUS)
         {
             IsHttpAllowed = true,
             IsHttpsAllowed = true,
             OptimizationType = OptimizationType.GeneralWebDelivery
         };
 
-        public static AfdEndpointData CreateAfdEndpointData() => new AfdEndpointData(Location.WestUS)
+        public static AfdEndpointData CreateAfdEndpointData() => new AfdEndpointData(AzureLocation.WestUS)
         {
             OriginResponseTimeoutSeconds = 60
         };

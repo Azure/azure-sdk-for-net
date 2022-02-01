@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Result of Tenant Configuration Sync State.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TenantConfigurationSyncStateContract
+    public partial class TenantConfigurationSyncStateContract : Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -34,6 +34,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the
         /// TenantConfigurationSyncStateContract class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="branch">The name of Git branch.</param>
         /// <param name="commitId">The latest commit Id.</param>
         /// <param name="isExport">value indicating if last sync was save
@@ -52,7 +58,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </param>
         /// <param name="lastOperationId">Most recent tenant configuration
         /// operation identifier</param>
-        public TenantConfigurationSyncStateContract(string branch = default(string), string commitId = default(string), bool? isExport = default(bool?), bool? isSynced = default(bool?), bool? isGitEnabled = default(bool?), System.DateTime? syncDate = default(System.DateTime?), System.DateTime? configurationChangeDate = default(System.DateTime?), string lastOperationId = default(string))
+        public TenantConfigurationSyncStateContract(string id = default(string), string name = default(string), string type = default(string), string branch = default(string), string commitId = default(string), bool? isExport = default(bool?), bool? isSynced = default(bool?), bool? isGitEnabled = default(bool?), System.DateTime? syncDate = default(System.DateTime?), System.DateTime? configurationChangeDate = default(System.DateTime?), string lastOperationId = default(string))
+            : base(id, name, type)
         {
             Branch = branch;
             CommitId = commitId;

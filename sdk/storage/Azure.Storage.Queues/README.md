@@ -33,6 +33,18 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+
+In order to interact with the Azure Queue Storage service, you'll need to create an instance of the QueueClient class.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_IdentityAuth
+// Create a QueueClient that will authenticate through Active Directory
+Uri queueUri = new Uri("https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME");
+QueueClient queue = new QueueClient(queueUri, new DefaultAzureCredential());
+```
+
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
+
 ## Key concepts
 
 Common uses of Queue storage include:
@@ -126,18 +138,6 @@ await queue.CreateAsync();
 // Send a message to our queue
 await queue.SendMessageAsync("Hello, Azure!");
 ```
-
-### Authenticating with Azure.Identity
-
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
-
-```C# Snippet:Azure_Storage_Queues_Samples_Sample01a_HelloWorld_IdentityAuth
-// Create a QueueClient that will authenticate through Active Directory
-Uri queueUri = new Uri("https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME");
-QueueClient queue = new QueueClient(queueUri, new DefaultAzureCredential());
-```
-
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
 
 ### Message encoding
 

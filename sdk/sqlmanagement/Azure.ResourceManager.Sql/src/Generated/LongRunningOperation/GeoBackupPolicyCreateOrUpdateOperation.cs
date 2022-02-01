@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal GeoBackupPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<GeoBackupPolicyData> response)
+        internal GeoBackupPolicyCreateOrUpdateOperation(ArmClient armClient, Response<GeoBackupPolicyData> response)
         {
-            _operation = new OperationOrResponseInternals<GeoBackupPolicy>(Response.FromValue(new GeoBackupPolicy(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<GeoBackupPolicy>(Response.FromValue(new GeoBackupPolicy(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -8,39 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
     public partial class SiteConfigAppsettingCollection : ArmCollection, IEnumerable<SiteConfigAppsetting>, IAsyncEnumerable<SiteConfigAppsetting>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteConfigAppsettingWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteConfigAppsettingWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigAppsettingCollection"/> class for mocking. </summary>
         protected SiteConfigAppsettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigAppsettingCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteConfigAppsettingCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigAppsettingCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteConfigAppsettingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigAppsetting.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteConfigAppsetting.ResourceType, out string siteConfigAppsettingWebAppsApiVersion);
+            _siteConfigAppsettingWebAppsRestClient = new WebAppsRestOperations(_siteConfigAppsettingWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigAppsettingWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebSite.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != WebSite.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,22 +56,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<SiteConfigAppsetting> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken);
+                var response = _siteConfigAppsettingWebAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigAppsetting(Parent, response.Value), response.GetRawResponse());
+                    throw _siteConfigAppsettingWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -80,22 +84,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets the config reference and status of an app. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public async virtual Task<Response<SiteConfigAppsetting>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken).ConfigureAwait(false);
+                var response = await _siteConfigAppsettingWebAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigAppsetting(Parent, response.Value), response.GetRawResponse());
+                    throw await _siteConfigAppsettingWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteConfigAppsetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,22 +109,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public virtual Response<SiteConfigAppsetting> GetIfExists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                var response = _siteConfigAppsettingWebAppsRestClient.GetAppSettingKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,22 +134,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
         public async virtual Task<Response<SiteConfigAppsetting>> GetIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExistsAsync");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteConfigAppsetting(this, response.Value), response.GetRawResponse());
+                var response = await _siteConfigAppsettingWebAppsRestClient.GetAppSettingKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteConfigAppsetting>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteConfigAppsetting(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,15 +159,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string appSettingKey, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.CheckIfExists");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
             try
             {
@@ -186,15 +182,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
-            if (appSettingKey == null)
-            {
-                throw new ArgumentNullException(nameof(appSettingKey));
-            }
+            Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.CheckIfExistsAsync");
+            using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.Exists");
             scope.Start();
             try
             {
@@ -218,12 +212,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteConfigAppsetting> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
+                using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.GetAppSettingsKeyVaultReferences(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteConfigAppsettingWebAppsRestClient.GetAppSettingsKeyVaultReferences(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -233,12 +227,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteConfigAppsetting> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
+                using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.GetAppSettingsKeyVaultReferencesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteConfigAppsettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,12 +253,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteConfigAppsetting>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
+                using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.GetAppSettingsKeyVaultReferencesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteConfigAppsettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,12 +268,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteConfigAppsetting>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
+                using var scope = _siteConfigAppsettingWebAppsClientDiagnostics.CreateScope("SiteConfigAppsettingCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.GetAppSettingsKeyVaultReferencesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteConfigAppsettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigAppsetting(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -304,8 +298,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteConfigAppsetting, ApiKeyVaultReferenceData> Construct() { }
     }
 }
