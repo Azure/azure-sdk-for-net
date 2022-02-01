@@ -13,12 +13,8 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class RequestContextTests : SyncAsyncPolicyTestBase
+    public class RequestContextTests
     {
-        public RequestContextTests(bool isAsync) : base(isAsync)
-        {
-        }
-
         [Test]
         public void CanCastFromErrorOptions()
         {
@@ -215,6 +211,42 @@ namespace Azure.Core.Tests
             {
                 message.Request.Headers.Add(_headerName, _headerVaue);
             }
+        }
+
+        [Test]
+        public void CanAddErrorCodes()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(new int[] { 204, 304 }, isError: true);
+            Assert.Contains(204, context.ErrorCodes);
+            Assert.Contains(304, context.ErrorCodes);
+        }
+
+        [Test]
+        public void CanAddNonErrorCodes()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(new int[] { 404, 409 }, isError: false);
+            Assert.Contains(404, context.NonErrorCodes);
+            Assert.Contains(409, context.NonErrorCodes);
+        }
+
+        [Test]
+        public void CanAddCustomCodesMultipleTimes()
+        {
+            var context = new RequestContext();
+            context.AddClassifier(new int[] { 204, 304 }, isError: true);
+            context.AddClassifier(new int[] { 205, 300, 301 }, isError: true);
+            context.AddClassifier(new int[] { 404, 409 }, isError: false);
+            context.AddClassifier(new int[] { 412 }, isError: false);
+            Assert.Contains(204, context.ErrorCodes);
+            Assert.Contains(304, context.ErrorCodes);
+            Assert.Contains(205, context.ErrorCodes);
+            Assert.Contains(300, context.ErrorCodes);
+            Assert.Contains(301, context.ErrorCodes);
+            Assert.Contains(404, context.NonErrorCodes);
+            Assert.Contains(409, context.NonErrorCodes);
+            Assert.Contains(412, context.NonErrorCodes);
         }
 
         [Test]

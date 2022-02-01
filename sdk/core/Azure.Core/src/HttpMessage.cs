@@ -88,7 +88,7 @@ namespace Azure.Core
                 return;
             }
 
-            if (context.Policies != null &&  context.Policies.Count > 0)
+            if (context.Policies?.Count > 0)
             {
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
