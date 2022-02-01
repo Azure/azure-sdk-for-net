@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsAudience"/> object.
         /// </summary>
-        /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes.For Text Analytics, this value corresponds to a URL that identifies the Azure cloud where the resource is located. Read more at: https://docs.microsoft.com/en-us/azure/azure-government/documentation-government-cognitiveservices. The default audience value is the Azure Public Cloud.</param>
+        /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes.For Text Analytics, this value corresponds to a URL that identifies the Azure cloud where the resource is located. For more information: <see href="https://docs.microsoft.com/azure/azure-government/documentation-government-cognitiveservices" />.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAnalyticsAudience(string value)
         {
