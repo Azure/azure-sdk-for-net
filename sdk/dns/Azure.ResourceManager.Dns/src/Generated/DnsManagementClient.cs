@@ -32,26 +32,6 @@ namespace Azure.ResourceManager.Dns
         public DnsManagementClient(string subscriptionId, TokenCredential tokenCredential, DnsManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of DnsManagementClient. </summary>
-        /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public DnsManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, DnsManagementClientOptions options = null)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            endpoint ??= new Uri("https://management.azure.com");
-
-            options ??= new DnsManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
-            _subscriptionId = subscriptionId;
-            _endpoint = endpoint;
-        }
 
         /// <summary> Returns an instance of RecordSetsOperations. </summary>
         public virtual RecordSetsOperations RecordSets => new RecordSetsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);

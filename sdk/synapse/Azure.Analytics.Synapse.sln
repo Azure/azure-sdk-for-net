@@ -29,10 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Mon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Monitoring.Tests", "Azure.Analytics.Synapse.Monitoring\tests\Azure.Analytics.Synapse.Monitoring.Tests.csproj", "{729E92B7-E47B-442C-836F-27B8A7806D2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{C97510BD-D704-4FE5-8B04-80BD267DFC51}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{02A34436-0CB1-43C3-8CD5-4EC450171055}"
-EndProject
+
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13

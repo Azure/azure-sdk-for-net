@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,12 +24,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
-        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType type, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, type)
+        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, type, systemData)
         {
             DatabaseName = databaseName;
             QueryId = queryId;

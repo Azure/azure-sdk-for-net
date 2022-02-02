@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -22,52 +22,56 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of HubIpConfiguration and their operations over its parent. </summary>
     public partial class HubIpConfigurationCollection : ArmCollection, IEnumerable<HubIpConfiguration>, IAsyncEnumerable<HubIpConfiguration>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualHubIpConfigurationRestOperations _virtualHubIpConfigurationRestClient;
+        private readonly ClientDiagnostics _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics;
+        private readonly VirtualHubIpConfigurationRestOperations _hubIpConfigurationVirtualHubIpConfigurationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HubIpConfigurationCollection"/> class for mocking. </summary>
         protected HubIpConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of HubIpConfigurationCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubIpConfigurationCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal HubIpConfigurationCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIpConfiguration.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(HubIpConfiguration.ResourceType, out string hubIpConfigurationVirtualHubIpConfigurationApiVersion);
+            _hubIpConfigurationVirtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubIpConfigurationVirtualHubIpConfigurationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => VirtualHub.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != VirtualHub.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHub.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="parameters"> Hub Ip Configuration parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualHubIpConfigurationCreateOrUpdateOperation CreateOrUpdate(string ipConfigName, HubIpConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual HubIpConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipConfigName, HubIpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.CreateOrUpdate");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken);
-                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
+                var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken);
+                var operation = new HubIpConfigurationCreateOrUpdateOperation(ArmClient, _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -80,28 +84,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="parameters"> Hub Ip Configuration parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualHubIpConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(string ipConfigName, HubIpConfigurationData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<HubIpConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipConfigName, HubIpConfigurationData parameters, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.CreateOrUpdate");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubIpConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
+                var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new HubIpConfigurationCreateOrUpdateOperation(ArmClient, _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,22 +118,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual Response<HubIpConfiguration> Get(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.Get");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
+                var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HubIpConfiguration(Parent, response.Value), response.GetRawResponse());
+                    throw _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HubIpConfiguration(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,22 +143,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public async virtual Task<Response<HubIpConfiguration>> GetAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.Get");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
+                var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HubIpConfiguration(Parent, response.Value), response.GetRawResponse());
+                    throw await _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new HubIpConfiguration(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,22 +168,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual Response<HubIpConfiguration> GetIfExists(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExists");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new HubIpConfiguration(this, response.Value), response.GetRawResponse());
+                var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new HubIpConfiguration(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,22 +193,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public async virtual Task<Response<HubIpConfiguration>> GetIfExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExistsAsync");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse())
-                    : Response.FromValue(new HubIpConfiguration(this, response.Value), response.GetRawResponse());
+                var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<HubIpConfiguration>(null, response.GetRawResponse());
+                return Response.FromValue(new HubIpConfiguration(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,15 +218,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.Exists");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -249,15 +241,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
-            if (ipConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.ExistsAsync");
+            using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -278,12 +268,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<HubIpConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
+                using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubIpConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -293,12 +283,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<HubIpConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
+                using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualHubIpConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,12 +306,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<HubIpConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
+                using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubIpConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,12 +321,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<HubIpConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
+                using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualHubIpConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HubIpConfiguration(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -361,8 +351,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HubIpConfiguration, HubIpConfigurationData> Construct() { }
     }
 }

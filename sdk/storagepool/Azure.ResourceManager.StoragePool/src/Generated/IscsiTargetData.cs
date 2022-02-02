@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StoragePool.Models;
 
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Resource metadata required by ARM RPC. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
@@ -57,9 +56,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
         /// <param name="port"> The port used by iSCSI Target portal group. </param>
         /// <param name="sessions"> List of identifiers for active sessions on the iSCSI target. </param>
-        internal IscsiTargetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, IscsiTargetAclMode aclMode, IList<Acl> staticAcls, IList<IscsiLun> luns, string targetIqn, ProvisioningStates provisioningState, OperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, type)
+        internal IscsiTargetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, IscsiTargetAclMode aclMode, IList<Acl> staticAcls, IList<IscsiLun> luns, string targetIqn, ProvisioningStates provisioningState, OperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
             AclMode = aclMode;
@@ -73,8 +71,6 @@ namespace Azure.ResourceManager.StoragePool
             Sessions = sessions;
         }
 
-        /// <summary> Resource metadata required by ARM RPC. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>
         public string ManagedBy { get; }
         /// <summary> List of Azure resource ids that manage this resource. </summary>

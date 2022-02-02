@@ -31,7 +31,7 @@ await foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

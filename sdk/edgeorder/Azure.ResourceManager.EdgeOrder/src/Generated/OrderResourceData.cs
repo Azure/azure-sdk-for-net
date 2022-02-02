@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
 
@@ -27,20 +26,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Represents resource creation and update time. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
         /// <param name="currentStage"> Order current status. </param>
         /// <param name="orderStageHistory"> Order status history. </param>
-        internal OrderResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IReadOnlyList<string> orderItemIds, StageDetails currentStage, IReadOnlyList<StageDetails> orderStageHistory) : base(id, name, type)
+        internal OrderResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IReadOnlyList<string> orderItemIds, StageDetails currentStage, IReadOnlyList<StageDetails> orderStageHistory) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             OrderItemIds = orderItemIds;
             CurrentStage = currentStage;
             OrderStageHistory = orderStageHistory;
         }
 
-        /// <summary> Represents resource creation and update time. </summary>
-        public SystemData SystemData { get; }
         /// <summary> List of order item ARM Ids which are part of an order. </summary>
         public IReadOnlyList<string> OrderItemIds { get; }
         /// <summary> Order current status. </summary>

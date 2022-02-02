@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date. </param>
-        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, string lastAvailableBackupDate) : base(id, name, type)
+        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string lastAvailableBackupDate) : base(id, name, type, systemData)
         {
             LastAvailableBackupDate = lastAvailableBackupDate;
         }

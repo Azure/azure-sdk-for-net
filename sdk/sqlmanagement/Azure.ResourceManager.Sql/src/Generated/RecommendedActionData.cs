@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -31,6 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="recommendationReason"> Gets the reason for recommending this action. e.g., DuplicateIndex. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
         /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType type, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, string executeActionDuration, DateTimeOffset? revertActionStartTime, string revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, object> details) : base(id, name, type)
+        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, string executeActionDuration, DateTimeOffset? revertActionStartTime, string revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, object> details) : base(id, name, type, systemData)
         {
             Kind = kind;
             Location = location;

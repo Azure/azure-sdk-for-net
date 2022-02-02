@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VpnGateway> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VpnGatewayCreateOrUpdateOperation for mocking. </summary>
         protected VpnGatewayCreateOrUpdateOperation()
         {
         }
 
-        internal VpnGatewayCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnGatewayCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnGatewayCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         VpnGateway IOperationSource<VpnGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VpnGateway(_operationBase, VpnGatewayData.DeserializeVpnGatewayData(document.RootElement));
+            var data = VpnGatewayData.DeserializeVpnGatewayData(document.RootElement);
+            return new VpnGateway(_armClient, data);
         }
 
         async ValueTask<VpnGateway> IOperationSource<VpnGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VpnGateway(_operationBase, VpnGatewayData.DeserializeVpnGatewayData(document.RootElement));
+            var data = VpnGatewayData.DeserializeVpnGatewayData(document.RootElement);
+            return new VpnGateway(_armClient, data);
         }
     }
 }

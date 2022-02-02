@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteCrossConnection> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCrossConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCrossConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCrossConnectionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteCrossConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCrossConnectionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteCrossConnection IOperationSource<ExpressRouteCrossConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteCrossConnection(_operationBase, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement));
+            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
+            return new ExpressRouteCrossConnection(_armClient, data);
         }
 
         async ValueTask<ExpressRouteCrossConnection> IOperationSource<ExpressRouteCrossConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteCrossConnection(_operationBase, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement));
+            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
+            return new ExpressRouteCrossConnection(_armClient, data);
         }
     }
 }

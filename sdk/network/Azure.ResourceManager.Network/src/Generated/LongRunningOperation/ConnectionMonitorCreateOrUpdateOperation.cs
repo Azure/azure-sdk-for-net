@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ConnectionMonitor> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ConnectionMonitorCreateOrUpdateOperation for mocking. </summary>
         protected ConnectionMonitorCreateOrUpdateOperation()
         {
         }
 
-        internal ConnectionMonitorCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ConnectionMonitorCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ConnectionMonitor>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ConnectionMonitorCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ConnectionMonitor IOperationSource<ConnectionMonitor>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ConnectionMonitor(_operationBase, ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement));
+            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
+            return new ConnectionMonitor(_armClient, data);
         }
 
         async ValueTask<ConnectionMonitor> IOperationSource<ConnectionMonitor>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ConnectionMonitor(_operationBase, ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement));
+            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
+            return new ConnectionMonitor(_armClient, data);
         }
     }
 }

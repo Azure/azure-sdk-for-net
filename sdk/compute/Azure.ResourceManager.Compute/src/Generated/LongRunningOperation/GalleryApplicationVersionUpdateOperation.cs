@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<GalleryApplicationVersion> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionUpdateOperation for mocking. </summary>
         protected GalleryApplicationVersionUpdateOperation()
         {
         }
 
-        internal GalleryApplicationVersionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryApplicationVersionUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<GalleryApplicationVersion>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryApplicationVersionUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Compute.Models
         GalleryApplicationVersion IOperationSource<GalleryApplicationVersion>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new GalleryApplicationVersion(_operationBase, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement));
+            var data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement);
+            return new GalleryApplicationVersion(_armClient, data);
         }
 
         async ValueTask<GalleryApplicationVersion> IOperationSource<GalleryApplicationVersion>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new GalleryApplicationVersion(_operationBase, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement));
+            var data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement);
+            return new GalleryApplicationVersion(_armClient, data);
         }
     }
 }

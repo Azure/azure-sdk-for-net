@@ -5,8 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -23,28 +22,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="vmId"> Gets or sets the Vm Id. </param>
         /// <param name="publicKey"> Gets or sets the Public Key. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string vmId, string publicKey, VMwareIdentity identity, string provisioningState) : base(id, name, type)
+        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string vmId, string publicKey, SystemAssignedServiceIdentity identity, string provisioningState) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             VmId = vmId;
             PublicKey = publicKey;
             Identity = identity;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The system data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Gets or sets the Vm Id. </summary>
         public string VmId { get; set; }
         /// <summary> Gets or sets the Public Key. </summary>
         public string PublicKey { get; set; }
         /// <summary> The identity of the resource. </summary>
-        public VMwareIdentity Identity { get; }
+        public SystemAssignedServiceIdentity Identity { get; }
         /// <summary> Gets or sets the provisioning state. </summary>
         public string ProvisioningState { get; }
     }

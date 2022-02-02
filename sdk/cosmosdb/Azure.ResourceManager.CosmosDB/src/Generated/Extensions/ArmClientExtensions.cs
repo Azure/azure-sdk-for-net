@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccount" /> object. </returns>
         public static DatabaseAccount GetDatabaseAccount(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccount(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccount.ValidateResourceId(id);
+            return new DatabaseAccount(armClient, id);
         }
         #endregion
 
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
         public static SqlDatabase GetSqlDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlDatabase(clientOptions, credential, uri, pipeline, id));
+            SqlDatabase.ValidateResourceId(id);
+            return new SqlDatabase(armClient, id);
         }
         #endregion
 
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountSqlDatabaseThroughputSetting GetDatabaseAccountSqlDatabaseThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountSqlDatabaseThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountSqlDatabaseThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountSqlDatabaseThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -52,7 +56,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> object. </returns>
         public static DatabaseAccountSqlDatabaseContainerThroughputSetting GetDatabaseAccountSqlDatabaseContainerThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountSqlDatabaseContainerThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountSqlDatabaseContainerThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountSqlDatabaseContainerThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -63,7 +68,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountMongodbDatabaseThroughputSetting GetDatabaseAccountMongodbDatabaseThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountMongodbDatabaseThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountMongodbDatabaseThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountMongodbDatabaseThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -74,7 +80,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> object. </returns>
         public static DatabaseAccountMongodbDatabaseCollectionThroughputSetting GetDatabaseAccountMongodbDatabaseCollectionThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountMongodbDatabaseCollectionThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -85,7 +92,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSetting" /> object. </returns>
         public static DatabaseAccountTableThroughputSetting GetDatabaseAccountTableThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountTableThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountTableThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountTableThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -96,7 +104,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> object. </returns>
         public static DatabaseAccountCassandraKeyspaceThroughputSetting GetDatabaseAccountCassandraKeyspaceThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountCassandraKeyspaceThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountCassandraKeyspaceThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -107,7 +116,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> object. </returns>
         public static DatabaseAccountCassandraKeyspaceTableThroughputSetting GetDatabaseAccountCassandraKeyspaceTableThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountCassandraKeyspaceTableThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -118,7 +128,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> object. </returns>
         public static DatabaseAccountGremlinDatabaseThroughputSetting GetDatabaseAccountGremlinDatabaseThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountGremlinDatabaseThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountGremlinDatabaseThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountGremlinDatabaseThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -129,7 +140,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> object. </returns>
         public static DatabaseAccountGremlinDatabaseGraphThroughputSetting GetDatabaseAccountGremlinDatabaseGraphThroughputSetting(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DatabaseAccountGremlinDatabaseGraphThroughputSetting(clientOptions, credential, uri, pipeline, id));
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting.ValidateResourceId(id);
+            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(armClient, id);
         }
         #endregion
 
@@ -140,7 +152,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlContainer" /> object. </returns>
         public static SqlContainer GetSqlContainer(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlContainer(clientOptions, credential, uri, pipeline, id));
+            SqlContainer.ValidateResourceId(id);
+            return new SqlContainer(armClient, id);
         }
         #endregion
 
@@ -151,7 +164,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlStoredProcedure" /> object. </returns>
         public static SqlStoredProcedure GetSqlStoredProcedure(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlStoredProcedure(clientOptions, credential, uri, pipeline, id));
+            SqlStoredProcedure.ValidateResourceId(id);
+            return new SqlStoredProcedure(armClient, id);
         }
         #endregion
 
@@ -162,7 +176,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlUserDefinedFunction" /> object. </returns>
         public static SqlUserDefinedFunction GetSqlUserDefinedFunction(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlUserDefinedFunction(clientOptions, credential, uri, pipeline, id));
+            SqlUserDefinedFunction.ValidateResourceId(id);
+            return new SqlUserDefinedFunction(armClient, id);
         }
         #endregion
 
@@ -173,7 +188,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="SqlTrigger" /> object. </returns>
         public static SqlTrigger GetSqlTrigger(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SqlTrigger(clientOptions, credential, uri, pipeline, id));
+            SqlTrigger.ValidateResourceId(id);
+            return new SqlTrigger(armClient, id);
         }
         #endregion
 
@@ -184,7 +200,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabase" /> object. </returns>
         public static MongoDBDatabase GetMongoDBDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MongoDBDatabase(clientOptions, credential, uri, pipeline, id));
+            MongoDBDatabase.ValidateResourceId(id);
+            return new MongoDBDatabase(armClient, id);
         }
         #endregion
 
@@ -195,7 +212,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollection" /> object. </returns>
         public static MongoDBCollection GetMongoDBCollection(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MongoDBCollection(clientOptions, credential, uri, pipeline, id));
+            MongoDBCollection.ValidateResourceId(id);
+            return new MongoDBCollection(armClient, id);
         }
         #endregion
 
@@ -206,7 +224,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosTable" /> object. </returns>
         public static CosmosTable GetCosmosTable(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CosmosTable(clientOptions, credential, uri, pipeline, id));
+            CosmosTable.ValidateResourceId(id);
+            return new CosmosTable(armClient, id);
         }
         #endregion
 
@@ -217,7 +236,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspace" /> object. </returns>
         public static CassandraKeyspace GetCassandraKeyspace(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CassandraKeyspace(clientOptions, credential, uri, pipeline, id));
+            CassandraKeyspace.ValidateResourceId(id);
+            return new CassandraKeyspace(armClient, id);
         }
         #endregion
 
@@ -228,7 +248,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTable" /> object. </returns>
         public static CassandraTable GetCassandraTable(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new CassandraTable(clientOptions, credential, uri, pipeline, id));
+            CassandraTable.ValidateResourceId(id);
+            return new CassandraTable(armClient, id);
         }
         #endregion
 
@@ -239,7 +260,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabase" /> object. </returns>
         public static GremlinDatabase GetGremlinDatabase(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GremlinDatabase(clientOptions, credential, uri, pipeline, id));
+            GremlinDatabase.ValidateResourceId(id);
+            return new GremlinDatabase(armClient, id);
         }
         #endregion
 
@@ -250,7 +272,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraph" /> object. </returns>
         public static GremlinGraph GetGremlinGraph(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GremlinGraph(clientOptions, credential, uri, pipeline, id));
+            GremlinGraph.ValidateResourceId(id);
+            return new GremlinGraph(armClient, id);
+        }
+        #endregion
+
+        #region CosmosDBLocation
+        /// <summary> Gets an object representing a CosmosDBLocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBLocation" /> object. </returns>
+        public static CosmosDBLocation GetCosmosDBLocation(this ArmClient armClient, ResourceIdentifier id)
+        {
+            CosmosDBLocation.ValidateResourceId(id);
+            return new CosmosDBLocation(armClient, id);
         }
         #endregion
 
@@ -261,7 +296,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            PrivateEndpointConnection.ValidateResourceId(id);
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -272,7 +308,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            PrivateLinkResource.ValidateResourceId(id);
+            return new PrivateLinkResource(armClient, id);
         }
         #endregion
 
@@ -283,7 +320,32 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="RestorableDatabaseAccount" /> object. </returns>
         public static RestorableDatabaseAccount GetRestorableDatabaseAccount(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorableDatabaseAccount(clientOptions, credential, uri, pipeline, id));
+            RestorableDatabaseAccount.ValidateResourceId(id);
+            return new RestorableDatabaseAccount(armClient, id);
+        }
+        #endregion
+
+        #region ClusterResource
+        /// <summary> Gets an object representing a ClusterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
+        public static ClusterResource GetClusterResource(this ArmClient armClient, ResourceIdentifier id)
+        {
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(armClient, id);
+        }
+        #endregion
+
+        #region DataCenterResource
+        /// <summary> Gets an object representing a DataCenterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCenterResource" /> object. </returns>
+        public static DataCenterResource GetDataCenterResource(this ArmClient armClient, ResourceIdentifier id)
+        {
+            DataCenterResource.ValidateResourceId(id);
+            return new DataCenterResource(armClient, id);
         }
         #endregion
     }

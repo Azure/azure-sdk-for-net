@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StoragePool.Models;
 
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.StoragePool
 
         internal static IscsiTargetData DeserializeIscsiTargetData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             IscsiTargetAclMode aclMode = default;
             Optional<IList<Acl>> staticAcls = default;
             Optional<IList<IscsiLun>> luns = default;
@@ -85,16 +84,6 @@ namespace Azure.ResourceManager.StoragePool
             Optional<IReadOnlyList<string>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("managedBy"))
                 {
                     managedBy = property.Value.GetString();
@@ -128,6 +117,11 @@ namespace Azure.ResourceManager.StoragePool
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

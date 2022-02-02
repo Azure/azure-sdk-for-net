@@ -3,12 +3,19 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_. 
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Trevor Lacey _([GitHub](https://github.com/trevorlacey-msft))_
 
 ## 1.5.0 (2021-10-14)
 
@@ -49,7 +56,7 @@
 
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
-- Tomas Pajurek _([tpajurek-dtml](https://github.com/tpajurek-dtml))_
+- Tomas Pajurek _([tpajurek-dtml](https://github.com/tomas-pajurek))_
 
 ### Features Added
 

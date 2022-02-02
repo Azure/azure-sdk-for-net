@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxPatchSettings DeserializeLinuxPatchSettings(JsonElement element)
         {
-            Optional<LinuxVMGuestPatchMode> patchMode = default;
+            Optional<LinuxVmGuestPatchMode> patchMode = default;
             Optional<LinuxPatchAssessmentMode> assessmentMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    patchMode = new LinuxVMGuestPatchMode(property.Value.GetString());
+                    patchMode = new LinuxVmGuestPatchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("assessmentMode"))

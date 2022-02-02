@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        internal JobTargetGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<JobTargetGroupData> response)
+        internal JobTargetGroupCreateOrUpdateOperation(ArmClient armClient, Response<JobTargetGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<JobTargetGroup>(Response.FromValue(new JobTargetGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<JobTargetGroup>(Response.FromValue(new JobTargetGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

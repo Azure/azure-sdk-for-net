@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="ConfigurationStore" /> object. </returns>
         public static ConfigurationStore GetConfigurationStore(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ConfigurationStore(clientOptions, credential, uri, pipeline, id));
+            ConfigurationStore.ValidateResourceId(id);
+            return new ConfigurationStore(armClient, id);
         }
         #endregion
 
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateEndpointConnection(clientOptions, credential, uri, pipeline, id));
+            PrivateEndpointConnection.ValidateResourceId(id);
+            return new PrivateEndpointConnection(armClient, id);
         }
         #endregion
 
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new PrivateLinkResource(clientOptions, credential, uri, pipeline, id));
+            PrivateLinkResource.ValidateResourceId(id);
+            return new PrivateLinkResource(armClient, id);
         }
         #endregion
     }

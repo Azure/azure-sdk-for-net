@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StoragePool
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPool" /> object. </returns>
         public static DiskPool GetDiskPool(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DiskPool(clientOptions, credential, uri, pipeline, id));
+            DiskPool.ValidateResourceId(id);
+            return new DiskPool(armClient, id);
         }
         #endregion
 
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="IscsiTarget" /> object. </returns>
         public static IscsiTarget GetIscsiTarget(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new IscsiTarget(clientOptions, credential, uri, pipeline, id));
+            IscsiTarget.ValidateResourceId(id);
+            return new IscsiTarget(armClient, id);
         }
         #endregion
     }

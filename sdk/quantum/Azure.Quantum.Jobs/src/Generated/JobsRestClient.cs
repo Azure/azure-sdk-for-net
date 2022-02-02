@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -325,6 +326,103 @@ namespace Azure.Quantum.Jobs
             {
                 case 204:
                     return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePatchRequest(string jobId, IEnumerable<Models.JsonPatchDocument> patchJob)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in patchJob)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+            }
+            content.JsonWriter.WriteEndArray();
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Patch a job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="patchJob"> The json patch document containing the patch operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="patchJob"/> is null. </exception>
+        public async Task<Response<JobDetails>> PatchAsync(string jobId, IEnumerable<Models.JsonPatchDocument> patchJob, CancellationToken cancellationToken = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (patchJob == null)
+            {
+                throw new ArgumentNullException(nameof(patchJob));
+            }
+
+            using var message = CreatePatchRequest(jobId, patchJob);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobDetails value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = JobDetails.DeserializeJobDetails(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 204:
+                    return Response.FromValue((JobDetails)null, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Patch a job. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="patchJob"> The json patch document containing the patch operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="patchJob"/> is null. </exception>
+        public Response<JobDetails> Patch(string jobId, IEnumerable<Models.JsonPatchDocument> patchJob, CancellationToken cancellationToken = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (patchJob == null)
+            {
+                throw new ArgumentNullException(nameof(patchJob));
+            }
+
+            using var message = CreatePatchRequest(jobId, patchJob);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobDetails value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = JobDetails.DeserializeJobDetails(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 204:
+                    return Response.FromValue((JobDetails)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

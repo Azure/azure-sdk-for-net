@@ -7,9 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
-        public AppServiceEnvironmentData(Location location) : base(location)
+        public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
             ClusterSettings = new ChangeTrackingList<NameValuePair>();
             UserWhitelistedIpRanges = new ChangeTrackingList<string>();
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, tags, location, kind)
+        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, systemData, tags, location, kind)
         {
             ProvisioningState = provisioningState;
             Status = status;

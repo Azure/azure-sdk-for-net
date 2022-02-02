@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         private readonly OperationInternals<EventHubNamespace> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of EventHubNamespaceCreateOrUpdateOperation for mocking. </summary>
         protected EventHubNamespaceCreateOrUpdateOperation()
         {
         }
 
-        internal EventHubNamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EventHubNamespaceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<EventHubNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EventHubNamespaceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         EventHubNamespace IOperationSource<EventHubNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EventHubNamespace(_operationBase, EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement));
+            var data = EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement);
+            return new EventHubNamespace(_armClient, data);
         }
 
         async ValueTask<EventHubNamespace> IOperationSource<EventHubNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EventHubNamespace(_operationBase, EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement));
+            var data = EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement);
+            return new EventHubNamespace(_armClient, data);
         }
     }
 }

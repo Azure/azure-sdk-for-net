@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -22,26 +22,32 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of WorkloadGroup and their operations over its parent. </summary>
     public partial class WorkloadGroupCollection : ArmCollection, IEnumerable<WorkloadGroup>, IAsyncEnumerable<WorkloadGroup>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WorkloadGroupsRestOperations _workloadGroupsRestClient;
+        private readonly ClientDiagnostics _workloadGroupClientDiagnostics;
+        private readonly WorkloadGroupsRestOperations _workloadGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="WorkloadGroupCollection"/> class for mocking. </summary>
         protected WorkloadGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadGroupCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadGroupCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal WorkloadGroupCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _workloadGroupsRestClient = new WorkloadGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _workloadGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadGroup.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(WorkloadGroup.ResourceType, out string workloadGroupApiVersion);
+            _workloadGroupRestClient = new WorkloadGroupsRestOperations(_workloadGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadGroupApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SqlDatabase.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SqlDatabase.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -49,28 +55,26 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: WorkloadGroups_CreateOrUpdate
         /// <summary> Creates or updates a workload group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="parameters"> The requested workload group state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkloadGroupCreateOrUpdateOperation CreateOrUpdate(string workloadGroupName, WorkloadGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual WorkloadGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.CreateOrUpdate");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workloadGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken);
-                var operation = new WorkloadGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _workloadGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
+                var response = _workloadGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken);
+                var operation = new WorkloadGroupCreateOrUpdateOperation(ArmClient, _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -86,28 +90,26 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: WorkloadGroups_CreateOrUpdate
         /// <summary> Creates or updates a workload group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="parameters"> The requested workload group state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkloadGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string workloadGroupName, WorkloadGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WorkloadGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.CreateOrUpdate");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workloadGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _workloadGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
+                var response = await _workloadGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadGroupCreateOrUpdateOperation(ArmClient, _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,22 +127,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a workload group. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual Response<WorkloadGroup> Get(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.Get");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _workloadGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken);
+                var response = _workloadGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadGroup(Parent, response.Value), response.GetRawResponse());
+                    throw _workloadGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WorkloadGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,22 +155,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a workload group. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public async virtual Task<Response<WorkloadGroup>> GetAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.Get");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workloadGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _workloadGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WorkloadGroup(Parent, response.Value), response.GetRawResponse());
+                    throw await _workloadGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WorkloadGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,22 +180,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual Response<WorkloadGroup> GetIfExists(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExists");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workloadGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<WorkloadGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new WorkloadGroup(this, response.Value), response.GetRawResponse());
+                var response = _workloadGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<WorkloadGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new WorkloadGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,22 +205,20 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public async virtual Task<Response<WorkloadGroup>> GetIfExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExistsAsync");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workloadGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<WorkloadGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new WorkloadGroup(this, response.Value), response.GetRawResponse());
+                var response = await _workloadGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<WorkloadGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new WorkloadGroup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,15 +230,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.Exists");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -261,15 +253,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.ExistsAsync");
+            using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -293,12 +283,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<WorkloadGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
+                using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workloadGroupsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _workloadGroupRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +298,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<WorkloadGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
+                using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _workloadGroupsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _workloadGroupRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,12 +324,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<WorkloadGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
+                using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workloadGroupsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _workloadGroupRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,12 +339,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<WorkloadGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
+                using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _workloadGroupsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _workloadGroupRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadGroup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -379,8 +369,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WorkloadGroup, WorkloadGroupData> Construct() { }
     }
 }

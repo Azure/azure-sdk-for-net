@@ -6,19 +6,32 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4945",
+        "Content-Length": "5222",
         "Content-Type": "application/json",
-        "traceparent": "00-d2a37616208f2346a70db3894760f68b-e3234563671f0749-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210707.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "c9d25013946394807ebdd9beea0bf228",
+        "traceparent": "00-1c601f339a1ebf39a02c92a0d84f3d14-046a3a0265650d21-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "814c2e976f74d0cac73f70e7c465df7d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "fpmjeogx",
+        "name": "ufvfviab",
         "skills": [
+          {
+            "uri": "https://microsoft.com",
+            "@odata.type": "#Microsoft.Skills.Custom.AmlSkill",
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "phrgrkof"
+              }
+            ]
+          },
           {
             "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
             "inputs": [
@@ -38,7 +51,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "lgnlkuyy"
+                "targetName": "miabxnds"
               }
             ]
           },
@@ -58,7 +71,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "upyugkjy"
+                "targetName": "vgrduflr"
               }
             ]
           },
@@ -73,11 +86,11 @@
             "outputs": [
               {
                 "name": "content",
-                "targetName": "cojtwncd"
+                "targetName": "sodvrucn"
               },
               {
                 "name": "normalized_images",
-                "targetName": "xyafuysk"
+                "targetName": "xnrkxywh"
               }
             ]
           },
@@ -96,7 +109,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "lripadri"
+                "targetName": "sknapdpg"
               }
             ]
           },
@@ -115,7 +128,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "oxeepvou"
+                "targetName": "bdjoqwgk"
               }
             ]
           },
@@ -130,7 +143,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "gnhofmax"
+                "targetName": "uamcgrmr"
               }
             ]
           },
@@ -149,7 +162,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "djmltsdu"
+                "targetName": "gmcjurtv"
               }
             ]
           },
@@ -164,15 +177,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "wojnbsyy"
+                "targetName": "jkjjqlbp"
               },
               {
                 "name": "languageName",
-                "targetName": "vaeyixnb"
+                "targetName": "xwtolmwb"
               },
               {
                 "name": "score",
-                "targetName": "jexhrdex"
+                "targetName": "hgpxmtaa"
               }
             ]
           },
@@ -195,7 +208,7 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "rkmppgnu"
+                "targetName": "xutdagli"
               }
             ]
           },
@@ -213,11 +226,11 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "tjgbmatn"
+                "targetName": "imefmwsj"
               },
               {
                 "name": "layoutText",
-                "targetName": "nisfhboe"
+                "targetName": "xwejxxfs"
               }
             ]
           },
@@ -238,11 +251,11 @@
             "outputs": [
               {
                 "name": "piiEntities",
-                "targetName": "vlbotvcs"
+                "targetName": "obcncvjp"
               },
               {
                 "name": "maskedText",
-                "targetName": "jkvqfjip"
+                "targetName": "jiluqwpr"
               }
             ]
           },
@@ -251,18 +264,18 @@
             "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
             "inputs": [
               {
-                "name": "text",
+                "name": "languageCode",
                 "source": "/document/content"
               },
               {
-                "name": "languageCode",
+                "name": "text",
                 "source": "/document/content"
               }
             ],
             "outputs": [
               {
                 "name": "score",
-                "targetName": "ljeyqloi"
+                "targetName": "kkgxhqnj"
               }
             ]
           },
@@ -277,7 +290,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "kktjkyqp"
+                "targetName": "mgyooqcy"
               }
             ]
           },
@@ -297,7 +310,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "viseexax"
+                "targetName": "paoxdwgl"
               }
             ]
           },
@@ -321,15 +334,15 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "gnrbedhd"
+                "targetName": "dovekxra"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "ydswvpmk"
+                "targetName": "hmxmqhlx"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "vreibsij"
+                "targetName": "nravvuas"
               }
             ]
           },
@@ -345,7 +358,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "tftwpekm"
+                "targetName": "flfqiqnn"
               }
             ]
           },
@@ -364,7 +377,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "jgrdsmeh"
+                "targetName": "etusuixo"
               }
             ]
           },
@@ -384,15 +397,15 @@
             "outputs": [
               {
                 "name": "sentiment",
-                "targetName": "dpjhfstf"
+                "targetName": "nygcrpih"
               },
               {
                 "name": "confidenceScores",
-                "targetName": "uihmtqvn"
+                "targetName": "opklvjpi"
               },
               {
                 "name": "sentences",
-                "targetName": "ehhxijmt"
+                "targetName": "ncxyraqp"
               }
             ]
           }
@@ -401,34 +414,60 @@
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
         },
         "knowledgeStore": {
-          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
           "projections": []
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "c9d25013-9463-9480-7ebd-d9beea0bf228",
-        "Content-Length": "8111",
+        "client-request-id": "814c2e97-6f74-d0ca-c73f-70e7c465df7d",
+        "Content-Length": "8621",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 07 Jul 2021 22:39:09 GMT",
-        "elapsed-time": "77",
-        "ETag": "W/\u00220x8D94198093CE4C5\u0022",
+        "Date": "Tue, 25 Jan 2022 22:16:12 GMT",
+        "elapsed-time": "85",
+        "ETag": "W/\u00220x8D9E0504C67E98E\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2021-04-30-Preview",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027ufvfviab\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "c9d25013-9463-9480-7ebd-d9beea0bf228",
+        "request-id": "814c2e97-6f74-d0ca-c73f-70e7c465df7d",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "c9d25013-9463-9480-7ebd-d9beea0bf228"
+        "x-ms-client-request-id": "814c2e97-6f74-d0ca-c73f-70e7c465df7d"
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D94198093CE4C5\u0022",
-        "name": "fpmjeogx",
+        "@odata.etag": "\u00220x8D9E0504C67E98E\u0022",
+        "name": "ufvfviab",
         "description": null,
         "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Custom.AmlSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "uri": "https://microsoft.com",
+            "key": null,
+            "resourceId": null,
+            "region": null,
+            "timeout": null,
+            "degreeOfParallelism": null,
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "phrgrkof"
+              }
+            ]
+          },
           {
             "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
             "name": null,
@@ -457,7 +496,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "lgnlkuyy"
+                "targetName": "miabxnds"
               }
             ]
           },
@@ -488,7 +527,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "upyugkjy"
+                "targetName": "vgrduflr"
               }
             ],
             "inlineEntitiesDefinition": []
@@ -511,11 +550,11 @@
             "outputs": [
               {
                 "name": "content",
-                "targetName": "cojtwncd"
+                "targetName": "sodvrucn"
               },
               {
                 "name": "normalized_images",
-                "targetName": "xyafuysk"
+                "targetName": "xnrkxywh"
               }
             ],
             "configuration": null
@@ -545,7 +584,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "lripadri"
+                "targetName": "sknapdpg"
               }
             ]
           },
@@ -575,7 +614,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "oxeepvou"
+                "targetName": "bdjoqwgk"
               }
             ]
           },
@@ -598,7 +637,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "gnhofmax"
+                "targetName": "uamcgrmr"
               }
             ]
           },
@@ -627,7 +666,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "djmltsdu"
+                "targetName": "gmcjurtv"
               }
             ]
           },
@@ -649,15 +688,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "wojnbsyy"
+                "targetName": "jkjjqlbp"
               },
               {
                 "name": "languageName",
-                "targetName": "vaeyixnb"
+                "targetName": "xwtolmwb"
               },
               {
                 "name": "score",
-                "targetName": "jexhrdex"
+                "targetName": "hgpxmtaa"
               }
             ]
           },
@@ -691,7 +730,7 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "rkmppgnu"
+                "targetName": "xutdagli"
               }
             ]
           },
@@ -715,11 +754,11 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "tjgbmatn"
+                "targetName": "imefmwsj"
               },
               {
                 "name": "layoutText",
-                "targetName": "nisfhboe"
+                "targetName": "xwejxxfs"
               }
             ]
           },
@@ -733,6 +772,8 @@
             "maskingMode": "none",
             "maskingCharacter": null,
             "modelVersion": null,
+            "piiCategories": [],
+            "domain": null,
             "inputs": [
               {
                 "name": "languageCode",
@@ -750,11 +791,11 @@
             "outputs": [
               {
                 "name": "piiEntities",
-                "targetName": "vlbotvcs"
+                "targetName": "obcncvjp"
               },
               {
                 "name": "maskedText",
-                "targetName": "jkvqfjip"
+                "targetName": "jiluqwpr"
               }
             ]
           },
@@ -766,13 +807,13 @@
             "defaultLanguageCode": "en",
             "inputs": [
               {
-                "name": "text",
+                "name": "languageCode",
                 "source": "/document/content",
                 "sourceContext": null,
                 "inputs": []
               },
               {
-                "name": "languageCode",
+                "name": "text",
                 "source": "/document/content",
                 "sourceContext": null,
                 "inputs": []
@@ -781,7 +822,7 @@
             "outputs": [
               {
                 "name": "score",
-                "targetName": "ljeyqloi"
+                "targetName": "kkgxhqnj"
               }
             ]
           },
@@ -801,7 +842,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "kktjkyqp"
+                "targetName": "mgyooqcy"
               }
             ]
           },
@@ -830,7 +871,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "viseexax"
+                "targetName": "paoxdwgl"
               }
             ]
           },
@@ -865,20 +906,20 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "gnrbedhd"
+                "targetName": "dovekxra"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "ydswvpmk"
+                "targetName": "hmxmqhlx"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "vreibsij"
+                "targetName": "nravvuas"
               }
             ]
           },
           {
-            "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+            "@odata.type": "#Microsoft.Azure.Search.V2021_04_30_Preview.WebApiSkill",
             "name": null,
             "description": null,
             "context": null,
@@ -887,6 +928,7 @@
             "timeout": null,
             "batchSize": null,
             "degreeOfParallelism": null,
+            "authResourceId": null,
             "inputs": [
               {
                 "name": "input",
@@ -898,7 +940,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "tftwpekm"
+                "targetName": "flfqiqnn"
               }
             ],
             "httpHeaders": null
@@ -929,7 +971,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "jgrdsmeh"
+                "targetName": "etusuixo"
               }
             ]
           },
@@ -958,15 +1000,15 @@
             "outputs": [
               {
                 "name": "sentiment",
-                "targetName": "dpjhfstf"
+                "targetName": "nygcrpih"
               },
               {
                 "name": "confidenceScores",
-                "targetName": "uihmtqvn"
+                "targetName": "opklvjpi"
               },
               {
                 "name": "sentences",
-                "targetName": "ehhxijmt"
+                "targetName": "ncxyraqp"
               }
             ]
           }
@@ -976,7 +1018,7 @@
           "description": null
         },
         "knowledgeStore": {
-          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
           "projections": [],
           "parameters": null
         },
@@ -985,7 +1027,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1560392185",
+    "RandomSeed": "207569492",
     "SearchIndexName": null,
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,

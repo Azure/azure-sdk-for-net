@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -23,11 +23,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="columnType"> The column data type. </param>
         /// <param name="temporalType"> The table temporal type. </param>
         /// <param name="memoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
-        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType type, ColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed) : base(id, name, type)
+        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed) : base(id, name, type, systemData)
         {
             ColumnType = columnType;
             TemporalType = temporalType;

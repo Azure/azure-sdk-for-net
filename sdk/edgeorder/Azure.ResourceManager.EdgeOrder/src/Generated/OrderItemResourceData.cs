@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/>, or <paramref name="orderId"/> is null. </exception>
-        public OrderItemResourceData(Location location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, string orderId) : base(location)
+        public OrderItemResourceData(AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, string orderId) : base(location)
         {
             if (orderItemDetails == null)
             {
@@ -47,24 +46,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="systemData"> Represents resource creation and update time. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="startTime"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SystemData systemData, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startTime, string orderId) : base(id, name, type, tags, location)
+        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startTime, string orderId) : base(id, name, type, systemData, tags, location)
         {
-            SystemData = systemData;
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
             StartTime = startTime;
             OrderId = orderId;
         }
 
-        /// <summary> Represents resource creation and update time. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Represents order item details. </summary>
         public OrderItemDetails OrderItemDetails { get; set; }
         /// <summary> Represents shipping and return address for order item. </summary>

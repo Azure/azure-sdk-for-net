@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerAzureADAdministrator> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerAzureADAdministratorCreateOrUpdateOperation for mocking. </summary>
         protected ServerAzureADAdministratorCreateOrUpdateOperation()
         {
         }
 
-        internal ServerAzureADAdministratorCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerAzureADAdministratorCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerAzureADAdministrator>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerAzureADAdministratorCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerAzureADAdministrator IOperationSource<ServerAzureADAdministrator>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerAzureADAdministrator(_operationBase, ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement));
+            var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
+            return new ServerAzureADAdministrator(_armClient, data);
         }
 
         async ValueTask<ServerAzureADAdministrator> IOperationSource<ServerAzureADAdministrator>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerAzureADAdministrator(_operationBase, ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement));
+            var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
+            return new ServerAzureADAdministrator(_armClient, data);
         }
     }
 }

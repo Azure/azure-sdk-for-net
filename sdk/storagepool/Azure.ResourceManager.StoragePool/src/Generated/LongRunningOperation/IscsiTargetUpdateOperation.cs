@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         private readonly OperationInternals<IscsiTarget> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of IscsiTargetUpdateOperation for mocking. </summary>
         protected IscsiTargetUpdateOperation()
         {
         }
 
-        internal IscsiTargetUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal IscsiTargetUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<IscsiTarget>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "IscsiTargetUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         IscsiTarget IOperationSource<IscsiTarget>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new IscsiTarget(_operationBase, IscsiTargetData.DeserializeIscsiTargetData(document.RootElement));
+            var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+            return new IscsiTarget(_armClient, data);
         }
 
         async ValueTask<IscsiTarget> IOperationSource<IscsiTarget>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new IscsiTarget(_operationBase, IscsiTargetData.DeserializeIscsiTargetData(document.RootElement));
+            var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+            return new IscsiTarget(_armClient, data);
         }
     }
 }

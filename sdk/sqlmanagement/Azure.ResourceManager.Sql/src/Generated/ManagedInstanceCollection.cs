@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
@@ -23,26 +23,32 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstance and their operations over its parent. </summary>
     public partial class ManagedInstanceCollection : ArmCollection, IEnumerable<ManagedInstance>, IAsyncEnumerable<ManagedInstance>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedInstancesRestOperations _managedInstancesRestClient;
+        private readonly ClientDiagnostics _managedInstanceClientDiagnostics;
+        private readonly ManagedInstancesRestOperations _managedInstanceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceCollection"/> class for mocking. </summary>
         protected ManagedInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedInstancesRestClient = new ManagedInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstance.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstance.ResourceType, out string managedInstanceApiVersion);
+            _managedInstanceRestClient = new ManagedInstancesRestOperations(_managedInstanceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,28 +56,26 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ManagedInstances_CreateOrUpdate
         /// <summary> Creates or updates a managed instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceCreateOrUpdateOperation CreateOrUpdate(string managedInstanceName, ManagedInstanceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ManagedInstanceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.CreateOrUpdate");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters, cancellationToken);
-                var operation = new ManagedInstanceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters).Request, response);
+                var response = _managedInstanceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters, cancellationToken);
+                var operation = new ManagedInstanceCreateOrUpdateOperation(ArmClient, _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,28 +91,26 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ManagedInstances_CreateOrUpdate
         /// <summary> Creates or updates a managed instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="parameters"> The requested managed instance resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(string managedInstanceName, ManagedInstanceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedInstanceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string managedInstanceName, ManagedInstanceData parameters, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.CreateOrUpdate");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _managedInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters).Request, response);
+                var response = await _managedInstanceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceCreateOrUpdateOperation(ArmClient, _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,22 +129,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<ManagedInstance> Get(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken);
+                var response = _managedInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstance(Parent, response.Value), response.GetRawResponse());
+                    throw _managedInstanceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,22 +158,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstance>> GetAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstance(Parent, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,22 +184,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<ManagedInstance> GetIfExists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
+                var response = _managedInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,22 +210,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<ManagedInstance>> GetIfExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExistsAsync");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstance>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstance(this, response.Value), response.GetRawResponse());
+                var response = await _managedInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedInstance>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,15 +236,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -268,15 +260,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.ExistsAsync");
+            using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -301,12 +291,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
+                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstancesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,12 +306,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstance> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
+                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstancesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,12 +333,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
+                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstancesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -358,12 +348,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
+                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstancesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -372,52 +362,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="ManagedInstance" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(ManagedInstance.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="ManagedInstance" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(ManagedInstance.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<ManagedInstance> IEnumerable<ManagedInstance>.GetEnumerator()
@@ -434,8 +378,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ManagedInstance, ManagedInstanceData> Construct() { }
     }
 }

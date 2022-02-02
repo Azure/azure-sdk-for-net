@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="ResourcePool" /> object. </returns>
         public static ResourcePool GetResourcePool(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ResourcePool(clientOptions, credential, uri, pipeline, id));
+            ResourcePool.ValidateResourceId(id);
+            return new ResourcePool(armClient, id);
         }
         #endregion
 
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareCluster" /> object. </returns>
         public static VMwareCluster GetVMwareCluster(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VMwareCluster(clientOptions, credential, uri, pipeline, id));
+            VMwareCluster.ValidateResourceId(id);
+            return new VMwareCluster(armClient, id);
         }
         #endregion
 
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareHost" /> object. </returns>
         public static VMwareHost GetVMwareHost(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VMwareHost(clientOptions, credential, uri, pipeline, id));
+            VMwareHost.ValidateResourceId(id);
+            return new VMwareHost(armClient, id);
         }
         #endregion
 
@@ -52,7 +56,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareDatastore" /> object. </returns>
         public static VMwareDatastore GetVMwareDatastore(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VMwareDatastore(clientOptions, credential, uri, pipeline, id));
+            VMwareDatastore.ValidateResourceId(id);
+            return new VMwareDatastore(armClient, id);
         }
         #endregion
 
@@ -63,7 +68,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VCenter" /> object. </returns>
         public static VCenter GetVCenter(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VCenter(clientOptions, credential, uri, pipeline, id));
+            VCenter.ValidateResourceId(id);
+            return new VCenter(armClient, id);
         }
         #endregion
 
@@ -74,7 +80,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
         public static VirtualMachine GetVirtualMachine(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachine(clientOptions, credential, uri, pipeline, id));
+            VirtualMachine.ValidateResourceId(id);
+            return new VirtualMachine(armClient, id);
         }
         #endregion
 
@@ -85,7 +92,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachineTemplate" /> object. </returns>
         public static VirtualMachineTemplate GetVirtualMachineTemplate(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualMachineTemplate(clientOptions, credential, uri, pipeline, id));
+            VirtualMachineTemplate.ValidateResourceId(id);
+            return new VirtualMachineTemplate(armClient, id);
         }
         #endregion
 
@@ -96,7 +104,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
         public static VirtualNetwork GetVirtualNetwork(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new VirtualNetwork(clientOptions, credential, uri, pipeline, id));
+            VirtualNetwork.ValidateResourceId(id);
+            return new VirtualNetwork(armClient, id);
         }
         #endregion
 
@@ -107,7 +116,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="InventoryItem" /> object. </returns>
         public static InventoryItem GetInventoryItem(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new InventoryItem(clientOptions, credential, uri, pipeline, id));
+            InventoryItem.ValidateResourceId(id);
+            return new InventoryItem(armClient, id);
         }
         #endregion
 
@@ -118,7 +128,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="HybridIdentityMetadata" /> object. </returns>
         public static HybridIdentityMetadata GetHybridIdentityMetadata(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new HybridIdentityMetadata(clientOptions, credential, uri, pipeline, id));
+            HybridIdentityMetadata.ValidateResourceId(id);
+            return new HybridIdentityMetadata(armClient, id);
         }
         #endregion
 
@@ -129,7 +140,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="MachineExtension" /> object. </returns>
         public static MachineExtension GetMachineExtension(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new MachineExtension(clientOptions, credential, uri, pipeline, id));
+            MachineExtension.ValidateResourceId(id);
+            return new MachineExtension(armClient, id);
         }
         #endregion
 
@@ -140,7 +152,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="GuestAgent" /> object. </returns>
         public static GuestAgent GetGuestAgent(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new GuestAgent(clientOptions, credential, uri, pipeline, id));
+            GuestAgent.ValidateResourceId(id);
+            return new GuestAgent(armClient, id);
         }
         #endregion
     }

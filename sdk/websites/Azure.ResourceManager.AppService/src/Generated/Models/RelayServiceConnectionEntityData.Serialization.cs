@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> entityName = default;
             Optional<string> entityConnectionString = default;
             Optional<string> resourceType = default;
@@ -95,6 +96,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, kind.Value, entityName.Value, entityConnectionString.Value, resourceType.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData, kind.Value, entityName.Value, entityConnectionString.Value, resourceType.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
         }
     }
 }

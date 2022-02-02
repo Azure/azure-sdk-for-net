@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -28,12 +27,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="excludeDisks"> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </param>
         /// <param name="sourceMetadata"> Gets the details of the VM captured at the time of the restore point creation. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the restore point. </param>
         /// <param name="consistencyMode"> Gets the consistency mode for the restore point. Please refer to https://aka.ms/RestorePoints for more details. </param>
         /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, DateTimeOffset? timeCreated) : base(id, name, type)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, DateTimeOffset? timeCreated) : base(id, name, type, systemData)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;

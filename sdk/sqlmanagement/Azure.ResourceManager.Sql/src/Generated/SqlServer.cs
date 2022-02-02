@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -28,13 +28,20 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServersRestOperations _serversRestClient;
-        private readonly DatabasesRestOperations _databasesRestClient;
-        private readonly ReplicationLinksRestOperations _replicationLinksRestClient;
+
+        private readonly ClientDiagnostics _sqlServerServersClientDiagnostics;
+        private readonly ServersRestOperations _sqlServerServersRestClient;
+        private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
+        private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _replicationLinkClientDiagnostics;
+        private readonly ReplicationLinksRestOperations _replicationLinkRestClient;
+        private readonly ClientDiagnostics _serverUsagesClientDiagnostics;
         private readonly ServerUsagesRestOperations _serverUsagesRestClient;
-        private readonly FirewallRulesRestOperations _firewallRulesRestClient;
+        private readonly ClientDiagnostics _firewallRuleClientDiagnostics;
+        private readonly FirewallRulesRestOperations _firewallRuleRestClient;
+        private readonly ClientDiagnostics _serverOperationsClientDiagnostics;
         private readonly ServerRestOperations _serverOperationsRestClient;
+        private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
         private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
         private readonly SqlServerData _data;
 
@@ -44,60 +51,44 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SqlServer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SqlServer(ArmResource options, SqlServerData resource) : base(options, resource.Id)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SqlServer(ArmClient armClient, SqlServerData data) : this(armClient, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serversRestClient = new ServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlServer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlServer(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SqlServer(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serversRestClient = new ServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServer"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlServer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serversRestClient = new ServersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _databasesRestClient = new DatabasesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _replicationLinksRestClient = new ReplicationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _firewallRulesRestClient = new FirewallRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serverOperationsRestClient = new ServerRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
+            _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
+            _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
+            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
+            _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _serverUsagesRestClient = new ServerUsagesRestOperations(_serverUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRule.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
+            _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
+            _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _serverOperationsRestClient = new ServerRestOperations(_serverOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_tdeCertificatesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -114,6 +105,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_Get
@@ -122,14 +119,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SqlServer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Get");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Get");
             scope.Start();
             try
             {
-                var response = await _serversRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(this, response.Value), response.GetRawResponse());
+                    throw await _sqlServerServersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,14 +143,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServer> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Get");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Get");
             scope.Start();
             try
             {
-                var response = _serversRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServer(this, response.Value), response.GetRawResponse());
+                    throw _sqlServerServersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlServer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,17 +162,37 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
@@ -184,14 +201,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a server. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ServerDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlServerDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Delete");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Delete");
             scope.Start();
             try
             {
-                var response = await _serversRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerDeleteOperation(_clientDiagnostics, Pipeline, _serversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _sqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlServerDeleteOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,16 +226,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a server. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ServerDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlServerDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Delete");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Delete");
             scope.Start();
             try
             {
-                var response = _serversRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ServerDeleteOperation(_clientDiagnostics, Pipeline, _serversRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _sqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SqlServerDeleteOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -235,20 +252,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.AddTag");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _serversRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,20 +278,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<SqlServer> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.AddTag");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _serversRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -294,19 +305,19 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.SetTags");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _serversRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -323,19 +334,19 @@ namespace Azure.ResourceManager.Sql
         {
             if (tags == null)
             {
-                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.SetTags");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(cancellationToken: cancellationToken);
+                TagResource.Delete(true, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _serversRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,20 +361,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.RemoveTag");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _serversRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -378,20 +386,17 @@ namespace Azure.ResourceManager.Sql
         /// <returns> The updated resource with the tag removed. </returns>
         public virtual Response<SqlServer> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-            }
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.RemoveTag");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _serversRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(this, originalResponse.Value), originalResponse.GetRawResponse());
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,23 +409,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_Update
         /// <summary> Updates a server. </summary>
-        /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerUpdateOperation> UpdateAsync(ServerUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlServerUpdateOperation> UpdateAsync(bool waitForCompletion, ServerUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Update");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = await _serversRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerUpdateOperation(this, _clientDiagnostics, Pipeline, _serversRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlServerUpdateOperation(ArmClient, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -436,23 +441,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_Update
         /// <summary> Updates a server. </summary>
-        /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ServerUpdateOperation Update(ServerUpdate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlServerUpdateOperation Update(bool waitForCompletion, ServerUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.Update");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = _serversRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ServerUpdateOperation(this, _clientDiagnostics, Pipeline, _serversRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new SqlServerUpdateOperation(ArmClient, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -474,11 +479,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SqlDatabaseData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListInaccessibleByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -489,11 +494,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SqlDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _databasesRestClient.ListInaccessibleByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -515,11 +520,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SqlDatabaseData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListInaccessibleByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -530,11 +535,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SqlDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
+                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _databasesRestClient.ListInaccessibleByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -556,11 +561,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ReplicationLinkData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinksRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _replicationLinkRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -571,11 +576,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ReplicationLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = await _replicationLinksRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _replicationLinkRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -597,11 +602,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ReplicationLinkData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinksRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _replicationLinkRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -612,11 +617,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ReplicationLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
+                using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
-                    var response = _replicationLinksRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _replicationLinkRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -638,7 +643,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerUsages");
+                using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServer.GetServerUsages");
                 scope.Start();
                 try
                 {
@@ -664,7 +669,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerUsages");
+                using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServer.GetServerUsages");
                 scope.Start();
                 try
                 {
@@ -694,11 +699,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.ReplaceFirewallRule");
+            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServer.ReplaceFirewallRule");
             scope.Start();
             try
             {
-                var response = await _firewallRulesRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _firewallRuleRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -722,11 +727,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.ReplaceFirewallRule");
+            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServer.ReplaceFirewallRule");
             scope.Start();
             try
             {
-                var response = _firewallRulesRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _firewallRuleRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -746,7 +751,7 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServerOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerOperations");
+                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServer.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -761,7 +766,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ServerOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerOperations");
+                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServer.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -787,7 +792,7 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServerOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerOperations");
+                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServer.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -802,7 +807,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ServerOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlServer.GetServerOperations");
+                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServer.GetServerOperations");
                 scope.Start();
                 try
                 {
@@ -822,23 +827,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: TdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
-        /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<TdeCertificateCreateOperation> CreateTdeCertificateAsync(TdeCertificate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlServerCreateTdeCertificateOperation> CreateTdeCertificateAsync(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.CreateTdeCertificate");
+            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServer.CreateTdeCertificate");
             scope.Start();
             try
             {
                 var response = await _tdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new TdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new SqlServerCreateTdeCertificateOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -854,25 +859,25 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: TdeCertificates_Create
         /// <summary> Creates a TDE certificate for a given server. </summary>
-        /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual TdeCertificateCreateOperation CreateTdeCertificate(TdeCertificate parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlServerCreateTdeCertificateOperation CreateTdeCertificate(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.CreateTdeCertificate");
+            using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServer.CreateTdeCertificate");
             scope.Start();
             try
             {
                 var response = _tdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new TdeCertificateCreateOperation(_clientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new SqlServerCreateTdeCertificateOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -886,23 +891,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_ImportDatabase
         /// <summary> Imports a bacpac into a new database. </summary>
-        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerImportDatabaseOperation> ImportDatabaseAsync(ImportNewDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SqlServerImportDatabaseOperation> ImportDatabaseAsync(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.ImportDatabase");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.ImportDatabase");
             scope.Start();
             try
             {
-                var response = await _serversRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerImportDatabaseOperation(_clientDiagnostics, Pipeline, _serversRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlServerImportDatabaseOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -918,23 +923,23 @@ namespace Azure.ResourceManager.Sql
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_ImportDatabase
         /// <summary> Imports a bacpac into a new database. </summary>
-        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ServerImportDatabaseOperation ImportDatabase(ImportNewDatabaseDefinition parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual SqlServerImportDatabaseOperation ImportDatabase(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlServer.ImportDatabase");
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.ImportDatabase");
             scope.Start();
             try
             {
-                var response = _serversRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new ServerImportDatabaseOperation(_clientDiagnostics, Pipeline, _serversRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var operation = new SqlServerImportDatabaseOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -950,7 +955,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RecoverableDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of RecoverableDatabases and their operations over a SqlServer. </returns>
-        public RecoverableDatabaseCollection GetRecoverableDatabases()
+        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
         {
             return new RecoverableDatabaseCollection(this);
         }
@@ -960,7 +965,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SqlDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlDatabases and their operations over a SqlServer. </returns>
-        public SqlDatabaseCollection GetSqlDatabases()
+        public virtual SqlDatabaseCollection GetSqlDatabases()
         {
             return new SqlDatabaseCollection(this);
         }
@@ -970,7 +975,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ElasticPools in the SqlServer. </summary>
         /// <returns> An object representing collection of ElasticPools and their operations over a SqlServer. </returns>
-        public ElasticPoolCollection GetElasticPools()
+        public virtual ElasticPoolCollection GetElasticPools()
         {
             return new ElasticPoolCollection(this);
         }
@@ -980,7 +985,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerCommunicationLinks in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a SqlServer. </returns>
-        public ServerCommunicationLinkCollection GetServerCommunicationLinks()
+        public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
         {
             return new ServerCommunicationLinkCollection(this);
         }
@@ -990,7 +995,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServiceObjectives in the SqlServer. </summary>
         /// <returns> An object representing collection of ServiceObjectives and their operations over a SqlServer. </returns>
-        public ServiceObjectiveCollection GetServiceObjectives()
+        public virtual ServiceObjectiveCollection GetServiceObjectives()
         {
             return new ServiceObjectiveCollection(this);
         }
@@ -1000,7 +1005,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
+        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
         {
             return new ExtendedServerBlobAuditingPolicyCollection(this);
         }
@@ -1010,7 +1015,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerBlobAuditingPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
+        public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
         {
             return new ServerBlobAuditingPolicyCollection(this);
         }
@@ -1020,7 +1025,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAdvisors in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAdvisors and their operations over a SqlServer. </returns>
-        public ServerAdvisorCollection GetServerAdvisors()
+        public virtual ServerAdvisorCollection GetServerAdvisors()
         {
             return new ServerAdvisorCollection(this);
         }
@@ -1030,7 +1035,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of EncryptionProtectors in the SqlServer. </summary>
         /// <returns> An object representing collection of EncryptionProtectors and their operations over a SqlServer. </returns>
-        public EncryptionProtectorCollection GetEncryptionProtectors()
+        public virtual EncryptionProtectorCollection GetEncryptionProtectors()
         {
             return new EncryptionProtectorCollection(this);
         }
@@ -1040,7 +1045,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of FailoverGroups in the SqlServer. </summary>
         /// <returns> An object representing collection of FailoverGroups and their operations over a SqlServer. </returns>
-        public FailoverGroupCollection GetFailoverGroups()
+        public virtual FailoverGroupCollection GetFailoverGroups()
         {
             return new FailoverGroupCollection(this);
         }
@@ -1050,7 +1055,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of FirewallRules in the SqlServer. </summary>
         /// <returns> An object representing collection of FirewallRules and their operations over a SqlServer. </returns>
-        public FirewallRuleCollection GetFirewallRules()
+        public virtual FirewallRuleCollection GetFirewallRules()
         {
             return new FirewallRuleCollection(this);
         }
@@ -1060,7 +1065,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of JobAgents in the SqlServer. </summary>
         /// <returns> An object representing collection of JobAgents and their operations over a SqlServer. </returns>
-        public JobAgentCollection GetJobAgents()
+        public virtual JobAgentCollection GetJobAgents()
         {
             return new JobAgentCollection(this);
         }
@@ -1070,7 +1075,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the SqlServer. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a SqlServer. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
             return new PrivateEndpointConnectionCollection(this);
         }
@@ -1080,7 +1085,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of PrivateLinkResources in the SqlServer. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a SqlServer. </returns>
-        public PrivateLinkResourceCollection GetPrivateLinkResources()
+        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
             return new PrivateLinkResourceCollection(this);
         }
@@ -1090,9 +1095,9 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the SqlServer. </summary>
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
-        public ServerAutomaticTuning GetServerAutomaticTuning()
+        public virtual ServerAutomaticTuning GetServerAutomaticTuning()
         {
-            return new ServerAutomaticTuning(this, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new ServerAutomaticTuning(ArmClient, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
         #endregion
 
@@ -1100,7 +1105,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAzureADAdministrators in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a SqlServer. </returns>
-        public ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
+        public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
         {
             return new ServerAzureADAdministratorCollection(this);
         }
@@ -1110,7 +1115,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerAzureADOnlyAuthentications in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a SqlServer. </returns>
-        public ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
+        public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
         {
             return new ServerAzureADOnlyAuthenticationCollection(this);
         }
@@ -1120,7 +1125,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDevOpsAuditingSettings in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a SqlServer. </returns>
-        public ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
+        public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
         {
             return new ServerDevOpsAuditingSettingsCollection(this);
         }
@@ -1130,7 +1135,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerDnsAliases in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerDnsAliases and their operations over a SqlServer. </returns>
-        public ServerDnsAliasCollection GetServerDnsAliases()
+        public virtual ServerDnsAliasCollection GetServerDnsAliases()
         {
             return new ServerDnsAliasCollection(this);
         }
@@ -1140,7 +1145,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerKeys in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerKeys and their operations over a SqlServer. </returns>
-        public ServerKeyCollection GetServerKeys()
+        public virtual ServerKeyCollection GetServerKeys()
         {
             return new ServerKeyCollection(this);
         }
@@ -1150,7 +1155,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerSecurityAlertPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a SqlServer. </returns>
-        public ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
+        public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
         {
             return new ServerSecurityAlertPolicyCollection(this);
         }
@@ -1160,7 +1165,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerVulnerabilityAssessments in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a SqlServer. </returns>
-        public ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
+        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
         {
             return new ServerVulnerabilityAssessmentCollection(this);
         }
@@ -1170,7 +1175,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of SyncAgents in the SqlServer. </summary>
         /// <returns> An object representing collection of SyncAgents and their operations over a SqlServer. </returns>
-        public SyncAgentCollection GetSyncAgents()
+        public virtual SyncAgentCollection GetSyncAgents()
         {
             return new SyncAgentCollection(this);
         }
@@ -1180,7 +1185,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of VirtualNetworkRules in the SqlServer. </summary>
         /// <returns> An object representing collection of VirtualNetworkRules and their operations over a SqlServer. </returns>
-        public VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
         {
             return new VirtualNetworkRuleCollection(this);
         }
@@ -1190,7 +1195,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of OutboundFirewallRules in the SqlServer. </summary>
         /// <returns> An object representing collection of OutboundFirewallRules and their operations over a SqlServer. </returns>
-        public OutboundFirewallRuleCollection GetOutboundFirewallRules()
+        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
         {
             return new OutboundFirewallRuleCollection(this);
         }
@@ -1200,7 +1205,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of RestorableDroppedDatabases in the SqlServer. </summary>
         /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a SqlServer. </returns>
-        public RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
+        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
         {
             return new RestorableDroppedDatabaseCollection(this);
         }
@@ -1210,7 +1215,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServerConnectionPolicies in the SqlServer. </summary>
         /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a SqlServer. </returns>
-        public ServerConnectionPolicyCollection GetServerConnectionPolicies()
+        public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
         {
             return new ServerConnectionPolicyCollection(this);
         }

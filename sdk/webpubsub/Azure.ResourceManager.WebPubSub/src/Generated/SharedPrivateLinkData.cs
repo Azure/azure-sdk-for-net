@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -23,15 +23,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, type)
+        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
@@ -39,8 +38,6 @@ namespace Azure.ResourceManager.WebPubSub
             Status = status;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
         public string GroupId { get; set; }
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>

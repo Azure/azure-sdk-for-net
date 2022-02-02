@@ -56,8 +56,8 @@
     "deserializable",
     "deserializes",
     "diagnoser",
-    "dotnetcli",
     "dont",
+    "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
@@ -65,6 +65,7 @@
     "finalizers",
     "illumos",
     "ints",
+    "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
@@ -72,28 +73,36 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
     "referer",
     "renormalize",
     "retriable",
+    "signup",
     "skus",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
     },
     {
       "filename": "**/sdk/compute/**/*.cs",
@@ -108,7 +117,8 @@
         "vhds",
         "swappable",
         "ssdzrs",
-        "dscp"
+        "dscp",
+        "vmguest"
       ]
     },
     {
@@ -122,13 +132,17 @@
     {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
+        "Cpus",
         "Ctlr",
         "Lsilogic",
         "Lsilogicsas",
         "Pcnet",
         "Pmem",
         "Pvscsi",
-        "Sesparse"
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
       ]
     },
     {
@@ -153,6 +167,7 @@
         "Eaptls",
         "Fqdns",
         "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -175,9 +190,11 @@
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
+        "echsm",
         "getsas",
         "listsas",
         "oaep",
+        "rsahsm",
         "setsas",
         "mhsm",
         "mhsmip"
@@ -190,14 +207,14 @@
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "Droppeded",
         "CIAS",
-        "Vcores",
-        "Unrestorable",
-        "Stdev",
+        "Droppeded",
+        "Nchar",
         "Ntext",
         "Nvarchar",
-        "Stdev"
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
       ]
     },
     {
@@ -239,7 +256,7 @@
         "Undelete"
       ]
     },
-	{
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "Iscsi"
@@ -269,6 +286,7 @@
         "sybase",
         "sybase",
         "teradata",
+        "updation",
         "usql",
         "vertica",
         "xero"

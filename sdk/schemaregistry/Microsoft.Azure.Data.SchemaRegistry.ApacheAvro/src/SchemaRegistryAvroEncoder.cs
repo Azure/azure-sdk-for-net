@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private readonly SchemaRegistryAvroObjectEncoderOptions _options;
         private const string AvroMimeType = "avro/binary";
         private const int CacheCapacity = 128;
+        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
 
         /// <summary>
         /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
@@ -44,11 +45,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             _options = options;
         }
 
-        // TODO support backcompat for first beta
-        // private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
-        // private const int RecordFormatIndicatorLength = 4;
-        // private const int SchemaIdLength = 32;
-        // private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
+        private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        private const int RecordFormatIndicatorLength = 4;
+        private const int SchemaIdLength = 32;
+        private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
         private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
         private readonly LruCache<Schema, string> _schemaToIdMap = new(CacheCapacity);
 
@@ -120,12 +120,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        internal (string SchemaId, BinaryData Data) Encode(object value, Type inputType, CancellationToken cancellationToken) =>
-            EncodeInternalAsync(value, inputType, false, cancellationToken).EnsureCompleted();
-
-        internal async ValueTask<(string SchemaId, BinaryData Data)> EncodeAsync(object value, Type inputType, CancellationToken cancellationToken) =>
-            await EncodeInternalAsync(value, inputType, true, cancellationToken).ConfigureAwait(false);
-
         private async ValueTask<(string SchemaId, BinaryData Data)> EncodeInternalAsync(
             object value,
             Type inputType,
@@ -133,7 +127,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(inputType, nameof(inputType));
+            inputType ??= value?.GetType() ?? typeof(object);
 
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
@@ -200,6 +194,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="messageFactory">Optional func to create a derived instance of <see cref="MessageWithMetadata"/> given the serialized Avro.
         /// If not specified, it is assumed that the derived type has a public constructor accepting a <see cref="BinaryData"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="T">The <see cref="MessageWithMetadata"/> type to encode the data into.</typeparam>
         public T EncodeMessageData<T>(
             object data,
             Type inputType = default,
@@ -216,6 +211,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="messageFactory">Optional func to create a derived instance of <see cref="MessageWithMetadata"/> given the serialized Avro.
         /// If not specified, it is assumed that the derived type has a public constructor accepting a <see cref="BinaryData"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="T">The <see cref="MessageWithMetadata"/> type to encode the data into.</typeparam>
         public async ValueTask<T> EncodeMessageDataAsync<T>(
             object data,
             Type inputType = default,
@@ -223,7 +219,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             CancellationToken cancellationToken = default) where T : MessageWithMetadata
             => await EncodeMessageDataInternalAsync(data, inputType, messageFactory, true, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask<T> EncodeMessageDataInternalAsync<T>(
+        internal async ValueTask<T> EncodeMessageDataInternalAsync<T>(
             object data,
             Type inputType,
             Func<BinaryData, T> messageFactory,
@@ -231,13 +227,23 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             CancellationToken cancellationToken) where T : MessageWithMetadata
         {
             (string schemaId, BinaryData bd) = async
-                ? await EncodeAsync(data, inputType ?? data?.GetType(), cancellationToken).ConfigureAwait(false)
-                : Encode(data, inputType ?? data?.GetType(), cancellationToken);
+                ? await EncodeInternalAsync(data, inputType, true, cancellationToken).ConfigureAwait(false)
+                : EncodeInternalAsync(data, inputType, false, cancellationToken).EnsureCompleted();
 
             MessageWithMetadata message;
             if (messageFactory == default)
             {
-                message = (MessageWithMetadata)Activator.CreateInstance(typeof(T), bd);
+                if (typeof(T) == typeof(MessageWithMetadata))
+                {
+                    // If concrete type is used, we need to use the parameterless constructor as the concrete type does
+                    // not have any other constructors by design (to make it easier to use across the different messaging libraries).
+                    message = (MessageWithMetadata)Activator.CreateInstance(typeof(T));
+                    message.Data = bd;
+                }
+                else
+                {
+                    message = (MessageWithMetadata)Activator.CreateInstance(typeof(T), bd);
+                }
             }
             else
             {
@@ -251,77 +257,87 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
         /// </summary>
         /// <param name="message">The message containing the data to decode.</param>
-        /// <param name="returnType">The type to deserialize to.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="T">The type to decode the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public object DecodeMessageData(
+        public T DecodeMessageData<T>(
             MessageWithMetadata message,
-            Type returnType,
             CancellationToken cancellationToken = default)
-            => DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, false, cancellationToken).EnsureCompleted();
+            => DecodeMessageDataInternalAsync<T>(message.Data, message.ContentType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
         /// </summary>
         /// <param name="message">The message containing the data to decode.</param>
-        /// <param name="returnType">The type to deserialize to.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="T">The type to decode the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
         /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
-        public async ValueTask<object> DecodeMessageDataAsync(
+        public async ValueTask<T> DecodeMessageDataAsync<T>(
             MessageWithMetadata message,
-            Type returnType,
             CancellationToken cancellationToken = default)
-            => await DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, true, cancellationToken).ConfigureAwait(false);
+            => await DecodeMessageDataInternalAsync<T>(message.Data, message.ContentType, true, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask<object> DecodeMessageBodyInternalAsync(
+        private async ValueTask<T> DecodeMessageDataInternalAsync<T>(
             BinaryData data,
             string contentType,
-            Type returnType,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            string[] contentTypeArray = contentType.Split('+');
-            if (contentTypeArray.Length != 2)
-            {
-                throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
-            }
-
-            if (contentTypeArray[0] != AvroMimeType)
-            {
-                throw new InvalidOperationException("An avro encoder may only be used on content that is of 'avro/binary' type");
-            }
-
-            if (async)
-            {
-                return await DecodeAsync(data, contentTypeArray[1], returnType, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return Decode(data, contentTypeArray[1], returnType, cancellationToken);
-            }
-        }
-
-        internal object Decode(BinaryData data, string schemaId, Type returnType, CancellationToken cancellationToken) =>
-            DecodeInternalAsync(data, schemaId, returnType, false, cancellationToken).EnsureCompleted();
-
-        internal async ValueTask<object> DecodeAsync(BinaryData data, string schemaId, Type returnType, CancellationToken cancellationToken) =>
-            await DecodeInternalAsync(data, schemaId, returnType, true, cancellationToken).ConfigureAwait(false);
-
-        private async ValueTask<object> DecodeInternalAsync(
-            BinaryData data,
-            string schemaId,
-            Type returnType,
             bool async,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(returnType, nameof(returnType));
+            Argument.AssertNotNull(contentType, nameof(contentType));
+
+            string schemaId;
+            // Back Compat for first preview
+            ReadOnlyMemory<byte> memory = data.ToMemory();
+            byte[] recordFormatIdentifier = null;
+            if (memory.Length >= RecordFormatIndicatorLength)
+            {
+                recordFormatIdentifier = memory.Slice(0, RecordFormatIndicatorLength).ToArray();
+            }
+            if (recordFormatIdentifier != null && recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
+            {
+                byte[] schemaIdBytes = memory.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
+                schemaId = Utf8Encoding.GetString(schemaIdBytes);
+                data = new BinaryData(memory.Slice(PayloadStartPosition, memory.Length - PayloadStartPosition));
+            }
+            else
+            {
+                string[] contentTypeArray = contentType.Split('+');
+                if (contentTypeArray.Length != 2)
+                {
+                    throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
+                }
+
+                if (contentTypeArray[0] != AvroMimeType)
+                {
+                    throw new InvalidOperationException("An avro encoder may only be used on content that is of 'avro/binary' type");
+                }
+
+                schemaId = contentTypeArray[1];
+            }
+
+            if (async)
+            {
+                return await DecodeInternalAsync<T>(data, schemaId, true, cancellationToken).ConfigureAwait(false);            }
+            else
+            {
+                return DecodeInternalAsync<T>(data, schemaId, false, cancellationToken).EnsureCompleted();
+            }
+        }
+
+        private async ValueTask<T> DecodeInternalAsync<T>(
+            BinaryData data,
+            string schemaId,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             Argument.AssertNotNull(schemaId, nameof(schemaId));
 
+            Type returnType = typeof(T);
             SupportedType supportedType = GetSupportedTypeOrThrow(returnType);
 
             Schema writerSchema;
@@ -340,12 +356,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             {
                 object returnInstance = Activator.CreateInstance(returnType);
                 DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema, SupportedType.SpecificRecord);
-                return reader.Read(reuse: returnInstance, binaryDecoder);
+                return (T) reader.Read(reuse: returnInstance, binaryDecoder);
             }
             else
             {
                 DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
-                return reader.Read(reuse: null, binaryDecoder);
+                return (T) reader.Read(reuse: null, binaryDecoder);
             }
         }
     }

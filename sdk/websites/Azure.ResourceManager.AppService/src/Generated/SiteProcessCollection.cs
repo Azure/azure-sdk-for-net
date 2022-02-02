@@ -8,39 +8,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of ProcessInfo and their operations over its parent. </summary>
     public partial class SiteProcessCollection : ArmCollection, IEnumerable<SiteProcess>, IAsyncEnumerable<SiteProcess>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteProcessWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteProcessWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteProcessCollection"/> class for mocking. </summary>
         protected SiteProcessCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteProcessCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteProcessCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteProcessCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteProcess.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteProcess.ResourceType, out string siteProcessWebAppsApiVersion);
+            _siteProcessWebAppsRestClient = new WebAppsRestOperations(_siteProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteProcessWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebSite.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != WebSite.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -50,22 +56,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteProcess> Get(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.Get");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken);
+                var response = _siteProcessWebAppsRestClient.GetProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteProcess(Parent, response.Value), response.GetRawResponse());
+                    throw _siteProcessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -80,22 +84,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<SiteProcess>> GetAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.Get");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken).ConfigureAwait(false);
+                var response = await _siteProcessWebAppsRestClient.GetProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteProcess(Parent, response.Value), response.GetRawResponse());
+                    throw await _siteProcessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,22 +109,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteProcess> GetIfExists(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetIfExists");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
+                var response = _siteProcessWebAppsRestClient.GetProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,22 +134,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<SiteProcess>> GetIfExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetIfExistsAsync");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteProcess>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteProcess(this, response.Value), response.GetRawResponse());
+                var response = await _siteProcessWebAppsRestClient.GetProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, processId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteProcess>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteProcess(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,15 +159,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.Exists");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -186,15 +182,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            if (processId == null)
-            {
-                throw new ArgumentNullException(nameof(processId));
-            }
+            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.ExistsAsync");
+            using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.Exists");
             scope.Start();
             try
             {
@@ -218,12 +212,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteProcess> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
+                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListProcesses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteProcessWebAppsRestClient.ListProcesses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -233,12 +227,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteProcess> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
+                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListProcessesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteProcessWebAppsRestClient.ListProcessesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,12 +253,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteProcess>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
+                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListProcessesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteProcessWebAppsRestClient.ListProcessesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,12 +268,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteProcess>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
+                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListProcessesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteProcessWebAppsRestClient.ListProcessesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcess(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -304,8 +298,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteProcess, ProcessInfoData> Construct() { }
     }
 }

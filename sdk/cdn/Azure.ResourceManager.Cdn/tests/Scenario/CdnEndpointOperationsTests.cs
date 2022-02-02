@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, SkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            await cdnEndpoint.DeleteAsync();
+            await cdnEndpoint.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnEndpoint.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 OriginPath = "/path/valid",
                 OriginHostHeader = "www.bing.com"
             };
-            var lro = await cdnEndpoint.UpdateAsync(updateOptions);
+            var lro = await cdnEndpoint.UpdateAsync(true, updateOptions);
             CdnEndpoint updatedCdnEndpoint = lro.Value;
             ResourceDataHelper.AssertEndpointUpdate(updatedCdnEndpoint, updateOptions);
         }
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             Assert.AreEqual(cdnEndpoint.Data.ResourceState, EndpointResourceState.Running);
-            var lro1 = await cdnEndpoint.StopAsync();
+            var lro1 = await cdnEndpoint.StopAsync(true);
             Assert.AreEqual(lro1.Value.ResourceState, EndpointResourceState.Stopped);
-            var lro2 = await cdnEndpoint.StartAsync();
+            var lro2 = await cdnEndpoint.StartAsync(true);
             Assert.AreEqual(lro2.Value.ResourceState, EndpointResourceState.Running);
         }
 
@@ -86,18 +86,18 @@ namespace Azure.ResourceManager.Cdn.Tests
                 HostName = "testsa4dotnetsdk.blob.core.windows.net"
             };
             cdnEndpointData.Origins.Add(deepCreatedOrigin);
-            var lro = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(cdnEndpointName, cdnEndpointData);
+            var lro = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(true, cdnEndpointName, cdnEndpointData);
             CdnEndpoint cdnEndpoint = lro.Value;
             PurgeOptions purgeParameters = new PurgeOptions(new List<string>
             {
                 "/*"
             });
-            Assert.DoesNotThrowAsync(async () => await cdnEndpoint.PurgeContentAsync(purgeParameters));
+            Assert.DoesNotThrowAsync(async () => await cdnEndpoint.PurgeContentAsync(true, purgeParameters));
             LoadOptions loadParameters = new LoadOptions(new List<string>
             {
                 "/testfile/file1.txt"
             });
-            Assert.DoesNotThrowAsync(async () => await cdnEndpoint.LoadContentAsync(loadParameters));
+            Assert.DoesNotThrowAsync(async () => await cdnEndpoint.LoadContentAsync(true, loadParameters));
         }
 
         [TestCase]

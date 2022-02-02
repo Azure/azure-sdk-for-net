@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<NetworkVirtualAppliance> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceCreateOrUpdateOperation for mocking. </summary>
         protected NetworkVirtualApplianceCreateOrUpdateOperation()
         {
         }
 
-        internal NetworkVirtualApplianceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkVirtualApplianceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<NetworkVirtualAppliance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkVirtualApplianceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         NetworkVirtualAppliance IOperationSource<NetworkVirtualAppliance>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new NetworkVirtualAppliance(_operationBase, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement));
+            var data = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
+            return new NetworkVirtualAppliance(_armClient, data);
         }
 
         async ValueTask<NetworkVirtualAppliance> IOperationSource<NetworkVirtualAppliance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new NetworkVirtualAppliance(_operationBase, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement));
+            var data = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(document.RootElement);
+            return new NetworkVirtualAppliance(_armClient, data);
         }
     }
 }

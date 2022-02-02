@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,7 +16,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -28,8 +28,10 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancersRestOperations _loadBalancersRestClient;
+
+        private readonly ClientDiagnostics _loadBalancerClientDiagnostics;
+        private readonly LoadBalancersRestOperations _loadBalancerRestClient;
+        private readonly ClientDiagnostics _loadBalancerNetworkInterfacesClientDiagnostics;
         private readonly LoadBalancerNetworkInterfacesRestOperations _loadBalancerNetworkInterfacesRestClient;
         private readonly LoadBalancerData _data;
 
@@ -39,45 +41,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "LoadBalancer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal LoadBalancer(ArmResource options, LoadBalancerData resource) : base(options, new ResourceIdentifier(resource.Id))
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal LoadBalancer(ArmClient armClient, LoadBalancerData data) : this(armClient, new ResourceIdentifier(data.Id))
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancer(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal LoadBalancer(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string loadBalancerApiVersion);
+            _loadBalancerRestClient = new LoadBalancersRestOperations(_loadBalancerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
+            _loadBalancerNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,19 +82,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
         /// <summary> Gets the specified load balancer. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LoadBalancer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Get");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                    throw await _loadBalancerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,14 +114,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadBalancer> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Get");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                    throw _loadBalancerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LoadBalancer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,30 +133,50 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType, cancellationToken);
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LoadBalancerDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<LoadBalancerDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Delete");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _loadBalancerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new LoadBalancerDeleteOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -177,16 +191,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LoadBalancerDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual LoadBalancerDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Delete");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _loadBalancerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new LoadBalancerDeleteOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -207,12 +221,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Update");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Update");
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                var response = await _loadBalancerRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,12 +246,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Update");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Update");
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                var response = _loadBalancerRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new LoadBalancer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +267,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkInterfaceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
@@ -268,7 +282,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterfaceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
@@ -291,7 +305,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkInterfaceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
@@ -306,7 +320,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterfaceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
@@ -326,7 +340,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of BackendAddressPools in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public BackendAddressPoolCollection GetBackendAddressPools()
+        public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
             return new BackendAddressPoolCollection(this);
         }
@@ -336,7 +350,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of FrontendIPConfigurations in the LoadBalancer. </summary>
         /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a LoadBalancer. </returns>
-        public FrontendIPConfigurationCollection GetFrontendIPConfigurations()
+        public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
             return new FrontendIPConfigurationCollection(this);
         }
@@ -346,7 +360,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of InboundNatRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public InboundNatRuleCollection GetInboundNatRules()
+        public virtual InboundNatRuleCollection GetInboundNatRules()
         {
             return new InboundNatRuleCollection(this);
         }
@@ -356,7 +370,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of LoadBalancingRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancer. </returns>
-        public LoadBalancingRuleCollection GetLoadBalancingRules()
+        public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
             return new LoadBalancingRuleCollection(this);
         }
@@ -366,7 +380,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of OutboundRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of OutboundRules and their operations over a LoadBalancer. </returns>
-        public OutboundRuleCollection GetOutboundRules()
+        public virtual OutboundRuleCollection GetOutboundRules()
         {
             return new OutboundRuleCollection(this);
         }
@@ -376,7 +390,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a collection of Probes in the LoadBalancer. </summary>
         /// <returns> An object representing collection of Probes and their operations over a LoadBalancer. </returns>
-        public ProbeCollection GetProbes()
+        public virtual ProbeCollection GetProbes()
         {
             return new ProbeCollection(this);
         }

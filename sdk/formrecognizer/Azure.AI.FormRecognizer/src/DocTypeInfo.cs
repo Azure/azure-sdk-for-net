@@ -11,5 +11,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         /// <summary> Description of the document semantic schema. </summary>
         public IReadOnlyDictionary<string, DocumentFieldSchema> FieldSchema { get; }
+
+        /// <summary> Custom model build mode. </summary>
+        internal DocumentBuildMode? BuildMode { get; }
     }
 }

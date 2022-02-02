@@ -28,7 +28,7 @@ namespace SignalRServiceExtension.Tests
             var parameter = typeof(TestServerlessHub).GetMethod(nameof(TestServerlessHub.TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var resolvedAttribute = bindingProvider.GetParameterResolvedAttribute(attribute, parameter);
             Assert.Equal(nameof(TestServerlessHub), resolvedAttribute.HubName);
-            Assert.Equal(Category.Messages, resolvedAttribute.Category);
+            Assert.Equal(SignalRTriggerCategories.Messages, resolvedAttribute.Category);
             Assert.Equal(nameof(TestServerlessHub.TestFunction), resolvedAttribute.Event);
             Assert.Equal(new string[] { "arg0", "arg1" }, resolvedAttribute.ParameterNames);
 
@@ -51,15 +51,15 @@ namespace SignalRServiceExtension.Tests
             var parameter = typeof(TestConnectedServerlessHub).GetMethod(nameof(TestConnectedServerlessHub.OnConnected), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var resolvedAttribute = bindingProvider.GetParameterResolvedAttribute(attribute, parameter);
             Assert.Equal(nameof(TestConnectedServerlessHub), resolvedAttribute.HubName);
-            Assert.Equal(Category.Connections, resolvedAttribute.Category);
-            Assert.Equal(Event.Connected, resolvedAttribute.Event);
+            Assert.Equal(SignalRTriggerCategories.Connections, resolvedAttribute.Category);
+            Assert.Equal(SignalRTriggerEvents.Connected, resolvedAttribute.Event);
             Assert.Equal(new string[] { "arg0", "arg1" }, resolvedAttribute.ParameterNames);
 
             parameter = typeof(TestConnectedServerlessHub).GetMethod(nameof(TestConnectedServerlessHub.OnDisconnected), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             resolvedAttribute = bindingProvider.GetParameterResolvedAttribute(attribute, parameter);
             Assert.Equal(nameof(TestConnectedServerlessHub), resolvedAttribute.HubName);
-            Assert.Equal(Category.Connections, resolvedAttribute.Category);
-            Assert.Equal(Event.Disconnected, resolvedAttribute.Event);
+            Assert.Equal(SignalRTriggerCategories.Connections, resolvedAttribute.Category);
+            Assert.Equal(SignalRTriggerEvents.Disconnected, resolvedAttribute.Event);
             Assert.Equal(new string[] { "arg0", "arg1" }, resolvedAttribute.ParameterNames);
         }
 

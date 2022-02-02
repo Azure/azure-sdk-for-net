@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<PolicyType> policyType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
@@ -102,6 +103,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -192,7 +198,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicySetDefinitionData(id, name, type, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
+            return new PolicySetDefinitionData(id, name, type, systemData, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
         }
     }
 }

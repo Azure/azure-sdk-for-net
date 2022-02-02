@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary> Initializes a new instance of VirtualClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualClusterData(Location location) : base(location)
+        public VirtualClusterData(AzureLocation location) : base(location)
         {
             ChildResources = new ChangeTrackingList<string>();
         }
@@ -27,13 +25,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="subnetId"> Subnet resource ID for the virtual cluster. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this virtual cluster. </param>
-        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string subnetId, string family, IReadOnlyList<string> childResources, string maintenanceConfigurationId) : base(id, name, type, tags, location)
+        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string subnetId, string family, IReadOnlyList<string> childResources, string maintenanceConfigurationId) : base(id, name, type, systemData, tags, location)
         {
             SubnetId = subnetId;
             Family = family;
