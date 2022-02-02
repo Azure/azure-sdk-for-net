@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
                 jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
                 sourceLocalPath: transferJob.SourceLocalPath,
-                destinationBlobClient: transferJob.DestinationBlobClient,
+                destinationBlobClient: transferJob.DestinationDirectoryBlobClient,
                 options: transferJob.UploadOptions);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 jobId: transferJob.JobId,
                 status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
                 jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceBlobClient: transferJob.SourceBlobClient,
+                sourceBlobClient: transferJob.SourceDirectoryBlobClient,
                 destinationLocalPath: transferJob.DestinationLocalPath,
                 options: transferJob.Options);
         }

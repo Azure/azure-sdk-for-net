@@ -10,6 +10,8 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
+using Azure.Storage.Blobs;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -28,7 +30,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The source blob where it's contents will be downloaded when the job is performed.
         /// </summary>
-        public BlobVirtualDirectoryClient SourceBlobClient => _sourceBlobClient;
+        public BlobVirtualDirectoryClient SourceDirectoryBlobClient => _sourceBlobClient;
 
         /// <summary>
         /// Local Path to store the downloaded contents from the source blob
@@ -77,13 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task to perform the Upload operation.</returns>
         public async Task<Response> GetSingleDownloadTaskAsync(string blobName)
         {
-            BlobRequestConditions conditions = new BlobRequestConditions()
-            {
-                IfModifiedSince = Options.DirectoryRequestConditions.IfModifiedSince ?? null,
-                IfUnmodifiedSince = Options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
-            };
-
-            BlockBlobClient blockBlobClient = SourceBlobClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = SourceDirectoryBlobClient.GetBlockBlobClient(blobName);
             string downloadPath = Path.Combine(DestinationLocalPath, blobName);
 
             Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
@@ -92,11 +88,64 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 response = await blockBlobClient.DownloadToAsync(
                     downloadPath,
-                    conditions,
+                    default,
                     Options.TransferOptions)
                     .ConfigureAwait(false);
             }
             return response;
+        }
+
+        public Action ProcessSingleDownloadTransfer(string blobName, bool async = true)
+        {
+            return () =>
+            {
+                BlobClient blobClient = SourceDirectoryBlobClient.GetBlobClient(blobName);
+                string downloadPath = Path.Combine(DestinationLocalPath, blobName);
+
+                // TODO: make logging messages similar to the errors class where we only take in params
+                // so we dont have magic strings hanging out here
+                Logger.LogAsync(DataMovementLogLevel.Information,
+                    $"Processing Download Directory Transfer source: {SourceDirectoryBlobClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}",
+                    async).EnsureCompleted();
+                // Do only blockblob upload for now for now
+
+                BlobDownloadToOptions blobDownloadOptions = new BlobDownloadToOptions()
+                {
+                    TransferOptions = Options.TransferOptions,
+                    TransactionalHashingOptions = Options.TransactionalHashingOptions,
+                };
+
+                try
+                {
+                    Response response = blobClient.DownloadTo(
+                        path: downloadPath,
+                        options: blobDownloadOptions,
+                        CancellationTokenSource.Token);
+                    if (response != null)
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Information,
+                            $"Transfer succeeded on from source:{SourceDirectoryBlobClient.Uri.AbsoluteUri} to destination:{DestinationLocalPath}",
+                            async).EnsureCompleted();
+                    }
+                    else
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Error,
+                            $"Download Directory Transfer Failed due to unknown reasons. Download Directory Transfer returned null results",
+                            async).EnsureCompleted();
+                    }
+                }
+                //TODO: catch other type of exceptions and handle gracefully
+                catch (RequestFailedException ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Download Directory Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Download Directory Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+            };
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Models
@@ -18,6 +19,7 @@ namespace Azure.Storage.DataMovement.Models
         /// Job Id in form of a Guid
         /// </summary>
         public string JobId { get; set; }
+
         /// <summary>
         /// Cancellation Token Source
         ///
@@ -63,6 +65,13 @@ namespace Azure.Storage.DataMovement.Models
         {
             // TODO: remove stub
             return StorageJobTransferStatus.Completed;
+        }
+
+        public virtual async Task PauseTransferJob()
+        {
+            CancellationTokenSource.Cancel();
+            await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been paused.").ConfigureAwait(false);
+            await PlanJobWriter.ReportProgress("Job Paused").ConfigureAwait(false);
         }
     }
 }

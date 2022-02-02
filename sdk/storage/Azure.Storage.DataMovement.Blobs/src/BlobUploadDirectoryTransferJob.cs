@@ -9,6 +9,8 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
+using Azure.Storage.Blobs;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -29,7 +31,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The destination blob client.
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationBlobClient => _destinationBlobClient;
+        public BlobVirtualDirectoryClient DestinationDirectoryBlobClient => _destinationBlobClient;
 
         internal BlobDirectoryUploadOptions _uploadOptions;
 
@@ -87,22 +89,15 @@ namespace Azure.Storage.DataMovement.Blobs
             string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
             blobName = blobName.Replace(@"\", "/");
 
-            BlockBlobClient blockBlobClient = DestinationBlobClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = DestinationDirectoryBlobClient.GetBlockBlobClient(blobName);
 
             BlobUploadOptions blobUploadOptions = new BlobUploadOptions()
             {
-                HttpHeaders = new BlobHttpHeaders()
-                {
-                    ContentType = UploadOptions.HttpHeaders.ContentType,
-                    ContentEncoding = UploadOptions.HttpHeaders.ContentEncoding,
-                    ContentDisposition = UploadOptions.HttpHeaders.ContentDisposition,
-                    ContentLanguage = UploadOptions.HttpHeaders.ContentLanguage,
-                    CacheControl = UploadOptions.HttpHeaders.CacheControl
-                },
-                Metadata = UploadOptions.Metadata,
-                Tags = UploadOptions.Tags,
                 AccessTier = UploadOptions.AccessTier,
-                TransferOptions = UploadOptions.TransferOptions
+                TransferOptions = UploadOptions.TransferOptions,
+                ImmutabilityPolicy = UploadOptions.ImmutabilityPolicy,
+                LegalHold = UploadOptions.LegalHold,
+                TransactionalHashingOptions = UploadOptions.TransactionalHashingOptions,
             };
 
             Response<BlobContentInfo> response;
@@ -115,6 +110,64 @@ namespace Azure.Storage.DataMovement.Blobs
                     blobUploadOptions ).ConfigureAwait(false);
             }
             return response;
+        }
+
+        public Action ProcessSingleUploadTransfer(string fullPathName, bool async = true)
+        {
+            return () =>
+            {
+                // Replace backward slashes meant to be directory name separators
+                string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
+                blobName = blobName.Replace(@"\", "/");
+
+                BlobClient destinationBlobClient = DestinationDirectoryBlobClient.GetBlobClient(blobName);
+
+                BlobUploadOptions blobUploadOptions = new BlobUploadOptions()
+                {
+                    AccessTier = UploadOptions.AccessTier,
+                    TransferOptions = UploadOptions.TransferOptions,
+                    ImmutabilityPolicy = UploadOptions.ImmutabilityPolicy,
+                    LegalHold = UploadOptions.LegalHold,
+                    TransactionalHashingOptions = UploadOptions.TransactionalHashingOptions,
+                };
+
+                // TODO: make logging messages similar to the errors class where we only take in params
+                // so we dont have magic strings hanging out here
+                Logger.LogAsync(DataMovementLogLevel.Information,
+                    $"Processing Upload Directory Transfer source: {SourceLocalPath}; destination: {DestinationDirectoryBlobClient.Uri}",
+                    async).EnsureCompleted();
+                // Do only blockblob upload for now for now
+                try
+                {
+                    Response<BlobContentInfo> response = destinationBlobClient.Upload(
+                        _sourceLocalPath,
+                        blobUploadOptions,
+                        CancellationTokenSource.Token);
+                    if (response != null && response.Value != null)
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Information,
+                            $"Transfer succeeded on from source:{SourceLocalPath} to destination:{DestinationDirectoryBlobClient.Uri.AbsoluteUri}",
+                            async).EnsureCompleted();
+                    }
+                    else
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Error,
+                            $"Upload Transfer Failed due to unknown reasons. Upload Transfer returned null results",
+                            async).EnsureCompleted();
+                    }
+                }
+                //TODO: catch other type of exceptions and handle gracefully
+                catch (RequestFailedException ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+            };
         }
     }
 }

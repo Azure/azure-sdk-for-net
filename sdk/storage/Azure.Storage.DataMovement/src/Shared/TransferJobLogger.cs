@@ -62,13 +62,21 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="logLevel"></param>
         /// <param name="message"></param>
-        public async Task LogAsync(DataMovementLogLevel logLevel, string message)
+        /// <param name="async"></param>
+        public async Task LogAsync(DataMovementLogLevel logLevel, string message, bool async = true)
         {
             if (LogLevelLimit >= logLevel)
             {
                 using (StreamWriter fileStream = File.AppendText(LoggerFilePath))
                 {
-                    await fileStream.WriteLineAsync(message).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await fileStream.WriteLineAsync(message).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        fileStream.WriteLine(message);
+                    }
                 }
                 // TODO: handle all types of errors to make it clear to the user what's going on
                 // e.g. if we are unable to open the file

@@ -5,12 +5,7 @@ namespace Azure.Storage.DataMovement.Blobs
         protected internal BlobTransferManager() { }
         public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
         public override Azure.Storage.DataMovement.Models.StorageTransferJobDetails GetJob(string jobId) { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferCopyDirectoryJobDetails> ListCopyDirectoryJobs() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferDownloadDirectoryJobDetails> ListDownloadDirectoryJobs() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferCopyJobDetails> ListSingleCopyJobs() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferDownloadJobDetails> ListSingleDownloadJobs() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferUploadJobDetails> ListSingleUploadJobs() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Storage.DataMovement.Blobs.Models.BlobTransferUploadDirectoryJobDetails> ListUploadDirectoryJobs() { throw null; }
+        public System.Threading.Tasks.Task PauseJob(string jobId) { throw null; }
         public string ScheduleCopy(System.Uri sourceUri, Azure.Storage.Blobs.BlobClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleCopyDirectory(System.Uri sourceUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleDownload(Azure.Storage.Blobs.BlobClient sourceClient, string destinationLocalPath, Azure.Storage.Blobs.Models.BlobDownloadToOptions options = null) { throw null; }
@@ -39,6 +34,8 @@ namespace Azure.Storage.DataMovement.Blobs
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Response>> DownloadAsync(string targetPath) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Response>> DownloadAsync(string targetPath, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryDownloadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Response>> DownloadAsync(string targetPath, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Storage.Blobs.BlobClient GetBlobClient(string blobName) { throw null; }
+        protected internal virtual Azure.Storage.Blobs.BlobClient GetBlobClientCore(string blobName) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.Models.BlobItem> GetBlobs(Azure.Storage.Blobs.Models.BlobTraits traits = Azure.Storage.Blobs.Models.BlobTraits.None, Azure.Storage.Blobs.Models.BlobStates states = Azure.Storage.Blobs.Models.BlobStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.Models.BlobItem> GetBlobsAsync(Azure.Storage.Blobs.Models.BlobTraits traits = Azure.Storage.Blobs.Models.BlobTraits.None, Azure.Storage.Blobs.Models.BlobStates states = Azure.Storage.Blobs.Models.BlobStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.Models.BlobHierarchyItem> GetBlobsByHierarchy(Azure.Storage.Blobs.Models.BlobTraits traits = Azure.Storage.Blobs.Models.BlobTraits.None, Azure.Storage.Blobs.Models.BlobStates states = Azure.Storage.Blobs.Models.BlobStates.None, string delimiter = null, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -62,54 +59,26 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     {
         public BlobDirectoryCopyFromUriOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
         public bool? LegalHold { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
-        public bool? ShouldSealDestination { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryRequestConditions SourceConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     public partial class BlobDirectoryDownloadOptions
     {
         public BlobDirectoryDownloadOptions() { }
-        public bool ContentsOnly { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryRequestConditions DirectoryRequestConditions { get { throw null; } set { } }
         public System.IProgress<Azure.Storage.DataMovement.TransferProgressHandler> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
-    }
-    public partial class BlobDirectoryHttpHeaders
-    {
-        public BlobDirectoryHttpHeaders() { }
-        public string CacheControl { get { throw null; } set { } }
-        public string ContentDisposition { get { throw null; } set { } }
-        public string ContentEncoding { get { throw null; } set { } }
-        public string ContentLanguage { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
-    }
-    public partial class BlobDirectoryRequestConditions
-    {
-        public BlobDirectoryRequestConditions() { }
-        public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
-        public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
     public partial class BlobDirectoryUploadOptions
     {
         public BlobDirectoryUploadOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public bool ContentsOnly { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
+        public bool? LegalHold { get { throw null; } set { } }
         public System.IProgress<Azure.Storage.DataMovement.TransferProgressHandler> ProgressHandler { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.UploadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }
     public enum BlobServiceCopyMethod

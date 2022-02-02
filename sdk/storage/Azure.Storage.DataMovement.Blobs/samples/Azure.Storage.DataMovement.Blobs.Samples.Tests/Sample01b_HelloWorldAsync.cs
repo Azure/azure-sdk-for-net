@@ -245,10 +245,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string uploadDirectoryJobId2 = transferManager.ScheduleUploadDirectory(
                     sourcePath2,
                     destinationBlob,
-                    options: new BlobDirectoryUploadOptions()
-                    {
-                        ContentsOnly = true
-                    });
+                    options: new BlobDirectoryUploadOptions());
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
                 Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();
@@ -343,11 +340,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create simple transfer directory download job which the contents of that directory
                 string downloadDirectoryJobId = transferManager.ScheduleDownloadDirectory(
                     sourceBlobDirectory2,
-                    downloadPath,
-                    options: new BlobDirectoryDownloadOptions()
-                    {
-                        ContentsOnly = true
-                    });
+                    downloadPath);
 
                 // Create transfer directory upload job where we specify a progress handler and concurrency
                 Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();

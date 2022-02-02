@@ -382,10 +382,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Directory.Delete(folder, true);
 
-            await client.DownloadAsync(folder, options: new BlobDirectoryDownloadOptions()
-            {
-                DirectoryRequestConditions = new BlobDirectoryRequestConditions()
-            });
+            await client.DownloadAsync(folder);
 
             List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
@@ -415,11 +412,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.DownloadAsync(folder, options: new BlobDirectoryDownloadOptions()
-            {
-                DirectoryRequestConditions = new BlobDirectoryRequestConditions()
-            });
-
+            await client.DownloadAsync(folder);
             List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
             // Assert

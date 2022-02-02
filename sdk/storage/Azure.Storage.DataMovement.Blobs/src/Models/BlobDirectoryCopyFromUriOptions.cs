@@ -17,36 +17,10 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public class BlobDirectoryCopyFromUriOptions
     {
         /// <summary>
-        /// Optional custom metadata to set for this append blob.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public Metadata Metadata { get; set; }
-#pragma warning restore CA2227 // Collection properties should be readonly
-
-        /// <summary>
-        /// Options tags to set for this append blob.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public Tags Tags { get; set; }
-#pragma warning restore CA2227 // Collection properties should be readonly
-
-        /// <summary>
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
-
-        /// <summary>
-        /// Optional <see cref="BlobDirectoryRequestConditions"/> to add
-        /// conditions on the copying of data from this source blob.
-        /// </summary>
-        public BlobDirectoryRequestConditions SourceConditions { get; set; }
-
-        /// <summary>
-        /// Optional <see cref="BlobDirectoryRequestConditions"/> to add conditions on
-        /// the copying of data to this blob.
-        /// </summary>
-        public BlobDirectoryRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="RehydratePriority"/>
@@ -55,14 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// This parameter is not valid for synchronous copies.
         /// </summary>
         public RehydratePriority? RehydratePriority { get; set; }
-
-        /// <summary>
-        /// If the destination blob should be sealed.
-        /// Only applicable for Append Blobs.
-        ///
-        /// This parameter is not valid for synchronous copies.
-        /// </summary>
-        public bool? ShouldSealDestination { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.

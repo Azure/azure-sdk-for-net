@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -76,8 +77,48 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task to perform the Upload operation.</returns>
         public Task StartTransferTaskAsync()
         {
-            // Do only blockblob upload for now for now
+            // Do only blockblob upload for now
             return DestinationBlobClient.UploadAsync(_sourceLocalPath, _uploadOptions);
+        }
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed.
+        /// </summary>
+        /// <param name="async">Defines whether the oepration should be async</param>
+        /// <returns>The Task to perform the Upload operation.</returns>
+        public Action ProcessUploadTransfer(bool async = true)
+        {
+            return () =>
+            {
+                // TODO: make logging messages similar to the errors class where we only take in params
+                // so we dont have magic strings hanging out here
+                Logger.LogAsync(DataMovementLogLevel.Information,
+                    $"Processing Upload Transfer source: {SourceLocalPath}; destination: {DestinationBlobClient.Uri}", async).EnsureCompleted();
+                // Do only blockblob upload for now for now
+                try
+                {
+                    Response<BlobContentInfo> response = DestinationBlobClient.Upload(_sourceLocalPath, _uploadOptions);
+                    if (response != null && response.Value != null)
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer succeeded on from source:{SourceLocalPath} to destination:{DestinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                    }
+                    else
+                    {
+                        Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                    }
+                }
+                //TODO: catch other type of exceptions and handle gracefully
+                catch (RequestFailedException ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+            };
         }
     }
 }

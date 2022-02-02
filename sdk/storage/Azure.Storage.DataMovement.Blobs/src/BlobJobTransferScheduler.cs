@@ -22,8 +22,15 @@ namespace Azure.Storage.DataMovement.Blobs
     /// Performs scanning or queues up scanning of the jobs in the queue
     /// Adds the job items to the queue
     /// </summary>
-    internal class BlobJobTransferScheduler : IDisposable
+    internal class BlobJobTransferScheduler : TaskScheduler
     {
+        // Indicates whether the current thread is processing work items.
+        [ThreadStatic]
+        private static bool _currentThreadIsProcessingItems;
+
+        // Indicates whether the scheduler is currently processing work items.
+        private int _delegatesQueuedOrRunning;
+
         /// <summary>
         /// The maximum number of simultaneous workers for making service side list calls. Handles the amount of scanning
         /// allowed at the same time.
@@ -36,6 +43,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private readonly int _maxLocalListWorkerCount;
 
+        /// <summary>
+        /// The maximum number of simultaneous workers for making upload and download calls. Handles the amount of upload and download
+        /// allowed at the same time. This might be adjusted due to to what the StorageTransferOptions is set to.
+        /// </summary>
+        private readonly int _maxTransferWorkerCount;
+
+        /// <summary>
+        /// Total amount of workers
+        /// </summary>
+        private readonly int _totalWorkerCount;
+
         // TaskScheduler
         //
         // To manage something like this that will eventually exit when the queue empties
@@ -43,13 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs
         // the queue has something to process.
         //private TaskScheduler taskScheduler;
 
-        internal ConcurrentQueue<Task> tasksToProcess;
-
-        /// <summary>
-        /// TODO: Task runner to manage all the tasks running
-        /// we can do better than this.
-        /// </summary>
-        internal Task jobRunner;
+        internal ConcurrentQueue<Task> _tasksToProcess;
 
         /// <summary>
         /// Task Throttler to mananage thread performing list calls to the service.
@@ -74,18 +86,17 @@ namespace Azure.Storage.DataMovement.Blobs
         internal TaskThrottler LocalTaskThrottler => _localTaskThrottler;
 
         /// <summary>
-        /// Source of cancellation token.
-        /// </summary>
-        internal CancellationTokenSource _cancellationTokenSource;
-
-        /// <summary>
         /// BlobJobTransferScheduler Constructor
         /// </summary>
         /// <param name="maxListServiceRequestWorkerCount">The maximum number of simultaneous workers for making requests to the service.</param>
         /// <param name="maxLocalListWorkerCount">The maximum number of simultaneous workes for max Local List work count.</param>
-        public BlobJobTransferScheduler(int? maxListServiceRequestWorkerCount = default, int? maxLocalListWorkerCount = default)
+        /// <param name="maxTransferWorkerCount"></param>
+        public BlobJobTransferScheduler(
+            int? maxListServiceRequestWorkerCount = default,
+            int? maxLocalListWorkerCount = default,
+            int? maxTransferWorkerCount = default)
         {
-            // Set _maxWorkerCount
+            // Set _maxListServiceRequestWorkerCount
             if (maxListServiceRequestWorkerCount.HasValue && maxListServiceRequestWorkerCount > 0)
             {
                 _maxListServiceRequestWorkerCount = maxListServiceRequestWorkerCount.Value;
@@ -99,7 +110,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             _storageServiceTaskThrottler = new TaskThrottler(_maxListServiceRequestWorkerCount);
 
-            // Set _maxWorkerCount
+            // Set _maxLocalListWorkerCount
             if (maxLocalListWorkerCount.HasValue && maxLocalListWorkerCount > 0)
             {
                 _maxLocalListWorkerCount = maxLocalListWorkerCount.Value;
@@ -113,274 +124,116 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             _localTaskThrottler = new TaskThrottler(_maxLocalListWorkerCount);
 
-            tasksToProcess = new ConcurrentQueue<Task>();
-            jobRunner = RunJobsAsync();
-        }
-
-        /// <summary>
-        /// Handling cancelling tasks
-        /// </summary>
-        public void CancelTasks()
-        {
-            // TODO: handle the difference between pausing and cancelling jobs. Since cancelling
-            // jobs would mean we no longer hold the state of that job
-            if (_cancellationTokenSource != null)
+            // Set max number of transfer workers
+            if (maxTransferWorkerCount.HasValue && maxTransferWorkerCount > 0)
             {
-                _cancellationTokenSource.Cancel(true);
-            }
-        }
-
-        /// <summary>
-        /// Ensures disposing of the cancellationTokenSource
-        /// </summary>
-        public void Dispose()
-        {
-            if (_cancellationTokenSource != null)
-            {
-                _cancellationTokenSource.Cancel(true);
-                // TODO: Need to figure out a way to cancel the tasks in RunTasksAsync method before disposing
-                _cancellationTokenSource.Dispose();
-            }
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Adds job to the queue that has already been scanned.
-        /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobUploadTransferJob job)
-        {
-            // Just because this job would only be a single job, we need to queue
-            // it in the case that other jobs are currently being scanned
-            // that way we're not adding scans out of order
-
-            // TODO: look into possiblity of sending requests based on different priority
-            // because if the job is for a different storage account
-            // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
-            if (tasksToProcess.IsEmpty)
-            {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
-                jobRunner.Start();
+                _maxTransferWorkerCount = maxTransferWorkerCount.Value;
             }
             else
             {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
+                _maxTransferWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
+            _totalWorkerCount = _maxTransferWorkerCount + _maxLocalListWorkerCount + _maxListServiceRequestWorkerCount;
+
+            _delegatesQueuedOrRunning = 0;
+            _currentThreadIsProcessingItems = false;
+
+            _tasksToProcess = new ConcurrentQueue<Task>();
         }
 
         /// <summary>
         /// Adds job to the queue that has already been scanned.
         /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobDownloadTransferJob job)
+        /// <param name="task"></param>
+        protected override void QueueTask(Task task)
         {
-            // Just because this job would only be a single job, we need to queue
-            // it in the case that other jobs are currently being scanned
-            // that way we're not adding scans out of order
-
-            // TODO: look into possiblity of sending requests based on different priority
-            // because if the job is for a different storage account
-            // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
-            if (tasksToProcess.IsEmpty)
+            // Add the task to the list of tasks to be processed.  If there aren't enough
+            // delegates currently queued or running to process tasks, schedule another.
+            lock (_tasksToProcess)
             {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
-                jobRunner.Start();
-            }
-            else
-            {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
-            }
-        }
-
-        /// <summary>
-        /// Adds job to the queue that has already been scanned.
-        /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobUploadDirectoryTransferJob job)
-        {
-            // TODO: set error scanning here from the StorageTransferConfigurations
-            PathScannerFactory scannerFactory = new PathScannerFactory(job.SourceLocalPath);
-            PathScanner scanner = scannerFactory.BuildPathScanner();
-            StorageServiceTaskThrottler.AddTask(async () =>
-            {
-                //await Task.FromResult<IEnumerable<FileSystemInfo>>(scanner.Scan()).ConfigureAwait(false);
-                await Task.Run(() => ScanLocalDirectory(job, scanner)).ConfigureAwait(false);
-            });
-            StorageServiceTaskThrottler.Wait();
-        }
-
-        private void ScanLocalDirectory(BlobUploadDirectoryTransferJob job, PathScanner scanner)
-        {
-            IEnumerable<FileSystemInfo> pathList = scanner.Scan();
-
-            foreach (FileSystemInfo path in pathList)
-            {
-                if (path.GetType() == typeof(FileInfo))
+                _tasksToProcess.Enqueue(task);
+                if (_delegatesQueuedOrRunning < _totalWorkerCount)
                 {
-                    if (tasksToProcess.IsEmpty)
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleUploadTaskAsync(path.FullName));
-                        jobRunner.Start();
-                    }
-                    else
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleUploadTaskAsync(path.FullName));
-                    }
+                    ++_delegatesQueuedOrRunning;
+                    NotifyThreadPoolOfPendingWork();
                 }
             }
         }
 
-        /// <summary>
-        /// Adds job to the queue that has already been scanned.
-        /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobDownloadDirectoryTransferJob job)
+        // Inform the ThreadPool that there's work to be executed for this scheduler.
+        private void NotifyThreadPoolOfPendingWork()
         {
-            // TODO: Need to replace this with the async method so that we can enumerate based on the continuation token
-            // in the case that the customer decides to pause the job, and wants to resume later we have the continuation token
-            // or we're getting throttled and we should take a break and continue later.
-
-            //TODO: add cancellation token here for enumeration
-            Pageable<BlobItem> blobs = job.SourceBlobClient.GetBlobs();
-
-            foreach (BlobItem blob in blobs)
+            ThreadPool.UnsafeQueueUserWorkItem(_ =>
             {
-                if (tasksToProcess.IsEmpty)
+                // Note that the current thread is now processing work items.
+                // This is necessary to enable inlining of tasks into this thread.
+                _currentThreadIsProcessingItems = true;
+                try
                 {
-                    tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
-                    jobRunner.Start();
+                    // Process all available items in the queue.
+                    while (true)
+                    {
+                        Task item;
+                        lock (_tasksToProcess)
+                        {
+                            // When there are no more items to be processed,
+                            // note that we're done processing, and get out.
+                            if (_tasksToProcess.IsEmpty)
+                            {
+                                --_delegatesQueuedOrRunning;
+                                break;
+                            }
+
+                            // Tries to get the next item from the queue
+                            _tasksToProcess.TryDequeue(out item);
+                        }
+
+                        // Execute the task we pulled out of the queue
+                        base.TryExecuteTask(item);
+                    }
                 }
-                else
+                // We're done processing items on the current thread
+                finally
                 {
-                    tasksToProcess.Enqueue(job.GetSingleDownloadTaskAsync(blob.Name));
+                    _currentThreadIsProcessingItems = false;
                 }
-            }
+            }, null);
         }
 
-        /// <summary>
-        /// Adds job to the queue that has already been scanned.
-        /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobServiceCopyTransferJob job)
+        protected override IEnumerable<Task> GetScheduledTasks()
         {
-            // Just because this job would only be a single job, we need to queue
-            // it in the case that other jobs are currently being scanned
-            // that way we're not adding scans out of order
-
-            // TODO: look into possiblity of sending requests based on different priority
-            // because if the job is for a different storage account
-            // it might be worth sending that requests anyways cause it wouldn't slow down traffic for that storage account per say
-            if (tasksToProcess.IsEmpty)
-            {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
-                jobRunner.Start();
-            }
-            else
-            {
-                tasksToProcess.Enqueue(job.StartTransferTaskAsync());
-            }
-        }
-
-        /// <summary>
-        /// Adds job to the queue that has already been scanned.
-        /// </summary>
-        /// <param name="job"></param>
-        internal void AddJob(BlobServiceCopyDirectoryTransferJob job)
-        {
-            // TODO: Need to replace this with the async method so that we can enumerate based on the continuation token
-            // in the case that the customer decides to pause the job, and wants to resume later we have the continuation token
-            // or we're getting throttled and we should take a break and continue later.
-
-            //TODO: add cancellation token here for enumeration
-            BlobVirtualDirectoryClient sourceVirtualDirectoryClient = new BlobVirtualDirectoryClient(job.SourceDirectoryUri);
-            Pageable<BlobItem> blobs = sourceVirtualDirectoryClient.GetBlobs();
-
-            foreach (BlobItem blob in blobs)
-            {
-                if (tasksToProcess.IsEmpty)
-                {
-                    if (job.CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleAsyncCopyTaskAsync(blob.Name));
-                    }
-                    else
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleSyncCopyTaskAsync(blob.Name));
-                    }
-                    jobRunner.Start();
-                }
-                else
-                {
-                    if (job.CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleAsyncCopyTaskAsync(blob.Name));
-                    }
-                    else
-                    {
-                        tasksToProcess.Enqueue(job.GetSingleSyncCopyTaskAsync(blob.Name));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Runs jobs on the multiple threads given.
-        ///
-        /// This will be called once there's one job on the queue, if there are no items in the queue then we exit.
-        /// </summary>
-        private async Task RunJobsAsync()
-        {
-            // Create a list of tasks that will each run each Transfer Item
-            // of a Job.  The queue maintains the order of the Tasks
-            // so we can keep appending to the end of the destination
-            // stream when each segment finishes.
-
+            bool lockTaken = false;
             try
             {
-                _cancellationTokenSource = new CancellationTokenSource();
-                CancellationToken cancellationToken = _cancellationTokenSource.Token;
-                var runningTasks = new List<Task>();
-                while (!tasksToProcess.IsEmpty)
-                {
-                    Task currentTask;
-                    if (tasksToProcess.TryDequeue(out currentTask))
-                    {
-                        // Create Task from given job type
-                        // TODO: remove this and call the according job type to create the task
-                        // Add Task
-                        currentTask = currentTask.WithCancellation(cancellationToken);
-                        runningTasks.Add(currentTask);
-
-                        // If we run out of workers
-                        if (runningTasks.Count >= _maxListServiceRequestWorkerCount)
-                        {
-                            // Wait for at least one of them to finish
-                            await Task.WhenAny(runningTasks).ConfigureAwait(false);
-
-                            // Clear any completed blocks from the task list
-                            for (int i = 0; i < runningTasks.Count; i++)
-                            {
-                                Task runningTask = runningTasks[i];
-                                if (!runningTask.IsCompleted)
-                                {
-                                    continue;
-                                }
-
-                                await runningTask.ConfigureAwait(false);
-                                runningTasks.RemoveAt(i);
-                                i--;
-                            }
-                        }
-                    }
-                }
-                // Wait for all the remaining blocks to finish staging and then
-                // commit the block list to complete the upload
-                await Task.WhenAll(runningTasks).ConfigureAwait(false);
+                Monitor.TryEnter(_tasksToProcess, ref lockTaken);
+                if (lockTaken)
+                    return _tasksToProcess;
+                else
+                    throw new NotSupportedException();
             }
             finally
             {
-                _cancellationTokenSource.Dispose();
+                if (lockTaken)
+                    Monitor.Exit(_tasksToProcess);
             }
+        }
+
+        // Attempts to execute the specified task on the current thread.
+        protected sealed override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
+        {
+            // If this thread isn't already processing a task, we don't support inlining
+            if (!_currentThreadIsProcessingItems)
+                return false;
+
+            // If the task was previously queued, remove it from the queue
+            if (taskWasPreviouslyQueued)
+                // Try to run the task.
+                if (TryDequeue(task))
+                    return base.TryExecuteTask(task);
+                else
+                    return false;
+            else
+                return base.TryExecuteTask(task);
         }
     }
 }

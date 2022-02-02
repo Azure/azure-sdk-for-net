@@ -11,12 +11,6 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public class BlobDirectoryDownloadOptions
     {
         /// <summary>
-        /// Optional <see cref="BlobDirectoryRequestConditions"/> to add conditions on
-        /// the copying of data to this blob.
-        /// </summary>
-        public BlobDirectoryRequestConditions DirectoryRequestConditions { get; set; }
-
-        /// <summary>
         /// Optional <see cref="IProgress{StorageTransferStatus}"/> to provide
         /// progress updates about data transfers.
         /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
@@ -30,11 +24,8 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Setting to upload ONLY the contents of the directory. Default set to false.
-        ///
-        /// TODO: better description
-        /// TODO: better naming
+        /// Transactional hashing options for data integrity checks.
         /// </summary>
-        public bool ContentsOnly { get; set; }
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

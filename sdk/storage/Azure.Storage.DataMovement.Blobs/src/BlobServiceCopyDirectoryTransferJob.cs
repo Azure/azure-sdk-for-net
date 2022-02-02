@@ -9,6 +9,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.Blobs;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -86,21 +87,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
             BlobCopyFromUriOptions blobCopyFromUriOptions = new BlobCopyFromUriOptions()
             {
-                Metadata = CopyFromUriOptions.Metadata,
-                Tags = CopyFromUriOptions.Tags,
                 AccessTier = CopyFromUriOptions.AccessTier,
-                SourceConditions = new BlobRequestConditions
-                {
-                    IfModifiedSince = CopyFromUriOptions?.SourceConditions?.IfModifiedSince,
-                    IfUnmodifiedSince = CopyFromUriOptions?.SourceConditions?.IfUnmodifiedSince,
-                },
-                DestinationConditions = new BlobRequestConditions
-                {
-                    IfModifiedSince = CopyFromUriOptions?.SourceConditions?.IfModifiedSince,
-                    IfUnmodifiedSince = CopyFromUriOptions?.SourceConditions?.IfUnmodifiedSince,
-                },
                 RehydratePriority = CopyFromUriOptions.RehydratePriority,
-                ShouldSealDestination = CopyFromUriOptions.ShouldSealDestination,
                 DestinationImmutabilityPolicy = CopyFromUriOptions.DestinationImmutabilityPolicy,
                 LegalHold = CopyFromUriOptions.LegalHold,
                 SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
@@ -124,27 +112,89 @@ namespace Azure.Storage.DataMovement.Blobs
 
             BlobCopyFromUriOptions blobCopyFromUriOptions = new BlobCopyFromUriOptions()
             {
-                Metadata = CopyFromUriOptions.Metadata,
-                Tags = CopyFromUriOptions.Tags,
                 AccessTier = CopyFromUriOptions.AccessTier,
-                SourceConditions = new BlobRequestConditions
-                {
-                    IfModifiedSince = CopyFromUriOptions?.SourceConditions?.IfModifiedSince,
-                    IfUnmodifiedSince = CopyFromUriOptions?.SourceConditions?.IfUnmodifiedSince,
-                },
-                DestinationConditions = new BlobRequestConditions
-                {
-                    IfModifiedSince = CopyFromUriOptions?.SourceConditions?.IfModifiedSince,
-                    IfUnmodifiedSince = CopyFromUriOptions?.SourceConditions?.IfUnmodifiedSince,
-                },
                 RehydratePriority = CopyFromUriOptions.RehydratePriority,
-                ShouldSealDestination = CopyFromUriOptions.ShouldSealDestination,
                 DestinationImmutabilityPolicy = CopyFromUriOptions.DestinationImmutabilityPolicy,
                 LegalHold = CopyFromUriOptions.LegalHold,
                 SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
             };
 
             return await blockBlobClient.SyncCopyFromUriAsync(SourceDirectoryUri, blobCopyFromUriOptions).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed.
+        /// </summary>
+        /// <param name="blobName">Blob Name in the Source that is to be copied</param>
+        /// <param name="async">Defines whether the oepration should be async</param>
+        /// <returns>The Task to perform the Upload operation.</returns>
+        public Action ProcessSingleCopyTransfer(string blobName, bool async = true)
+        {
+            return () =>
+            {
+                BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
+                sourceUriBuilder.BlobName += $"/{blobName}";
+                Uri sourceBlobUri = sourceUriBuilder.ToUri();
+
+                BlobClient destinationBlobClient = DestinationDirectoryClient.GetBlobClient(blobName);
+
+                // TODO: make logging messages similar to the errors class where we only take in params
+                // so we dont have magic strings hanging out here
+                Logger.LogAsync(DataMovementLogLevel.Information,
+                    $"Processing Single Copy Transfer source: {sourceBlobUri.AbsoluteUri}; destination: {destinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                // Do only blockblob upload for now for now
+                try
+                {
+                    BlobCopyFromUriOptions blobCopyFromUriOptions = new BlobCopyFromUriOptions()
+                    {
+                        AccessTier = CopyFromUriOptions.AccessTier,
+                        RehydratePriority = CopyFromUriOptions.RehydratePriority,
+                        DestinationImmutabilityPolicy = CopyFromUriOptions.DestinationImmutabilityPolicy,
+                        LegalHold = CopyFromUriOptions.LegalHold,
+                        SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
+                    };
+
+                    if (CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
+                    {
+                        CopyFromUriOperation copyOperation = destinationBlobClient.StartCopyFromUri(sourceBlobUri, blobCopyFromUriOptions);
+                        // TODO: Might want to figure out an appropriate delay to poll the wait for completion
+                        // TODO: Also might want to cancel this if it takes too long to prevent any threads to be hung up on this operation.
+                        copyOperation.WaitForCompletion(CancellationTokenSource.Token);
+
+                        if (copyOperation.HasCompleted && copyOperation.HasValue)
+                        {
+                            Logger.LogAsync(DataMovementLogLevel.Information, $"Copy Transfer succeeded on from source:{sourceBlobUri.AbsoluteUri} to destination:{destinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                        }
+                        else
+                        {
+                            Logger.LogAsync(DataMovementLogLevel.Error, $"Copy Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                        }
+                    }
+                    else //if(CopyMethod == BlobServiceCopyMethod.ServiceSideSyncCopy)
+                    {
+                        Response<BlobCopyInfo> response = destinationBlobClient.SyncCopyFromUri(sourceBlobUri, blobCopyFromUriOptions);
+                        if (response != null && response.Value != null)
+                        {
+                            Logger.LogAsync(DataMovementLogLevel.Information, $"Copy Transfer succeeded on from source:{sourceBlobUri.AbsoluteUri} to destination:{destinationBlobClient.Uri.AbsoluteUri}", async).EnsureCompleted();
+                        }
+                        else
+                        {
+                            Logger.LogAsync(DataMovementLogLevel.Error, $"Copy Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
+                        }
+                    }
+                }
+                //TODO: catch other type of exceptions and handle gracefully
+                catch (RequestFailedException ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
+                    // Progress Handling is already done by the upload call
+                }
+            };
         }
     }
 }

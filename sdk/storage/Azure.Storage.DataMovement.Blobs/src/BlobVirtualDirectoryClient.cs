@@ -428,6 +428,31 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <see cref="BlobVirtualDirectoryClient"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public virtual BlobClient GetBlobClient(string blobName)
+        {
+            return GetBlobClientCore(blobName);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobVirtualDirectoryClient"/>.
+        /// </summary>
+        /// <param name="blobName">Name of the blob</param>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlobClient GetBlobClientCore(string blobName)
+        {
+            return _containerClient.GetBlobClient(blobName);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobVirtualDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobVirtualDirectoryClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
         public virtual BlockBlobClient GetBlockBlobClient(string blobName)
         {
             return GetBlockBlobClientCore(blobName);
@@ -901,12 +926,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     BlobContainerClient containerClient = GetParentBlobContainerClient();
 
-                    BlobRequestConditions conditions = new BlobRequestConditions()
-                    {
-                        IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
-                        IfUnmodifiedSince = options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
-                    };
-
                     int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
                         options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
                     TaskThrottler throttler = new TaskThrottler(concurrency);
@@ -930,7 +949,7 @@ namespace Azure.Storage.DataMovement.Blobs
                                     {
                                         responses.Add(await client.DownloadToAsync(
                                             destination,
-                                            conditions,
+                                            default,
                                             options.TransferOptions,
                                             cancellationToken)
                                             .ConfigureAwait(false));
@@ -955,7 +974,7 @@ namespace Azure.Storage.DataMovement.Blobs
                                 {
                                     responses.Add(await client.DownloadToAsync(
                                         destination,
-                                        conditions,
+                                        default,
                                         options.TransferOptions,
                                         cancellationToken)
                                         .ConfigureAwait(false));
