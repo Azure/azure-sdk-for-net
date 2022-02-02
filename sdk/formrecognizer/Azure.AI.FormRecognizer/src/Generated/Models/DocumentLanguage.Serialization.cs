@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentLanguage
+    public partial class DocumentLanguage
     {
         internal static DocumentLanguage DeserializeDocumentLanguage(JsonElement element)
         {

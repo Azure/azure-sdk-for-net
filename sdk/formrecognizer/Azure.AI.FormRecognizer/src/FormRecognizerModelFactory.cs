@@ -549,6 +549,18 @@ namespace Azure.AI.FormRecognizer.Models
             return new CurrencyValue(amount, currencySymbol);
         }
 
+        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
+        /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the language. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentLanguage"/> instance for mocking. </returns>
+        internal static DocumentLanguage DocumentLanguage(string languageCode = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentLanguage(languageCode, spans?.ToList(), confidence);
+        }
+
         /// <summary> Initializes a new instance of DocumentSpan. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
