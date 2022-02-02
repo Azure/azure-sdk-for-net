@@ -57,9 +57,10 @@ namespace Azure.ResourceManager.Core
     public abstract partial class ArmResource
     {
         protected ArmResource() { }
-        protected internal ArmResource(Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { }
+        protected internal ArmResource(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
         protected internal virtual Azure.ResourceManager.ArmClient ArmClient { get { throw null; } }
         protected internal System.Uri BaseUri { get { throw null; } }
+        protected internal Azure.ResourceManager.ArmClient Client { get { throw null; } }
         protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
