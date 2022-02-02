@@ -11,7 +11,18 @@ namespace Azure.Core
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     internal class ForwardsClientCallsAttribute : Attribute
     {
-        public ForwardsClientCallsAttribute() { }
+        /// <summary>
+        /// Creates a new instance of <see cref="ForwardsClientCallsAttribute"/>.
+        /// </summary>
+        public ForwardsClientCallsAttribute()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ForwardsClientCallsAttribute"/>.
+        /// </summary>
+        /// <param name="skipChecks"> Sets whether or not diagnostic scope validation should happen. </param>
         public ForwardsClientCallsAttribute(bool skipChecks)
         {
             SkipChecks = skipChecks;
@@ -23,6 +34,6 @@ namespace Azure.Core
         /// If the public API will cache the results then the diagnostic scope will not always be created because an Azure API is not always called.
         /// In this case we need to turn off this validation for this API only.
         /// </summary>
-        public bool? SkipChecks { get; }
+        public bool SkipChecks { get; }
     }
 }
