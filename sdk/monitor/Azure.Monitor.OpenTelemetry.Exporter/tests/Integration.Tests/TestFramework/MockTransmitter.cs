@@ -24,5 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 
             return new ValueTask<int>(Task.FromResult(telemetryItems.Count()));
         }
+
+        public ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

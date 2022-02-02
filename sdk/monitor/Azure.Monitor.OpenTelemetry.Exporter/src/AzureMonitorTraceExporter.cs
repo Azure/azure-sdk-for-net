@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
         private readonly ResourceParser resourceParser;
+        private const int MaxBatchSize = 512;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
         {
@@ -46,6 +47,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Handle return value, it can be converted as metrics.
                 // TODO: Validate CancellationToken and async pattern here.
                 this.Transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+                if (telemetryItems.Count < MaxBatchSize)
+                {
+                    this.Transmitter.TransmitFromStorage(false, CancellationToken.None);
+                }
+
                 return ExportResult.Success;
             }
             catch (Exception ex)

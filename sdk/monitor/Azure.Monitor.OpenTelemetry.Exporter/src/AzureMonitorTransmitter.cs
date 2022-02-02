@@ -64,5 +64,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             return itemsAccepted;
         }
+
+        public async ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken)
+        {
+            IPersistentBlob blob;
+            while (true)
+            {
+                blob = storage.GetBlob();
+                if (blob == null)
+                {
+                    // Could not find a single blob to transmit.
+                    return;
+                }
+
+                // lease the blob so that no one else can read.
+                // todo: time to lease?
+                var leasedBlob = blob.Lease(10000);
+                if (leasedBlob != null)
+                {
+                    var batch = leasedBlob.Read();
+                    int itemsAccepted;
+                    if (batch != null)
+                    {
+                        if (async)
+                        {
+                            itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(batch, storage, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(batch, storage, cancellationToken).Result;
+                        }
+
+                        // Delete the blob here
+                        // as new one will be created in case of failure
+                        // TODO: Avoid recreating blob when transmitting from storage.
+                        blob.Delete();
+
+                        if (itemsAccepted != 0)
+                        {
+                            AzureMonitorExporterEventSource.Log.Write($"TransmissionSuccessfulFromStorage{EventLevelSuffix.Informational}", $"{itemsAccepted} items were transmitted from storage");
+                        }
+                        else
+                        {
+                            AzureMonitorExporterEventSource.Log.Write($"FailedTransmissionFromStorage{EventLevelSuffix.Informational}");
+                        }
+                    }
+                }
+            }
+        }
     }
 }
