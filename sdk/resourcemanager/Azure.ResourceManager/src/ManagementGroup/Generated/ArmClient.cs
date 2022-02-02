@@ -10,6 +10,7 @@ using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager
 {
+    /// <summary> The entry point for all ARM clients. </summary>
     public partial class ArmClient
     {
         #region ManagementGroup

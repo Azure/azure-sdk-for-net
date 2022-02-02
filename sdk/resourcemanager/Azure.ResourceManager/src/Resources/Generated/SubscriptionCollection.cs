@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -31,23 +30,40 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionCollection"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SubscriptionCollection(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
-        {
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Subscription.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Subscription.ResourceType, out string subscriptionApiVersion);
-            _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != Tenant.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+        }
+
+        // Collection level operations.
+
+        /// RequestPath: /subscriptions/{subscriptionId}
+        /// ContextualPath: /
+        /// OperationId: Subscriptions_Get
+        /// <summary> Gets details about a specified subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual Response<Subscription> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken);
+                if (response.Value == null)
+                    throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}
@@ -78,25 +94,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Gets details about a specified subscription. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<Subscription> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<Subscription> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Get");
+            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken);
+                var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
                 return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -106,45 +119,75 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_List
-        /// <summary> Gets all subscriptions for a tenant. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Subscription> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async virtual Task<Response<Subscription>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _subscriptionRestClient.GetAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
+                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
             }
-            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual Response<bool> Exists(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(subscriptionId, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions
@@ -188,112 +231,45 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
+        /// RequestPath: /subscriptions
         /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// OperationId: Subscriptions_List
+        /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Subscription> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
-            scope.Start();
-            try
+            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await GetIfExistsAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<bool> Exists(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(subscriptionId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async virtual Task<Response<Subscription>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _subscriptionRestClient.GetAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<Subscription> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Subscription> IEnumerable<Subscription>.GetEnumerator()

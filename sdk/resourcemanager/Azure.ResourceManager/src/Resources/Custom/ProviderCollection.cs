@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Resources
 #endif
         }
 
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new Subscription Parent { get { return base.Parent as Subscription; } }
+
         [ForwardsClientCalls(true)]
         internal virtual string GetApiVersion(ResourceType resourceType, CancellationToken cancellationToken = default)
         {

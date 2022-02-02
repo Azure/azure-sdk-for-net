@@ -130,6 +130,42 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
         /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
         /// OperationId: Tags_DeleteAtScope
@@ -172,62 +208,6 @@ namespace Azure.ResourceManager.Resources
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_UpdateAtScope
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<TagResource>> UpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TagResource(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_UpdateAtScope
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="parameters"> The TagPatchResource to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<TagResource> Update(TagPatchResource parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, parameters, cancellationToken);
-                return Response.FromValue(new TagResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -300,16 +280,26 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
+        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
+        /// OperationId: Tags_UpdateAtScope
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<TagResource>> UpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.GetAvailableLocations");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TagResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,16 +308,26 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
+        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
+        /// OperationId: Tags_UpdateAtScope
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <param name="parameters"> The TagPatchResource to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<TagResource> Update(TagPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.GetAvailableLocations");
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, parameters, cancellationToken);
+                return Response.FromValue(new TagResource(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

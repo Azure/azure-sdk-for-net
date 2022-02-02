@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -35,6 +34,37 @@ namespace Azure.ResourceManager.Resources
         {
             if (id.ResourceType != Subscription.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
+
+        // Collection level operations.
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: Providers_Get
+        /// <summary> Gets the specified resource provider. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = _providerRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken);
+                if (response.Value == null)
+                    throw _providerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
@@ -66,26 +96,23 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Gets the specified resource provider. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<Provider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<Provider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Get");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _providerRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken);
+                var response = _providerRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    throw _providerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    return Response.FromValue<Provider>(null, response.GetRawResponse());
                 return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -95,47 +122,78 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_List
-        /// <summary> Gets all resource providers for a subscription. </summary>
-        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
-        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Provider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Provider> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public async virtual Task<Response<Provider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _providerRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Provider>(null, response.GetRawResponse());
+                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
             }
-            async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual Response<bool> Exists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers
@@ -181,116 +239,47 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// RequestPath: /subscriptions/{subscriptionId}/providers
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// OperationId: Providers_List
+        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Provider" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Provider> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
-
-            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Exists");
-            scope.Start();
-            try
+            async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await GetIfExistsAsync(resourceProviderNamespace, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _providerRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _providerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Provider(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<bool> Exists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
-
-            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(resourceProviderNamespace, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public async virtual Task<Response<Provider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
-
-            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _providerRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Provider>(null, response.GetRawResponse());
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<Provider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
-
-            using var scope = _providerClientDiagnostics.CreateScope("ProviderCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _providerRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<Provider>(null, response.GetRawResponse());
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Provider> IEnumerable<Provider>.GetEnumerator()

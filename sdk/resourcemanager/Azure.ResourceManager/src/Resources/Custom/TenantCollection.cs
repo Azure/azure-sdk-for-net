@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="client"> The resource representing the parent resource. </param>
         internal TenantCollection(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
+            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
+            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
         }
     }
 }
