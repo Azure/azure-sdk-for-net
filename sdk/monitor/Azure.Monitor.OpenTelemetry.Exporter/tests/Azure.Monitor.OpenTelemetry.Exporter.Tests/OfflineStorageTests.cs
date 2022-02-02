@@ -165,6 +165,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             transmitter.storage.GetBlob().Lease(1000).Delete();
         }
 
+        [Fact]
+        public void TransmitFromStorage()
+        {
+            var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+
+            using var testServer = new LocalEndpoint(testEndpoint);
+            testServer.ServerLogic = async (httpContext) =>
+            {
+                httpContext.Response.StatusCode = 500;
+                await httpContext.Response.WriteAsync("Internal Server Error");
+            };
+
+            // Transmit
+            var transmitter = GetTransmitter();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            // Wait for maintenance job to run atleast once
+            Thread.Sleep(15000);
+
+            //Assert
+            Assert.Single(transmitter.storage.GetBlobs());
+
+            // reset server logic to return 200
+            testServer.ServerLogic = async (httpContext) =>
+            {
+                httpContext.Response.StatusCode = 200;
+                await httpContext.Response.WriteAsync("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            };
+
+            transmitter.TransmitFromStorage(false, CancellationToken.None).EnsureCompleted();
+
+            // Assert
+            // Blob will be deleted on successful tranmission
+            Assert.Empty(transmitter.storage.GetBlobs());
+        }
+
         private static AzureMonitorTransmitter GetTransmitter()
         {
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();

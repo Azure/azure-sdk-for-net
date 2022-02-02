@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (telemetryItems.Count < MaxBatchSize)
                 {
-                    this.Transmitter.TransmitFromStorage(false, CancellationToken.None);
+                    this.Transmitter.TransmitFromStorage(false, CancellationToken.None).EnsureCompleted();
                 }
 
                 return ExportResult.Success;

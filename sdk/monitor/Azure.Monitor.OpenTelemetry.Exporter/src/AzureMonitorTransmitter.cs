@@ -67,25 +67,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public async ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken)
         {
-            IPersistentBlob blob;
-            while (true)
+            foreach (var blob in storage.GetBlobs())
             {
-                blob = storage.GetBlob();
-                if (blob == null)
-                {
-                    // Could not find a single blob to transmit.
-                    return;
-                }
-
                 // lease the blob so that no one else can read.
                 // todo: time to lease?
                 var leasedBlob = blob.Lease(10000);
                 if (leasedBlob != null)
                 {
                     var batch = leasedBlob.Read();
-                    int itemsAccepted;
                     if (batch != null)
                     {
+                        int itemsAccepted;
                         if (async)
                         {
                             itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(batch, storage, cancellationToken).ConfigureAwait(false);
@@ -96,8 +88,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
 
                         // Delete the blob here
-                        // as new one will be created in case of failure
+                        // as new one will be created in case of another failure
                         // TODO: Avoid recreating blob when transmitting from storage.
+                        // Creating new blob every time also resets the data retention period.
                         blob.Delete();
 
                         if (itemsAccepted != 0)
