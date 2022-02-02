@@ -58,7 +58,7 @@ param(
   [Parameter(Mandatory = $false)]
   [string]$PackageSourceOverride
 )
-
+Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)(?:master|main)"
@@ -129,7 +129,7 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
     LogWarning "Package metadata not found for $packageInfoJsonLocation"
     return
   }
-  
+
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
   if ($packageInfo.DevVersion) {
@@ -161,25 +161,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
     $packageMetadata = $packageMetadataArray[0]
   }
 
-  $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
-  $outputReadmeContent = "" 
-  if ($readmeContent) { 
-    $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
-  }
-
-  $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
-  $readMePath = $docsMsMetadata.LatestReadMeLocation
-  if ($originalVersion.IsPrerelease) { 
-    $readMePath = $docsMsMetadata.PreviewReadMeLocation
-  }
-
-  $suffix = $docsMsMetadata.Suffix
-  $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
-
-  $readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
-
-  Set-Content -Path $readmeLocation -Value $outputReadmeContent
-
   # Copy package info file to the docs repo
   $metadataMoniker = 'latest'
   if ($originalVersion.IsPrerelease) {
@@ -192,20 +173,45 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson
+
+  # Update Readme Content
+  if ($packageInfo.ReadMePath == null -or !(Test-Path $packageInfo.ReadMePath)) {
+    Write-Warning "$packageInfo.Name does not have Readme file. Skipping update readme."
+    return
+  }
+  
+  $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
+  $outputReadmeContent = "" 
+  if ($readmeContent) { 
+    $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
+  }
+  $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
+  $readMePath = $docsMsMetadata.LatestReadMeLocation
+  if ($originalVersion.IsPrerelease) { 
+    $readMePath = $docsMsMetadata.PreviewReadMeLocation
+  }
+
+  $suffix = $docsMsMetadata.Suffix
+  $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
+
+  $readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
+
+  Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfoLocation"
-
   # Convert package metadata json file to metadata json property.
   $packageInfo = GetPackageInfoJson $packageInfoLocation
   # Add validation step for daily update and release
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    Write-Host "Validating the package..."
     &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
     if ($LASTEXITCODE) {
       LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for more details on how to diagnose this issue."
       exit $LASTEXITCODE
     }
   }
+  Write-Host "Updating the package json ..."
   UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
 }
