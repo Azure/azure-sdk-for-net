@@ -14,6 +14,25 @@ namespace Azure.AI.FormRecognizer
         Basic = 0,
         Natural = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FormRecognizerAudience : System.IEquatable<Azure.AI.FormRecognizer.FormRecognizerAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FormRecognizerAudience(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzureChina { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.FormRecognizer.FormRecognizerAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.FormRecognizerAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.FormRecognizerAudience left, Azure.AI.FormRecognizer.FormRecognizerAudience right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.FormRecognizerAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.FormRecognizerAudience left, Azure.AI.FormRecognizer.FormRecognizerAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FormRecognizerClient
     {
         protected FormRecognizerClient() { }
@@ -49,6 +68,7 @@ namespace Azure.AI.FormRecognizer
     public partial class FormRecognizerClientOptions : Azure.Core.ClientOptions
     {
         public FormRecognizerClientOptions(Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion.V2_1) { }
+        public Azure.AI.FormRecognizer.FormRecognizerAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -347,6 +367,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyDictionary<string, float> FieldConfidence { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> FieldSchema { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentAnalysisAudience : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentAnalysisAudience(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzureChina { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DocumentAnalysisClient
     {
         protected DocumentAnalysisClient() { }
@@ -362,6 +401,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentAnalysisClientOptions : Azure.Core.ClientOptions
     {
         public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview) { }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

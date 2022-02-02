@@ -12,6 +12,7 @@
 - Added the `tags` parameter to the `StartCreateComposedModel` methods.
 
 ### Bugs Fixed
+- FormRecognizerAudience and DocumentAnalysisAudience has been added to allow the user to select the Azure cloud where the resource is located. Issue [17192](https://github.com/azure/azure-sdk-for-net/issues/17192).
 
 ### Other Changes
 

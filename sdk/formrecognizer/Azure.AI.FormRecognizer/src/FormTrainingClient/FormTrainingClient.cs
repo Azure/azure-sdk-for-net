@@ -107,9 +107,11 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience.ToString()) ? FormRecognizerAudience.AzurePublicCloud : options.Audience)}/.default";
+
             Diagnostics = new ClientDiagnostics(options);
             ServiceVersion = options.Version;
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
             ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(ServiceVersion));
         }
 
