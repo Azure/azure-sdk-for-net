@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Indexed by the job id
         /// </summary>
-        private IDictionary<string, TransferJobInternal> _totalTransferJobs { get; set; }
+        private IDictionary<string, BlobTransferJobInternal> _totalTransferJobs { get; set; }
 
         /// <summary>
         /// internal job transfer to scan for job sand schedule requests accordingly
@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     }
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Created all upload tasks for the source directory: {transferJob.SourceLocalPath} to upload to the destination directory: {transferJob.DestinationDirectoryBlobClient.Uri.AbsoluteUri}",
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceLocalPath} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                         false).EnsureCompleted();
 
                     // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceLocalPath} and uploaded to the destination directory: {transferJob.DestinationDirectoryBlobClient.Uri.AbsoluteUri}",
+                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceLocalPath} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                         false).EnsureCompleted();
                 },
                 cancellationToken: transferJob.CancellationTokenSource.Token,
@@ -221,13 +221,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 action: () => {
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Begin enumerating files within source directory: {transferJob.SourceDirectoryBlobClient.DirectoryPath}",
+                        message: $"Begin enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}",
                         false).EnsureCompleted();
-                    Pageable<BlobItem> blobs = transferJob.SourceDirectoryBlobClient.GetBlobs();
+                    Pageable<BlobItem> blobs = transferJob.SourceBlobDirectoryClient.GetBlobs();
 
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Completed enumerating files within source directory: {transferJob.SourceDirectoryBlobClient.DirectoryPath}\n",
+                        message: $"Completed enumerating files within source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath}\n",
                         false).EnsureCompleted();
 
                     List<Task> fileUploadTasks = new List<Task>();
@@ -242,7 +242,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     }
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryBlobClient.DirectoryPath} to upload to the destination directory: {transferJob.DestinationLocalPath}",
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} to upload to the destination directory: {transferJob.DestinationLocalPath}",
                         false).EnsureCompleted();
 
                     // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryBlobClient.DirectoryPath} and uploaded to the destination directory: {transferJob.DestinationLocalPath}",
+                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceBlobDirectoryClient.DirectoryPath} and uploaded to the destination directory: {transferJob.DestinationLocalPath}",
                         false).EnsureCompleted();
                 },
                 cancellationToken: transferJob.CancellationTokenSource.Token,
@@ -351,7 +351,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     }
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} to upload to the destination directory: {transferJob.DestinationDirectoryClient.Uri.AbsoluteUri}",
+                        message: $"Created all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} to upload to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                         false).EnsureCompleted();
 
                     // Wait for all the remaining blobs to finish upload before logging that the transfer has finished.
@@ -359,7 +359,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     transferJob.Logger.LogAsync(
                         logLevel: DataMovementLogLevel.Information,
-                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} and uploaded to the destination directory: {transferJob.DestinationDirectoryClient.Uri.AbsoluteUri}",
+                        message: $"Completed all upload tasks for the source directory: {transferJob.SourceDirectoryUri.AbsoluteUri} and uploaded to the destination directory: {transferJob.DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                         false).EnsureCompleted();
                 },
                 cancellationToken: transferJob.CancellationTokenSource.Token,
@@ -394,10 +394,24 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public override StorageTransferJobDetails GetJob(string jobId)
+        public BlobTransferJobProperties GetJobDetails(string jobId)
         {
-            //TODO: stub
-            return default;
+            if (!_totalTransferJobs.ContainsKey(jobId))
+            {
+                BlobTransferJobInternal job = _totalTransferJobs[jobId];
+                if (job.CancellationTokenSource.IsCancellationRequested)
+                {
+                    throw Errors.JobCancelledOrPaused(jobId);
+                }
+                else
+                {
+                    return job.GetJobDetails();
+                }
+            }
+            else
+            {
+                throw Errors.InvalidJobId(nameof(PauseJob), jobId);
+            }
         }
 
         /// <summary>
@@ -408,7 +422,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {
-                TransferJobInternal job = _totalTransferJobs[jobId];
+                BlobTransferJobInternal job = _totalTransferJobs[jobId];
                 if (job.CancellationTokenSource.IsCancellationRequested)
                 {
                     throw Errors.JobCancelledOrPaused(jobId);

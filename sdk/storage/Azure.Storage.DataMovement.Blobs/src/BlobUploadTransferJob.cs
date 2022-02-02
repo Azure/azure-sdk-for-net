@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -16,7 +17,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Uploading BLobTransfer Job
     /// </summary>
-    internal class BlobUploadTransferJob : TransferJobInternal
+    internal class BlobUploadTransferJob : BlobTransferJobInternal
     {
         /// <summary>
         /// The path to the local file where the contents to be upload to the blob is stored.
@@ -74,16 +75,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
-        /// <returns>The Task to perform the Upload operation.</returns>
-        public Task StartTransferTaskAsync()
-        {
-            // Do only blockblob upload for now
-            return DestinationBlobClient.UploadAsync(_sourceLocalPath, _uploadOptions);
-        }
-
-        /// <summary>
-        /// Create next TransferItem/Task to be processed.
-        /// </summary>
         /// <param name="async">Defines whether the oepration should be async</param>
         /// <returns>The Task to perform the Upload operation.</returns>
         public Action ProcessUploadTransfer(bool async = true)
@@ -119,6 +110,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

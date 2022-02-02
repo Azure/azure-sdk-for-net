@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobServiceCopyDirectoryTransferJob : TransferJobInternal
+    internal class BlobServiceCopyDirectoryTransferJob : BlobTransferJobInternal
     {
         private Uri _sourceDirectoryUri;
 
@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Destination directory for the finished copies
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationDirectoryClient => _destinationDirectoryClient;
+        public BlobVirtualDirectoryClient DestinationBlobDirectoryClient => _destinationDirectoryClient;
 
         /// <summary>
         /// Copy method to choose between StartCopyFromUri or SyncCopyFromUri
@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
-            BlockBlobClient blockBlobClient = DestinationDirectoryClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
 
             BlobCopyFromUriOptions blobCopyFromUriOptions = new BlobCopyFromUriOptions()
             {
@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobUriBuilder sourceUriBuilder = new BlobUriBuilder(SourceDirectoryUri);
             sourceUriBuilder.BlobName += $"/{blobName}";
 
-            BlockBlobClient blockBlobClient = DestinationDirectoryClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
 
             BlobCopyFromUriOptions blobCopyFromUriOptions = new BlobCopyFromUriOptions()
             {
@@ -136,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 sourceUriBuilder.BlobName += $"/{blobName}";
                 Uri sourceBlobUri = sourceUriBuilder.ToUri();
 
-                BlobClient destinationBlobClient = DestinationDirectoryClient.GetBlobClient(blobName);
+                BlobClient destinationBlobClient = DestinationBlobDirectoryClient.GetBlobClient(blobName);
 
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
@@ -195,6 +195,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

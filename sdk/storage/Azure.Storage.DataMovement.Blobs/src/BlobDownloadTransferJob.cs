@@ -8,10 +8,11 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 using Azure.Core.Pipeline;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDownloadTransferJob : TransferJobInternal
+    internal class BlobDownloadTransferJob : BlobTransferJobInternal
     {
         // Might have to change BlobBaseClient to other client, when we do page blob and append blob
         internal BlobBaseClient _sourceBlobClient;
@@ -116,6 +117,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         protected internal BlobTransferManager() { }
         public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
-        public override Azure.Storage.DataMovement.Models.StorageTransferJobDetails GetJob(string jobId) { throw null; }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobTransferJobProperties GetJobDetails(string jobId) { throw null; }
         public System.Threading.Tasks.Task PauseJob(string jobId) { throw null; }
         public string ScheduleCopy(System.Uri sourceUri, Azure.Storage.Blobs.BlobClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleCopyDirectory(System.Uri sourceUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions copyOptions = null) { throw null; }
@@ -86,48 +86,34 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         ServiceSideAsyncCopy = 0,
         ServiceSideSyncCopy = 1,
     }
-    public partial class BlobTransferCopyDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    public partial class BlobTransferJobProperties
     {
-        internal BlobTransferCopyDirectoryJobDetails() { }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions CopyFromUriOptions { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod CopyMethod { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationDirectoryClient { get { throw null; } }
-        public System.Uri SourceDirectoryUri { get { throw null; } }
-    }
-    public partial class BlobTransferCopyJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
-    {
-        internal BlobTransferCopyJobDetails() { }
-        public Azure.Storage.Blobs.Models.BlobCopyFromUriOptions CopyFromUriOptions { get { throw null; } }
+        internal BlobTransferJobProperties() { }
         public Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod CopyMethod { get { throw null; } }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
-        public System.Uri SourceUri { get { throw null; } }
-    }
-    public partial class BlobTransferDownloadDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
-    {
-        internal BlobTransferDownloadDirectoryJobDetails() { }
+        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationBlobDirectoryClient { get { throw null; } }
         public string DestinationLocalPath { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryDownloadOptions Options { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceBlobClient { get { throw null; } }
-    }
-    public partial class BlobTransferDownloadJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
-    {
-        internal BlobTransferDownloadJobDetails() { }
-        public string DestinationLocalPath { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobDownloadToOptions Options { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions DirectoryCopyFromUriOptions { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryDownloadOptions DirectoryDownloadOptions { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions DirectoryUploadOptions { get { throw null; } }
+        public string JobId { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobCopyFromUriOptions SingleCopyFromUriOptions { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobDownloadToOptions SingleDownloadOptions { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobUploadOptions SingleUploadOptions { get { throw null; } }
         public Azure.Storage.Blobs.Specialized.BlobBaseClient SourceBlobClient { get { throw null; } }
-    }
-    public partial class BlobTransferUploadDirectoryJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
-    {
-        internal BlobTransferUploadDirectoryJobDetails() { }
-        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient DestinationBlobClient { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient SourceBlobDirectoryClient { get { throw null; } }
         public string SourceLocalPath { get { throw null; } }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions UploadOptions { get { throw null; } }
+        public System.Uri SourceUri { get { throw null; } }
+        public Azure.Storage.DataMovement.Models.StorageJobTransferStatus Status { get { throw null; } }
+        public Azure.Storage.DataMovement.Blobs.Models.StorageTransferType TransferType { get { throw null; } }
     }
-    public partial class BlobTransferUploadJobDetails : Azure.Storage.DataMovement.Models.StorageTransferJobDetails
+    public enum StorageTransferType
     {
-        internal BlobTransferUploadJobDetails() { }
-        public Azure.Storage.Blobs.Specialized.BlobBaseClient DestinationBlobClient { get { throw null; } }
-        public string SourceLocalPath { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobUploadOptions UploadOptions { get { throw null; } }
+        SingleUpload = 0,
+        SingleDownload = 1,
+        DirectoryUpload = 2,
+        DirectoryDownload = 3,
+        SingleServiceCopy = 4,
+        DirectoryServiceCopy = 5,
     }
 }

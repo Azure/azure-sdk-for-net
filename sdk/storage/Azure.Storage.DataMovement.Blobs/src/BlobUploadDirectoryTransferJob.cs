@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Blob Directory Upload Job
     /// </summary>
-    internal class BlobUploadDirectoryTransferJob : TransferJobInternal
+    internal class BlobUploadDirectoryTransferJob : BlobTransferJobInternal
     {
         private string _sourceLocalPath;
 
@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The destination blob client.
         /// </summary>
-        public BlobVirtualDirectoryClient DestinationDirectoryBlobClient => _destinationBlobClient;
+        public BlobVirtualDirectoryClient DestinationBlobDirectoryClient => _destinationBlobClient;
 
         internal BlobDirectoryUploadOptions _uploadOptions;
 
@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
             blobName = blobName.Replace(@"\", "/");
 
-            BlockBlobClient blockBlobClient = DestinationDirectoryBlobClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = DestinationBlobDirectoryClient.GetBlockBlobClient(blobName);
 
             BlobUploadOptions blobUploadOptions = new BlobUploadOptions()
             {
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 string blobName = fullPathName.Substring(SourceLocalPath.Length + 1);
                 blobName = blobName.Replace(@"\", "/");
 
-                BlobClient destinationBlobClient = DestinationDirectoryBlobClient.GetBlobClient(blobName);
+                BlobClient destinationBlobClient = DestinationBlobDirectoryClient.GetBlobClient(blobName);
 
                 BlobUploadOptions blobUploadOptions = new BlobUploadOptions()
                 {
@@ -134,7 +134,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
                 Logger.LogAsync(DataMovementLogLevel.Information,
-                    $"Processing Upload Directory Transfer source: {SourceLocalPath}; destination: {DestinationDirectoryBlobClient.Uri}",
+                    $"Processing Upload Directory Transfer source: {SourceLocalPath}; destination: {DestinationBlobDirectoryClient.Uri}",
                     async).EnsureCompleted();
                 // Do only blockblob upload for now for now
                 try
@@ -146,7 +146,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     if (response != null && response.Value != null)
                     {
                         Logger.LogAsync(DataMovementLogLevel.Information,
-                            $"Transfer succeeded on from source:{SourceLocalPath} to destination:{DestinationDirectoryBlobClient.Uri.AbsoluteUri}",
+                            $"Transfer succeeded on from source:{SourceLocalPath} to destination:{DestinationBlobDirectoryClient.Uri.AbsoluteUri}",
                             async).EnsureCompleted();
                     }
                     else
@@ -168,6 +168,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

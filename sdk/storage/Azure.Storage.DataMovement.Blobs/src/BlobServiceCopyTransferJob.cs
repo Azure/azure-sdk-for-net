@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobServiceCopyTransferJob : TransferJobInternal
+    internal class BlobServiceCopyTransferJob : BlobTransferJobInternal
     {
         private Uri _sourceUri;
 
@@ -136,6 +136,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

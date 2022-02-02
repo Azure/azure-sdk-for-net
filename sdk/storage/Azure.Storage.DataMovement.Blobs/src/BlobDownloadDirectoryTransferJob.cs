@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
     ///
     /// TODO: better description
     /// </summary>
-    internal class BlobDownloadDirectoryTransferJob : TransferJobInternal
+    internal class BlobDownloadDirectoryTransferJob : BlobTransferJobInternal
     {
         /// <summary>
         /// The source blob where it's contents will be downloaded when the job is performed.
@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The source blob where it's contents will be downloaded when the job is performed.
         /// </summary>
-        public BlobVirtualDirectoryClient SourceDirectoryBlobClient => _sourceBlobClient;
+        public BlobVirtualDirectoryClient SourceBlobDirectoryClient => _sourceBlobClient;
 
         /// <summary>
         /// Local Path to store the downloaded contents from the source blob
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task to perform the Upload operation.</returns>
         public async Task<Response> GetSingleDownloadTaskAsync(string blobName)
         {
-            BlockBlobClient blockBlobClient = SourceDirectoryBlobClient.GetBlockBlobClient(blobName);
+            BlockBlobClient blockBlobClient = SourceBlobDirectoryClient.GetBlockBlobClient(blobName);
             string downloadPath = Path.Combine(DestinationLocalPath, blobName);
 
             Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
@@ -99,13 +99,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return () =>
             {
-                BlobClient blobClient = SourceDirectoryBlobClient.GetBlobClient(blobName);
+                BlobClient blobClient = SourceBlobDirectoryClient.GetBlobClient(blobName);
                 string downloadPath = Path.Combine(DestinationLocalPath, blobName);
 
                 // TODO: make logging messages similar to the errors class where we only take in params
                 // so we dont have magic strings hanging out here
                 Logger.LogAsync(DataMovementLogLevel.Information,
-                    $"Processing Download Directory Transfer source: {SourceDirectoryBlobClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}",
+                    $"Processing Download Directory Transfer source: {SourceBlobDirectoryClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}",
                     async).EnsureCompleted();
                 // Do only blockblob upload for now for now
 
@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     if (response != null)
                     {
                         Logger.LogAsync(DataMovementLogLevel.Information,
-                            $"Transfer succeeded on from source:{SourceDirectoryBlobClient.Uri.AbsoluteUri} to destination:{DestinationLocalPath}",
+                            $"Transfer succeeded on from source:{SourceBlobDirectoryClient.Uri.AbsoluteUri} to destination:{DestinationLocalPath}",
                             async).EnsureCompleted();
                     }
                     else
@@ -146,6 +146,14 @@ namespace Azure.Storage.DataMovement.Blobs
                     // Progress Handling is already done by the upload call
                 }
             };
+        }
+
+        /// <summary>
+        /// Translates job details
+        /// </summary>
+        public override BlobTransferJobProperties GetJobDetails()
+        {
+            return this.ToBlobTransferJobDetails();
         }
     }
 }

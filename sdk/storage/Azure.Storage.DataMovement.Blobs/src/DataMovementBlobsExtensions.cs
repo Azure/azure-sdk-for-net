@@ -9,102 +9,114 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal static partial class DataMovementBlobsExtensions
     {
-        internal static BlobTransferUploadJobDetails ToBlobTransferUploadJobDetails(this BlobUploadTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobUploadTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferUploadJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceLocalPath: transferJob.SourceLocalPath,
-                destinationBlobClient: transferJob.DestinationBlobClient,
-                options: transferJob.UploadOptions);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.SingleUpload,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceLocalPath = transferJob.SourceLocalPath,
+                DestinationBlobClient = transferJob.DestinationBlobClient,
+                SingleUploadOptions = transferJob.UploadOptions,
+            };
         }
 
-        internal static BlobTransferUploadDirectoryJobDetails ToBlobTransferUploadDirectoryJobDetails(this BlobUploadDirectoryTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobUploadDirectoryTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferUploadDirectoryJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceLocalPath: transferJob.SourceLocalPath,
-                destinationBlobClient: transferJob.DestinationDirectoryBlobClient,
-                options: transferJob.UploadOptions);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.DirectoryUpload,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceLocalPath = transferJob.SourceLocalPath,
+                DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
+                DirectoryUploadOptions = transferJob.UploadOptions,
+            };
         }
 
-        internal static BlobTransferDownloadJobDetails ToBlobTransferDownloadJobDetails(this BlobDownloadTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobDownloadTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferDownloadJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceBlobClient: transferJob.SourceBlobClient,
-                destinationLocalPath: transferJob.DestinationLocalPath,
-                options: transferJob.Options);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.SingleDownload,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceBlobClient = transferJob.SourceBlobClient,
+                DestinationLocalPath = transferJob.DestinationLocalPath,
+                SingleDownloadOptions = transferJob.Options
+            };
         }
 
-        internal static BlobTransferDownloadDirectoryJobDetails ToBlobTransferDownloadDirectoryJobDetails(this BlobDownloadDirectoryTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobDownloadDirectoryTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferDownloadDirectoryJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceBlobClient: transferJob.SourceDirectoryBlobClient,
-                destinationLocalPath: transferJob.DestinationLocalPath,
-                options: transferJob.Options);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.DirectoryDownload,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceBlobDirectoryClient = transferJob.SourceBlobDirectoryClient,
+                DestinationLocalPath = transferJob.DestinationLocalPath,
+                DirectoryDownloadOptions = transferJob.Options
+            };
         }
 
-        internal static BlobTransferCopyJobDetails ToBlobTransferCopyJobDetails(this BlobServiceCopyTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobServiceCopyTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferCopyJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceUri: transferJob.SourceUri,
-                destinationBlobClient: transferJob.DestinationBlobClient,
-                copyMethod: transferJob.CopyMethod,
-                copyFromUriOptions: transferJob.CopyFromUriOptions);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.SingleServiceCopy,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceUri = transferJob.SourceUri,
+                DestinationBlobClient = transferJob.DestinationBlobClient,
+                CopyMethod = transferJob.CopyMethod,
+                SingleCopyFromUriOptions = transferJob.CopyFromUriOptions
+            };
         }
 
-        internal static BlobTransferCopyDirectoryJobDetails ToBlobTransferCopyDirectoryJobDetails(this BlobServiceCopyDirectoryTransferJob transferJob)
+        internal static BlobTransferJobProperties ToBlobTransferJobDetails(this BlobServiceCopyDirectoryTransferJob transferJob)
         {
             if (transferJob == null)
             {
                 return null;
             }
 
-            return new BlobTransferCopyDirectoryJobDetails(
-                jobId: transferJob.JobId,
-                status: DataMovement.Models.StorageJobTransferStatus.Completed, //TODO: update with actual job status
-                jobStartTime: DateTimeOffset.MinValue, // TODO: udpate to actual start time
-                sourceDirectoryUri: transferJob.SourceDirectoryUri,
-                destinationDirectoryClient: transferJob.DestinationDirectoryClient,
-                copyMethod: transferJob.CopyMethod,
-                copyFromUriOptions: transferJob.CopyFromUriOptions);
+            return new BlobTransferJobProperties()
+            {
+                JobId = transferJob.JobId,
+                TransferType = StorageTransferType.DirectoryServiceCopy,
+                Status = DataMovement.Models.StorageJobTransferStatus.Completed, //TODO = update with actual job status
+                SourceUri = transferJob.SourceDirectoryUri,
+                DestinationBlobDirectoryClient = transferJob.DestinationBlobDirectoryClient,
+                CopyMethod = transferJob.CopyMethod,
+                DirectoryCopyFromUriOptions = transferJob.CopyFromUriOptions
+            };
         }
     }
 }
