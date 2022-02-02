@@ -111,22 +111,22 @@ namespace Azure.Storage.Tests
             string initialMismatchedScope = "https://disk.compute.azure.com/.default";
             string serviceChallengeResponseScope = "https://storage.azure.com";
 
-            string[] unauthorizedScopes = new string[] { unauthorizedScope };
-            string[] authorizedScopes = new string[] { authorizedScope + "/.default" };
+            string[] initialMismatchedScopes = new string[] { initialMismatchedScope };
+            string[] serviceChallengeResponseScopes = new string[] { serviceChallengeResponseScope + "/.default" };
             MockCredential mockCredential = new MockCredential()
             {
                 GetTokenCallback = (trc, _) =>
                 {
-                    Assert.AreEqual(authorizedScopes, trc.Scopes);
+                    Assert.AreEqual(serviceChallengeResponseScopes, trc.Scopes);
                 }
             };
 
-            StorageBearerTokenChallengeAuthorizationPolicy tokenChallengeAuthorizationPolicy = new StorageBearerTokenChallengeAuthorizationPolicy(mockCredential, unauthorizedScopes, enableTenantDiscovery: true);
+            StorageBearerTokenChallengeAuthorizationPolicy tokenChallengeAuthorizationPolicy = new StorageBearerTokenChallengeAuthorizationPolicy(mockCredential, initialMismatchedScopes, enableTenantDiscovery: true);
             MockResponse challengeResponse = new MockResponse((int)HttpStatusCode.Unauthorized);
             challengeResponse.AddHeader(
                 new HttpHeader(
                     HttpHeader.Names.WwwAuthenticate,
-                    $"Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id={authorizedScope}"));
+                    $"Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id={serviceChallengeResponseScope}"));
 
             MockTransport transport = CreateMockTransport(
                 _ =>
