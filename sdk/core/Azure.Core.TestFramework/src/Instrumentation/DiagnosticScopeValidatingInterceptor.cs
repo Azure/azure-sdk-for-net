@@ -181,9 +181,10 @@ namespace Azure.Core.TestFramework
             {
                 // Remove subscribers before enumerating events.
                 diagnosticListener.Dispose();
-                bool? skipOverride = forwardAttribute is null
+                var skipOverrideProperty = forwardAttribute is not null ? forwardAttribute.GetType().GetProperty("SkipChecks") : null;
+                bool ? skipOverride = skipOverrideProperty is null
                     ? default(bool?)
-                    : (bool?)forwardAttribute.GetType().GetProperty("SkipChecks").GetValue(forwardAttribute);
+                    : (bool?)skipOverrideProperty.GetValue(forwardAttribute);
                 skipChecks |= skipOverride.HasValue && skipOverride.Value;
                 if (!skipChecks)
                 {
