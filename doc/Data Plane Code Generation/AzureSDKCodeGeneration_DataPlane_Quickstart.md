@@ -84,8 +84,6 @@ When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1`
 - Build the library project to create the starter package binary.
 - Export the library's public API to the directory `<sdkPath>/<service>/<namespace>/api`
 
-For more details, see the generation script code at [Invoke-DataPlaneGenerateSDKPackage.ps1](https://github.com/Azure/azure-sdk-for-net/eng/scripts/automation).
-
 ## Add package ship requirements
 
 Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
