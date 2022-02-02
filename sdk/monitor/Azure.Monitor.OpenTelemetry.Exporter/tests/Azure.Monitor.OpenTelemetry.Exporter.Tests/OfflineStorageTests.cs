@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             transmitter.TransmitFromStorage(false, CancellationToken.None).EnsureCompleted();
 
             // Assert
-            // Blob will be deleted on successful tranmission
+            // Blob will be deleted on successful transmission
             Assert.Empty(transmitter.storage.GetBlobs());
         }
 
