@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (analyzeRequest != null)
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (analyzeRequest != null)
@@ -227,7 +227,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -306,7 +306,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -371,7 +371,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -436,7 +436,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -511,7 +511,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -586,7 +586,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -642,7 +642,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -711,7 +711,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -767,7 +767,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -837,7 +837,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -896,7 +896,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", "2021-09-30-preview", true);
+            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

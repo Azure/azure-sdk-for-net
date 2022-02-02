@@ -186,7 +186,7 @@ namespace Azure.Storage
                 }
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
+            if (_bufferPosition == _bufferLength || _bufferInvalidated)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
@@ -387,7 +387,7 @@ namespace Azure.Storage
 
             // newPosition is less than _position, but within _buffer.
             long beginningOfBuffer = _position - _bufferPosition;
-            if (newPosition < _position && newPosition > beginningOfBuffer)
+            if (newPosition < _position && newPosition >= beginningOfBuffer)
             {
                 _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;
