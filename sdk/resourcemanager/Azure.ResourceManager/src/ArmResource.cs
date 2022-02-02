@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
-        /// <param name="armClient"> The <see cref="ArmClient"/> this resource client should be created from. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> this resource client should be created from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ArmResource(ArmClient armClient, ResourceIdentifier id)
+        protected internal ArmResource(ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(armClient, nameof(armClient));
+            Argument.AssertNotNull(client, nameof(client));
 
-            ArmClient = armClient;
+            ArmClient = client;
             Id = id;
         }
 
@@ -52,7 +52,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the <see cref="ArmClient"/> this resource client was created from.
         /// </summary>
-        protected internal virtual ArmClient ArmClient { get; }
+        protected internal virtual ArmClient ArmClient { get; } /* BACK COMPAT REMOVE ME */
+
+        /// <summary>
+        /// Gets the <see cref="ArmClient"/> this resource client was created from.
+        /// </summary>
+        protected internal ArmClient Client => ArmClient;
 
         /// <summary>
         /// Gets the diagnostic options for this resource client.
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = ArmClient.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
+            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = await ArmClient.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -125,7 +130,7 @@ namespace Azure.ResourceManager.Core
         public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
             where T : class
         {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(ArmClient); }) as T;
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
         }
     }
 }

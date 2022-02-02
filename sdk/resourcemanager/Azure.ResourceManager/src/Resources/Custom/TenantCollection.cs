@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Resources
     public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
     {
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
-        /// <param name="armClient"> The resource representing the parent resource. </param>
-        internal TenantCollection(ArmClient armClient) : this(armClient, ResourceIdentifier.Root)
+        /// <param name="client"> The resource representing the parent resource. </param>
+        internal TenantCollection(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
         }
     }

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operation"> The resource representing the parent resource. </param>
         /// <param name="nameSpace"> The namespace for the rest apis. </param>
         internal RestApiCollection(ArmResource operation, string nameSpace)
-            : base(operation.ArmClient, operation.Id)
+            : base(operation.Client, operation.Id)
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
             _nameSpace = nameSpace;
-            _providerCollection = new ProviderCollection(ArmClient.GetSubscription(Id));
+            _providerCollection = new ProviderCollection(Client.GetSubscription(Id));
         }
 
 

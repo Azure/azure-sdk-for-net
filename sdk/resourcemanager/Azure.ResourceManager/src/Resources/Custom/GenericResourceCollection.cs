@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="GenericResourceCollection"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GenericResourceCollection(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal GenericResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = _resourcesRestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                var operation = new GenericResourceCreateOrUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceCreateOrUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceCreateOrUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceCreateOrUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                    : Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,6 +318,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         private ProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
-            => GetCachedClient((armClient) => { return new ProviderCollection(armClient, subscriptionId); });
+            => GetCachedClient((client) => { return new ProviderCollection(client, subscriptionId); });
     }
 }

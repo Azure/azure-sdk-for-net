@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "GenericResource"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GenericResource(ArmClient armClient, GenericResourceData data) : this(armClient, data.Id)
+        internal GenericResource(ArmClient client, GenericResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GenericResource(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal GenericResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             ResourceIdentifier subscription = Id.GetSubscriptionResourceIdentifier();
             if (subscription == null)
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException("Only resource in a subscription is supported");
             }
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Id.ResourceType, out string apiVersion);
+            Client.TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(ArmClient.GetSubscription(subscription));
+            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GenericResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Resources
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                var operation = new GenericResourceUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
+                var operation = new GenericResourceUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

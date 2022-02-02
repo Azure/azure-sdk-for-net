@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Resources
     public partial class Tenant : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
-        internal Tenant(ArmClient armClient) : this(armClient, ResourceIdentifier.Root)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        internal Tenant(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Tenant"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Tenant(ArmClient armClient, TenantData data) : this(armClient, ResourceIdentifier.Root)
+        internal Tenant(ArmClient client, TenantData data) : this(client, ResourceIdentifier.Root)
         {
             HasData = true;
             _data = data;
