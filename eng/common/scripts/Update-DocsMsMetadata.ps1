@@ -70,7 +70,7 @@ param(
   [Parameter(Mandatory = $false)]
   [string]$ClientSecret
 )
-Set-StrictMode -Version 3
+
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers Metadata-Helpers.ps1)
 
