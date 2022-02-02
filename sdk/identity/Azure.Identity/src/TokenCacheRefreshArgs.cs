@@ -27,8 +27,13 @@ namespace Azure.Identity
         public string SuggestedCacheKey { get; }
 
         internal TokenCacheRefreshArgs(TokenCacheNotificationArgs args)
+            : this(args?.SuggestedCacheKey)
         {
-            SuggestedCacheKey = args.SuggestedCacheKey;
+        }
+
+        internal TokenCacheRefreshArgs(string suggestedCacheKey)
+        {
+            SuggestedCacheKey = suggestedCacheKey;
         }
     }
 }

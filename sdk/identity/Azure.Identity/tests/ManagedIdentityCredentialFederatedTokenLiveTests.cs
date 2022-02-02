@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
                     var options = InstrumentClientOptions(new TokenCredentialOptions());
                     var credential = InstrumentClient(new ManagedIdentityCredential(options: options));
 
-                    var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
+                    var tokenRequestContext = new TokenRequestContext(new[] { ScopeUtilities.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
                     var accessToken = await credential.GetTokenAsync(tokenRequestContext);
 

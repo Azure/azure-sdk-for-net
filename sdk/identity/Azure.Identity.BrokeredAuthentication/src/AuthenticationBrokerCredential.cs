@@ -1,25 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Azure.Identity
+namespace Azure.Identity.BrokeredAuthentication
 {
     /// <summary>
-    /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
-    /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
+    /// A <see cref="TokenCredential"/> implementation which launches the system authentication broker to authenticate. If no system broker is available the credential will fallback to the system browser to authenticate the user.
     /// </summary>
-    public class InteractiveBrowserCredential : TokenCredential
+    public class AuthenticationBrokerCredential : TokenCredential
     {
-        private readonly string _tenantId;
+        internal string TenantId { get; }
         internal string ClientId { get; }
         internal string LoginHint { get; }
+        internal Uri RedirectUri { get; }
         internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
@@ -29,65 +30,38 @@ namespace Azure.Identity
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
-        /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users.
+        /// Creates a new <see cref="AuthenticationBrokerCredential"/> with the specified options, which will authenticate users via the system authentication broker.
         /// </summary>
-        public InteractiveBrowserCredential()
-            : this(null, Constants.DeveloperSignOnClientId, null, null)
+        public AuthenticationBrokerCredential()
+            : this(null)
         { }
 
         /// <summary>
-        /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
+        /// Creates a new <see cref="AuthenticationBrokerCredential"/> with the specified options, which will authenticate users via the system authentication broker.
         /// </summary>
-        /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
-        public InteractiveBrowserCredential(InteractiveBrowserCredentialOptions options)
-            : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, options, null)
+        /// <param name="options">The client options for the newly created <see cref="AuthenticationBrokerCredential"/>.</param>
+        public AuthenticationBrokerCredential(AuthenticationBrokerCredentialOptions options)
         {
-            DisableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
-            Record = options?.AuthenticationRecord;
+            options = options ?? new AuthenticationBrokerCredentialOptions();
+            ClientId = options.ClientId ?? Constants.DeveloperSignOnClientId;
+            TenantId = options.TenantId;
+            LoginHint = options.LoginHint;
+            RedirectUri = options.RedirectUri;
+            DisableAutomaticAuthentication = options.DisableAutomaticAuthentication;
+            Record = options.AuthenticationRecord;
+            Pipeline = options.CredentialPipeline;
+
+            var redirectUrl = RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
+
+            Client = options.Client ?? new MsalPublicClient(Pipeline, TenantId, ClientId, redirectUrl, options as ITokenCacheOptions, false, true);
         }
 
         /// <summary>
-        /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
-        /// </summary>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public InteractiveBrowserCredential(string clientId)
-            : this(null, clientId, null, null)
-        { }
-
-        /// <summary>
-        /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
-        /// </summary>
-        /// <param name="tenantId">The tenant id of the application and the users to authenticate. Can be null in the case of multi-tenant applications.</param>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true), clientId, options, null, null)
-        { }
-
-        internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)
-            : this(tenantId, clientId, options, pipeline, null)
-        { }
-
-        internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
-        {
-            Argument.AssertNotNull(clientId, nameof(clientId));
-
-            ClientId = clientId;
-            _tenantId = tenantId;
-            Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
-            var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
-            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
-        }
-
-        /// <summary>
-        /// Interactively authenticates a user via the default browser.
+        /// Interactively authenticates a user via the system authentication broker. If no system broker is available the credential will fallback to the system browser to authenticate the user.
+        /// The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
+        /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
@@ -97,10 +71,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Interactively authenticates a user via the default browser. The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetTokenAsync"/>.
+        /// Interactively authenticates a user via the system authentication broker. If no system broker is available the credential will fallback to the system browser to authenticate the user.
+        /// The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
+        /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
@@ -110,7 +85,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Interactively authenticates a user via the default browser. The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
+        /// Interactively authenticates a user via the system authentication broker. If no system broker is available the credential will fallback to the system browser to authenticate the user.
+        /// The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -121,7 +97,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Interactively authenticates a user via the default browser.
+        /// Interactively authenticates a user via the system authentication broker. If no system broker is available the credential will fallback to the system browser to authenticate the user.
+        /// The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -132,7 +109,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the system authentication broker is launched to authenticate the user. If no system broker is available the credential will fallback to the system browser to authenticate the user.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -143,7 +120,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the system authentication broker is launched to authenticate the user. If no system broker is available the credential will fallback to the system browser to authenticate the user.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -155,7 +132,7 @@ namespace Azure.Identity
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(AuthenticationBrokerCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
@@ -171,7 +148,7 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(GetToken)}", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(AuthenticationBrokerCredential)}.{nameof(GetToken)}", requestContext);
 
             try
             {
@@ -181,7 +158,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext);
+                        var tenantId = TenantIdResolver.Resolve(TenantId ?? Record.TenantId, requestContext);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
@@ -215,12 +192,12 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context);
+            var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context);
             AuthenticationResult result = await Client
                 .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);
 
-            Record = new AuthenticationRecord(result, ClientId);
+            Record = IdentityModelFactory.AuthenticationRecord(result.Account.Username, result.Account.Environment, result.Account.HomeAccountId.Identifier, result.TenantId, ClientId);
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }

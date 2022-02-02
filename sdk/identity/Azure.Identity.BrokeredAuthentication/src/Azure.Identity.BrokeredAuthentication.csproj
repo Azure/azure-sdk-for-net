@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
+    <AssemblyTitle>Microsoft Azure.Identity.BrokeredAuthentication Component</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <!-- <ApiCompatVersion>1.0.0</ApiCompatVersion> -->
+    <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
+    <NoWarn>$(NoWarn);3021</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <!--<PackageReference Include="Azure.Identity" />-->
+    <!-- This should be changed back to a package reference once the required changes in Azure.Identity have shipped in the next GA -->
+    <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="Microsoft.Identity.Client" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+  </ItemGroup>
+  <!--Only Add Microsoft.Identity.Client.Desktop when compiled for desktop or net core 3.1-->
+  <ItemGroup Condition="('$(TargetFramework)' == 'net461')">
+    <PackageReference Include="Microsoft.Identity.Client.Desktop" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../Azure.Identity/src/AbstractAcquireTokenParameterBuilderExtensions.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/AsyncLockWithValue.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/AuthenticationAccount.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/Constants.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/CredentialDiagnosticScope.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/CredentialPipeline.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/HttpPipelineClientFactory.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/IdentityCompatSwitches.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/IScopeHandler.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/ITokenCacheOptions.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/MsalCacheHelperWrapper.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/MsalClientBase.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/MsalPublicClient.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/ScopeGroupHandler.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/ScopeUtilities.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/TenantIdResolver.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/TokenCache.cs" LinkBase="Shared.Identity" />
+    <Compile Include="../../Azure.Identity/src/Validations.cs" LinkBase="Shared.Identity" />
+  </ItemGroup>
+</Project>

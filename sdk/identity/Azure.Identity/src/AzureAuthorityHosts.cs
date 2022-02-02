@@ -10,29 +10,25 @@ namespace Azure.Identity
     /// </summary>
     public static class AzureAuthorityHosts
     {
-        private const string AzurePublicCloudHostUrl = "https://login.microsoftonline.com/";
-        private const string AzureChinaHostUrl = "https://login.chinacloudapi.cn/";
-        private const string AzureGermanyHostUrl = "https://login.microsoftonline.de/";
-        private const string AzureGovernmentHostUrl = "https://login.microsoftonline.us/";
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure Public Cloud.
         /// </summary>
-        public static Uri AzurePublicCloud { get; } = new Uri(AzurePublicCloudHostUrl);
+        public static Uri AzurePublicCloud { get; } = new Uri(Constants.AzurePublicCloudHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure China Cloud.
         /// </summary>
-        public static Uri AzureChina { get; } = new Uri(AzureChinaHostUrl);
+        public static Uri AzureChina { get; } = new Uri(Constants.AzureChinaHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure German Cloud.
         /// </summary>
-        public static Uri AzureGermany { get; } = new Uri(AzureGermanyHostUrl);
+        public static Uri AzureGermany { get; } = new Uri(Constants.AzureGermanyHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure US Government Cloud.
         /// </summary>
-        public static Uri AzureGovernment { get; } = new Uri(AzureGovernmentHostUrl);
+        public static Uri AzureGovernment { get; } = new Uri(Constants.AzureGovernmentHostUrl);
 
         internal static Uri GetDefault()
         {
@@ -48,13 +44,13 @@ namespace Azure.Identity
         {
             switch (authorityHost.AbsoluteUri)
             {
-                case AzurePublicCloudHostUrl:
+                case Constants.AzurePublicCloudHostUrl:
                     return "https://management.core.windows.net//.default";
-                case AzureChinaHostUrl:
+                case Constants.AzureChinaHostUrl:
                     return "https://management.core.chinacloudapi.cn//.default";
-                case AzureGermanyHostUrl:
+                case Constants.AzureGermanyHostUrl:
                     return "https://management.core.cloudapi.de//.default";
-                case AzureGovernmentHostUrl:
+                case Constants.AzureGovernmentHostUrl:
                     return "https://management.core.usgovcloudapi.net//.default";
                 default:
                     return null;

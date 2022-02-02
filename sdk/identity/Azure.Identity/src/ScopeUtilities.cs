@@ -52,5 +52,22 @@ namespace Azure.Identity
                 throw new ArgumentException(InvalidScopeMessage, nameof(scope));
             }
         }
+
+        internal static string GetDefaultScope(Uri authorityHost)
+        {
+            switch (authorityHost.AbsoluteUri)
+            {
+                case Constants.AzurePublicCloudHostUrl:
+                    return "https://management.core.windows.net//.default";
+                case Constants.AzureChinaHostUrl:
+                    return "https://management.core.chinacloudapi.cn//.default";
+                case Constants.AzureGermanyHostUrl:
+                    return "https://management.core.cloudapi.de//.default";
+                case Constants.AzureGovernmentHostUrl:
+                    return "https://management.core.usgovcloudapi.net//.default";
+                default:
+                    return null;
+            }
+        }
     }
 }

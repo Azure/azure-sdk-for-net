@@ -436,12 +436,12 @@ namespace Azure.Identity.Tests
             {
                 _bytes = bytes;
             }
-            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
             {
                 return Task.FromResult(_bytes[callIndex++]);
             }
 
-            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
             {
                 return Task.CompletedTask;
             }
@@ -456,12 +456,12 @@ namespace Azure.Identity.Tests
                 _bytes = bytes;
                 _updated = updated;
             }
-            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
             {
                 return Task.FromResult(_bytes);
             }
 
-            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
             {
                 return _updated == null ? Task.CompletedTask : _updated(tokenCacheUpdatedArgs);
             }

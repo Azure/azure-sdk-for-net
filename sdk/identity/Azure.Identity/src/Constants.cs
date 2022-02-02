@@ -41,5 +41,10 @@ namespace Azure.Identity
         public static readonly KeyValuePair<string, string> DefaultMsaltokenCacheKeyringAttribute2 = new KeyValuePair<string, string>("Microsoft.Developer.IdentityService", "1.0.0.0");
 
         public const string DefaultMsalTokenCacheName = "msal.cache";
+
+        public const string AzurePublicCloudHostUrl = "https://login.microsoftonline.com/";
+        public const string AzureChinaHostUrl = "https://login.chinacloudapi.cn/";
+        public const string AzureGermanyHostUrl = "https://login.microsoftonline.de/";
+        public const string AzureGovernmentHostUrl = "https://login.microsoftonline.us/";
     }
 }

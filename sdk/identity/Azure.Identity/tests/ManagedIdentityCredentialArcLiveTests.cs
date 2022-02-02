@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests
 
                 var cred = InstrumentClient(new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions())));
 
-                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { ScopeUtilities.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
             }
         }
     }

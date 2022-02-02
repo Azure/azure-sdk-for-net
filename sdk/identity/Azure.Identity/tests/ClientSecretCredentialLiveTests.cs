@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
+            var tokenRequestContext = new TokenRequestContext(new[] { ScopeUtilities.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
+            var tokenRequestContext = new TokenRequestContext(new[] { ScopeUtilities.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 
             // ensure we can initially acquire a  token
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext));
@@ -84,13 +84,13 @@ namespace Azure.Identity.Tests
             public int CacheReadCount;
             public int CacheUpdatedCount;
 
-            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            public override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
             {
                 CacheReadCount++;
                 return Task.FromResult(Data);
             }
 
-            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            public override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
             {
                 CacheUpdatedCount++;
                 Data = tokenCacheUpdatedArgs.UnsafeCacheData;

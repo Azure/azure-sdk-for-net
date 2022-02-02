@@ -36,5 +36,19 @@ namespace Azure.Identity
         /// <returns>A new instance of the <see cref="DeviceCodeInfo"/> for mocking purposes.</returns>
         public static DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, Uri verificationUri, DateTimeOffset expiresOn, string message, string clientId, IReadOnlyCollection<string> scopes)
             => new DeviceCodeInfo(userCode, deviceCode, verificationUri, expiresOn, message, clientId, scopes);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TokenCacheRefreshArgs"/> class for mocking purposes.
+        /// </summary>
+        /// <param name="suggestedCacheKey">The suggested cache key for the TokenCacheRefreshArgs</param>
+        /// <returns>A new instance of the <see cref="TokenCacheRefreshArgs"/> for mocking purposes.</returns>
+        public static TokenCacheRefreshArgs TokenCacheRefreshArgs(string suggestedCacheKey) => new TokenCacheRefreshArgs(suggestedCacheKey);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TokenCacheUpdatedArgs"/> class for mocking purposes.
+        /// </summary>
+        /// <param name="data">The updated cache data for the TokenCacheUpdatedArgs</param>
+        /// <returns>A new instance of the <see cref="TokenCacheUpdatedArgs"/> for mocking purposes.</returns>
+        public static TokenCacheUpdatedArgs TokenCacheUpdatedArgs(ReadOnlyMemory<byte> data) => new TokenCacheUpdatedArgs(data);
     }
 }
