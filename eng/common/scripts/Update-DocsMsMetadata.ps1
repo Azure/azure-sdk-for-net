@@ -175,7 +175,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
     -Value $packageInfoJson
 
   # Update Readme Content
-  if ($packageInfo.ReadMePath == null -or !(Test-Path $packageInfo.ReadMePath)) {
+  if (!$packageInfo.ReadMePath -or !(Test-Path $packageInfo.ReadMePath)) {
     Write-Warning "$packageInfo.Name does not have Readme file. Skipping update readme."
     return
   }
