@@ -39,22 +39,5 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = data;
         }
-
-        /// <summary>
-        /// Gets the management group operations object associated with the id.
-        /// </summary>
-        /// <param name="id"> The id of the management group operations. </param>
-        /// <returns> A client to perform operations on the management group. </returns>
-        internal ManagementGroup GetManagementGroup(ResourceIdentifier id)
-        {
-            return new ManagementGroup(ArmClient, id);
-        }
-
-        /// <summary> Gets an object representing a ManagementGroupCollection along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ManagementGroupCollection" /> object. </returns>
-        public virtual ManagementGroupCollection GetManagementGroups()
-        {
-            return new ManagementGroupCollection(this);
-        }
     }
 }

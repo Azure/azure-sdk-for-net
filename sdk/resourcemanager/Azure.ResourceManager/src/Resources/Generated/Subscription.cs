@@ -105,6 +105,34 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of Providers in the Provider. </summary>
+        /// <returns> An object representing collection of Providers and their operations over a Provider. </returns>
+        public virtual ProviderCollection GetProviders()
+        {
+            return new ProviderCollection(ArmClient, Id);
+        }
+
+        /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>
+        /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
+        public virtual ResourceGroupCollection GetResourceGroups()
+        {
+            return new ResourceGroupCollection(ArmClient, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the SubscriptionPolicyDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a SubscriptionPolicyDefinition. </returns>
+        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        {
+            return new SubscriptionPolicyDefinitionCollection(ArmClient, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the SubscriptionPolicySetDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a SubscriptionPolicySetDefinition. </returns>
+        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        {
+            return new SubscriptionPolicySetDefinitionCollection(ArmClient, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Subscriptions_Get
@@ -143,42 +171,6 @@ namespace Azure.ResourceManager.Resources
                 if (response.Value == null)
                     throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {
@@ -705,44 +697,40 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region Provider
-
-        /// <summary> Gets a collection of Providers in the Subscription. </summary>
-        /// <returns> An object representing collection of Providers and their operations over a Subscription. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new ProviderCollection(this);
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ResourceGroup
-
-        /// <summary> Gets a collection of ResourceGroups in the Subscription. </summary>
-        /// <returns> An object representing collection of ResourceGroups and their operations over a Subscription. </returns>
-        public virtual ResourceGroupCollection GetResourceGroups()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return new ResourceGroupCollection(this);
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
-
-        #region SubscriptionPolicyDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
-        {
-            return new SubscriptionPolicyDefinitionCollection(this);
-        }
-        #endregion
-
-        #region SubscriptionPolicySetDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
-        {
-            return new SubscriptionPolicySetDefinitionCollection(this);
-        }
-        #endregion
     }
 }

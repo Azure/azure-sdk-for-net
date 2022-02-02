@@ -88,6 +88,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of Features in the Feature. </summary>
+        /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
+        public virtual FeatureCollection GetFeatures()
+        {
+            return new FeatureCollection(ArmClient, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
         /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
         /// OperationId: Providers_Get
@@ -327,15 +334,5 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
-
-        #region Feature
-
-        /// <summary> Gets a collection of Features in the Provider. </summary>
-        /// <returns> An object representing collection of Features and their operations over a Provider. </returns>
-        public virtual FeatureCollection GetFeatures()
-        {
-            return new FeatureCollection(this);
-        }
-        #endregion
     }
 }

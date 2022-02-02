@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.Tests
             if (key is null)
             {
                 var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("Value cannot be null"));
             }
             else if (value is null)
             {
-                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
-                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
+                var ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await _rg.AddTagAsync(key, value));
+                Assert.That(ex.Message.Contains("Value cannot be null"));
             }
             else
             {

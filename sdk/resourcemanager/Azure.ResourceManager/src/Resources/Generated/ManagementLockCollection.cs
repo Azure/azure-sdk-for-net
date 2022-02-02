@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -31,49 +32,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagementLockCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagementLockCollection(ArmResource parent) : base(parent)
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ManagementLockCollection(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
             _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLock.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(ManagementLock.ResourceType, out string managementLockApiVersion);
             _managementLockRestClient = new ManagementLocksRestOperations(_managementLockClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_CreateOrUpdateByScope
-        /// <summary> Create or update a management lock by scope. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagementLockCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ManagementLockCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
@@ -113,24 +78,31 @@ namespace Azure.ResourceManager.Resources
 
         /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
         /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Get a management lock by scope. </summary>
+        /// OperationId: ManagementLocks_CreateOrUpdateByScope
+        /// <summary> Create or update a management lock by scope. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
+        /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<ManagementLock> Get(string lockName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ManagementLockCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Get");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken);
-                if (response.Value == null)
-                    throw _managementLockClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+                var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
+                var operation = new ManagementLockCreateOrUpdateOperation(ArmClient, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -167,22 +139,25 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
+        /// <summary> Get a management lock by scope. </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<ManagementLock> GetIfExists(string lockName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementLock> Get(string lockName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Get");
             scope.Start();
             try
             {
-                var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken: cancellationToken);
+                var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
+                    throw _managementLockClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,75 +167,46 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="lockName"> The name of lock. </param>
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_ListByScope
+        /// <summary> Gets all the management locks for a scope. </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public async virtual Task<Response<ManagementLock>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementLock> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ManagementLock>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementLockRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ManagementLock>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managementLockRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="lockName"> The name of lock. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<bool> Exists(string lockName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(lockName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="lockName"> The name of lock. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string lockName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
@@ -305,46 +251,112 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
         /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_ListByScope
-        /// <summary> Gets all the management locks for a scope. </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// OperationId: ManagementLocks_GetByScope
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementLock> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementLock>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementLockRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await GetIfExistsAsync(lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            async Task<Page<ManagementLock>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementLockRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="lockName"> The name of lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public virtual Response<bool> Exists(string lockName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(lockName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="lockName"> The name of lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public async virtual Task<Response<ManagementLock>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// ContextualPath: /{scope}
+        /// OperationId: ManagementLocks_GetByScope
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="lockName"> The name of lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public virtual Response<ManagementLock> GetIfExists(string lockName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+
+            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLock(ArmClient, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ManagementLock> IEnumerable<ManagementLock>.GetEnumerator()

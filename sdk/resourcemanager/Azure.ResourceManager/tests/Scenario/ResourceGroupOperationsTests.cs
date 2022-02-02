@@ -146,7 +146,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(null, "value"));
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
+            Assert.AreEqual(400, ex.Status);
         }
 
         [TestCase]
@@ -200,7 +201,9 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await rg1.RemoveTagAsync(" "));
+            Assert.DoesNotThrowAsync(async () => rg2 = await rg1.RemoveTagAsync(" "));
+            //removing something that wasn't there should not have changed the tags
+            Assert.AreEqual(tags2, rg2.Data.Tags);
         }
 
         [TestCase]

@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Properties = properties
             };
-            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(true, resourceLinkId, data);
+            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(true, data);
             return lro.Value;
         }
     }

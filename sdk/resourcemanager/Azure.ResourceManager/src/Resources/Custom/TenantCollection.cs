@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
         /// <param name="armClient"> The resource representing the parent resource. </param>
-        internal TenantCollection(ArmClient armClient) : base(armClient, ResourceIdentifier.Root)
+        internal TenantCollection(ArmClient armClient) : this(armClient, ResourceIdentifier.Root)
         {
-            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
-            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
         }
     }
 }
