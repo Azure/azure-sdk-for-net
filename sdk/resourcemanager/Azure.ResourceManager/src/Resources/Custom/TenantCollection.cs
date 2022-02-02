@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
         /// <param name="client"> The resource representing the parent resource. </param>
-        internal TenantCollection(ArmClient client) : this(client, ResourceIdentifier.Root)
+        internal TenantCollection(ArmClient client) : base(client, ResourceIdentifier.Root)
         {
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
             ArmClient.TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
