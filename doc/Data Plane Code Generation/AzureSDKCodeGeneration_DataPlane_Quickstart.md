@@ -1,10 +1,10 @@
 # Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)
 
-The purpose of the Azure SDK is to provide a unified developer experience across Azure services. In this tutorial, we will walk through creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have a standardized API based on the  [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+We build Azure SDK libraries to give developers a consistent, unified experience working with Azure services, in the language ecosystem where they're most comfortable.  Azure SDK Code Generation allows you to quickly and easily create a client library so customers can work with your service as part of the SDK.  In this tutorial, we will step through the process of creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have an API that follows [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), which will give it the same look and feel of other .NET libraries in the Azure SDK.
 
-We will use the swagger file which contains a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp).
+Azure SDK Code Generation takes an Open API spec as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec follows the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md), to enable the output library to be consistent with the Azure SDK Guidelines.
 
-**Learn more**: to understand more about Azure SDK Code Geneneration, see the [Azure SDK Code Geneneration docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
+**Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Geneneration docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
 This tutorial has following sections:
 
@@ -70,74 +70,21 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 
 **Note**:
 
-- Use one of the following pre-approved namespace groups (<https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list>): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.IoT, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
-- namespace is the shipped package name, it should be `Azure.<group>.<service>`
-- inputfiles is the api definition files, separated by semicolon if more than one. The api definition file can be local file e.g. ./swagger/compute.json or premlink which contains commit id in it, e.g. <https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json>.
+- For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
+- `-inputfiles` takes the address of the Open API spec files,  separated by semicolon if there is more than one file.  The Open API spec file can be local file, e.g. ./swagger/compute.json, or the web address of the file the `azure-rest-api-specs` repo.  When pointing to a file in the `azure-rest-api-specs` repo, make sure to include the commit id in the URI, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json`.  This ensures that you can choose the time to upgrade to new swagger file versions.
+- `-securityScope` designates the authentication scope your library will use if it supports token credential authentication.  Both Azure Active Directory and Azure Key Credential authentication are supported. **AzureKey authentication** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service supports AADToken, just set the parameter **securityScope**(the security scope), and if your service supports AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service supports two methods of authentication.
 
-- Both AADToken and AzureKey authentication are supported. **AzureKey authentication** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service supports AADToken, just set the parameter **securityScope**(the security scope), and if your service supports AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service supports two authentications.
+When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` script, it will:
 
-The script `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` will do **step-by-step** as following:
+- Create a project folder, install template files from `eng/templates/Azure.ServiceTemplate.Template`, and create `.csproj` and `.sln` files for your new library.
 
-1. Create the project folder
+    These files are created following the guidance for the [Azure SDK Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
 
-Create a SDK library project, configuration file, or solution based on the specified template.
+- Generate the library source code files to the directory `<sdkPath>/<service>/<namespace>/src/Generated`
+- Build the library project to create the starter package binary.
+- Export the library's public API to the directory `<sdkPath>/<service>/<namespace>/api`
 
-- install dotnet template
-  
-Navigate to the sdk repo root directory, and run the following commands:
-
-```cmd
-dotnet new --install eng/templates/Azure.ServiceTemplate.Template
-```
-
-- dotnet new project
-  
-Create project folder `Azure.<group>.<service>`. e.g. Azure.IoT.DeviceUpdate under `sdk/<service>` folder, navigate to the project folder, and run 'dotnet new' as following:
-  
-```cmd
-sdk\<your-service-name>\Azure.<group>.<service>> dotnet new dataplane --libraryName [Client-Library-Title] --groupName [namespace-group-name] --swagger [input-swagger-file-path] --securityScopes [security-scopes] --force
-```
-
-e.g.
-
-```cmd
-dotnet new dataplane --libraryName DeviceUpdate --groupName IoT --swagger https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2021-06-01-preview/deviceupdate.json --securityScopes https://api.adu.microsoft.com/.default --force
-```
-
-- update the solution file if needed
-
-Run 'dotnet sln' as following to update the projects in the solution file:
-
-```cmd
-dotnet sln remove src\Azure.<group>.<service>.csproj
-dotnet sln add src\Azure.<group>.<service>.csproj
-dotnet sln remove tests\Azure.<group>.<service>.Tests.csproj
-dotnet sln add tests\Azure.<group>.<service>.Tests.csproj
-```
-
-**Learn more:** to understand more about the Azure SDK repo structure, see [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md) in the `azure-sdk` repo.
-
-2. Generate client library
-
-In this section, we'll create a generated API layer built on Azure Core.
-
-From a PowerShell command prompt, navigate to the directory holding `Azure.<group>.<service>.csproj`. Run the following commands:
-
-```cmd
-sdk\<your-service-name>\Azure.<group>.<service>\src> dotnet build /t:GenerateCode
-```
-
-After you run the GenerateCode command, you should find a **Generated** folder in your project. Inside the Generated folder you'll find the ServiceClient and ServiceClientOptions which you can use to interact with the service.
-
-3. Export public API
-
-If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [eng\templates\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
-
-e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
-
-```powershell
-eng\scripts\Export-API.ps1 deviceupdate
-```
+For more details, see the generation script code at [Invoke-DataPlaneGenerateSDKPackage.ps1](https://github.com/Azure/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1).
 
 ## Add package ship requirements
 
@@ -157,7 +104,7 @@ Here is the step by step process to add tests:requirements
 
 - Add other client parameters in `<client-name>ClientTestEnvironment.cs`
 - Update `<client-name>ClientTest.cs`.
-  - Comment-out the 'CreateClient' method, and update the new <service>Client statement.
+  - Comment-out the 'CreateClient' method, and update the new `<service>Client` statement.
   - remove all the template project tests, and write the tests according to the commented Test method template. Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
 
 **Note**:
@@ -189,33 +136,18 @@ README.md file instructions are listed in `Azure.<group>.<service>/README.md` fi
 
 Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.md`. For general information about the changelog, see the [Changelog Guidelines](https://azure.github.io/azure-sdk/policies_releases.html#change-logs).
 
-### Customize
+### Add Convenience APIs
 
-You may need to customize the client library a little bit to provide customers better experience when they use the library. 
+Adding convenience APIs is not required for Azure SDK data plane generated libraries, but doing so can provide customers with a better experience when they develop code using your library.  You should consider adding convenience APIs to the generated client to make it easier to use for the most common customer scenarios, or based on customer feedback.  Any convenience APIs you add should be approved with the Azure SDK architecture board.
 
-There are two customization approaches:
+You can add convienice APIs by adding a customization layer on top of the generated code.  Please see the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) for the details of adding the customization layer.  This is the preferred method for adding convenience APIs to your generated client.
 
-- C# customization: Add convenience APIs.
+If other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) shows and example of how this can be accomplished.
 
-**Learn more**: The [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
+Once you've made changes to the public API, you will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory similar to the example found in [eng\templates\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
 
-- Customizations can be done as a transform in `autorest.md`.
-In `Azure.<group>.<service>` project, we have autorest.md file which is use to add configuration to generate code based on your swagger. [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) is an example.
+e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
 
-```yaml
-directive:
-  - from: swagger-document
-    where: $.parameters.endpoint
-    transform: >
-      if ($.format === undefined) {
-        $.format = "url";
-      }
-  - from: swagger-document
-    where: $.parameters.Endpoint
-    transform: >
-      if ($.format === undefined) {
-        $.format = "url";
-      }
+```powershell
+eng\scripts\Export-API.ps1 deviceupdate
 ```
-
-**Note**: When to customize the client library, we prefer to using C# customization because it is easier to write, far easier to read, and much better documented than autorest.md REAMDE transforms. If c# customization does not work, you can write an autorest.md README transform.
