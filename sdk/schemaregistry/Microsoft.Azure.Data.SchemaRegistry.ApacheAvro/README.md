@@ -94,11 +94,20 @@ Console.WriteLine(eventData.EventBody);
 
 To decode an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
-Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(eventData);
 Console.WriteLine(deserialized.Age);
 Console.WriteLine(deserialized.Name);
 ```
 
+### Encode and decode data using `MessageWithMetadata` directly
+
+It is also possible to encode and decode using `MessageWithMetadata`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageWithMetadata`.
+```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(employee, typeof(Employee));
+
+Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
+```
 
 ## Troubleshooting
 
