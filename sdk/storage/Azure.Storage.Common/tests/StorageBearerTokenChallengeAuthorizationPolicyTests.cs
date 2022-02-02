@@ -108,8 +108,8 @@ namespace Azure.Storage.Tests
         {
             // Arrange
             bool firstRequest = true;
-            string unauthorizedScope = "https://disk.compute.azure.com/.default";
-            string authorizedScope = "https://storage.azure.com";
+            string initialMismatchedScope = "https://disk.compute.azure.com/.default";
+            string serviceChallengeResponseScope = "https://storage.azure.com";
 
             string[] unauthorizedScopes = new string[] { unauthorizedScope };
             string[] authorizedScopes = new string[] { authorizedScope + "/.default" };
