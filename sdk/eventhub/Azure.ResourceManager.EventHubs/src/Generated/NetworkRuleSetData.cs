@@ -26,16 +26,15 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type, location)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type, systemData, location)
         {
-            SystemData = systemData;
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
@@ -43,8 +42,6 @@ namespace Azure.ResourceManager.EventHubs
             PublicNetworkAccess = publicNetworkAccess;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         public bool? TrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of RoleInstance and their operations over its parent. </summary>
     public partial class RoleInstanceCollection : ArmCollection, IEnumerable<RoleInstance>, IAsyncEnumerable<RoleInstance>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CloudServiceRoleInstancesRestOperations _cloudServiceRoleInstancesRestClient;
+        private readonly ClientDiagnostics _roleInstanceCloudServiceRoleInstancesClientDiagnostics;
+        private readonly CloudServiceRoleInstancesRestOperations _roleInstanceCloudServiceRoleInstancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RoleInstanceCollection"/> class for mocking. </summary>
         protected RoleInstanceCollection()
@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal RoleInstanceCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _roleInstanceCloudServiceRoleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RoleInstance.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(RoleInstance.ResourceType, out string roleInstanceCloudServiceRoleInstancesApiVersion);
+            _roleInstanceCloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(_roleInstanceCloudServiceRoleInstancesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, roleInstanceCloudServiceRoleInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,22 +55,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual Response<RoleInstance> Get(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Get");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken);
+                var response = _roleInstanceCloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleInstance(Parent, response.Value), response.GetRawResponse());
+                    throw _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RoleInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -82,22 +81,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public async virtual Task<Response<RoleInstance>> GetAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Get");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RoleInstance(Parent, response.Value), response.GetRawResponse());
+                    throw await _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RoleInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,22 +107,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual Response<RoleInstance> GetIfExists(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
+                var response = _roleInstanceCloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<RoleInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,22 +133,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public async virtual Task<Response<RoleInstance>> GetIfExistsAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<RoleInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new RoleInstance(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleInstance(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,15 +159,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -192,15 +183,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
+            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
             scope.Start();
             try
             {
@@ -222,12 +211,12 @@ namespace Azure.ResourceManager.Compute
         {
             Page<RoleInstance> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRoleInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _roleInstanceCloudServiceRoleInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -237,12 +226,12 @@ namespace Azure.ResourceManager.Compute
             }
             Page<RoleInstance> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRoleInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _roleInstanceCloudServiceRoleInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -261,12 +250,12 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<RoleInstance>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRoleInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _roleInstanceCloudServiceRoleInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -276,12 +265,12 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<RoleInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRoleInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _roleInstanceCloudServiceRoleInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstance(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,8 +295,5 @@ namespace Azure.ResourceManager.Compute
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, RoleInstance, RoleInstanceData> Construct() { }
     }
 }

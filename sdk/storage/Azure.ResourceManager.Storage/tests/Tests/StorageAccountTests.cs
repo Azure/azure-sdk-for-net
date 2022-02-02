@@ -41,6 +41,59 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task StorageAccountGetOperations()
+        {
+            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
+            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(apiList.Count() > 1);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountOperations()
+        {
+            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
+            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            bool exist1 = false;
+            bool exist2 = false;
+            foreach (RestApi restApi in apiList)
+            {
+                if (CheckRestApi(restApi, "Microsoft.Storage/storageAccounts/write", "Microsoft Storage", "Storage Accounts", "Create/Update Storage Account"))
+                {
+                    exist1 = true;
+                }
+                if (CheckRestApi(restApi, "Microsoft.Storage/storageAccounts/delete", "Microsoft Storage", "Storage Accounts", "Delete Storage Account"))
+                {
+                    exist2 = true;
+                }
+            }
+            Assert.IsTrue(exist1);
+            Assert.IsTrue(exist2);
+        }
+
+        public bool CheckRestApi(RestApi restApi, string name, string provider, string resource, string operation)
+        {
+            if (restApi.Name != name)
+            {
+                return false;
+            }
+            if (restApi.Operation != operation)
+            {
+                return false;
+            }
+            if (restApi.Provider != provider)
+            {
+                return false;
+            }
+            if (restApi.Resource != resource)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task ListSku()
         {
             List<SkuInformation> skulist = await DefaultSubscription.GetSkusAsync().ToEnumerableAsync();
@@ -531,7 +584,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareCollection shareCollection = fileService.GetFileShares();
             FileShareData shareData = new FileShareData();
             shareData.ShareQuota = 5200;
-            FileShareCreateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
+            FileShareCreateOrUpdateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
             FileShare share = await fileShareCreateOperation.WaitForCompletionAsync();
             Assert.AreEqual(share.Data.ShareQuota, shareData.ShareQuota);
         }
@@ -1157,13 +1210,13 @@ namespace Azure.ResourceManager.Storage.Tests
             account = await account.AddTagAsync("key", "value");
 
             //verify the tag is added successfully
-            Assert.AreEqual(account.Data.Tags.Count, 1);
+            Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count + 1);
 
             //remove tag
             account = await account.RemoveTagAsync("key");
 
             //verify the tag is removed successfully
-            Assert.AreEqual(account.Data.Tags.Count, 0);
+            Assert.AreEqual(account.Data.Tags.Count, DefaultTags.Count);
         }
 
         [Test]

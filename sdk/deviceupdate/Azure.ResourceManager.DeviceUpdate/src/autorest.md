@@ -10,6 +10,10 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/34018925632ef75ef541
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+override-operation-name:
+  CheckNameAvailability: CheckDeviceUpdateNameAvailability
+mgmt-debug:
+  show-request-path: true
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation
@@ -20,43 +24,11 @@ directive:
   - from: swagger-document
     where: $.definitions.Instance
     transform: $['x-ms-client-name'] = 'DeviceUpdateInstance'
-  - rename-operation:
-      from: Accounts_ListBySubscription
-      to: DeviceUpdateAccounts_ListBySubscription
-  - rename-operation:
-      from: Accounts_ListByResourceGroup
-      to: DeviceUpdateAccounts_ListByResourceGroup
-  - rename-operation:
-      from: Accounts_Get
-      to: DeviceUpdateAccounts_Get
-  - rename-operation:
-      from: Accounts_Create
-      to: DeviceUpdateAccounts_Create
-  - rename-operation:
-      from: Accounts_Delete
-      to: DeviceUpdateAccounts_Delete
-  - rename-operation:
-      from: Accounts_Update
-      to: DeviceUpdateAccounts_Update
-  - rename-operation:
-      from: Instances_ListByAccount
-      to: DeviceUpdateInstances_ListByAccount
-  - rename-operation:
-      from: Instances_Get
-      to: DeviceUpdateInstances_Get
-  - rename-operation:
-      from: Instances_Create
-      to: DeviceUpdateInstances_Create
-  - rename-operation:
-      from: Instances_Delete
-      to: DeviceUpdateInstances_Delete
-  - rename-operation:
-      from: Instances_Update
-      to: DeviceUpdateInstances_Update
-  - remove-operation: Accounts_Head
-  - remove-operation: Instances_Head
-  - remove-operation: Operations_List
-  - remove-operation: DeviceUpdateAccounts_Update
+  - from: swagger-document
+    where: $.definitions.ConnectionDetails.properties.privateIpAddress
+    transform: $['x-ms-client-name'] = 'privateIPAddress'
+  - remove-operation: Accounts_Head  # Not supported yet
+  - remove-operation: Instances_Head # Not supported yet
   - rename-model:
       from: AccountUpdate
       to: DeviceUpdateAccountUpdateOptions

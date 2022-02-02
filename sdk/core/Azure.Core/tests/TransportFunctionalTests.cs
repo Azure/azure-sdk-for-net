@@ -881,7 +881,6 @@ namespace Azure.Core.Tests
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
 
         private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
@@ -924,7 +923,6 @@ namespace Azure.Core.Tests
         public Task CanCancelContentUpload() => CanCancelContentUpload(false);
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public Task CanCancelContentUploadHttps() => CanCancelContentUpload(true);
 
         private async Task CanCancelContentUpload(bool https)
@@ -995,7 +993,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
@@ -1111,6 +1108,35 @@ namespace Azure.Core.Tests
                 Response response = await ExecuteRequest(request, transport);
 
                 Assert.AreEqual(444, response.Status);
+            }
+        }
+
+        [Test]
+        public async Task CookiesDisabledByDefault()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.IsFalse(context.Request.Headers.ContainsKey("cookie"));
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.Add(
+                        "set-cookie",
+                        "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+
+                // create a second request to verify cookies not set
+                request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
             }
         }
 

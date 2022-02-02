@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing collection of GuestAgent and their operations over its parent. </summary>
     public partial class GuestAgentCollection : ArmCollection, IEnumerable<GuestAgent>, IAsyncEnumerable<GuestAgent>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GuestAgentsRestOperations _guestAgentsRestClient;
+        private readonly ClientDiagnostics _guestAgentClientDiagnostics;
+        private readonly GuestAgentsRestOperations _guestAgentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GuestAgentCollection"/> class for mocking. </summary>
         protected GuestAgentCollection()
@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GuestAgentCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _guestAgentsRestClient = new GuestAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _guestAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", GuestAgent.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(GuestAgent.ResourceType, out string guestAgentApiVersion);
+            _guestAgentRestClient = new GuestAgentsRestOperations(_guestAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, guestAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,24 +55,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
         /// OperationId: GuestAgents_Create
         /// <summary> Create Or Update GuestAgent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the guestAgents. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual GuestAgentCreateOperation CreateOrUpdate(bool waitForCompletion, string name, GuestAgentData body = null, CancellationToken cancellationToken = default)
+        public virtual GuestAgentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, GuestAgentData body = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _guestAgentsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body, cancellationToken);
-                var operation = new GuestAgentCreateOperation(Parent, _clientDiagnostics, Pipeline, _guestAgentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body).Request, response);
+                var response = _guestAgentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body, cancellationToken);
+                var operation = new GuestAgentCreateOrUpdateOperation(ArmClient, _guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -87,24 +86,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
         /// OperationId: GuestAgents_Create
         /// <summary> Create Or Update GuestAgent. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the guestAgents. </param>
         /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<GuestAgentCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, GuestAgentData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<GuestAgentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, GuestAgentData body = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _guestAgentsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestAgentCreateOperation(Parent, _clientDiagnostics, Pipeline, _guestAgentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body).Request, response);
+                var response = await _guestAgentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new GuestAgentCreateOrUpdateOperation(ArmClient, _guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,22 +119,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements GuestAgent GET method. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<GuestAgent> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.Get");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = _guestAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _guestAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestAgent(Parent, response.Value), response.GetRawResponse());
+                    throw _guestAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GuestAgent(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,22 +147,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Implements GuestAgent GET method. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<GuestAgent>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.Get");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _guestAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GuestAgent(Parent, response.Value), response.GetRawResponse());
+                    throw await _guestAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new GuestAgent(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,22 +172,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<GuestAgent> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetIfExists");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _guestAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _guestAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<GuestAgent>(null, response.GetRawResponse());
-                return Response.FromValue(new GuestAgent(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestAgent(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,22 +197,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<GuestAgent>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetIfExists");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _guestAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _guestAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<GuestAgent>(null, response.GetRawResponse());
-                return Response.FromValue(new GuestAgent(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestAgent(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,15 +222,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.Exists");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.Exists");
             scope.Start();
             try
             {
@@ -258,15 +245,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="name"> Name of the GuestAgent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.Exists");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.Exists");
             scope.Start();
             try
             {
@@ -290,12 +275,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             Page<GuestAgent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
+                using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _guestAgentsRestClient.ListByVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _guestAgentRestClient.ListByVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,12 +290,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             Page<GuestAgent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
+                using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _guestAgentsRestClient.ListByVmNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _guestAgentRestClient.ListByVmNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,12 +316,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             async Task<Page<GuestAgent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
+                using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _guestAgentsRestClient.ListByVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _guestAgentRestClient.ListByVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -346,12 +331,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             async Task<Page<GuestAgent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
+                using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _guestAgentsRestClient.ListByVmNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _guestAgentRestClient.ListByVmNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GuestAgent(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -376,8 +361,5 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, GuestAgent, GuestAgentData> Construct() { }
     }
 }

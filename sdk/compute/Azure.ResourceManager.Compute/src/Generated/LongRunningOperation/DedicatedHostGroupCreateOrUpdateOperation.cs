@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal DedicatedHostGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<DedicatedHostGroupData> response)
+        internal DedicatedHostGroupCreateOrUpdateOperation(ArmClient armClient, Response<DedicatedHostGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<DedicatedHostGroup>(Response.FromValue(new DedicatedHostGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DedicatedHostGroup>(Response.FromValue(new DedicatedHostGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

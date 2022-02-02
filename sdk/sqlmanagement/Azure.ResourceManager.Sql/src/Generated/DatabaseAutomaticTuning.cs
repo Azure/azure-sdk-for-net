@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
+
+        private readonly ClientDiagnostics _databaseAutomaticTuningClientDiagnostics;
         private readonly DatabaseAutomaticTuningRestOperations _databaseAutomaticTuningRestClient;
         private readonly DatabaseAutomaticTuningData _data;
 
@@ -37,43 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseAutomaticTuning"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseAutomaticTuning(ArmResource options, DatabaseAutomaticTuningData data) : base(options, data.Id)
+        internal DatabaseAutomaticTuning(ArmClient armClient, DatabaseAutomaticTuningData data) : this(armClient, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAutomaticTuning"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAutomaticTuning(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DatabaseAutomaticTuning(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DatabaseAutomaticTuning"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAutomaticTuning(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string databaseAutomaticTuningApiVersion);
+            _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_databaseAutomaticTuningClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,9 +83,6 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current
         /// OperationId: DatabaseAutomaticTuning_Get
@@ -113,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAutomaticTuning>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.Get");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.Get");
             scope.Start();
             try
             {
                 var response = await _databaseAutomaticTuningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAutomaticTuning(this, response.Value), response.GetRawResponse());
+                    throw await _databaseAutomaticTuningClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,14 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAutomaticTuning> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.Get");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.Get");
             scope.Start();
             try
             {
                 var response = _databaseAutomaticTuningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseAutomaticTuning(this, response.Value), response.GetRawResponse());
+                    throw _databaseAutomaticTuningClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DatabaseAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +134,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.GetAvailableLocations");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -175,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.GetAvailableLocations");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -202,12 +179,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.Update");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.Update");
             scope.Start();
             try
             {
                 var response = await _databaseAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAutomaticTuning(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,12 +207,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAutomaticTuning.Update");
+            using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuning.Update");
             scope.Start();
             try
             {
                 var response = _databaseAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken);
-                return Response.FromValue(new DatabaseAutomaticTuning(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseAutomaticTuning(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

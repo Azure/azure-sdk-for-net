@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of SiteConfig and their operations over its parent. </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotCollection"/> class for mocking. </summary>
         protected SiteConfigSnapshotCollection()
@@ -31,8 +31,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteConfigSnapshotCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteConfigSnapshot.ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
+            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,22 +53,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteConfigSnapshot> Get(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken);
+                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
+                    throw _siteConfigSnapshotWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -82,22 +81,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteConfigSnapshot>> GetAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken).ConfigureAwait(false);
+                var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigSnapshot(Parent, response.Value), response.GetRawResponse());
+                    throw await _siteConfigSnapshotWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteConfigSnapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,22 +106,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteConfigSnapshot> GetIfExists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
+                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,22 +131,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<SiteConfigSnapshot>> GetIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, snapshotId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteConfigSnapshot>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteConfigSnapshot(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigSnapshot(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,15 +156,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
             scope.Start();
             try
             {
@@ -188,15 +179,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            if (snapshotId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotId));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
+            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
             scope.Start();
             try
             {
@@ -209,8 +198,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteConfigSnapshot, SiteConfigData> Construct() { }
     }
 }

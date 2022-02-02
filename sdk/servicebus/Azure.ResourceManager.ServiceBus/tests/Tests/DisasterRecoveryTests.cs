@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceData parameters1 = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new ServiceBusSku(SkuName.Premium)
+                Sku = new Models.Sku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium,
                     Capacity = 1
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceData parameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS)
             {
-                Sku = new ServiceBusSku(SkuName.Premium)
+                Sku = new Models.Sku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium,
                     Capacity = 1
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //wait for completion, this may take several minutes in live and record mode
             disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             }
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailability(disasterRecoveryName));
+            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckDisasterRecoveryNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<NamespaceDisasterRecoveryConfigAuthorizationRule> rules = await disasterRecovery.GetNamespaceDisasterRecoveryConfigAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<NamespaceDisasterRecoveryAuthorizationRule> rules = await disasterRecovery.GetNamespaceDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            NamespaceDisasterRecoveryConfigAuthorizationRule rule = rules.First();
+            NamespaceDisasterRecoveryAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await disasterRecovery.BreakPairingAsync();
             disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {

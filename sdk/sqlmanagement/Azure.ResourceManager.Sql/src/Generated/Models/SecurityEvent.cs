@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="eventTime"> The time when the security event occurred. </param>
         /// <param name="securityEventType"> The type of the security event. </param>
         /// <param name="subscription"> The subscription name. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="applicationName"> The application used to execute the statement. </param>
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
-        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType type, DateTimeOffset? eventTime, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, type)
+        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? eventTime, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, type, systemData)
         {
             EventTime = eventTime;
             SecurityEventType = securityEventType;

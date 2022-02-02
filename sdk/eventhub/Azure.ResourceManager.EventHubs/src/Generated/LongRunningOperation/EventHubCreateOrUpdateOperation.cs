@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal EventHubCreateOrUpdateOperation(ArmResource operationsBase, Response<EventHubData> response)
+        internal EventHubCreateOrUpdateOperation(ArmClient armClient, Response<EventHubData> response)
         {
-            _operation = new OperationOrResponseInternals<EventHub>(Response.FromValue(new EventHub(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<EventHub>(Response.FromValue(new EventHub(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

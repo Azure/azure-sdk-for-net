@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         }
 
         /// <summary> Identity for the resource. </summary>
-        public LocationIdentity Identity { get; set; }
+        public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
