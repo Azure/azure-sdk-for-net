@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience.ToString()) ? FormRecognizerAudience.AzurePublicCloud : options.Audience)}/.default";
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? FormRecognizerAudience.AzurePublicCloud : options.Audience)}/.default";
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
