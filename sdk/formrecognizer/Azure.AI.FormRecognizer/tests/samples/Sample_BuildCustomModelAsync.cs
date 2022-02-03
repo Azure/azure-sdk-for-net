@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel model = operationResponse.Value;
 

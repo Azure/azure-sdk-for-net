@@ -617,7 +617,7 @@ Train a custom model with `4.0.x`:
 Uri trainingFileUri = <trainingFileUri>;
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
 

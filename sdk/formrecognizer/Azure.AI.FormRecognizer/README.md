@@ -511,7 +511,7 @@ Build a custom model on your own document type. The resulting model can be used 
 Uri trainingFileUri = <trainingFileUri>;
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
 
@@ -594,7 +594,7 @@ await foreach (DocumentModelInfo modelInfo in models)
 
 // Create a new model to store in the account
 Uri trainingFileUri = <trainingFileUri>;
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
 
@@ -640,7 +640,7 @@ foreach (DocumentModelInfo modelInfo in models.Take(10))
 // Create a new model to store in the account
 
 Uri trainingFileUri = <trainingFileUri>;
-BuildModelOperation operation = client.StartBuildModel(trainingFileUri);
+BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
 
