@@ -11,7 +11,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class for mocking. </summary>
@@ -20,25 +20,121 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachineCollection along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="VirtualMachineCollection" /> object. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines(ResourceIdentifier parentId)
+        /// <summary> Gets a collection of AvailabilitySets in the AvailabilitySet. </summary>
+        /// <returns> An object representing collection of AvailabilitySets and their operations over a AvailabilitySet. </returns>
+        public virtual AvailabilitySetCollection GetAvailabilitySets()
         {
-            return new VirtualMachineCollection(ArmClient, parentId);
+            return new AvailabilitySetCollection(Client, Id);
         }
-        #endregion
+
+        /// <summary> Gets a collection of ProximityPlacementGroups in the ProximityPlacementGroup. </summary>
+        /// <returns> An object representing collection of ProximityPlacementGroups and their operations over a ProximityPlacementGroup. </returns>
+        public virtual ProximityPlacementGroupCollection GetProximityPlacementGroups()
+        {
+            return new ProximityPlacementGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DedicatedHostGroups in the DedicatedHostGroup. </summary>
+        /// <returns> An object representing collection of DedicatedHostGroups and their operations over a DedicatedHostGroup. </returns>
+        public virtual DedicatedHostGroupCollection GetDedicatedHostGroups()
+        {
+            return new DedicatedHostGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SshPublicKeys in the SshPublicKey. </summary>
+        /// <returns> An object representing collection of SshPublicKeys and their operations over a SshPublicKey. </returns>
+        public virtual SshPublicKeyCollection GetSshPublicKeys()
+        {
+            return new SshPublicKeyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
+        public virtual VirtualMachineCollection GetVirtualMachines()
+        {
+            return new VirtualMachineCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of VirtualMachineScaleSets in the VirtualMachineScaleSet. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSets and their operations over a VirtualMachineScaleSet. </returns>
+        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
+        {
+            return new VirtualMachineScaleSetCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Images in the Image. </summary>
+        /// <returns> An object representing collection of Images and their operations over a Image. </returns>
+        public virtual ImageCollection GetImages()
+        {
+            return new ImageCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of RestorePointGroups in the RestorePointGroup. </summary>
+        /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroup. </returns>
+        public virtual RestorePointGroupCollection GetRestorePointGroups()
+        {
+            return new RestorePointGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of CapacityReservationGroups in the CapacityReservationGroup. </summary>
+        /// <returns> An object representing collection of CapacityReservationGroups and their operations over a CapacityReservationGroup. </returns>
+        public virtual CapacityReservationGroupCollection GetCapacityReservationGroups()
+        {
+            return new CapacityReservationGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Disks in the Disk. </summary>
+        /// <returns> An object representing collection of Disks and their operations over a Disk. </returns>
+        public virtual DiskCollection GetDisks()
+        {
+            return new DiskCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Snapshots in the Snapshot. </summary>
+        /// <returns> An object representing collection of Snapshots and their operations over a Snapshot. </returns>
+        public virtual SnapshotCollection GetSnapshots()
+        {
+            return new SnapshotCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DiskEncryptionSets in the DiskEncryptionSet. </summary>
+        /// <returns> An object representing collection of DiskEncryptionSets and their operations over a DiskEncryptionSet. </returns>
+        public virtual DiskEncryptionSetCollection GetDiskEncryptionSets()
+        {
+            return new DiskEncryptionSetCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DiskAccesses in the DiskAccess. </summary>
+        /// <returns> An object representing collection of DiskAccesses and their operations over a DiskAccess. </returns>
+        public virtual DiskAccessCollection GetDiskAccesses()
+        {
+            return new DiskAccessCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Galleries in the Gallery. </summary>
+        /// <returns> An object representing collection of Galleries and their operations over a Gallery. </returns>
+        public virtual GalleryCollection GetGalleries()
+        {
+            return new GalleryCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of CloudServices in the CloudService. </summary>
+        /// <returns> An object representing collection of CloudServices and their operations over a CloudService. </returns>
+        public virtual CloudServiceCollection GetCloudServices()
+        {
+            return new CloudServiceCollection(Client, Id);
+        }
     }
 }
