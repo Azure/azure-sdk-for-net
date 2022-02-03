@@ -30,7 +30,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
         $opsAuthToken = Generate-AadToken -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret
         $Headers["Authorization"] = "Bearer $opsAuthToken"
         Write-Host "Fetching aad identity for github user: $GithubUser"
-        $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers
+        $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers -MaximumRetryCount 3
     }
     catch { 
         Write-Warning $_
