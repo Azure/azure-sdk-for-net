@@ -71,7 +71,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction events to consider </param>
+        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
         /// <param name="options"> The options for configuring the client. </param>
         public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float SubsampleRate = 1.0f, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
@@ -125,7 +125,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction events to consider </param>
+        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
         /// <param name="options"> The options for configuring the client. </param>
         public PersonalizerClient(Uri endpoint, AzureKeyCredential credential, bool isLocalInference, float SubsampleRate = 1.0f, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
@@ -564,8 +564,8 @@ namespace Azure.AI.Personalizer
                 //ToDo: TASK 13057958 Working on changes to support token authentication in RLClient
                 //config["http.token.key"] = authValue;
             }
-            config["interaction.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.2/logs/interactions";
-            config["observation.http.api.host"] = stringEndpoint+"personalizer/v1.1-preview.2/logs/observations";
+            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/observations";
             config["interaction.subsample.rate"] = Convert.ToString(_SubsampleRate, CultureInfo.InvariantCulture);
             config["observation.subsample.rate"] = Convert.ToString(_SubsampleRate, CultureInfo.InvariantCulture);
             //ToDo: TASK 13057958 Working on changes to support model api in RL.Net
@@ -578,7 +578,7 @@ namespace Azure.AI.Personalizer
             return config;
         }
 
-        /// <summary> validate SubsampleRate input from user and throws exception if not in range </summary>
+        /// <summary> validate SubsampleRate input from user and throw exception if not in range </summary>
         private void validateAndAssignSampleRate(float SubsampleRate)
         {
             if (0 >= SubsampleRate || SubsampleRate > 1)
