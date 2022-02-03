@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using Azure.Core;
 
-namespace Azure.Messaging
+namespace Azure
 {
     /// <summary>
     /// A message containing a content type along with its data.
@@ -18,7 +20,17 @@ namespace Azure.Messaging
         /// <summary>
         /// Gets or sets the message content type.
         /// </summary>
-        public virtual string? ContentType { get; set; }
+        public ContentType? ContentType
+        {
+            get => ContentTypeCore;
+            set => ContentTypeCore = value;
+        }
+
+        /// <summary>
+        /// This property must be overriden by inheriting types to get/set the correct content type.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected virtual ContentType? ContentTypeCore { get; set; }
 
         /// <summary>
         /// Gets whether the message is read only or not. This

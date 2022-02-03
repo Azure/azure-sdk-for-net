@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Messaging;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.ServiceBus;
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             #region Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
-            MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(employee, typeof(Employee));
+            MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
             #endregion
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
-            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(employee, typeof(Employee_V2));
+            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee_V2>(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
             // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee() { Age = 42, Name = "Caketown"};
 
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
-            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(employee, typeof(Employee));
+            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
@@ -102,7 +103,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             record.Add("Age", 42);
 
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(record, typeof(GenericRecord));
+            var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, GenericRecord>(record);
 
             var deserializedObject = await encoder.DecodeMessageDataAsync<GenericRecord>(messageData);
             var readRecord = deserializedObject as GenericRecord;
@@ -119,7 +120,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var timeZoneInfo = TimeZoneInfo.Utc;
 
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-            Assert.ThrowsAsync<ArgumentException>(async () => await encoder.EncodeMessageDataAsync<MessageWithMetadata>(timeZoneInfo, typeof(TimeZoneInfo)));
+            Assert.ThrowsAsync<ArgumentException>(async () => await encoder.EncodeMessageDataAsync<MessageWithMetadata, TimeZoneInfo>(timeZoneInfo));
             await Task.CompletedTask;
         }
 
@@ -165,7 +166,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData eventData = await encoder.EncodeMessageDataAsync<EventData>(employee);
+            EventData eventData = (EventData) await encoder.EncodeMessageDataAsync(employee, messageType: typeof(EventData));
 
 #if SNIPPET
             // the schema Id will be included as a parameter of the content type
@@ -183,7 +184,54 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryAvroDecodeEventData
-            Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(eventData);
+            Employee deserialized = (Employee) await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+#if SNIPPET
+            Console.WriteLine(deserialized.Age);
+            Console.WriteLine(deserialized.Name);
+#endif
+            #endregion
+
+            // decoding should not alter the message
+            contentType = eventData.ContentType.Split('+');
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
+
+            // verify the payload was decoded correctly
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanUseEncoderWithEventDataUsingGenerics()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            #region Snippet:SchemaRegistryAvroEncodeEventDataGenerics
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+            EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
+
+#if SNIPPET
+            // the schema Id will be included as a parameter of the content type
+            Console.WriteLine(eventData.ContentType);
+
+            // the serialized Avro data will be stored in the EventBody
+            Console.WriteLine(eventData.EventBody);
+#endif
+            #endregion
+
+            Assert.IsFalse(((MessageWithMetadata) eventData).IsReadOnly);
+            string[] contentType = eventData.ContentType.Split('+');
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
+
+            #region Snippet:SchemaRegistryAvroDecodeEventDataGenerics
+            Employee deserialized = (Employee) await encoder.DecodeMessageDataAsync<Employee>(eventData);
 #if SNIPPET
             Console.WriteLine(deserialized.Age);
             Console.WriteLine(deserialized.Name);
@@ -211,7 +259,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData eventData = await encoder.EncodeMessageDataAsync<EventData>(employee);
+            EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
             string schemaId = eventData.ContentType.Split('+')[1];
             eventData.ContentType = "avro/binary";
 
@@ -227,104 +275,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             // decoding should not alter the message
             Assert.AreEqual("avro/binary", eventData.ContentType);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-        }
-
-        [RecordedTest]
-        public async Task CanUseEncoderWithEventDataUsingFunc()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData message = await encoder.EncodeMessageDataAsync(employee, messageFactory: bd => new EventData(bd));
-
-            string[] contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(message);
-
-            // decoding should not alter the message
-            contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-        }
-
-        [RecordedTest]
-        public async Task CanUseEncoderWithServiceBusMessage()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            ServiceBusMessage message = await encoder.EncodeMessageDataAsync<ServiceBusMessage>(employee);
-            Assert.IsFalse(((MessageWithMetadata) message).IsReadOnly);
-
-            string[] contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            ServiceBusReceivedMessage receivedMessage =
-                ServiceBusModelFactory.ServiceBusReceivedMessage(body: message.Body, contentType: message.ContentType);
-            Assert.IsTrue(((MessageWithMetadata) receivedMessage).IsReadOnly);
-
-            Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(receivedMessage);
-
-            // decoding should not alter the message
-            contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-        }
-
-        [RecordedTest]
-        public async Task CanUseEncoderWithServiceBusMessageUsingFunc()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            ServiceBusMessage message = await encoder.EncodeMessageDataAsync(employee, messageFactory: bd => new ServiceBusMessage(bd));
-
-            string[] contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            ServiceBusReceivedMessage receivedMessage =
-                ServiceBusModelFactory.ServiceBusReceivedMessage(body: message.Body, contentType: message.ContentType);
-
-            Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(receivedMessage);
-
-            // decoding should not alter the message
-            contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
 
             // verify the payload was decoded correctly
             Assert.IsNotNull(deserialized);
