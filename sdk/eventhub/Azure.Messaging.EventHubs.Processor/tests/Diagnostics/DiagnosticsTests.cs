@@ -45,8 +45,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
+            var partitionId = "65";
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var mockContext = new Mock<PartitionContext>("65");
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
 
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.Logger = mockLogger.Object;
 
             using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
-            await mockProcessor.Object.UpdateCheckpointAsync(new MockEventData(new byte[0], sequenceNumber: 65, offset: 998), mockContext.Object, default);
+            await mockProcessor.Object.UpdateCheckpointAsync(partitionId, new MockEventData(new byte[0], sequenceNumber: 65, offset: 998), default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");

@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs
         public override System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        protected internal virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.EventData eventData, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class EventProcessorClientOptions
     {

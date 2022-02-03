@@ -712,43 +712,41 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        ///   Creates or updates a checkpoint for the given partition.
         /// </summary>
         ///
-        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
-        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition to associate with the checkpoint.</param>
+        /// <param name="eventData">The event on which to base the checkpoint.  When using the checkpoint, a processor will start reading from the next available event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        internal Task UpdateCheckpointAsync(EventData eventData,
-                                            PartitionContext context,
-                                            CancellationToken cancellationToken)
+        protected internal virtual async Task UpdateCheckpointAsync(string partitionId,
+                                                                    EventData eventData,
+                                                                    CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertInRange(eventData.Offset, long.MinValue + 1, long.MaxValue, nameof(eventData.Offset));
             Argument.AssertInRange(eventData.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(eventData.SequenceNumber));
-            Argument.AssertNotNull(context, nameof(context));
 
-            Logger.UpdateCheckpointStart(context.PartitionId, Identifier, EventHubName, ConsumerGroup);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
             using var scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
             scope.Start();
 
             try
             {
-                // Parameter validation is done by Checkpoint constructor.
-
                 var checkpoint = new EventProcessorCheckpoint
                 {
                     FullyQualifiedNamespace = FullyQualifiedNamespace,
                     EventHubName = EventHubName,
                     ConsumerGroup = ConsumerGroup,
-                    PartitionId = context.PartitionId,
-                    StartingPosition = EventPosition.FromOffset(eventData.Offset)
+                    PartitionId = partitionId,
+                    StartingPosition = EventPosition.FromOffset(eventData.Offset, false)
                 };
 
-                return StorageManager.UpdateCheckpointAsync(checkpoint, eventData, cancellationToken);
+                await StorageManager.UpdateCheckpointAsync(checkpoint, eventData, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -756,13 +754,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(context.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(context.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
             }
         }
 
@@ -924,7 +922,7 @@ namespace Azure.Messaging.EventHubs
                     try
                     {
                         context ??= new ProcessorPartitionContext(partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
-                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(eventData, context, updateToken), cancellationToken);
+                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(context.PartitionId, eventData, updateToken), cancellationToken);
 
                         await _processEventAsync(eventArgs).ConfigureAwait(false);
                     }
