@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.Communication
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.Communication.CommunicationService GetCommunicationService(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Communication.CommunicationService GetCommunicationService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class CommunicationService : Azure.ResourceManager.Core.ArmResource
     {
