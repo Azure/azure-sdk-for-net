@@ -115,7 +115,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri pointing to the container that has your training files.
         /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
-        /// <param name="buildMode"></param>
+        /// <param name="buildMode">
+        /// The technique to use to build the model. Use:
+        /// <list type="bullet">
+        ///   <item><description>
+        ///   <see cref="DocumentBuildMode.Template"/>: when the custom documents all have the same layout. Fields
+        ///   are expected to be in the same place across documents. Build time tends to be considerably shorter
+        ///   than <see cref="DocumentBuildMode.Neural"/> mode.
+        ///   </description></item>
+        ///   <item><description>
+        ///   <see cref="DocumentBuildMode.Neural"/>:  recommended mode when custom documents have different layouts.
+        ///   Fields are expected to be the same but they can be placed in different positions across documents.
+        ///   </description></item>
+        /// </list>
+        /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
@@ -168,7 +181,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
-        /// <param name="buildMode"></param>
+        /// <param name="buildMode">
+        /// The technique to use to build the model. Use:
+        /// <list type="bullet">
+        ///   <item><description>
+        ///   <see cref="DocumentBuildMode.Template"/>: when the custom documents all have the same layout. Fields
+        ///   are expected to be in the same place across documents. Build time tends to be considerably shorter
+        ///   than <see cref="DocumentBuildMode.Neural"/> mode.
+        ///   </description></item>
+        ///   <item><description>
+        ///   <see cref="DocumentBuildMode.Neural"/>:  recommended mode when custom documents have different layouts.
+        ///   Fields are expected to be the same but they can be placed in different positions across documents.
+        ///   </description></item>
+        /// </list>
+        /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
