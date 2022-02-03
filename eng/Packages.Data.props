@@ -109,6 +109,7 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.2.0-rc1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry.Contrib.Extensions.PersistentStorage" Version="1.0.0-alpha2" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!--
@@ -264,7 +265,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20220127.3</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20220128.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

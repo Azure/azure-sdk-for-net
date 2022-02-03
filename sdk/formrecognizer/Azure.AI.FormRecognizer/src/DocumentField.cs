@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         private string ValueCountryRegion { get; }
 
-        private string ValueCurrency { get; }
+        private CurrencyValue? ValueCurrency { get; }
 
         private IReadOnlyList<DocumentField> ValueArray { get; }
 
@@ -258,6 +258,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             return ValueSignature.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="CurrencyValue"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to <see cref="CurrencyValue"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="DocumentFieldType.Currency"/>.</exception>
+        public CurrencyValue AsCurrency()
+        {
+            if (ValueType != DocumentFieldType.Currency)
+            {
+                throw new InvalidOperationException($"Cannot get field as currency.  Field value's type is {ValueType}.");
+            }
+
+            if (!ValueCurrency.HasValue)
+            {
+                throw new InvalidOperationException($"Value was extracted from the document, but cannot be normalized to {nameof(DocumentFieldType.Currency)} type. Consider accessing the `DocumentField.Content` property for a textual representation of the value.");
+            }
+
+            return ValueCurrency.Value;
         }
     }
 }

@@ -51,6 +51,45 @@ namespace Azure.Core.Tests
             }
         }
 
+        [ForwardsClientCalls(true)]
+        public virtual Response<TestResource> GetForwardsCallTrue(CancellationToken cancellationToken = default)
+        {
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
+        [ForwardsClientCalls(true)]
+        public async virtual Task<Response<TestResource>> GetForwardsCallTrueAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1);
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
+        [ForwardsClientCalls(false)]
+        public virtual Response<TestResource> GetForwardsCallFalse(CancellationToken cancellationToken = default)
+        {
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
+        [ForwardsClientCalls(false)]
+        public async virtual Task<Response<TestResource>> GetForwardsCallFalseAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1);
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
+        [ForwardsClientCalls]
+        public virtual Response<TestResource> GetForwardsCallDefault(CancellationToken cancellationToken = default)
+        {
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
+        [ForwardsClientCalls]
+        public async virtual Task<Response<TestResource>> GetForwardsCallDefaultAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1);
+            return Response.FromValue(new TestResource(), new MockResponse(200));
+        }
+
         public virtual Response<TestResource> GetResponse(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResource.GetResponse");

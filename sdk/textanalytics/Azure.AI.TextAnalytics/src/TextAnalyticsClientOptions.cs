@@ -48,6 +48,12 @@ namespace Azure.AI.TextAnalytics
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="TextAnalyticsAudience.AzurePublicCloud" /> will be assumed.</value>
+        public TextAnalyticsAudience? Audience { get; set; }
+
+        /// <summary>
         /// Default country hint value to use in all client calls.
         /// If no value is specified, "us" is set as default.
         /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.
@@ -72,6 +78,9 @@ namespace Azure.AI.TextAnalytics
         {
             Version = version;
             this.ConfigureLogging();
+
+            //Default Audience to Azure Public Cloud
+            Audience ??= TextAnalyticsAudience.AzurePublicCloud;
         }
 
         internal static string GetVersionString(ServiceVersion version)
