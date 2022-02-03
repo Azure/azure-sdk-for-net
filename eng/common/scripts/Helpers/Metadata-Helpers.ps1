@@ -40,7 +40,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
     $resp | Write-Verbose
 
     if ($resp.aad) {
-        Write-Host "Fetched aad identity $($resp.aad.alias) for github user $GithubUser."
+        Write-Host "Fetched aad identity $($resp.aad.alias) for github user $GithubUser. "
         return $resp.aad.alias
     }
     Write-Warning "Failed to retrieve the aad identity from given github user: $GithubName"
