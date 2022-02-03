@@ -43,7 +43,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
         Write-Host "Fetched aad identity $($resp.aad.alias) for github user $GithubUser."
         return $resp.aad.alias
     }
-    Write-Error "Failed to retrieve the aad identity from given github user: $GithubName"
+    Write-Warning "Failed to retrieve the aad identity from given github user: $GithubName"
     return $null
 }
 
@@ -54,6 +54,6 @@ function GetPrimaryCodeOwner ($TargetDirectory)
         Write-Host "Code Owners are $codeOwnerArray."
         return $codeOwnerArray[0]
     }
-    Write-Error "No code owner found in $TargetDirectory."
+    Write-Warning "No code owner found in $TargetDirectory."
     return $null
 }
