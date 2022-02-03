@@ -108,10 +108,6 @@ namespace Sql.Tests
                     Assert.Equal(ea.Expected.Thumbprint, "0x" + ea.Actual.Thumbprint);
                     Assert.Equal(ea.Expected.Type, ea.Actual.Type);
                 }
-                // Delete will be tested after deploying backend fix for AzureAsyncOperation headers
-                //sqlClient.ServerTrustCertificates.Delete(resourceGroupName, managedInstanceName, certificateName);
-                //var list_del_resp = sqlClient.ServerTrustCertificates.ListByInstance(resourceGroupName, managedInstanceName);
-                //var get_del_resp = sqlClient.ServerTrustCertificates.Get(resourceGroupName, managedInstanceName, certificateName);
 
                 // cert with invalid public key blob
                 var invalidCert1 = new ServerTrustCertificate(makeId(managedInstance.Id, invalidCertName1), invalidCertName1, certType, invalidPublicBlob, thumbprint1, invalidCertName1);
@@ -135,6 +131,9 @@ namespace Sql.Tests
                 Assert.Contains("InvalidPublicBlob", exception1.Body.Code);
                 Assert.Contains("MissingPublicBlob", exception4.Body.Code);
                 Assert.Contains("MethodNotAllowed", exception6.Body.Code);
+
+                sqlClient.ServerTrustCertificates.BeginDelete(resourceGroupName, managedInstanceName, certificateName1);
+                sqlClient.ServerTrustCertificates.BeginDelete(resourceGroupName, managedInstanceName, certificateName2);
             }
         }
 
@@ -149,8 +148,8 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
                 //var rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                //ManagedInstance managedInstance = context.CreateManagedInstance(rg);
                 ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
-                    
                 Assert.NotNull(managedInstance);
 
                 var resourceGroupName = rg.Name;
@@ -163,17 +162,69 @@ namespace Sql.Tests
                     PrimaryAvailabilityGroupName = "BoxLocalAg1",
                     SecondaryAvailabilityGroupName = "testcl",
                 };
+                var invalidDAG1 = new DistributedAvailabilityGroup()
+                {
+                    //TargetDatabase = "testdb",
+                    SourceEndpoint = "TCP://SERVER:7022",
+                    PrimaryAvailabilityGroupName = "BoxLocalAg1",
+                    SecondaryAvailabilityGroupName = "testcl",
+                };
+                var invalidDAG2 = new DistributedAvailabilityGroup()
+                {
+                    TargetDatabase = "testdb",
+                    //SourceEndpoint = "TCP://SERVER:7022",
+                    PrimaryAvailabilityGroupName = "BoxLocalAg1",
+                    SecondaryAvailabilityGroupName = "testcl",
+                };
+                var invalidDAG3 = new DistributedAvailabilityGroup()
+                {
+                    TargetDatabase = "testdb",
+                    SourceEndpoint = "TCP://SERVER:7022",
+                    //PrimaryAvailabilityGroupName = "BoxLocalAg1",
+                    SecondaryAvailabilityGroupName = "testcl",
+                };
+                var invalidDAG4 = new DistributedAvailabilityGroup()
+                {
+                    TargetDatabase = "testdb",
+                    SourceEndpoint = "TCP://SERVER:7022",
+                    PrimaryAvailabilityGroupName = "BoxLocalAg1",
+                    //SecondaryAvailabilityGroupName = "testcl",
+                };
+                var invalidDAG5 = new DistributedAvailabilityGroup();
 
-                sqlClient.DistributedAvailabilityGroups.BeginCreateOrUpdate(resourceGroupName, managedInstanceName, dagName, dagParams);
-                TestUtilities.Wait(TimeSpan.FromSeconds(3));
-                var getResp = sqlClient.DistributedAvailabilityGroups.Get(resourceGroupName, managedInstanceName, dagName);
+                var exCreate1 = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.CreateOrUpdate(resourceGroupName, managedInstanceName, "invalid_dag1", invalidDAG1));
+                var exCreate2 = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.CreateOrUpdate(resourceGroupName, managedInstanceName, "invalid_dag2", invalidDAG2));
+                var exCreate3 = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.CreateOrUpdate(resourceGroupName, managedInstanceName, "invalid_dag3", invalidDAG3));
+                var exCreate4 = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.CreateOrUpdate(resourceGroupName, managedInstanceName, "invalid_dag4", invalidDAG4));
+                var exCreate5 = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.CreateOrUpdate(resourceGroupName, managedInstanceName, "invalid_dag5", invalidDAG5));
+                Assert.Equal("InvalidParameterValue", exCreate1.Body.Code);
+                Assert.Equal("InvalidParameterValue", exCreate2.Body.Code);
+                Assert.Equal("InvalidParameterValue", exCreate3.Body.Code);
+                Assert.Equal("InvalidParameterValue", exCreate4.Body.Code);
+
+                var upsertResp = sqlClient.DistributedAvailabilityGroups.BeginCreateOrUpdate(resourceGroupName, managedInstanceName, dagName, dagParams);
                 var listResp = sqlClient.DistributedAvailabilityGroups.ListByInstance(resourceGroupName, managedInstanceName);
+
+                var tries = 0;
+                while (listResp.Count() == 0 && ++tries <= 3)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(30));
+                    listResp = sqlClient.DistributedAvailabilityGroups.ListByInstance(resourceGroupName, managedInstanceName);
+                }
+
+                var getResp = sqlClient.DistributedAvailabilityGroups.Get(resourceGroupName, managedInstanceName, dagName);
                 Assert.NotNull(getResp);
                 Assert.Single(listResp);
                 Assert.Equal(dagParams.TargetDatabase, getResp.TargetDatabase);
                 Assert.Equal(dagParams.SourceEndpoint, getResp.SourceEndpoint);
                 Assert.Equal(dagParams.TargetDatabase, listResp.First().TargetDatabase);
                 Assert.Equal(dagParams.SourceEndpoint, listResp.First().SourceEndpoint);
+
+                sqlClient.DistributedAvailabilityGroups.Delete(resourceGroupName, managedInstanceName, dagName);
+                var listRespEmpty = sqlClient.DistributedAvailabilityGroups.ListByInstance(resourceGroupName, managedInstanceName);
+                Assert.Empty(listRespEmpty);
+                var exceptionGet = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.Get(resourceGroupName, managedInstanceName, dagName));
+                Assert.Equal("ResourceNotFound", exceptionGet.Body.Code);
             }
         }
     }
