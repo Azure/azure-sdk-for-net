@@ -115,6 +115,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri pointing to the container that has your training files.
         /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
+        /// <param name="buildMode"></param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
@@ -123,7 +124,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation StartBuildModel(Uri trainingFilesUri, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation StartBuildModel(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
@@ -141,7 +142,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
-                var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+                var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
                     Description = buildModelOptions.ModelDescription
@@ -167,6 +168,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
+        /// <param name="buildMode"></param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
         /// to the documents in the source path.</param>
@@ -175,7 +177,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> StartBuildModelAsync(Uri trainingFilesUri, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> StartBuildModelAsync(Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions buildModelOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
             buildModelOptions ??= new BuildModelOptions();
@@ -192,7 +194,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 modelId ??= Guid.NewGuid().ToString();
-                var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+                var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
                     Description = buildModelOptions.ModelDescription

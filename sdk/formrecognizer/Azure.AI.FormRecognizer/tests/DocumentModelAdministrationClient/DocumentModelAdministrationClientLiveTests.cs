@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId, new BuildModelOptions() { Prefix = "subfolder" });
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" });
 
             await operation.WaitForCompletionAsync();
 
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(trainingFilesUri, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId, options);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
             await operation.WaitForCompletionAsync();
 
             DocumentModel model = operation.Value;
@@ -179,7 +179,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId, options);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
             await operation.WaitForCompletionAsync();
 
@@ -254,7 +254,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId, options);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
             ModelOperationInfo modelOperationInfo = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);

@@ -369,6 +369,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             V2022_01_30_preview = 1,
         }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentBuildMode : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentBuildMode(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode Neural { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode Template { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DocumentEntity
     {
         internal DocumentEntity() { }
@@ -478,8 +496,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperation>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperationInfo> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperationInfo> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOperation StartBuildModel(System.Uri trainingFilesUri, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOptions buildModelOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOperation> StartBuildModelAsync(System.Uri trainingFilesUri, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOptions buildModelOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOperation StartBuildModel(System.Uri trainingFilesUri, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOptions buildModelOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOperation> StartBuildModelAsync(System.Uri trainingFilesUri, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOptions buildModelOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.DocumentAnalysis.CopyModelOperation StartCopyModel(string modelId, Azure.AI.FormRecognizer.DocumentAnalysis.CopyAuthorization target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.CopyModelOperation> StartCopyModelAsync(string modelId, Azure.AI.FormRecognizer.DocumentAnalysis.CopyAuthorization target, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildModelOperation StartCreateComposedModel(System.Collections.Generic.IEnumerable<string> modelIds, string modelId = null, string modelDescription = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
