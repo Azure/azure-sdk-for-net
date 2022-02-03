@@ -33,7 +33,7 @@ function GetMsAliasFromGithub ($TenantId, $ClientId, $ClientSecret, $GithubUser)
         $resp = Invoke-RestMethod $OpensourceAPIBaseURI -Method 'GET' -Headers $Headers
     }
     catch { 
-        Write-Error $_
+        Write-Warning $_
         return $null
     }
 
