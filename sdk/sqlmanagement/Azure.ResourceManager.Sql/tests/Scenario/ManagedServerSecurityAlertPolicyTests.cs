@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual("Enabled", securityAlertPolicie.Value.Data.State.ToString());
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(securityAlertPoliciesName));
+            Assert.IsTrue(await collection.ExistsAsync(securityAlertPoliciesName));
 
             // 3.Get
             var getsecurityAlertPolicie = await collection.GetAsync(securityAlertPoliciesName);
