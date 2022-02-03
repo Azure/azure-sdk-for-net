@@ -332,11 +332,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel modelCopied = operation.Value;
+            DocumentModel copiedModel = operation.Value;
 
-            ValidateDocumentModel(modelCopied);
-            Assert.AreEqual(targetAuth.TargetModelId, modelCopied.ModelId);
-            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+            ValidateDocumentModel(copiedModel);
+            Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
+            Assert.AreNotEqual(trainedModel.ModelId, copiedModel.ModelId);
+
+            Assert.AreEqual(1, copiedModel.DocTypes.Count);
+            Assert.IsTrue(copiedModel.DocTypes.ContainsKey(modelId));
+
+            DocTypeInfo docType = copiedModel.DocTypes[modelId];
+
+            Assert.AreEqual(DocumentBuildMode.Template, docType.BuildMode);
         }
 
         [RecordedTest]
@@ -419,6 +426,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentModel composedModel = operation.Value;
 
             ValidateDocumentModel(composedModel);
+
+            Assert.AreEqual(2, composedModel.DocTypes.Count);
+            Assert.IsTrue(composedModel.DocTypes.ContainsKey(modelAId));
+            Assert.IsTrue(composedModel.DocTypes.ContainsKey(modelBId));
+
+            DocTypeInfo docTypeA = composedModel.DocTypes[modelAId];
+            DocTypeInfo docTypeB = composedModel.DocTypes[modelBId];
+
+            Assert.AreEqual(DocumentBuildMode.Template, docTypeA.BuildMode);
+            Assert.AreEqual(DocumentBuildMode.Template, docTypeB.BuildMode);
         }
 
         [RecordedTest]
