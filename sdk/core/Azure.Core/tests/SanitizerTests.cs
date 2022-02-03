@@ -4,7 +4,7 @@
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
-namespace Azure.Core.TestFramework
+namespace Azure.Core.Tests
 {
     public class SanitizerTests
     {
