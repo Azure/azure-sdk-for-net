@@ -188,6 +188,39 @@ public static void Run(
 }
 ```
 
+### Configuring the Event Hubs clients
+
+The Event Hubs clients can be configured using the  [settings](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs#functions-2x-and-higher) available in `host.json` for the majority of scenarios.  Some less common scenarios, however, require configuring options not available in the settings.  For example, when hosting your Function locally, it is sometimes necessary to specify the web sockets transport to request that the clients use port 443 rather than the default 5671 and 5672 which are blocked by some networks.
+
+To configure these additional options, you'll need to [create a startup class for the Function](https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection) and configure dependency injection to set the desired options when creating Event Hubs clients.  For more information on the available options, see [EventHubsOptions](https://docs.microsoft.com/dotnet/api/microsoft.azure.webjobs.eventhubs.eventhuboptions?view=azure-dotnet).
+
+```C# Snippet:Functions_EventHubs_ConfigureClientOptions
+[assembly: FunctionsStartup(typeof(<< MyNamespace >>.ConfigureClientOptions))]
+
+public class ConfigureClientOptions : FunctionsStartup
+{
+    public override void Configure(IFunctionsHostBuilder hostBuilder)
+    {
+        var builder = hostBuilder.Services.AddWebJobs(_ => { });
+
+        // This method allows you to configure the options used to
+        // create the Event Hubs clients.
+        //
+        // In this example, we're setting the transport type to
+        // use web sockets so that traffic is directed over port 443
+        // instead of 5671 and 5672, which are blocked by some networks.
+
+        builder.AddEventHubs(options =>
+        {
+            options.TransportType = EventHubsTransportType.AmqpWebSockets;
+        });
+
+        builder.AddBuiltInBindings();
+        builder.AddExecutionContextBinding();
+    }
+}
+````
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.

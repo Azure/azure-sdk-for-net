@@ -217,6 +217,39 @@ public static async Task Run(
 }
 ```
 
+### Configuring the ServiceBusClient
+
+The `ServiceBusClient` can be configured using the  [settings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus#additional-settings-for-version-5x) available in `host.json` for the majority of scenarios.  Some less common scenarios, however, require configuring options not available in the settings.  For example, when hosting your Function locally, it is sometimes necessary to specify the web sockets transport to request that the client use port 443 rather than the default 5671 and 5672 which are blocked by some networks.
+
+To configure these additional options, you'll need to [create a startup class for the Function](https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection) and configure dependency injection to set the desired options when creating Event Hubs clients.  For more information on the available options, see [ServiceBusOptions](https://docs.microsoft.com/dotnet/api/microsoft.azure.webjobs.servicebus.servicebusoptions?view=azure-dotnet).
+
+```C# Snippet:Functions_ServiceBus_ConfigureClientOptions
+[assembly: FunctionsStartup(typeof(<< MyNamespace >>.ConfigureClientOptions))]
+
+public class ConfigureClientOptions : FunctionsStartup
+{
+    public override void Configure(IFunctionsHostBuilder hostBuilder)
+    {
+        var builder = hostBuilder.Services.AddWebJobs(_ => { });
+
+        // This method allows you to configure the options used to
+        // create the Service Bus client.
+        //
+        // In this example, we're setting the transport type to
+        // use web sockets so that traffic is directed over port 443
+        // instead of 5671 and 5672, which are blocked by some networks.
+
+        builder.AddServiceBus(options =>
+        {
+            options.TransportType = ServiceBusTransportType.AmqpWebSockets;
+        });
+
+        builder.AddBuiltInBindings();
+        builder.AddExecutionContextBinding();
+    }
+}
+````
+
 ## Troubleshooting
 
 Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.

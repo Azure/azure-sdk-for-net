@@ -170,7 +170,7 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.2.0" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.3" />
@@ -197,6 +197,7 @@
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.35.0" />
+    <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageReference Update="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />
