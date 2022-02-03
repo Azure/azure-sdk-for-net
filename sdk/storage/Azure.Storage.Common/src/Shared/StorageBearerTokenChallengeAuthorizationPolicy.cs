@@ -59,7 +59,7 @@ namespace Azure.Storage
         {
             if (tenantId != null || !_enableTenantDiscovery)
             {
-                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+                TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);
                 if (async)
                 {
                     await base.AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
