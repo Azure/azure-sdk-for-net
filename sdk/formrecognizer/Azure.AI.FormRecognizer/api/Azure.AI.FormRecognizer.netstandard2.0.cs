@@ -268,6 +268,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzedDocument> Documents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair> KeyValuePairs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLanguage> Languages { get { throw null; } }
         public string ModelId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage> Pages { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentStyle> Styles { get { throw null; } }
@@ -436,6 +437,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public float Confidence { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement Key { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement Value { get { throw null; } }
+    }
+    public partial class DocumentLanguage
+    {
+        internal DocumentLanguage() { }
+        public float Confidence { get { throw null; } }
+        public string LanguageCode { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
     }
     public partial class DocumentLine
     {

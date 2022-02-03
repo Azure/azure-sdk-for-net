@@ -1146,6 +1146,58 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion
 
+        #region Read
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartAnalyzeDocumentCanReadPageAndLanguage(bool useStream)
+        {
+            var client = CreateDocumentAnalysisClient();
+            AnalyzeDocumentOperation operation;
+
+            if (useStream)
+            {
+                using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
+                }
+            }
+            else
+            {
+                var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
+                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasValue);
+
+            AnalyzeResult result = operation.Value;
+
+            ValidateAnalyzeResult(
+                result,
+                "prebuilt-read",
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            DocumentPage page = result.Pages.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(LengthUnit.Inch, page.Unit);
+            Assert.AreEqual(8.5, page.Width);
+            Assert.AreEqual(11, page.Height);
+            Assert.AreEqual(0, page.Angle);
+            Assert.AreEqual(18, page.Lines.Count);
+            Assert.IsEmpty(result.Tables);
+
+            Assert.IsNotEmpty(result.Languages);
+        }
+
+        #endregion
+
         #region Receipts
 
         [RecordedTest]
@@ -1569,6 +1621,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             foreach (DocumentTable table in result.Tables)
             {
                 ValidateTable(table, expectedFirstPageNumber, expectedLastPageNumber);
+            }
+
+            // Check Document Languages.
+
+            foreach (DocumentLanguage language in result.Languages)
+            {
+                Assert.That(language.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
+                Assert.That(language.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
+                Assert.NotNull(language.LanguageCode);
             }
         }
 

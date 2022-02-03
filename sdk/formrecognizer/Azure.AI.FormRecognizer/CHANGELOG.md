@@ -4,6 +4,7 @@
 
 ### Features Added
 - Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.
+- Added the `Languages` property to the `AnalyzeResult` class. This property is populated when using the `prebuilt-read` model and holds information about the languages in which the document is written.
 - Added the `Tags` property to the `BuildModelOptions` class. This property can be used to specify custom key-value attributes associated with the model to be built.
 - Added the `Tags` property to the `DocumentModelInfo` and to the `ModelOperationInfo` classes.
 
