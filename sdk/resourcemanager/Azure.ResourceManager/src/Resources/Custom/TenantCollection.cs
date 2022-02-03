@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tenant and their operations over their parent.
     /// </summary>
-    [CodeGenSuppress("TenantCollection", typeof(ArmResource))]
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetIfExists", typeof(CancellationToken))]
@@ -23,14 +22,8 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
         /// <param name="client"> The resource representing the parent resource. </param>
-        internal TenantCollection(ArmClient client) : base(client, ResourceIdentifier.Root)
+        internal TenantCollection(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
-            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
-            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
         }
     }
 }

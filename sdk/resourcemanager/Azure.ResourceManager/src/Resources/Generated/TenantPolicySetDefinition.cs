@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TenantPolicySetDefinition"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantPolicySetDefinition(ArmClient armClient, PolicySetDefinitionData data) : this(armClient, data.Id)
+        internal TenantPolicySetDefinition(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantPolicySetDefinition"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantPolicySetDefinition(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TenantPolicySetDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
             _tenantPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(_tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TenantPolicySetDefinition(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _tenantPolicySetDefinitionPolicySetDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicySetDefinition(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicySetDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

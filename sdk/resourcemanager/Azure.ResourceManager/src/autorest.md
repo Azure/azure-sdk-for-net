@@ -460,6 +460,13 @@ directive:
     transform: 'return undefined'
   - remove-model: OperationResults
   - from: management.json
+    where: $.definitions.CheckNameAvailabilityResult.properties.reason
+    transform: >
+      $['x-ms-enum'] = {
+        name: "NameUnavailableReason",
+        modelAsString: true
+      }
+  - from: management.json
     where: $.parameters.SearchParameter
     transform: >
       $['x-ms-enum'] = {

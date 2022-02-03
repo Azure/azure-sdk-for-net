@@ -28,20 +28,5 @@ namespace Azure.ResourceManager.Core
             : base(client, id)
         {
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmCollection"/> class.
-        /// </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        protected ArmCollection(ArmResource parent)
-            : base(parent.ArmClient, parent.Id)
-        {
-            Parent = parent;
-        }
-
-        /// <summary>
-        /// Gets the parent resource of this resource.
-        /// </summary>
-        protected ArmResource Parent { get; }
     }
 }

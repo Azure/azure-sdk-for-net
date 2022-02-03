@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
 
-            ArmClient = client;
+            Client = client;
             Id = id;
         }
 
@@ -52,40 +52,35 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the <see cref="ArmClient"/> this resource client was created from.
         /// </summary>
-        protected internal virtual ArmClient ArmClient { get; } /* BACK COMPAT REMOVE ME */
-
-        /// <summary>
-        /// Gets the <see cref="ArmClient"/> this resource client was created from.
-        /// </summary>
-        protected internal ArmClient Client => ArmClient;
+        protected internal virtual ArmClient Client { get; }
 
         /// <summary>
         /// Gets the diagnostic options for this resource client.
         /// </summary>
-        protected internal DiagnosticsOptions DiagnosticOptions => ArmClient.DiagnosticOptions;
+        protected internal DiagnosticsOptions DiagnosticOptions => Client.DiagnosticOptions;
 
         /// <summary>
         /// Gets the pipeline for this resource client.
         /// </summary>
-        protected internal HttpPipeline Pipeline => ArmClient.Pipeline;
+        protected internal HttpPipeline Pipeline => Client.Pipeline;
 
         /// <summary>
         /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal Uri BaseUri => ArmClient.BaseUri;
+        protected internal Uri BaseUri => Client.BaseUri;
 
         /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(ArmClient, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+        protected internal TagResource TagResource => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
-        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => ArmClient.TryGetApiVersion(resourceType, out apiVersion);
+        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
 
         /// <summary>
         /// Lists all available geo-locations.
