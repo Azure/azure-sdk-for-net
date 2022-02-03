@@ -354,13 +354,16 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             using Stream source = result.Content;
 
-            await source.CopyToAsync(
-                destination,
-                Constants.DefaultDownloadCopyBufferSize,
-                cancellationToken)
-                .ConfigureAwait(false);
+            // avoid edge-case I/O exceptions by manually read/writing rather than CopyToAsync
+            int read = 0;
+            byte[] buffer = new byte[Constants.DefaultDownloadCopyBufferSize];
+            while ((read = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) != 0)
+            {
+                await destination.WriteAsync(buffer, 0, read, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         private static void CopyTo(
@@ -369,8 +372,15 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
-            result.Content.Dispose();
+            using Stream source = result.Content;
+
+            // avoid edge-case I/O exceptions by manually read/writing rather than CopyTo
+            int read = 0;
+            byte[] buffer = new byte[Constants.DefaultDownloadCopyBufferSize];
+            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                destination.Write(buffer, 0, read);
+            }
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)
