@@ -1,4 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
 trigger:
   branches:
     include:
@@ -7,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template-dpg/
+    - sdk/ServiceNameLowercase/
 
 pr:
   branches:
@@ -18,13 +19,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/template-dpg/
+    - sdk/ServiceNameLowercase/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template-dpg
+    ServiceDirectory: ServiceNameLowercase
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template.Generated
-      safeName: AzureTemplateGenerated
+    - name: Azure.ServiceTemplate.Template
+      safeName: PackageSafeName

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (yyyy-mm-dd)
+## 1.0.0-beta.1 (Unreleased)
 
 ### Breaking Changes
 - Breaking change 1
