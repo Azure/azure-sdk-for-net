@@ -70,6 +70,37 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentModel model = operation.Value;
 
             ValidateDocumentModel(model);
+
+            Assert.AreEqual(1, model.DocTypes.Count);
+            Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
+
+            DocTypeInfo docType = model.DocTypes[modelId];
+
+            Assert.AreEqual(DocumentBuildMode.Template, docType.BuildMode);
+        }
+
+        [RecordedTest]
+        public async Task StartBuildModelWithNeuralBuildMode()
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var modelId = Recording.GenerateId();
+
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Neural, modelId);
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+
+            DocumentModel model = operation.Value;
+
+            ValidateDocumentModel(model);
+
+            Assert.AreEqual(1, model.DocTypes.Count);
+            Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
+
+            DocTypeInfo docType = model.DocTypes[modelId];
+
+            Assert.AreEqual(DocumentBuildMode.Neural, docType.BuildMode);
         }
 
         [RecordedTest]
