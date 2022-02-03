@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DisasterRecoveryAuthorizationRule"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DisasterRecoveryAuthorizationRule(ArmClient armClient, AuthorizationRuleData data) : this(armClient, data.Id)
+        internal DisasterRecoveryAuthorizationRule(ArmClient client, AuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="DisasterRecoveryAuthorizationRule"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DisasterRecoveryAuthorizationRule(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal DisasterRecoveryAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
             _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,43 +115,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DisasterRecoveryAuthorizationRule(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new DisasterRecoveryAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,6 +152,42 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {
