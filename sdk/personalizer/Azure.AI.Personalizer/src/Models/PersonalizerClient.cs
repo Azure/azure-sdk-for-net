@@ -75,7 +75,7 @@ namespace Azure.AI.Personalizer
         /// <param name="interactionsSubsampleRate"> Percentage from (0,1] determines how much percentage of interaction events to consider </param>
         /// <param name="observationsSubSampleRate"> Percentage from (0,1] determines how much percentage of observation events to consider </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float interactionsSubsampleRate = 1.0f, float observationsSubSampleRate = 100, PersonalizerClientOptions options = null) :
+        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float interactionsSubsampleRate = 1.0f, float observationsSubSampleRate = 1.0f, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
