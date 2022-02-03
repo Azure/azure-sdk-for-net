@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var modelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
 
             await operation.WaitForCompletionAsync();
 
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
