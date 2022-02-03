@@ -11,7 +11,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class for mocking. </summary>
@@ -20,16 +20,30 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of DatabaseAccounts in the DatabaseAccount. </summary>
+        /// <returns> An object representing collection of DatabaseAccounts and their operations over a DatabaseAccount. </returns>
+        public virtual DatabaseAccountCollection GetDatabaseAccounts()
+        {
+            return new DatabaseAccountCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
+        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
+        public virtual ClusterResourceCollection GetClusterResources()
+        {
+            return new ClusterResourceCollection(Client, Id);
         }
     }
 }
