@@ -2,10 +2,10 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.WebPubSub.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.SharedPrivateLink GetSharedPrivateLink(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.WebPubSub GetWebPubSub(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.WebPubSubHub GetWebPubSubHub(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.SharedPrivateLink GetSharedPrivateLink(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.WebPubSub GetWebPubSub(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.WebPubSubHub GetWebPubSubHub(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
     {
