@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
 
             // Verify List IpConfigurations in NetworkInterface
-            var networkInterfaceOperations = resourceGroup.GetNetworkInterfaces().Get(nicName).Value;
+            var networkInterfaceOperations = (await resourceGroup.GetNetworkInterfaces().GetAsync(nicName)).Value;
             AsyncPageable<NetworkInterfaceIPConfiguration> listNicIpConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
             List<NetworkInterfaceIPConfiguration> listNicIpConfigurations = await listNicIpConfigurationsAP.ToEnumerableAsync();
             Assert.AreEqual(ipConfigName, listNicIpConfigurations.First().Data.Name);
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.NotNull(getNicIpConfiguration.Value.Etag);
 
             // Verify List LoadBalancers in NetworkInterface
-            AsyncPageable<LoadBalancerData> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();
-            List<LoadBalancerData> listNicLoadBalancers = await listNicLoadBalancersAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancer> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();
+            List<LoadBalancer> listNicLoadBalancers = await listNicLoadBalancersAP.ToEnumerableAsync();
             Assert.IsEmpty(listNicLoadBalancers);
 
             // Get all Nics
