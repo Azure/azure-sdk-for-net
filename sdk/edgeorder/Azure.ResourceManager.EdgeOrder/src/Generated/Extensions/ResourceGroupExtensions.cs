@@ -14,52 +14,47 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region AddressResource
-        /// <summary> Gets an object representing a AddressResourceCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AddressResourceCollection" /> object. </returns>
-        public static AddressResourceCollection GetAddressResources(this ResourceGroup resourceGroup)
-        {
-            return new AddressResourceCollection(resourceGroup);
-        }
-        #endregion
-
-        #region OrderResource
-        /// <summary> Gets an object representing a OrderResourceCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="OrderResourceCollection" /> object. </returns>
-        public static OrderResourceCollection GetOrderResources(this ResourceGroup resourceGroup)
-        {
-            return new OrderResourceCollection(resourceGroup);
-        }
-        #endregion
-
-        #region OrderItemResource
-        /// <summary> Gets an object representing a OrderItemResourceCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="OrderItemResourceCollection" /> object. </returns>
-        public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroup resourceGroup)
-        {
-            return new OrderItemResourceCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of AddressResources in the AddressResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AddressResources and their operations over a AddressResource. </returns>
+        public static AddressResourceCollection GetAddressResources(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAddressResources();
+        }
+
+        /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
+        public static OrderResourceCollection GetOrderResources(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetOrderResources();
+        }
+
+        /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
+        public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetOrderItemResources();
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ListOrderAtResourceGroupLevel
+        /// <summary> Lists order at resource group level. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroup).GetOrderResourcesAsync(skipToken, cancellationToken);
@@ -68,10 +63,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ListOrderAtResourceGroupLevel
+        /// <summary> Lists order at resource group level. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrderResource> GetOrderResources(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroup).GetOrderResources(skipToken, cancellationToken);
