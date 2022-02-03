@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes. For FormRecognizer, this value corresponds to a URL that identifies the Azure cloud where the resource is located. For more information: <see href="https://docs.microsoft.com/azure/azure-government/documentation-government-cognitiveservices" />.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="value"/> is empty. </exception>
         /// <remarks>Please use one of the constant members over creating a custom value unless you have special needs for doing so.</remarks>
         public FormRecognizerAudience(string value)
         {
