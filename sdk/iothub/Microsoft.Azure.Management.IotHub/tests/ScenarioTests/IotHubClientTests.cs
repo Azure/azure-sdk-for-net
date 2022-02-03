@@ -80,7 +80,6 @@ namespace IotHub.Tests.ScenarioTests
                 iotHub.Sku.Name.Should().Be(IotHubSku.S1);
                 iotHub.Sku.Capacity.Should().Be(1);
                 iotHub.SystemData.CreatedAt.Should().NotBeNull();
-                iotHub.SystemData.CreatedAt.Should().BeCloseTo(DateTime.Now, precision: TimeSpan.FromHours(1));
                 iotHub.Properties.EnableDataResidency.Should().BeFalse();
 
                 // Add and get tags
