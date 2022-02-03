@@ -11,6 +11,11 @@
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
+			1) Add support for Availability Zones
+			2) Add support for System Data
+			3) Add support for Trusted Services
+			4) Breaking change: Remove support of preview features such as ExportPipelines, ImportPipelines, PipelineRuns, ScopeMaps and Tokens
+			5) Breaking change: Remove storageAccount property from Registry model and virtualNetworkRules property from NetworkRuleSet model
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
