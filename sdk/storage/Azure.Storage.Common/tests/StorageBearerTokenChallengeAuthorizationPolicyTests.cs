@@ -113,11 +113,14 @@ namespace Azure.Storage.Tests
 
             string[] initialMismatchedScopes = new string[] { initialMismatchedScope };
             string[] serviceChallengeResponseScopes = new string[] { serviceChallengeResponseScope + "/.default" };
+            int callCount = 0;
             MockCredential mockCredential = new MockCredential()
             {
                 GetTokenCallback = (trc, _) =>
                 {
+                    Assert.IsTrue(callCount <= 1);
                     Assert.AreEqual(serviceChallengeResponseScopes, trc.Scopes);
+                    callCount++;
                 }
             };
 
