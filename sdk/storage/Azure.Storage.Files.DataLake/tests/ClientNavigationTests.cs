@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Tests
     public class ClientNavigationTests : DataLakeTestBase
     {
         public ClientNavigationTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

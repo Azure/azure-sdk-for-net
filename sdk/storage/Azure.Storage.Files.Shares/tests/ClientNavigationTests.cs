@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Tests
     internal class ClientNavigationTests : FileTestBase
     {
         public ClientNavigationTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
