@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -23,6 +24,8 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task SingleSlotRankLocalInferenceTests()
         {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: true, isLocalInference: true, interactionsSubsampleRate: 1.01f));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: true, isLocalInference: true, observationsSubsampleRate: 0f));
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true, isLocalInference: true);
             await SingleSlotRankTests(client);
         }
