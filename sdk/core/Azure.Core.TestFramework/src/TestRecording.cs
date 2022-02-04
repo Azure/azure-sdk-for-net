@@ -117,10 +117,13 @@ namespace Azure.Core.TestFramework
                         "Connection"
                     };
 
-                    // temporary until custom matcher supports both excluded and ignored
-                    excludedHeaders.AddRange(_matcher.IgnoredHeaders);
-                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies),
-                        RecordingId);
+                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
+                    {
+                        ExcludedHeaders = string.Join(",", excludedHeaders),
+                        IgnoredHeaders = string.Join(",", _matcher.IgnoredHeaders),
+                        IgnoredQueryParameters = string.Join(",", _matcher.IgnoredQueryParameters),
+                        CompareBodies = _matcher.CompareBodies
+                    });
                     break;
             }
         }
