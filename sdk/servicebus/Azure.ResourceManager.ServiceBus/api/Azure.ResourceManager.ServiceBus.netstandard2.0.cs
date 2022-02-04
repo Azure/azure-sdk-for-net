@@ -2,19 +2,19 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.ServiceBus.DisasterRecovery GetDisasterRecovery(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.MigrationConfigProperties GetMigrationConfigProperties(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.NetworkRuleSet GetNetworkRuleSet(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespace GetServiceBusNamespace(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusQueue GetServiceBusQueue(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusRule GetServiceBusRule(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusSubscription GetServiceBusSubscription(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusTopic GetServiceBusTopic(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.DisasterRecovery GetDisasterRecovery(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.MigrationConfigProperties GetMigrationConfigProperties(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.NetworkRuleSet GetNetworkRuleSet(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespace GetServiceBusNamespace(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusQueue GetServiceBusQueue(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusRule GetServiceBusRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusSubscription GetServiceBusSubscription(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusTopic GetServiceBusTopic(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DisasterRecovery : Azure.ResourceManager.Core.ArmResource
     {

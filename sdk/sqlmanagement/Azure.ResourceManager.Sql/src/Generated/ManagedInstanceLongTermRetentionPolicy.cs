@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceLongTermRetentionPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedInstanceLongTermRetentionPolicy(ArmClient armClient, ManagedInstanceLongTermRetentionPolicyData data) : this(armClient, data.Id)
+        internal ManagedInstanceLongTermRetentionPolicy(ArmClient client, ManagedInstanceLongTermRetentionPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedInstanceLongTermRetentionPolicy(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ManagedInstanceLongTermRetentionPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceLongTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string managedInstanceLongTermRetentionPolicyApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string managedInstanceLongTermRetentionPolicyApiVersion);
             _managedInstanceLongTermRetentionPolicyRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceLongTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceLongTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceLongTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "StaticSiteARMResource"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StaticSiteARMResource(ArmClient armClient, StaticSiteARMResourceData data) : this(armClient, data.Id)
+        internal StaticSiteARMResource(ArmClient client, StaticSiteARMResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteARMResource"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StaticSiteARMResource(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal StaticSiteARMResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _staticSiteARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string staticSiteARMResourceStaticSitesApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string staticSiteARMResourceStaticSitesApiVersion);
             _staticSiteARMResourceStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,34 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of StaticSitePrivateEndpointConnections in the StaticSitePrivateEndpointConnection. </summary>
+        /// <returns> An object representing collection of StaticSitePrivateEndpointConnections and their operations over a StaticSitePrivateEndpointConnection. </returns>
+        public virtual StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
+        {
+            return new StaticSitePrivateEndpointConnectionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of StaticSiteBuildARMResources in the StaticSiteBuildARMResource. </summary>
+        /// <returns> An object representing collection of StaticSiteBuildARMResources and their operations over a StaticSiteBuildARMResource. </returns>
+        public virtual StaticSiteBuildARMResourceCollection GetStaticSiteBuildARMResources()
+        {
+            return new StaticSiteBuildARMResourceCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionApps in the StaticSiteUserProvidedFunctionApp. </summary>
+        /// <returns> An object representing collection of StaticSiteUserProvidedFunctionApps and their operations over a StaticSiteUserProvidedFunctionApp. </returns>
+        public virtual StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
+        {
+            return new StaticSiteUserProvidedFunctionAppCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of StaticSiteCustomDomainOverviewARMResources in the StaticSiteCustomDomainOverviewARMResource. </summary>
+        /// <returns> An object representing collection of StaticSiteCustomDomainOverviewARMResources and their operations over a StaticSiteCustomDomainOverviewARMResource. </returns>
+        public virtual StaticSiteCustomDomainOverviewARMResourceCollection GetStaticSiteCustomDomainOverviewARMResources()
+        {
+            return new StaticSiteCustomDomainOverviewARMResourceCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// OperationId: StaticSites_GetStaticSite
@@ -98,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _staticSiteARMResourceStaticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _staticSiteARMResourceStaticSitesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteARMResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,43 +149,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _staticSiteARMResourceStaticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _staticSiteARMResourceStaticSitesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteARMResource(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +227,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteARMResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +255,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, staticSiteEnvelope, cancellationToken);
-                return Response.FromValue(new StaticSiteARMResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1126,44 +1118,238 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        #region StaticSitePrivateEndpointConnection
-
-        /// <summary> Gets a collection of StaticSitePrivateEndpointConnections in the StaticSiteARMResource. </summary>
-        /// <returns> An object representing collection of StaticSitePrivateEndpointConnections and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<StaticSiteARMResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new StaticSitePrivateEndpointConnectionCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _staticSiteARMResourceStaticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region StaticSiteBuildARMResource
-
-        /// <summary> Gets a collection of StaticSiteBuildARMResources in the StaticSiteARMResource. </summary>
-        /// <returns> An object representing collection of StaticSiteBuildARMResources and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteBuildARMResourceCollection GetStaticSiteBuildARMResources()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<StaticSiteARMResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new StaticSiteBuildARMResourceCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _staticSiteARMResourceStaticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region StaticSiteUserProvidedFunctionApp
-
-        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionApps in the StaticSiteARMResource. </summary>
-        /// <returns> An object representing collection of StaticSiteUserProvidedFunctionApps and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<StaticSiteARMResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new StaticSiteUserProvidedFunctionAppCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _staticSiteARMResourceStaticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region StaticSiteCustomDomainOverviewARMResource
-
-        /// <summary> Gets a collection of StaticSiteCustomDomainOverviewARMResources in the StaticSiteARMResource. </summary>
-        /// <returns> An object representing collection of StaticSiteCustomDomainOverviewARMResources and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteCustomDomainOverviewARMResourceCollection GetStaticSiteCustomDomainOverviewARMResources()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<StaticSiteARMResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new StaticSiteCustomDomainOverviewARMResourceCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _staticSiteARMResourceStaticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<StaticSiteARMResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _staticSiteARMResourceStaticSitesRestClient.GetStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
+        /// OperationId: StaticSites_GetStaticSite
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<StaticSiteARMResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _staticSiteARMResourceStaticSitesRestClient.GetStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new StaticSiteARMResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

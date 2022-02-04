@@ -18,7 +18,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _eventHubClusterClustersClientDiagnostics;
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = await EventHubNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.EventHubs
                 try
                 {
                     var response = EventHubNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,14 +254,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
             scope.Start();
             try
@@ -279,14 +273,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Check the give Namespace name availability. </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
             scope.Start();
             try

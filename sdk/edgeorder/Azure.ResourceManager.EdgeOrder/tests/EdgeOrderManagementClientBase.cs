@@ -34,24 +34,27 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
 
-        public ResourceGroup GetResourceGroup(string name)
+        public async Task<ResourceGroup> GetResourceGroupAsync(string name)
         {
-            return Subscription.GetResourceGroups().Get(name).Value;
+            return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
-        protected AddressResourceCollection GetAddressResourceCollection(string resourceGroupName)
+        protected async Task<AddressResourceCollection> GetAddressResourceCollectionAsync(string resourceGroupName)
         {
-            return GetResourceGroup(resourceGroupName).GetAddressResources();
+            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetAddressResources();
         }
 
-        protected OrderItemResourceCollection GetOrderItemResourceCollection(string resourceGroupName)
+        protected async Task<OrderItemResourceCollection> GetOrderItemResourceCollectionAsync(string resourceGroupName)
         {
-            return GetResourceGroup(resourceGroupName).GetOrderItemResources();
+            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetOrderItemResources();
         }
 
-        protected OrderResourceCollection GetOrderResourceCollection(string resourceGroupName)
+        protected async Task<OrderResourceCollection> GetOrderResourceCollectionAsync(string resourceGroupName)
         {
-            return GetResourceGroup(resourceGroupName).GetOrderResources();
+            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetOrderResources();
         }
 
         protected static ContactDetails GetDefaultContactDetails()

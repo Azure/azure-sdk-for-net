@@ -15,61 +15,81 @@ namespace Azure.ResourceManager.DeviceUpdate
     {
         #region DeviceUpdateAccount
         /// <summary> Gets an object representing a DeviceUpdateAccount along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceUpdateAccount" /> object. </returns>
-        public static DeviceUpdateAccount GetDeviceUpdateAccount(this ArmClient armClient, ResourceIdentifier id)
+        public static DeviceUpdateAccount GetDeviceUpdateAccount(this ArmClient client, ResourceIdentifier id)
         {
-            DeviceUpdateAccount.ValidateResourceId(id);
-            return new DeviceUpdateAccount(armClient, id);
+            return client.GetClient(() =>
+            {
+                DeviceUpdateAccount.ValidateResourceId(id);
+                return new DeviceUpdateAccount(client, id);
+            }
+            );
         }
         #endregion
 
         #region DeviceUpdateInstance
         /// <summary> Gets an object representing a DeviceUpdateInstance along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceUpdateInstance" /> object. </returns>
-        public static DeviceUpdateInstance GetDeviceUpdateInstance(this ArmClient armClient, ResourceIdentifier id)
+        public static DeviceUpdateInstance GetDeviceUpdateInstance(this ArmClient client, ResourceIdentifier id)
         {
-            DeviceUpdateInstance.ValidateResourceId(id);
-            return new DeviceUpdateInstance(armClient, id);
+            return client.GetClient(() =>
+            {
+                DeviceUpdateInstance.ValidateResourceId(id);
+                return new DeviceUpdateInstance(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateEndpointConnection.ValidateResourceId(id);
-            return new PrivateEndpointConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateEndpointConnection.ValidateResourceId(id);
+                return new PrivateEndpointConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateLink
         /// <summary> Gets an object representing a PrivateLink along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
-        public static PrivateLink GetPrivateLink(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateLink GetPrivateLink(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateLink.ValidateResourceId(id);
-            return new PrivateLink(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateLink.ValidateResourceId(id);
+                return new PrivateLink(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateEndpointConnectionProxy
         /// <summary> Gets an object representing a PrivateEndpointConnectionProxy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionProxy" /> object. </returns>
-        public static PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateEndpointConnectionProxy.ValidateResourceId(id);
-            return new PrivateEndpointConnectionProxy(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateEndpointConnectionProxy.ValidateResourceId(id);
+                return new PrivateEndpointConnectionProxy(client, id);
+            }
+            );
         }
         #endregion
     }

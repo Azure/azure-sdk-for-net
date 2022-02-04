@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteBasicPublishingCredentialsPolicyScm"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteBasicPublishingCredentialsPolicyScm(ArmClient armClient, CsmPublishingCredentialsPoliciesEntityData data) : this(armClient, data.Id)
+        internal SiteBasicPublishingCredentialsPolicyScm(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteBasicPublishingCredentialsPolicyScm"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteBasicPublishingCredentialsPolicyScm(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteBasicPublishingCredentialsPolicyScm(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
             _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient = new WebAppsRestOperations(_siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,71 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowed(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
+        /// OperationId: WebApps_UpdateScmAllowed
+        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public async virtual Task<SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
+        /// OperationId: WebApps_UpdateScmAllowed
+        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public virtual SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowed(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
+                var operation = new SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,70 +222,6 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
-        /// OperationId: WebApps_UpdateScmAllowed
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm
-        /// OperationId: WebApps_UpdateScmAllowed
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _siteBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowed(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new SiteBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

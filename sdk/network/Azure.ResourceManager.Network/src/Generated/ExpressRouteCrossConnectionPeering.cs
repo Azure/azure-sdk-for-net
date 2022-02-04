@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionPeering"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCrossConnectionPeering(ArmClient armClient, ExpressRouteCrossConnectionPeeringData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal ExpressRouteCrossConnectionPeering(ArmClient client, ExpressRouteCrossConnectionPeeringData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeering"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRouteCrossConnectionPeering(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ExpressRouteCrossConnectionPeering(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteCrossConnectionPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
             _expressRouteCrossConnectionPeeringRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(_expressRouteCrossConnectionPeeringClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionPeeringApiVersion);
             _expressRouteCrossConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnection.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ExpressRouteCrossConnection.ResourceType, out string expressRouteCrossConnectionApiVersion);
+            Client.TryGetApiVersion(ExpressRouteCrossConnection.ResourceType, out string expressRouteCrossConnectionApiVersion);
             _expressRouteCrossConnectionRestClient = new ExpressRouteCrossConnectionsRestOperations(_expressRouteCrossConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCrossConnectionPeeringRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _expressRouteCrossConnectionPeeringClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,43 +120,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionPeeringRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _expressRouteCrossConnectionPeeringClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnectionPeering(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new ExpressRouteCrossConnectionPeering(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -363,6 +327,42 @@ namespace Azure.ResourceManager.Network
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeering.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

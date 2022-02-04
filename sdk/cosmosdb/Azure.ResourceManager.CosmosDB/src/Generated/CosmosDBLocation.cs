@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref = "CosmosDBLocation"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBLocation(ArmClient armClient, CosmosDBLocationData data) : this(armClient, data.Id)
+        internal CosmosDBLocation(ArmClient client, CosmosDBLocationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="CosmosDBLocation"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CosmosDBLocation(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal CosmosDBLocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of RestorableDatabaseAccounts in the RestorableDatabaseAccount. </summary>
+        /// <returns> An object representing collection of RestorableDatabaseAccounts and their operations over a RestorableDatabaseAccount. </returns>
+        public virtual RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts()
+        {
+            return new RestorableDatabaseAccountCollection(Client, Id);
+        }
+
         /// <summary> Get the properties of an existing Cosmos DB location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CosmosDBLocation>> GetAsync(CancellationToken cancellationToken = default)
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CosmosDBLocation(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocation(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,15 +165,5 @@ namespace Azure.ResourceManager.CosmosDB
                 throw;
             }
         }
-
-        #region RestorableDatabaseAccount
-
-        /// <summary> Gets a collection of RestorableDatabaseAccounts in the CosmosDBLocation. </summary>
-        /// <returns> An object representing collection of RestorableDatabaseAccounts and their operations over a CosmosDBLocation. </returns>
-        public virtual RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts()
-        {
-            return new RestorableDatabaseAccountCollection(this);
-        }
-        #endregion
     }
 }

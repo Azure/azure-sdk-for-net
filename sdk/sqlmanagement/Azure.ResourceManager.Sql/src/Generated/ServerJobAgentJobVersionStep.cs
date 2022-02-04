@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerJobAgentJobVersionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerJobAgentJobVersionStep(ArmClient armClient, JobStepData data) : this(armClient, data.Id)
+        internal ServerJobAgentJobVersionStep(ArmClient client, JobStepData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobVersionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerJobAgentJobVersionStep(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerJobAgentJobVersionStep(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobVersionStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
             _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobVersionStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, int.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, int.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStep(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

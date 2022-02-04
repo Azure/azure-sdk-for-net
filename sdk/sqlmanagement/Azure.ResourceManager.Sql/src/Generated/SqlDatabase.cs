@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -51,30 +52,30 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabase"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDatabase(ArmClient armClient, SqlDatabaseData data) : this(armClient, data.Id)
+        internal SqlDatabase(ArmClient client, SqlDatabaseData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabase"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlDatabase(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SqlDatabase(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ServerDatabaseSchemaTableColumn.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            Client.TryGetApiVersion(ServerDatabaseSchemaTableColumn.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
             _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(_serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
             _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePoint.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
+            Client.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
             _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
             _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            Client.TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
             _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
             _databaseExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(_databaseExtensionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -111,6 +112,146 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
+        public virtual DataMaskingPolicy GetDataMaskingPolicy()
+        {
+            return new DataMaskingPolicy(Client, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
+        }
+
+        /// <summary> Gets a collection of GeoBackupPolicies in the GeoBackupPolicy. </summary>
+        /// <returns> An object representing collection of GeoBackupPolicies and their operations over a GeoBackupPolicy. </returns>
+        public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
+        {
+            return new GeoBackupPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ReplicationLinks in the ReplicationLink. </summary>
+        /// <returns> An object representing collection of ReplicationLinks and their operations over a ReplicationLink. </returns>
+        public virtual ReplicationLinkCollection GetReplicationLinks()
+        {
+            return new ReplicationLinkCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ExtendedDatabaseBlobAuditingPolicies in the ExtendedDatabaseBlobAuditingPolicy. </summary>
+        /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicies and their operations over a ExtendedDatabaseBlobAuditingPolicy. </returns>
+        public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
+        {
+            return new ExtendedDatabaseBlobAuditingPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DatabaseBlobAuditingPolicies in the DatabaseBlobAuditingPolicy. </summary>
+        /// <returns> An object representing collection of DatabaseBlobAuditingPolicies and their operations over a DatabaseBlobAuditingPolicy. </returns>
+        public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
+        {
+            return new DatabaseBlobAuditingPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerDatabaseAdvisors in the ServerDatabaseAdvisor. </summary>
+        /// <returns> An object representing collection of ServerDatabaseAdvisors and their operations over a ServerDatabaseAdvisor. </returns>
+        public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
+        {
+            return new ServerDatabaseAdvisorCollection(Client, Id);
+        }
+
+        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
+        public virtual DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
+        {
+            return new DatabaseAutomaticTuning(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+        }
+
+        /// <summary> Gets a collection of ServerDatabaseSchemas in the ServerDatabaseSchema. </summary>
+        /// <returns> An object representing collection of ServerDatabaseSchemas and their operations over a ServerDatabaseSchema. </returns>
+        public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
+        {
+            return new ServerDatabaseSchemaCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DatabaseSecurityAlertPolicies in the DatabaseSecurityAlertPolicy. </summary>
+        /// <returns> An object representing collection of DatabaseSecurityAlertPolicies and their operations over a DatabaseSecurityAlertPolicy. </returns>
+        public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
+        {
+            return new DatabaseSecurityAlertPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerDatabaseVulnerabilityAssessments in the ServerDatabaseVulnerabilityAssessment. </summary>
+        /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessments and their operations over a ServerDatabaseVulnerabilityAssessment. </returns>
+        public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
+        {
+            return new ServerDatabaseVulnerabilityAssessmentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DataWarehouseUserActivities in the DataWarehouseUserActivities. </summary>
+        /// <returns> An object representing collection of DataWarehouseUserActivities and their operations over a DataWarehouseUserActivities. </returns>
+        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
+        {
+            return new DataWarehouseUserActivitiesCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of LongTermRetentionPolicies in the LongTermRetentionPolicy. </summary>
+        /// <returns> An object representing collection of LongTermRetentionPolicies and their operations over a LongTermRetentionPolicy. </returns>
+        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
+        {
+            return new LongTermRetentionPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
+        public virtual MaintenanceWindowOptions GetMaintenanceWindowOptions()
+        {
+            return new MaintenanceWindowOptions(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+        }
+
+        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
+        public virtual MaintenanceWindows GetMaintenanceWindows()
+        {
+            return new MaintenanceWindows(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
+        }
+
+        /// <summary> Gets a collection of RestorePoints in the RestorePoint. </summary>
+        /// <returns> An object representing collection of RestorePoints and their operations over a RestorePoint. </returns>
+        public virtual RestorePointCollection GetRestorePoints()
+        {
+            return new RestorePointCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SyncGroups in the SyncGroup. </summary>
+        /// <returns> An object representing collection of SyncGroups and their operations over a SyncGroup. </returns>
+        public virtual SyncGroupCollection GetSyncGroups()
+        {
+            return new SyncGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of WorkloadGroups in the WorkloadGroup. </summary>
+        /// <returns> An object representing collection of WorkloadGroups and their operations over a WorkloadGroup. </returns>
+        public virtual WorkloadGroupCollection GetWorkloadGroups()
+        {
+            return new WorkloadGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptions in the LogicalDatabaseTransparentDataEncryption. </summary>
+        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptions and their operations over a LogicalDatabaseTransparentDataEncryption. </returns>
+        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
+        {
+            return new LogicalDatabaseTransparentDataEncryptionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of BackupShortTermRetentionPolicies in the BackupShortTermRetentionPolicy. </summary>
+        /// <returns> An object representing collection of BackupShortTermRetentionPolicies and their operations over a BackupShortTermRetentionPolicy. </returns>
+        public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
+        {
+            return new BackupShortTermRetentionPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of LedgerDigestUploads in the LedgerDigestUploads. </summary>
+        /// <returns> An object representing collection of LedgerDigestUploads and their operations over a LedgerDigestUploads. </returns>
+        public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
+        {
+            return new LedgerDigestUploadsCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: Databases_Get
@@ -125,7 +266,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sqlDatabaseDatabasesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,43 +289,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _sqlDatabaseDatabasesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabase(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new SqlDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,166 +348,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<SqlDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<SqlDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<SqlDatabase>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<SqlDatabase> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<SqlDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<SqlDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabase(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// OperationId: Databases_Update
@@ -423,7 +368,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseUpdateOperation(ArmClient, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlDatabaseUpdateOperation(Client, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -455,7 +400,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseUpdateOperation(ArmClient, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlDatabaseUpdateOperation(Client, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -981,17 +926,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseColumnData> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumn> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseColumnData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumn>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -999,14 +944,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<DatabaseColumnData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumn>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1027,17 +972,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseColumnData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseColumnData> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaTableColumn> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<DatabaseColumnData> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumn> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1045,14 +990,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<DatabaseColumnData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumn> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabase.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1135,17 +1080,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabel> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabel>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1153,14 +1098,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabel>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1179,17 +1124,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabel> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnSensitivityLabel> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1197,14 +1142,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnSensitivityLabel> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetCurrentSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1279,17 +1224,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabel> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SensitivityLabelData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabel>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1297,14 +1242,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SensitivityLabelData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabel>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1323,17 +1268,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SensitivityLabelData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabel> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SensitivityLabelData> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnSensitivityLabel> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1341,14 +1286,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SensitivityLabelData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnSensitivityLabel> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabase.GetRecommendedSensitivityLabels");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabel(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1775,204 +1720,238 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region DataMaskingPolicy
-
-        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
-        public virtual DataMaskingPolicy GetDataMaskingPolicy()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<SqlDatabase>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new DataMaskingPolicy(ArmClient, new ResourceIdentifier(Id.ToString() + "/dataMaskingPolicies/Default"));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region GeoBackupPolicy
-
-        /// <summary> Gets a collection of GeoBackupPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of GeoBackupPolicies and their operations over a SqlDatabase. </returns>
-        public virtual GeoBackupPolicyCollection GetGeoBackupPolicies()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<SqlDatabase> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new GeoBackupPolicyCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ReplicationLink
-
-        /// <summary> Gets a collection of ReplicationLinks in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ReplicationLinks and their operations over a SqlDatabase. </returns>
-        public virtual ReplicationLinkCollection GetReplicationLinks()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<SqlDatabase>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new ReplicationLinkCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ExtendedDatabaseBlobAuditingPolicy
-
-        /// <summary> Gets a collection of ExtendedDatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ExtendedDatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public virtual ExtendedDatabaseBlobAuditingPolicyCollection GetExtendedDatabaseBlobAuditingPolicies()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<SqlDatabase> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new ExtendedDatabaseBlobAuditingPolicyCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region DatabaseBlobAuditingPolicy
-
-        /// <summary> Gets a collection of DatabaseBlobAuditingPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DatabaseBlobAuditingPolicies and their operations over a SqlDatabase. </returns>
-        public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<SqlDatabase>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return new DatabaseBlobAuditingPolicyCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ServerDatabaseAdvisor
-
-        /// <summary> Gets a collection of ServerDatabaseAdvisors in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseAdvisors and their operations over a SqlDatabase. </returns>
-        public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: Databases_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<SqlDatabase> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            return new ServerDatabaseAdvisorCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SqlDatabase(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region DatabaseAutomaticTuning
-
-        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
-        public virtual DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new DatabaseAutomaticTuning(ArmClient, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ServerDatabaseSchema
-
-        /// <summary> Gets a collection of ServerDatabaseSchemas in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseSchemas and their operations over a SqlDatabase. </returns>
-        public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return new ServerDatabaseSchemaCollection(this);
+            using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
-
-        #region DatabaseSecurityAlertPolicy
-
-        /// <summary> Gets a collection of DatabaseSecurityAlertPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DatabaseSecurityAlertPolicies and their operations over a SqlDatabase. </returns>
-        public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
-        {
-            return new DatabaseSecurityAlertPolicyCollection(this);
-        }
-        #endregion
-
-        #region ServerDatabaseVulnerabilityAssessment
-
-        /// <summary> Gets a collection of ServerDatabaseVulnerabilityAssessments in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessments and their operations over a SqlDatabase. </returns>
-        public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
-        {
-            return new ServerDatabaseVulnerabilityAssessmentCollection(this);
-        }
-        #endregion
-
-        #region DataWarehouseUserActivities
-
-        /// <summary> Gets a collection of DataWarehouseUserActivities in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataWarehouseUserActivities and their operations over a SqlDatabase. </returns>
-        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
-        {
-            return new DataWarehouseUserActivitiesCollection(this);
-        }
-        #endregion
-
-        #region LongTermRetentionPolicy
-
-        /// <summary> Gets a collection of LongTermRetentionPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LongTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
-        {
-            return new LongTermRetentionPolicyCollection(this);
-        }
-        #endregion
-
-        #region MaintenanceWindowOptions
-
-        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
-        public virtual MaintenanceWindowOptions GetMaintenanceWindowOptions()
-        {
-            return new MaintenanceWindowOptions(ArmClient, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
-        }
-        #endregion
-
-        #region MaintenanceWindows
-
-        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
-        public virtual MaintenanceWindows GetMaintenanceWindows()
-        {
-            return new MaintenanceWindows(ArmClient, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
-        }
-        #endregion
-
-        #region RestorePoint
-
-        /// <summary> Gets a collection of RestorePoints in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of RestorePoints and their operations over a SqlDatabase. </returns>
-        public virtual RestorePointCollection GetRestorePoints()
-        {
-            return new RestorePointCollection(this);
-        }
-        #endregion
-
-        #region SyncGroup
-
-        /// <summary> Gets a collection of SyncGroups in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of SyncGroups and their operations over a SqlDatabase. </returns>
-        public virtual SyncGroupCollection GetSyncGroups()
-        {
-            return new SyncGroupCollection(this);
-        }
-        #endregion
-
-        #region WorkloadGroup
-
-        /// <summary> Gets a collection of WorkloadGroups in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of WorkloadGroups and their operations over a SqlDatabase. </returns>
-        public virtual WorkloadGroupCollection GetWorkloadGroups()
-        {
-            return new WorkloadGroupCollection(this);
-        }
-        #endregion
-
-        #region LogicalDatabaseTransparentDataEncryption
-
-        /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptions in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptions and their operations over a SqlDatabase. </returns>
-        public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
-        {
-            return new LogicalDatabaseTransparentDataEncryptionCollection(this);
-        }
-        #endregion
-
-        #region BackupShortTermRetentionPolicy
-
-        /// <summary> Gets a collection of BackupShortTermRetentionPolicies in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of BackupShortTermRetentionPolicies and their operations over a SqlDatabase. </returns>
-        public virtual BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies()
-        {
-            return new BackupShortTermRetentionPolicyCollection(this);
-        }
-        #endregion
-
-        #region LedgerDigestUploads
-
-        /// <summary> Gets a collection of LedgerDigestUploads in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LedgerDigestUploads and their operations over a SqlDatabase. </returns>
-        public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
-        {
-            return new LedgerDigestUploadsCollection(this);
-        }
-        #endregion
     }
 }

@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerJobAgentJobExecutionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerJobAgentJobExecutionStep(ArmClient armClient, JobExecutionData data) : this(armClient, data.Id)
+        internal ServerJobAgentJobExecutionStep(ArmClient client, JobExecutionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionStep"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerJobAgentJobExecutionStep(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerJobAgentJobExecutionStep(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
             _serverJobAgentJobExecutionStepJobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ServerJobAgentJobExecutionStepTargets in the ServerJobAgentJobExecutionStepTarget. </summary>
+        /// <returns> An object representing collection of ServerJobAgentJobExecutionStepTargets and their operations over a ServerJobAgentJobExecutionStepTarget. </returns>
+        public virtual ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets()
+        {
+            return new ServerJobAgentJobExecutionStepTargetCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}
         /// OperationId: JobStepExecutions_Get
@@ -97,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobExecutionStep(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,15 +171,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        #region ServerJobAgentJobExecutionStepTarget
-
-        /// <summary> Gets a collection of ServerJobAgentJobExecutionStepTargets in the ServerJobAgentJobExecutionStep. </summary>
-        /// <returns> An object representing collection of ServerJobAgentJobExecutionStepTargets and their operations over a ServerJobAgentJobExecutionStep. </returns>
-        public virtual ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets()
-        {
-            return new ServerJobAgentJobExecutionStepTargetCollection(this);
-        }
-        #endregion
     }
 }

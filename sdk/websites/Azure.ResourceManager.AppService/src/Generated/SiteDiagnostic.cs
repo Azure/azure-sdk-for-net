@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteDiagnostic(ArmClient armClient, DiagnosticCategoryData data) : this(armClient, data.Id)
+        internal SiteDiagnostic(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteDiagnostic"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteDiagnostic(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteDiagnostic(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteDiagnosticDiagnosticsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteDiagnosticDiagnosticsApiVersion);
             _siteDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDiagnosticDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDiagnosticDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,20 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SiteDiagnosticAnalyses in the SiteDiagnosticAnalysis. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticAnalyses and their operations over a SiteDiagnosticAnalysis. </returns>
+        public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
+        {
+            return new SiteDiagnosticAnalysisCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SiteDiagnosticDetectors in the SiteDiagnosticDetector. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticDetectors and their operations over a SiteDiagnosticDetector. </returns>
+        public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
+        {
+            return new SiteDiagnosticDetectorCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
         /// OperationId: Diagnostics_GetSiteDiagnosticCategory
@@ -97,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteDiagnosticDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnostic(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnostic(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,25 +178,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        #region SiteDiagnosticAnalysis
-
-        /// <summary> Gets a collection of SiteDiagnosticAnalyses in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticAnalyses and their operations over a SiteDiagnostic. </returns>
-        public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
-        {
-            return new SiteDiagnosticAnalysisCollection(this);
-        }
-        #endregion
-
-        #region SiteDiagnosticDetector
-
-        /// <summary> Gets a collection of SiteDiagnosticDetectors in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticDetectors and their operations over a SiteDiagnostic. </returns>
-        public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
-        {
-            return new SiteDiagnosticDetectorCollection(this);
-        }
-        #endregion
     }
 }

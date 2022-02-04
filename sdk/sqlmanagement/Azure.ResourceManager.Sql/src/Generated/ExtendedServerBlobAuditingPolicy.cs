@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ExtendedServerBlobAuditingPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExtendedServerBlobAuditingPolicy(ArmClient armClient, ExtendedServerBlobAuditingPolicyData data) : this(armClient, data.Id)
+        internal ExtendedServerBlobAuditingPolicy(ArmClient client, ExtendedServerBlobAuditingPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExtendedServerBlobAuditingPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExtendedServerBlobAuditingPolicy(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ExtendedServerBlobAuditingPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _extendedServerBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string extendedServerBlobAuditingPolicyApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string extendedServerBlobAuditingPolicyApiVersion);
             _extendedServerBlobAuditingPolicyRestClient = new ExtendedServerBlobAuditingPoliciesRestOperations(_extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, extendedServerBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _extendedServerBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _extendedServerBlobAuditingPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _extendedServerBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _extendedServerBlobAuditingPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -2,11 +2,11 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount GetDeviceUpdateAccount(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstance GetDeviceUpdateInstance(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.PrivateLink GetPrivateLink(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount GetDeviceUpdateAccount(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstance GetDeviceUpdateInstance(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.PrivateLink GetPrivateLink(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DeviceUpdateAccount : Azure.ResourceManager.Core.ArmResource
     {

@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "OutboundRule"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OutboundRule(ArmClient armClient, OutboundRuleData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal OutboundRule(ArmClient client, OutboundRuleData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="OutboundRule"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OutboundRule(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal OutboundRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _outboundRuleLoadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
             _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundRuleLoadBalancerOutboundRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OutboundRule(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                 var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundRule(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SyncGroup"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SyncGroup(ArmClient armClient, SyncGroupData data) : this(armClient, data.Id)
+        internal SyncGroup(ArmClient client, SyncGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SyncGroup"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SyncGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SyncGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string syncGroupApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string syncGroupApiVersion);
             _syncGroupRestClient = new SyncGroupsRestOperations(_syncGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SyncMembers in the SyncMember. </summary>
+        /// <returns> An object representing collection of SyncMembers and their operations over a SyncMember. </returns>
+        public virtual SyncMemberCollection GetSyncMembers()
+        {
+            return new SyncMemberCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
         /// OperationId: SyncGroups_Get
@@ -98,7 +105,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _syncGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SyncGroup(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SyncGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,43 +128,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _syncGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncGroup(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new SyncGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _syncGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncGroupUpdateOperation(ArmClient, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SyncGroupUpdateOperation(Client, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -268,7 +239,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SyncGroupUpdateOperation(ArmClient, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SyncGroupUpdateOperation(Client, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -606,14 +577,40 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        #region SyncMember
-
-        /// <summary> Gets a collection of SyncMembers in the SyncGroup. </summary>
-        /// <returns> An object representing collection of SyncMembers and their operations over a SyncGroup. </returns>
-        public virtual SyncMemberCollection GetSyncMembers()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new SyncMemberCollection(this);
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

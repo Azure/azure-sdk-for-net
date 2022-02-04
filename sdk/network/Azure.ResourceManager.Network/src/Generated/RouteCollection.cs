@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -32,11 +33,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RouteCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal RouteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Route.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Route.ResourceType, out string routeApiVersion);
+            Client.TryGetApiVersion(Route.ResourceType, out string routeApiVersion);
             _routeRestClient = new RoutesRestOperations(_routeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,40 +49,6 @@ namespace Azure.ResourceManager.Network
         {
             if (id.ResourceType != RouteTable.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RouteTable.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// <summary> Creates or updates a route in the specified route table. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="routeName"> The name of the route. </param>
-        /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="routeParameters"/> is null. </exception>
-        public virtual RouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, RouteData routeParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
-            if (routeParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeParameters));
-            }
-
-            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _routeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters, cancellationToken);
-                var operation = new RouteCreateOrUpdateOperation(ArmClient, _routeClientDiagnostics, Pipeline, _routeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Creates or updates a route in the specified route table. </summary>
@@ -103,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteCreateOrUpdateOperation(ArmClient, _routeClientDiagnostics, Pipeline, _routeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters).Request, response);
+                var operation = new RouteCreateOrUpdateOperation(Client, _routeClientDiagnostics, Pipeline, _routeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,23 +83,30 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified route from a route table. </summary>
+        /// <summary> Creates or updates a route in the specified route table. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="routeName"> The name of the route. </param>
+        /// <param name="routeParameters"> Parameters supplied to the create or update route operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public virtual Response<Route> Get(string routeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="routeParameters"/> is null. </exception>
+        public virtual RouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, RouteData routeParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            if (routeParameters == null)
+            {
+                throw new ArgumentNullException(nameof(routeParameters));
+            }
 
-            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.Get");
+            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken);
-                if (response.Value == null)
-                    throw _routeClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Route(ArmClient, response.Value), response.GetRawResponse());
+                var response = _routeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters, cancellationToken);
+                var operation = new RouteCreateOrUpdateOperation(Client, _routeClientDiagnostics, Pipeline, _routeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, routeParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -156,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _routeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _routeClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Route(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Route(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,23 +140,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Gets the specified route from a route table. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public virtual Response<Route> GetIfExists(string routeName, CancellationToken cancellationToken = default)
+        public virtual Response<Route> Get(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetIfExists");
+            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.Get");
             scope.Start();
             try
             {
-                var response = _routeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken: cancellationToken);
+                var response = _routeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Route>(null, response.GetRawResponse());
-                return Response.FromValue(new Route(ArmClient, response.Value), response.GetRawResponse());
+                    throw _routeClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Route(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,23 +165,97 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Gets all routes in a route table. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Route" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Route> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Route>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _routeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Route(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Route>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _routeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Route(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all routes in a route table. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Route" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Route> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<Route> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _routeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Route(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Route> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _routeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Route(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<Route>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetIfExists");
+            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _routeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Route>(null, response.GetRawResponse());
-                return Response.FromValue(new Route(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +264,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -243,16 +292,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Route>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.Exists");
+            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _routeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<Route>(null, response.GetRawResponse());
+                return Response.FromValue(new Route(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,80 +312,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all routes in a route table. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="routeName"> The name of the route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Route" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Route> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        public virtual Response<Route> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            Page<Route> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _routeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Route(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Route> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _routeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Route(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-        /// <summary> Gets all routes in a route table. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Route" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Route> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Route>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _routeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Route(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _routeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Route>(null, response.GetRawResponse());
+                return Response.FromValue(new Route(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<Route>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _routeClientDiagnostics.CreateScope("RouteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _routeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Route(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Route> IEnumerable<Route>.GetEnumerator()

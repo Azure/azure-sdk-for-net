@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SqlAgentConfiguration"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlAgentConfiguration(ArmClient armClient, SqlAgentConfigurationData data) : this(armClient, data.Id)
+        internal SqlAgentConfiguration(ArmClient client, SqlAgentConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlAgentConfiguration"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlAgentConfiguration(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SqlAgentConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlAgentConfigurationSqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sqlAgentConfigurationSqlAgentApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sqlAgentConfigurationSqlAgentApiVersion);
             _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(_sqlAgentConfigurationSqlAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlAgentConfigurationSqlAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlAgentConfiguration(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,71 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlAgentConfigurationSqlAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlAgentConfiguration(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
+        /// OperationId: SqlAgent_CreateOrUpdate
+        /// <summary> Puts new sql agent configuration to instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<SqlAgentConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
+        /// OperationId: SqlAgent_CreateOrUpdate
+        /// <summary> Puts new sql agent configuration to instance. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual SqlAgentConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
+                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,70 +222,6 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_CreateOrUpdate
-        /// <summary> Puts new sql agent configuration to instance. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlAgentConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
-        /// OperationId: SqlAgent_CreateOrUpdate
-        /// <summary> Puts new sql agent configuration to instance. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlAgentConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
