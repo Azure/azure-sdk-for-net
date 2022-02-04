@@ -43,6 +43,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Model description. </summary>
         public string Description { get; }
+        /// <summary> Custom model build mode. </summary>
+        public DocumentBuildMode? BuildMode { get; }
         /// <summary> Estimated confidence for each field. </summary>
         public IReadOnlyDictionary<string, float> FieldConfidence { get; }
     }
