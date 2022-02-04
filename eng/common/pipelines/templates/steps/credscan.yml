@@ -1,6 +1,7 @@
 parameters:
   SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
+
 steps:
 - pwsh: |
     New-Item -Path "$(Build.SourcesDirectory)" -Name "credscan.tsv"
