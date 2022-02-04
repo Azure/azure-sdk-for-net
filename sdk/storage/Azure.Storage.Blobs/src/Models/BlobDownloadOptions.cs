@@ -24,6 +24,12 @@ namespace Azure.Storage.Blobs.Models
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </summary>
+        public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
         /// Optional transactional hashing options.
         /// Range must be provided explicitly stating a range withing Azure
         /// Storage size limits for requesting a transactional hash. See the

@@ -1302,6 +1302,8 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
+                    stream = stream.WithNoDispose().WithProgress(options?.ProgressHandler);
+
                     /* NOTE: we do not currently support both features together. This remains here for the
                      * potential future where we do.
                      * Comparing hash results comes BEFORE decryption.
