@@ -1,0 +1,39 @@
+parameters:
+  SuppressionFilePath: 'eng\CredScanSuppression.json'
+  BaselineFilePath: ''
+steps:
+- pwsh: |
+    New-Item -Path "$(Build.sourcesdirectory)" -Name "credscan.tsv"
+    if ("$(Build.Reason)" -eq 'PullRequest') {
+      New-Item -Path "$(Build.sourcesdirectory)" -Name "changedFiles" -ItemType "directory"
+      (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
+      | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)\credscan.tsv" -Value "$(Build.SourcesDirectory)\$_"}
+    }
+    else {
+      Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)\sdk\${{ parameters.ServiceDirectory }}"
+    }
+    Get-Content "$(Build.SourcesDirectory)\credscan.tsv"
+  displayName: Put changed files to folder     
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
+  displayName: Scanning for credentials
+  inputs:
+    toolMajorVersion: V2
+    toolVersion: latest
+    scanFolder: $(Build.SourcesDirectory)\credscan.tsv
+    suppressionsFile: ${{ parameters.SuppressionFilePath }}
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+  displayName: 'Post Analysis'
+  inputs:
+    GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
+    GdnBreakAllTools: false
+    GdnBreakGdnToolCredScan: true
+    GdnBreakGdnToolCredScanSeverity: Error
+    GdnBreakBaselines: baseline
+    # Used for generating baseline file.
+    # GdnBreakOutputBaselineFile: dotnet
+    # GdnBreakOutputBaseline: baseline
+  condition: succeededOrFailed()
+- pwsh: |
+    Write-Host "The cred scan step failed, please check https://aka.ms/azsdk/credscan for more information."
+  displayName: Troubleshooting for errors
+  condition: failed()
