@@ -19,7 +19,7 @@ steps:
   inputs:
     toolMajorVersion: V2
     toolVersion: latest
-    scanFolder: $(Build.SourcesDirectory)\credscan.tsv
+    scanFolder: $(Build.SourcesDirectory)/credscan.tsv
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: 'Post Analysis'
