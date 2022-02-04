@@ -3,7 +3,6 @@
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -28,8 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ReleasePolicy = GetReleasePolicy(),
             };
 
-            // BUGBUG: Remove assert when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
-            KeyVaultKey key = await AssertRequestSupported(async () => await Client.CreateRsaKeyAsync(options));
+            KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
             RegisterForCleanup(key.Name);
 
             JwtSecurityToken jws = await ReleaseKeyAsync(keyName);
@@ -74,42 +72,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
-        public async Task ReleaseImportedKey()
-        {
-            string keyName = Recording.GenerateId();
-
-            JsonWebKey jwk = KeyUtilities.CreateRsaKey(includePrivateParameters: true);
-            ImportKeyOptions options = new(keyName, jwk)
-            {
-                Properties =
-                {
-                    Exportable = true,
-                    ReleasePolicy = GetReleasePolicy(),
-                },
-            };
-
-            // BUGBUG: Remove assert when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
-            KeyVaultKey key = await AssertRequestSupported(async () => await Client.ImportKeyAsync(options));
-            RegisterForCleanup(key.Name);
-
-            // BUGBUG: Remove assert when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
-            JwtSecurityToken jws = await AssertRequestSupported(async () => await ReleaseKeyAsync(keyName));
-            Assert.IsTrue(jws.Payload.TryGetValue("response", out object response));
-
-            JsonDocument doc = JsonDocument.Parse(response.ToString());
-            JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
-            Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
-            Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
-        }
-
-        [Test]
         [KeyVaultOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/26792 is resolved.
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
         public async Task UpdateReleasePolicy([Values] bool immutable)
         {
-            SaveDebugRecordingsOnFailure = true;
-
             string keyName = Recording.GenerateId();
 
             CreateRsaKeyOptions options = new(keyName, hardwareProtected: true)
@@ -142,26 +108,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private async Task<T> AssertRequestSupported<T>(Func<Task<T>> fn)
-        {
-            try
-            {
-                return await fn();
-            }
-            catch (RequestFailedException ex) when (!IsManagedHSM && ex.Status == 400 && ex.ErrorCode == "BadParameter")
-            {
-                // Terminate the test method but do not fail so that recordings are saved.
-                throw new SuccessException("Secure Key Release is not currently supported by Azure Key Vault");
-            }
-        }
-
         private AttestationClient CreateAttestationClient() => InstrumentClient(
             new AttestationClient(
                 TestEnvironment.AttestationUri,
                 InstrumentClientOptions(
                     new KeyClientOptions(_serviceVersion))));
 
-        private KeyReleasePolicy GetReleasePolicy(bool? immutable = null)
+        protected KeyReleasePolicy GetReleasePolicy(bool? immutable = null)
         {
             string releasePolicy = $@"{{
     ""anyOf"": [
@@ -185,7 +138,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
         }
 
-        private async Task<JwtSecurityToken> ReleaseKeyAsync(string keyName)
+        protected async Task<JwtSecurityToken> ReleaseKeyAsync(string keyName)
         {
             AttestationClient attestationClient = CreateAttestationClient();
 
