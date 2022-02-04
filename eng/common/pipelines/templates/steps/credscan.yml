@@ -3,7 +3,7 @@ parameters:
   BaselineFilePath: ''
 steps:
 - pwsh: |
-    New-Item -Path "$(Build.sourcesdirectory)" -Name "credscan.tsv"
+    New-Item -Path "$(Build.SourcesDirectory)" -Name "credscan.tsv"
     if ("$(Build.Reason)" -eq 'PullRequest') {
       New-Item -Path "$(Build.sourcesdirectory)" -Name "changedFiles" -ItemType "directory"
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
