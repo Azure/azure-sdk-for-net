@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
-        private readonly SchemaRegistryAvroObjectEncoderOptions _options;
+        private readonly SchemaRegistryAvroEncoderOptions _options;
         private const string AvroMimeType = "avro/binary";
         private const int CacheCapacity = 128;
         private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <summary>
         /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
         /// </summary>
-        public SchemaRegistryAvroEncoder(SchemaRegistryClient client, string groupName, SchemaRegistryAvroObjectEncoderOptions options = null)
+        public SchemaRegistryAvroEncoder(SchemaRegistryClient client, string groupName, SchemaRegistryAvroEncoderOptions options = null)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName ?? throw new ArgumentNullException(nameof(groupName));

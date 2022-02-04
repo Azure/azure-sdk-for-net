@@ -80,7 +80,7 @@ Details on generating a class using the Apache Avro library can be found in the 
 
 In order to encode an `EventData` instance with Avro information, you can do the following:
 ```C# Snippet:SchemaRegistryAvroEncodeEventData
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = (EventData) await encoder.EncodeMessageDataAsync(employee, messageType: typeof(EventData));
@@ -101,7 +101,7 @@ Console.WriteLine(deserialized.Name);
 
 You can also use generic methods to encode and decode the data. This may be more convenient if you are not building a library on top of the Avro encoder, as you won't have to worry about the virality of generics:
 ```C# Snippet:SchemaRegistryAvroEncodeEventDataGenerics
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
@@ -124,7 +124,7 @@ Console.WriteLine(deserialized.Name);
 
 It is also possible to encode and decode using `MessageWithMetadata`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageWithMetadata`.
 ```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
 MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
 Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             #region Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
             MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
             var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee_V2>(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee() { Age = 42, Name = "Caketown"};
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
             var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             record.Add("Name", "Caketown");
             record.Add("Age", 42);
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, GenericRecord>(record);
 
             var deserializedObject = await encoder.DecodeMessageDataAsync<GenericRecord>(messageData);
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var timeZoneInfo = TimeZoneInfo.Utc;
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<ArgumentException>(async () => await encoder.EncodeMessageDataAsync<MessageWithMetadata, TimeZoneInfo>(timeZoneInfo));
             await Task.CompletedTask;
         }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             var messageData = new MessageWithMetadata
             {
                 Data = new BinaryData(Array.Empty<byte>()),
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             var messageData = new MessageWithMetadata
             {
                 Data = new BinaryData(Array.Empty<byte>()),
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryAvroEncodeEventData
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = (EventData) await encoder.EncodeMessageDataAsync(employee, messageType: typeof(EventData));
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryAvroEncodeEventDataGenerics
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
