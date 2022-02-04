@@ -23,6 +23,12 @@ namespace Azure.Identity
         internal bool AllowMultiTenantAuthentication { get; }
 
         /// <summary>
+        /// Protected constructor for mocking.
+        /// </summary>
+        protected ClientAssertionCredential()
+        { }
+
+        /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory using a signed client assertion.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>

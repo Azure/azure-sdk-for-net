@@ -14,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    internal class ClientAssertionCredentialLiveTests : IdentityRecordedTestBase
+    public class ClientAssertionCredentialLiveTests : IdentityRecordedTestBase
     {
-        public ClientAssertionCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ClientAssertionCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -106,9 +106,7 @@ namespace Azure.Identity.Tests
 
             audienceBuilder.Reset(authorityHost);
 
-            audienceBuilder.AppendPath(tenantId);
-
-            audienceBuilder.AppendPath("/oauth2/v2.0/token");
+            audienceBuilder.AppendPath(tenantId + "/v2.0", false);
 
             var audience = audienceBuilder.ToString();
 
