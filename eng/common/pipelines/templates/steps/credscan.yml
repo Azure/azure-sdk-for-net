@@ -1,5 +1,5 @@
 parameters:
-  SuppressionFilePath: 'eng\CredScanSuppression.json'
+  SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
 steps:
 - pwsh: |
