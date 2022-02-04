@@ -15,7 +15,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary>
         /// The latest version of the calling configuration service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_05_01_preview1;
         internal string ApiVersion { get; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "2021-05-01-preview1",
+                ServiceVersion.V2021_05_01_preview1 => "2021-05-01-preview1",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -38,7 +38,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             /// <summary>
             /// The V1 of the calling configuration service.
             /// </summary>
-            V1 = 1
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            V2021_05_01_preview1 = 1
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
 }
