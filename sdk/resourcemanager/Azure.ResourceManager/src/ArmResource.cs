@@ -85,34 +85,56 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
+        /// <param name="resourceType"></param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
+        protected virtual IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
+            => ListAvailableLocations(cancellationToken);
+
+        /// <summary>
+        /// Lists all available geo-locations.
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
+        protected virtual Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+            => ListAvailableLocationsAsync(cancellationToken);
+
+        /// <summary>
+        /// Lists all available geo-locations.
+        /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
+        public virtual IEnumerable<AzureLocation> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
+            string nameSpace = Id.ResourceType.Namespace;
+            string type = Id.ResourceType.Type;
+            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(nameSpace, null, cancellationToken);
             if (resourcePageableProvider is null)
-                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
+                throw new InvalidOperationException($"{type} not found for {nameSpace}");
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
-                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
+                throw new InvalidOperationException($"{type} not found for {nameSpace}");
             return theResource.Locations.Select(l => new AzureLocation(l));
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            string nameSpace = Id.ResourceType.Namespace;
+            string type = Id.ResourceType.Type;
+            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
-                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
+                throw new InvalidOperationException($"{type} not found for {nameSpace}");
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
-                throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
+                throw new InvalidOperationException($"{type} not found for {nameSpace}");
             return theResource.Locations.Select(l => new AzureLocation(l));
         }
 
