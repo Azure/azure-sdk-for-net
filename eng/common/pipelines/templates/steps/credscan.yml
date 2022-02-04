@@ -7,7 +7,7 @@ steps:
     if ("$(Build.Reason)" -eq 'PullRequest') {
       New-Item -Path "$(Build.sourcesdirectory)" -Name "changedFiles" -ItemType "directory"
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
-      | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)\credscan.tsv" -Value "$(Build.SourcesDirectory)\$_"}
+      | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)/credscan.tsv" -Value "$(Build.SourcesDirectory)/$_"}
     }
     else {
       Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)\sdk\${{ parameters.ServiceDirectory }}"
