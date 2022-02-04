@@ -134,6 +134,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         ///     </description>
         ///   </item>
         /// </list>
+        /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply
@@ -206,6 +207,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         ///     </description>
         ///   </item>
         /// </list>
+        /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="buildModelOptions">A set of options available for configuring the request. For example, set a model description or set a filter to apply

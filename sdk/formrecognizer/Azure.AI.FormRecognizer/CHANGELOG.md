@@ -10,7 +10,7 @@
 - Added the `BuildMode` property to `DocTypeInfo` to indicate the technique used when building the correspoding model.
 
 ### Breaking Changes
-- Added the required parameter `buildMode` to `StartBuildModel` methods. Users must now choose the technique (`Template` or `Neural`) used to build models.
+- Added the required parameter `buildMode` to `StartBuildModel` methods. Users must now choose the technique (`Template` or `Neural`) used to build models. For more information about the available build modes and their differences, see [here](https://aka.ms/azsdk/formrecognizer/buildmode).
 - Added the `tags` parameter to the `GetCopyAuthorization` methods.
 - Added the `tags` parameter to the `StartCreateComposedModel` methods.
 
