@@ -97,8 +97,9 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        /// Hidden property that translates the <see cref="MessageWithMetadata.ContentType"/> property to/from a string.
+        ///   Hidden property that translates the <see cref="MessageWithMetadata.ContentType"/> property to/from a string.
         /// </summary>
+        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected override ContentType? ContentTypeCore
         {
