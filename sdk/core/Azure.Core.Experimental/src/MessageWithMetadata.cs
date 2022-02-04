@@ -20,7 +20,7 @@ namespace Azure
         /// <summary>
         /// Gets or sets the message content type.
         /// </summary>
-        public ContentType? ContentType
+        public virtual ContentType? ContentType
         {
             get => ContentTypeCore;
             set => ContentTypeCore = value;
