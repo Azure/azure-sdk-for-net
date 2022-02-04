@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Management.Models
         internal CheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.Management.Models.Reason? Reason { get { throw null; } }
+        public Azure.ResourceManager.Management.Models.NameUnavailableReason? Reason { get { throw null; } }
     }
     public partial class CreateManagementGroupDetails
     {
@@ -274,6 +274,11 @@ namespace Azure.ResourceManager.Management.Models
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    public enum NameUnavailableReason
+    {
+        Invalid = 0,
+        AlreadyExists = 1,
+    }
     public partial class ParentGroupInfo
     {
         internal ParentGroupInfo() { }
@@ -286,11 +291,6 @@ namespace Azure.ResourceManager.Management.Models
         public PatchManagementGroupOptions() { }
         public string DisplayName { get { throw null; } set { } }
         public string ParentGroupId { get { throw null; } set { } }
-    }
-    public enum Reason
-    {
-        Invalid = 0,
-        AlreadyExists = 1,
     }
 }
 namespace Azure.ResourceManager.Models

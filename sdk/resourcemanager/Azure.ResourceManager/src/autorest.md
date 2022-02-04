@@ -463,8 +463,7 @@ directive:
     where: $.definitions.CheckNameAvailabilityResult.properties.reason
     transform: >
       $['x-ms-enum'] = {
-        name: "NameUnavailableReason",
-        modelAsString: true
+        name: "NameUnavailableReason"
       }
   - from: management.json
     where: $.parameters.SearchParameter

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new NameUnavailableReason(property.Value.GetString());
+                    reason = property.Value.GetString().ToNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))

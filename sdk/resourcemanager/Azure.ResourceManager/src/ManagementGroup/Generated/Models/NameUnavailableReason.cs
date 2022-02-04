@@ -5,47 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider&apos;s naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
-    public readonly partial struct NameUnavailableReason : IEquatable<NameUnavailableReason>
+    public enum NameUnavailableReason
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NameUnavailableReason"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NameUnavailableReason(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
-
         /// <summary> Invalid. </summary>
-        public static NameUnavailableReason Invalid { get; } = new NameUnavailableReason(InvalidValue);
+        Invalid,
         /// <summary> AlreadyExists. </summary>
-        public static NameUnavailableReason AlreadyExists { get; } = new NameUnavailableReason(AlreadyExistsValue);
-        /// <summary> Determines if two <see cref="NameUnavailableReason"/> values are the same. </summary>
-        public static bool operator ==(NameUnavailableReason left, NameUnavailableReason right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="NameUnavailableReason"/> values are not the same. </summary>
-        public static bool operator !=(NameUnavailableReason left, NameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NameUnavailableReason"/>. </summary>
-        public static implicit operator NameUnavailableReason(string value) => new NameUnavailableReason(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(NameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        AlreadyExists
     }
 }
