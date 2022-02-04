@@ -12,7 +12,7 @@ steps:
     else {
       Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)\sdk\${{ parameters.ServiceDirectory }}"
     }
-    Get-Content "$(Build.SourcesDirectory)\credscan.tsv"
+    Get-Content "$(Build.SourcesDirectory)/credscan.tsv"
   displayName: Put changed files to folder     
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
   displayName: Scanning for credentials
