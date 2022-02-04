@@ -32,7 +32,7 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerClient personalizerClient = null;
             if (isLocalInference)
             {
-                personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, true, options:options, SubsampleRate: SubsampleRate);
+                personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, true, options: options, SubsampleRate: SubsampleRate);
             }
             else
             {
