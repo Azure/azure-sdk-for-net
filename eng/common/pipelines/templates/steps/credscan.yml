@@ -10,7 +10,7 @@ steps:
       | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)/credscan.tsv" -Value "$(Build.SourcesDirectory)/$_"}
     }
     else {
-      Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)\sdk\${{ parameters.ServiceDirectory }}"
+      Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}"
     }
     Get-Content "$(Build.SourcesDirectory)/credscan.tsv"
   displayName: Put changed files to folder     
