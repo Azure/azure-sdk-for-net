@@ -1,26 +1,27 @@
 parameters:
   SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
+  SourceDirectory: $(Build.SourcesDirectory)
 
 steps:
 - pwsh: |
-    New-Item -Path "$(Build.SourcesDirectory)" -Name "credscan.tsv"
+    New-Item -Path "${{ parameters.SourceDirectory }}" -Name "credscan.tsv"
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      New-Item -Path "$(Build.SourcesDirectory)" -Name "changedFiles" -ItemType "directory"
+      New-Item -Path "${{ parameters.SourceDirectory }}" -Name "changedFiles" -ItemType "directory"
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
-      | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)/credscan.tsv" -Value "$(Build.SourcesDirectory)/$_"}
+      | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
-      Set-Content "credscan.tsv" -Value "$(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}"
+      Set-Content "credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
     }
-    Get-Content "$(Build.SourcesDirectory)/credscan.tsv"
+    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: Put changed files to folder     
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
   displayName: Scanning for credentials
   inputs:
     toolMajorVersion: V2
     toolVersion: latest
-    scanFolder: $(Build.SourcesDirectory)/credscan.tsv
+    scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: 'Post Analysis'
@@ -35,6 +36,6 @@ steps:
     # GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |
-    Write-Host "The cred scan step failed, please check https://aka.ms/azsdk/credscan for more information."
-  displayName: Troubleshooting for errors
+    Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
+  displayName: Troubleshooting Info
   condition: failed()
