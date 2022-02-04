@@ -103,6 +103,45 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
         }
 
+        [Test]
+        [KeyVaultOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/26792 is resolved.
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        public async Task UpdateReleasePolicy([Values] bool immutable)
+        {
+            SaveDebugRecordingsOnFailure = true;
+
+            string keyName = Recording.GenerateId();
+
+            CreateRsaKeyOptions options = new(keyName, hardwareProtected: true)
+            {
+                Exportable = true,
+                KeySize = 2048,
+                ReleasePolicy = GetReleasePolicy(immutable),
+            };
+
+            KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            Assert.AreEqual(immutable, key.Properties.ReleasePolicy.Immutable);
+            KeyProperties properties = new(key.Name)
+            {
+                Exportable = true,
+                ReleasePolicy = GetReleasePolicy(),
+            };
+
+            if (immutable)
+            {
+                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.UpdateKeyPropertiesAsync(properties));
+                Assert.AreEqual(400, ex.Status);
+                Assert.AreEqual("BadParameter", ex.ErrorCode);
+            }
+            else
+            {
+                key = await Client.UpdateKeyPropertiesAsync(properties);
+                Assert.IsFalse(key.Properties.ReleasePolicy.Immutable);
+            }
+        }
+
         private async Task<T> AssertRequestSupported<T>(Func<Task<T>> fn)
         {
             try
@@ -122,7 +161,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 InstrumentClientOptions(
                     new KeyClientOptions(_serviceVersion))));
 
-        private KeyReleasePolicy GetReleasePolicy()
+        private KeyReleasePolicy GetReleasePolicy(bool? immutable = null)
         {
             string releasePolicy = $@"{{
     ""anyOf"": [
@@ -130,18 +169,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ""anyOf"": [
                 {{
                     ""claim"": ""sdk-test"",
-                    ""condition"": ""equals"",
-                    ""value"": ""true""
+                    ""equals"": ""true""
                 }}
             ],
             ""authority"": ""{TestEnvironment.AttestationUri}""
         }}
     ],
-    ""version"": ""1.0""
+    ""version"": ""1.0.0""
 }}";
 
             BinaryData releasePolicyData = BinaryData.FromString(releasePolicy);
-            return new(releasePolicyData);
+            return new(releasePolicyData)
+            {
+                Immutable = immutable,
+            };
         }
 
         private async Task<JwtSecurityToken> ReleaseKeyAsync(string keyName)

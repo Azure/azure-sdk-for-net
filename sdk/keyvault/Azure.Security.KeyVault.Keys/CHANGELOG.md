@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added `KeyReleasePolicy.Immutable` property.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
 
 ## 4.3.0-beta.6 (2022-01-12)
 
