@@ -83,8 +83,8 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task MultiSlotLocalInferenceTest()
         {
-            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true, SubsampleRate: 1.01f));
-            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true, SubsampleRate: 0f));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true, subsampleRate: 1.01f));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true, subsampleRate: 0f));
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false, isLocalInference: true);
             await MultiSlotTestInner(client);
         }

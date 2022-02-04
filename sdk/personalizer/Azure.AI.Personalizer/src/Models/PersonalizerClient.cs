@@ -21,7 +21,7 @@ namespace Azure.AI.Personalizer
         private readonly bool _isLocalInference;
         private string stringEndpoint;
         private string apiKey;
-        private float _SubsampleRate = 1.0f;
+        private float subsampleRate = 1.0f;
 
         private readonly RankProcessor _rankProcessor;
 
@@ -71,15 +71,15 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
+        /// <param name="subsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float SubsampleRate = 1.0f, PersonalizerClientOptions options = null) :
+        public PersonalizerClient(Uri endpoint, TokenCredential credential, bool isLocalInference, float subsampleRate = 1.0f, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
             if (isLocalInference)
             {
-                validateAndAssignSampleRate(SubsampleRate);
+                validateAndAssignSampleRate(subsampleRate);
                 //Intialize liveModel and call Rank processor
                 //ToDo:TASK 13057958: Working on changes to support token authentication in RLClient
                 Configuration configuration = GetConfigurationForLiveModel("Token", "token");
@@ -125,15 +125,15 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="isLocalInference"> A flag to determine whether to use local inference. </param>
-        /// <param name="SubsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
+        /// <param name="subsampleRate"> Percentage from (0,1] determines how much percentage of interaction and observation events to consider </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential, bool isLocalInference, float SubsampleRate = 1.0f, PersonalizerClientOptions options = null) :
+        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential, bool isLocalInference, float subsampleRate = 1.0f, PersonalizerClientOptions options = null) :
             this(endpoint, credential, options)
         {
             _isLocalInference = isLocalInference;
             if (isLocalInference)
             {
-                validateAndAssignSampleRate(SubsampleRate);
+                validateAndAssignSampleRate(subsampleRate);
                 //Intialize liveModel and Rankprocessor
                 Configuration configuration = GetConfigurationForLiveModel("apiKey", apiKey);
                 LiveModel liveModel = new LiveModel(configuration);
@@ -566,8 +566,8 @@ namespace Azure.AI.Personalizer
             }
             config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/interactions";
             config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/observations";
-            config["interaction.subsample.rate"] = Convert.ToString(_SubsampleRate, CultureInfo.InvariantCulture);
-            config["observation.subsample.rate"] = Convert.ToString(_SubsampleRate, CultureInfo.InvariantCulture);
+            config["interaction.subsample.rate"] = Convert.ToString(subsampleRate, CultureInfo.InvariantCulture);
+            config["observation.subsample.rate"] = Convert.ToString(subsampleRate, CultureInfo.InvariantCulture);
             //ToDo: TASK 13057958 Working on changes to support model api in RL.Net
             config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.1/model";
             config["vw.commandline"] = _personalizerPolicy.Arguments;
@@ -579,13 +579,13 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> validate SubsampleRate input from user and throw exception if not in range </summary>
-        private void validateAndAssignSampleRate(float SubsampleRate)
+        private void validateAndAssignSampleRate(float subsampleRate)
         {
-            if (0 >= SubsampleRate || SubsampleRate > 1)
+            if (0 >= subsampleRate || subsampleRate > 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(SubsampleRate), "Percentage should be between (0,1]");
+                throw new ArgumentOutOfRangeException(nameof(subsampleRate), "Percentage should be between (0,1]");
             }
-            _SubsampleRate = SubsampleRate;
+            this.subsampleRate = subsampleRate;
         }
     }
 }

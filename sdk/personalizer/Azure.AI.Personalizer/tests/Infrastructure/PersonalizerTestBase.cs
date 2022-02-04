@@ -18,7 +18,7 @@ namespace Azure.AI.Personalizer.Tests
             Sanitizer = new PersonalizerRecordedTestSanitizer();
         }
 
-        protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false, bool isLocalInference = false, float SubsampleRate = 1.0f)
+        protected async Task<PersonalizerClient> GetPersonalizerClientAsync(bool isSingleSlot = false, bool isLocalInference = false, float subsampleRate = 1.0f)
         {
             string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
             string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
@@ -32,7 +32,7 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerClient personalizerClient = null;
             if (isLocalInference)
             {
-                personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, true, options: options, SubsampleRate: SubsampleRate);
+                personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, true, options: options, subsampleRate: subsampleRate);
             }
             else
             {
