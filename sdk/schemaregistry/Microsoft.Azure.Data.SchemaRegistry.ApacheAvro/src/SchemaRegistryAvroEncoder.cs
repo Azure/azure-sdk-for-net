@@ -6,20 +6,15 @@ using Avro.Generic;
 using Avro.IO;
 using Avro.Specific;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Azure.Messaging;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {

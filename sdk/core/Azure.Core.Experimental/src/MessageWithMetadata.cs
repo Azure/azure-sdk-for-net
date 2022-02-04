@@ -27,7 +27,9 @@ namespace Azure
         }
 
         /// <summary>
-        /// This property must be overriden by inheriting types to get/set the correct content type.
+        /// For inheriting types that have a string ContentType property, this property should be overriden to forward
+        /// the <see cref="ContentType"/> property into the inheriting type's string property, and vice versa.
+        /// For types that have a <see cref="Azure.Core.ContentType"/> ContentType property, it is not necessary to override this member.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual ContentType? ContentTypeCore { get; set; }
