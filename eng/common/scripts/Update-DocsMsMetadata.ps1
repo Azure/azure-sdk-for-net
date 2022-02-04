@@ -183,7 +183,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
   $readMePath = $docsMsMetadata.LatestReadMeLocation
   $metadataMoniker = 'latest'
-  if (("IsPrerelease" -in $originalVersion.PSobject.Properties.Name) -and $originalVersion.IsPrerelease) {
+  if ($originalVersion -and $originalVersion.IsPrerelease) {
     $metadataMoniker = 'preview'
     $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
