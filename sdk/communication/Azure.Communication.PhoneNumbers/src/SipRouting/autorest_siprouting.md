@@ -61,12 +61,3 @@ directive:
   transform: >
     $["x-namespace"] = "Azure.Communication.PhoneNumbers.SipRouting"
 ```
-
-### Move all the models to the main namespace
-```yaml
-directive:
-  from: swagger-document
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.Communication.PhoneNumbers.SipRouting"
-```
