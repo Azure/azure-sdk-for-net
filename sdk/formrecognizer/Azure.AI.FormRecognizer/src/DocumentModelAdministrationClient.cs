@@ -118,15 +118,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildMode">
         /// The technique to use to build the model. Use:
         /// <list type="bullet">
-        ///   <item><description>
-        ///   <see cref="DocumentBuildMode.Template"/>: when the custom documents all have the same layout. Fields
-        ///   are expected to be in the same place across documents. Build time tends to be considerably shorter
-        ///   than <see cref="DocumentBuildMode.Neural"/> mode.
-        ///   </description></item>
-        ///   <item><description>
-        ///   <see cref="DocumentBuildMode.Neural"/>:  recommended mode when custom documents have different layouts.
-        ///   Fields are expected to be the same but they can be placed in different positions across documents.
-        ///   </description></item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Template"/></term>
+        ///     <description>
+        ///       When the custom documents all have the same layout. Fields are expected to be in the same place
+        ///       across documents. Build time tends to be considerably shorter than <see cref="DocumentBuildMode.Neural"/>
+        ///       mode.
+        ///     </description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Neural"/></term>
+        ///     <description>
+        ///       Recommended mode when custom documents have different layouts. Fields are expected to be the same but
+        ///       they can be placed in different positions across documents.
+        ///     </description>
+        ///   </item>
         /// </list>
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
@@ -184,15 +190,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildMode">
         /// The technique to use to build the model. Use:
         /// <list type="bullet">
-        ///   <item><description>
-        ///   <see cref="DocumentBuildMode.Template"/>: when the custom documents all have the same layout. Fields
-        ///   are expected to be in the same place across documents. Build time tends to be considerably shorter
-        ///   than <see cref="DocumentBuildMode.Neural"/> mode.
-        ///   </description></item>
-        ///   <item><description>
-        ///   <see cref="DocumentBuildMode.Neural"/>:  recommended mode when custom documents have different layouts.
-        ///   Fields are expected to be the same but they can be placed in different positions across documents.
-        ///   </description></item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Template"/></term>
+        ///     <description>
+        ///       When the custom documents all have the same layout. Fields are expected to be in the same place
+        ///       across documents. Build time tends to be considerably shorter than <see cref="DocumentBuildMode.Neural"/>
+        ///       mode.
+        ///     </description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Neural"/></term>
+        ///     <description>
+        ///       Recommended mode when custom documents have different layouts. Fields are expected to be the same but
+        ///       they can be placed in different positions across documents.
+        ///     </description>
+        ///   </item>
         /// </list>
         /// </param>
         /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
