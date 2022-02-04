@@ -120,8 +120,8 @@ namespace Azure.Core.TestFramework
                     await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
                     {
                         ExcludedHeaders = string.Join(",", excludedHeaders),
-                        IgnoredHeaders = string.Join(",", _matcher.IgnoredHeaders),
-                        IgnoredQueryParameters = string.Join(",", _matcher.IgnoredQueryParameters),
+                        IgnoredHeaders = _matcher.IgnoredHeaders.Count > 0 ? string.Join(",", _matcher.IgnoredHeaders) : null,
+                        IgnoredQueryParameters = _matcher.IgnoredQueryParameters.Count > 0 ? string.Join(",", _matcher.IgnoredQueryParameters): null,
                         CompareBodies = _matcher.CompareBodies
                     });
                     break;
