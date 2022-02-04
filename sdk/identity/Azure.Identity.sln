@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.Identity", "Azure.Ide
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication", "Azure.Identity.BrokeredAuthentication\src\Azure.Identity.BrokeredAuthentication.csproj", "{2337B615-724F-4ED7-8929-B1AF89815D30}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication.Tests", "Azure.Identity.BrokeredAuthentication\tests\Azure.Identity.BrokeredAuthentication.Tests.csproj", "{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{2337B615-724F-4ED7-8929-B1AF89815D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2337B615-724F-4ED7-8929-B1AF89815D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2337B615-724F-4ED7-8929-B1AF89815D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
