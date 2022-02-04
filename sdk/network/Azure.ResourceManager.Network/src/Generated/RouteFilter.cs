@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RouteFiltersRestOperations _routeFiltersRestClient;
+
+        private readonly ClientDiagnostics _routeFilterClientDiagnostics;
+        private readonly RouteFiltersRestOperations _routeFilterRestClient;
         private readonly RouteFilterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "RouteFilter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RouteFilter(ArmResource options, RouteFilterData data) : base(options, new ResourceIdentifier(data.Id))
+        internal RouteFilter(ArmClient armClient, RouteFilterData data) : this(armClient, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="armClient"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RouteFilter(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal RouteFilter(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="RouteFilter"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RouteFilter(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _routeFiltersRestClient = new RouteFiltersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _routeFilterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ResourceType, out string routeFilterApiVersion);
+            _routeFilterRestClient = new RouteFiltersRestOperations(_routeFilterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RouteFilter>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Get");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Get");
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _routeFilterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                    throw await _routeFilterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +110,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RouteFilter> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Get");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Get");
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _routeFilterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                    throw _routeFilterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +131,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetAvailableLocations");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.GetAvailableLocations");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -188,12 +167,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<RouteFilterDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Delete");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Delete");
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterDeleteOperation(_clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _routeFilterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RouteFilterDeleteOperation(_routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,12 +189,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual RouteFilterDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Delete");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Delete");
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new RouteFilterDeleteOperation(_clientDiagnostics, Pipeline, _routeFiltersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _routeFilterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new RouteFilterDeleteOperation(_routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,12 +217,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Update");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Update");
             scope.Start();
             try
             {
-                var response = await _routeFiltersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                var response = await _routeFilterRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,12 +242,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteFilter.Update");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilter.Update");
             scope.Start();
             try
             {
-                var response = _routeFiltersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new RouteFilter(this, response.Value), response.GetRawResponse());
+                var response = _routeFilterRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

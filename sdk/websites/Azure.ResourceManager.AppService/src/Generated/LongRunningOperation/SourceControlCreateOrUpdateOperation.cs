@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SourceControlCreateOrUpdateOperation(ArmResource operationsBase, Response<SourceControlData> response)
+        internal SourceControlCreateOrUpdateOperation(ArmClient armClient, Response<SourceControlData> response)
         {
-            _operation = new OperationOrResponseInternals<SourceControl>(Response.FromValue(new SourceControl(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SourceControl>(Response.FromValue(new SourceControl(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

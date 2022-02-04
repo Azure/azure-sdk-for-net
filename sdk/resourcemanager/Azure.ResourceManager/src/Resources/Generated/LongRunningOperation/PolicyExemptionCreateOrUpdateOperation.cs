@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal PolicyExemptionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyExemptionData> response)
+        internal PolicyExemptionCreateOrUpdateOperation(ArmClient armClient, Response<PolicyExemptionData> response)
         {
-            _operation = new OperationOrResponseInternals<PolicyExemption>(Response.FromValue(new PolicyExemption(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<PolicyExemption>(Response.FromValue(new PolicyExemption(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of ManagedInstanceEncryptionProtector and their operations over its parent. </summary>
     public partial class ManagedInstanceEncryptionProtectorCollection : ArmCollection, IEnumerable<ManagedInstanceEncryptionProtector>, IAsyncEnumerable<ManagedInstanceEncryptionProtector>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorsRestClient;
+        private readonly ClientDiagnostics _managedInstanceEncryptionProtectorClientDiagnostics;
+        private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorCollection"/> class for mocking. </summary>
         protected ManagedInstanceEncryptionProtectorCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ManagedInstanceEncryptionProtectorCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ManagedInstanceEncryptionProtector.ResourceType, out string apiVersion);
-            _managedInstanceEncryptionProtectorsRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _managedInstanceEncryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceEncryptionProtector.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ManagedInstanceEncryptionProtector.ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
+            _managedInstanceEncryptionProtectorRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceEncryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.CreateOrUpdate");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceEncryptionProtectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
-                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var response = _managedInstanceEncryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
+                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(ArmClient, _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.CreateOrUpdate");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceEncryptionProtectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var response = await _managedInstanceEncryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(ArmClient, _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceEncryptionProtector> Get(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Get");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceEncryptionProtectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken);
+                var response = _managedInstanceEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceEncryptionProtector(this, response.Value), response.GetRawResponse());
+                    throw _managedInstanceEncryptionProtectorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceEncryptionProtector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceEncryptionProtector>> GetAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Get");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceEncryptionProtectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceEncryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceEncryptionProtector(this, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceEncryptionProtectorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstanceEncryptionProtector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceEncryptionProtector> GetIfExists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetIfExists");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstanceEncryptionProtectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
+                var response = _managedInstanceEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceEncryptionProtector>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceEncryptionProtector(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceEncryptionProtector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceEncryptionProtector>> GetIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetIfExists");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceEncryptionProtectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceEncryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ManagedInstanceEncryptionProtector>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceEncryptionProtector(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceEncryptionProtector(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Exists");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Exists");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Exists");
+            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.Exists");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ManagedInstanceEncryptionProtector> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
+                using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceEncryptionProtectorsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceEncryptionProtectorRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceEncryptionProtector> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
+                using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedInstanceEncryptionProtectorsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _managedInstanceEncryptionProtectorRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ManagedInstanceEncryptionProtector>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
+                using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceEncryptionProtectorsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceEncryptionProtectorRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceEncryptionProtector>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
+                using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _managedInstanceEncryptionProtectorsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceEncryptionProtectorRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceEncryptionProtector(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,8 +341,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceEncryptionProtector, ManagedInstanceEncryptionProtectorData> Construct() { }
     }
 }

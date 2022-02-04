@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -23,8 +22,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of BackupItem and their operations over its parent. </summary>
     public partial class SiteBackupCollection : ArmCollection, IEnumerable<SiteBackup>, IAsyncEnumerable<SiteBackup>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteBackupWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteBackupWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteBackupCollection"/> class for mocking. </summary>
         protected SiteBackupCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SiteBackupCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SiteBackup.ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackup.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
+            _siteBackupWebAppsRestClient = new WebAppsRestOperations(_siteBackupWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Get");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken);
+                var response = _siteBackupWebAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                    throw _siteBackupWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Get");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
+                var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                    throw await _siteBackupWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
+                var response = _siteBackupWebAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SiteBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SiteBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteBackup(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteBackup(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.Exists");
+            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.Exists");
             scope.Start();
             try
             {
@@ -213,12 +212,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<SiteBackup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
+                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteBackupWebAppsRestClient.ListBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,12 +227,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SiteBackup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
+                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _siteBackupWebAppsRestClient.ListBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,12 +253,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<SiteBackup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
+                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteBackupWebAppsRestClient.ListBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,12 +268,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SiteBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
+                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _webAppsRestClient.ListBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteBackupWebAppsRestClient.ListBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackup(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,8 +298,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteBackup, BackupItemData> Construct() { }
     }
 }

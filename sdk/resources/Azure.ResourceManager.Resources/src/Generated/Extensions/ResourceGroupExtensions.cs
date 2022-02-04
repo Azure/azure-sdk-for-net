@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region JitRequestDefinition
-        /// <summary> Gets an object representing a JitRequestDefinitionCollection along with the instance operations that can be performed on it. </summary>
+        #region JitRequest
+        /// <summary> Gets an object representing a JitRequestCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="JitRequestDefinitionCollection" /> object. </returns>
-        public static JitRequestDefinitionCollection GetJitRequestDefinitions(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="JitRequestCollection" /> object. </returns>
+        public static JitRequestCollection GetJitRequests(this ResourceGroup resourceGroup)
         {
-            return new JitRequestDefinitionCollection(resourceGroup);
+            return new JitRequestCollection(resourceGroup);
         }
         #endregion
 
@@ -69,5 +69,14 @@ namespace Azure.ResourceManager.Resources
             return new TemplateSpecCollection(resourceGroup);
         }
         #endregion
+
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((armClient) =>
+            {
+                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+            }
+            );
+        }
     }
 }

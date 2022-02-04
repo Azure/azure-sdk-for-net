@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal RestorePointGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<RestorePointGroupData> response)
+        internal RestorePointGroupCreateOrUpdateOperation(ArmClient armClient, Response<RestorePointGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<RestorePointGroup>(Response.FromValue(new RestorePointGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<RestorePointGroup>(Response.FromValue(new RestorePointGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

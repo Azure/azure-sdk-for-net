@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing collection of AfdCustomDomain and their operations over its parent. </summary>
     public partial class AfdCustomDomainCollection : ArmCollection, IEnumerable<AfdCustomDomain>, IAsyncEnumerable<AfdCustomDomain>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AfdCustomDomainsRestOperations _afdCustomDomainsRestClient;
+        private readonly ClientDiagnostics _afdCustomDomainClientDiagnostics;
+        private readonly AfdCustomDomainsRestOperations _afdCustomDomainRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AfdCustomDomainCollection"/> class for mocking. </summary>
         protected AfdCustomDomainCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AfdCustomDomainCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AfdCustomDomain.ResourceType, out string apiVersion);
-            _afdCustomDomainsRestClient = new AfdCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _afdCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", AfdCustomDomain.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(AfdCustomDomain.ResourceType, out string afdCustomDomainApiVersion);
+            _afdCustomDomainRestClient = new AfdCustomDomainsRestOperations(_afdCustomDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.CreateOrUpdate");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var response = _afdCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken);
+                var operation = new AfdCustomDomainCreateOrUpdateOperation(ArmClient, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.CreateOrUpdate");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _afdCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var response = await _afdCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdCustomDomainCreateOrUpdateOperation(ArmClient, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
+                var response = _afdCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
+                    throw _afdCustomDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
+                var response = await _afdCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
+                    throw await _afdCustomDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AfdCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _afdCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _afdCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<AfdCustomDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _afdCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _afdCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<AfdCustomDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new AfdCustomDomain(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AfdCustomDomain(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
+            using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<AfdCustomDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
+                using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _afdCustomDomainsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _afdCustomDomainRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<AfdCustomDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
+                using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _afdCustomDomainsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _afdCustomDomainRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<AfdCustomDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
+                using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _afdCustomDomainsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _afdCustomDomainRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<AfdCustomDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
+                using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _afdCustomDomainsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _afdCustomDomainRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AfdCustomDomain(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,8 +351,5 @@ namespace Azure.ResourceManager.Cdn
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AfdCustomDomain, AfdCustomDomainData> Construct() { }
     }
 }

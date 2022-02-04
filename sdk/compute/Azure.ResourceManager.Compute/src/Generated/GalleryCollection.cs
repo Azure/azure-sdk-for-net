@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of Gallery and their operations over its parent. </summary>
     public partial class GalleryCollection : ArmCollection, IEnumerable<Gallery>, IAsyncEnumerable<Gallery>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GalleriesRestOperations _galleriesRestClient;
+        private readonly ClientDiagnostics _galleryClientDiagnostics;
+        private readonly GalleriesRestOperations _galleryRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GalleryCollection"/> class for mocking. </summary>
         protected GalleryCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal GalleryCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Gallery.ResourceType, out string apiVersion);
-            _galleriesRestClient = new GalleriesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Gallery.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(Gallery.ResourceType, out string galleryApiVersion);
+            _galleryRestClient = new GalleriesRestOperations(_galleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(gallery));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken);
-                var operation = new GalleryCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
+                var response = _galleryRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken);
+                var operation = new GalleryCreateOrUpdateOperation(ArmClient, _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +99,12 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(gallery));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _galleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
+                var response = await _galleryRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryCreateOrUpdateOperation(ArmClient, _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,14 +126,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Get");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken);
+                var response = _galleryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                    throw _galleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Gallery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,14 +152,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Get");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken).ConfigureAwait(false);
+                var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                    throw await _galleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Gallery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,14 +178,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _galleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
+                var response = _galleryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<Gallery>(null, response.GetRawResponse());
-                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Gallery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,14 +204,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _galleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Gallery>(null, response.GetRawResponse());
-                return Response.FromValue(new Gallery(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Gallery(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Exists");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.Exists");
             scope.Start();
             try
             {
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.Exists");
+            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.Exists");
             scope.Start();
             try
             {
@@ -276,12 +275,12 @@ namespace Azure.ResourceManager.Compute
         {
             Page<Gallery> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAll");
+                using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _galleriesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _galleryRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +290,12 @@ namespace Azure.ResourceManager.Compute
             }
             Page<Gallery> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAll");
+                using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _galleriesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _galleryRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,12 +313,12 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<Gallery>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAll");
+                using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _galleriesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _galleryRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,12 +328,12 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<Gallery>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAll");
+                using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _galleriesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _galleryRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Gallery(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,52 +342,6 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="Gallery" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(Gallery.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="Gallery" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(Gallery.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<Gallery> IEnumerable<Gallery>.GetEnumerator()
@@ -405,8 +358,5 @@ namespace Azure.ResourceManager.Compute
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, Gallery, GalleryData> Construct() { }
     }
 }

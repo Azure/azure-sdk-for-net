@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(true, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
-            var managedIdentity = new ManagedServiceIdentity()
+            var managedIdentity = new DeploymentScriptManagedIdentity()
             {
                 Type = "UserAssigned",
                 UserAssignedIdentities =

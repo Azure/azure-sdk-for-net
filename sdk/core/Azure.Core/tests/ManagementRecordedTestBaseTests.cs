@@ -194,5 +194,35 @@ namespace Azure.Core.Tests.Management
             //method waits for 10 seconds so timer should easily be less than half of that if we skip
             Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
         }
+
+        [Test]
+        public void ValidateForwardClientCallTrue()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.DoesNotThrowAsync( async () => testResource = await testResource.GetForwardsCallTrueAsync());
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+        }
+
+        [Test]
+        public void ValidateForwardClientCallFalse()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
+            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+        }
+
+        [Test]
+        public void ValidateForwardClientCallDefault()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResource testResource = client.GetTestResource();
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
+            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+        }
     }
 }

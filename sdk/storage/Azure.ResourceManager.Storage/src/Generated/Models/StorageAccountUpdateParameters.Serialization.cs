@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -78,6 +78,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("supportsHttpsTrafficOnly");
                 writer.WriteBooleanValue(EnableHttpsTrafficOnly.Value);
             }
+            if (Optional.IsDefined(IsSftpEnabled))
+            {
+                writer.WritePropertyName("isSftpEnabled");
+                writer.WriteBooleanValue(IsSftpEnabled.Value);
+            }
+            if (Optional.IsDefined(IsLocalUserEnabled))
+            {
+                writer.WritePropertyName("isLocalUserEnabled");
+                writer.WriteBooleanValue(IsLocalUserEnabled.Value);
+            }
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
@@ -112,6 +122,26 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("allowCrossTenantReplication");
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
+            }
+            if (Optional.IsDefined(DefaultToOAuthAuthentication))
+            {
+                writer.WritePropertyName("defaultToOAuthAuthentication");
+                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            {
+                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+            }
+            if (Optional.IsDefined(AllowedCopyScope))
+            {
+                writer.WritePropertyName("allowedCopyScope");
+                writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing collection of LocalNetworkGateway and their operations over its parent. </summary>
     public partial class LocalNetworkGatewayCollection : ArmCollection, IEnumerable<LocalNetworkGateway>, IAsyncEnumerable<LocalNetworkGateway>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LocalNetworkGatewaysRestOperations _localNetworkGatewaysRestClient;
+        private readonly ClientDiagnostics _localNetworkGatewayClientDiagnostics;
+        private readonly LocalNetworkGatewaysRestOperations _localNetworkGatewayRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGatewayCollection"/> class for mocking. </summary>
         protected LocalNetworkGatewayCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal LocalNetworkGatewayCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(LocalNetworkGateway.ResourceType, out string apiVersion);
-            _localNetworkGatewaysRestClient = new LocalNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _localNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LocalNetworkGateway.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(LocalNetworkGateway.ResourceType, out string localNetworkGatewayApiVersion);
+            _localNetworkGatewayRestClient = new LocalNetworkGatewaysRestOperations(_localNetworkGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localNetworkGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _localNetworkGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
-                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var response = _localNetworkGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(ArmClient, _localNetworkGatewayClientDiagnostics, Pipeline, _localNetworkGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -100,12 +99,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _localNetworkGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var response = await _localNetworkGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(ArmClient, _localNetworkGatewayClientDiagnostics, Pipeline, _localNetworkGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,14 +125,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _localNetworkGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken);
+                var response = _localNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
+                    throw _localNetworkGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LocalNetworkGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,14 +150,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _localNetworkGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
+                    throw await _localNetworkGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LocalNetworkGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,14 +175,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _localNetworkGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken);
+                var response = _localNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<LocalNetworkGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalNetworkGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,14 +200,14 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _localNetworkGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _localNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<LocalNetworkGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalNetworkGateway(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalNetworkGateway(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
+            using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
             try
             {
@@ -270,12 +269,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<LocalNetworkGateway> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
+                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _localNetworkGatewaysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _localNetworkGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,12 +284,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<LocalNetworkGateway> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
+                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _localNetworkGatewaysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _localNetworkGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,12 +307,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<LocalNetworkGateway>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
+                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _localNetworkGatewaysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _localNetworkGatewayRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,12 +322,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<LocalNetworkGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
+                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _localNetworkGatewaysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _localNetworkGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -337,52 +336,6 @@ namespace Azure.ResourceManager.Network
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="LocalNetworkGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(LocalNetworkGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="LocalNetworkGateway" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(LocalNetworkGateway.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<LocalNetworkGateway> IEnumerable<LocalNetworkGateway>.GetEnumerator()
@@ -399,8 +352,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
     }
 }

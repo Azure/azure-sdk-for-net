@@ -15,18 +15,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SubscriptionUsage and their operations over its parent. </summary>
     public partial class SubscriptionUsageCollection : ArmCollection, IEnumerable<SubscriptionUsage>, IAsyncEnumerable<SubscriptionUsage>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SubscriptionUsagesRestOperations _subscriptionUsagesRestClient;
+        private readonly ClientDiagnostics _subscriptionUsageClientDiagnostics;
+        private readonly SubscriptionUsagesRestOperations _subscriptionUsageRestClient;
         private readonly string _locationName;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionUsageCollection"/> class for mocking. </summary>
@@ -40,9 +38,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         internal SubscriptionUsageCollection(ArmResource parent, string locationName) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SubscriptionUsage.ResourceType, out string apiVersion);
-            _subscriptionUsagesRestClient = new SubscriptionUsagesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
             _locationName = locationName;
 #if DEBUG
 			ValidateResourceId(Id);
@@ -69,14 +67,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionUsagesRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken);
+                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                    throw _subscriptionUsageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,14 +95,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionUsagesRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                    throw await _subscriptionUsageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,14 +120,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionUsagesRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
+                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,14 +145,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionUsagesRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SubscriptionUsage>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsage(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsage(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
             try
             {
@@ -195,7 +193,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
+            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
             try
             {
@@ -219,12 +217,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SubscriptionUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _subscriptionUsagesRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionUsageRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,12 +232,12 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SubscriptionUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _subscriptionUsagesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _subscriptionUsageRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -260,12 +258,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SubscriptionUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _subscriptionUsagesRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionUsageRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,12 +273,12 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SubscriptionUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
+                using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _subscriptionUsagesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _subscriptionUsageRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionUsage(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -289,52 +287,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="SubscriptionUsage" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(SubscriptionUsage.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="SubscriptionUsage" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SubscriptionUsageCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(SubscriptionUsage.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<SubscriptionUsage> IEnumerable<SubscriptionUsage>.GetEnumerator()
@@ -351,8 +303,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SubscriptionUsage, SubscriptionUsageData> Construct() { }
     }
 }

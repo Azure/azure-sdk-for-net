@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal FileServiceCreateOrUpdateOperation(ArmResource operationsBase, Response<FileServiceData> response)
+        internal FileServiceCreateOrUpdateOperation(ArmClient armClient, Response<FileServiceData> response)
         {
-            _operation = new OperationOrResponseInternals<FileService>(Response.FromValue(new FileService(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<FileService>(Response.FromValue(new FileService(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

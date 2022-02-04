@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, type)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, type, systemData)
         {
             Location = location;
             Properties = properties;

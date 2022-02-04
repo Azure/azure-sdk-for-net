@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             GeoBackupPolicyState state = default;
             Optional<string> storageType = default;
             foreach (var property in element.EnumerateObject())
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new GeoBackupPolicyData(id, name, type, kind.Value, location.Value, state, storageType.Value);
+            return new GeoBackupPolicyData(id, name, type, systemData, kind.Value, location.Value, state, storageType.Value);
         }
     }
 }

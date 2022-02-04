@@ -22,11 +22,10 @@ namespace Azure.Analytics.Purview.Account
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _collectionName;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -51,7 +50,7 @@ namespace Azure.Analytics.Purview.Account
             Argument.AssertNotNull(collectionName, nameof(collectionName));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
@@ -105,12 +104,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> GetCollectionAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCollectionRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -165,12 +164,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response GetCollection(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCollectionRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -249,12 +248,12 @@ namespace Azure.Analytics.Purview.Account
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -333,12 +332,12 @@ namespace Azure.Analytics.Purview.Account
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateCollectionRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -373,12 +372,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> DeleteCollectionAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteCollectionRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -413,12 +412,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response DeleteCollection(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteCollectionRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -459,12 +458,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual async Task<Response> GetCollectionPathAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCollectionPathRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -505,12 +504,12 @@ namespace Azure.Analytics.Purview.Account
         public virtual Response GetCollectionPath(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
+            using var scope = ClientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCollectionPathRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -558,7 +557,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -566,7 +565,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetChildCollectionNamesRequest(skipToken, context)
                         : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -612,7 +611,7 @@ namespace Azure.Analytics.Purview.Account
         public virtual Pageable<BinaryData> GetChildCollectionNames(string skipToken = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -620,7 +619,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetChildCollectionNamesRequest(skipToken, context)
                         : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));

@@ -16,15 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ServiceObjective and their operations over its parent. </summary>
     public partial class ServiceObjectiveCollection : ArmCollection, IEnumerable<ServiceObjective>, IAsyncEnumerable<ServiceObjective>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServiceObjectivesRestOperations _serviceObjectivesRestClient;
+        private readonly ClientDiagnostics _serviceObjectiveClientDiagnostics;
+        private readonly ServiceObjectivesRestOperations _serviceObjectiveRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceObjectiveCollection"/> class for mocking. </summary>
         protected ServiceObjectiveCollection()
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal ServiceObjectiveCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ServiceObjective.ResourceType, out string apiVersion);
-            _serviceObjectivesRestClient = new ServiceObjectivesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _serviceObjectiveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServiceObjective.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(ServiceObjective.ResourceType, out string serviceObjectiveApiVersion);
+            _serviceObjectiveRestClient = new ServiceObjectivesRestOperations(_serviceObjectiveClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceObjectiveApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceObjectivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken);
+                var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
+                    throw _serviceObjectiveClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceObjective(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceObjectivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
+                    throw await _serviceObjectiveClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServiceObjective(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,14 +115,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceObjectivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken);
+                var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<ServiceObjective>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceObjective(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,14 +140,14 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceObjectivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<ServiceObjective>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceObjective(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
             try
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
             try
             {
@@ -213,12 +212,12 @@ namespace Azure.ResourceManager.Sql
         {
             Page<ServiceObjective> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
+                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serviceObjectivesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(this, value)), null, response.GetRawResponse());
+                    var response = _serviceObjectiveRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,12 +238,12 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<ServiceObjective>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
+                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serviceObjectivesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(this, value)), null, response.GetRawResponse());
+                    var response = await _serviceObjectiveRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,8 +268,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceObjective, ServiceObjectiveData> Construct() { }
     }
 }

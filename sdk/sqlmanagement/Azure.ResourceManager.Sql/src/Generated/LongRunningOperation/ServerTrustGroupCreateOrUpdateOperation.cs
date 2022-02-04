@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerTrustGroup> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerTrustGroupCreateOrUpdateOperation for mocking. </summary>
         protected ServerTrustGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ServerTrustGroupCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerTrustGroupCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerTrustGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerTrustGroupCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
-            return new ServerTrustGroup(_operationBase, data);
+            return new ServerTrustGroup(_armClient, data);
         }
 
         async ValueTask<ServerTrustGroup> IOperationSource<ServerTrustGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerTrustGroupData.DeserializeServerTrustGroupData(document.RootElement);
-            return new ServerTrustGroup(_operationBase, data);
+            return new ServerTrustGroup(_armClient, data);
         }
     }
 }

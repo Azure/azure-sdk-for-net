@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing collection of SqlContainer and their operations over its parent. </summary>
     public partial class SqlContainerCollection : ArmCollection, IEnumerable<SqlContainer>, IAsyncEnumerable<SqlContainer>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SqlResourcesRestOperations _sqlResourcesRestClient;
+        private readonly ClientDiagnostics _sqlContainerSqlResourcesClientDiagnostics;
+        private readonly SqlResourcesRestOperations _sqlContainerSqlResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SqlContainerCollection"/> class for mocking. </summary>
         protected SqlContainerCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal SqlContainerCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(SqlContainer.ResourceType, out string apiVersion);
-            _sqlResourcesRestClient = new SqlResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _sqlContainerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlContainer.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(SqlContainer.ResourceType, out string sqlContainerSqlResourcesApiVersion);
+            _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlContainerSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlContainerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
-                var operation = new SqlContainerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var response = _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
+                var operation = new SqlContainerCreateOrUpdateOperation(ArmClient, _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentNullException(nameof(createUpdateSqlContainerParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var response = await _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlContainerCreateOrUpdateOperation(ArmClient, _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Get");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
+                var response = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
+                    throw _sqlContainerSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlContainer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Get");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
+                    throw await _sqlContainerSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SqlContainer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                var response = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<SqlContainer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlContainer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<SqlContainer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlContainer(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.Exists");
+            using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Page<SqlContainer> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
+                using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _sqlResourcesRestClient.ListSqlContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(this, value)), null, response.GetRawResponse());
+                    var response = _sqlContainerSqlResourcesRestClient.ListSqlContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
             async Task<Page<SqlContainer>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
+                using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlResourcesRestClient.ListSqlContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(this, value)), null, response.GetRawResponse());
+                    var response = await _sqlContainerSqlResourcesRestClient.ListSqlContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(ArmClient, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,8 +321,5 @@ namespace Azure.ResourceManager.CosmosDB
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SqlContainer, SqlContainerData> Construct() { }
     }
 }

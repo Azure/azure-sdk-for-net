@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -25,8 +24,8 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of AppServiceEnvironment and their operations over its parent. </summary>
     public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironment>, IAsyncEnumerable<AppServiceEnvironment>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentsRestClient;
+        private readonly ClientDiagnostics _appServiceEnvironmentClientDiagnostics;
+        private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironmentCollection"/> class for mocking. </summary>
         protected AppServiceEnvironmentCollection()
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal AppServiceEnvironmentCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AppServiceEnvironment.ResourceType, out string apiVersion);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironment.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(AppServiceEnvironment.ResourceType, out string appServiceEnvironmentApiVersion);
+            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(_appServiceEnvironmentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,12 +70,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken);
-                var operation = new AppServiceEnvironmentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response);
+                var response = _appServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken);
+                var operation = new AppServiceEnvironmentCreateOrUpdateOperation(ArmClient, _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -106,12 +105,12 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentNullException(nameof(hostingEnvironmentEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceEnvironmentCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response);
+                var response = await _appServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceEnvironmentCreateOrUpdateOperation(ArmClient, _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
+                    throw _appServiceEnvironmentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,14 +162,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
+                    throw await _appServiceEnvironmentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,14 +187,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<AppServiceEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,14 +212,14 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<AppServiceEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironment(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
             try
             {
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
+            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
             try
             {
@@ -285,12 +284,12 @@ namespace Azure.ResourceManager.AppService
         {
             Page<AppServiceEnvironment> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
+                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appServiceEnvironmentRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,12 +299,12 @@ namespace Azure.ResourceManager.AppService
             }
             Page<AppServiceEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
+                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appServiceEnvironmentRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,12 +325,12 @@ namespace Azure.ResourceManager.AppService
         {
             async Task<Page<AppServiceEnvironment>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
+                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appServiceEnvironmentRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,12 +340,12 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<AppServiceEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
+                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appServiceEnvironmentRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -355,52 +354,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="AppServiceEnvironment" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(AppServiceEnvironment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="AppServiceEnvironment" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(AppServiceEnvironment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<AppServiceEnvironment> IEnumerable<AppServiceEnvironment>.GetEnumerator()
@@ -417,8 +370,5 @@ namespace Azure.ResourceManager.AppService
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AppServiceEnvironment, AppServiceEnvironmentData> Construct() { }
     }
 }

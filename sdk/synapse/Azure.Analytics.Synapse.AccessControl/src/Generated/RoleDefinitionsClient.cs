@@ -19,10 +19,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         private static readonly string[] AuthorizationScopes = new string[] { "https://dev.azuresynapse.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -42,7 +41,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -94,12 +93,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -153,12 +152,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -214,12 +213,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -275,12 +274,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -314,12 +313,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -353,12 +352,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Response GetScopes(RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
             scope0.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             IscsiTargetAclMode aclMode = default;
             Optional<string> targetIqn = default;
             Optional<IList<Acl>> staticAcls = default;
@@ -110,6 +112,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new IscsiTargetCreate(id, name, type, managedBy.Value, Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Optional.ToList(staticAcls), Optional.ToList(luns));
+            return new IscsiTargetCreate(id, name, type, systemData, managedBy.Value, Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Optional.ToList(staticAcls), Optional.ToList(luns));
         }
     }
 }
