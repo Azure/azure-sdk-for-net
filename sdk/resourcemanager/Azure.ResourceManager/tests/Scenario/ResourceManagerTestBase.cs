@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
             return op.Value;
         }
 
-        protected async Task<GenericResourceCreateOrUpdateOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
+        protected async Task<ArmOperation<GenericResource>> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Tests
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
         {
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, input);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, input);
             return lro.Value;
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            GenericResourceCreateOrUpdateOperation lro = await Client.GetGenericResources().CreateOrUpdateAsync(true, vnId, input);
+            ArmOperation<GenericResource> lro = await Client.GetGenericResources().CreateOrUpdateAsync(true, vnId, input);
             return lro.Value;
         }
 

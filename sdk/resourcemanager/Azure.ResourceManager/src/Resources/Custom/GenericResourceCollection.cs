@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual GenericResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GenericResource> CreateOrUpdate(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = _resourcesRestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                var operation = new GenericResourceCreateOrUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new ArmOperation<GenericResource>(new GenericResourceSource(ArmClient), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<GenericResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GenericResource>> CreateOrUpdateAsync(bool waitForCompletion, ResourceIdentifier resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceCreateOrUpdateOperation(ArmClient, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
+                var operation = new ArmOperation<GenericResource>(new GenericResourceSource(ArmClient), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroup> CreateOrUpdate(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             if (parameters == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupCreateOrUpdateOperation(ArmClient, response);
+                var operation = new ArmOperation<ResourceGroup>(Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ResourceGroup>> CreateOrUpdateAsync(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             if (parameters == null)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupCreateOrUpdateOperation(ArmClient, response);
+                var operation = new ArmOperation<ResourceGroup>(Response.FromValue(new ResourceGroup(ArmClient, response.Value), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

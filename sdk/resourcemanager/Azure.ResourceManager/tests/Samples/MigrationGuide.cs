@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+            ArmOperation<ResourceGroup> rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 
