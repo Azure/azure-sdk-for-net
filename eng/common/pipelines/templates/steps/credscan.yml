@@ -6,7 +6,7 @@ steps:
 - pwsh: |
     New-Item -Path "$(Build.SourcesDirectory)" -Name "credscan.tsv"
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      New-Item -Path "$(Build.sourcesdirectory)" -Name "changedFiles" -ItemType "directory"
+      New-Item -Path "$(Build.SourcesDirectory)" -Name "changedFiles" -ItemType "directory"
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
       | ForEach-Object { Add-Content -Path "$(Build.SourcesDirectory)/credscan.tsv" -Value "$(Build.SourcesDirectory)/$_"}
     }
