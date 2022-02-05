@@ -16,8 +16,11 @@ namespace Azure.Storage
             => new ArgumentException($"Cannot process {command} for job id: \"{jobId}\". Because" +
                 $"the respective job does not exist or is no longer stored in the transfer manager.");
 
+        public static ArgumentException PlanFileMissing(string path, string jobId)
+            => new ArgumentException($"Cannot resume job, \"{jobId}\", because the job plan file cannot be found at the following path: \"{path}\"");
+
         public static ArgumentException JobCancelledOrPaused(string jobId)
-            => new ArgumentException($"The following job id: \"{jobId}\" has already had a job id cancelled or paused.");
+            => new ArgumentException($"The following job with the respective job id: \"{jobId}\" is currently being cancelled or paused.");
 
         public static InvalidOperationException TooManyLogFiles(string logFolderPath, string jobId)
             => new InvalidOperationException($"Path:\"{logFolderPath}\" cannot be used to store log file for job \"{jobId}\"" +

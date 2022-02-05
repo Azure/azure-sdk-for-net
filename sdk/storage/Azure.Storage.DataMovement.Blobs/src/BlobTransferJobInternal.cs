@@ -52,6 +52,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string folderPath = String.IsNullOrEmpty(loggerFolderPath) ? Constants.DataMovement.DefaultLogTransferFiles : loggerFolderPath;
             // TODO; get loglevel from StorageTransferManager
             Logger = new TransferJobLogger(folderPath, jobId);
+            PlanJobWriter = new PlanJobWriter(folderPath, jobId);
         }
 
         /// <summary>
@@ -68,7 +69,14 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationTokenSource.Cancel();
             await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been paused.").ConfigureAwait(false);
-            await PlanJobWriter.ReportProgress("Job Paused").ConfigureAwait(false);
+            await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
+        }
+
+        public virtual async Task ResumeTransferJob()
+        {
+            CancellationTokenSource.Cancel();
+            await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been resumed.").ConfigureAwait(false);
+            await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
         }
 
         /// <summary>

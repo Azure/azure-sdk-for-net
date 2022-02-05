@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement.Models
         {
             CancellationTokenSource.Cancel();
             await Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer Job has been paused.").ConfigureAwait(false);
-            await PlanJobWriter.ReportProgress("Job Paused").ConfigureAwait(false);
+            await PlanJobWriter.SetTransferStatus("Job Paused").ConfigureAwait(false);
         }
     }
 }

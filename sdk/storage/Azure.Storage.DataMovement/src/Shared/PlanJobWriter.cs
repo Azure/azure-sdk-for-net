@@ -6,6 +6,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO.MemoryMappedFiles;
 
 namespace Azure.Storage.DataMovement
 {
@@ -14,7 +15,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Contains file path to the job file
         /// </summary>
-        internal string planJobFilePath;
+        public string PlanJobFilePath;
 
         /// <summary>
         /// Constructor.
@@ -22,7 +23,8 @@ namespace Azure.Storage.DataMovement
         public PlanJobWriter(string jobId, string planFolderPath)
         {
             // To populate as jobs get added
-            planJobFilePath = Path.Combine(planFolderPath, $"{jobId}.{Constants.DataMovement.PlanFile.FileExtension}");
+            PlanJobFilePath = Path.Combine(planFolderPath, $"{jobId}.{Constants.DataMovement.PlanFile.FileExtension}");
+            MemoryMappedFile.CreateNew(PlanJobFilePath, Constants.DataMovement.PlanFile.MemoryMappedFileSize);
         }
 
         /// <summary>
@@ -31,9 +33,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="reportMessage"></param>
         /// TODO: update transferstatus in the transfer plan file threadsafely
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task ReportProgress(string reportMessage /*StorageTransferStatus transferStatus = default*/)
+        public async Task SetTransferStatus(string reportMessage /*StorageTransferStatus transferStatus = default*/)
         {
-            using (StreamWriter fileStream = File.AppendText(planJobFilePath))
+            using (StreamWriter fileStream = File.AppendText(PlanJobFilePath))
             {
                 await fileStream.WriteLineAsync(reportMessage).ConfigureAwait(false);
             }
@@ -48,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="NotImplementedException"></exception>
         public void RemovePlanFile()
         {
-            File.Delete(planJobFilePath);
+            File.Delete(PlanJobFilePath);
         }
     }
 }

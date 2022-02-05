@@ -437,5 +437,52 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw Errors.InvalidJobId(nameof(PauseJob), jobId);
             }
         }
+
+        /// <summary>
+        /// Returns storage job information if provided jobId.
+        /// </summary>
+        /// <param name="jobId"></param>
+        public async Task ResumeJob(string jobId)
+        {
+            if (!_totalTransferJobs.ContainsKey(jobId))
+            {
+                BlobTransferJobInternal job = _totalTransferJobs[jobId];
+                if (job.CancellationTokenSource.IsCancellationRequested)
+                {
+                    // The job is currently getting cancelled or paused
+                    throw Errors.JobCancelledOrPaused(jobId);
+                }
+                else
+                {
+                    await job.ResumeTransferJob().ConfigureAwait(false);
+                }
+            }
+            else
+            {
+                throw Errors.InvalidJobId(nameof(ResumeJob), jobId);
+            }
+        }
+
+        /// <summary>
+        /// Pauses transfers that are currently being processed.
+        /// Does not allow any other transfer start.
+        /// </summary>
+        /// TODO: Returns actual object, or at least in a designated log
+        /// file we have a place where people can continue transfers
+        public virtual void PauseTransfers()
+        {
+            _managerTransferStatus = StorageManagerTransferStatus.Pausing;
+
+            foreach (BlobTransferJobInternal job in _totalTransferJobs)
+            {
+                if (!job.CancellationTokenSource.IsCancellationRequested)
+                {
+                    job.CancellationTokenSource.Cancel(true);
+                }
+                //TODO: log cancellation of job
+                //Call job update transfer status
+            }
+            _managerTransferStatus = StorageManagerTransferStatus.Idle;
+        }
     }
 }

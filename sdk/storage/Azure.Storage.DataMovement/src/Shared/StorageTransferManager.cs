@@ -24,14 +24,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class StorageTransferManager
     {
-        /// <summary>
-        /// To hold the jobs to scan
-        /// This is a weird thing to have because we have regular Blob Directory Upload / Download which will
-        /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
-        /// part of DMLib instead of scanning right before the job is benefical.
-        /// </summary>
-        internal List<TransferJobInternal> _totalJobs;
-
         // Not sure if we should keep the jobs that in in progress here
         // private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
@@ -66,47 +58,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Directory path where transfer state is kept.</param>
         public StorageTransferManager(StorageTransferManagerOptions options)
         {
-            _totalJobs = new List<TransferJobInternal>();
             _options = options;
-            _managerTransferStatus = StorageManagerTransferStatus.Idle;
-        }
-
-        /// <summary>
-        /// List all jobs and information
-        /// </summary>
-        /// <returns></returns>
-        public virtual IList<StorageTransferJobDetails> ListJobs()
-            //options to grab what kind of information
-        {
-            return new List<StorageTransferJobDetails>();
-        }
-
-        /// <summary>
-        /// Returns storage job information if provided jobId
-        /// </summary>
-        /// <param name="jobId"></param>
-        /// <returns></returns>
-        public virtual StorageTransferJobDetails GetJob(string jobId)
-        {
-            return new StorageTransferJobDetails();
-        }
-
-        /// <summary>
-        /// Pauses transfers that are currently being processed.
-        /// Does not allow any other transfer start.
-        /// </summary>
-        /// TODO: Returns actual object, or at least in a designated log
-        /// file we have a place where people can continue transfers
-        public virtual void PauseTransfers()
-        {
-            _managerTransferStatus = StorageManagerTransferStatus.Pausing;
-
-            foreach (TransferJobInternal job in _totalJobs)
-            {
-                job.CancellationTokenSource.Cancel(true);
-                //TODO: log cancellation of job
-                //Call job update transfer status
-            }
             _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
 

@@ -687,6 +687,9 @@ namespace Azure.Storage
             {
                 // TBD
                 internal const string FileExtension = ".plan";
+                // TODO: might change the value
+                internal const long MemoryMappedFileSize = 4 * Constants.MB;
+                internal const int CustomHeaderMaxBytes = 256;
             }
         }
     }
