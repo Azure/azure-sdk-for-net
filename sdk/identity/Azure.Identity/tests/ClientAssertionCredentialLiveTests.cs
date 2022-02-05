@@ -26,8 +26,9 @@ namespace Azure.Identity.Tests
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
         }
 
-        [Test]
-        public async Task AuthnenticateWithSyncAssertionCallback()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AuthnenticateWithAssertionCallback(bool useAsyncCallback)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
@@ -35,46 +36,20 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new ClientAssertionCredentialOptions());
 
-            Func<string> assertionCallback = () => CreateClientAssertionJWT(options.AuthorityHost, clientId, tenantId, cert);
+            ClientAssertionCredential credential;
 
-            var credential = InstrumentClient(new ClientAssertionCredential(tenantId, clientId, assertionCallback, options));
-
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
-
-            // ensure we can initially acquire a  token
-            AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
-
-            Assert.IsNotNull(token.Token);
-
-            // ensure subsequent calls before the token expires are served from the token cache
-            AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
-
-            Assert.AreEqual(token.Token, cachedToken.Token);
-
-            // ensure new credentials don't share tokens from the cache
-            var credential2 = new ClientCertificateCredential(tenantId, clientId, cert, options);
-
-            AccessToken token2 = await credential2.GetTokenAsync(tokenRequestContext);
-
-            // this assert is conditional because the access token is scrubbed in the recording so they will never be different
-            if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
+            if (useAsyncCallback)
             {
-                Assert.AreNotEqual(token.Token, token2.Token);
+                Func<CancellationToken, Task<string>> assertionCallback = (ct) => Task.FromResult(CreateClientAssertionJWT(options.AuthorityHost, clientId, tenantId, cert));
+
+                credential = InstrumentClient(new ClientAssertionCredential(tenantId, clientId, assertionCallback, options));
             }
-        }
+            else
+            {
+                Func<string> assertionCallback = () => CreateClientAssertionJWT(options.AuthorityHost, clientId, tenantId, cert);
 
-        [Test]
-        public async Task AuthnenticateWithAsyncAssertionCallback()
-        {
-            var tenantId = TestEnvironment.ServicePrincipalTenantId;
-            var clientId = TestEnvironment.ServicePrincipalClientId;
-            var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
-
-            var options = InstrumentClientOptions(new ClientAssertionCredentialOptions());
-
-            Func<CancellationToken, Task<string>> assertionCallback = (ct) => Task.FromResult(CreateClientAssertionJWT(options.AuthorityHost, clientId, tenantId, cert));
-
-            var credential = InstrumentClient(new ClientAssertionCredential(tenantId, clientId, assertionCallback, options));
+                credential = InstrumentClient(new ClientAssertionCredential(tenantId, clientId, assertionCallback, options));
+            }
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 

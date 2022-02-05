@@ -24,4 +24,9 @@
     <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <Folder Include="SessionRecords\ClientAssertionCredentialLiveTests\" />
+  </ItemGroup>
+
 </Project>

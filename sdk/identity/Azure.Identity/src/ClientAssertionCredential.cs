@@ -29,7 +29,7 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory using a signed client assertion.
+        /// Creates an instance of the ClientCertificateCredential with an asynchronous callback that provides a signed client assertion to authenicate against Azure Active Directory.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
@@ -37,22 +37,28 @@ namespace Azure.Identity
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientAssertionCredential(string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, ClientAssertionCredentialOptions options = default)
         {
-            TenantId = tenantId;
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId;
+
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory using a signed client assertion.
+        /// Creates an instance of the ClientCertificateCredential with a synchronous callback that provides a signed client assertion to authenicate against Azure Active Directory.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
-        /// <param name="assertionCallback">An asynchronous callback returning a valid client assertion used to authenticate the service principal.</param>
+        /// <param name="assertionCallback">A synchronous callback returning a valid client assertion used to authenticate the service principal.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientAssertionCredential(string tenantId, string clientId, Func<string> assertionCallback, ClientAssertionCredentialOptions options = default)
         {
-            TenantId = tenantId;
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId;
+
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, null, null, options?.IsLoggingPIIEnabled ?? false);
         }
 
