@@ -11127,7 +11127,7 @@ namespace Azure.ResourceManager.Network.Models
         internal TroubleshootingRecommendedActions() { }
         public string ActionId { get { throw null; } }
         public string ActionText { get { throw null; } }
-        public string ActionUri { get { throw null; } }
+        public System.Uri ActionUri { get { throw null; } }
         public string ActionUriText { get { throw null; } }
     }
     public partial class TroubleshootingResult

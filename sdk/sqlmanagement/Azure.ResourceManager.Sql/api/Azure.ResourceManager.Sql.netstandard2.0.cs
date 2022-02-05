@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Sql
         public string SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? Status { get { throw null; } }
         public string StorageContainerSasToken { get { throw null; } set { } }
-        public string StorageContainerUri { get { throw null; } set { } }
+        public System.Uri StorageContainerUri { get { throw null; } set { } }
     }
     public partial class ManagedDatabaseRestoreDetailsResult : Azure.ResourceManager.Core.ArmResource
     {
@@ -4763,7 +4763,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.OperationMode? OperationMode { get { throw null; } set { } }
         public string StorageKey { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType? StorageKeyType { get { throw null; } set { } }
-        public string StorageUri { get { throw null; } set { } }
+        public System.Uri StorageUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DatabaseLicenseType : System.IEquatable<Azure.ResourceManager.Sql.Models.DatabaseLicenseType>
@@ -5325,14 +5325,14 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ExportDatabaseDefinition
     {
-        public ExportDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword) { }
+        public ExportDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, System.Uri storageUri, string administratorLogin, string administratorLoginPassword) { }
         public string AdministratorLogin { get { throw null; } }
         public string AdministratorLoginPassword { get { throw null; } }
         public string AuthenticationType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.NetworkIsolationSettings NetworkIsolation { get { throw null; } set { } }
         public string StorageKey { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
-        public string StorageUri { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
     }
     public partial class ExtendedDatabaseBlobAuditingPolicyCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.ExtendedDatabaseBlobAuditingPolicy>
     {
@@ -5551,14 +5551,14 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ImportExistingDatabaseDefinition
     {
-        public ImportExistingDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword) { }
+        public ImportExistingDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, System.Uri storageUri, string administratorLogin, string administratorLoginPassword) { }
         public string AdministratorLogin { get { throw null; } }
         public string AdministratorLoginPassword { get { throw null; } }
         public string AuthenticationType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.NetworkIsolationSettings NetworkIsolation { get { throw null; } set { } }
         public string StorageKey { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
-        public string StorageUri { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
     }
     public partial class ImportExportExtensionsOperationResult : Azure.ResourceManager.Models.Resource
     {
@@ -5574,7 +5574,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ImportExportOperationResult : Azure.ResourceManager.Models.Resource
     {
         public ImportExportOperationResult() { }
-        public string BlobUri { get { throw null; } }
+        public System.Uri BlobUri { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public string LastModifiedTime { get { throw null; } }
@@ -5587,7 +5587,7 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ImportNewDatabaseDefinition
     {
-        public ImportNewDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword) { }
+        public ImportNewDatabaseDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType, string storageKey, System.Uri storageUri, string administratorLogin, string administratorLoginPassword) { }
         public string AdministratorLogin { get { throw null; } }
         public string AdministratorLoginPassword { get { throw null; } }
         public string AuthenticationType { get { throw null; } set { } }
@@ -5598,7 +5598,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string ServiceObjectiveName { get { throw null; } set { } }
         public string StorageKey { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
-        public string StorageUri { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
     }
     public partial class InstanceFailoverGroupCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.InstanceFailoverGroup>
     {
@@ -6337,7 +6337,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? Status { get { throw null; } }
         public string StorageContainerSasToken { get { throw null; } set { } }
-        public string StorageContainerUri { get { throw null; } set { } }
+        public System.Uri StorageContainerUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ManagedDatabaseUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.ManagedDatabase>
@@ -7071,7 +7071,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.MetricName Name { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PrimaryAggregationType? PrimaryAggregationType { get { throw null; } }
-        public string ResourceUri { get { throw null; } }
+        public System.Uri ResourceUri { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.UnitDefinitionType? Unit { get { throw null; } }
     }
     public partial class MetricName
