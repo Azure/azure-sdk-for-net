@@ -4,7 +4,7 @@
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <IsClientLibrary>false</IsClientLibrary>
     <IsPackable>true</IsPackable>
-    <IsSample>true</IsSample>
+    <IsSamplesProject>true</IsSamplesProject>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <NoWarn>
       $(NoWarn);
