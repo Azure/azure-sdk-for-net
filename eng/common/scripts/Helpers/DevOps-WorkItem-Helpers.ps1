@@ -411,13 +411,13 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
 
     if ($allowPrompt) {
       if (!$pkg.DisplayName) {
-        Write-Host "We need a package display name to be used in various places and it should be consistent across languages for similar packages."
+        Write-Host "Display name is used to identify this package across languages and is usually the friendly name (i.e. For 'Azure Anomaly Detector' it would be 'Anomaly Detector'). See https://aka.ms/azsdk/mark-release-status for more info."
         while (($readInput = Read-Host -Prompt "Input the display name") -eq "") { }
         $packageInfo.DisplayName = $readInput
       }
 
       if (!$pkg.ServiceName) {
-        Write-Host "We need a package service name to be used in various places and it should be consistent across languages for similar packages."
+        Write-Host "This is the friendly service name for this package that is used to align it with other packages and languages. The service name is sometimes the same as the `Package Display Name` if there is only one package for a service. (i.e. For 'Azure Anomaly Detector' it would be 'Anomaly Detector'). See https://aka.ms/azsdk/mark-release-status for more info."
         while (($readInput = Read-Host -Prompt "Input the service name") -eq "") { }
         $packageInfo.ServiceName = $readInput
       }
