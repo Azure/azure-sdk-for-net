@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.5.0" />
-    <PackageReference Include="Azure.IoT.DeviceUpdate" Version="1.0.0-beta.3" />
-    <PackageReference Include="System.CommandLine.DragonFruit" Version="0.4.0-alpha.21617.1" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.IoT.DeviceUpdate" VersionOverride="1.0.0-beta.3" />
+    <PackageReference Include="System.CommandLine.DragonFruit" VersionOverride="0.4.0-alpha.21617.1" />
   </ItemGroup>
 
 </Project>
