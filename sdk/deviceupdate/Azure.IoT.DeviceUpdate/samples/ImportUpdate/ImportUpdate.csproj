@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" VersionOverride="1.5.0" />
     <PackageReference Include="Azure.IoT.DeviceUpdate" VersionOverride="1.0.0-beta.3" />
-    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.10.0" />
     <PackageReference Include="System.CommandLine.DragonFruit" VersionOverride="0.4.0-alpha.21617.1" />
   </ItemGroup>
 
