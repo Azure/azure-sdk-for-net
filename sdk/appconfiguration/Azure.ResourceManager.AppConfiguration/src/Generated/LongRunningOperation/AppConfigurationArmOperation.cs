@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppConfiguration.Models
+namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> Deletes a configuration store. </summary>
-    public partial class ConfigurationStoreDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class AppConfigurationArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ConfigurationStoreDeleteOperation for mocking. </summary>
-        protected ConfigurationStoreDeleteOperation()
+        /// <summary> Initializes a new instance of AppConfigurationArmOperation for mocking. </summary>
+        protected AppConfigurationArmOperation()
         {
         }
 
-        internal ConfigurationStoreDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AppConfigurationArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConfigurationStoreDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal AppConfigurationArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "AppConfigurationArmOperation");
         }
 
         /// <inheritdoc />

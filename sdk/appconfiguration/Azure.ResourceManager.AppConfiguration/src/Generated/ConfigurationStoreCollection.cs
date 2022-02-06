@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public async virtual Task<ConfigurationStoreCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConfigurationStore>> CreateOrUpdateAsync(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             if (configStoreCreationParameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _configurationStoreRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfigurationStoreCreateOrUpdateOperation(Client, _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="configStoreCreationParameters"/> is null. </exception>
-        public virtual ConfigurationStoreCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfigurationStore> CreateOrUpdate(bool waitForCompletion, string configStoreName, ConfigurationStoreData configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             if (configStoreCreationParameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _configurationStoreRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters, cancellationToken);
-                var operation = new ConfigurationStoreCreateOrUpdateOperation(Client, _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response);
+                var operation = new AppConfigurationArmOperation<ConfigurationStore>(new ConfigurationStoreSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, configStoreCreationParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
