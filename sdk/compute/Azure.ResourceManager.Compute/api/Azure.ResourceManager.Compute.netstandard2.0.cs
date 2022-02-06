@@ -698,8 +698,8 @@ namespace Azure.ResourceManager.Compute
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
-        public string PrivacyStatementUri { get { throw null; } set { } }
-        public string ReleaseNoteUri { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
     }
     public partial class GalleryApplicationVersion : Azure.ResourceManager.Core.ArmResource
@@ -826,11 +826,11 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes? OSState { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
-        public string PrivacyStatementUri { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } set { } }
-        public string ReleaseNoteUri { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
     }
     public partial class GalleryImageVersion : Azure.ResourceManager.Core.ArmResource
     {
@@ -1786,9 +1786,9 @@ namespace Azure.ResourceManager.Compute
     {
         public VirtualMachineRunCommandData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AsyncExecution { get { throw null; } set { } }
-        public string ErrorBlobUri { get { throw null; } set { } }
+        public System.Uri ErrorBlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandInstanceView InstanceView { get { throw null; } }
-        public string OutputBlobUri { get { throw null; } set { } }
+        public System.Uri OutputBlobUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> ProtectedParameters { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -2311,13 +2311,13 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public BootDiagnostics() { }
         public bool? Enabled { get { throw null; } set { } }
-        public string StorageUri { get { throw null; } set { } }
+        public System.Uri StorageUri { get { throw null; } set { } }
     }
     public partial class BootDiagnosticsInstanceView
     {
         internal BootDiagnosticsInstanceView() { }
-        public string ConsoleScreenshotBlobUri { get { throw null; } }
-        public string SerialConsoleLogBlobUri { get { throw null; } }
+        public System.Uri ConsoleScreenshotBlobUri { get { throw null; } }
+        public System.Uri SerialConsoleLogBlobUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
     }
     public enum CachingTypes
@@ -2745,10 +2745,10 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ImageDiskReference GalleryImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference ImageReference { get { throw null; } set { } }
         public int? LogicalSectorSize { get { throw null; } set { } }
-        public string SecurityDataUri { get { throw null; } set { } }
+        public System.Uri SecurityDataUri { get { throw null; } set { } }
         public string SourceResourceId { get { throw null; } set { } }
         public string SourceUniqueId { get { throw null; } }
-        public string SourceUri { get { throw null; } set { } }
+        public System.Uri SourceUri { get { throw null; } set { } }
         public string StorageAccountId { get { throw null; } set { } }
         public long? UploadSizeBytes { get { throw null; } set { } }
     }
@@ -3593,8 +3593,8 @@ namespace Azure.ResourceManager.Compute.Models
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
-        public string PrivacyStatementUri { get { throw null; } set { } }
-        public string ReleaseNoteUri { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
     }
     public partial class GalleryApplicationUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.GalleryApplication>
@@ -3812,11 +3812,11 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes? OSState { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
-        public string PrivacyStatementUri { get { throw null; } set { } }
+        public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } set { } }
-        public string ReleaseNoteUri { get { throw null; } set { } }
+        public System.Uri ReleaseNoteUri { get { throw null; } set { } }
     }
     public partial class GalleryImageUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.GalleryImage>
     {
@@ -4093,7 +4093,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ImageDisk
     {
         public ImageDisk() { }
-        public string BlobUri { get { throw null; } set { } }
+        public System.Uri BlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CachingTypes? Caching { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.WritableSubResource DiskEncryptionSet { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } set { } }
@@ -4367,8 +4367,8 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class LogAnalyticsInputBase
     {
-        public LogAnalyticsInputBase(string blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime) { }
-        public string BlobContainerSasUri { get { throw null; } }
+        public LogAnalyticsInputBase(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime) { }
+        public System.Uri BlobContainerSasUri { get { throw null; } }
         public System.DateTimeOffset FromTime { get { throw null; } }
         public bool? GroupByClientApplicationId { get { throw null; } set { } }
         public bool? GroupByOperationName { get { throw null; } set { } }
@@ -5041,7 +5041,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RequestRateByIntervalInput : Azure.ResourceManager.Compute.Models.LogAnalyticsInputBase
     {
-        public RequestRateByIntervalInput(string blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMins intervalLength) : base (default(string), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
+        public RequestRateByIntervalInput(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMins intervalLength) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
         public Azure.ResourceManager.Compute.Models.IntervalInMins IntervalLength { get { throw null; } }
     }
     public enum ResourceIdentityType
@@ -5270,8 +5270,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RetrieveBootDiagnosticsDataResult
     {
         internal RetrieveBootDiagnosticsDataResult() { }
-        public string ConsoleScreenshotBlobUri { get { throw null; } }
-        public string SerialConsoleLogBlobUri { get { throw null; } }
+        public System.Uri ConsoleScreenshotBlobUri { get { throw null; } }
+        public System.Uri SerialConsoleLogBlobUri { get { throw null; } }
     }
     public partial class RoleInstanceDeleteOperation : Azure.Operation
     {
@@ -5504,7 +5504,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ShareInfoElement
     {
         internal ShareInfoElement() { }
-        public string VmUri { get { throw null; } }
+        public System.Uri VmUri { get { throw null; } }
     }
     public partial class SharingProfile
     {
@@ -5823,7 +5823,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ThrottledRequestsInput : Azure.ResourceManager.Compute.Models.LogAnalyticsInputBase
     {
-        public ThrottledRequestsInput(string blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime) : base (default(string), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
+        public ThrottledRequestsInput(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
     }
     public partial class UefiSettings
     {
@@ -6440,15 +6440,15 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineRunCommandScriptSource() { }
         public string CommandId { get { throw null; } set { } }
         public string Script { get { throw null; } set { } }
-        public string ScriptUri { get { throw null; } set { } }
+        public System.Uri ScriptUri { get { throw null; } set { } }
     }
     public partial class VirtualMachineRunCommandUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public VirtualMachineRunCommandUpdate() { }
         public bool? AsyncExecution { get { throw null; } set { } }
-        public string ErrorBlobUri { get { throw null; } set { } }
+        public System.Uri ErrorBlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandInstanceView InstanceView { get { throw null; } }
-        public string OutputBlobUri { get { throw null; } set { } }
+        public System.Uri OutputBlobUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> ProtectedParameters { get { throw null; } }
         public string ProvisioningState { get { throw null; } }

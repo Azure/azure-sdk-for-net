@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
         }
 
+        protected VaultOperationsTestsBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)//, true)
+        {
+        }
+
         protected async Task Initialize()
         {
             Location = "westcentralus";
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
-            VaultProperties.VaultUri = "";
+            VaultProperties.VaultUri = new Uri("http://vaulturi.com");
             VaultProperties.NetworkAcls = new NetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",

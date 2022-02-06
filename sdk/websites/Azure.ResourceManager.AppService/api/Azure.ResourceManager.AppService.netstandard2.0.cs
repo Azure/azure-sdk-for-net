@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.AppService
         public HybridConnectionData() { }
         public string Hostname { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public string RelayArmUri { get { throw null; } set { } }
+        public System.Uri RelayArmUri { get { throw null; } set { } }
         public string RelayName { get { throw null; } set { } }
         public string SendKeyName { get { throw null; } set { } }
         public string SendKeyValue { get { throw null; } set { } }
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.AppService
     public partial class RelayServiceConnectionEntityData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public RelayServiceConnectionEntityData() { }
-        public string BiztalkUri { get { throw null; } set { } }
+        public System.Uri BiztalkUri { get { throw null; } set { } }
         public string EntityConnectionString { get { throw null; } set { } }
         public string EntityName { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
@@ -4227,13 +4227,13 @@ namespace Azure.ResourceManager.AppService
         public string PublishingPasswordHash { get { throw null; } set { } }
         public string PublishingPasswordHashSalt { get { throw null; } set { } }
         public string PublishingUserName { get { throw null; } set { } }
-        public string ScmUri { get { throw null; } set { } }
+        public System.Uri ScmUri { get { throw null; } set { } }
     }
     public partial class VnetGatewayData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public VnetGatewayData() { }
         public string VnetName { get { throw null; } set { } }
-        public string VpnPackageUri { get { throw null; } set { } }
+        public System.Uri VpnPackageUri { get { throw null; } set { } }
     }
     public partial class VnetInfoResourceData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6653,9 +6653,9 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? AppOffline { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public string DbType { get { throw null; } set { } }
-        public string PackageUri { get { throw null; } set { } }
+        public System.Uri PackageUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SetParameters { get { throw null; } }
-        public string SetParametersXmlFileUri { get { throw null; } set { } }
+        public System.Uri SetParametersXmlFileUri { get { throw null; } set { } }
         public bool? SkipAppData { get { throw null; } set { } }
     }
     public partial class MsDeployLog : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
@@ -6730,7 +6730,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public OpenIdConnectConfig() { }
         public string AuthorizationEndpoint { get { throw null; } set { } }
-        public string CertificationUri { get { throw null; } set { } }
+        public System.Uri CertificationUri { get { throw null; } set { } }
         public string Issuer { get { throw null; } set { } }
         public string TokenEndpoint { get { throw null; } set { } }
         public string WellKnownOpenIdConfiguration { get { throw null; } set { } }
@@ -7093,7 +7093,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResourceMetricAvailability> MetricAvailabilities { get { throw null; } }
         public string PrimaryAggregationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
-        public string ResourceUri { get { throw null; } }
+        public System.Uri ResourceUri { get { throw null; } }
         public string Unit { get { throw null; } }
     }
     public partial class ResourceNameAvailability

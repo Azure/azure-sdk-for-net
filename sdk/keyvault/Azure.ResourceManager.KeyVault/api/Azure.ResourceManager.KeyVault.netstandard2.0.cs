@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KeyVault
         public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
-        public string KeyUri { get { throw null; } }
+        public System.Uri KeyUri { get { throw null; } }
         public string KeyUriWithVersion { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.JsonWebKeyCurveName? CurveName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.JsonWebKeyOperation> KeyOps { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
-        public string KeyUri { get { throw null; } }
+        public System.Uri KeyUri { get { throw null; } }
         public string KeyUriWithVersion { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.JsonWebKeyType? Kty { get { throw null; } set { } }
     }
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.CreateMode? CreateMode { get { throw null; } set { } }
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public bool? EnableSoftDelete { get { throw null; } set { } }
-        public string HsmUri { get { throw null; } }
+        public System.Uri HsmUri { get { throw null; } }
         public System.Collections.Generic.IList<string> InitialAdminObjectIds { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.MhsmNetworkRuleSet NetworkAcls { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public SecretProperties() { }
         public Azure.ResourceManager.KeyVault.Models.SecretAttributes Attributes { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
-        public string SecretUri { get { throw null; } }
+        public System.Uri SecretUri { get { throw null; } }
         public string SecretUriWithVersion { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
-        public string VaultUri { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VaultProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.VaultProvisioningState>

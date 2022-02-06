@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri");
-                writer.WriteStringValue(KeyVaultKeyUri);
+                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> enableCassandraConnector = default;
             Optional<ConnectorOffer> connectorOffer = default;
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
-            Optional<string> keyVaultKeyUri = default;
+            Optional<Uri> keyVaultKeyUri = default;
             Optional<string> defaultIdentity = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
@@ -437,7 +438,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         if (property0.NameEquals("keyVaultKeyUri"))
                         {
-                            keyVaultKeyUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keyVaultKeyUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("defaultIdentity"))

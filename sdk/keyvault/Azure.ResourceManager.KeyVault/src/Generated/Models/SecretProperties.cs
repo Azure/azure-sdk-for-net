@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Properties of the secret. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="attributes"> The attributes of the secret. </param>
         /// <param name="secretUri"> The URI to retrieve the current version of the secret. </param>
         /// <param name="secretUriWithVersion"> The URI to retrieve the specific version of the secret. </param>
-        internal SecretProperties(string value, string contentType, SecretAttributes attributes, string secretUri, string secretUriWithVersion)
+        internal SecretProperties(string value, string contentType, SecretAttributes attributes, Uri secretUri, string secretUriWithVersion)
         {
             Value = value;
             ContentType = contentType;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The attributes of the secret. </summary>
         public SecretAttributes Attributes { get; set; }
         /// <summary> The URI to retrieve the current version of the secret. </summary>
-        public string SecretUri { get; }
+        public Uri SecretUri { get; }
         /// <summary> The URI to retrieve the specific version of the secret. </summary>
         public string SecretUriWithVersion { get; }
     }
