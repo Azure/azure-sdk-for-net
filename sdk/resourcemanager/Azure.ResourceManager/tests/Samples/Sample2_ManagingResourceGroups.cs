@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ArmOperation<ResourceGroup> operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
