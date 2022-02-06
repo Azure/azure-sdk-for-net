@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Resources
             _operation = new OperationOrResponseInternals(response);
         }
 
-        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GenericResourceCreateOrUpdateOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "GenericResourceCreateOrUpdateOperation");
         }
 
         /// <inheritdoc />
