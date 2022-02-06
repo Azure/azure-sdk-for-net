@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager
 {
     /// <summary> Create a resource by ID. </summary>
     public class ArmOperation : Operation
