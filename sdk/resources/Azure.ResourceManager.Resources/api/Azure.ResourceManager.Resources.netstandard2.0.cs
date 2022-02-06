@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources
         public object MainTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationManagementPolicy ManagementPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ApplicationNotificationPolicy NotificationPolicy { get { throw null; } set { } }
-        public string PackageFileUri { get { throw null; } set { } }
+        public System.Uri PackageFileUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationPolicy> Policies { get { throw null; } }
     }
     public static partial class ArmClientExtensions
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
-        public string PrimaryScriptUri { get { throw null; } set { } }
+        public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
         public string ScriptContent { get { throw null; } set { } }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Outputs { get { throw null; } }
-        public string PrimaryScriptUri { get { throw null; } set { } }
+        public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
         public string ScriptContent { get { throw null; } set { } }

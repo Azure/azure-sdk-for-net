@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public KeyVaultProperties() { }
         public Azure.ResourceManager.ServiceBus.Models.UserAssignedIdentityProperties Identity { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
-        public string KeyVaultUri { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
     }
     public enum ManagedServiceIdentityType
