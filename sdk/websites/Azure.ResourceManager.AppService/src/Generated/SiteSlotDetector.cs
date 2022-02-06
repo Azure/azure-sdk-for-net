@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotDetector"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotDetector(ArmClient armClient, AppServiceDetectorData data) : this(armClient, data.Id)
+        internal SiteSlotDetector(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDetector"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotDetector(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotDetector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotDetectorDiagnosticsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotDetectorDiagnosticsApiVersion);
             _siteSlotDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDetectorDiagnosticsRestClient.GetSiteDetectorResponseSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDetector(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotDetectorDiagnosticsRestClient.GetSiteDetectorResponseSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDetector(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "User"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal User(ArmClient armClient, UserData data) : this(armClient, data.Id)
+        internal User(ArmClient client, UserData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="User"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal User(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal User(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _userClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string userApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string userApiVersion);
             _userRestClient = new WebSiteManagementRestOperations(_userClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _userRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _userClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new User(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,71 @@ namespace Azure.ResourceManager.AppService
                 var response = _userRestClient.GetPublishingUser(cancellationToken);
                 if (response.Value == null)
                     throw _userClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new User(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new User(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
+        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
+        /// OperationId: UpdatePublishingUser
+        /// <summary> Description for Updates publishing user. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public async virtual Task<UserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        {
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _userRestClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
+                var operation = new UserCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
+        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
+        /// OperationId: UpdatePublishingUser
+        /// <summary> Description for Updates publishing user. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
+        public virtual UserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        {
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
+            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _userRestClient.UpdatePublishingUser(userDetails, cancellationToken);
+                var operation = new UserCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,70 +222,6 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: UpdatePublishingUser
-        /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="userDetails"> Details of publishing user. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async virtual Task<UserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
-        {
-            if (userDetails == null)
-            {
-                throw new ArgumentNullException(nameof(userDetails));
-            }
-
-            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _userRestClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
-                var operation = new UserCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: UpdatePublishingUser
-        /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="userDetails"> Details of publishing user. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public virtual UserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
-        {
-            if (userDetails == null)
-            {
-                throw new ArgumentNullException(nameof(userDetails));
-            }
-
-            using var scope = _userClientDiagnostics.CreateScope("User.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _userRestClient.UpdatePublishingUser(userDetails, cancellationToken);
-                var operation = new UserCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

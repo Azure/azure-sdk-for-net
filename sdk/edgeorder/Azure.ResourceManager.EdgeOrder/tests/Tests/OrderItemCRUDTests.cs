@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             string orderId = string.Format(EdgeOrderManagementTestUtilities.OrderArmIdFormat,
                 TestEnvironment.SubscriptionId, resourceGroupName, EdgeOrderManagementTestUtilities.DefaultResourceLocation, orderItemName);
 
-            OrderItemResourceCollection _orderItemResourceCollection = GetOrderItemResourceCollection(resourceGroupName);
+            OrderItemResourceCollection _orderItemResourceCollection = await GetOrderItemResourceCollectionAsync(resourceGroupName);
 
             OrderItemResourceData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
                 GetDefaultOrderItemDetails(), addressDetails, orderId);

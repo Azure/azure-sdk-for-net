@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "HybridConnectionLimits"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HybridConnectionLimits(ArmClient armClient, HybridConnectionLimitsData data) : this(armClient, data.Id)
+        internal HybridConnectionLimits(ArmClient client, HybridConnectionLimitsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="HybridConnectionLimits"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HybridConnectionLimits(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal HybridConnectionLimits(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
             _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(_hybridConnectionLimitsAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HybridConnectionLimits(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _hybridConnectionLimitsAppServicePlansRestClient.GetHybridConnectionPlanLimit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _hybridConnectionLimitsAppServicePlansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridConnectionLimits(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridConnectionLimits(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

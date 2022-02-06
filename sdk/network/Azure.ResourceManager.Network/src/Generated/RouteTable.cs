@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "RouteTable"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RouteTable(ArmClient armClient, RouteTableData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal RouteTable(ArmClient client, RouteTableData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteTable"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RouteTable(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal RouteTable(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string routeTableApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string routeTableApiVersion);
             _routeTableRestClient = new RouteTablesRestOperations(_routeTableClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,13 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of Routes in the Route. </summary>
+        /// <returns> An object representing collection of Routes and their operations over a Route. </returns>
+        public virtual RouteCollection GetRoutes()
+        {
+            return new RouteCollection(Client, Id);
+        }
+
         /// <summary> Gets the specified route table. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _routeTableClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteTable(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,43 +124,7 @@ namespace Azure.ResourceManager.Network
                 var response = _routeTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _routeTableClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteTable(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTable.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTable.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +193,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeTableRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RouteTable(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +218,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeTableRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new RouteTable(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,14 +227,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        #region Route
-
-        /// <summary> Gets a collection of Routes in the RouteTable. </summary>
-        /// <returns> An object representing collection of Routes and their operations over a RouteTable. </returns>
-        public virtual RouteCollection GetRoutes()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new RouteCollection(this);
+            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTable.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTable.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

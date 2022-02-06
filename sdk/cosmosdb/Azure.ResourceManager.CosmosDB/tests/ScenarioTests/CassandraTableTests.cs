@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToAutoscale(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToAutoscaleAsync(true)).Value;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateCassandraTableToManualThroughput(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToManualThroughputAsync(true)).Value;
             AssertManualThroughput(throughputData);
         }
 

@@ -1287,13 +1287,27 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeStorageDirectoryDeletedEvent()
         {
-            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\", \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
+            Assert.IsNull((eventData as StorageDirectoryDeletedEventData).Recursive);
+        }
+
+        [Test]
+        public void ConsumeStorageDirectoryDeletedEvent_Recursive()
+        {
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",   \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": { \"recursive\":\"true\",   \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
+            Assert.IsTrue((eventData as StorageDirectoryDeletedEventData).Recursive);
         }
 
         [Test]
@@ -1964,6 +1978,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).FileType);
+            Assert.AreEqual("https://tf0831datamigrate.blob.core.windows.net/windturbinecapture/tfdatamigratens/hubdatamigration/1/2017/08/31/19/11/45.avro", (eventData as EventHubCaptureFileCreatedEventData).Fileurl);
         }
         #endregion
 

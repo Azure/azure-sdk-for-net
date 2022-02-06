@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerDatabaseAdvisor"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerDatabaseAdvisor(ArmClient armClient, AdvisorData data) : this(armClient, data.Id)
+        internal ServerDatabaseAdvisor(ArmClient client, AdvisorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerDatabaseAdvisor"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerDatabaseAdvisor(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerDatabaseAdvisor(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
             _serverDatabaseAdvisorDatabaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(_serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of RecommendedActions in the RecommendedAction. </summary>
+        /// <returns> An object representing collection of RecommendedActions and their operations over a RecommendedAction. </returns>
+        public virtual RecommendedActionCollection GetRecommendedActions()
+        {
+            return new RecommendedActionCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// OperationId: DatabaseAdvisors_Get
@@ -97,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseAdvisor(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +127,63 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseAdvisor(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
+        /// OperationId: DatabaseAdvisors_Update
+        /// <summary> Updates a database advisor. </summary>
+        /// <param name="parameters"> The requested advisor resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<ServerDatabaseAdvisor>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisor.Update");
+            scope.Start();
+            try
+            {
+                var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
+        /// OperationId: DatabaseAdvisors_Update
+        /// <summary> Updates a database advisor. </summary>
+        /// <param name="parameters"> The requested advisor resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ServerDatabaseAdvisor> Update(AdvisorData parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisor.Update");
+            scope.Start();
+            try
+            {
+                var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,71 +227,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseAdvisors_Update
-        /// <summary> Updates a database advisor. </summary>
-        /// <param name="parameters"> The requested advisor resource state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseAdvisor>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisor.Update");
-            scope.Start();
-            try
-            {
-                var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseAdvisor(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseAdvisors_Update
-        /// <summary> Updates a database advisor. </summary>
-        /// <param name="parameters"> The requested advisor resource state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ServerDatabaseAdvisor> Update(AdvisorData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisor.Update");
-            scope.Start();
-            try
-            {
-                var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new ServerDatabaseAdvisor(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region RecommendedAction
-
-        /// <summary> Gets a collection of RecommendedActions in the ServerDatabaseAdvisor. </summary>
-        /// <returns> An object representing collection of RecommendedActions and their operations over a ServerDatabaseAdvisor. </returns>
-        public virtual RecommendedActionCollection GetRecommendedActions()
-        {
-            return new RecommendedActionCollection(this);
-        }
-        #endregion
     }
 }

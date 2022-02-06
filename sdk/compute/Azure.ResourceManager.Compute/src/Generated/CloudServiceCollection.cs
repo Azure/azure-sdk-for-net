@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref="CloudServiceCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CloudServiceCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal CloudServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudService.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(CloudService.ResourceType, out string cloudServiceApiVersion);
+            Client.TryGetApiVersion(CloudService.ResourceType, out string cloudServiceApiVersion);
             _cloudServiceRestClient = new CloudServicesRestOperations(_cloudServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,36 +50,6 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceGroup.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cloudServiceName"> Name of the cloud service. </param>
-        /// <param name="parameters"> The cloud service object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public virtual CloudServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
-
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _cloudServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken);
-                var operation = new CloudServiceCreateOrUpdateOperation(ArmClient, _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
@@ -96,7 +68,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CloudServiceCreateOrUpdateOperation(ArmClient, _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
+                var operation = new CloudServiceCreateOrUpdateOperation(Client, _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,23 +80,26 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Display information about a cloud service. </summary>
+        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public virtual Response<CloudService> Get(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual CloudServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Get");
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken);
-                if (response.Value == null)
-                    throw _cloudServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudService(ArmClient, response.Value), response.GetRawResponse());
+                var response = _cloudServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken);
+                var operation = new CloudServiceCreateOrUpdateOperation(Client, _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,7 +124,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _cloudServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CloudService(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,23 +133,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Display information about a cloud service. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public virtual Response<CloudService> GetIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<CloudService> Get(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
+                var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
-                return Response.FromValue(new CloudService(ArmClient, response.Value), response.GetRawResponse());
+                    throw _cloudServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,23 +158,97 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CloudService> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<CloudService>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _cloudServiceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<CloudService>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _cloudServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CloudService> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<CloudService> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _cloudServiceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<CloudService> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _cloudServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<CloudService>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
-                return Response.FromValue(new CloudService(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,7 +257,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
@@ -236,16 +285,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CloudService>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
-            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Exists");
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,80 +305,29 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudService> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
+        public virtual Response<CloudService> GetIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Page<CloudService> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CloudService> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
-        /// <summary> Gets a list of all cloud services under a resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudService> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<CloudService>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<CloudService>(null, response.GetRawResponse());
+                return Response.FromValue(new CloudService(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<CloudService>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudService(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<CloudService> IEnumerable<CloudService>.GetEnumerator()

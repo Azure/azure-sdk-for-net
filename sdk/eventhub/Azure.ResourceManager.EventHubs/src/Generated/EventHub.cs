@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of the <see cref = "EventHub"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventHub(ArmClient armClient, EventHubData data) : this(armClient, data.Id)
+        internal EventHub(ArmClient client, EventHubData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventHub"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventHub(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal EventHub(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _eventHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string eventHubApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string eventHubApiVersion);
             _eventHubRestClient = new EventHubsRestOperations(_eventHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,20 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of EventHubAuthorizationRules in the EventHubAuthorizationRule. </summary>
+        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHubAuthorizationRule. </returns>
+        public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
+        {
+            return new EventHubAuthorizationRuleCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ConsumerGroups in the ConsumerGroup. </summary>
+        /// <returns> An object representing collection of ConsumerGroups and their operations over a ConsumerGroup. </returns>
+        public virtual ConsumerGroupCollection GetConsumerGroups()
+        {
+            return new ConsumerGroupCollection(Client, Id);
+        }
+
         /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<EventHub>> GetAsync(CancellationToken cancellationToken = default)
@@ -95,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _eventHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,43 +129,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _eventHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHub(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new EventHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,24 +182,40 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        #region EventHubAuthorizationRule
-
-        /// <summary> Gets a collection of EventHubAuthorizationRules in the EventHub. </summary>
-        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHub. </returns>
-        public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new EventHubAuthorizationRuleCollection(this);
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ConsumerGroup
-
-        /// <summary> Gets a collection of ConsumerGroups in the EventHub. </summary>
-        /// <returns> An object representing collection of ConsumerGroups and their operations over a EventHub. </returns>
-        public virtual ConsumerGroupCollection GetConsumerGroups()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return new ConsumerGroupCollection(this);
+            using var scope = _eventHubClientDiagnostics.CreateScope("EventHub.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
     }
 }

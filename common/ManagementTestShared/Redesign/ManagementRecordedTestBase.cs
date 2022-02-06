@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.ResourceManager.TestFramework
 {
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
-        where TEnvironment: TestEnvironment, new()
+        where TEnvironment : TestEnvironment, new()
     {
         protected ResourceGroupCleanupPolicy ResourceGroupCleanupPolicy = new ResourceGroupCleanupPolicy();
 
@@ -80,11 +79,11 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
-            return CreateClient<ArmClient>(
+            return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,
                 subscriptionId ?? TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
-                options);
+                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
         private Uri GetUri(string endpoint)
@@ -171,11 +170,11 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
-            GlobalClient = CreateClient<ArmClient>(
+            GlobalClient = InstrumentClient(new ArmClient(
                 SessionEnvironment.Credential,
                 SessionEnvironment.SubscriptionId,
                 GetUri(SessionEnvironment.ResourceManagerUrl),
-                options);
+                options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
         private bool HasOneTimeSetup()
@@ -222,8 +221,6 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected override object InstrumentOperation(Type operationType, object operation)
-        {
-            return InstrumentMgmtOperation(operationType, operation, new ManagementInterceptor(this));
-        }
+            => InstrumentOperationInternal(operationType, operation, false, new ManagementInterceptor(this));
     }
 }

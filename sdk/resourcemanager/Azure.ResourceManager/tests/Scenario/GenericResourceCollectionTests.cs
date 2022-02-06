@@ -26,9 +26,17 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            var genericResources = subscription.GetGenericResources();
+            var genericResources = subscription.GetGenericResourcesAsync();
 
-            GenericResource aset2 = genericResources.FirstOrDefault(gr => gr.Data.Id == aset.Data.Id);
+            GenericResource aset2 = null;
+            await foreach (GenericResource resource in genericResources)
+            {
+                if (resource.Data.Id == aset.Data.Id)
+                {
+                    aset2 = resource;
+                    break;
+                }
+            }
 
             AssertAreEqual(aset, aset2);
 

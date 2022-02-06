@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             var addressName = Recording.GenerateAssetName("SdkAddress");
             ContactDetails contactDetails = GetDefaultContactDetails();
             ShippingAddress shippingAddress = GetDefaultShippingAddress();
-            _addressResourceCollection = GetAddressResourceCollection(resourceGroupName);
+            _addressResourceCollection = await GetAddressResourceCollectionAsync(resourceGroupName);
 
             AddressResourceData addressResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
                 contactDetails)

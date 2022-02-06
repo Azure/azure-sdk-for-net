@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager
 {
-    /// <summary> The entry point for all ARM clients. </summary>
     public partial class ArmClient
     {
         #region PolicyAssignment
@@ -32,6 +31,17 @@ namespace Azure.ResourceManager
         {
             Provider.ValidateResourceId(id);
             return new Provider(this, id);
+        }
+        #endregion
+
+        #region GenericResource
+        /// <summary> Gets an object representing a GenericResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
+        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
+        {
+            GenericResource.ValidateResourceId(id);
+            return new GenericResource(this, id);
         }
         #endregion
 
