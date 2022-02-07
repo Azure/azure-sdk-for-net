@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class PolicyExemptionSource : IOperationSource<PolicyExemption>
+    internal class PolicyExemptionOperationSource : IOperationSource<PolicyExemption>
     {
         private readonly ArmClient _client;
 
-        internal PolicyExemptionSource(ArmClient client)
+        internal PolicyExemptionOperationSource(ArmClient client)
         {
             _client = client;
         }

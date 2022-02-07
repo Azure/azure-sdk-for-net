@@ -10,20 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ResourceGroupExportResultSource : IOperationSource<ResourceGroupExportResult>
+    internal class ResourceGroupExportResultOperationSource : IOperationSource<ResourceGroupExportResult>
     {
-        private readonly ArmClient _client;
-
-        internal ResourceGroupExportResultSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         ResourceGroupExportResult IOperationSource<ResourceGroupExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);

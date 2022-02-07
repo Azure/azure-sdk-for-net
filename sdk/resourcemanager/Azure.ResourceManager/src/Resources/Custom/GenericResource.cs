@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class SubscriptionPolicyDefinitionSource : IOperationSource<SubscriptionPolicyDefinition>
+    internal class SubscriptionPolicyDefinitionOperationSource : IOperationSource<SubscriptionPolicyDefinition>
     {
         private readonly ArmClient _client;
 
-        internal SubscriptionPolicyDefinitionSource(ArmClient client)
+        internal SubscriptionPolicyDefinitionOperationSource(ArmClient client)
         {
             _client = client;
         }

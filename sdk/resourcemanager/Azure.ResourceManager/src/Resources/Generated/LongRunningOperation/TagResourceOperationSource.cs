@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class TagResourceSource : IOperationSource<TagResource>
+    internal class TagResourceOperationSource : IOperationSource<TagResource>
     {
         private readonly ArmClient _client;
 
-        internal TagResourceSource(ArmClient client)
+        internal TagResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

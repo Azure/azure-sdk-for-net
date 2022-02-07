@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ManagementLockSource : IOperationSource<ManagementLock>
+    internal class ManagementLockOperationSource : IOperationSource<ManagementLock>
     {
         private readonly ArmClient _client;
 
-        internal ManagementLockSource(ArmClient client)
+        internal ManagementLockOperationSource(ArmClient client)
         {
             _client = client;
         }

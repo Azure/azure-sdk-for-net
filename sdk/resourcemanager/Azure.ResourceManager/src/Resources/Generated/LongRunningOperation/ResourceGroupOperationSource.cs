@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class ResourceGroupSource : IOperationSource<ResourceGroup>
+    internal class ResourceGroupOperationSource : IOperationSource<ResourceGroup>
     {
         private readonly ArmClient _client;
 
-        internal ResourceGroupSource(ArmClient client)
+        internal ResourceGroupOperationSource(ArmClient client)
         {
             _client = client;
         }

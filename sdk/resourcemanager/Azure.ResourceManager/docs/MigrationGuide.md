@@ -158,7 +158,7 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
         }
     }
 };
-VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+ArmOperation<VirtualNetwork> vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
 VirtualNetwork vnet = vnetCreateLro.Value;
 ```
 
@@ -180,7 +180,7 @@ NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgNa
 ```C# Snippet:Create_NetworkSecurityGroup
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
+ArmOperation<NetworkSecurityGroup> nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
 NetworkSecurityGroup nsg = nsgCreateLro.Value;
 ```
 
@@ -226,7 +226,7 @@ NetworkInterfaceIPConfigurationData nicIPConfig = new NetworkInterfaceIPConfigur
 NetworkInterfaceData nicData = new NetworkInterfaceData();
 nicData.Location = location;
 nicData.IpConfigurations.Add(nicIPConfig);
-NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
+ArmOperation<NetworkInterface> nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
 NetworkInterface nic = nicCreateLro.Value;
 ```
 

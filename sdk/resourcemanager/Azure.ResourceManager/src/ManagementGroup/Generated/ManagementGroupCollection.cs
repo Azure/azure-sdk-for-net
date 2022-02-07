@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _managementGroupRestClient.CreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
-                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
