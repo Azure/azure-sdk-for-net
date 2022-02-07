@@ -124,7 +124,7 @@ Console.WriteLine(deserialized.Name);
 
 It is also possible to encode and decode using `MessageWithMetadata`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageWithMetadata`.
 ```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
 Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
