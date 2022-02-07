@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-e12a531df2bed64a9a2e00b53049d777-f7d796b4333a5e41-00",
-        "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20220207.1 (.NET Framework 4.8.9014.0; Microsoft Windows 10.0.22523 )",
-        "x-ms-client-request-id": "294bef5d367eec303b935ff4333dd0b5",
+        "traceparent": "00-7232c103c7596c5ae575d4dde02739ae-60858f697a268b7a-00",
+        "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20220207.1 (.NET 6.0.1; Microsoft Windows 10.0.22523)",
+        "x-ms-client-request-id": "10ee737fb506d4fbf35774d5a506b29f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 07 Feb 2022 19:36:03 GMT",
+        "x-ms-date": "Mon, 07 Feb 2022 20:28:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -21,13 +21,13 @@
         "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview, 2021-10-08-preview, 2022-02-01",
         "Content-Length": "508",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Feb 2022 19:36:01 GMT",
-        "MS-CV": "q4abvudUX0uot7Z3WO4dfA.0",
+        "Date": "Mon, 07 Feb 2022 20:28:22 GMT",
+        "MS-CV": "seuuzICPy0mppmorE7/veA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0onQBYgAAAABvrMNjwq0SQ4JNKYwebvi9V1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "054ABYgAAAAD1txzHnt\u002BNS6J3qxxd6klJV1NURURHRTA4MTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "294bef5d367eec303b935ff4333dd0b5",
+        "x-ms-client-request-id": "10ee737fb506d4fbf35774d5a506b29f",
         "X-Processing-Time": "24ms"
       },
       "ResponseBody": {
@@ -38,7 +38,7 @@
               "stun:turn.azure.com:3478",
               "turn:turn.azure.com:3478"
             ],
-            "username": "BQAANkWgKG8B2B3ssOmmCwffiF6BtKESHzP7jZDGazIAAAAMARCsgNlqhd5IsZldo6P6NifIm0WmK784zacg2cvEDj3YTxBDsTc=",
+            "username": "BQAANpWwyaAB2B3zQYsafdpJ85XqqFXTVOaIsmvMPo0AAAAMARCsgNlqhd5IsZldo6P6NifInFIDjhVQA3Rp45xNoAGu/\u002BonDHY=",
             "credential": "Sanitized"
           },
           {
@@ -47,16 +47,16 @@
               "stun:13.107.17.41:3478",
               "turn:13.107.17.41:3478"
             ],
-            "username": "BQAANkWgKG8B2B3ssOmmCwffiF6BtKESHzP7jZDGazIAAAAMARCsgNlqhd5IsZldo6P6NifIm0WmK784zacg2cvEDj3YTxBDsTc=",
+            "username": "BQAANpWwyaAB2B3zQYsafdpJ85XqqFXTVOaIsmvMPo0AAAAMARCsgNlqhd5IsZldo6P6NifInFIDjhVQA3Rp45xNoAGu/\u002BonDHY=",
             "credential": "Sanitized"
           }
         ],
-        "expiresOn": "2022-02-09T19:36:02.5190999\u002B00:00"
+        "expiresOn": "2022-02-09T20:28:23.3098439\u002B00:00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1621838795"
+    "RandomSeed": "1422455166"
   }
 }
