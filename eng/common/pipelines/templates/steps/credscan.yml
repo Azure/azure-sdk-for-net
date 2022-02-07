@@ -15,7 +15,7 @@ steps:
       Set-Content "credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
-  displayName: Put changed files to folder     
+  displayName: CredScan setup
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
   displayName: Scanning for credentials
   inputs:
