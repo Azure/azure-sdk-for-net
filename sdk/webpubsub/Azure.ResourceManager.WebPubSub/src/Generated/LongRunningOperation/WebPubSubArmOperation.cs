@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.WebPubSub.Models
+namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> Delete the specified shared private link resource. </summary>
-    public partial class SharedPrivateLinkDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class WebPubSubArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkDeleteOperation for mocking. </summary>
-        protected SharedPrivateLinkDeleteOperation()
+        /// <summary> Initializes a new instance of WebPubSubArmOperation for mocking. </summary>
+        protected WebPubSubArmOperation()
         {
         }
 
-        internal SharedPrivateLinkDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WebPubSubArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SharedPrivateLinkDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal WebPubSubArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "WebPubSubArmOperation");
         }
 
         /// <inheritdoc />
