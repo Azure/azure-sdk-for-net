@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetData input = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
+            ArmOperation<AvailabilitySet> lro = await availabilitySetCollection.CreateOrUpdateAsync(true, availabilitySetName, input);
             AvailabilitySet availabilitySet = lro.Value;
             #endregion Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
         }

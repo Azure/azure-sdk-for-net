@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public async virtual Task<DiskAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DiskAccess>> CreateOrUpdateAsync(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
             if (diskAccess == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskAccessRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessCreateOrUpdateOperation(Client, _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess).Request, response);
+                var operation = new ComputeArmOperation<DiskAccess>(new DiskAccessSource(Client), _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public virtual DiskAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskAccess> CreateOrUpdate(bool waitForCompletion, string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
             if (diskAccess == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskAccessRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken);
-                var operation = new DiskAccessCreateOrUpdateOperation(Client, _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess).Request, response);
+                var operation = new ComputeArmOperation<DiskAccess>(new DiskAccessSource(Client), _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, diskAccess).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

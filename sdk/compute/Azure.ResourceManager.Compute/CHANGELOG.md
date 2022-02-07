@@ -222,7 +222,7 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
+ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
 AvailabilitySet availabilitySet = asetOperation.Value;
 
 // Create VNet
@@ -283,7 +283,7 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
+ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
 VirtualMachine vm = vmOperation.Value;
 ```
 

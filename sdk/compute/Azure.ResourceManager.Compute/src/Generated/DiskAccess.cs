@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a disk access resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskAccessDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccess.Delete");
             scope.Start();
             try
             {
                 var response = await _diskAccessRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessDeleteOperation(_diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a disk access resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskAccessDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccess.Delete");
             scope.Start();
             try
             {
                 var response = _diskAccessRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DiskAccessDeleteOperation(_diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
-        public async virtual Task<DiskAccessUpdateOperation> UpdateAsync(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DiskAccess>> UpdateAsync(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccess == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskAccessRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessUpdateOperation(Client, _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+                var operation = new ComputeArmOperation<DiskAccess>(new DiskAccessSource(Client), _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
-        public virtual DiskAccessUpdateOperation Update(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskAccess> Update(bool waitForCompletion, DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccess == null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskAccessRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken);
-                var operation = new DiskAccessUpdateOperation(Client, _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+                var operation = new ComputeArmOperation<DiskAccess>(new DiskAccessSource(Client), _diskAccessClientDiagnostics, Pipeline, _diskAccessRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskAccess).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

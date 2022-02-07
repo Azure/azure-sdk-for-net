@@ -104,7 +104,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         }
     }
 };
-VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
+ArmOperation<VirtualMachine> lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
 VirtualMachine vm = lro.Value;
 ```
 

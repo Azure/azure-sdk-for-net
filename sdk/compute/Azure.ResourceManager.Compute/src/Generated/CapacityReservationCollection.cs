@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<CapacityReservationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CapacityReservation>> CreateOrUpdateAsync(bool waitForCompletion, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
             if (parameters == null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _capacityReservationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CapacityReservationCreateOrUpdateOperation(Client, _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual CapacityReservationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CapacityReservation> CreateOrUpdate(bool waitForCompletion, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
             if (parameters == null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _capacityReservationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken);
-                var operation = new CapacityReservationCreateOrUpdateOperation(Client, _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
