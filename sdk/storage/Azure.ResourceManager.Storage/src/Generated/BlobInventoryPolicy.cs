@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes the blob inventory policy associated with the specified storage account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BlobInventoryPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicy.Delete");
             scope.Start();
             try
             {
                 var response = await _blobInventoryPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BlobInventoryPolicyDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes the blob inventory policy associated with the specified storage account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BlobInventoryPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicy.Delete");
             scope.Start();
             try
             {
                 var response = _blobInventoryPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BlobInventoryPolicyDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

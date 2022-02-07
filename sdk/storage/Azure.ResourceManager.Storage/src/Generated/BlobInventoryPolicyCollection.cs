@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="properties"> The blob inventory policy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public async virtual Task<BlobInventoryPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<BlobInventoryPolicy>> CreateOrUpdateAsync(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _blobInventoryPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new BlobInventoryPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<BlobInventoryPolicy>(Response.FromValue(new BlobInventoryPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="properties"> The blob inventory policy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual BlobInventoryPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BlobInventoryPolicy> CreateOrUpdate(bool waitForCompletion, BlobInventoryPolicyName blobInventoryPolicyName, BlobInventoryPolicyData properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _blobInventoryPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobInventoryPolicyName, properties, cancellationToken);
-                var operation = new BlobInventoryPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<BlobInventoryPolicy>(Response.FromValue(new BlobInventoryPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

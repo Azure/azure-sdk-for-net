@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<BlobServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, BlobServiceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<BlobService>> CreateOrUpdateAsync(bool waitForCompletion, BlobServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _blobServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BlobServiceCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<BlobService>(Response.FromValue(new BlobService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual BlobServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, BlobServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BlobService> CreateOrUpdate(bool waitForCompletion, BlobServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _blobServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new BlobServiceCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<BlobService>(Response.FromValue(new BlobService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

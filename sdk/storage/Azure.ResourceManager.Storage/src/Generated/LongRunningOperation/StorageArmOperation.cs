@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Storage.Models
+namespace Azure.ResourceManager.Storage
 {
-    /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
-    public partial class StorageQueueDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class StorageArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of StorageQueueDeleteOperation for mocking. </summary>
-        protected StorageQueueDeleteOperation()
+        /// <summary> Initializes a new instance of StorageArmOperation for mocking. </summary>
+        protected StorageArmOperation()
         {
         }
 
-        internal StorageQueueDeleteOperation(Response response)
+        internal StorageArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal StorageArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "StorageArmOperation");
         }
 
         /// <inheritdoc />
