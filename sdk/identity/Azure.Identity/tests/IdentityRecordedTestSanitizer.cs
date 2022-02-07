@@ -15,7 +15,7 @@ namespace Azure.Identity.Tests
             SanitizedHeaders.Add("secret");
             AddJsonPathSanitizer("$..refresh_token");
             AddJsonPathSanitizer("$..access_token");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&]+", "=" + SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+", "=" + SanitizeValue)
             {
                 Condition = new Condition { UriRegex = ".*/token([?].*)?$" }
             });
