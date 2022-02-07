@@ -1,22 +1,22 @@
 # Guide for Validating the Build Compliance check on azure-sdk-for-net PRs
 
 This guide describes how package owners can monitor their package's Credential Scanner (CredScan) status and correct any errors.
-General information about CredScan can be found in the overview documentation at [aka.ms/credscan](credscan_doc). The
-Azure SDK's motivation and methodology for running CredScan is documented [here](devops_doc).
+General information about CredScan can be found in the overview documentation at [aka.ms/credscan][credscan_doc]. The
+Azure SDK's motivation and methodology for running CredScan is documented [here][devops_doc].
 
 ## Table of Contents
 - [Check CredScan Status](#check-credscan-status)
 - [Correct Active Warnings](#correct-active-warnings)
   - [True Positives](#true-positives)
   - [False Positives](#false-positives)
-- [Support](#support)
+- [Correct Baselined Warnings](#correct-baselined-warnings)
 
 ## Check CredScan Status
-If your PR fails the Build Compliance check, follow these steps: 
+CredScan is run each week over the entire `azure-sdk-for-net` repository as part of the
+[net-aggregate-reports][aggregate_reports] pipeline. The scan produces a list of active warnings in the "Post
+Analysis" task of the "ComplianceTools" job ([example output][credscan_output]).
 
-1. Click “View more details on Azure Pipelines”. In the “Compliance” check on the Pipeline page, view the “Scanning for credentials” step. This page will show where the leaked secrets are in the current PR.
-
-2. Each warning will begin with the path to the file containing a potential credential, as well as the row and column where
+Each warning will begin with the path to the file containing a potential credential, as well as the row and column where
 the credential string begins. For example, for a potential credential that starts in row 3 and column 20 of a
 particular file:
 ```
@@ -26,20 +26,9 @@ particular file:
 The warning will then list an error code and description of why the potential credential was flagged.
 
 ## True Positives
-Depending on if you are working on a Track 1 service or a Track 2 service there are different steps to adding/modifying the sanitizer:
+If CredScan discovers an actual credential, please contact the EngSys team at azuresdkengsysteam@microsoft.com so any
+remediation can be done.
 
-For a Track 1 Service:
-1.	Access your service's TestBase.cs file.
-2.	In the static constructor, JsonPathSanitizers can be added. This allows the sanitization of particular fields identified such as “accessSAS”. Add a field to sanitize like so: “RecorderUtilities.JsonPathSanitizers.Add("$..{FIELDNAMEHERE");”
-3.	An example can be found in here in the Track 1 Compute [TestBase.cs file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Microsoft.Azure.Management.Compute/tests/ScenarioTests/VMTestBase.cs#L32).
-
-For a Track 2 Service:
-1.	Access your service's [RPName]ClientBase.cs file. It should extend the ManagementRecordedTestBase. An example for the  CosmosDBManagementClientBase class is shown [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.ResourceManager.CosmosDB/tests/CosmosDBManagementClientBase.cs).
-2. Check the proctected constructor in your [RPName]ClientBase.cs file. If a [RPName]RecordedTestSanitizer object is initialized here, open that file. Otherwise, create a [RPName]RecordedTestSanitizer.cs file that extends the RecordedTestSanitizer class. An example of the CosmosDBRecordedTestSanitizer.cs can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.ResourceManager.CosmosDB/tests/CosmosDBManagementRecordedTestSanitizer.cs). 
-3. Add the fields that need to be sanitized into the [RPName]RecordedTestSanitizer.cs file into the constructor as shown [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.ResourceManager.CosmosDB/tests/CosmosDBManagementRecordedTestSanitizer.cs#L14).
-3.	If the protected constructor in your [RPName]ClientBase class does not create a [RPName]RecordedTestSanitizer object, add the initialization [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.ResourceManager.CosmosDB/tests/CosmosDBManagementClientBase.cs#L48).
-
-Once you have added the Sanitizers, re-record all your test files that had leaked secrets. They should be replaced with the keyword “Sanitized”.
 ## False Positives
 If CredScan flags something that's not actually a credential or secret, we can suppress the warning to shut off the
 false alarm. CredScan allows you to suppress fake credentials by either suppressing a string value or by suppressing
@@ -49,8 +38,8 @@ Credential warnings are suppressed in [eng/CredScanSuppression.json][suppression
 the `"placeholder"` list, and suppressed files are in the `"file"` list under `"suppressions"`.
 
 If you have a fake credential flagged by CredScan, try one of the following (listed from most to least preferable):
-  - Import and use a suitable credential from a file that's already suppressed in [eng/CredScanSuppression.json](suppression_file).
-  - Replace the credential with a string value that's already suppressed in [eng/CredScanSuppression.json](suppression_file).
+  - Import and use a suitable credential from a file that's already suppressed in [eng/CredScanSuppression.json][suppression_file].
+  - Replace the credential with a string value that's already suppressed in [eng/CredScanSuppression.json][suppression_file].
   - Move the credential into a `fake_credentials.json` file in your package, and add the file path to the list of suppressed files if necessary.
   - Add the credential to the list of suppressed string values.
 
@@ -62,5 +51,19 @@ Suppressing string values will disable warnings no matter where the string comes
 and inconvenient for lengthy strings. Suppressing warnings in a file is convenient for fake credential files, but
 strings in that file will still trigger warnings if present in another unsuppressed file.
 
-## Support
-If you have any questions about CredScan in azure-sdk-for-net, please post your question in this [Teams channel](https://teams.microsoft.com/l/channel/19%3a7b87fb348f224b37b6206fa9d89a105b%40thread.skype/Language%2520-%2520DotNet?groupId=3e17dcb0-4257-4a30-b843-77f47f1d4121&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+## Correct Baselined Warnings
+In addition to active warning that appear in the [net-aggregate-reports][aggregate_reports] pipeline ouput, there
+are also CredScan warnings that have been suppressed in [eng/dotnet.gdnbaselines][baseline]. This file is a snapshot of
+the active warnings at one point in time; CredScan won't re-raise warnings that have been recorded here.
+
+Ultimately, we hope to remove this baseline file from the repository entirely. If you see any warnings for a package
+that you own in this file, please remove a few at a time from the file so that CredScan will output these warnings in
+the pipeline. Then, resolve them following the steps from the [Correct Active Warnings](#correct-active-warnings)
+section of this guide.
+
+[aggregate_reports]: https://dev.azure.com/azure-sdk/internal/_build?definitionId=1399&_a=summary
+[baseline]: https://github.com/Azure/azure-sdk-for-net/blob/main/eng/dotnet.gdnbaselines
+[credscan_doc]: https://aka.ms/credscan
+[credscan_output]: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=1321293&view=logs&j=3b141548-98d7-5be1-7ef8-eeb08ca02972&t=7989ab4d-bdd3-5239-37e1-e3681bbc7025
+[devops_doc]: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/413/Credential-Scan-Step-in-Pipeline
+[suppression_file]: https://github.com/Azure/azure-sdk-for-net/blob/main/eng/CredScanSuppression.json
