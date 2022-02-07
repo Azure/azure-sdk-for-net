@@ -2,12 +2,11 @@ parameters:
   SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
   SourceDirectory: $(Build.SourcesDirectory)
+  ServiceDirectory: ''
 
 steps:
 - pwsh: |
-    New-Item -Path "${{ parameters.SourceDirectory }}" -Name "credscan.tsv"
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      New-Item -Path "${{ parameters.SourceDirectory }}" -Name "changedFiles" -ItemType "directory"
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
       | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
