@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ExtendedLocation
 {
-    internal class CustomLocationSource : IOperationSource<CustomLocation>
+    internal class CustomLocationOperationSource : IOperationSource<CustomLocation>
     {
         private readonly ArmClient _client;
 
-        internal CustomLocationSource(ArmClient client)
+        internal CustomLocationOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             try
             {
                 var response = await _customLocationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             try
             {
                 var response = _customLocationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
