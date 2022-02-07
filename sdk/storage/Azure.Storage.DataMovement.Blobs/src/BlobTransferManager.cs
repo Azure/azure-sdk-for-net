@@ -424,7 +424,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public async Task PauseJob(string jobId)
+        public override async Task PauseJob(string jobId)
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {
@@ -448,7 +448,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public async Task ResumeJob(string jobId)
+        public override async Task ResumeJob(string jobId)
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {

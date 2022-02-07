@@ -57,6 +57,18 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Returns storage job information if provided jobId.
+        /// </summary>
+        /// <param name="jobId"></param>
+        public abstract Task PauseJob(string jobId);
+
+        /// <summary>
+        /// Returns storage job information if provided jobId.
+        /// </summary>
+        /// <param name="jobId"></param>
+        public abstract Task ResumeJob(string jobId);
+
+        /// <summary>
         /// Pauses transfers that are currently being processed.
         /// Does not allow any other transfer start.
         /// </summary>

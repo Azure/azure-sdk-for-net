@@ -31,7 +31,9 @@ namespace Azure.Storage.DataMovement
         public StorageTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
         public abstract void CancelTransfers();
         public abstract void Clean();
+        public abstract System.Threading.Tasks.Task PauseJob(string jobId);
         public abstract void PauseTransfers();
+        public abstract System.Threading.Tasks.Task ResumeJob(string jobId);
     }
     public partial class TransferProgressHandler
     {
