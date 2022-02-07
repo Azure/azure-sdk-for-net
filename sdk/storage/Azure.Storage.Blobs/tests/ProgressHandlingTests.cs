@@ -139,5 +139,41 @@ namespace Azure.Storage.Blobs.Tests
             Assert.AreEqual(length, progress.List.Max());
             Assert.IsTrue(new ReadOnlySpan<byte>(data, offset, length).SequenceEqual(downloadedData));
         }
+
+        [RecordedTest]
+        [TestCase(Constants.KB, default, default)]
+        [TestCase(10 * Constants.KB, Constants.KB, 1)]
+        [TestCase(10 * Constants.KB, Constants.KB, 2)]
+        [TestCase(10 * Constants.KB, Constants.KB, 10)]
+        [TestCase(Constants.MB, 100 * Constants.KB, 10)] // multi-report per-partition case
+        public async Task DownloadTo(int dataLength, int? partitionSize, int? parallelism)
+        {
+            await using DisposingContainer test = await BlobsClientBuilder.GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(dataLength);
+            TestProgress progress = new TestProgress();
+            var client = test.Container.GetBlobClient(BlobsClientBuilder.GetNewBlobName());
+            await client.UploadAsync(BinaryData.FromBytes(data));
+
+            // Act
+            var downloadedData = new MemoryStream();
+            await client.DownloadToAsync(downloadedData, new BlobDownloadToOptions
+            {
+                ProgressHandler = progress,
+                TransferOptions = new StorageTransferOptions
+                {
+                    InitialTransferSize = partitionSize,
+                    MaximumTransferSize = partitionSize,
+                    MaximumConcurrency = parallelism
+                }
+            });
+
+            // Assert
+            Assert.AreNotEqual(0, progress.List.Count);
+            Assert.AreEqual(downloadedData.Length, progress.List.Max());
+            Assert.AreEqual(data.Length, downloadedData.Length);
+            Assert.IsTrue(Enumerable.SequenceEqual(data, downloadedData.ToArray()));
+        }
     }
 }
