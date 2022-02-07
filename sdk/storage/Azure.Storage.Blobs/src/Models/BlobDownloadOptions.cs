@@ -55,6 +55,7 @@ namespace Azure.Storage.Blobs.Models
 
             Range = new HttpRange(offset: deepCopySource.Range.Offset, length: deepCopySource.Range.Length);
             Conditions = BlobRequestConditions.CloneOrDefault(deepCopySource.Conditions);
+            ProgressHandler = deepCopySource.ProgressHandler;
             // can't access an internal deep copy in Storage.Common
             TransactionalHashingOptions = deepCopySource.TransactionalHashingOptions == default
                 ? default
