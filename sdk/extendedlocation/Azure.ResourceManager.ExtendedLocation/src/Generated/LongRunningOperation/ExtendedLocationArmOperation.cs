@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.ExtendedLocation.Models
+namespace Azure.ResourceManager.ExtendedLocation
 {
-    /// <summary> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </summary>
-    public partial class CustomLocationDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class ExtendedLocationArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of CustomLocationDeleteOperation for mocking. </summary>
-        protected CustomLocationDeleteOperation()
+        /// <summary> Initializes a new instance of ExtendedLocationArmOperation for mocking. </summary>
+        protected ExtendedLocationArmOperation()
         {
         }
 
-        internal CustomLocationDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExtendedLocationArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "CustomLocationDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal ExtendedLocationArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ExtendedLocationArmOperation");
         }
 
         /// <inheritdoc />
