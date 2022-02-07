@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlAgentConfigurationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlAgentConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlAgentConfigurationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlAgentConfiguration> CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new SqlAgentConfigurationCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
