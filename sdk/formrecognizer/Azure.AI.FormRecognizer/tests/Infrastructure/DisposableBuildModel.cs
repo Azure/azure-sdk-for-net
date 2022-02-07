@@ -46,11 +46,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// </summary>
         /// <param name="adminClient">The client to use for building and for deleting the model upon disposal.</param>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="buildMode">The technique to use to build the model.</param>
         /// <param name="modelId">Model Id.</param>
         /// <returns>A <see cref="DisposableBuildModel"/> instance from which the trained model ID can be obtained.</returns>
-        public static async Task<DisposableBuildModel> BuildModelAsync(DocumentModelAdministrationClient adminClient, Uri trainingFilesUri, string modelId)
+        public static async Task<DisposableBuildModel> BuildModelAsync(DocumentModelAdministrationClient adminClient, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId)
         {
-            BuildModelOperation operation = await adminClient.StartBuildModelAsync(trainingFilesUri, modelId);
+            BuildModelOperation operation = await adminClient.StartBuildModelAsync(trainingFilesUri, buildMode, modelId);
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);

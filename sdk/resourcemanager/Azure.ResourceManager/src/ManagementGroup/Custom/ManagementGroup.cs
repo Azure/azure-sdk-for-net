@@ -21,8 +21,6 @@ using Azure.ResourceManager.Management.Models;
 namespace Azure.ResourceManager.Management
 {
     /// <summary> A Class representing a ManagementGroup along with the instance operations that can be performed on it. </summary>
-    [CodeGenSuppress("CheckNameAvailabilityAsync", typeof(CheckNameAvailabilityOptions), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckNameAvailability", typeof(CheckNameAvailabilityOptions), typeof(CancellationToken))]
     public partial class ManagementGroup : ArmResource
     {
     }

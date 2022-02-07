@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref="ImageCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ImageCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _imageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Image.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Image.ResourceType, out string imageApiVersion);
+            Client.TryGetApiVersion(Image.ResourceType, out string imageApiVersion);
             _imageRestClient = new ImagesRestOperations(_imageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, imageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,6 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceGroup.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// <summary> Create or update an image. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="imageName"> The name of the image. </param>
-        /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ImageCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _imageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters, cancellationToken);
-                var operation = new ImageCreateOrUpdateOperation(ArmClient, _imageClientDiagnostics, Pipeline, _imageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Create or update an image. </summary>
@@ -104,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _imageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ImageCreateOrUpdateOperation(ArmClient, _imageClientDiagnostics, Pipeline, _imageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters).Request, response);
+                var operation = new ImageCreateOrUpdateOperation(Client, _imageClientDiagnostics, Pipeline, _imageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,24 +84,30 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets an image. </summary>
+        /// <summary> Create or update an image. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="imageName"> The name of the image. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual Response<Image> Get(string imageName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ImageCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string imageName, ImageData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Get");
+            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken);
-                if (response.Value == null)
-                    throw _imageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Image(ArmClient, response.Value), response.GetRawResponse());
+                var response = _imageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters, cancellationToken);
+                var operation = new ImageCreateOrUpdateOperation(Client, _imageClientDiagnostics, Pipeline, _imageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -159,7 +133,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _imageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Image(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Image(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,24 +142,148 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Gets an image. </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual Response<Image> GetIfExists(string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<Image> Get(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetIfExists");
+            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken: cancellationToken);
+                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Image>(null, response.GetRawResponse());
-                return Response.FromValue(new Image(ArmClient, response.Value), response.GetRawResponse());
+                    throw _imageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Image(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the list of images under a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Image> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Image>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _imageRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Image(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Image>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _imageRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new Image(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets the list of images under a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Image> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<Image> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _imageRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Image(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Image> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _imageRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new Image(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(imageName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public virtual Response<bool> Exists(string imageName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(imageName, expand: expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<Image>(null, response.GetRawResponse());
-                return Response.FromValue(new Image(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Image(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,122 +324,24 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public virtual Response<bool> Exists(string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<Image> GetIfExists(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Exists");
+            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = GetIfExists(imageName, expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<Image>(null, response.GetRawResponse());
+                return Response.FromValue(new Image(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="imageName"> The name of the image. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
-
-            using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(imageName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the list of images under a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Image> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<Image> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _imageRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Image(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Image> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _imageRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Image(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets the list of images under a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Image" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Image> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Image>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _imageRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Image(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Image>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("ImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _imageRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Image(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<Image> IEnumerable<Image>.GetEnumerator()

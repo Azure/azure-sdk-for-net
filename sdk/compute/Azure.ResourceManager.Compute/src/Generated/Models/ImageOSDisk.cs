@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
         /// <param name="oSType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="oSState"> The OS State. </param>
-        internal ImageOSDisk(WritableSubResource snapshot, WritableSubResource managedDisk, string blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, WritableSubResource diskEncryptionSet, OperatingSystemTypes oSType, OperatingSystemStateTypes oSState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
+        internal ImageOSDisk(WritableSubResource snapshot, WritableSubResource managedDisk, Uri blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, WritableSubResource diskEncryptionSet, OperatingSystemTypes oSType, OperatingSystemStateTypes oSState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
         {
             OSType = oSType;
             OSState = oSState;

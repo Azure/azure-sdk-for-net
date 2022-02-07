@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; }
+        public Uri PrimaryScriptUri { get; }
         /// <summary> Supporting files for the external script. </summary>
         public IReadOnlyList<string> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>

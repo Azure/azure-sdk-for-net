@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VpnSiteLink"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnSiteLink(ArmClient armClient, VpnSiteLinkData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal VpnSiteLink(ArmClient client, VpnSiteLinkData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnSiteLink"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VpnSiteLink(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal VpnSiteLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnSiteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string vpnSiteLinkApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string vpnSiteLinkApiVersion);
             _vpnSiteLinkRestClient = new VpnSiteLinksRestOperations(_vpnSiteLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnSiteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _vpnSiteLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnSiteLink(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnSiteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _vpnSiteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLink(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

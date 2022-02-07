@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseSecurityAlertPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseSecurityAlertPolicy(ArmClient armClient, DatabaseSecurityAlertPolicyData data) : this(armClient, data.Id)
+        internal DatabaseSecurityAlertPolicy(ArmClient client, DatabaseSecurityAlertPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseSecurityAlertPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseSecurityAlertPolicy(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal DatabaseSecurityAlertPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string databaseSecurityAlertPolicyApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string databaseSecurityAlertPolicyApiVersion);
             _databaseSecurityAlertPolicyRestClient = new DatabaseSecurityAlertPoliciesRestOperations(_databaseSecurityAlertPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _databaseSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _databaseSecurityAlertPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _databaseSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _databaseSecurityAlertPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseSecurityAlertPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

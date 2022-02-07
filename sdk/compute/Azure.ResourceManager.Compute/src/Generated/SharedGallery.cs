@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SharedGallery"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SharedGallery(ArmClient armClient, SharedGalleryData data) : this(armClient, data.Id)
+        internal SharedGallery(ArmClient client, SharedGalleryData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SharedGallery"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGallery(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SharedGallery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
             _sharedGalleryRestClient = new SharedGalleriesRestOperations(_sharedGalleryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SharedGalleryImages in the SharedGalleryImage. </summary>
+        /// <returns> An object representing collection of SharedGalleryImages and their operations over a SharedGalleryImage. </returns>
+        public virtual SharedGalleryImageCollection GetSharedGalleryImages()
+        {
+            return new SharedGalleryImageCollection(Client, Id);
+        }
+
         /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SharedGallery>> GetAsync(CancellationToken cancellationToken = default)
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw await _sharedGalleryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGallery(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +123,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw _sharedGalleryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGallery(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGallery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,15 +167,5 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
-
-        #region SharedGalleryImage
-
-        /// <summary> Gets a collection of SharedGalleryImages in the SharedGallery. </summary>
-        /// <returns> An object representing collection of SharedGalleryImages and their operations over a SharedGallery. </returns>
-        public virtual SharedGalleryImageCollection GetSharedGalleryImages()
-        {
-            return new SharedGalleryImageCollection(this);
-        }
-        #endregion
     }
 }

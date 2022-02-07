@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteWebJobCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteWebJobCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteWebJob.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteWebJob.ResourceType, out string siteWebJobWebAppsApiVersion);
+            Client.TryGetApiVersion(SiteWebJob.ResourceType, out string siteWebJobWebAppsApiVersion);
             _siteWebJobWebAppsRestClient = new WebAppsRestOperations(_siteWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,36 +48,6 @@ namespace Azure.ResourceManager.AppService
         {
             if (id.ResourceType != WebSite.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetWebJob
-        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
-        /// <param name="webJobName"> Name of the web job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<SiteWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteWebJobWebAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
-                if (response.Value == null)
-                    throw _siteWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteWebJob(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
@@ -97,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteWebJobWebAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteWebJobWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteWebJob(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +78,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetWebJob
+        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<SiteWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
+            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteWebJobWebAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                var response = _siteWebJobWebAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteWebJob(ArmClient, response.Value), response.GetRawResponse());
+                    throw _siteWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +106,92 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="webJobName"> Name of the web job. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListWebJobs
+        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public async virtual Task<Response<SiteWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteWebJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteWebJob> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SiteWebJob>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _siteWebJobWebAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteWebJob(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteWebJobWebAppsRestClient.ListWebJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SiteWebJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteWebJobWebAppsRestClient.ListWebJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="webJobName"> Name of the web job. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListWebJobs
+        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteWebJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteWebJob> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.Exists");
-            scope.Start();
-            try
+            Page<SiteWebJob> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(webJobName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteWebJobWebAppsRestClient.ListWebJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SiteWebJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteWebJobWebAppsRestClient.ListWebJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetWebJob
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
@@ -202,86 +214,86 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListWebJobs
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// OperationId: WebApps_GetWebJob
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteWebJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteWebJob> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
-            Page<SiteWebJob> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteWebJobWebAppsRestClient.ListWebJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(webJobName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SiteWebJob> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteWebJobWebAppsRestClient.ListWebJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListWebJobs
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// OperationId: WebApps_GetWebJob
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="webJobName"> Name of the web job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteWebJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteWebJob> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public async virtual Task<Response<SiteWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteWebJob>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteWebJobWebAppsRestClient.ListWebJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _siteWebJobWebAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteWebJob>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteWebJobWebAppsRestClient.ListWebJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetWebJob
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="webJobName"> Name of the web job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<SiteWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteWebJobWebAppsClientDiagnostics.CreateScope("SiteWebJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteWebJobWebAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteWebJob(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SiteWebJob> IEnumerable<SiteWebJob>.GetEnumerator()

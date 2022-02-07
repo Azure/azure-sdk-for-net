@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.Network.Tests
             // TODO: ADO 5975
             //Response<LoadBalancingRule> getLoadBalancerLoadBalancingRule = await loadBalancerOperations.GetLoadBalancerLoadBalancingRuleAsync();
             // Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterfaceData> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync();
-            List<NetworkInterfaceData> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync();
+            List<NetworkInterface> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancerNetworkInterfaces);
 
             // Verify List Probes in LoadBalancer
@@ -1162,8 +1162,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(nic1.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterfaceData> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
-            List<NetworkInterfaceData> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
+            List<NetworkInterface> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer

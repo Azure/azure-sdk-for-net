@@ -48,33 +48,33 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Subscription"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Subscription(ArmClient armClient, SubscriptionData data) : this(armClient, data.Id)
+        internal Subscription(ArmClient client, SubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subscription"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subscription(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal Subscription(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
             _subscriptionRestClient = new SubscriptionsRestOperations(_subscriptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
             _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
             _subscriptionResourcesRestClient = new ResourcesRestOperations(_subscriptionResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
             _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
             _subscriptionTagsRestClient = new TagsRestOperations(_subscriptionTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
+            Client.TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Feature.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
+            Client.TryGetApiVersion(Feature.ResourceType, out string featureApiVersion);
             _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -105,6 +105,34 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of Providers in the Provider. </summary>
+        /// <returns> An object representing collection of Providers and their operations over a Provider. </returns>
+        public virtual ProviderCollection GetProviders()
+        {
+            return new ProviderCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>
+        /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
+        public virtual ResourceGroupCollection GetResourceGroups()
+        {
+            return new ResourceGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the SubscriptionPolicyDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a SubscriptionPolicyDefinition. </returns>
+        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
+        {
+            return new SubscriptionPolicyDefinitionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the SubscriptionPolicySetDefinition. </summary>
+        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a SubscriptionPolicySetDefinition. </returns>
+        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
+        {
+            return new SubscriptionPolicySetDefinitionCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Subscriptions_Get
@@ -119,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _subscriptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,43 +170,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw _subscriptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -501,7 +493,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -516,7 +508,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -543,7 +535,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -558,7 +550,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -638,7 +630,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featureRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -653,7 +645,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = await _featureRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -679,7 +671,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featureRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -694,7 +686,7 @@ namespace Azure.ResourceManager.Resources
                 try
                 {
                     var response = _featureRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Feature(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new Feature(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -705,44 +697,40 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region Provider
-
-        /// <summary> Gets a collection of Providers in the Subscription. </summary>
-        /// <returns> An object representing collection of Providers and their operations over a Subscription. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new ProviderCollection(this);
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ResourceGroup
-
-        /// <summary> Gets a collection of ResourceGroups in the Subscription. </summary>
-        /// <returns> An object representing collection of ResourceGroups and their operations over a Subscription. </returns>
-        public virtual ResourceGroupCollection GetResourceGroups()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return new ResourceGroupCollection(this);
+            using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
-
-        #region SubscriptionPolicyDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicyDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
-        {
-            return new SubscriptionPolicyDefinitionCollection(this);
-        }
-        #endregion
-
-        #region SubscriptionPolicySetDefinition
-
-        /// <summary> Gets a collection of SubscriptionPolicySetDefinitions in the Subscription. </summary>
-        /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a Subscription. </returns>
-        public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
-        {
-            return new SubscriptionPolicySetDefinitionCollection(this);
-        }
-        #endregion
     }
 }

@@ -12,23 +12,21 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region ServiceBusNamespace
-        /// <summary> Gets an object representing a ServiceBusNamespaceCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceCollection" /> object. </returns>
-        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroup resourceGroup)
-        {
-            return new ServiceBusNamespaceCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of ServiceBusNamespaces in the ServiceBusNamespace. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ServiceBusNamespaces and their operations over a ServiceBusNamespace. </returns>
+        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetServiceBusNamespaces();
         }
     }
 }

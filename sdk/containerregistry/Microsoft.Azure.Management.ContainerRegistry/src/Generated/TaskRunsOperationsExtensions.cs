@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The run request name.
+            /// The name of the task run.
             /// </param>
             public static TaskRun Get(this ITaskRunsOperations operations, string resourceGroupName, string registryName, string taskRunName)
             {
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The run request name.
+            /// The name of the task run.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The name of task run.
+            /// The name of the task run.
             /// </param>
             /// <param name='taskRun'>
             /// The parameters of a run that needs to scheduled.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The name of task run.
+            /// The name of the task run.
             /// </param>
             /// <param name='taskRun'>
             /// The parameters of a run that needs to scheduled.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             public static void Delete(this ITaskRunsOperations operations, string resourceGroupName, string registryName, string taskRunName)
             {
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='updateParameters'>
             /// The parameters for updating a task run.
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='updateParameters'>
             /// The parameters for updating a task run.
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The run request name.
+            /// The name of the task run.
             /// </param>
             public static TaskRun GetDetails(this ITaskRunsOperations operations, string resourceGroupName, string registryName, string taskRunName)
             {
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The run request name.
+            /// The name of the task run.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The name of task run.
+            /// The name of the task run.
             /// </param>
             /// <param name='taskRun'>
             /// The parameters of a run that needs to scheduled.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The name of task run.
+            /// The name of the task run.
             /// </param>
             /// <param name='taskRun'>
             /// The parameters of a run that needs to scheduled.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             public static void BeginDelete(this ITaskRunsOperations operations, string resourceGroupName, string registryName, string taskRunName)
             {
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='updateParameters'>
             /// The parameters for updating a task run.
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// The name of the container registry.
             /// </param>
             /// <param name='taskRunName'>
-            /// The task run name.
+            /// The name of the task run.
             /// </param>
             /// <param name='updateParameters'>
             /// The parameters for updating a task run.

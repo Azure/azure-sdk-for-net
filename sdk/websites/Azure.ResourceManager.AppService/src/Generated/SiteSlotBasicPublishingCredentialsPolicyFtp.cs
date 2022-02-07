@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotBasicPublishingCredentialsPolicyFtp"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient armClient, CsmPublishingCredentialsPoliciesEntityData data) : this(armClient, data.Id)
+        internal SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotBasicPublishingCredentialsPolicyFtp"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotBasicPublishingCredentialsPolicyFtpWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotBasicPublishingCredentialsPolicyFtpWebAppsApiVersion);
             _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(_siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBasicPublishingCredentialsPolicyFtpWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.GetFtpAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,71 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.GetFtpAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
+        /// OperationId: WebApps_UpdateFtpAllowedSlot
+        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyFtp.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
+        /// OperationId: WebApps_UpdateFtpAllowedSlot
+        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public virtual SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyFtp.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,70 +222,6 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
-        /// OperationId: WebApps_UpdateFtpAllowedSlot
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyFtp.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
-        /// OperationId: WebApps_UpdateFtpAllowedSlot
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyFtp.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

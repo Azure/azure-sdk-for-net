@@ -13,8 +13,8 @@ namespace Azure.Core.TestFramework
     internal class OperationInterceptor : IInterceptor
     {
         private static readonly object NoWaitDelay = TimeSpan.Zero;
-        private static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
-        private static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[]{typeof(TimeSpan), typeof(CancellationToken)});
+        internal static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
+        internal static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[] { typeof(TimeSpan), typeof(CancellationToken) });
 
         private readonly bool _noWait;
 
@@ -30,31 +30,14 @@ namespace Azure.Core.TestFramework
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
                     CheckArguments(invocation.Arguments);
-                    var cancellationToken = invocation.Arguments.Last();
-                    var waitForCompletionMethod = invocation.TargetType.GetMethod(WaitForCompletionMethodName, new[]{typeof(TimeSpan), typeof(CancellationToken)});
-                    try
-                    {
-                        invocation.ReturnValue = waitForCompletionMethod.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
-                    }
-                    catch (TargetInvocationException ex)
-                    {
-                        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                    }
+                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, invocation.Arguments.Last());
                     return;
                 }
 
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
                     CheckArguments(invocation.Arguments);
-                    var cancellationToken = invocation.Arguments.Last();
-                    try
-                    {
-                        invocation.ReturnValue = WaitForCompletionResponseAsync.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
-                    }
-                    catch (TargetInvocationException ex)
-                    {
-                        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                    }
+                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget, invocation.Arguments.Last());
                     return;
                 }
             }
@@ -62,11 +45,38 @@ namespace Azure.Core.TestFramework
             invocation.Proceed();
         }
 
+        internal static object InvokeWaitForCompletionResponse(object target, object cancellationToken)
+        {
+            try
+            {
+                return WaitForCompletionResponseAsync.Invoke(target, new[] { NoWaitDelay, cancellationToken });
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+            }
+            return null;
+        }
+
+        internal static object InvokeWaitForCompletion(object target, Type targetType, object cancellationToken)
+        {
+            var waitForCompletionMethod = targetType.GetMethod(WaitForCompletionMethodName, new[] { typeof(TimeSpan), typeof(CancellationToken) });
+            try
+            {
+                return waitForCompletionMethod.Invoke(target, new[] { NoWaitDelay, cancellationToken });
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+            }
+            return null;
+        }
+
         private void CheckArguments(object[] invocationArguments)
         {
             if (invocationArguments.Length == 2)
             {
-                var interval = (TimeSpan) invocationArguments[0];
+                var interval = (TimeSpan)invocationArguments[0];
                 if (interval < TimeSpan.FromSeconds(1))
                 {
                     throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode. " +

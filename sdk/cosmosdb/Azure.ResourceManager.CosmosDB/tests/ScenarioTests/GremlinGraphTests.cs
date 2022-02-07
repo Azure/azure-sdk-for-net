@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = await throughput.CreateOrUpdate(false, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateGremlinGraphToAutoscale(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(true)).Value;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateGremlinGraphToManualThroughput(false).WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(true)).Value;
             AssertManualThroughput(throughputData);
         }
 

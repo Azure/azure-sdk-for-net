@@ -96,7 +96,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.8.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.7" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.8" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
@@ -109,6 +109,7 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.2.0-rc1"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry.Contrib.Extensions.PersistentStorage" Version="1.0.0-alpha2" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!--
@@ -149,7 +150,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220127.5" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220204.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -264,7 +265,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20220127.3</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20220202.2</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

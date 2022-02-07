@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri");
-                writer.WriteStringValue(KeyVaultKeyUri);
+                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {
@@ -185,6 +186,11 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("disableLocalAuth");
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity");
+                writer.WriteObjectValue(Capacity);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -217,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<bool> enableCassandraConnector = default;
             Optional<ConnectorOffer> connectorOffer = default;
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
-            Optional<string> keyVaultKeyUri = default;
+            Optional<Uri> keyVaultKeyUri = default;
             Optional<string> defaultIdentity = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
@@ -232,6 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<NetworkAclBypass> networkAclBypass = default;
             Optional<IList<string>> networkAclBypassResourceIds = default;
             Optional<bool> disableLocalAuth = default;
+            Optional<Capacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -505,7 +512,12 @@ namespace Azure.ResourceManager.CosmosDB
                         }
                         if (property0.NameEquals("keyVaultKeyUri"))
                         {
-                            keyVaultKeyUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keyVaultKeyUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("defaultIdentity"))
@@ -648,11 +660,21 @@ namespace Azure.ResourceManager.CosmosDB
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("capacity"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            capacity = Capacity.DeserializeCapacity(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DatabaseAccountData(id, name, type, systemData, tags, location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, databaseAccountOfferType.Value, Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, instanceId.Value, Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth));
+            return new DatabaseAccountData(id, name, type, systemData, tags, location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, databaseAccountOfferType.Value, Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, instanceId.Value, Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
         }
     }
 }

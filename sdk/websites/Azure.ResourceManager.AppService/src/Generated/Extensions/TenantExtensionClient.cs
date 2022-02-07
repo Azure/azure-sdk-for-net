@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Tenant. </summary>
     internal partial class TenantExtensionClient : ArmResource
     {
         private ClientDiagnostics _certificateRegistrationProviderClientDiagnostics;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TenantExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.AppService
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        #region User
-        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it in the TenantExtensionClient. </summary>
         /// <returns> Returns a <see cref="User" /> object. </returns>
         public virtual User GetUser()
         {
-            return new User(ArmClient, new ResourceIdentifier(Id + "/providers/Microsoft.Web/publishingUsers/web"));
+            return new User(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
         }
-        #endregion
+
+        /// <summary> Gets a collection of SourceControls in the SourceControl. </summary>
+        /// <returns> An object representing collection of SourceControls and their operations over a SourceControl. </returns>
+        public virtual SourceControlCollection GetSourceControls()
+        {
+            return new SourceControlCollection(Client, Id);
+        }
 
         /// RequestPath: /providers/Microsoft.CertificateRegistration/operations
         /// ContextualPath: /
@@ -400,13 +405,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantExtensionClient.GetFunctionAppStacksForLocationProviders");
@@ -447,13 +448,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantExtensionClient.GetFunctionAppStacksForLocationProviders");
@@ -494,13 +491,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantExtensionClient.GetWebAppStacksForLocationProviders");
@@ -541,13 +534,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantExtensionClient.GetWebAppStacksForLocationProviders");

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </summary>
         public JsonWebKeyCurveName? CurveName { get; set; }
         /// <summary> The URI to retrieve the current version of the key. </summary>
-        public string KeyUri { get; }
+        public Uri KeyUri { get; }
         /// <summary> The URI to retrieve the specific version of the key. </summary>
         public string KeyUriWithVersion { get; }
     }

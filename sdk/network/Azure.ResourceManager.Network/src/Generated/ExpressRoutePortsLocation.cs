@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRoutePortsLocation"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRoutePortsLocation(ArmClient armClient, ExpressRoutePortsLocationData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal ExpressRoutePortsLocation(ArmClient client, ExpressRoutePortsLocationData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRoutePortsLocation"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRoutePortsLocation(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ExpressRoutePortsLocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRoutePortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string expressRoutePortsLocationApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string expressRoutePortsLocationApiVersion);
             _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(_expressRoutePortsLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortsLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRoutePortsLocationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRoutePortsLocationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRoutePortsLocation(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortsLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

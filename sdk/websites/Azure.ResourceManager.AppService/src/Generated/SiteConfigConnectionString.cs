@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteConfigConnectionString"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteConfigConnectionString(ArmClient armClient, ApiKeyVaultReferenceData data) : this(armClient, data.Id)
+        internal SiteConfigConnectionString(ArmClient client, ApiKeyVaultReferenceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteConfigConnectionString"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteConfigConnectionString(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteConfigConnectionString(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
             _siteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(_siteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigConnectionStringWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteConfigConnectionStringWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigConnectionString(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteConfigConnectionStringWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigConnectionString(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

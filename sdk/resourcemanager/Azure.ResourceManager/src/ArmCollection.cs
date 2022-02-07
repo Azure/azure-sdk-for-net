@@ -19,24 +19,14 @@ namespace Azure.ResourceManager.Core
         {
         }
 
-        internal ArmCollection(ArmClient client, ResourceIdentifier id)
-            : base(client, id)
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmCollection"/> class.
         /// </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        protected ArmCollection(ArmResource parent)
-            : base(parent.ArmClient, parent.Id)
+        /// <param name="client"> The client to copy settings from. </param>
+        /// <param name="id"> The id of the parent for the collection. </param>
+        protected ArmCollection(ArmClient client, ResourceIdentifier id)
+            : base(client, id)
         {
-            Parent = parent;
         }
-
-        /// <summary>
-        /// Gets the parent resource of this resource.
-        /// </summary>
-        protected ArmResource Parent { get; }
     }
 }

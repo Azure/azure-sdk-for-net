@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteContinuousWebJobCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteContinuousWebJobCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteContinuousWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContinuousWebJob.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
+            Client.TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
             _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(_siteContinuousWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,36 +48,6 @@ namespace Azure.ResourceManager.AppService
         {
             if (id.ResourceType != WebSite.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetContinuousWebJob
-        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
-        /// <param name="webJobName"> Name of Web Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<SiteContinuousWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
-                if (response.Value == null)
-                    throw _siteContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
@@ -97,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +78,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetContinuousWebJob
+        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<SiteContinuousWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteContinuousWebJob> Get(string webJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
-            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExists");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                var response = _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
+                    throw _siteContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +106,92 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="webJobName"> Name of Web Job. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListContinuousWebJobs
+        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public async virtual Task<Response<SiteContinuousWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteContinuousWebJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteContinuousWebJob> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SiteContinuousWebJob>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteContinuousWebJob(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SiteContinuousWebJob>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="webJobName"> Name of Web Job. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListContinuousWebJobs
+        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
-        public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteContinuousWebJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteContinuousWebJob> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
-
-            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.Exists");
-            scope.Start();
-            try
+            Page<SiteContinuousWebJob> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(webJobName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SiteContinuousWebJob> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetContinuousWebJob
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
@@ -202,86 +214,86 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListContinuousWebJobs
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// OperationId: WebApps_GetContinuousWebJob
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteContinuousWebJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteContinuousWebJob> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
-            Page<SiteContinuousWebJob> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(webJobName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SiteContinuousWebJob> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListContinuousWebJobs
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// OperationId: WebApps_GetContinuousWebJob
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteContinuousWebJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteContinuousWebJob> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public async virtual Task<Response<SiteContinuousWebJob>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteContinuousWebJob>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteContinuousWebJob>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteContinuousWebJobWebAppsRestClient.ListContinuousWebJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteContinuousWebJob(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetContinuousWebJob
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<SiteContinuousWebJob> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
+
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webJobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteContinuousWebJob>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SiteContinuousWebJob> IEnumerable<SiteContinuousWebJob>.GetEnumerator()
