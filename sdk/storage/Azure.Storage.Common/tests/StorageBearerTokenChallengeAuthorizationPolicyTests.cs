@@ -145,6 +145,7 @@ namespace Azure.Storage.Tests
 
             // Act
             await SendGetRequest(transport, tokenChallengeAuthorizationPolicy, uri: new Uri("https://example.com"));
+            await SendGetRequest(transport, tokenChallengeAuthorizationPolicy, uri: new Uri("https://example.com"));
         }
     }
 }
