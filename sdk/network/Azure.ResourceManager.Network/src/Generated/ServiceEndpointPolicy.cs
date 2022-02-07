@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified service endpoint policy. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ServiceEndpointPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicy.Delete");
             scope.Start();
             try
             {
                 var response = await _serviceEndpointPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyDeleteOperation(_serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified service endpoint policy. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ServiceEndpointPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicy.Delete");
             scope.Start();
             try
             {
                 var response = _serviceEndpointPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ServiceEndpointPolicyDeleteOperation(_serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

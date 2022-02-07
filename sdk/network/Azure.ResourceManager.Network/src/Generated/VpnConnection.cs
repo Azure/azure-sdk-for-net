@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a vpn connection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnConnectionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.Delete");
             scope.Start();
             try
             {
                 var response = await _vpnConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnConnectionDeleteOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a vpn connection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnConnectionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.Delete");
             scope.Start();
             try
             {
                 var response = _vpnConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VpnConnectionDeleteOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnConnectionStartPacketCaptureOperation> StartPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> StartPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.StartPacketCapture");
             scope.Start();
             try
             {
                 var response = await _vpnConnectionRestClient.StartPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnConnectionStartPacketCaptureOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnConnectionStartPacketCaptureOperation StartPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StartPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.StartPacketCapture");
             scope.Start();
             try
             {
                 var response = _vpnConnectionRestClient.StartPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new VpnConnectionStartPacketCaptureOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStartPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnConnectionStopPacketCaptureOperation> StopPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<string>> StopPacketCaptureAsync(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.StopPacketCapture");
             scope.Start();
             try
             {
                 var response = await _vpnConnectionRestClient.StopPacketCaptureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnConnectionStopPacketCaptureOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnConnectionStopPacketCaptureOperation StopPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> StopPacketCapture(bool waitForCompletion, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.StopPacketCapture");
             scope.Start();
             try
             {
                 var response = _vpnConnectionRestClient.StopPacketCapture(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new VpnConnectionStopPacketCaptureOperation(_vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateStopPacketCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

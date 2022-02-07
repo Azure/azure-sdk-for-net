@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NetworkProfile>> CreateOrUpdateAsync(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkProfileCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<NetworkProfile>(Response.FromValue(new NetworkProfile(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkProfile> CreateOrUpdate(bool waitForCompletion, string networkProfileName, NetworkProfileData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, parameters, cancellationToken);
-                var operation = new NetworkProfileCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<NetworkProfile>(Response.FromValue(new NetworkProfile(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

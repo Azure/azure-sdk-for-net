@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualRouterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualRouter>> CreateOrUpdateAsync(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualRouterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualRouterCreateOrUpdateOperation(Client, _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualRouter>(new VirtualRouterOperationSource(Client), _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualRouterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualRouter> CreateOrUpdate(bool waitForCompletion, string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualRouterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken);
-                var operation = new VirtualRouterCreateOrUpdateOperation(Client, _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualRouter>(new VirtualRouterOperationSource(Client), _virtualRouterClientDiagnostics, Pipeline, _virtualRouterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -127,14 +126,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified virtual network peering. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkPeeringDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeering.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkPeeringRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkPeeringDeleteOperation(_virtualNetworkPeeringClientDiagnostics, Pipeline, _virtualNetworkPeeringRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkPeeringClientDiagnostics, Pipeline, _virtualNetworkPeeringRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -149,14 +148,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified virtual network peering. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkPeeringDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeering.Delete");
             scope.Start();
             try
             {
                 var response = _virtualNetworkPeeringRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VirtualNetworkPeeringDeleteOperation(_virtualNetworkPeeringClientDiagnostics, Pipeline, _virtualNetworkPeeringRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualNetworkPeeringClientDiagnostics, Pipeline, _virtualNetworkPeeringRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

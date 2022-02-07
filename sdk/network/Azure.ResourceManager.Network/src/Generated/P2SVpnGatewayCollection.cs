@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public async virtual Task<P2SVpnGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<P2SVpnGateway>> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (p2SVpnGatewayParameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Client, _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
+                var operation = new NetworkArmOperation<P2SVpnGateway>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual P2SVpnGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<P2SVpnGateway> CreateOrUpdate(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             if (p2SVpnGatewayParameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken);
-                var operation = new P2SVpnGatewayCreateOrUpdateOperation(Client, _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response);
+                var operation = new NetworkArmOperation<P2SVpnGateway>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

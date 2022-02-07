@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a VirtualHubBgpConnection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BgpConnectionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnection.Delete");
             scope.Start();
             try
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BgpConnectionDeleteOperation(_bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a VirtualHubBgpConnection. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BgpConnectionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnection.Delete");
             scope.Start();
             try
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BgpConnectionDeleteOperation(_bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a list of routes the virtual hub bgp connection has learned. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BgpConnectionGetLearnedRoutesVirtualHubBgpConnectionOperation> GetLearnedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnection.GetLearnedRoutesVirtualHubBgpConnection");
             scope.Start();
             try
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListLearnedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BgpConnectionGetLearnedRoutesVirtualHubBgpConnectionOperation(_bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<PeerRouteList>(new PeerRouteListOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a list of routes the virtual hub bgp connection has learned. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BgpConnectionGetLearnedRoutesVirtualHubBgpConnectionOperation GetLearnedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnection.GetLearnedRoutesVirtualHubBgpConnection");
             scope.Start();
             try
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.ListLearnedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BgpConnectionGetLearnedRoutesVirtualHubBgpConnectionOperation(_bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<PeerRouteList>(new PeerRouteListOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BgpConnectionGetAdvertisedRoutesVirtualHubBgpConnectionOperation> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnection.GetAdvertisedRoutesVirtualHubBgpConnection");
             scope.Start();
             try
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListAdvertisedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BgpConnectionGetAdvertisedRoutesVirtualHubBgpConnectionOperation(_bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<PeerRouteList>(new PeerRouteListOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BgpConnectionGetAdvertisedRoutesVirtualHubBgpConnectionOperation GetAdvertisedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnection.GetAdvertisedRoutesVirtualHubBgpConnection");
             scope.Start();
             try
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.ListAdvertisedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BgpConnectionGetAdvertisedRoutesVirtualHubBgpConnectionOperation(_bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation<PeerRouteList>(new PeerRouteListOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

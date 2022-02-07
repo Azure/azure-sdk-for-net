@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DdosCustomPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DdosCustomPolicy>> CreateOrUpdateAsync(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
             if (parameters == null)
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ddosCustomPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Client, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var operation = new NetworkArmOperation<DdosCustomPolicy>(new DdosCustomPolicyOperationSource(Client), _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DdosCustomPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DdosCustomPolicy> CreateOrUpdate(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
             if (parameters == null)
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ddosCustomPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Client, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
+                var operation = new NetworkArmOperation<DdosCustomPolicy>(new DdosCustomPolicyOperationSource(Client), _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

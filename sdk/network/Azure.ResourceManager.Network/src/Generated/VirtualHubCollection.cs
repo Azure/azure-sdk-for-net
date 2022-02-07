@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async virtual Task<VirtualHubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualHub>> CreateOrUpdateAsync(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
             if (virtualHubParameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubCreateOrUpdateOperation(Client, _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualHub>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual VirtualHubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualHub> CreateOrUpdate(bool waitForCompletion, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
             if (virtualHubParameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken);
-                var operation = new VirtualHubCreateOrUpdateOperation(Client, _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualHub>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

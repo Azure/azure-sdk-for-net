@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified application gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewayDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Delete");
             scope.Start();
             try
             {
                 var response = await _applicationGatewayRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayDeleteOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified application gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewayDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Delete");
             scope.Start();
             try
             {
                 var response = _applicationGatewayRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayDeleteOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Starts the specified application gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewayStartOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Start");
             scope.Start();
             try
             {
                 var response = await _applicationGatewayRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayStartOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Starts the specified application gateway. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewayStartOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Start");
             scope.Start();
             try
             {
                 var response = _applicationGatewayRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayStartOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops the specified application gateway in a resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewayStopOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Stop");
             scope.Start();
             try
             {
                 var response = await _applicationGatewayRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayStopOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops the specified application gateway in a resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewayStopOperation Stop(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Stop(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.Stop");
             scope.Start();
             try
             {
                 var response = _applicationGatewayRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationGatewayStopOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewayBackendHealthOperation> BackendHealthAsync(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ApplicationGatewayBackendHealth>> BackendHealthAsync(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.BackendHealth");
             scope.Start();
             try
             {
                 var response = await _applicationGatewayRestClient.BackendHealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayBackendHealthOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -344,14 +344,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewayBackendHealthOperation BackendHealth(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplicationGatewayBackendHealth> BackendHealth(bool waitForCompletion, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGateway.BackendHealth");
             scope.Start();
             try
             {
                 var response = _applicationGatewayRestClient.BackendHealth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                var operation = new ApplicationGatewayBackendHealthOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
-        public async virtual Task<ApplicationGatewayBackendHealthOnDemandOperation> BackendHealthOnDemandAsync(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ApplicationGatewayBackendHealthOnDemand>> BackendHealthOnDemandAsync(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (probeRequest == null)
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.BackendHealthOnDemandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
-        public virtual ApplicationGatewayBackendHealthOnDemandOperation BackendHealthOnDemand(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplicationGatewayBackendHealthOnDemand> BackendHealthOnDemand(bool waitForCompletion, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (probeRequest == null)
             {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.BackendHealthOnDemand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken);
-                var operation = new ApplicationGatewayBackendHealthOnDemandOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string peConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PrivateEndpointConnection>> CreateOrUpdateAsync(bool waitForCompletion, string peConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
             if (parameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _privateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string peConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpointConnection> CreateOrUpdate(bool waitForCompletion, string peConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
             if (parameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _privateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, parameters, cancellationToken);
-                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

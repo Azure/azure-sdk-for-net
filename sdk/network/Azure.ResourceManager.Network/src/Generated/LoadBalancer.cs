@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LoadBalancerDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
                 var response = await _loadBalancerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerDeleteOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LoadBalancerDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
                 var response = _loadBalancerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LoadBalancerDeleteOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

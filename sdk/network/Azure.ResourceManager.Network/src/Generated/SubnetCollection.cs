@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Subnet>> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _subnetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetCreateOrUpdateOperation(Client, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new NetworkArmOperation<Subnet>(new SubnetOperationSource(Client), _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Subnet> CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _subnetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
-                var operation = new SubnetCreateOrUpdateOperation(Client, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new NetworkArmOperation<Subnet>(new SubnetOperationSource(Client), _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

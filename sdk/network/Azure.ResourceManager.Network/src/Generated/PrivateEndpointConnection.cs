@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -129,14 +128,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Delete private end point connection for a private link service in a subscription. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
             scope.Start();
             try
             {
                 var response = await _privateEndpointConnectionPrivateLinkServicesRestClient.DeletePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointConnectionDeleteOperation(_privateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, _privateEndpointConnectionPrivateLinkServicesRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_privateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, _privateEndpointConnectionPrivateLinkServicesRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -151,14 +150,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Delete private end point connection for a private link service in a subscription. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
             scope.Start();
             try
             {
                 var response = _privateEndpointConnectionPrivateLinkServicesRestClient.DeletePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PrivateEndpointConnectionDeleteOperation(_privateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, _privateEndpointConnectionPrivateLinkServicesRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_privateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, _privateEndpointConnectionPrivateLinkServicesRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

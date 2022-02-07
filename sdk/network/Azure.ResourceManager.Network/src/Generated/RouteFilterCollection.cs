@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
-        public async virtual Task<RouteFilterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<RouteFilter>> CreateOrUpdateAsync(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
             if (routeFilterParameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeFilterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterCreateOrUpdateOperation(Client, _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
+                var operation = new NetworkArmOperation<RouteFilter>(new RouteFilterOperationSource(Client), _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
-        public virtual RouteFilterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RouteFilter> CreateOrUpdate(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
             if (routeFilterParameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeFilterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken);
-                var operation = new RouteFilterCreateOrUpdateOperation(Client, _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
+                var operation = new NetworkArmOperation<RouteFilter>(new RouteFilterOperationSource(Client), _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

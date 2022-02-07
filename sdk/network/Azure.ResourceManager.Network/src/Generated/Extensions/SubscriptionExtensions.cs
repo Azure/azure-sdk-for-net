@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -547,7 +548,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async static Task<SwapPublicIpAddressesLoadBalancerOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public async static Task<ArmOperation> SwapPublicIpAddressesLoadBalancerAsync(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
@@ -566,7 +567,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static SwapPublicIpAddressesLoadBalancerOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public static ArmOperation SwapPublicIpAddressesLoadBalancer(this Subscription subscription, bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
@@ -757,7 +758,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async static Task<CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public async static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
@@ -776,7 +777,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this Subscription subscription, bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             if (parameters == null)
