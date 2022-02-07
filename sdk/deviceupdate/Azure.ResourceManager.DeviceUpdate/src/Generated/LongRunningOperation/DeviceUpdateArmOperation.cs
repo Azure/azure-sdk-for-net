@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.DeviceUpdate.Models
+namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> Deletes the specified private endpoint connection associated with the device update account. </summary>
-    public partial class PrivateEndpointConnectionDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class DeviceUpdateArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDeleteOperation for mocking. </summary>
-        protected PrivateEndpointConnectionDeleteOperation()
+        /// <summary> Initializes a new instance of DeviceUpdateArmOperation for mocking. </summary>
+        protected DeviceUpdateArmOperation()
         {
         }
 
-        internal PrivateEndpointConnectionDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeviceUpdateArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal DeviceUpdateArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "DeviceUpdateArmOperation");
         }
 
         /// <inheritdoc />

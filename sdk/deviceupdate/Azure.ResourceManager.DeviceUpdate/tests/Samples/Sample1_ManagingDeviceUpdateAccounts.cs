@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Get the account collection from the specific resource group and create an account
             string accountName = "myAccount";
             DeviceUpdateAccountData input = new DeviceUpdateAccountData(AzureLocation.WestUS2);
-            DeviceUpdateAccountCreateOrUpdateOperation lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
+            ArmOperation<DeviceUpdateAccount> lro = await resourceGroup.GetDeviceUpdateAccounts().CreateOrUpdateAsync(true, accountName, input);
             DeviceUpdateAccount account = lro.Value;
             #endregion Snippet:Managing_Accounts_CreateAnAccount
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
                 Location = AzureLocation.WestUS2,
                 Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
             };
-            DeviceUpdateAccountUpdateOperation lro = await account.UpdateAsync(true, updateOptions);
+            ArmOperation<DeviceUpdateAccount> lro = await account.UpdateAsync(true, updateOptions);
             account = lro.Value;
             #endregion Snippet:Managing_Accounts_UpdateAnAccount
         }
