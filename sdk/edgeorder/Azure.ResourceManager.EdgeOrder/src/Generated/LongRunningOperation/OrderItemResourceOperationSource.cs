@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    internal class OrderItemResourceSource : IOperationSource<OrderItemResource>
+    internal class OrderItemResourceOperationSource : IOperationSource<OrderItemResource>
     {
         private readonly ArmClient _client;
 
-        internal OrderItemResourceSource(ArmClient client)
+        internal OrderItemResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

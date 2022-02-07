@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _addressResourceRestClient.UpdateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _addressResourceRestClient.UpdateAddress(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

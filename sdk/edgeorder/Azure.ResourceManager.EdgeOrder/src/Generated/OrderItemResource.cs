@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _orderItemResourceRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _orderItemResourceRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
