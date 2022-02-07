@@ -11,7 +11,5 @@ namespace Azure.Communication.NetworkTraversal
     [CodeGenModel(Usage = new[] { "input", "converter" })]
     public partial class CommunicationRelayConfiguration
     {
-        /// <summary> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
     }
 }

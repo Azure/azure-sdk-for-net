@@ -28,8 +28,8 @@ namespace Azure.Communication.NetworkTraversal
     }
     public partial class CommunicationRelayConfiguration
     {
-        public CommunicationRelayConfiguration(System.DateTimeOffset? expiresOn, System.Collections.Generic.IEnumerable<Azure.Communication.NetworkTraversal.CommunicationIceServer> iceServers) { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public CommunicationRelayConfiguration(System.DateTimeOffset expiresOn, System.Collections.Generic.IEnumerable<Azure.Communication.NetworkTraversal.CommunicationIceServer> iceServers) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.NetworkTraversal.CommunicationIceServer> IceServers { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

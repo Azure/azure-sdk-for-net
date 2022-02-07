@@ -19,15 +19,8 @@ namespace Azure.Communication.NetworkTraversal
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ExpiresOn != null)
-            {
-                writer.WritePropertyName("expiresOn");
-                writer.WriteStringValue(ExpiresOn.Value, "O");
-            }
-            else
-            {
-                writer.WriteNull("expiresOn");
-            }
+            writer.WritePropertyName("expiresOn");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("iceServers");
             writer.WriteStartArray();
             foreach (var item in IceServers)
@@ -40,17 +33,12 @@ namespace Azure.Communication.NetworkTraversal
 
         internal static CommunicationRelayConfiguration DeserializeCommunicationRelayConfiguration(JsonElement element)
         {
-            DateTimeOffset? expiresOn = default;
+            DateTimeOffset expiresOn = default;
             IList<CommunicationIceServer> iceServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiresOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        expiresOn = null;
-                        continue;
-                    }
                     expiresOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
