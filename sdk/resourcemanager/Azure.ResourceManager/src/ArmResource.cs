@@ -85,28 +85,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected virtual IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
-            => ListAvailableLocations(cancellationToken);
-
-        /// <summary>
-        /// Lists all available geo-locations.
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected virtual Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
-            => ListAvailableLocationsAsync(cancellationToken);
-
-        /// <summary>
-        /// Lists all available geo-locations.
-        /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual IEnumerable<AzureLocation> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
@@ -125,7 +107,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
