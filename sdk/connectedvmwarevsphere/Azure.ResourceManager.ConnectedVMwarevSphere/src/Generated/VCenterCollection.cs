@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public async virtual Task<VCenterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VCenter>> CreateOrUpdateAsync(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vCenterRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new VCenterCreateOrUpdateOperation(Client, _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public virtual VCenterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VCenter> CreateOrUpdate(bool waitForCompletion, string vcenterName, VCenterData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vCenterRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken);
-                var operation = new VCenterCreateOrUpdateOperation(Client, _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

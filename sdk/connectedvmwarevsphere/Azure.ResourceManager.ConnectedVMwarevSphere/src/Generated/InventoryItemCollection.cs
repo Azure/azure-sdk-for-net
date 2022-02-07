@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public async virtual Task<InventoryItemCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<InventoryItem>> CreateOrUpdateAsync(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new InventoryItemCreateOrUpdateOperation(Client, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItem>(Response.FromValue(new InventoryItem(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual InventoryItemCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InventoryItem> CreateOrUpdate(bool waitForCompletion, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken);
-                var operation = new InventoryItemCreateOrUpdateOperation(Client, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItem>(Response.FromValue(new InventoryItem(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

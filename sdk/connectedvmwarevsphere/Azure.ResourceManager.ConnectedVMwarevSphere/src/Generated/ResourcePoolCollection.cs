@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public async virtual Task<ResourcePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ResourcePool>> CreateOrUpdateAsync(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _resourcePoolRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcePoolCreateOrUpdateOperation(Client, _resourcePoolClientDiagnostics, Pipeline, _resourcePoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<ResourcePool>(new ResourcePoolSource(Client), _resourcePoolClientDiagnostics, Pipeline, _resourcePoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public virtual ResourcePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourcePool> CreateOrUpdate(bool waitForCompletion, string resourcePoolName, ResourcePoolData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _resourcePoolRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body, cancellationToken);
-                var operation = new ResourcePoolCreateOrUpdateOperation(Client, _resourcePoolClientDiagnostics, Pipeline, _resourcePoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<ResourcePool>(new ResourcePoolSource(Client), _resourcePoolClientDiagnostics, Pipeline, _resourcePoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

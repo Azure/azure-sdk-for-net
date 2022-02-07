@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
+namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> Stop virtual machine. </summary>
-    public partial class VirtualMachineStopOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class ConnectedVMwarevSphereArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of VirtualMachineStopOperation for mocking. </summary>
-        protected VirtualMachineStopOperation()
+        /// <summary> Initializes a new instance of ConnectedVMwarevSphereArmOperation for mocking. </summary>
+        protected ConnectedVMwarevSphereArmOperation()
         {
         }
 
-        internal VirtualMachineStopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ConnectedVMwarevSphereArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineStopOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal ConnectedVMwarevSphereArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ConnectedVMwarevSphereArmOperation");
         }
 
         /// <inheritdoc />
