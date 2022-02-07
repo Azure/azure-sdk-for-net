@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class NetworkRuleSetSource : IOperationSource<NetworkRuleSet>
+    internal class NetworkRuleSetOperationSource : IOperationSource<NetworkRuleSet>
     {
         private readonly ArmClient _client;
 
-        internal NetworkRuleSetSource(ArmClient client)
+        internal NetworkRuleSetOperationSource(ArmClient client)
         {
             _client = client;
         }

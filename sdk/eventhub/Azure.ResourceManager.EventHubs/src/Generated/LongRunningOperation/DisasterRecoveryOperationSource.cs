@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class DisasterRecoverySource : IOperationSource<DisasterRecovery>
+    internal class DisasterRecoveryOperationSource : IOperationSource<DisasterRecovery>
     {
         private readonly ArmClient _client;
 
-        internal DisasterRecoverySource(ArmClient client)
+        internal DisasterRecoveryOperationSource(ArmClient client)
         {
             _client = client;
         }

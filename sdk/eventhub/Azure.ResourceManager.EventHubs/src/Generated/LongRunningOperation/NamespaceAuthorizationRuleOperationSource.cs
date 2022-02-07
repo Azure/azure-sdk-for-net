@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class NamespaceAuthorizationRuleSource : IOperationSource<NamespaceAuthorizationRule>
+    internal class NamespaceAuthorizationRuleOperationSource : IOperationSource<NamespaceAuthorizationRule>
     {
         private readonly ArmClient _client;
 
-        internal NamespaceAuthorizationRuleSource(ArmClient client)
+        internal NamespaceAuthorizationRuleOperationSource(ArmClient client)
         {
             _client = client;
         }

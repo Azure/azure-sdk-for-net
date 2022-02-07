@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class EventHubAuthorizationRuleSource : IOperationSource<EventHubAuthorizationRule>
+    internal class EventHubAuthorizationRuleOperationSource : IOperationSource<EventHubAuthorizationRule>
     {
         private readonly ArmClient _client;
 
-        internal EventHubAuthorizationRuleSource(ArmClient client)
+        internal EventHubAuthorizationRuleOperationSource(ArmClient client)
         {
             _client = client;
         }

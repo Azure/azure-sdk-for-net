@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class ConsumerGroupSource : IOperationSource<ConsumerGroup>
+    internal class ConsumerGroupOperationSource : IOperationSource<ConsumerGroup>
     {
         private readonly ArmClient _client;
 
-        internal ConsumerGroupSource(ArmClient client)
+        internal ConsumerGroupOperationSource(ArmClient client)
         {
             _client = client;
         }

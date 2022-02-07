@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class SchemaGroupSource : IOperationSource<SchemaGroup>
+    internal class SchemaGroupOperationSource : IOperationSource<SchemaGroup>
     {
         private readonly ArmClient _client;
 
-        internal SchemaGroupSource(ArmClient client)
+        internal SchemaGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
