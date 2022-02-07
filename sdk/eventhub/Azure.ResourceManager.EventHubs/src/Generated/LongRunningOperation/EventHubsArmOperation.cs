@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> Deletes an Event Hub from the specified Namespace and resource group. </summary>
-    public partial class EventHubDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class EventHubsArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of EventHubDeleteOperation for mocking. </summary>
-        protected EventHubDeleteOperation()
+        /// <summary> Initializes a new instance of EventHubsArmOperation for mocking. </summary>
+        protected EventHubsArmOperation()
         {
         }
 
-        internal EventHubDeleteOperation(Response response)
+        internal EventHubsArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal EventHubsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "EventHubsArmOperation");
         }
 
         /// <inheritdoc />
