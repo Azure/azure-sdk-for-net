@@ -135,6 +135,9 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.policySettings.properties.defaultCustomBlockResponseStatusCode
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.ProfileProperties.properties.originResponseTimeoutSeconds
     transform: $['x-nullable'] = true  
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]

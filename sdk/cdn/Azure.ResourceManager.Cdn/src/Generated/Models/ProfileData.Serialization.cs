@@ -39,8 +39,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
-                writer.WritePropertyName("originResponseTimeoutSeconds");
-                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+                if (OriginResponseTimeoutSeconds != null)
+                {
+                    writer.WritePropertyName("originResponseTimeoutSeconds");
+                    writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("originResponseTimeoutSeconds");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -60,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             Optional<string> frontDoorId = default;
-            Optional<int> originResponseTimeoutSeconds = default;
+            Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                originResponseTimeoutSeconds = null;
                                 continue;
                             }
                             originResponseTimeoutSeconds = property0.Value.GetInt32();
