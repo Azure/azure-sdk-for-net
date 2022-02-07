@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 telemetryItem = new TelemetryItem(logRecord);
                 telemetryItem.InstrumentationKey = instrumentationKey;
                 telemetryItem.SetResource(roleName, roleInstance);
-                if (logRecord?.Exception != null)
+                if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase
                     {
@@ -48,6 +48,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return telemetryItems;
+        }
+
+        internal static string GetMessage(LogRecord logRecord)
+        {
+            string message = null;
+
+            if (logRecord.FormattedMessage != null)
+            {
+                message = logRecord.FormattedMessage;
+            }
+            else if (logRecord.State != null)
+            {
+                message = logRecord.State.ToString();
+            }
+            else if (logRecord.StateValues != null)
+            {
+                for (int i = 0; i < logRecord.StateValues.Count; i++)
+                {
+                    message += ($"{logRecord.StateValues[i].Key}:{logRecord.StateValues[i].Value};");
+                }
+            }
+
+            return message;
         }
 
         internal static string GetProblemId(Exception exception)

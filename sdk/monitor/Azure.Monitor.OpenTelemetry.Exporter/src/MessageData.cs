@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         public MessageData(int version, LogRecord logRecord) : base(version)
         {
-            Message = logRecord.State.ToString();
+            Message = LogsHelper.GetMessage(logRecord);
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
 
             Properties = new ChangeTrackingDictionary<string, string>();

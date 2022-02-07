@@ -15,10 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryExceptionData(int version, LogRecord logRecord) : base(version)
         {
+            var message = LogsHelper.GetMessage(logRecord);
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
             ProblemId = LogsHelper.GetProblemId(logRecord.Exception);
 
-            var message = logRecord.State.ToString();
             // collect the set of exceptions detail info from the passed in exception
             List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();
             ConvertExceptionTree(logRecord.Exception, message, null, exceptions);
