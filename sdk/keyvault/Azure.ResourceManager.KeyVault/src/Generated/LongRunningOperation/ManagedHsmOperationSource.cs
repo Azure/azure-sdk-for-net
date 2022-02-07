@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class ManagedHsmSource : IOperationSource<ManagedHsm>
+    internal class ManagedHsmOperationSource : IOperationSource<ManagedHsm>
     {
         private readonly ArmClient _client;
 
-        internal ManagedHsmSource(ArmClient client)
+        internal ManagedHsmOperationSource(ArmClient client)
         {
             _client = client;
         }

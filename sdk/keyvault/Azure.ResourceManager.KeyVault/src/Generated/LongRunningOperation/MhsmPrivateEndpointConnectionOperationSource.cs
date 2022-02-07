@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class MhsmPrivateEndpointConnectionSource : IOperationSource<MhsmPrivateEndpointConnection>
+    internal class MhsmPrivateEndpointConnectionOperationSource : IOperationSource<MhsmPrivateEndpointConnection>
     {
         private readonly ArmClient _client;
 
-        internal MhsmPrivateEndpointConnectionSource(ArmClient client)
+        internal MhsmPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }

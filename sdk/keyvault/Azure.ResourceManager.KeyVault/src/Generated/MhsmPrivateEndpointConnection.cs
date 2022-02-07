@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<MhsmPrivateEndpointConnection>(new MhsmPrivateEndpointConnectionSource(Client), _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<MhsmPrivateEndpointConnection>(new MhsmPrivateEndpointConnectionOperationSource(Client), _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation<MhsmPrivateEndpointConnection>(new MhsmPrivateEndpointConnectionSource(Client), _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<MhsmPrivateEndpointConnection>(new MhsmPrivateEndpointConnectionOperationSource(Client), _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

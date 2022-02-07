@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class SecretSource : IOperationSource<Secret>
+    internal class SecretOperationSource : IOperationSource<Secret>
     {
         private readonly ArmClient _client;
 
-        internal SecretSource(ArmClient client)
+        internal SecretOperationSource(ArmClient client)
         {
             _client = client;
         }

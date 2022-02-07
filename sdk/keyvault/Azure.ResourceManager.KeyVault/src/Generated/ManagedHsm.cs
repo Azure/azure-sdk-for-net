@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _managedHsmRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmOperationSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _managedHsmRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmOperationSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class VaultKeySource : IOperationSource<VaultKey>
+    internal class VaultOperationSource : IOperationSource<Vault>
     {
         private readonly ArmClient _client;
 
-        internal VaultKeySource(ArmClient client)
+        internal VaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        VaultKey IOperationSource<VaultKey>.CreateResult(Response response, CancellationToken cancellationToken)
+        Vault IOperationSource<Vault>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KeyData.DeserializeKeyData(document.RootElement);
-            return new VaultKey(_client, data);
+            var data = VaultData.DeserializeVaultData(document.RootElement);
+            return new Vault(_client, data);
         }
 
-        async ValueTask<VaultKey> IOperationSource<VaultKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Vault> IOperationSource<Vault>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KeyData.DeserializeKeyData(document.RootElement);
-            return new VaultKey(_client, data);
+            var data = VaultData.DeserializeVaultData(document.RootElement);
+            return new Vault(_client, data);
         }
     }
 }

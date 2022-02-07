@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _privateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _privateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new KeyVaultArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
