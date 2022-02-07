@@ -21,11 +21,6 @@ namespace Azure.ResourceManager.Resources
 
     {
         /// <summary>
-        /// Gets the parent resource of this resource.
-        /// </summary>
-        protected new Subscription Parent { get {return base.Parent as Subscription;} }
-
-        /// <summary>
         /// Constructs an object used to create a resource group.
         /// </summary>
         /// <param name="location"> The location of the resource group. </param>

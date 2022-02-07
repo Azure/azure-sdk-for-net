@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -14,28 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             : base()
         {
             AddJsonPathSanitizer("$..token");
-        }
-
-        private const string RetryAfter = "Retry-After";
-
-        /// <summary>
-        /// A RegEx to isolate a SAS token value.
-        /// </summary>
-        private Regex SignatureRegEx = new Regex(@"([\x0026|&|?]sig=)([\w\d%]+)", RegexOptions.Compiled);
-
-        public override string SanitizeUri(string uri)
-        {
-            return SignatureRegEx.Replace(uri, $"$1{SanitizeValue}");
-        }
-
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
-        {
-            if (headers.ContainsKey(RetryAfter))
-            {
-                headers[RetryAfter] = new[] { "0" };
-            }
-
-            base.SanitizeHeaders(headers);
+            UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter("sig", SanitizeValue));
         }
     }
 }

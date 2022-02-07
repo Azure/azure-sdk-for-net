@@ -1,0 +1,1431 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ?api-version=2021-10-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "171",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-931f8c320394cd43b5822a0368feb4c4-58bf4fd427970e46-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b9840c73c66bed1e7c377bed06b0bd91",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "092d0cb3-646a-4059-a55e-40a4c1063d0d",
+        "Content-Length": "319",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:11 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "200"
+      },
+      "ResponseBody": {
+        "projectName": "newFAQ",
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "createdDateTime": "2022-01-30T09:00:12Z",
+        "lastModifiedDateTime": "2022-01-30T09:00:12Z",
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-37f9784e0c603140ac37042cab3f1623-566f83a87b50124b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7757bd4b5af0166061e4d819b477beac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "32203ccb-776d-4031-9af6-876b7e512cfe",
+        "Content-Length": "2175",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:11 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "120"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "projectName": "IssacNewton",
+            "description": "biography of Sir Issac Newton",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-25T15:53:45Z",
+            "lastModifiedDateTime": "2022-01-25T16:57:20Z",
+            "lastDeployedDateTime": "2022-01-25T16:57:51Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "Microsoft",
+            "description": "test project for some Microsoft QnAs",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-25T18:33:47Z",
+            "lastModifiedDateTime": "2022-01-25T18:45:36Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "TestProject131875973",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-26T09:27:33Z",
+            "lastModifiedDateTime": "2022-01-26T09:27:33Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "fc12a55c-be22-46cc-b4b0-5b0a270f19e3",
+            "description": "rokulkaTestNe2",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2021-06-16T09:51:00Z",
+            "lastModifiedDateTime": "2021-06-16T09:51:00Z",
+            "settings": {
+              "defaultAnswer": "No good match found in KB"
+            }
+          },
+          {
+            "projectName": "newFAQ",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-30T09:00:12Z",
+            "lastModifiedDateTime": "2022-01-30T09:00:12Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "rokulkatest5",
+            "description": "RokulkaTest",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-24T19:04:26Z",
+            "lastModifiedDateTime": "2022-01-24T19:04:26Z",
+            "settings": {
+              "defaultAnswer": "No good match found in KB"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-e5d9833b300eb0418be77b3d168b452f-e586ec86c17bbd4d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e4547212d47b902b7081f0108206bfd4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b639392b-87b7-4d4a-ba36-f671acc4392e",
+        "Content-Length": "2175",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:12 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "119"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "projectName": "IssacNewton",
+            "description": "biography of Sir Issac Newton",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-25T15:53:45Z",
+            "lastModifiedDateTime": "2022-01-25T16:57:20Z",
+            "lastDeployedDateTime": "2022-01-25T16:57:51Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "Microsoft",
+            "description": "test project for some Microsoft QnAs",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-25T18:33:47Z",
+            "lastModifiedDateTime": "2022-01-25T18:45:36Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "TestProject131875973",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-26T09:27:33Z",
+            "lastModifiedDateTime": "2022-01-26T09:27:33Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "fc12a55c-be22-46cc-b4b0-5b0a270f19e3",
+            "description": "rokulkaTestNe2",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2021-06-16T09:51:00Z",
+            "lastModifiedDateTime": "2021-06-16T09:51:00Z",
+            "settings": {
+              "defaultAnswer": "No good match found in KB"
+            }
+          },
+          {
+            "projectName": "newFAQ",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-30T09:00:12Z",
+            "lastModifiedDateTime": "2022-01-30T09:00:12Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "rokulkatest5",
+            "description": "RokulkaTest",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-01-24T19:04:26Z",
+            "lastModifiedDateTime": "2022-01-24T19:04:26Z",
+            "settings": {
+              "defaultAnswer": "No good match found in KB"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources?api-version=2021-10-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "259",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-c91c78951f8bc041-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f71819db38c21854ac6e5887ee043905",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022op\u0022:\u0022add\u0022,\u0022value\u0022:{\u0022displayName\u0022:\u0022MicrosoftFAQ\u0022,\u0022source\u0022:\u0022https://www.microsoft.com/en-in/software-download/faq\u0022,\u0022sourceUri\u0022:\u0022https://www.microsoft.com/en-in/software-download/faq\u0022,\u0022sourceKind\u0022:\u0022url\u0022,\u0022contentStructureKind\u0022:\u0022unstructured\u0022,\u0022refresh\u0022:false}}]",
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "06e8bf2b-32b2-4318-ae69-325b20c92321",
+        "Content-Length": "0",
+        "Date": "Sun, 30 Jan 2022 09:00:12 GMT",
+        "operation-location": "https://wuppe.api.cognitive.microsoft.com:443/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "278"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-108b9c36aee6294e-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "94dacf79d85c761691c6076e6a4f945a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0f27501d-e4c4-465d-913d-37bd3881acfb",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:12 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-853a27bb7c3fc34b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9a3d0325c75edae91d3b380d7ba4a26b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "df35ce7a-1b2f-4437-82d0-155ee09ca5ca",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:14 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-709fff0603296648-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b296eb482a2c027803a166fb30e5ae5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d4958232-a6e1-4efe-8dad-134e65f03b24",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:16 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-8ef6bba7dc7c3048-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "eb61fed99ec6b1a6e5ff7621a009fbec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6ad6146b-fff2-4d0c-a6da-8fcc7cf96a05",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:17 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-79b7cca418931f4d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7e269b24e1b8fa2e8b3b97bd61eeaa38",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ab2176d7-330f-4a48-9537-ac013d2d428f",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:18 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-91f089a47cbb8546-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7d33db8cb642aaa444e4cc2cb45762fa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "25435e73-eac2-46e8-ae04-544eeb50ece7",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:20 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-f05a566b58d2864b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "95d679a62fbff7a4d067608b07e950f7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "be5d7e24-c86f-4a83-8685-e48eeca9ffde",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:21 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-131ecd240d812443-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c5943e557dd56da9f67c3ad315014633",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d77040bc-d0af-46c7-84b3-b0190831b636",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:23 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-99b726a865628343-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e7169cd915175c78373caddb5618a25b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b37fb85c-df9a-4ae0-a0a8-49a676945222",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:24 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-5ddffedbc1071f42-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "75d7d5949cc22824cf689e43f5d0e2ce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "eb821ff7-8ea2-4ad0-97b8-e338026c89d7",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:25 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-5624d5c6d2b38542-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6ab22c2168d240e0c5378e98d0ce16de",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e2839b3b-814c-4d9f-a3dc-d67c36ea8c3b",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:27 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-4928ad039efacf4c-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "403fded9d02a3c7177ed18ae76356766",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4d03660d-f5a1-4e0b-bb64-02491fae917e",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:28 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-05a5498dee4f7143-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2ab9de5a37652b88f496b08b0d8c5701",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c06384a4-a77f-4101-8ad7-33ca684bfc44",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:29 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:14\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources/jobs/3071cbc0-5eb9-4ab3-8670-c62442cbbe55?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-633a6f025c3d5542b63616f225663df8-111f0c360e6a024d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1669c051a29051a4bb76f2e55032c98f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "78bea689-9549-4a0b-9b5a-d7eb73a726e9",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:13\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:13\u002B00:00",
+        "jobId": "3071cbc0-5eb9-4ab3-8670-c62442cbbe55",
+        "lastUpdatedDateTime": "2022-01-30T09:00:30\u002B00:00",
+        "status": "succeeded",
+        "resultUrl": "/knowledgebases/newFAQ"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d54185588a87744f97962cd3abd91f46-d1b8999ce39a884e-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f23e27d0ec14a27856134b931fe62feb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f6ae4a69-75b8-46b0-a2fe-744770c14c97",
+        "Content-Length": "351",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "displayName": "MicrosoftFAQ",
+            "source": "https://www.microsoft.com/en-in/software-download/faq",
+            "sourceUri": "https://www.microsoft.com/en-in/software-download/faq",
+            "sourceKind": "url",
+            "contentStructureKind": "unstructured",
+            "lastUpdatedDateTime": "2022-01-30T09:00:27.8120985Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/sources?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0bcef3a1bf58d148a8d891ef4b440929-7268c65604142748-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b65c179550cbb7d639686fef44a3dbc2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "144e606d-6106-40d9-b53d-748fa93dcf1e",
+        "Content-Length": "351",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "displayName": "MicrosoftFAQ",
+            "source": "https://www.microsoft.com/en-in/software-download/faq",
+            "sourceUri": "https://www.microsoft.com/en-in/software-download/faq",
+            "sourceKind": "url",
+            "contentStructureKind": "unstructured",
+            "lastUpdatedDateTime": "2022-01-30T09:00:27.8120985Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production?api-version=2021-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-9133cdbe8c281648-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e5ba20cc654d65ec47c7bf7d561131d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "af7503b4-0349-47a4-b5ed-4827901a47bb",
+        "Content-Length": "0",
+        "Date": "Sun, 30 Jan 2022 09:00:31 GMT",
+        "operation-location": "https://wuppe.api.cognitive.microsoft.com:443/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "134"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-241fb780240b3947-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "394f074712d67fc45186b9ac7c885db3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "eb596378-4e13-499a-83f3-c7fef237645c",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:31 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-e583b89a91af1c4c-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ffc68938492b309e2af66e0491596128",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dd825aba-fd24-495d-a548-2f3f0ebd4dc0",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:33 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-27f2444c333b014d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3da89a37a153baec5c3b94c6ac3fe9bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0c7fdf77-1123-4fc3-baeb-704c3e195dc9",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:34 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-bbcd64e2f0fce94f-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cc440c69314afea9681e0edfa3c0eef8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6b35b805-612b-40c5-9fa6-ff7865cdd9bc",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:35 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-cc8fcafbb95eb948-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e175912520df965f9d0ca2efb4d884eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9e788060-437f-41b7-a1d2-df9e03a05c18",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:37 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-03c52c312288024b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "849aaf0d941405ddf0aad435930c169c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c16f5419-02bb-4465-a6f4-f0f98a543ae1",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:38 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-f161511c6f1eb945-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1ba09c4d07ca49dfacae2f3e8fb94990",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "23869a8c-5478-43a6-ba53-4fcbe4b9beb1",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:39 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-370eb42350e3fc48-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f4d2239a692590e4b36ff1354b2a0290",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6a420051-2622-465b-9a68-6b3b3b002307",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:41 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-fcc9c2101e7db446-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "18a206f669370620cf50d765649e7637",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cb3d7fcb-ddf0-456a-a70d-0a2f58ffa346",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:42 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-83e952b36283a64d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6f9a4460213ae376b80f675a16aafd82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3178bd82-b8c7-46df-85f0-9be41b67e939",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:43 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-fa23cc2b4bfb3149-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "88489fac3116315803cb25d4917e2b15",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fec7393f-db97-46bf-a197-e60616b13864",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:45 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-bef2c3e27998ea48-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "06d4b9f99290d45690bf602701c5f024",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b3aab321-3208-489f-b536-f572ae04cee7",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:46 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-74d6cbda3e97a44d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c5b95552ed562f20ec686c6efca15139",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "226bbc24-6562-4547-87d4-7ccb53a83ce0",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:47 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "41"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-e84428c9fbc39f4b-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5c6152e3f7d619f24973f857d1302f3d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e118b3c8-2cba-4916-8954-67bd91c4d6dd",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:48 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-e33149d0b194034a-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3c8100db66c50bbe99a41a2725e7d8ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "47a53684-c455-4f02-b7b4-2457b4e8f7a3",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:50 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-0ff0f44619709b44-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "af44266e93635b4d62a07ce2f5c95ebc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3139d5d0-ae53-4f56-aca6-2d938e83dbb9",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:51 GMT",
+        "Retry-After": "00:00:30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production/jobs/db21ccb0-2ff2-419c-a903-a4a596c8bef2?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-5b1617bc1ae7bd4c-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "fb922f39141f7d739356c332ddcbf361",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2c568e9f-9929-489e-af97-d188f9b2b308",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:31\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:31\u002B00:00",
+        "jobId": "db21ccb0-2ff2-419c-a903-a4a596c8bef2",
+        "lastUpdatedDateTime": "2022-01-30T09:00:51\u002B00:00",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments/production?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3a1966ccc823f2488df606c75d4726e5-89fe725470a6764d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "aae9099b7fec48d9b326d925e9db15d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "86efed97-81f3-4c43-bc68-be29b75984fd",
+        "Content-Length": "86",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
+      },
+      "ResponseBody": {
+        "deploymentName": "production",
+        "lastDeployedDateTime": "2022-01-30T09:00:51Z"
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-36d34f354cc2c54aa85980e8459bf641-0f607856d087394d-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f6ed5d45dc5459ceb3c61c0dd01b7e97",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f417420f-6b06-4aaf-9727-11d6b8d41b58",
+        "Content-Length": "123",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "deploymentName": "production",
+            "lastDeployedDateTime": "2022-01-30T09:00:51Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ/deployments?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-4376fc3f152fb34bb83e63c52c88be92-c99dc0d966079143-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ec471bacb4dfb9d0554a48f93b4e94b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2efac98c-5388-4b40-9556-3368977a0432",
+        "Content-Length": "123",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:53 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "deploymentName": "production",
+            "lastDeployedDateTime": "2022-01-30T09:00:51Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/newFAQ?api-version=2021-10-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-637ac5289c2bbf439533f1f8fa79d4e3-3e49003239826a45-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7fecf240fcddbe0c3b90f62563cc7797",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "7689e403-1492-42a9-8b85-b92f33200601",
+        "Content-Length": "0",
+        "Date": "Sun, 30 Jan 2022 09:00:57 GMT",
+        "operation-location": "https://wuppe.api.cognitive.microsoft.com:443/language/query-knowledgebases/projects/deletion-jobs/e5c8e2a8-e763-4228-8521-5c8621a8fbc3?api-version=2021-10-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "3913"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/query-knowledgebases/projects/deletion-jobs/e5c8e2a8-e763-4228-8521-5c8621a8fbc3?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-637ac5289c2bbf439533f1f8fa79d4e3-70896ae1c7d8b54e-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220130.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cd7841a7299391f08d34a10a94d41d64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4ea322b3-9a18-457e-ade2-b67999300251",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 30 Jan 2022 09:00:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2022-01-30T09:00:57\u002B00:00",
+        "expirationDateTime": "2022-01-30T15:00:57\u002B00:00",
+        "jobId": "e5c8e2a8-e763-4228-8521-5c8621a8fbc3",
+        "lastUpdatedDateTime": "2022-01-30T09:00:57\u002B00:00",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "RandomSeed": "1212694426"
+  }
+}

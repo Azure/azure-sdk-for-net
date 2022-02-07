@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentDetector"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentDetector(ArmClient armClient, AppServiceDetectorData data) : this(armClient, data.Id)
+        internal HostingEnvironmentDetector(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetector"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HostingEnvironmentDetector(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal HostingEnvironmentDetector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hostingEnvironmentDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
             _hostingEnvironmentDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentDetector(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

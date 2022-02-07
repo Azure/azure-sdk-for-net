@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkSecurityGroup"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkSecurityGroup(ArmClient armClient, NetworkSecurityGroupData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal NetworkSecurityGroup(ArmClient client, NetworkSecurityGroupData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroup"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkSecurityGroup(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal NetworkSecurityGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string networkSecurityGroupApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string networkSecurityGroupApiVersion);
             _networkSecurityGroupRestClient = new NetworkSecurityGroupsRestOperations(_networkSecurityGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkSecurityGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,20 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SecurityRules in the SecurityRule. </summary>
+        /// <returns> An object representing collection of SecurityRules and their operations over a SecurityRule. </returns>
+        public virtual SecurityRuleCollection GetSecurityRules()
+        {
+            return new SecurityRuleCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DefaultSecurityRules in the DefaultSecurityRule. </summary>
+        /// <returns> An object representing collection of DefaultSecurityRules and their operations over a DefaultSecurityRule. </returns>
+        public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
+        {
+            return new DefaultSecurityRuleCollection(Client, Id);
+        }
+
         /// <summary> Gets the specified network security group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _networkSecurityGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkSecurityGroup(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,43 +131,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _networkSecurityGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityGroup(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new NetworkSecurityGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,7 +200,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkSecurityGroupRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkSecurityGroup(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +225,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkSecurityGroupRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new NetworkSecurityGroup(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkSecurityGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,24 +234,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        #region SecurityRule
-
-        /// <summary> Gets a collection of SecurityRules in the NetworkSecurityGroup. </summary>
-        /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public virtual SecurityRuleCollection GetSecurityRules()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new SecurityRuleCollection(this);
+            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region DefaultSecurityRule
-
-        /// <summary> Gets a collection of DefaultSecurityRules in the NetworkSecurityGroup. </summary>
-        /// <returns> An object representing collection of DefaultSecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return new DefaultSecurityRuleCollection(this);
+            using var scope = _networkSecurityGroupClientDiagnostics.CreateScope("NetworkSecurityGroup.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
     }
 }

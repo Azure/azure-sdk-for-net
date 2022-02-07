@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateOrderCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AppServiceCertificateOrderCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AppServiceCertificateOrderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _appServiceCertificateOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateOrder.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(AppServiceCertificateOrder.ResourceType, out string appServiceCertificateOrderApiVersion);
+            Client.TryGetApiVersion(AppServiceCertificateOrder.ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrderRestClient = new AppServiceCertificateOrdersRestOperations(_appServiceCertificateOrderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceCertificateOrderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,43 +50,6 @@ namespace Azure.ResourceManager.AppService
         {
             if (id.ResourceType != ResourceGroup.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServiceCertificateOrders_CreateOrUpdate
-        /// <summary> Description for Create or update a certificate purchase order. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="certificateOrderName"> Name of the certificate order. </param>
-        /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public virtual AppServiceCertificateOrderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-            if (certificateDistinguishedName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateDistinguishedName));
-            }
-
-            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _appServiceCertificateOrderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName, cancellationToken);
-                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(ArmClient, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
@@ -110,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateOrderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(ArmClient, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
+                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(Client, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,24 +89,31 @@ namespace Azure.ResourceManager.AppService
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Description for Get a certificate order. </summary>
-        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// OperationId: AppServiceCertificateOrders_CreateOrUpdate
+        /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="certificateOrderName"> Name of the certificate order. </param>
+        /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public virtual Response<AppServiceCertificateOrder> Get(string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
+        public virtual AppServiceCertificateOrderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+            if (certificateDistinguishedName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateDistinguishedName));
+            }
 
-            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.Get");
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken);
-                if (response.Value == null)
-                    throw _appServiceCertificateOrderClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateOrder(ArmClient, response.Value), response.GetRawResponse());
+                var response = _appServiceCertificateOrderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName, cancellationToken);
+                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(Client, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -169,7 +141,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServiceCertificateOrderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _appServiceCertificateOrderClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AppServiceCertificateOrder(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,23 +150,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AppServiceCertificateOrders_Get
+        /// <summary> Description for Get a certificate order. </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public virtual Response<AppServiceCertificateOrder> GetIfExists(string certificateOrderName, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceCertificateOrder> Get(string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
-            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken);
+                var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateOrder(ArmClient, response.Value), response.GetRawResponse());
+                    throw _appServiceCertificateOrderClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,55 +178,92 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AppServiceCertificateOrders_ListByResourceGroup
+        /// <summary> Description for Get certificate orders in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public async virtual Task<Response<AppServiceCertificateOrder>> GetIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceCertificateOrder> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-
-            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<AppServiceCertificateOrder>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _appServiceCertificateOrderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceCertificateOrder(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _appServiceCertificateOrderRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<AppServiceCertificateOrder>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _appServiceCertificateOrderRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AppServiceCertificateOrders_ListByResourceGroup
+        /// <summary> Description for Get certificate orders in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public virtual Response<bool> Exists(string certificateOrderName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceCertificateOrder> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
-
-            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.Exists");
-            scope.Start();
-            try
+            Page<AppServiceCertificateOrder> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(certificateOrderName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _appServiceCertificateOrderRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<AppServiceCertificateOrder> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _appServiceCertificateOrderRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AppServiceCertificateOrders_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
@@ -274,86 +286,86 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServiceCertificateOrders_ListByResourceGroup
-        /// <summary> Description for Get certificate orders in a resource group. </summary>
+        /// OperationId: AppServiceCertificateOrders_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceCertificateOrder> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public virtual Response<bool> Exists(string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            Page<AppServiceCertificateOrder> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceCertificateOrderRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(certificateOrderName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<AppServiceCertificateOrder> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceCertificateOrderRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServiceCertificateOrders_ListByResourceGroup
-        /// <summary> Description for Get certificate orders in a resource group. </summary>
+        /// OperationId: AppServiceCertificateOrders_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceCertificateOrder> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public async virtual Task<Response<AppServiceCertificateOrder>> GetIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceCertificateOrder>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceCertificateOrderRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _appServiceCertificateOrderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<AppServiceCertificateOrder>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceCertificateOrderRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateOrder(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AppServiceCertificateOrders_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public virtual Response<AppServiceCertificateOrder> GetIfExists(string certificateOrderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<AppServiceCertificateOrder>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrder(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<AppServiceCertificateOrder> IEnumerable<AppServiceCertificateOrder>.GetEnumerator()

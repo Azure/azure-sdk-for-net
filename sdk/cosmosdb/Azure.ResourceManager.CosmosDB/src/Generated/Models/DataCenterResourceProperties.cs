@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
         /// <param name="diskCapacity"> Number of disk used for data centers. Default value is 4. </param>
         /// <param name="availabilityZone"> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
-        internal DataCenterResourceProperties(ManagedCassandraProvisioningState? provisioningState, string dataCenterLocation, string delegatedSubnetId, int? nodeCount, IReadOnlyList<SeedNode> seedNodes, string base64EncodedCassandraYamlFragment, string managedDiskCustomerKeyUri, string backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? availabilityZone)
+        internal DataCenterResourceProperties(ManagedCassandraProvisioningState? provisioningState, string dataCenterLocation, string delegatedSubnetId, int? nodeCount, IReadOnlyList<SeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? availabilityZone)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -61,9 +62,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A fragment of a cassandra.yaml configuration file to be included in the cassandra.yaml for all nodes in this data center. The fragment should be Base64 encoded, and only a subset of keys are allowed. </summary>
         public string Base64EncodedCassandraYamlFragment { get; set; }
         /// <summary> Key uri to use for encryption of managed disks. Ensure the system assigned identity of the cluster has been assigned appropriate permissions(key get/wrap/unwrap permissions) on the key. </summary>
-        public string ManagedDiskCustomerKeyUri { get; set; }
+        public Uri ManagedDiskCustomerKeyUri { get; set; }
         /// <summary> Indicates the Key Uri of the customer key to use for encryption of the backup storage account. </summary>
-        public string BackupStorageCustomerKeyUri { get; set; }
+        public Uri BackupStorageCustomerKeyUri { get; set; }
         /// <summary> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </summary>
         public string Sku { get; set; }
         /// <summary> Disk SKU used for data centers. Default value is P30. </summary>

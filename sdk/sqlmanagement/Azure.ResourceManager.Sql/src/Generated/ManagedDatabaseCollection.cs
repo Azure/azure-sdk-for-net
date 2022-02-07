@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -32,11 +33,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagedDatabaseCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ManagedDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ManagedDatabase.ResourceType, out string managedDatabaseApiVersion);
+            Client.TryGetApiVersion(ManagedDatabase.ResourceType, out string managedDatabaseApiVersion);
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(_managedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,43 +49,6 @@ namespace Azure.ResourceManager.Sql
         {
             if (id.ResourceType != ManagedInstance.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_CreateOrUpdate
-        /// <summary> Creates a new database or updates an existing database. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="parameters"> The requested database resource state. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _managedDatabaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters, cancellationToken);
-                var operation = new ManagedDatabaseCreateOrUpdateOperation(ArmClient, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
@@ -109,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedDatabaseCreateOrUpdateOperation(ArmClient, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
+                var operation = new ManagedDatabaseCreateOrUpdateOperation(Client, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,24 +88,31 @@ namespace Azure.ResourceManager.Sql
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Gets a managed database. </summary>
+        /// OperationId: ManagedDatabases_CreateOrUpdate
+        /// <summary> Creates a new database or updates an existing database. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public virtual Response<ManagedDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ManagedDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.Get");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
-                if (response.Value == null)
-                    throw _managedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
+                var response = _managedDatabaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters, cancellationToken);
+                var operation = new ManagedDatabaseCreateOrUpdateOperation(Client, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -168,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _managedDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +149,26 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// OperationId: ManagedDatabases_Get
+        /// <summary> Gets a managed database. </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public virtual Response<ManagedDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabase> Get(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
+                    throw _managedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,55 +177,92 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// OperationId: ManagedDatabases_ListByInstance
+        /// <summary> Gets a list of managed databases. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public async virtual Task<Response<ManagedDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDatabase> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ManagedDatabase>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabase(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managedDatabaseRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ManagedDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _managedDatabaseRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// OperationId: ManagedDatabases_ListByInstance
+        /// <summary> Gets a list of managed databases. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDatabase> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.Exists");
-            scope.Start();
-            try
+            Page<ManagedDatabase> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(databaseName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedDatabaseRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ManagedDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedDatabaseRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// OperationId: ManagedDatabases_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -273,86 +285,86 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListByInstance
-        /// <summary> Gets a list of managed databases. </summary>
+        /// OperationId: ManagedDatabases_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabase> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabase> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(databaseName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ManagedDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListByInstance
-        /// <summary> Gets a list of managed databases. </summary>
+        /// OperationId: ManagedDatabases_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabase> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public async virtual Task<Response<ManagedDatabase>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabase>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ManagedDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabase(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// OperationId: ManagedDatabases_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual Response<ManagedDatabase> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ManagedDatabase>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabase(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ManagedDatabase> IEnumerable<ManagedDatabase>.GetEnumerator()

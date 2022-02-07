@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceDatabaseSchemaTable"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaTable(ArmClient armClient, DatabaseTableData data) : this(armClient, data.Id)
+        internal ManagedInstanceDatabaseSchemaTable(ArmClient client, DatabaseTableData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTable"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaTable(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ManagedInstanceDatabaseSchemaTable(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
             _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient = new ManagedDatabaseTablesRestOperations(_managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableManagedDatabaseTablesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumns in the ManagedInstanceDatabaseSchemaTableColumn. </summary>
+        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumns and their operations over a ManagedInstanceDatabaseSchemaTableColumn. </returns>
+        public virtual ManagedInstanceDatabaseSchemaTableColumnCollection GetManagedInstanceDatabaseSchemaTableColumns()
+        {
+            return new ManagedInstanceDatabaseSchemaTableColumnCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
         /// OperationId: ManagedDatabaseTables_Get
@@ -97,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,15 +171,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        #region ManagedInstanceDatabaseSchemaTableColumn
-
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumns in the ManagedInstanceDatabaseSchemaTable. </summary>
-        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumns and their operations over a ManagedInstanceDatabaseSchemaTable. </returns>
-        public virtual ManagedInstanceDatabaseSchemaTableColumnCollection GetManagedInstanceDatabaseSchemaTableColumns()
-        {
-            return new ManagedInstanceDatabaseSchemaTableColumnCollection(this);
-        }
-        #endregion
     }
 }

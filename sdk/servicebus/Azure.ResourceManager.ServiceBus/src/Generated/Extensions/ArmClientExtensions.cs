@@ -15,157 +15,209 @@ namespace Azure.ResourceManager.ServiceBus
     {
         #region ServiceBusNamespace
         /// <summary> Gets an object representing a ServiceBusNamespace along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusNamespace" /> object. </returns>
-        public static ServiceBusNamespace GetServiceBusNamespace(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceBusNamespace GetServiceBusNamespace(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceBusNamespace.ValidateResourceId(id);
-            return new ServiceBusNamespace(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceBusNamespace.ValidateResourceId(id);
+                return new ServiceBusNamespace(client, id);
+            }
+            );
         }
         #endregion
 
         #region NetworkRuleSet
         /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public static NetworkRuleSet GetNetworkRuleSet(this ArmClient armClient, ResourceIdentifier id)
+        public static NetworkRuleSet GetNetworkRuleSet(this ArmClient client, ResourceIdentifier id)
         {
-            NetworkRuleSet.ValidateResourceId(id);
-            return new NetworkRuleSet(armClient, id);
+            return client.GetClient(() =>
+            {
+                NetworkRuleSet.ValidateResourceId(id);
+                return new NetworkRuleSet(client, id);
+            }
+            );
         }
         #endregion
 
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient armClient, ResourceIdentifier id)
+        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            PrivateEndpointConnection.ValidateResourceId(id);
-            return new PrivateEndpointConnection(armClient, id);
+            return client.GetClient(() =>
+            {
+                PrivateEndpointConnection.ValidateResourceId(id);
+                return new PrivateEndpointConnection(client, id);
+            }
+            );
         }
         #endregion
 
         #region DisasterRecovery
         /// <summary> Gets an object representing a DisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
-        public static DisasterRecovery GetDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
+        public static DisasterRecovery GetDisasterRecovery(this ArmClient client, ResourceIdentifier id)
         {
-            DisasterRecovery.ValidateResourceId(id);
-            return new DisasterRecovery(armClient, id);
+            return client.GetClient(() =>
+            {
+                DisasterRecovery.ValidateResourceId(id);
+                return new DisasterRecovery(client, id);
+            }
+            );
         }
         #endregion
 
         #region NamespaceDisasterRecoveryAuthorizationRule
         /// <summary> Gets an object representing a NamespaceDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRule" /> object. </returns>
-        public static NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        public static NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            NamespaceDisasterRecoveryAuthorizationRule.ValidateResourceId(id);
-            return new NamespaceDisasterRecoveryAuthorizationRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                NamespaceDisasterRecoveryAuthorizationRule.ValidateResourceId(id);
+                return new NamespaceDisasterRecoveryAuthorizationRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region NamespaceAuthorizationRule
         /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
-        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            NamespaceAuthorizationRule.ValidateResourceId(id);
-            return new NamespaceAuthorizationRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                NamespaceAuthorizationRule.ValidateResourceId(id);
+                return new NamespaceAuthorizationRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region NamespaceQueueAuthorizationRule
         /// <summary> Gets an object representing a NamespaceQueueAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceQueueAuthorizationRule" /> object. </returns>
-        public static NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        public static NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            NamespaceQueueAuthorizationRule.ValidateResourceId(id);
-            return new NamespaceQueueAuthorizationRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                NamespaceQueueAuthorizationRule.ValidateResourceId(id);
+                return new NamespaceQueueAuthorizationRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region NamespaceTopicAuthorizationRule
         /// <summary> Gets an object representing a NamespaceTopicAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceTopicAuthorizationRule" /> object. </returns>
-        public static NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        public static NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            NamespaceTopicAuthorizationRule.ValidateResourceId(id);
-            return new NamespaceTopicAuthorizationRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                NamespaceTopicAuthorizationRule.ValidateResourceId(id);
+                return new NamespaceTopicAuthorizationRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region MigrationConfigProperties
         /// <summary> Gets an object representing a MigrationConfigProperties along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MigrationConfigProperties" /> object. </returns>
-        public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient armClient, ResourceIdentifier id)
+        public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient client, ResourceIdentifier id)
         {
-            MigrationConfigProperties.ValidateResourceId(id);
-            return new MigrationConfigProperties(armClient, id);
+            return client.GetClient(() =>
+            {
+                MigrationConfigProperties.ValidateResourceId(id);
+                return new MigrationConfigProperties(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceBusQueue
         /// <summary> Gets an object representing a ServiceBusQueue along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusQueue" /> object. </returns>
-        public static ServiceBusQueue GetServiceBusQueue(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceBusQueue GetServiceBusQueue(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceBusQueue.ValidateResourceId(id);
-            return new ServiceBusQueue(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceBusQueue.ValidateResourceId(id);
+                return new ServiceBusQueue(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceBusTopic
         /// <summary> Gets an object representing a ServiceBusTopic along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusTopic" /> object. </returns>
-        public static ServiceBusTopic GetServiceBusTopic(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceBusTopic GetServiceBusTopic(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceBusTopic.ValidateResourceId(id);
-            return new ServiceBusTopic(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceBusTopic.ValidateResourceId(id);
+                return new ServiceBusTopic(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceBusRule
         /// <summary> Gets an object representing a ServiceBusRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusRule" /> object. </returns>
-        public static ServiceBusRule GetServiceBusRule(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceBusRule GetServiceBusRule(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceBusRule.ValidateResourceId(id);
-            return new ServiceBusRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceBusRule.ValidateResourceId(id);
+                return new ServiceBusRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region ServiceBusSubscription
         /// <summary> Gets an object representing a ServiceBusSubscription along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusSubscription" /> object. </returns>
-        public static ServiceBusSubscription GetServiceBusSubscription(this ArmClient armClient, ResourceIdentifier id)
+        public static ServiceBusSubscription GetServiceBusSubscription(this ArmClient client, ResourceIdentifier id)
         {
-            ServiceBusSubscription.ValidateResourceId(id);
-            return new ServiceBusSubscription(armClient, id);
+            return client.GetClient(() =>
+            {
+                ServiceBusSubscription.ValidateResourceId(id);
+                return new ServiceBusSubscription(client, id);
+            }
+            );
         }
         #endregion
     }

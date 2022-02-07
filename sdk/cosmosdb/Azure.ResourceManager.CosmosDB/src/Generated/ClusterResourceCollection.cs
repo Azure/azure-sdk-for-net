@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref="ClusterResourceCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ClusterResourceCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ClusterResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _clusterResourceCassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ClusterResource.ResourceType, out string clusterResourceCassandraClustersApiVersion);
+            Client.TryGetApiVersion(ClusterResource.ResourceType, out string clusterResourceCassandraClustersApiVersion);
             _clusterResourceCassandraClustersRestClient = new CassandraClustersRestOperations(_clusterResourceCassandraClustersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, clusterResourceCassandraClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,6 @@ namespace Azure.ResourceManager.CosmosDB
         {
             if (id.ResourceType != ResourceGroup.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// <summary> Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="clusterName"> Managed Cassandra cluster name. </param>
-        /// <param name="body"> The properties specifying the desired state of the managed Cassandra cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ClusterResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _clusterResourceCassandraClustersRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken);
-                var operation = new ClusterResourceCreateOrUpdateOperation(ArmClient, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH. </summary>
@@ -104,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _clusterResourceCassandraClustersRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ClusterResourceCreateOrUpdateOperation(ArmClient, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                var operation = new ClusterResourceCreateOrUpdateOperation(Client, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,23 +84,30 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of a managed Cassandra cluster. </summary>
+        /// <summary> Create or update a managed Cassandra cluster. When updating, you must specify all writable properties. To update only some properties, use PATCH. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
+        /// <param name="body"> The properties specifying the desired state of the managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<ClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="body"/> is null. </exception>
+        public virtual ClusterResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, ClusterResourceData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
-            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.Get");
+            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
-                if (response.Value == null)
-                    throw _clusterResourceCassandraClustersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ClusterResource(ArmClient, response.Value), response.GetRawResponse());
+                var response = _clusterResourceCassandraClustersRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken);
+                var operation = new ClusterResourceCreateOrUpdateOperation(Client, _clusterResourceCassandraClustersClientDiagnostics, Pipeline, _clusterResourceCassandraClustersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -157,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clusterResourceCassandraClustersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ClusterResource(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,23 +141,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Get the properties of a managed Cassandra cluster. </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<ClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetIfExists");
+            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                var response = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ClusterResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ClusterResource(ArmClient, response.Value), response.GetRawResponse());
+                    throw _clusterResourceCassandraClustersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,23 +166,67 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _clusterResourceCassandraClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _clusterResourceCassandraClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<ClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetIfExists");
+            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ClusterResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ClusterResource(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -244,16 +263,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.Exists");
+            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _clusterResourceCassandraClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ClusterResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,50 +283,29 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual Response<ClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _clusterResourceCassandraClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-        /// <summary> List all managed Cassandra clusters in this resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clusterResourceCassandraClustersClientDiagnostics.CreateScope("ClusterResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _clusterResourceCassandraClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _clusterResourceCassandraClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ClusterResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ClusterResource> IEnumerable<ClusterResource>.GetEnumerator()

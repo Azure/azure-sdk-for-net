@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
-                { $"{extensionPath}:LoadBalancingStrategy", "0" },
+                { $"{extensionPath}:LoadBalancingStrategy", "greedy" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
                 { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
                 { $"{extensionPath}:ClientRetryOptions:MaximumRetries", "5" },
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:ClientRetryOptions:MaxDelay", "00:01:00" },
                 { $"{extensionPath}:ClientRetryOptions:TryTimeout", "00:01:30" },
                 { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
-                { $"{extensionPath}:TransportType", "1" },
+                { $"{extensionPath}:TransportType", "amqpWebSockets" },
                 { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{extensionPath}:CustomEndpointAddress", "http://www.customendpoint.com/" },
             };

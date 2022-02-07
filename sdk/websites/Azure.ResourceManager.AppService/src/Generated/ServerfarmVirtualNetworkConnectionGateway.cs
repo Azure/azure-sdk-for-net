@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerfarmVirtualNetworkConnectionGateway"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerfarmVirtualNetworkConnectionGateway(ArmClient armClient, VnetGatewayData data) : this(armClient, data.Id)
+        internal ServerfarmVirtualNetworkConnectionGateway(ArmClient client, VnetGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerfarmVirtualNetworkConnectionGateway"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerfarmVirtualNetworkConnectionGateway(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ServerfarmVirtualNetworkConnectionGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
             _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(_serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

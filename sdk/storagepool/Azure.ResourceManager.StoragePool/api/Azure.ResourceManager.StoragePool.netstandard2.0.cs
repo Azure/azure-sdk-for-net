@@ -2,8 +2,8 @@ namespace Azure.ResourceManager.StoragePool
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.StoragePool.DiskPool GetDiskPool(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.StoragePool.IscsiTarget GetIscsiTarget(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StoragePool.DiskPool GetDiskPool(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StoragePool.IscsiTarget GetIscsiTarget(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DiskPool : Azure.ResourceManager.Core.ArmResource
     {

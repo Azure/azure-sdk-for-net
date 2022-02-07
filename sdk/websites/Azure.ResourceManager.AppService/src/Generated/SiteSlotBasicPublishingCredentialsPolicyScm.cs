@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotBasicPublishingCredentialsPolicyScm"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient armClient, CsmPublishingCredentialsPoliciesEntityData data) : this(armClient, data.Id)
+        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotBasicPublishingCredentialsPolicyScm"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
             _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient = new WebAppsRestOperations(_siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotBasicPublishingCredentialsPolicyScmWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,71 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.GetScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyScm(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// OperationId: WebApps_UpdateScmAllowedSlot
+        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
+        /// OperationId: WebApps_UpdateScmAllowedSlot
+        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
+        public virtual SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        {
+            if (csmPublishingAccessPoliciesEntity == null)
+            {
+                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
+            }
+
+            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
+                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -158,70 +222,6 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// OperationId: WebApps_UpdateScmAllowedSlot
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
-        /// OperationId: WebApps_UpdateScmAllowedSlot
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
-        {
-            if (csmPublishingAccessPoliciesEntity == null)
-            {
-                throw new ArgumentNullException(nameof(csmPublishingAccessPoliciesEntity));
-            }
-
-            using var scope = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsClientDiagnostics.CreateScope("SiteSlotBasicPublishingCredentialsPolicyScm.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotBasicPublishingCredentialsPolicyScmWebAppsRestClient.UpdateScmAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyScmCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

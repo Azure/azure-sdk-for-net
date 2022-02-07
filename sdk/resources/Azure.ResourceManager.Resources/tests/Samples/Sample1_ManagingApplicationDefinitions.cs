@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             {
                 DisplayName = applicationDefinitionName,
                 Description = $"{applicationDefinitionName} description",
-                PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
+                PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
             };
             ApplicationDefinitionCreateOrUpdateOperation lro = await applicationDefinitionCollection.CreateOrUpdateAsync(true, applicationDefinitionName, input);
             ApplicationDefinition applicationDefinition = lro.Value;

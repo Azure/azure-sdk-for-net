@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DataPolicyManifest"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmClient armClient, DataPolicyManifestData data) : this(armClient, data.Id)
+        internal DataPolicyManifest(ArmClient client, DataPolicyManifestData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="DataPolicyManifest"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal DataPolicyManifest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
             _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _dataPolicyManifestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _dataPolicyManifestRestClient.GetByPolicyMode(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _dataPolicyManifestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

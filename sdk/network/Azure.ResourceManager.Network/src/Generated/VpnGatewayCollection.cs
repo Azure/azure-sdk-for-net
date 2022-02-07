@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -33,11 +34,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnGatewayCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VpnGatewayCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VpnGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGateway.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(VpnGateway.ResourceType, out string vpnGatewayApiVersion);
+            Client.TryGetApiVersion(VpnGateway.ResourceType, out string vpnGatewayApiVersion);
             _vpnGatewayRestClient = new VpnGatewaysRestOperations(_vpnGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,6 @@ namespace Azure.ResourceManager.Network
         {
             if (id.ResourceType != ResourceGroup.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// <summary> Creates a virtual wan vpn gateway if it doesn&apos;t exist else updates the existing gateway. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="vpnGatewayParameters"> Parameters supplied to create or Update a virtual wan vpn gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="vpnGatewayParameters"/> is null. </exception>
-        public virtual VpnGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VpnGatewayData vpnGatewayParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            if (vpnGatewayParameters == null)
-            {
-                throw new ArgumentNullException(nameof(vpnGatewayParameters));
-            }
-
-            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _vpnGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters, cancellationToken);
-                var operation = new VpnGatewayCreateOrUpdateOperation(ArmClient, _vpnGatewayClientDiagnostics, Pipeline, _vpnGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Creates a virtual wan vpn gateway if it doesn&apos;t exist else updates the existing gateway. </summary>
@@ -104,7 +72,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _vpnGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnGatewayCreateOrUpdateOperation(ArmClient, _vpnGatewayClientDiagnostics, Pipeline, _vpnGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters).Request, response);
+                var operation = new VpnGatewayCreateOrUpdateOperation(Client, _vpnGatewayClientDiagnostics, Pipeline, _vpnGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,23 +84,30 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a virtual wan vpn gateway. </summary>
+        /// <summary> Creates a virtual wan vpn gateway if it doesn&apos;t exist else updates the existing gateway. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
+        /// <param name="vpnGatewayParameters"> Parameters supplied to create or Update a virtual wan vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<VpnGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="vpnGatewayParameters"/> is null. </exception>
+        public virtual VpnGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string gatewayName, VpnGatewayData vpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (vpnGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(vpnGatewayParameters));
+            }
 
-            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.Get");
+            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vpnGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
-                if (response.Value == null)
-                    throw _vpnGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnGateway(ArmClient, response.Value), response.GetRawResponse());
+                var response = _vpnGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters, cancellationToken);
+                var operation = new VpnGatewayCreateOrUpdateOperation(Client, _vpnGatewayClientDiagnostics, Pipeline, _vpnGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, vpnGatewayParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -157,7 +132,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _vpnGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnGateway(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,23 +141,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Retrieves the details of a virtual wan vpn gateway. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<VpnGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<VpnGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
+            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _vpnGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _vpnGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VpnGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnGateway(ArmClient, response.Value), response.GetRawResponse());
+                    throw _vpnGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VpnGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,23 +166,97 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Lists all the VpnGateways in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VpnGateway> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VpnGateway>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _vpnGatewayRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VpnGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _vpnGatewayRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all the VpnGateways in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VpnGateway> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<VpnGateway> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vpnGatewayRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VpnGateway> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vpnGatewayRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<VpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
+            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _vpnGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VpnGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnGateway(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +265,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
@@ -244,16 +293,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.Exists");
+            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _vpnGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<VpnGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,80 +313,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all the VpnGateways in a resource group. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VpnGateway> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        public virtual Response<VpnGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Page<VpnGateway> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vpnGatewayRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VpnGateway> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vpnGatewayRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-        /// <summary> Lists all the VpnGateways in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnGateway" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VpnGateway> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VpnGateway>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vpnGatewayRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _vpnGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<VpnGateway>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnGateway(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<VpnGateway>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _vpnGatewayClientDiagnostics.CreateScope("VpnGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vpnGatewayRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnGateway(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<VpnGateway> IEnumerable<VpnGateway>.GetEnumerator()

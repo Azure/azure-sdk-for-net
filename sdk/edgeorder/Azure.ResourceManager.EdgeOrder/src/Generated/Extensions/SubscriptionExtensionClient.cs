@@ -18,7 +18,7 @@ using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _addressResourceClientDiagnostics;
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await AddressResourceRestClient.ListAddressesAtSubscriptionLevelAsync(Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await AddressResourceRestClient.ListAddressesAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = AddressResourceRestClient.ListAddressesAtSubscriptionLevel(Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = AddressResourceRestClient.ListAddressesAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,15 +147,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
-
             async Task<Page<ProductFamily>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProductFamilies");
@@ -197,15 +191,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
-
             Page<ProductFamily> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProductFamilies");
@@ -246,15 +234,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
-
             async Task<Page<ProductConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurations");
@@ -295,15 +277,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
-
             Page<ProductConfiguration> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurations");
@@ -437,7 +413,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await DefaultRestClient.ListOrderAtSubscriptionLevelAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -452,7 +428,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await DefaultRestClient.ListOrderAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -479,7 +455,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = DefaultRestClient.ListOrderAtSubscriptionLevel(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -494,7 +470,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = DefaultRestClient.ListOrderAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -523,7 +499,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await OrderItemResourceRestClient.ListOrderItemsAtSubscriptionLevelAsync(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -538,7 +514,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await OrderItemResourceRestClient.ListOrderItemsAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -567,7 +543,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = OrderItemResourceRestClient.ListOrderItemsAtSubscriptionLevel(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -582,7 +558,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = OrderItemResourceRestClient.ListOrderItemsAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
