@@ -62,13 +62,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 message = logRecord.State.ToString();
             }
-            else if (logRecord.StateValues != null)
-            {
-                for (int i = 0; i < logRecord.StateValues.Count; i++)
-                {
-                    message += ($"{logRecord.StateValues[i].Key}:{logRecord.StateValues[i].Value};");
-                }
-            }
+
+            // TODO: Parse logRecord.StateValues to extract originalformat / telemetry properties.
 
             return message;
         }
