@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountCassandraKeyspaceThroughputSettingSource : IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>
+    internal class DatabaseAccountMongodbDatabaseCollectionThroughputSettingOperationSource : IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -23,38 +23,40 @@ namespace Azure.ResourceManager.CosmosDB
             { "subscriptionId", "Microsoft.Resources/subscriptions" },
             { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
             { "accountName", "Microsoft.DocumentDB/databaseAccounts" },
-            { "keyspaceName", "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces" },
+            { "databaseName", "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases" },
+            { "collectionName", "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections" },
         };
 
-        internal DatabaseAccountCassandraKeyspaceThroughputSettingSource(ArmClient client)
+        internal DatabaseAccountMongodbDatabaseCollectionThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DatabaseAccountCassandraKeyspaceThroughputSetting IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountMongodbDatabaseCollectionThroughputSetting IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_client, data);
         }
 
-        async ValueTask<DatabaseAccountCassandraKeyspaceThroughputSetting> IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountMongodbDatabaseCollectionThroughputSetting> IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountCassandraKeyspaceThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountMongodbDatabaseCollectionThroughputSetting.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountCassandraKeyspaceThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountMongodbDatabaseCollectionThroughputSetting.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),
-                GetName("keyspaceName", data.Id));
+                GetName("databaseName", data.Id),
+                GetName("collectionName", data.Id));
 
             return new ThroughputSettingsData(
                 newId,

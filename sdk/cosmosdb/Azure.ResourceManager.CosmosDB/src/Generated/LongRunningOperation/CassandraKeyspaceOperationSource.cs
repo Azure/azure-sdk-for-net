@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraKeyspaceSource : IOperationSource<CassandraKeyspace>
+    internal class CassandraKeyspaceOperationSource : IOperationSource<CassandraKeyspace>
     {
         private readonly ArmClient _client;
 
-        internal CassandraKeyspaceSource(ArmClient client)
+        internal CassandraKeyspaceOperationSource(ArmClient client)
         {
             _client = client;
         }

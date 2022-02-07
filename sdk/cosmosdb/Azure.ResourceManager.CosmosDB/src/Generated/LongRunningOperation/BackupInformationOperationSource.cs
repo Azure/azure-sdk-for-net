@@ -10,20 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class BackupInformationSource : IOperationSource<BackupInformation>
+    internal class BackupInformationOperationSource : IOperationSource<BackupInformation>
     {
-        private readonly ArmClient _client;
-
-        internal BackupInformationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         BackupInformation IOperationSource<BackupInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);

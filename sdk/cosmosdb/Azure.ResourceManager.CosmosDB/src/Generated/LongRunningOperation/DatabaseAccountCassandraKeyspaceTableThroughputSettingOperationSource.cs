@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountSqlDatabaseContainerThroughputSettingSource : IOperationSource<DatabaseAccountSqlDatabaseContainerThroughputSetting>
+    internal class DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource : IOperationSource<DatabaseAccountCassandraKeyspaceTableThroughputSetting>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -23,40 +23,40 @@ namespace Azure.ResourceManager.CosmosDB
             { "subscriptionId", "Microsoft.Resources/subscriptions" },
             { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
             { "accountName", "Microsoft.DocumentDB/databaseAccounts" },
-            { "databaseName", "Microsoft.DocumentDB/databaseAccounts/sqlDatabases" },
-            { "containerName", "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers" },
+            { "keyspaceName", "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces" },
+            { "tableName", "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables" },
         };
 
-        internal DatabaseAccountSqlDatabaseContainerThroughputSettingSource(ArmClient client)
+        internal DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DatabaseAccountSqlDatabaseContainerThroughputSetting IOperationSource<DatabaseAccountSqlDatabaseContainerThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountCassandraKeyspaceTableThroughputSetting IOperationSource<DatabaseAccountCassandraKeyspaceTableThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountSqlDatabaseContainerThroughputSetting(_client, data);
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_client, data);
         }
 
-        async ValueTask<DatabaseAccountSqlDatabaseContainerThroughputSetting> IOperationSource<DatabaseAccountSqlDatabaseContainerThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountCassandraKeyspaceTableThroughputSetting> IOperationSource<DatabaseAccountCassandraKeyspaceTableThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountSqlDatabaseContainerThroughputSetting(_client, data);
+            return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountSqlDatabaseContainerThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountCassandraKeyspaceTableThroughputSetting.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountSqlDatabaseContainerThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),
-                GetName("databaseName", data.Id),
-                GetName("containerName", data.Id));
+                GetName("keyspaceName", data.Id),
+                GetName("tableName", data.Id));
 
             return new ThroughputSettingsData(
                 newId,

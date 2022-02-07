@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountSource : IOperationSource<DatabaseAccount>
+    internal class DatabaseAccountOperationSource : IOperationSource<DatabaseAccount>
     {
         private readonly ArmClient _client;
 
-        internal DatabaseAccountSource(ArmClient client)
+        internal DatabaseAccountOperationSource(ArmClient client)
         {
             _client = client;
         }

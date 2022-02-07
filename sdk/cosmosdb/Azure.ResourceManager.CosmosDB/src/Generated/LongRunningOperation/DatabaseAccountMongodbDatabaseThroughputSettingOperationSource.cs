@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountMongodbDatabaseCollectionThroughputSettingSource : IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>
+    internal class DatabaseAccountMongodbDatabaseThroughputSettingOperationSource : IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -24,39 +24,37 @@ namespace Azure.ResourceManager.CosmosDB
             { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
             { "accountName", "Microsoft.DocumentDB/databaseAccounts" },
             { "databaseName", "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases" },
-            { "collectionName", "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections" },
         };
 
-        internal DatabaseAccountMongodbDatabaseCollectionThroughputSettingSource(ArmClient client)
+        internal DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DatabaseAccountMongodbDatabaseCollectionThroughputSetting IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountMongodbDatabaseThroughputSetting IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseThroughputSetting(_client, data);
         }
 
-        async ValueTask<DatabaseAccountMongodbDatabaseCollectionThroughputSetting> IOperationSource<DatabaseAccountMongodbDatabaseCollectionThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountMongodbDatabaseThroughputSetting> IOperationSource<DatabaseAccountMongodbDatabaseThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(_client, data);
+            return new DatabaseAccountMongodbDatabaseThroughputSetting(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountMongodbDatabaseCollectionThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountMongodbDatabaseThroughputSetting.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountMongodbDatabaseCollectionThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountMongodbDatabaseThroughputSetting.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),
-                GetName("databaseName", data.Id),
-                GetName("collectionName", data.Id));
+                GetName("databaseName", data.Id));
 
             return new ThroughputSettingsData(
                 newId,

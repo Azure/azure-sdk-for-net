@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountGremlinDatabaseGraphThroughputSettingSource : IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>
+    internal class DatabaseAccountCassandraKeyspaceThroughputSettingOperationSource : IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -23,40 +23,38 @@ namespace Azure.ResourceManager.CosmosDB
             { "subscriptionId", "Microsoft.Resources/subscriptions" },
             { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
             { "accountName", "Microsoft.DocumentDB/databaseAccounts" },
-            { "databaseName", "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases" },
-            { "graphName", "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs" },
+            { "keyspaceName", "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces" },
         };
 
-        internal DatabaseAccountGremlinDatabaseGraphThroughputSettingSource(ArmClient client)
+        internal DatabaseAccountCassandraKeyspaceThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DatabaseAccountGremlinDatabaseGraphThroughputSetting IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountCassandraKeyspaceThroughputSetting IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(_client, data);
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_client, data);
         }
 
-        async ValueTask<DatabaseAccountGremlinDatabaseGraphThroughputSetting> IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountCassandraKeyspaceThroughputSetting> IOperationSource<DatabaseAccountCassandraKeyspaceThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(_client, data);
+            return new DatabaseAccountCassandraKeyspaceThroughputSetting(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountGremlinDatabaseGraphThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountCassandraKeyspaceThroughputSetting.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountGremlinDatabaseGraphThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountCassandraKeyspaceThroughputSetting.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),
-                GetName("databaseName", data.Id),
-                GetName("graphName", data.Id));
+                GetName("keyspaceName", data.Id));
 
             return new ThroughputSettingsData(
                 newId,

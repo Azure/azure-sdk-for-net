@@ -11,29 +11,30 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CommandOutputSource : IOperationSource<CommandOutput>
+    internal class CosmosTableOperationSource : IOperationSource<CosmosTable>
     {
         private readonly ArmClient _client;
 
-        internal CommandOutputSource(ArmClient client)
+        internal CosmosTableOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        CommandOutput IOperationSource<CommandOutput>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosTable IOperationSource<CosmosTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return CommandOutput.DeserializeCommandOutput(document.RootElement);
+            var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
+            return new CosmosTable(_client, data);
         }
 
-        async ValueTask<CommandOutput> IOperationSource<CommandOutput>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosTable> IOperationSource<CosmosTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CommandOutput.DeserializeCommandOutput(document.RootElement);
+            var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
+            return new CosmosTable(_client, data);
         }
     }
 }

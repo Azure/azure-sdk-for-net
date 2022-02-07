@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraTableSource : IOperationSource<CassandraTable>
+    internal class CassandraTableOperationSource : IOperationSource<CassandraTable>
     {
         private readonly ArmClient _client;
 
-        internal CassandraTableSource(ArmClient client)
+        internal CassandraTableOperationSource(ArmClient client)
         {
             _client = client;
         }

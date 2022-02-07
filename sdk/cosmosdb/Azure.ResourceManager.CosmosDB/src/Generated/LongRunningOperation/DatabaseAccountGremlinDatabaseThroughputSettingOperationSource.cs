@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountTableThroughputSettingSource : IOperationSource<DatabaseAccountTableThroughputSetting>
+    internal class DatabaseAccountGremlinDatabaseThroughputSettingOperationSource : IOperationSource<DatabaseAccountGremlinDatabaseThroughputSetting>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -23,38 +23,38 @@ namespace Azure.ResourceManager.CosmosDB
             { "subscriptionId", "Microsoft.Resources/subscriptions" },
             { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
             { "accountName", "Microsoft.DocumentDB/databaseAccounts" },
-            { "tableName", "Microsoft.DocumentDB/databaseAccounts/tables" },
+            { "databaseName", "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases" },
         };
 
-        internal DatabaseAccountTableThroughputSettingSource(ArmClient client)
+        internal DatabaseAccountGremlinDatabaseThroughputSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        DatabaseAccountTableThroughputSetting IOperationSource<DatabaseAccountTableThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountGremlinDatabaseThroughputSetting IOperationSource<DatabaseAccountGremlinDatabaseThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountTableThroughputSetting(_client, data);
+            return new DatabaseAccountGremlinDatabaseThroughputSetting(_client, data);
         }
 
-        async ValueTask<DatabaseAccountTableThroughputSetting> IOperationSource<DatabaseAccountTableThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountGremlinDatabaseThroughputSetting> IOperationSource<DatabaseAccountGremlinDatabaseThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountTableThroughputSetting(_client, data);
+            return new DatabaseAccountGremlinDatabaseThroughputSetting(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountTableThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountGremlinDatabaseThroughputSetting.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountTableThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountGremlinDatabaseThroughputSetting.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),
-                GetName("tableName", data.Id));
+                GetName("databaseName", data.Id));
 
             return new ThroughputSettingsData(
                 newId,

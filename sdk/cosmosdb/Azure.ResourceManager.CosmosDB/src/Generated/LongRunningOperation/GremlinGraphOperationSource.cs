@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class GremlinGraphSource : IOperationSource<GremlinGraph>
+    internal class GremlinGraphOperationSource : IOperationSource<GremlinGraph>
     {
         private readonly ArmClient _client;
 
-        internal GremlinGraphSource(ArmClient client)
+        internal GremlinGraphOperationSource(ArmClient client)
         {
             _client = client;
         }

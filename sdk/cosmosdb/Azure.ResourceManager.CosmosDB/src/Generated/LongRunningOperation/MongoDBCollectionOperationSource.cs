@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class MongoDBCollectionSource : IOperationSource<MongoDBCollection>
+    internal class MongoDBCollectionOperationSource : IOperationSource<MongoDBCollection>
     {
         private readonly ArmClient _client;
 
-        internal MongoDBCollectionSource(ArmClient client)
+        internal MongoDBCollectionOperationSource(ArmClient client)
         {
             _client = client;
         }

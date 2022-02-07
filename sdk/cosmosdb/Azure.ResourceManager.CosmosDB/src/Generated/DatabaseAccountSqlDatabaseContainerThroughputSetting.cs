@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.UpdateSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.UpdateSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseContainerThroughputSetting>(new DatabaseAccountSqlDatabaseContainerThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
