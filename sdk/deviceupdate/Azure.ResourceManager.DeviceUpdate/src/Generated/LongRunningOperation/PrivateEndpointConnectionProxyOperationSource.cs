@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal class PrivateEndpointConnectionProxySource : IOperationSource<PrivateEndpointConnectionProxy>
+    internal class PrivateEndpointConnectionProxyOperationSource : IOperationSource<PrivateEndpointConnectionProxy>
     {
         private readonly ArmClient _client;
 
-        internal PrivateEndpointConnectionProxySource(ArmClient client)
+        internal PrivateEndpointConnectionProxyOperationSource(ArmClient client)
         {
             _client = client;
         }

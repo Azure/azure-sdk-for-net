@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal class DeviceUpdateInstanceSource : IOperationSource<DeviceUpdateInstance>
+    internal class DeviceUpdateInstanceOperationSource : IOperationSource<DeviceUpdateInstance>
     {
         private readonly ArmClient _client;
 
-        internal DeviceUpdateInstanceSource(ArmClient client)
+        internal DeviceUpdateInstanceOperationSource(ArmClient client)
         {
             _client = client;
         }
