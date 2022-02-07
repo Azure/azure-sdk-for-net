@@ -10,5 +10,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// <summary> Represents a SIP trunk for routing calls. See RFC 4904. </summary>
     public partial class SipTrunk
     {
+        /// <summary> Initializes a new instance of SipTrunk. </summary>
+        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
+        public SipTrunk(int? sipSignalingPort)
+        {
+            SipSignalingPort = sipSignalingPort;
+        }
     }
 }
