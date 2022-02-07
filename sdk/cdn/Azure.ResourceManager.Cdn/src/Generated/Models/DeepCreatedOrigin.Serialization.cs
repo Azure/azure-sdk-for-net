@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> privateLinkResourceId = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
-            Optional<PrivateEndpointStatus> privateEndpointStatus = default;
+            Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                privateEndpointStatus = null;
                                 continue;
                             }
                             privateEndpointStatus = new PrivateEndpointStatus(property0.Value.GetString());

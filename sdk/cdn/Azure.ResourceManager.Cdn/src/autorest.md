@@ -116,7 +116,7 @@ directive:
     where: $.definitions.*.properties.weight
     transform: $['x-nullable'] = true
   - from: swagger-document
-    where: $.definitions.OriginProperties.properties.privateEndpointStatus
+    where: $.definitions.*.properties.privateEndpointStatus
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.WafMetricsResponse.properties.series.items.properties.groups
