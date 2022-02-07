@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -136,14 +135,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PolicyExemptionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
             scope.Start();
             try
             {
                 var response = await _policyExemptionRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyExemptionDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +160,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PolicyExemptionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
             scope.Start();
             try
             {
                 var response = _policyExemptionRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new PolicyExemptionDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

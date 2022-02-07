@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+            ArmOperation<ResourceGroup> rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 
             #region Snippet:Create_AvailabilitySet
             string vmName = "quickstartvm";
             AvailabilitySetData aSetData = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
+            ArmOperation<AvailabilitySet> asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
             AvailabilitySet aset = asetCreateLro.Value;
             string asetId = aset.Id;
             #endregion

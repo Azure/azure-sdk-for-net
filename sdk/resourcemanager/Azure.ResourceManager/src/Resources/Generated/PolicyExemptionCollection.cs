@@ -17,7 +17,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicyExemptionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             if (parameters == null)
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyExemptionRestClient.CreateOrUpdateAsync(Id, policyExemptionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<PolicyExemption>(Response.FromValue(new PolicyExemption(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicyExemptionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyExemption> CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             if (parameters == null)
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyExemptionRestClient.CreateOrUpdate(Id, policyExemptionName, parameters, cancellationToken);
-                var operation = new PolicyExemptionCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<PolicyExemption>(Response.FromValue(new PolicyExemption(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

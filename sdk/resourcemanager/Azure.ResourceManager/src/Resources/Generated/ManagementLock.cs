@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -136,14 +135,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementLockDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
                 var response = await _managementLockRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +160,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Delete a management lock by scope. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementLockDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLock.Delete");
             scope.Start();
             try
             {
                 var response = _managementLockRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ManagementLockDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

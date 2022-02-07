@@ -70,7 +70,7 @@ AzureLocation location = AzureLocation.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+ArmOperation<ResourceGroup> rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
@@ -104,7 +104,7 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 ```C# Snippet:Create_AvailabilitySet
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
-AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
+ArmOperation<AvailabilitySet> asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
 AvailabilitySet aset = asetCreateLro.Value;
 string asetId = aset.Id;
 ```

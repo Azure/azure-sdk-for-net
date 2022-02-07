@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Management
 {
-    /// <summary> Deletes a resource link with the specified ID. </summary>
-    public partial class ResourceLinkDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class ManagementArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceLinkDeleteOperation for mocking. </summary>
-        protected ResourceLinkDeleteOperation()
+        /// <summary> Initializes a new instance of ManagementArmOperation for mocking. </summary>
+        protected ManagementArmOperation()
         {
         }
 
-        internal ResourceLinkDeleteOperation(Response response)
+        internal ManagementArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal ManagementArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ManagementArmOperation");
         }
 
         /// <inheritdoc />

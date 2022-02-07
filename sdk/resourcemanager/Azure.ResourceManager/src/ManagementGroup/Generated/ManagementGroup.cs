@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
             try
             {
                 var response = await _managementGroupRestClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupDeleteOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response);
+                var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementGroupDeleteOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
             scope.Start();
             try
             {
                 var response = _managementGroupRestClient.Delete(Id.Name, cacheControl, cancellationToken);
-                var operation = new ManagementGroupDeleteOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response);
+                var operation = new ManagementArmOperation(_managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateDeleteRequest(Id.Name, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
