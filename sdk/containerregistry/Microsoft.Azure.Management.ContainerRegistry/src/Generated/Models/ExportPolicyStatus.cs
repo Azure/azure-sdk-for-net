@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TokenCertificateName.
+    /// Defines values for ExportPolicyStatus.
     /// </summary>
-    public static class TokenCertificateName
+    public static class ExportPolicyStatus
     {
-        public const string Certificate1 = "certificate1";
-        public const string Certificate2 = "certificate2";
+        public const string Enabled = "enabled";
+        public const string Disabled = "disabled";
     }
 }

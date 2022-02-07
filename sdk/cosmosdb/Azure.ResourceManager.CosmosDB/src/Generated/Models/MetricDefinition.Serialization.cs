@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
             Optional<PrimaryAggregationType> primaryAggregationType = default;
             Optional<UnitType> unit = default;
-            Optional<Uri> resourceUri = default;
+            Optional<string> resourceUri = default;
             Optional<MetricName> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,12 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("resourceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceUri = new Uri(property.Value.GetString());
+                    resourceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))

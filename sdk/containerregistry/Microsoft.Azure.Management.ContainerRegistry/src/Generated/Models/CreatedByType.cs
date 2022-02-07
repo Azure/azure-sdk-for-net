@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for PipelineOptions.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class PipelineOptions
+    public static class CreatedByType
     {
-        public const string OverwriteTags = "OverwriteTags";
-        public const string OverwriteBlobs = "OverwriteBlobs";
-        public const string DeleteSourceBlobOnSuccess = "DeleteSourceBlobOnSuccess";
-        public const string ContinueOnErrors = "ContinueOnErrors";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

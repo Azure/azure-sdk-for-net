@@ -13,28 +13,28 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class PipelineRunSourceProperties
+    /// <summary>
+    /// The properties of a package type.
+    /// </summary>
+    public partial class PackageType
     {
         /// <summary>
-        /// Initializes a new instance of the PipelineRunSourceProperties
-        /// class.
+        /// Initializes a new instance of the PackageType class.
         /// </summary>
-        public PipelineRunSourceProperties()
+        public PackageType()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PipelineRunSourceProperties
-        /// class.
+        /// Initializes a new instance of the PackageType class.
         /// </summary>
-        /// <param name="type">The type of the source. Possible values include:
-        /// 'AzureStorageBlob'</param>
-        /// <param name="name">The name of the source.</param>
-        public PipelineRunSourceProperties(string type = default(string), string name = default(string))
+        /// <param name="name">The name of the package type.</param>
+        /// <param name="endpoint">The endpoint of the package type.</param>
+        public PackageType(string name = default(string), string endpoint = default(string))
         {
-            Type = type;
             Name = name;
+            Endpoint = endpoint;
             CustomInit();
         }
 
@@ -44,17 +44,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of the source. Possible values include:
-        /// 'AzureStorageBlob'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the source.
+        /// Gets or sets the name of the package type.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets the endpoint of the package type.
+        /// </summary>
+        [JsonProperty(PropertyName = "endpoint")]
+        public string Endpoint { get; private set; }
 
     }
 }

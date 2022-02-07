@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TokenPasswordName.
+    /// Defines values for ZoneRedundancy.
     /// </summary>
-    public static class TokenPasswordName
+    public static class ZoneRedundancy
     {
-        public const string Password1 = "password1";
-        public const string Password2 = "password2";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

@@ -2773,7 +2773,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.MetricName Name { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.PrimaryAggregationType? PrimaryAggregationType { get { throw null; } }
-        public System.Uri ResourceUri { get { throw null; } }
+        public string ResourceId { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
     }
     public partial class MetricName
