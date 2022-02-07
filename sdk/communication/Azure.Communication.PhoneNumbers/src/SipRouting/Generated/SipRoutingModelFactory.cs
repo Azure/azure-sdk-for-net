@@ -6,12 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.PhoneNumbers.SipRouting;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class SIPRoutingServiceModelFactory
+    internal static partial class SipRoutingModelFactory
     {
         /// <summary> Initializes new instance of SipConfiguration class. </summary>
         /// <param name="trunks">
@@ -21,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers
         /// </param>
         /// <param name="routes"> Trunk routes for routing calls. </param>
         /// <returns> A new <see cref="SipRouting.SipConfiguration"/> instance for mocking. </returns>
-        public static SipConfiguration SipConfiguration(IDictionary<string, SipTrunk> trunks = default, IEnumerable<SipTrunkRoute> routes = default)
+        public static SipConfiguration SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks = default, IReadOnlyList<SipTrunkRoute> routes = default)
         {
             trunks ??= new Dictionary<string, SipTrunk>();
             routes ??= new List<SipTrunkRoute>();
