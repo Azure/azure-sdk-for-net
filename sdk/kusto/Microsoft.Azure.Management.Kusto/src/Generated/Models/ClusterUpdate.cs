@@ -93,7 +93,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Enabled', 'Disabled'</param>
         /// <param name="allowedFqdnList">List of allowed FQDNs(Fully Qualified
         /// Domain Name) for egress from Cluster.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>))
+        /// <param name="publicIPType">Indicates what public IP type to create
+        /// - IPv4 (default), or DualStack (both IPv4 and IPv6). Possible
+        /// values include: 'IPv4', 'DualStack'</param>
+        /// <param name="virtualClusterGraduationProperties">Virtual Cluster
+        /// graduation properties</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string publicIPType = default(string), string virtualClusterGraduationProperties = default(string))
             : base(id, name, type)
         {
             Tags = tags;
@@ -121,6 +126,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
             EnableAutoStop = enableAutoStop;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             AllowedFqdnList = allowedFqdnList;
+            PublicIPType = publicIPType;
+            VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
             CustomInit();
         }
 
@@ -294,6 +301,20 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowedFqdnList")]
         public IList<string> AllowedFqdnList { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates what public IP type to create - IPv4
+        /// (default), or DualStack (both IPv4 and IPv6). Possible values
+        /// include: 'IPv4', 'DualStack'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPType")]
+        public string PublicIPType { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual Cluster graduation properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualClusterGraduationProperties")]
+        public string VirtualClusterGraduationProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
