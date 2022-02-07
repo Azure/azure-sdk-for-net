@@ -13,26 +13,28 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class PipelineSourceTriggerDescriptor
+    /// <summary>
+    /// The export policy for a container registry.
+    /// </summary>
+    public partial class ExportPolicy
     {
         /// <summary>
-        /// Initializes a new instance of the PipelineSourceTriggerDescriptor
-        /// class.
+        /// Initializes a new instance of the ExportPolicy class.
         /// </summary>
-        public PipelineSourceTriggerDescriptor()
+        public ExportPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PipelineSourceTriggerDescriptor
-        /// class.
+        /// Initializes a new instance of the ExportPolicy class.
         /// </summary>
-        /// <param name="timestamp">The timestamp when the source update
-        /// happened.</param>
-        public PipelineSourceTriggerDescriptor(System.DateTime? timestamp = default(System.DateTime?))
+        /// <param name="status">The value that indicates whether the policy is
+        /// enabled or not. Possible values include: 'enabled',
+        /// 'disabled'</param>
+        public ExportPolicy(string status = default(string))
         {
-            Timestamp = timestamp;
+            Status = status;
             CustomInit();
         }
 
@@ -42,10 +44,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the timestamp when the source update happened.
+        /// Gets or sets the value that indicates whether the policy is enabled
+        /// or not. Possible values include: 'enabled', 'disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "timestamp")]
-        public System.DateTime? Timestamp { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
 
     }
 }
