@@ -17,7 +17,7 @@ steps:
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: CredScan setup
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
-  displayName: Scanning for credentials
+  displayName: CredScan running
   inputs:
     toolMajorVersion: V2
     toolVersion: latest
