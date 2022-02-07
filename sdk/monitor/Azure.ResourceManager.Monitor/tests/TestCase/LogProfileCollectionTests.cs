@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var container = await GetLogProfileCollectionAsync();
             var name = Recording.GenerateAssetName("testLogProfile");
-            var input = ResourceDataHelper.GetBasicLogProfileData("global");
+            var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             var lro = await container.CreateOrUpdateAsync(true, name, input);
             var logProfile = lro.Value;
             Assert.AreEqual(name, logProfile.Data.Name);
@@ -56,18 +57,19 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var collection = await GetLogProfileCollectionAsync();
             var logProfileName = Recording.GenerateAssetName("testLogProfile-");
-            var input = ResourceDataHelper.GetBasicLogProfileData("global");
+            var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             var lro = await collection.CreateOrUpdateAsync(true, logProfileName, input);
             LogProfile lgoProfile1 = lro.Value;
+            Thread.Sleep(1000);
             LogProfile logProfile2 = await collection.GetAsync(logProfileName);
-            ResourceDataHelper.AssertLogProfile(lgoProfile1.Data, logProfile2.Data);
+            Assert.AreEqual(lgoProfile1.Data.Name, logProfile2.Data.Name);
         }
 
         [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetLogProfileCollectionAsync();
-            var input = ResourceDataHelper.GetBasicLogProfileData("global");
+            var input = ResourceDataHelper.GetBasicLogProfileData("westus");
             _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testLogProfile-"), input);
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(list.Count, 1);
