@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.EdgeOrder.Models
+namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> Deletes an address. </summary>
-    public partial class AddressResourceDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class EdgeOrderArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of AddressResourceDeleteOperation for mocking. </summary>
-        protected AddressResourceDeleteOperation()
+        /// <summary> Initializes a new instance of EdgeOrderArmOperation for mocking. </summary>
+        protected EdgeOrderArmOperation()
         {
         }
 
-        internal AddressResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal EdgeOrderArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AddressResourceDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal EdgeOrderArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "EdgeOrderArmOperation");
         }
 
         /// <inheritdoc />
