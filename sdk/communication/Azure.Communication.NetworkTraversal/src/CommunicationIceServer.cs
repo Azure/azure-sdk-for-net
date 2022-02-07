@@ -8,6 +8,10 @@ using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
+    /// <summary>
+    /// The user should be able to serialize or deserialize CommunicationIceServer
+    /// for better experience.
+    /// </summary>
     [CodeGenModel(Usage = new[] { "input", "converter" })]
     public partial class CommunicationIceServer
     {

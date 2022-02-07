@@ -125,11 +125,6 @@ namespace Azure.Communication.NetworkTraversal.Tests
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
             Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
 
-            var configJ = turnCredentialsResponse.Value;
-            var jsonResponse = JsonSerializer.Serialize(configJ);
-            var relayConfig = JsonSerializer.Deserialize<CommunicationRelayConfiguration>(jsonResponse);
-
-            Assert.IsNotNull(relayConfig);
             foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
             {
                 foreach (string url in serverCredential.Urls)
@@ -139,6 +134,55 @@ namespace Azure.Communication.NetworkTraversal.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
                 Assert.IsNotNull((serverCredential.RouteType));
+            }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsAndValidateSerializationWithConnectionStringWithoutIdentity")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsAndValidateSerializationWithKeyCredentialWithoutIdentity")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsAndValidateSerializationWithTokenCredentialWithoutIdentity")]
+        public async Task GettingTurnCredentialsAndValidateSerialization(AuthMethod authMethod, params string[] scopes)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync();
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+
+            var turnConfig = turnCredentialsResponse.Value;
+            var turnConfigSerialized = JsonSerializer.Serialize(turnConfig);
+            Assert.IsNotNull(turnConfigSerialized);
+
+            var turnConfigDeserialized = JsonSerializer.Deserialize<CommunicationRelayConfiguration>(turnConfigSerialized);
+            Assert.IsNotNull(turnConfigDeserialized);
+
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+
+                var serializedIceServer = JsonSerializer.Serialize(serverCredential);
+                Assert.IsNotNull(serializedIceServer);
+
+                CommunicationIceServer? deserializedIceServer = JsonSerializer.Deserialize<CommunicationIceServer>(serializedIceServer);
+
+                Assert.IsNotNull(deserializedIceServer);
+                Assert.IsNotNull(deserializedIceServer?.Username);
+                Assert.IsNotNull(deserializedIceServer?.RouteType);
+                Assert.IsNotNull(deserializedIceServer?.Urls);
+                Assert.AreEqual(serverCredential.Username, deserializedIceServer?.Username);
+                Assert.AreEqual(serverCredential.RouteType, deserializedIceServer?.RouteType);
+                CollectionAssert.AreEqual(serverCredential.Urls, deserializedIceServer?.Urls);
             }
         }
     }
