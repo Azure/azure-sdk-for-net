@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>Microsoft Azure Application Insights Data Library"</AssemblyTitle>
-    <Description>Provides Microsoft Azure Application Insights data plane query operations operations.</Description>
+    <AssemblyTitle>Microsoft Azure Application Insights Data Library</AssemblyTitle>
+    <Description>Provides Microsoft Azure Application Insights data plane query operations.</Description>
     <Version>1.1.0-beta.1</Version>
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>ApplicationInsights;</PackageTags>
