@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    internal class ConfigurationStoreSource : IOperationSource<ConfigurationStore>
+    internal class ConfigurationStoreOperationSource : IOperationSource<ConfigurationStore>
     {
         private readonly ArmClient _client;
 
-        internal ConfigurationStoreSource(ArmClient client)
+        internal ConfigurationStoreOperationSource(ArmClient client)
         {
             _client = client;
         }

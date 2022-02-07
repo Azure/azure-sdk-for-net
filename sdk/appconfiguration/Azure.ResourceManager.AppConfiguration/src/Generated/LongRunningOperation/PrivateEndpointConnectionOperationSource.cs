@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    internal class PrivateEndpointConnectionSource : IOperationSource<PrivateEndpointConnection>
+    internal class PrivateEndpointConnectionOperationSource : IOperationSource<PrivateEndpointConnection>
     {
         private readonly ArmClient _client;
 
-        internal PrivateEndpointConnectionSource(ArmClient client)
+        internal PrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
