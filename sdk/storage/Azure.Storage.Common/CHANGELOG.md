@@ -1,6 +1,6 @@
 # Release History
 
-## 12.10.0-beta.3 (Unreleased)
+## 12.10.0-beta.3 (2022-02-07)
 - Fixed bug where AccountSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
 
 ## 12.10.0-beta.2 (2021-11-30)
