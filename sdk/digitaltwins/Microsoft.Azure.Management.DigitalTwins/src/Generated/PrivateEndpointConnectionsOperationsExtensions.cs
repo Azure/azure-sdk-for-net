@@ -166,8 +166,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='properties'>
+            /// The connection properties.
             /// </param>
-            public static PrivateEndpointConnection CreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties)
+            public static PrivateEndpointConnection CreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
             }
@@ -188,11 +189,12 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='properties'>
+            /// The connection properties.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> CreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> CreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -259,8 +261,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='properties'>
+            /// The connection properties.
             /// </param>
-            public static PrivateEndpointConnection BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties)
+            public static PrivateEndpointConnection BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
             }
@@ -281,11 +284,12 @@ namespace Microsoft.Azure.Management.DigitalTwins
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='properties'>
+            /// The connection properties.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
                 {

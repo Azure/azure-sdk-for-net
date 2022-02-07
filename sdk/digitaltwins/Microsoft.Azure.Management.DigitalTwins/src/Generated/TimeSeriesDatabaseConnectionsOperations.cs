@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DigitalTwins
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DigitalTwinsEndpointOperations operations.
+    /// TimeSeriesDatabaseConnectionsOperations operations.
     /// </summary>
-    internal partial class DigitalTwinsEndpointOperations : IServiceOperations<AzureDigitalTwinsManagementClient>, IDigitalTwinsEndpointOperations
+    internal partial class TimeSeriesDatabaseConnectionsOperations : IServiceOperations<AzureDigitalTwinsManagementClient>, ITimeSeriesDatabaseConnectionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DigitalTwinsEndpointOperations class.
+        /// Initializes a new instance of the TimeSeriesDatabaseConnectionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DigitalTwinsEndpointOperations(AzureDigitalTwinsManagementClient client)
+        internal TimeSeriesDatabaseConnectionsOperations(AzureDigitalTwinsManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         public AzureDigitalTwinsManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get DigitalTwinsInstance Endpoints.
+        /// Get all existing time series database connections for this DigitalTwins
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DigitalTwinsEndpointResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/timeSeriesDatabaseConnections").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
@@ -209,7 +210,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DigitalTwinsEndpointResource>>();
+            var _result = new AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -222,7 +223,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DigitalTwinsEndpointResource>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TimeSeriesDatabaseConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -242,7 +243,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         }
 
         /// <summary>
-        /// Get DigitalTwinsInstances Endpoint.
+        /// Get the description of an existing time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -250,8 +251,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of Endpoint Resource.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -274,7 +275,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -292,9 +293,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            if (endpointName == null)
+            if (timeSeriesDatabaseConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "timeSeriesDatabaseConnectionName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -305,17 +306,17 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("timeSeriesDatabaseConnectionName", timeSeriesDatabaseConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/timeSeriesDatabaseConnections/{timeSeriesDatabaseConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{timeSeriesDatabaseConnectionName}", System.Uri.EscapeDataString(timeSeriesDatabaseConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -409,7 +410,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DigitalTwinsEndpointResource>();
+            var _result = new AzureOperationResponse<TimeSeriesDatabaseConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -422,7 +423,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TimeSeriesDatabaseConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -442,7 +443,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         }
 
         /// <summary>
-        /// Create or update DigitalTwinsInstance endpoint.
+        /// Create or update a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -450,11 +451,11 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of Endpoint Resource.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='properties'>
-        /// DigitalTwinsInstance endpoint resource properties.
+        /// Properties of a specific time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -462,15 +463,15 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionProperties properties = default(TimeSeriesDatabaseConnectionProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DigitalTwinsEndpointResource> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, endpointName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TimeSeriesDatabaseConnection> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, timeSeriesDatabaseConnectionName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Delete a DigitalTwinsInstance endpoint.
+        /// Delete a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -478,8 +479,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of Endpoint Resource.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -487,15 +488,15 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<DigitalTwinsEndpointResource> _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, endpointName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TimeSeriesDatabaseConnection> _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, timeSeriesDatabaseConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Create or update DigitalTwinsInstance endpoint.
+        /// Create or update a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -503,11 +504,11 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of Endpoint Resource.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='properties'>
-        /// DigitalTwinsInstance endpoint resource properties.
+        /// Properties of a specific time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -530,7 +531,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionProperties properties = default(TimeSeriesDatabaseConnectionProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -548,18 +549,14 @@ namespace Microsoft.Azure.Management.DigitalTwins
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            if (endpointName == null)
+            if (timeSeriesDatabaseConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "timeSeriesDatabaseConnectionName");
             }
-            if (properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "properties");
-            }
-            DigitalTwinsEndpointResource endpointDescription = new DigitalTwinsEndpointResource();
+            TimeSeriesDatabaseConnection timeSeriesDatabaseConnectionDescription = new TimeSeriesDatabaseConnection();
             if (properties != null)
             {
-                endpointDescription.Properties = properties;
+                timeSeriesDatabaseConnectionDescription.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -570,18 +567,18 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("endpointDescription", endpointDescription);
+                tracingParameters.Add("timeSeriesDatabaseConnectionName", timeSeriesDatabaseConnectionName);
+                tracingParameters.Add("timeSeriesDatabaseConnectionDescription", timeSeriesDatabaseConnectionDescription);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/timeSeriesDatabaseConnections/{timeSeriesDatabaseConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{timeSeriesDatabaseConnectionName}", System.Uri.EscapeDataString(timeSeriesDatabaseConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -625,9 +622,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
 
             // Serialize Request
             string _requestContent = null;
-            if(endpointDescription != null)
+            if(timeSeriesDatabaseConnectionDescription != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(endpointDescription, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(timeSeriesDatabaseConnectionDescription, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -681,7 +678,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DigitalTwinsEndpointResource>();
+            var _result = new AzureOperationResponse<TimeSeriesDatabaseConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -694,7 +691,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TimeSeriesDatabaseConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -712,7 +709,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TimeSeriesDatabaseConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -732,7 +729,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         }
 
         /// <summary>
-        /// Delete a DigitalTwinsInstance endpoint.
+        /// Delete a time series database connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the DigitalTwinsInstance.
@@ -740,8 +737,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <param name='resourceName'>
         /// The name of the DigitalTwinsInstance.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of Endpoint Resource.
+        /// <param name='timeSeriesDatabaseConnectionName'>
+        /// Name of time series database connection.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -764,7 +761,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TimeSeriesDatabaseConnection>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string timeSeriesDatabaseConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -782,9 +779,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            if (endpointName == null)
+            if (timeSeriesDatabaseConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "timeSeriesDatabaseConnectionName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -795,17 +792,17 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("timeSeriesDatabaseConnectionName", timeSeriesDatabaseConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/timeSeriesDatabaseConnections/{timeSeriesDatabaseConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{timeSeriesDatabaseConnectionName}", System.Uri.EscapeDataString(timeSeriesDatabaseConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -899,7 +896,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DigitalTwinsEndpointResource>();
+            var _result = new AzureOperationResponse<TimeSeriesDatabaseConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -912,7 +909,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TimeSeriesDatabaseConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -930,7 +927,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DigitalTwinsEndpointResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TimeSeriesDatabaseConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -950,7 +947,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
         }
 
         /// <summary>
-        /// Get DigitalTwinsInstance Endpoints.
+        /// Get all existing time series database connections for this DigitalTwins
+        /// instance.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -976,7 +974,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DigitalTwinsEndpointResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1085,7 +1083,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DigitalTwinsEndpointResource>>();
+            var _result = new AzureOperationResponse<IPage<TimeSeriesDatabaseConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1098,7 +1096,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DigitalTwinsEndpointResource>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TimeSeriesDatabaseConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
