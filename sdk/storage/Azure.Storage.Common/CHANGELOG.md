@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.10.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated StorageBearerTokenChallengeAuthorizationPolicy to use the AAD scope returned by a bearer challenges.
 
 ## 12.10.0-beta.3 (2022-02-07)
 - Fixed bug where AccountSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
