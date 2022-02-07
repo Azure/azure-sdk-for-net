@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         #region Encode
 
         /// <summary>
-        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             => (TMessage) EncodeMessageDataInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
@@ -83,13 +83,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             => (TMessage) await EncodeMessageDataInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="dataType">The type of the data to encode. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>.
+        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>, and
+        /// have a parameterless constructor.
         /// If left blank, the data will be encoded into a <see cref="MessageWithMetadata"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public MessageWithMetadata EncodeMessageData(
@@ -100,13 +101,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             => EncodeMessageDataInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// Encodes the message data as Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
         /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="dataType">The type of the data to encode. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>.
+        /// <param name="messageType">The type of message to encode the data into. Must extend from <see cref="MessageWithMetadata"/>, and
+        /// have a parameterless constructor.
         /// If left blank, the data will be encoded into a <see cref="MessageWithMetadata"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public async ValueTask<MessageWithMetadata> EncodeMessageDataAsync(

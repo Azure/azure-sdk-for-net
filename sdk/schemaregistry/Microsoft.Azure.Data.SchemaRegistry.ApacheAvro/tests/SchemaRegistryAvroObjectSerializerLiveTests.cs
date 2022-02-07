@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             #region Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee_V2>(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee() { Age = 42, Name = "Caketown"};
 
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions() { AutoRegisterSchemas = true });
+            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
             var messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
