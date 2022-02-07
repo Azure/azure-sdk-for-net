@@ -97,10 +97,6 @@
         "TEXT_ANALYTICS_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
-        },
-        "TEXT_ANALYTICS_DEFAULT_SCOPE": {
-            "type": "string",
-            "value": "[parameters('cognitiveServicesEndpointSuffix')]"
         }
     }
 }
