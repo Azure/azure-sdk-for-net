@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineExtensionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineExtension>(new VirtualMachineExtensionSource(Client), _virtualMachineExtensionClientDiagnostics, Pipeline, _virtualMachineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineExtension>(new VirtualMachineExtensionOperationSource(Client), _virtualMachineExtensionClientDiagnostics, Pipeline, _virtualMachineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineExtensionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineExtension>(new VirtualMachineExtensionSource(Client), _virtualMachineExtensionClientDiagnostics, Pipeline, _virtualMachineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineExtension>(new VirtualMachineExtensionOperationSource(Client), _virtualMachineExtensionClientDiagnostics, Pipeline, _virtualMachineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

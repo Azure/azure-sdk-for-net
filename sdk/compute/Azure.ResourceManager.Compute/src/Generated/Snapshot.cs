@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

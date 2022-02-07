@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 },
             };
-            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
+            ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
             VirtualNetwork vnet = vnetOperation.Value;
 
             // Create Network interface
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
+            ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
             NetworkInterface nic = nicOperation.Value;
 
             var vmData = new VirtualMachineData(location)

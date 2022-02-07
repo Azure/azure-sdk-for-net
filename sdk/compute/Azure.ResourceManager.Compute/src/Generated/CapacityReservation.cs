@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _capacityReservationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _capacityReservationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

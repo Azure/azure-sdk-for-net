@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Disk>(new DiskSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken);
-                var operation = new ComputeArmOperation<Disk>(new DiskSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

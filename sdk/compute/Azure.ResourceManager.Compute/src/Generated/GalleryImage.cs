@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryImageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryImageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

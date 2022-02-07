@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskEncryptionSetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<DiskEncryptionSet>(new DiskEncryptionSetSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskEncryptionSet>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskEncryptionSetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken);
-                var operation = new ComputeArmOperation<DiskEncryptionSet>(new DiskEncryptionSetSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<DiskEncryptionSet>(new DiskEncryptionSetOperationSource(Client), _diskEncryptionSetClientDiagnostics, Pipeline, _diskEncryptionSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

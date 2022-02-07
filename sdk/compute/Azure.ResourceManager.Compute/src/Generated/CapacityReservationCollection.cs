@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _capacityReservationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _capacityReservationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot, cancellationToken);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

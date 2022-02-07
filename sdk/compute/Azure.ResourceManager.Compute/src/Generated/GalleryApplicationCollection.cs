@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

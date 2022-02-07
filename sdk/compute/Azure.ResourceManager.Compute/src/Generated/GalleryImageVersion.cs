@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryImageVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionOperationSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryImageVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionOperationSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

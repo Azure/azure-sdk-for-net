@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _privateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionSource(Client), _privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _privateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection, cancellationToken);
-                var operation = new ComputeArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionSource(Client), _privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<PrivateEndpointConnection>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, privateEndpointConnection).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

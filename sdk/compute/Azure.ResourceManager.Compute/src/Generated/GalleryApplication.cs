@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryApplicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryApplicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Gallery>(new GallerySource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery, cancellationToken);
-                var operation = new ComputeArmOperation<Gallery>(new GallerySource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<Gallery>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, galleryName, gallery).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

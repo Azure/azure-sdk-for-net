@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _cloudServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CloudService>(new CloudServiceSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CloudService>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _cloudServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<CloudService>(new CloudServiceSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CloudService>(new CloudServiceOperationSource(Client), _cloudServiceClientDiagnostics, Pipeline, _cloudServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServiceName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

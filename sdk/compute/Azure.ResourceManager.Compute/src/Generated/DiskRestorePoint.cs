@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _diskRestorePointRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _diskRestorePointRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData, cancellationToken);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriSource(Client), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
