@@ -6,6 +6,7 @@
 - Added support for BlobContainerClient.OpenWriteAsync().
 - Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
 - Fixed a bug where BlobClient.Upload() and UploadAsync() would result in a NullReferenceException when trying to overwrite a blob with client-side encryption enabled
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException in certain network conditions.
 
 ### Other Changes
 
