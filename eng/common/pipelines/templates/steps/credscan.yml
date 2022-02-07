@@ -37,5 +37,5 @@ steps:
   condition: succeededOrFailed()
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
-  displayName: Troubleshooting Info
+  displayName: CredScan troubleshooting guide
   condition: failed()
