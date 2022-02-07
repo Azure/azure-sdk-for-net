@@ -32,11 +32,14 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER PackageSourceOverride
-Optional parameter to supply a different package source (useful for daily dev
-docs generation from pacakges which are not published to the default feed). This
-variable is meant to be used in the domain-specific business logic in
-&$ValidateDocsMsPackagesFn
+.PARAMETER TenantId
+The aad tenant id/object id.
+
+.PARAMETER ClientId
+The add client id/application id.
+
+.PARAMETER ClientSecret
+The client secret of add app.
 #>
 
 param(
@@ -56,10 +59,20 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride
-)
+  [string]$PackageSourceOverride,
 
+  [Parameter(Mandatory = $false)]
+  [string]$TenantId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientId,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ClientSecret
+)
+Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
+. (Join-Path $PSScriptRoot Helpers Metadata-Helpers.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)(?:master|main)"
 $TITLE_REGEX = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library for (?:JavaScript|Java|Python|\.NET|C)))"
@@ -94,15 +107,18 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   }
   
   # Get the first code owners of the package.
-  $author = "ramya-rao-a"
-  $msauthor = "ramyar"
   Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $codeOwnerArray = ."$PSScriptRoot/get-codeowners.ps1" `
-                    -TargetDirectory $PackageInfo.DirectoryPath 
-  if ($codeOwnerArray) {
-    Write-Host "Code Owners are $($codeOwnerArray -join ",")"
-    $author = $codeOwnerArray[0]
-    $msauthor = $author # This is a placeholder for now. Will change to the right ms alias.
+  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath 
+  if (!$author) {
+    $author = "ramya-rao-a" 
+    $msauthor = "ramyar"
+  }
+  else {
+    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
+  }
+  # Default value
+  if (!$msauthor) {
+    $msauthor = $author
   }
   Write-Host "The author of package: $author"
   Write-Host "The ms author of package: $msauthor"
@@ -129,7 +145,7 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
     LogWarning "Package metadata not found for $packageInfoJsonLocation"
     return
   }
-  
+
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
   if ($packageInfo.DevVersion) {
@@ -149,8 +165,10 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
 
 function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) { 
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
-
-  $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.GroupId -eq $packageInfo.Group -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
+  $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
+  if ($packageInfo.Group) {
+    $packageMetadataArray = ($packageMetadataArray).Where({$_.GroupId -eq $packageInfo.Group})
+  }
   if ($packageMetadataArray.Count -eq 0) { 
     LogWarning "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV. Using best effort defaults."
     $packageMetadata = $null
@@ -161,29 +179,13 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
     $packageMetadata = $packageMetadataArray[0]
   }
 
-  $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
-  $outputReadmeContent = "" 
-  if ($readmeContent) { 
-    $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
-  }
-
+  # Copy package info file to the docs repo
   $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
   $readMePath = $docsMsMetadata.LatestReadMeLocation
-  if ($originalVersion.IsPrerelease) { 
-    $readMePath = $docsMsMetadata.PreviewReadMeLocation
-  }
-
-  $suffix = $docsMsMetadata.Suffix
-  $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
-
-  $readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
-
-  Set-Content -Path $readmeLocation -Value $outputReadmeContent
-
-  # Copy package info file to the docs repo
   $metadataMoniker = 'latest'
-  if ($originalVersion.IsPrerelease) {
+  if ($originalVersion -and $originalVersion.IsPrerelease) {
     $metadataMoniker = 'preview'
+    $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
@@ -192,20 +194,36 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson
+
+  # Update Readme Content
+  if (!$packageInfo.ReadMePath -or !(Test-Path $packageInfo.ReadMePath)) {
+    Write-Warning "$($packageInfo.Name) does not have Readme file. Skipping update readme."
+    return
+  }
+  
+  $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
+  $outputReadmeContent = "" 
+  if ($readmeContent) { 
+    $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
+  }
+
+  $suffix = $docsMsMetadata.Suffix
+  $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
+
+  $readmeLocation = Join-Path $DocRepoLocation $readMePath $readMeName
+
+  Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   Write-Host "Updating metadata for package: $packageInfoLocation"
-
   # Convert package metadata json file to metadata json property.
   $packageInfo = GetPackageInfoJson $packageInfoLocation
   # Add validation step for daily update and release
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    Write-Host "Validating the package..."
     &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
-    if ($LASTEXITCODE) {
-      LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for more details on how to diagnose this issue."
-      exit $LASTEXITCODE
-    }
   }
+  Write-Host "Updating the package json ..."
   UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo
 }

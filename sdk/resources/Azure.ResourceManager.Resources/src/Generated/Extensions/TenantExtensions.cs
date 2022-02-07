@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,40 +16,50 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this Tenant tenant)
-        {
-            return new DeploymentCollection(tenant);
-        }
-        #endregion
-
         private static TenantExtensionClient GetExtensionClient(Tenant tenant)
         {
-            return tenant.GetCachedClient((armClient) =>
+            return tenant.GetCachedClient((client) =>
             {
-                return new TenantExtensionClient(armClient, tenant.Id);
+                return new TenantExtensionClient(client, tenant.Id);
             }
             );
         }
 
+        /// <summary> Gets a collection of Deployments in the Deployment. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
+        public static DeploymentCollection GetDeployments(this Tenant tenant)
+        {
+            return GetExtensionClient(tenant).GetDeployments();
+        }
+
+        /// <summary> Calculate the hash of the given template. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public static async Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Tenant tenant, object template, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public async static Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Tenant tenant, object template, CancellationToken cancellationToken = default)
         {
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
             return await GetExtensionClient(tenant).CalculateTemplateHashDeploymentAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Calculate the hash of the given template. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public static Response<TemplateHashResult> CalculateTemplateHashDeployment(this Tenant tenant, object template, CancellationToken cancellationToken = default)
         {
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
             return GetExtensionClient(tenant).CalculateTemplateHashDeployment(template, cancellationToken);
         }
     }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Custom model build mode. </summary>
-    internal readonly partial struct DocumentBuildMode : IEquatable<DocumentBuildMode>
+    public readonly partial struct DocumentBuildMode : IEquatable<DocumentBuildMode>
     {
         private readonly string _value;
 
@@ -24,11 +24,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         private const string TemplateValue = "template";
         private const string NeuralValue = "neural";
-
-        /// <summary> template. </summary>
-        public static DocumentBuildMode Template { get; } = new DocumentBuildMode(TemplateValue);
-        /// <summary> neural. </summary>
-        public static DocumentBuildMode Neural { get; } = new DocumentBuildMode(NeuralValue);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are the same. </summary>
         public static bool operator ==(DocumentBuildMode left, DocumentBuildMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are not the same. </summary>

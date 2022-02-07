@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SourceControl"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SourceControl(ArmClient armClient, SourceControlData data) : this(armClient, data.Id)
+        internal SourceControl(ArmClient client, SourceControlData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SourceControl"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SourceControl(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SourceControl(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sourceControlApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sourceControlApiVersion);
             _sourceControlRestClient = new WebSiteManagementRestOperations(_sourceControlClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _sourceControlRestClient.GetSourceControlAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sourceControlClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SourceControl(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _sourceControlRestClient.GetSourceControl(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _sourceControlClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SourceControl(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

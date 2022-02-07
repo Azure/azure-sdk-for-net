@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            trigger = await SqlTriggerCollection.CreateOrUpdate(false, _triggerName, updateOptions).WaitForCompletionAsync();
+            trigger = (await SqlTriggerCollection.CreateOrUpdateAsync(true, _triggerName, updateOptions)).Value;
             Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
             Assert.AreEqual(trigger.Data.Resource.TriggerOperation, TriggerOperation.Create);

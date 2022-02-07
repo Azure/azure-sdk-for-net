@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotResourceHealthMetadata"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotResourceHealthMetadata(ArmClient armClient, ResourceHealthMetadataData data) : this(armClient, data.Id)
+        internal SiteSlotResourceHealthMetadata(ArmClient client, ResourceHealthMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotResourceHealthMetadata"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotResourceHealthMetadata(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotResourceHealthMetadata(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
             _siteSlotResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(_siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotResourceHealthMetadataResourceHealthMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotResourceHealthMetadataResourceHealthMetadataRestClient.GetBySiteSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotResourceHealthMetadata(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotResourceHealthMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotResourceHealthMetadataResourceHealthMetadataRestClient.GetBySiteSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotResourceHealthMetadata(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotResourceHealthMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

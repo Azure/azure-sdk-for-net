@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,102 +17,87 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region AppServiceCertificateOrder
-        /// <summary> Gets an object representing a AppServiceCertificateOrderCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateOrderCollection" /> object. </returns>
-        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroup resourceGroup)
-        {
-            return new AppServiceCertificateOrderCollection(resourceGroup);
-        }
-        #endregion
-
-        #region AppServiceDomain
-        /// <summary> Gets an object representing a AppServiceDomainCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceDomainCollection" /> object. </returns>
-        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroup resourceGroup)
-        {
-            return new AppServiceDomainCollection(resourceGroup);
-        }
-        #endregion
-
-        #region AppServiceEnvironment
-        /// <summary> Gets an object representing a AppServiceEnvironmentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentCollection" /> object. </returns>
-        public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroup resourceGroup)
-        {
-            return new AppServiceEnvironmentCollection(resourceGroup);
-        }
-        #endregion
-
-        #region AppServicePlan
-        /// <summary> Gets an object representing a AppServicePlanCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AppServicePlanCollection" /> object. </returns>
-        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroup resourceGroup)
-        {
-            return new AppServicePlanCollection(resourceGroup);
-        }
-        #endregion
-
-        #region Certificate
-        /// <summary> Gets an object representing a CertificateCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CertificateCollection" /> object. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroup resourceGroup)
-        {
-            return new CertificateCollection(resourceGroup);
-        }
-        #endregion
-
-        #region KubeEnvironment
-        /// <summary> Gets an object representing a KubeEnvironmentCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="KubeEnvironmentCollection" /> object. </returns>
-        public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroup resourceGroup)
-        {
-            return new KubeEnvironmentCollection(resourceGroup);
-        }
-        #endregion
-
-        #region StaticSiteARMResource
-        /// <summary> Gets an object representing a StaticSiteARMResourceCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="StaticSiteARMResourceCollection" /> object. </returns>
-        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroup resourceGroup)
-        {
-            return new StaticSiteARMResourceCollection(resourceGroup);
-        }
-        #endregion
-
-        #region WebSite
-        /// <summary> Gets an object representing a WebSiteCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WebSiteCollection" /> object. </returns>
-        public static WebSiteCollection GetWebSites(this ResourceGroup resourceGroup)
-        {
-            return new WebSiteCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of AppServiceCertificateOrders in the AppServiceCertificateOrder. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AppServiceCertificateOrders and their operations over a AppServiceCertificateOrder. </returns>
+        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAppServiceCertificateOrders();
+        }
+
+        /// <summary> Gets a collection of AppServiceDomains in the AppServiceDomain. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AppServiceDomains and their operations over a AppServiceDomain. </returns>
+        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAppServiceDomains();
+        }
+
+        /// <summary> Gets a collection of AppServiceEnvironments in the AppServiceEnvironment. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironment. </returns>
+        public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAppServiceEnvironments();
+        }
+
+        /// <summary> Gets a collection of AppServicePlans in the AppServicePlan. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlan. </returns>
+        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAppServicePlans();
+        }
+
+        /// <summary> Gets a collection of Certificates in the Certificate. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of Certificates and their operations over a Certificate. </returns>
+        public static CertificateCollection GetCertificates(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetCertificates();
+        }
+
+        /// <summary> Gets a collection of KubeEnvironments in the KubeEnvironment. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of KubeEnvironments and their operations over a KubeEnvironment. </returns>
+        public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetKubeEnvironments();
+        }
+
+        /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
+        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetStaticSiteARMResources();
+        }
+
+        /// <summary> Gets a collection of WebSites in the WebSite. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of WebSites and their operations over a WebSite. </returns>
+        public static WebSiteCollection GetWebSites(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetWebSites();
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
+        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadataAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
@@ -119,10 +105,11 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
+        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadata(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadata(cancellationToken);
         }
@@ -130,72 +117,108 @@ namespace Azure.ResourceManager.AppService
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: Move
+        /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public async static Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (moveResourceEnvelope == null)
+            {
+                throw new ArgumentNullException(nameof(moveResourceEnvelope));
+            }
+
             return await GetExtensionClient(resourceGroup).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: Move
+        /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response Move(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (moveResourceEnvelope == null)
+            {
+                throw new ArgumentNullException(nameof(moveResourceEnvelope));
+            }
+
             return GetExtensionClient(resourceGroup).Move(moveResourceEnvelope, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: Validate
+        /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
+        public async static Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
+            if (validateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(validateRequest));
+            }
+
             return await GetExtensionClient(resourceGroup).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: Validate
+        /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public static Response<ValidateResponse> Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
+            if (validateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(validateRequest));
+            }
+
             return GetExtensionClient(resourceGroup).Validate(validateRequest, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ValidateMove
+        /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        public async static Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (moveResourceEnvelope == null)
+            {
+                throw new ArgumentNullException(nameof(moveResourceEnvelope));
+            }
+
             return await GetExtensionClient(resourceGroup).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ValidateMove
+        /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public static Response ValidateMove(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
+            if (moveResourceEnvelope == null)
+            {
+                throw new ArgumentNullException(nameof(moveResourceEnvelope));
+            }
+
             return GetExtensionClient(resourceGroup).ValidateMove(moveResourceEnvelope, cancellationToken);
         }
     }

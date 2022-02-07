@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(vault2.Id, vault1.Id);
             Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
 
-            Assert.AreEqual(vault2.Properties.HsmUri.TrimEnd('/'), vault1.Properties.HsmUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.HsmUri.ToString().TrimEnd('/'), vault1.Properties.HsmUri.ToString().TrimEnd('/'));
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
             Assert.AreEqual(vault2.Sku.Name, vault1.Sku.Name);
             Assert.AreEqual(vault2.Sku.Family, vault1.Sku.Family);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(vault2.Id, vault1.Id);
             Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
 
-            Assert.AreEqual(vault2.Properties.VaultUri.TrimEnd('/'), vault1.Properties.VaultUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.VaultUri.ToString().TrimEnd('/'), vault1.Properties.VaultUri.ToString().TrimEnd('/'));
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
             Assert.AreEqual(vault2.Properties.Sku.Name, vault1.Properties.Sku.Name);
             Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);

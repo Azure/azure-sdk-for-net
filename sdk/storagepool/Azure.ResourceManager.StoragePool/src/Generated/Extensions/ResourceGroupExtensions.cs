@@ -12,23 +12,21 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region DiskPool
-        /// <summary> Gets an object representing a DiskPoolCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiskPoolCollection" /> object. </returns>
-        public static DiskPoolCollection GetDiskPools(this ResourceGroup resourceGroup)
-        {
-            return new DiskPoolCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of DiskPools in the DiskPool. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DiskPools and their operations over a DiskPool. </returns>
+        public static DiskPoolCollection GetDiskPools(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDiskPools();
         }
     }
 }

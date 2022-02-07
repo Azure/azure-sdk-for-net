@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotInstance"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotInstance(ArmClient armClient, WebSiteInstanceStatusData data) : this(armClient, data.Id)
+        internal SiteSlotInstance(ArmClient client, WebSiteInstanceStatusData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotInstance"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotInstance(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotInstance(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotInstanceWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotInstanceWebAppsApiVersion);
             _siteSlotInstanceWebAppsRestClient = new WebAppsRestOperations(_siteSlotInstanceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +83,20 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it in the SiteSlotInstance. </summary>
+        /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
+        public virtual SiteSlotInstanceExtension GetSiteSlotInstanceExtension()
+        {
+            return new SiteSlotInstanceExtension(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+        }
+
+        /// <summary> Gets a collection of SiteSlotInstanceProcesses in the SiteSlotInstanceProcess. </summary>
+        /// <returns> An object representing collection of SiteSlotInstanceProcesses and their operations over a SiteSlotInstanceProcess. </returns>
+        public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
+        {
+            return new SiteSlotInstanceProcessCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}
         /// OperationId: WebApps_GetInstanceInfoSlot
@@ -97,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotInstanceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotInstance(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotInstanceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstance(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -164,25 +178,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        #region SiteSlotInstanceExtension
-
-        /// <summary> Gets an object representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it in the SiteSlotInstance. </summary>
-        /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
-        public virtual SiteSlotInstanceExtension GetSiteSlotInstanceExtension()
-        {
-            return new SiteSlotInstanceExtension(ArmClient, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
-        }
-        #endregion
-
-        #region SiteSlotInstanceProcess
-
-        /// <summary> Gets a collection of SiteSlotInstanceProcesses in the SiteSlotInstance. </summary>
-        /// <returns> An object representing collection of SiteSlotInstanceProcesses and their operations over a SiteSlotInstance. </returns>
-        public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
-        {
-            return new SiteSlotInstanceProcessCollection(this);
-        }
-        #endregion
     }
 }

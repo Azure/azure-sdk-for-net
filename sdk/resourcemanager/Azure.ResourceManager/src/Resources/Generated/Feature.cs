@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Feature"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Feature(ArmClient armClient, FeatureData data) : this(armClient, data.Id)
+        internal Feature(ArmClient client, FeatureData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="Feature"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Feature(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal Feature(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string featureApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string featureApiVersion);
             _featureRestClient = new FeaturesRestOperations(_featureClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _featureClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,91 @@ namespace Azure.ResourceManager.Resources
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _featureClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// OperationId: Features_Register
+        /// <summary> Registers the preview feature for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<Feature>> RegisterAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
+            scope.Start();
+            try
+            {
+                var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// OperationId: Features_Register
+        /// <summary> Registers the preview feature for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Feature> Register(CancellationToken cancellationToken = default)
+        {
+            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
+            scope.Start();
+            try
+            {
+                var response = _featureRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// OperationId: Features_Unregister
+        /// <summary> Unregisters the preview feature for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<Feature>> UnregisterAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
+            scope.Start();
+            try
+            {
+                var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
+        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// OperationId: Features_Unregister
+        /// <summary> Unregisters the preview feature for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Feature> Unregister(CancellationToken cancellationToken = default)
+        {
+            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
+            scope.Start();
+            try
+            {
+                var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
+                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,90 +235,6 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Register
-        /// <summary> Registers the preview feature for the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Feature>> RegisterAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
-            scope.Start();
-            try
-            {
-                var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Register
-        /// <summary> Registers the preview feature for the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Feature> Register(CancellationToken cancellationToken = default)
-        {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
-            scope.Start();
-            try
-            {
-                var response = _featureRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Unregister
-        /// <summary> Unregisters the preview feature for the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Feature>> UnregisterAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
-            scope.Start();
-            try
-            {
-                var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Unregister
-        /// <summary> Unregisters the preview feature for the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Feature> Unregister(CancellationToken cancellationToken = default)
-        {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
-            scope.Start();
-            try
-            {
-                var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new Feature(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

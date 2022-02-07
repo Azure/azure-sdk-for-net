@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -33,15 +34,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedServerCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        internal DeletedServerCollection(ArmResource parent, string locationName) : base(parent)
+        internal DeletedServerCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
-            _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(DeletedServer.ResourceType, out string deletedServerApiVersion);
-            _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
             _locationName = locationName;
+            _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(DeletedServer.ResourceType, out string deletedServerApiVersion);
+            _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,36 +53,6 @@ namespace Azure.ResourceManager.Sql
         {
             if (id.ResourceType != Subscription.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedServers_Get
-        /// <summary> Gets a deleted server. </summary>
-        /// <param name="deletedServerName"> The name of the deleted server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
-        public virtual Response<DeletedServer> Get(string deletedServerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
-
-            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken);
-                if (response.Value == null)
-                    throw _deletedServerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
@@ -102,7 +74,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _deletedServerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,23 +83,26 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeletedServers_Get
+        /// <summary> Gets a deleted server. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
-        public virtual Response<DeletedServer> GetIfExists(string deletedServerName, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedServer> Get(string deletedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
 
-            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken);
+                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
+                    throw _deletedServerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,55 +111,92 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="deletedServerName"> The name of the deleted server. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeletedServers_ListByLocation
+        /// <summary> Gets a list of deleted servers for a location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
-        public async virtual Task<Response<DeletedServer>> GetIfExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedServer> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
-
-            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DeletedServer>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedServer(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedServerRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<DeletedServer>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _deletedServerRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="deletedServerName"> The name of the deleted server. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeletedServers_ListByLocation
+        /// <summary> Gets a list of deleted servers for a location. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
-        public virtual Response<bool> Exists(string deletedServerName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedServer> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
-
-            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
-            scope.Start();
-            try
+            Page<DeletedServer> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(deletedServerName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedServerRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<DeletedServer> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _deletedServerRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeletedServers_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
@@ -207,86 +219,86 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedServers_ListByLocation
-        /// <summary> Gets a list of deleted servers for a location. </summary>
+        /// OperationId: DeletedServers_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedServer> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        public virtual Response<bool> Exists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Page<DeletedServer> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deletedServerRestClient.ListByLocation(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(deletedServerName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<DeletedServer> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deletedServerRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedServers_ListByLocation
-        /// <summary> Gets a list of deleted servers for a location. </summary>
+        /// OperationId: DeletedServers_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedServer> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        public async virtual Task<Response<DeletedServer>> GetIfExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedServer>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedServerRestClient.ListByLocationAsync(Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<DeletedServer>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedServerRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: DeletedServers_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="deletedServerName"> The name of the deleted server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServerName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
+        public virtual Response<DeletedServer> GetIfExists(string deletedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+
+            using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deletedServerRestClient.Get(Id.SubscriptionId, _locationName, deletedServerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DeletedServer>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<DeletedServer> IEnumerable<DeletedServer>.GetEnumerator()

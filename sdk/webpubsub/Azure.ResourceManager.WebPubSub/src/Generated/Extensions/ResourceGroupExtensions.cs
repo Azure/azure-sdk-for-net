@@ -12,23 +12,21 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region WebPubSub
-        /// <summary> Gets an object representing a WebPubSubCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="WebPubSubCollection" /> object. </returns>
-        public static WebPubSubCollection GetWebPubSubs(this ResourceGroup resourceGroup)
-        {
-            return new WebPubSubCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of WebPubSubs in the WebPubSub. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of WebPubSubs and their operations over a WebPubSub. </returns>
+        public static WebPubSubCollection GetWebPubSubs(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetWebPubSubs();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<VirtualNetwork> remoteVirtualNetwork = await remoteVirtualNetworkOperation.WaitForCompletionAsync();;
 
             // Get Peerings in the vnet
-            var virtualNetworkPeeringCollection =resourceGroup.GetVirtualNetworks().Get(vnetName).Value.GetVirtualNetworkPeerings();
+            var virtualNetworkPeeringCollection = (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetVirtualNetworkPeerings();
             AsyncPageable<VirtualNetworkPeering> listPeeringAP = virtualNetworkPeeringCollection.GetAllAsync();
             List<VirtualNetworkPeering> listPeering = await listPeeringAP.ToEnumerableAsync();
             Assert.IsEmpty(listPeering);
