@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal class CommunicationServiceSource : IOperationSource<CommunicationService>
+    internal class CommunicationServiceOperationSource : IOperationSource<CommunicationService>
     {
         private readonly ArmClient _client;
 
-        internal CommunicationServiceSource(ArmClient client)
+        internal CommunicationServiceOperationSource(ArmClient client)
         {
             _client = client;
         }

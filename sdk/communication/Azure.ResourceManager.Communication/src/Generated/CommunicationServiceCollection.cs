@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _communicationServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceOperationSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _communicationServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters, cancellationToken);
-                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceOperationSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
