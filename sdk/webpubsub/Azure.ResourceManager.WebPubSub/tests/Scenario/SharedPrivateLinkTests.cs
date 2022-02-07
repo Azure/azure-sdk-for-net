@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeTearDown]
         public async Task GlobleTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
+            if (await _resourceGroup.GetWebPubSubs().ExistsAsync(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
                 await webPubSub.Value.DeleteAsync(true);

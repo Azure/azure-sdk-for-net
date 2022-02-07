@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EncryptionProtectorsRestOperations _encryptionProtectorsRestClient;
+
+        private readonly ClientDiagnostics _encryptionProtectorClientDiagnostics;
+        private readonly EncryptionProtectorsRestOperations _encryptionProtectorRestClient;
         private readonly EncryptionProtectorData _data;
 
         /// <summary> Initializes a new instance of the <see cref="EncryptionProtector"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "EncryptionProtector"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EncryptionProtector(ArmResource options, EncryptionProtectorData data) : base(options, data.Id)
+        internal EncryptionProtector(ArmClient client, EncryptionProtectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _encryptionProtectorsRestClient = new EncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="EncryptionProtector"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EncryptionProtector(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal EncryptionProtector(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _encryptionProtectorsRestClient = new EncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="EncryptionProtector"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EncryptionProtector(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _encryptionProtectorsRestClient = new EncryptionProtectorsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string encryptionProtectorApiVersion);
+            _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(_encryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +91,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<EncryptionProtector>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.Get");
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.Get");
             scope.Start();
             try
             {
-                var response = await _encryptionProtectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _encryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new EncryptionProtector(this, response.Value), response.GetRawResponse());
+                    throw await _encryptionProtectorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new EncryptionProtector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,50 +114,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EncryptionProtector> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.Get");
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.Get");
             scope.Start();
             try
             {
-                var response = _encryptionProtectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _encryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionProtector(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _encryptionProtectorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new EncryptionProtector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,12 +138,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<EncryptionProtectorRevalidateOperation> RevalidateAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.Revalidate");
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.Revalidate");
             scope.Start();
             try
             {
-                var response = await _encryptionProtectorsRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EncryptionProtectorRevalidateOperation(_clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _encryptionProtectorRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new EncryptionProtectorRevalidateOperation(_encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,15 +163,51 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EncryptionProtectorRevalidateOperation Revalidate(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtector.Revalidate");
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.Revalidate");
             scope.Start();
             try
             {
-                var response = _encryptionProtectorsRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EncryptionProtectorRevalidateOperation(_clientDiagnostics, Pipeline, _encryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _encryptionProtectorRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new EncryptionProtectorRevalidateOperation(_encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtector.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

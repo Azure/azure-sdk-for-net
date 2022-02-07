@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> The image SKU. </param>
         /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or &apos;latest&apos;. Major, Minor, and Build are decimal numbers. Specify &apos;latest&apos; to use the latest version of an image available at deploy time. Even if you use &apos;latest&apos;, the VM image will not automatically update after deploy time even if a new version becomes available. </param>
         /// <param name="exactVersion"> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from &apos;version&apos;, only if the value specified in &apos;version&apos; field is &apos;latest&apos;. </param>
-        internal ImageReference(string id, string publisher, string offer, string sku, string version, string exactVersion) : base(id)
+        /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
+        internal ImageReference(string id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageId) : base(id)
         {
             Publisher = publisher;
             Offer = offer;
             Sku = sku;
             Version = version;
             ExactVersion = exactVersion;
+            SharedGalleryImageId = sharedGalleryImageId;
         }
 
         /// <summary> The image publisher. </summary>
@@ -41,5 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Version { get; set; }
         /// <summary> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from &apos;version&apos;, only if the value specified in &apos;version&apos; field is &apos;latest&apos;. </summary>
         public string ExactVersion { get; }
+        /// <summary> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </summary>
+        public string SharedGalleryImageId { get; set; }
     }
 }

@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <!-- Temporary until next release of Tables SDK containing updated InternalsVisibleTo -->
+    <ProjectReference Include="..\..\Azure.Data.Tables\src\Azure.Data.Tables.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.Tables.csproj" />
   </ItemGroup>
 

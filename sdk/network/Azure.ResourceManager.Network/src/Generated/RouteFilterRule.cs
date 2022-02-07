@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RouteFilterRulesRestOperations _routeFilterRulesRestClient;
+
+        private readonly ClientDiagnostics _routeFilterRuleClientDiagnostics;
+        private readonly RouteFilterRulesRestOperations _routeFilterRuleRestClient;
         private readonly RouteFilterRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilterRule"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "RouteFilterRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RouteFilterRule(ArmResource options, RouteFilterRuleData data) : base(options, new ResourceIdentifier(data.Id))
+        internal RouteFilterRule(ArmClient client, RouteFilterRuleData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilterRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RouteFilterRule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal RouteFilterRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="RouteFilterRule"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RouteFilterRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _routeFilterRulesRestClient = new RouteFilterRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string routeFilterRuleApiVersion);
+            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(_routeFilterRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,14 +88,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RouteFilterRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.Get");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Get");
             scope.Start();
             try
             {
-                var response = await _routeFilterRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _routeFilterRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                    throw await _routeFilterRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RouteFilterRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,14 +108,58 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RouteFilterRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.Get");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Get");
             scope.Start();
             try
             {
-                var response = _routeFilterRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _routeFilterRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteFilterRule(this, response.Value), response.GetRawResponse());
+                    throw _routeFilterRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RouteFilterRule(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified rule from a route filter. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<RouteFilterRuleDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _routeFilterRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RouteFilterRuleDeleteOperation(_routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified rule from a route filter. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual RouteFilterRuleDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.Delete");
+            scope.Start();
+            try
+            {
+                var response = _routeFilterRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RouteFilterRuleDeleteOperation(_routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -147,7 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.GetAvailableLocations");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -165,55 +191,11 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.GetAvailableLocations");
+            using var scope = _routeFilterRuleClientDiagnostics.CreateScope("RouteFilterRule.GetAvailableLocations");
             scope.Start();
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified rule from a route filter. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<RouteFilterRuleDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterRuleDeleteOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified rule from a route filter. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual RouteFilterRuleDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterRule.Delete");
-            scope.Start();
-            try
-            {
-                var response = _routeFilterRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RouteFilterRuleDeleteOperation(_clientDiagnostics, Pipeline, _routeFilterRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

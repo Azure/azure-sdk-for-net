@@ -5,13 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ExtendedLocation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,105 +15,37 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        private static CustomLocationsRestOperations GetCustomLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, Uri endpoint = null)
+        private static TenantExtensionClient GetExtensionClient(Tenant tenant)
         {
-            return new CustomLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint);
+            return tenant.GetCachedClient((client) =>
+            {
+                return new TenantExtensionClient(client, tenant.Id);
+            }
+            );
         }
 
         /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
         /// ContextualPath: /
         /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists the CustomLocationOperations for this <see cref="Tenant" />. </summary>
+        /// <summary> Lists all available Custom Locations operations. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                async Task<Page<CustomLocationOperation>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<CustomLocationOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOperationsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsCustomLocationsAsync(cancellationToken);
         }
 
         /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
         /// ContextualPath: /
         /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists the CustomLocationOperations for this <see cref="Tenant" />. </summary>
+        /// <summary> Lists all available Custom Locations operations. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocationOperation> GetOperationsCustomLocations(this Tenant tenant, CancellationToken cancellationToken = default)
         {
-            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCustomLocationsRestOperations(clientDiagnostics, credential, options, pipeline, baseUri);
-                Page<CustomLocationOperation> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperations(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<CustomLocationOperation> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("TenantExtensions.GetOperationsCustomLocations");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOperationsNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
+            return GetExtensionClient(tenant).GetOperationsCustomLocations(cancellationToken);
         }
     }
 }

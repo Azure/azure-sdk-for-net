@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TemplateSpecsRestOperations _templateSpecsRestClient;
+
+        private readonly ClientDiagnostics _templateSpecClientDiagnostics;
+        private readonly TemplateSpecsRestOperations _templateSpecRestClient;
         private readonly TemplateSpecData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpec"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TemplateSpec"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TemplateSpec(ArmResource options, TemplateSpecData data) : base(options, data.Id)
+        internal TemplateSpec(ArmClient client, TemplateSpecData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpec"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateSpec(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal TemplateSpec(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="TemplateSpec"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateSpec(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _templateSpecsRestClient = new TemplateSpecsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
+            _templateSpecRestClient = new TemplateSpecsRestOperations(_templateSpecClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,19 +84,26 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpecVersion. </summary>
+        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpecVersion. </returns>
+        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
+        {
+            return new TemplateSpecVersionCollection(Client, Id);
+        }
+
         /// <summary> Gets a Template Spec with a given name. </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpec>> GetAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Get");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Get");
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
+                    throw await _templateSpecClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,50 +117,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpec> Get(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Get");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Get");
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _templateSpecClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,11 +138,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<TemplateSpecDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Delete");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new TemplateSpecDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -207,14 +160,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual TemplateSpecDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Delete");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _templateSpecRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new TemplateSpecDeleteOperation(response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -229,12 +182,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpec>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Update");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try
             {
-                var response = await _templateSpecsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
+                var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,12 +201,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpec> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TemplateSpec.Update");
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Update");
             scope.Start();
             try
             {
-                var response = _templateSpecsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new TemplateSpec(this, response.Value), response.GetRawResponse());
+                var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,14 +215,40 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        #region TemplateSpecVersion
-
-        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpec. </summary>
-        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpec. </returns>
-        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new TemplateSpecVersionCollection(this);
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

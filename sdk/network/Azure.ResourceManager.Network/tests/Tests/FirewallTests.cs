@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task GlobalSetUp()
         {
             Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 

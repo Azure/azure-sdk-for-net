@@ -23,22 +23,19 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, type)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             Action = action;
             FilterType = filterType;
             SqlFilter = sqlFilter;
             CorrelationFilter = correlationFilter;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
         public FilterAction Action { get; set; }
         /// <summary> Filter type that is evaluated against a BrokeredMessage. </summary>

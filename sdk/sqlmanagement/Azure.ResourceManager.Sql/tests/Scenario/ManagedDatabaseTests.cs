@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(databaseName, database.Value.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(databaseName));
-            Assert.IsFalse(collection.Exists(databaseName + "0"));
+            Assert.IsTrue(await collection.ExistsAsync(databaseName));
+            Assert.IsFalse(await collection.ExistsAsync(databaseName + "0"));
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseName);

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}/versions/{galleryApplicationVersionName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionsRestClient;
+
+        private readonly ClientDiagnostics _galleryApplicationVersionClientDiagnostics;
+        private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionRestClient;
         private readonly GalleryApplicationVersionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersion"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "GalleryApplicationVersion"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GalleryApplicationVersion(ArmResource options, GalleryApplicationVersionData data) : base(options, data.Id)
+        internal GalleryApplicationVersion(ArmClient client, GalleryApplicationVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _galleryApplicationVersionsRestClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersion"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GalleryApplicationVersion(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal GalleryApplicationVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _galleryApplicationVersionsRestClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersion"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GalleryApplicationVersion(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _galleryApplicationVersionsRestClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _galleryApplicationVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string galleryApplicationVersionApiVersion);
+            _galleryApplicationVersionRestClient = new GalleryApplicationVersionsRestOperations(_galleryApplicationVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApplicationVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,14 +89,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<GalleryApplicationVersion>> GetAsync(ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Get");
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Get");
             scope.Start();
             try
             {
-                var response = await _galleryApplicationVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
+                    throw await _galleryApplicationVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new GalleryApplicationVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,14 +110,296 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GalleryApplicationVersion> Get(ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Get");
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Get");
             scope.Start();
             try
             {
-                var response = _galleryApplicationVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryApplicationVersion(this, response.Value), response.GetRawResponse());
+                    throw _galleryApplicationVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersion(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a gallery Application Version. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<GalleryApplicationVersionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _galleryApplicationVersionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryApplicationVersionDeleteOperation(_galleryApplicationVersionClientDiagnostics, Pipeline, _galleryApplicationVersionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a gallery Application Version. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual GalleryApplicationVersionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Delete");
+            scope.Start();
+            try
+            {
+                var response = _galleryApplicationVersionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new GalleryApplicationVersionDeleteOperation(_galleryApplicationVersionClientDiagnostics, Pipeline, _galleryApplicationVersionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public async virtual Task<GalleryApplicationVersionUpdateOperation> UpdateAsync(bool waitForCompletion, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Update");
+            scope.Start();
+            try
+            {
+                var response = await _galleryApplicationVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
+                var operation = new GalleryApplicationVersionUpdateOperation(Client, _galleryApplicationVersionClientDiagnostics, Pipeline, _galleryApplicationVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public virtual GalleryApplicationVersionUpdateOperation Update(bool waitForCompletion, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.Update");
+            scope.Start();
+            try
+            {
+                var response = _galleryApplicationVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken);
+                var operation = new GalleryApplicationVersionUpdateOperation(Client, _galleryApplicationVersionClientDiagnostics, Pipeline, _galleryApplicationVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<GalleryApplicationVersion>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<GalleryApplicationVersion> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<GalleryApplicationVersion>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<GalleryApplicationVersion> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<GalleryApplicationVersion>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<GalleryApplicationVersion> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                return Response.FromValue(new GalleryApplicationVersion(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +413,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.GetAvailableLocations");
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -167,285 +431,11 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.GetAvailableLocations");
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersion.GetAvailableLocations");
             scope.Start();
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a gallery Application Version. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GalleryApplicationVersionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _galleryApplicationVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryApplicationVersionDeleteOperation(_clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a gallery Application Version. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GalleryApplicationVersionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Delete");
-            scope.Start();
-            try
-            {
-                var response = _galleryApplicationVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GalleryApplicationVersionDeleteOperation(_clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<GalleryApplicationVersion>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _galleryApplicationVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<GalleryApplicationVersion> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _galleryApplicationVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<GalleryApplicationVersion>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _galleryApplicationVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<GalleryApplicationVersion> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _galleryApplicationVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<GalleryApplicationVersion>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _galleryApplicationVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<GalleryApplicationVersion> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _galleryApplicationVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new GalleryApplicationVersion(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update a gallery Application Version. </summary>
-        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public async virtual Task<GalleryApplicationVersionUpdateOperation> UpdateAsync(bool waitForCompletion, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplicationVersion == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplicationVersion));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Update");
-            scope.Start();
-            try
-            {
-                var response = await _galleryApplicationVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryApplicationVersionUpdateOperation(this, _clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update a gallery Application Version. </summary>
-        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
-        public virtual GalleryApplicationVersionUpdateOperation Update(bool waitForCompletion, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplicationVersion == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplicationVersion));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersion.Update");
-            scope.Start();
-            try
-            {
-                var response = _galleryApplicationVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken);
-                var operation = new GalleryApplicationVersionUpdateOperation(this, _clientDiagnostics, Pipeline, _galleryApplicationVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IDictionary<string, AppServiceCertificate>> certificates = default;
             Optional<string> distinguishedName = default;
             Optional<string> domainVerificationToken = default;
@@ -143,6 +145,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -348,7 +355,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceCertificateOrderData(id, name, type, tags, location, kind.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value);
+            return new AppServiceCertificateOrderData(id, name, type, systemData, tags, location, kind.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value);
         }
     }
 }

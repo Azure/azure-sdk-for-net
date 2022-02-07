@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancerLoadBalancingRulesRestOperations _loadBalancerLoadBalancingRulesRestClient;
+
+        private readonly ClientDiagnostics _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics;
+        private readonly LoadBalancerLoadBalancingRulesRestOperations _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient;
         private readonly LoadBalancingRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancingRule"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "LoadBalancingRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LoadBalancingRule(ArmResource options, LoadBalancingRuleData data) : base(options, new ResourceIdentifier(data.Id))
+        internal LoadBalancingRule(ArmClient client, LoadBalancingRuleData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancingRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancingRule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal LoadBalancingRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRule"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancingRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,14 +87,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LoadBalancingRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRule.Get");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRule.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                    throw await _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +107,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadBalancingRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRule.Get");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRule.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancingRule(this, response.Value), response.GetRawResponse());
+                    throw _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRule.GetAvailableLocations");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRule.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -164,7 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancingRule.GetAvailableLocations");
+            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRule.GetAvailableLocations");
             scope.Start();
             try
             {

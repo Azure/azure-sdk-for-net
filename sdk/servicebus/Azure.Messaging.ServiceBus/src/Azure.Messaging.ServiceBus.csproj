@@ -19,11 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-  <!--    
-      TEMP: Move Core to a project reference until the
-            MessageWithMetadata are shipped in Azure.Core.
-  <PackageReference Include="Azure.Core" />
-  -->
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
@@ -61,8 +57,4 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" />
-  </ItemGroup>
-
 </Project>

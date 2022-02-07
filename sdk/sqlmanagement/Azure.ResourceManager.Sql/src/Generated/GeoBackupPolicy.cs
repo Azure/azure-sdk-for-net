@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/geoBackupPolicies/{geoBackupPolicyName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GeoBackupPoliciesRestOperations _geoBackupPoliciesRestClient;
+
+        private readonly ClientDiagnostics _geoBackupPolicyClientDiagnostics;
+        private readonly GeoBackupPoliciesRestOperations _geoBackupPolicyRestClient;
         private readonly GeoBackupPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicy"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "GeoBackupPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GeoBackupPolicy(ArmResource options, GeoBackupPolicyData data) : base(options, data.Id)
+        internal GeoBackupPolicy(ArmClient client, GeoBackupPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _geoBackupPoliciesRestClient = new GeoBackupPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GeoBackupPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal GeoBackupPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _geoBackupPoliciesRestClient = new GeoBackupPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicy"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GeoBackupPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _geoBackupPoliciesRestClient = new GeoBackupPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _geoBackupPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string geoBackupPolicyApiVersion);
+            _geoBackupPolicyRestClient = new GeoBackupPoliciesRestOperations(_geoBackupPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, geoBackupPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<GeoBackupPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicy.Get");
+            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _geoBackupPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _geoBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GeoBackupPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _geoBackupPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new GeoBackupPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GeoBackupPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicy.Get");
+            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicy.Get");
             scope.Start();
             try
             {
-                var response = _geoBackupPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _geoBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GeoBackupPolicy(this, response.Value), response.GetRawResponse());
+                    throw _geoBackupPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GeoBackupPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +134,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicy.GetAvailableLocations");
+            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicy.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GeoBackupPolicy.GetAvailableLocations");
+            using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicy.GetAvailableLocations");
             scope.Start();
             try
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             string sqlServerName = Recording.GenerateAssetName("sqlserver-");
             await CreateOrUpdateSqlServer(sqlServerName);
-            Assert.AreEqual(true, _resourceGroup.GetSqlServers().Exists(sqlServerName).Value);
+            Assert.AreEqual(true, (await _resourceGroup.GetSqlServers().ExistsAsync(sqlServerName)).Value);
         }
 
         [Test]

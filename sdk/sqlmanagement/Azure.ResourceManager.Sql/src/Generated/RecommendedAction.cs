@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatabaseRecommendedActionsRestOperations _databaseRecommendedActionsRestClient;
+
+        private readonly ClientDiagnostics _recommendedActionDatabaseRecommendedActionsClientDiagnostics;
+        private readonly DatabaseRecommendedActionsRestOperations _recommendedActionDatabaseRecommendedActionsRestClient;
         private readonly RecommendedActionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecommendedAction"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "RecommendedAction"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecommendedAction(ArmResource options, RecommendedActionData data) : base(options, data.Id)
+        internal RecommendedAction(ArmClient client, RecommendedActionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="RecommendedAction"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecommendedAction(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal RecommendedAction(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="RecommendedAction"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecommendedAction(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
+            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RecommendedAction>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.Get");
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Get");
             scope.Start();
             try
             {
-                var response = await _databaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                    throw await _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,50 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecommendedAction> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.Get");
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Get");
             scope.Start();
             try
             {
-                var response = _databaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,12 +143,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.Update");
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Update");
             scope.Start();
             try
             {
-                var response = await _databaseRecommendedActionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,12 +171,48 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RecommendedAction.Update");
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.Update");
             scope.Start();
             try
             {
-                var response = _databaseRecommendedActionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new RecommendedAction(this, response.Value), response.GetRawResponse());
+                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedAction.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

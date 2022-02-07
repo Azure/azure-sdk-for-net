@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/guestAgents/{name}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GuestAgentsRestOperations _guestAgentsRestClient;
+
+        private readonly ClientDiagnostics _guestAgentClientDiagnostics;
+        private readonly GuestAgentsRestOperations _guestAgentRestClient;
         private readonly GuestAgentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GuestAgent"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref = "GuestAgent"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GuestAgent(ArmResource options, GuestAgentData data) : base(options, data.Id)
+        internal GuestAgent(ArmClient client, GuestAgentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _guestAgentsRestClient = new GuestAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="GuestAgent"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GuestAgent(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal GuestAgent(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _guestAgentsRestClient = new GuestAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="GuestAgent"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GuestAgent(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _guestAgentsRestClient = new GuestAgentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _guestAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string guestAgentApiVersion);
+            _guestAgentRestClient = new GuestAgentsRestOperations(_guestAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, guestAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +91,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<GuestAgent>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.Get");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.Get");
             scope.Start();
             try
             {
-                var response = await _guestAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _guestAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GuestAgent(this, response.Value), response.GetRawResponse());
+                    throw await _guestAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new GuestAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,50 +114,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GuestAgent> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.Get");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.Get");
             scope.Start();
             try
             {
-                var response = _guestAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _guestAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestAgent(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _guestAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GuestAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,12 +138,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<GuestAgentDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.Delete");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.Delete");
             scope.Start();
             try
             {
-                var response = await _guestAgentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestAgentDeleteOperation(_clientDiagnostics, Pipeline, _guestAgentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _guestAgentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new GuestAgentDeleteOperation(_guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,15 +163,51 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual GuestAgentDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GuestAgent.Delete");
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.Delete");
             scope.Start();
             try
             {
-                var response = _guestAgentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GuestAgentDeleteOperation(_clientDiagnostics, Pipeline, _guestAgentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _guestAgentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new GuestAgentDeleteOperation(_guestAgentClientDiagnostics, Pipeline, _guestAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _guestAgentClientDiagnostics.CreateScope("GuestAgent.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServerAzureADOnlyAuthenticationsRestOperations _serverAzureADOnlyAuthenticationsRestClient;
+
+        private readonly ClientDiagnostics _serverAzureADOnlyAuthenticationClientDiagnostics;
+        private readonly ServerAzureADOnlyAuthenticationsRestOperations _serverAzureADOnlyAuthenticationRestClient;
         private readonly ServerAzureADOnlyAuthenticationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServerAzureADOnlyAuthentication"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ServerAzureADOnlyAuthentication"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerAzureADOnlyAuthentication(ArmResource options, ServerAzureADOnlyAuthenticationData data) : base(options, data.Id)
+        internal ServerAzureADOnlyAuthentication(ArmClient client, ServerAzureADOnlyAuthenticationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServerAzureADOnlyAuthentication"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerAzureADOnlyAuthentication(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ServerAzureADOnlyAuthentication(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ServerAzureADOnlyAuthentication"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerAzureADOnlyAuthentication(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serverAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string serverAzureADOnlyAuthenticationApiVersion);
+            _serverAzureADOnlyAuthenticationRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(_serverAzureADOnlyAuthenticationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADOnlyAuthenticationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +91,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerAzureADOnlyAuthentication>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Get");
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Get");
             scope.Start();
             try
             {
-                var response = await _serverAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serverAzureADOnlyAuthenticationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerAzureADOnlyAuthentication(this, response.Value), response.GetRawResponse());
+                    throw await _serverAzureADOnlyAuthenticationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ServerAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,50 +114,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerAzureADOnlyAuthentication> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Get");
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Get");
             scope.Start();
             try
             {
-                var response = _serverAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _serverAzureADOnlyAuthenticationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerAzureADOnlyAuthentication(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _serverAzureADOnlyAuthenticationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,12 +138,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ServerAzureADOnlyAuthenticationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Delete");
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Delete");
             scope.Start();
             try
             {
-                var response = await _serverAzureADOnlyAuthenticationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerAzureADOnlyAuthenticationDeleteOperation(_clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _serverAzureADOnlyAuthenticationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServerAzureADOnlyAuthenticationDeleteOperation(_serverAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,15 +163,51 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ServerAzureADOnlyAuthenticationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Delete");
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.Delete");
             scope.Start();
             try
             {
-                var response = _serverAzureADOnlyAuthenticationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ServerAzureADOnlyAuthenticationDeleteOperation(_clientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _serverAzureADOnlyAuthenticationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ServerAzureADOnlyAuthenticationDeleteOperation(_serverAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _serverAzureADOnlyAuthenticationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _serverAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ServerAzureADOnlyAuthentication.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

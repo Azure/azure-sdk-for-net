@@ -12,84 +12,77 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region ResourcePool
-        /// <summary> Gets an object representing a ResourcePoolCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of ResourcePools in the ResourcePool. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ResourcePoolCollection" /> object. </returns>
+        /// <returns> An object representing collection of ResourcePools and their operations over a ResourcePool. </returns>
         public static ResourcePoolCollection GetResourcePools(this ResourceGroup resourceGroup)
         {
-            return new ResourcePoolCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetResourcePools();
         }
-        #endregion
 
-        #region VMwareCluster
-        /// <summary> Gets an object representing a VMwareClusterCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VMwareClusters in the VMwareCluster. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VMwareClusterCollection" /> object. </returns>
+        /// <returns> An object representing collection of VMwareClusters and their operations over a VMwareCluster. </returns>
         public static VMwareClusterCollection GetVMwareClusters(this ResourceGroup resourceGroup)
         {
-            return new VMwareClusterCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVMwareClusters();
         }
-        #endregion
 
-        #region VMwareHost
-        /// <summary> Gets an object representing a VMwareHostCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VMwareHosts in the VMwareHost. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VMwareHostCollection" /> object. </returns>
+        /// <returns> An object representing collection of VMwareHosts and their operations over a VMwareHost. </returns>
         public static VMwareHostCollection GetVMwareHosts(this ResourceGroup resourceGroup)
         {
-            return new VMwareHostCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVMwareHosts();
         }
-        #endregion
 
-        #region VMwareDatastore
-        /// <summary> Gets an object representing a VMwareDatastoreCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VMwareDatastores in the VMwareDatastore. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VMwareDatastoreCollection" /> object. </returns>
+        /// <returns> An object representing collection of VMwareDatastores and their operations over a VMwareDatastore. </returns>
         public static VMwareDatastoreCollection GetVMwareDatastores(this ResourceGroup resourceGroup)
         {
-            return new VMwareDatastoreCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVMwareDatastores();
         }
-        #endregion
 
-        #region VCenter
-        /// <summary> Gets an object representing a VCenterCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VCenters in the VCenter. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VCenterCollection" /> object. </returns>
+        /// <returns> An object representing collection of VCenters and their operations over a VCenter. </returns>
         public static VCenterCollection GetVCenters(this ResourceGroup resourceGroup)
         {
-            return new VCenterCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVCenters();
         }
-        #endregion
 
-        #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachineCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineCollection" /> object. </returns>
+        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
         {
-            return new VirtualMachineCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVirtualMachines();
         }
-        #endregion
 
-        #region VirtualMachineTemplate
-        /// <summary> Gets an object representing a VirtualMachineTemplateCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VirtualMachineTemplates in the VirtualMachineTemplate. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineTemplateCollection" /> object. </returns>
+        /// <returns> An object representing collection of VirtualMachineTemplates and their operations over a VirtualMachineTemplate. </returns>
         public static VirtualMachineTemplateCollection GetVirtualMachineTemplates(this ResourceGroup resourceGroup)
         {
-            return new VirtualMachineTemplateCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVirtualMachineTemplates();
         }
-        #endregion
 
-        #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetworkCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkCollection" /> object. </returns>
+        /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroup resourceGroup)
         {
-            return new VirtualNetworkCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVirtualNetworks();
         }
-        #endregion
     }
 }

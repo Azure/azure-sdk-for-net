@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             var parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new ServiceBusSku(SkuName.Premium)
+                Sku = new Models.Sku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium
                 },
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespace namespace2 = null;
 
             //validate
-            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetNamespacesAsync())
+            await foreach (ServiceBusNamespace serviceBusNamespace in DefaultSubscription.GetServiceBusNamespacesAsync())
             {
                 count++;
                 if (serviceBusNamespace.Id.Name == namespaceName1)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters.Sku = new ServiceBusSku(SkuName.Premium)
+            createParameters.Sku = new Models.Sku(SkuName.Premium)
             {
                 Tier = SkuTier.Premium
             };
@@ -390,13 +390,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId2 } ,IgnoreMissingVnetServiceEndpoint = false},
                     new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId3 } ,IgnoreMissingVnetServiceEndpoint = false}
                 },
-                IpRules =
+                IPRules =
                     {
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
-                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
+                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
                     }
             };
             await serviceBusNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(true, parameter);
@@ -404,10 +404,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //get the network rule set
             NetworkRuleSet networkRuleSet = await serviceBusNamespace.GetNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
-            Assert.NotNull(networkRuleSet.Data.IpRules);
+            Assert.NotNull(networkRuleSet.Data.IPRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
             Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
-            Assert.AreEqual(networkRuleSet.Data.IpRules.Count, 5);
+            Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
 
             //delete virtual network
             await virtualNetwork.DeleteAsync(true);
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters1 = new ServiceBusNamespaceData(DefaultLocation);
-            createParameters1.Sku = new ServiceBusSku(SkuName.Premium)
+            createParameters1.Sku = new Models.Sku(SkuName.Premium)
             {
                 Tier = SkuTier.Premium
             };
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create namespace with standard
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceData createParameters2 = new ServiceBusNamespaceData(AzureLocation.EastUS);
-            createParameters2.Sku = new ServiceBusSku(SkuName.Standard)
+            createParameters2.Sku = new Models.Sku(SkuName.Standard)
             {
                 Tier = SkuTier.Standard
             };

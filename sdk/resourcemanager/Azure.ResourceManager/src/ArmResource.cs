@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,10 +18,10 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
-    public abstract class ArmResource
+    public abstract partial class ArmResource
     {
         private TagResource _tagResource;
-        private Tenant _tenant;
+        private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class for mocking.
@@ -31,43 +33,16 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
-        /// <param name="parentOperations"> The resource representing the parent resource. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> this resource client should be created from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ArmResource(ArmResource parentOperations, ResourceIdentifier id)
-            : this(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmResource"/> class.
-        /// </summary>
-        /// <param name="clientOptions"></param>
-        /// <param name="credential"></param>
-        /// <param name="uri"></param>
-        /// <param name="pipeline"></param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ArmResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id)
-            : this(new ClientContext(clientOptions, credential, uri, pipeline), id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmResource"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
+        protected internal ArmResource(ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(client, nameof(client));
 
-            ClientOptions = clientContext.ClientOptions;
+            Client = client;
             Id = id;
-            Credential = clientContext.Credential;
-            BaseUri = clientContext.BaseUri;
-            Pipeline = clientContext.Pipeline;
         }
-
-        private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
 
         /// <summary>
         /// Gets the resource identifier.
@@ -75,30 +50,37 @@ namespace Azure.ResourceManager.Core
         public virtual ResourceIdentifier Id { get; }
 
         /// <summary>
-        /// Gets the Azure Resource Manager client options.
+        /// Gets the <see cref="ArmClient"/> this resource client was created from.
         /// </summary>
-        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
+        protected internal virtual ArmClient Client { get; }
 
         /// <summary>
-        /// Gets the Azure credential.
+        /// Gets the diagnostic options for this resource client.
         /// </summary>
-        protected internal virtual TokenCredential Credential { get; private set; }
+        protected internal DiagnosticsOptions DiagnosticOptions => Client.DiagnosticOptions;
 
         /// <summary>
-        /// Gets the base URI of the service.
+        /// Gets the pipeline for this resource client.
         /// </summary>
-        protected internal virtual Uri BaseUri { get; private set; }
+        protected internal HttpPipeline Pipeline => Client.Pipeline;
 
         /// <summary>
-        /// Gets the HTTP pipeline.
+        /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; }
+        protected internal Uri BaseUri => Client.BaseUri;
 
         /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
+        protected internal TagResource TagResource => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+
+        /// <summary>
+        /// Gets the api version override if it has been set for the current client options.
+        /// </summary>
+        /// <param name="resourceType"> The resource type to get the version for. </param>
+        /// <param name="apiVersion"> The api version to variable to set. </param>
+        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
 
         /// <summary>
         /// Lists all available geo-locations.
@@ -108,10 +90,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<AzureLocation> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = Tenant.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
+            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => new AzureLocation(l));
@@ -125,13 +107,25 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<AzureLocation>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            ProviderInfo resourcePageableProvider = await Tenant.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => new AzureLocation(l));
+        }
+
+        /// <summary>
+        /// Gets a cached client to use for extension methods.
+        /// </summary>
+        /// <typeparam name="T"> The type of client to get. </typeparam>
+        /// <param name="func"> The constructor factory for the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
+            where T : class
+        {
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
         }
     }
 }

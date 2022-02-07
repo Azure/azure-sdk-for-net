@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<JobAgent> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of JobAgentCreateOrUpdateOperation for mocking. </summary>
         protected JobAgentCreateOrUpdateOperation()
         {
         }
 
-        internal JobAgentCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal JobAgentCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<JobAgent>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JobAgentCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
-            return new JobAgent(_operationBase, data);
+            return new JobAgent(_armClient, data);
         }
 
         async ValueTask<JobAgent> IOperationSource<JobAgent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
-            return new JobAgent(_operationBase, data);
+            return new JobAgent(_armClient, data);
         }
     }
 }

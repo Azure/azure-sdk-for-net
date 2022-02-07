@@ -22,10 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -45,7 +44,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -102,12 +101,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -166,12 +165,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -230,12 +229,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -294,12 +293,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -396,7 +395,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "WeatherClient.GetWeathers");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "WeatherClient.GetWeathers");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -404,7 +403,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
                         : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -499,7 +498,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "WeatherClient.GetWeathers");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "WeatherClient.GetWeathers");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -507,7 +506,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
                         : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -588,12 +587,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -676,12 +675,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "WeatherClient.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {
@@ -764,12 +763,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -852,12 +851,12 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "WeatherClient.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
             }
             catch (Exception e)
             {

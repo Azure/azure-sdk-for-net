@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _webPubSub = await CreateWebPubSub(webPubSubName);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.True(_webPubSub.GetPrivateEndpointConnections().Exists(list[0].Data.Name));
-            Assert.False(_webPubSub.GetPrivateEndpointConnections().Exists(list[0].Data.Name + "01"));
+            Assert.True(await _webPubSub.GetPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
+            Assert.False(await _webPubSub.GetPrivateEndpointConnections().ExistsAsync(list[0].Data.Name + "01"));
         }
 
         [Test]

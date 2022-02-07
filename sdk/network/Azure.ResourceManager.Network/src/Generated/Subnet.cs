@@ -28,9 +28,12 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SubnetsRestOperations _subnetsRestClient;
+
+        private readonly ClientDiagnostics _subnetClientDiagnostics;
+        private readonly SubnetsRestOperations _subnetRestClient;
+        private readonly ClientDiagnostics _resourceNavigationLinksClientDiagnostics;
         private readonly ResourceNavigationLinksRestOperations _resourceNavigationLinksRestClient;
+        private readonly ClientDiagnostics _serviceAssociationLinksClientDiagnostics;
         private readonly ServiceAssociationLinksRestOperations _serviceAssociationLinksRestClient;
         private readonly SubnetData _data;
 
@@ -40,47 +43,26 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Subnet"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Subnet(ArmResource options, SubnetData data) : base(options, new ResourceIdentifier(data.Id))
+        internal Subnet(ArmClient client, SubnetData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="Subnet"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subnet(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Subnet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Subnet"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Subnet(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _subnetsRestClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string subnetApiVersion);
+            _subnetRestClient = new SubnetsRestOperations(_subnetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
+            _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _resourceNavigationLinksRestClient = new ResourceNavigationLinksRestOperations(_resourceNavigationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _serviceAssociationLinksRestClient = new ServiceAssociationLinksRestOperations(_serviceAssociationLinksClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,14 +97,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Subnet>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.Get");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Get");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _subnetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
+                    throw await _subnetClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Subnet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,50 +118,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subnet> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.Get");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Get");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _subnetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _subnetClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Subnet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,12 +139,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SubnetDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.Delete");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Delete");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _subnetRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SubnetDeleteOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,14 +161,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SubnetDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.Delete");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.Delete");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _subnetRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SubnetDeleteOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -233,8 +179,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Prepares a subnet by applying network intent policies. </summary>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<SubnetPrepareNetworkPoliciesOperation> PrepareNetworkPoliciesAsync(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
@@ -244,12 +190,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.PrepareNetworkPoliciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                var response = await _subnetRestClient.PrepareNetworkPoliciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SubnetPrepareNetworkPoliciesOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreatePrepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,8 +208,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Prepares a subnet by applying network intent policies. </summary>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual SubnetPrepareNetworkPoliciesOperation PrepareNetworkPolicies(bool waitForCompletion, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
@@ -273,14 +219,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.PrepareNetworkPolicies(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken);
-                var operation = new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreatePrepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                var response = _subnetRestClient.PrepareNetworkPolicies(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken);
+                var operation = new SubnetPrepareNetworkPoliciesOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreatePrepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -291,8 +237,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Unprepares a subnet by removing network intent policies. </summary>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public async virtual Task<SubnetUnprepareNetworkPoliciesOperation> UnprepareNetworkPoliciesAsync(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
@@ -302,12 +248,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
             try
             {
-                var response = await _subnetsRestClient.UnprepareNetworkPoliciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                var response = await _subnetRestClient.UnprepareNetworkPoliciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SubnetUnprepareNetworkPoliciesOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateUnprepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -320,8 +266,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Unprepares a subnet by removing network intent policies. </summary>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
         public virtual SubnetUnprepareNetworkPoliciesOperation UnprepareNetworkPolicies(bool waitForCompletion, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
@@ -331,14 +277,14 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
             try
             {
-                var response = _subnetsRestClient.UnprepareNetworkPolicies(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken);
-                var operation = new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _subnetsRestClient.CreateUnprepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                var response = _subnetRestClient.UnprepareNetworkPolicies(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken);
+                var operation = new SubnetUnprepareNetworkPoliciesOperation(_subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateUnprepareNetworkPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
                 if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -355,7 +301,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ResourceNavigationLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subnet.GetResourceNavigationLinks");
+                using var scope = _resourceNavigationLinksClientDiagnostics.CreateScope("Subnet.GetResourceNavigationLinks");
                 scope.Start();
                 try
                 {
@@ -378,7 +324,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<ResourceNavigationLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subnet.GetResourceNavigationLinks");
+                using var scope = _resourceNavigationLinksClientDiagnostics.CreateScope("Subnet.GetResourceNavigationLinks");
                 scope.Start();
                 try
                 {
@@ -401,7 +347,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ServiceAssociationLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subnet.GetServiceAssociationLinks");
+                using var scope = _serviceAssociationLinksClientDiagnostics.CreateScope("Subnet.GetServiceAssociationLinks");
                 scope.Start();
                 try
                 {
@@ -424,7 +370,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<ServiceAssociationLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Subnet.GetServiceAssociationLinks");
+                using var scope = _serviceAssociationLinksClientDiagnostics.CreateScope("Subnet.GetServiceAssociationLinks");
                 scope.Start();
                 try
                 {
@@ -438,6 +384,42 @@ namespace Azure.ResourceManager.Network
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _subnetClientDiagnostics.CreateScope("Subnet.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

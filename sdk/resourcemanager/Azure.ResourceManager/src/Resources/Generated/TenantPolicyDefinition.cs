@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PolicyDefinitionsRestOperations _policyDefinitionsRestClient;
+
+        private readonly ClientDiagnostics _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics;
+        private readonly PolicyDefinitionsRestOperations _tenantPolicyDefinitionPolicyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinition"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TenantPolicyDefinition"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantPolicyDefinition(ArmResource options, PolicyDefinitionData data) : base(options, data.Id)
+        internal TenantPolicyDefinition(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinition"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantPolicyDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal TenantPolicyDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinition"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantPolicyDefinition(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _policyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
+            _tenantPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicyDefinitionPolicyDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,14 +90,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TenantPolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
             scope.Start();
             try
             {
-                var response = await _policyDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TenantPolicyDefinition(this, response.Value), response.GetRawResponse());
+                    throw await _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +113,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantPolicyDefinition> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
             scope.Start();
             try
             {
-                var response = _policyDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
+                var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(this, response.Value), response.GetRawResponse());
+                    throw _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +134,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinition.GetAvailableLocations");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +152,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TenantPolicyDefinition.GetAvailableLocations");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.GetAvailableLocations");
             scope.Start();
             try
             {

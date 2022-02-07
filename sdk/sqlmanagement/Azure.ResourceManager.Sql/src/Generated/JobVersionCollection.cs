@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -22,8 +23,8 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing collection of JobVersion and their operations over its parent. </summary>
     public partial class JobVersionCollection : ArmCollection, IEnumerable<JobVersion>, IAsyncEnumerable<JobVersion>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobVersionsRestOperations _jobVersionsRestClient;
+        private readonly ClientDiagnostics _jobVersionClientDiagnostics;
+        private readonly JobVersionsRestOperations _jobVersionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="JobVersionCollection"/> class for mocking. </summary>
         protected JobVersionCollection()
@@ -31,11 +32,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="JobVersionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal JobVersionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal JobVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobVersionsRestClient = new JobVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _jobVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobVersion.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(JobVersion.ResourceType, out string jobVersionApiVersion);
+            _jobVersionRestClient = new JobVersionsRestOperations(_jobVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,7 +50,29 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlJob.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
+        /// OperationId: JobVersions_Get
+        /// <summary> Gets a job version. </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<JobVersion>> GetAsync(int jobVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _jobVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _jobVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
@@ -57,113 +82,113 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JobVersion> Get(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Get");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken);
+                var response = _jobVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobVersion(Parent, response.Value), response.GetRawResponse());
+                    throw _jobVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
+        /// OperationId: JobVersions_ListByJob
+        /// <summary> Gets all versions of a job. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="JobVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JobVersion> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<JobVersion>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _jobVersionRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<JobVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _jobVersionRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
+        /// OperationId: JobVersions_ListByJob
+        /// <summary> Gets all versions of a job. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JobVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JobVersion> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<JobVersion> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobVersionRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<JobVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobVersionRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
         /// OperationId: JobVersions_Get
-        /// <summary> Gets a job version. </summary>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JobVersion>> GetAsync(int jobVersion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = await _jobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobVersion(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobVersion> GetIfExists(int jobVersion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _jobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JobVersion>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _jobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(int jobVersion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(jobVersion, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.Exists");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -177,86 +202,74 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobVersions_ListByJob
-        /// <summary> Gets all versions of a job. </summary>
+        /// OperationId: JobVersions_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobVersion> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(int jobVersion, CancellationToken cancellationToken = default)
         {
-            Page<JobVersion> FirstPageFunc(int? pageSizeHint)
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobVersionsRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(jobVersion, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<JobVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobVersionsRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobVersions_ListByJob
-        /// <summary> Gets all versions of a job. </summary>
+        /// OperationId: JobVersions_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobVersion> GetAllAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JobVersion>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
         {
-            async Task<Page<JobVersion>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobVersionsRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _jobVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<JobVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobVersionsRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
+        /// OperationId: JobVersions_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<JobVersion> GetIfExists(int jobVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _jobVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<JobVersion>(null, response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<JobVersion> IEnumerable<JobVersion>.GetEnumerator()
@@ -273,8 +286,5 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobVersion, JobVersionData> Construct() { }
     }
 }

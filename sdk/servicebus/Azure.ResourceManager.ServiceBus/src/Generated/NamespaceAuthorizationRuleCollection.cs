@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class representing collection of ServiceBusAuthorizationRule and their operations over its parent. </summary>
     public partial class NamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceAuthorizationRule>, IAsyncEnumerable<NamespaceAuthorizationRule>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NamespaceAuthorizationRulesRestOperations _namespaceAuthorizationRulesRestClient;
+        private readonly ClientDiagnostics _namespaceAuthorizationRuleClientDiagnostics;
+        private readonly NamespaceAuthorizationRulesRestOperations _namespaceAuthorizationRuleRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NamespaceAuthorizationRuleCollection"/> class for mocking. </summary>
         protected NamespaceAuthorizationRuleCollection()
@@ -32,11 +33,13 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of the <see cref="NamespaceAuthorizationRuleCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal NamespaceAuthorizationRuleCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal NamespaceAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _namespaceAuthorizationRulesRestClient = new NamespaceAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _namespaceAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(NamespaceAuthorizationRule.ResourceType, out string namespaceAuthorizationRuleApiVersion);
+            _namespaceAuthorizationRuleRestClient = new NamespaceAuthorizationRulesRestOperations(_namespaceAuthorizationRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceAuthorizationRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,65 +51,30 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_CreateOrUpdate
         /// <summary> Creates or updates an authorization rule for a namespace. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access authorization rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NamespaceAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _namespaceAuthorizationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken);
-                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Parent, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an authorization rule for a namespace. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="parameters"> The shared access authorization rule. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<NamespaceAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _namespaceAuthorizationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Parent, response);
+                var response = await _namespaceAuthorizationRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,25 +86,33 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_CreateOrUpdate
+        /// <summary> Creates or updates an authorization rule for a namespace. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="parameters"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual NamespaceAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _namespaceAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NamespaceAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                var response = _namespaceAuthorizationRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken);
+                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -145,25 +121,26 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
         /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public async virtual Task<Response<NamespaceAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _namespaceAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
+                var response = await _namespaceAuthorizationRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NamespaceAuthorizationRule(Parent, response.Value), response.GetRawResponse());
+                    throw await _namespaceAuthorizationRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NamespaceAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,25 +149,26 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
+        /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _namespaceAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _namespaceAuthorizationRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceAuthorizationRule(this, response.Value), response.GetRawResponse());
+                    throw _namespaceAuthorizationRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NamespaceAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,70 +177,101 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_List
+        /// <summary> Gets the authorization rules for a namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public async virtual Task<Response<NamespaceAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
+            async Task<Page<NamespaceAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
+                using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _namespaceAuthorizationRuleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<NamespaceAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _namespaceAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceAuthorizationRule(this, response.Value), response.GetRawResponse());
+                using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _namespaceAuthorizationRuleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_List
+        /// <summary> Gets the authorization rules for a namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
+            Page<NamespaceAuthorizationRule> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
+                using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _namespaceAuthorizationRuleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Exists");
-            scope.Start();
-            try
+            Page<NamespaceAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(authorizationRuleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _namespaceAuthorizationRuleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Exists");
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -276,80 +285,86 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets the authorization rules for a namespace. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Page<NamespaceAuthorizationRule> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _namespaceAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(authorizationRuleName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<NamespaceAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _namespaceAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the authorization rules for a namespace. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public async virtual Task<Response<NamespaceAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NamespaceAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _namespaceAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _namespaceAuthorizationRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<NamespaceAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _namespaceAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
+        /// OperationId: NamespaceAuthorizationRules_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual Response<NamespaceAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _namespaceAuthorizationRuleClientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _namespaceAuthorizationRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceAuthorizationRule(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<NamespaceAuthorizationRule> IEnumerable<NamespaceAuthorizationRule>.GetEnumerator()
@@ -366,8 +381,5 @@ namespace Azure.ResourceManager.ServiceBus
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, NamespaceAuthorizationRule, ServiceBusAuthorizationRuleData> Construct() { }
     }
 }

@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    var recordResponse = await _proxy.Client.StartRecordAsync(_sessionFile);
+                    var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile));
                     RecordingId = recordResponse.Headers.XRecordingId;
                     await AddProxySanitizersAsync();
 
@@ -92,7 +92,7 @@ namespace Azure.Core.TestFramework
                     ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
                     try
                     {
-                        playbackResponse = await _proxy.Client.StartPlaybackAsync(_sessionFile);
+                        playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile));
                     }
                     catch (RequestFailedException ex)
                         when (ex.Status == 404)
@@ -117,10 +117,18 @@ namespace Azure.Core.TestFramework
                         "Connection"
                     };
 
-                    // temporary until custom matcher supports both excluded and ignored
-                    excludedHeaders.AddRange(_matcher.IgnoredHeaders);
-                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher(string.Join(",", excludedHeaders), _matcher.CompareBodies),
-                        RecordingId);
+                    await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
+                    {
+                        ExcludedHeaders = string.Join(",", excludedHeaders),
+                        IgnoredHeaders = _matcher.IgnoredHeaders.Count > 0 ? string.Join(",", _matcher.IgnoredHeaders) : null,
+                        IgnoredQueryParameters = _matcher.IgnoredQueryParameters.Count > 0 ? string.Join(",", _matcher.IgnoredQueryParameters): null,
+                        CompareBodies = _matcher.CompareBodies
+                    });
+
+                    foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
+                    {
+                        await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
+                    }
                     break;
             }
         }
@@ -130,6 +138,11 @@ namespace Azure.Core.TestFramework
             foreach (string header in _sanitizer.SanitizedHeaders)
             {
                 await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+            }
+
+            foreach (var header in _sanitizer.HeaderRegexSanitizers)
+            {
+                await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId);
             }
 
             foreach (string jsonPath in _sanitizer.JsonPathSanitizers.Select(s => s.JsonPath))
@@ -150,11 +163,6 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _sanitizer.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
-            }
-
-            foreach (HeaderTransform transform in _sanitizer.HeaderTransforms)
-            {
-                await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
             }
         }
 

@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Compute
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
+
+        private readonly ClientDiagnostics _oSFamilyCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _oSFamilyCloudServiceOperatingSystemsRestClient;
         private readonly OSFamilyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="OSFamily"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "OSFamily"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OSFamily(ArmResource options, OSFamilyData data) : base(options, data.Id)
+        internal OSFamily(ArmClient client, OSFamilyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="OSFamily"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSFamily(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal OSFamily(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="OSFamily"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSFamily(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _oSFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string oSFamilyCloudServiceOperatingSystemsApiVersion);
+            _oSFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,14 +87,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<OSFamily>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamily.Get");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamily.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                    throw await _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +107,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OSFamily> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamily.Get");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamily.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _oSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamily(this, response.Value), response.GetRawResponse());
+                    throw _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamily.GetAvailableLocations");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamily.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -164,7 +146,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSFamily.GetAvailableLocations");
+            using var scope = _oSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamily.GetAvailableLocations");
             scope.Start();
             try
             {

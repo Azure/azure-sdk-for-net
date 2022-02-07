@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the virtual network. </param>
         /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        internal VirtualNetworkData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, ProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, type, location, tags)
+        internal VirtualNetworkData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, ProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the virtual network. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DiskAccessesRestOperations _diskAccessesRestClient;
+
+        private readonly ClientDiagnostics _privateEndpointConnectionDiskAccessesClientDiagnostics;
+        private readonly DiskAccessesRestOperations _privateEndpointConnectionDiskAccessesRestClient;
         private readonly PrivateEndpointConnectionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnection"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnection(ArmResource options, PrivateEndpointConnectionData data) : base(options, data.Id)
+        internal PrivateEndpointConnection(ArmClient client, PrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnection"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnection(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal PrivateEndpointConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnection"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnection(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _diskAccessesRestClient = new DiskAccessesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _privateEndpointConnectionDiskAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string privateEndpointConnectionDiskAccessesApiVersion);
+            _privateEndpointConnectionDiskAccessesRestClient = new DiskAccessesRestOperations(_privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointConnectionDiskAccessesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,14 +88,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateEndpointConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.Get");
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.Get");
             scope.Start();
             try
             {
-                var response = await _diskAccessesRestClient.GetAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateEndpointConnectionDiskAccessesRestClient.GetAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
+                    throw await _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new PrivateEndpointConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,14 +108,58 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateEndpointConnection> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.Get");
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.Get");
             scope.Start();
             try
             {
-                var response = _diskAccessesRestClient.GetAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _privateEndpointConnectionDiskAccessesRestClient.GetAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
+                    throw _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnection(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<PrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _privateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateEndpointConnectionDeleteOperation(_privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
+            scope.Start();
+            try
+            {
+                var response = _privateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new PrivateEndpointConnectionDeleteOperation(_privateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _privateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -147,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.GetAvailableLocations");
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -165,55 +191,11 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.GetAvailableLocations");
+            using var scope = _privateEndpointConnectionDiskAccessesClientDiagnostics.CreateScope("PrivateEndpointConnection.GetAvailableLocations");
             scope.Start();
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskAccessDeleteAPrivateEndpointConnectionOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _diskAccessesRestClient.DeleteAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskAccessDeleteAPrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a private endpoint connection under a disk access resource. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskAccessDeleteAPrivateEndpointConnectionOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnection.Delete");
-            scope.Start();
-            try
-            {
-                var response = _diskAccessesRestClient.DeleteAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DiskAccessDeleteAPrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _diskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.CosmosDB
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CassandraResourcesRestOperations _cassandraResourcesRestClient;
+
+        private readonly ClientDiagnostics _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics;
+        private readonly CassandraResourcesRestOperations _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient;
         private readonly ThroughputSettingsData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting"/> class for mocking. </summary>
@@ -38,43 +39,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseAccountCassandraKeyspaceTableThroughputSetting"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmResource options, ThroughputSettingsData data) : base(options, data.Id)
+        internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseAccountCassandraKeyspaceTableThroughputSetting(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _cassandraResourcesRestClient = new CassandraResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesApiVersion);
+            _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient = new CassandraResourcesRestOperations(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,21 +84,18 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// <summary> Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database account with the provided name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.Get");
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.Get");
             scope.Start();
             try
             {
-                var response = await _cassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, response.Value), response.GetRawResponse());
+                    throw await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +108,340 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.Get");
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.Get");
             scope.Start();
             try
             {
-                var response = _cassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, response.Value), response.GetRawResponse());
+                    throw _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
+        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            if (updateThroughputParameters == null)
+            {
+                throw new ArgumentNullException(nameof(updateThroughputParameters));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
+        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        {
+            if (updateThroughputParameters == null)
+            {
+                throw new ArgumentNullException(nameof(updateThroughputParameters));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation> MigrateCassandraTableToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation MigrateCassandraTableToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation> MigrateCassandraTableToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation MigrateCassandraTableToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
+            scope.Start();
+            try
+            {
+                var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +455,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.GetAvailableLocations");
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,329 +473,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.GetAvailableLocations");
+            using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.GetAvailableLocations");
             scope.Start();
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<CassandraResourceUpdateCassandraTableThroughputOperation> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _cassandraResourcesRestClient.UpdateCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceUpdateCassandraTableThroughputOperation(this, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual CassandraResourceUpdateCassandraTableThroughputOperation CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
-        {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _cassandraResourcesRestClient.UpdateCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new CassandraResourceUpdateCassandraTableThroughputOperation(this, _clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cassandraResourcesRestClient.GetCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<DatabaseAccountCassandraKeyspaceTableThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cassandraResourcesRestClient.GetCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new DatabaseAccountCassandraKeyspaceTableThroughputSetting(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CassandraResourceMigrateCassandraTableToAutoscaleOperation> MigrateCassandraTableToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = await _cassandraResourcesRestClient.MigrateCassandraTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceMigrateCassandraTableToAutoscaleOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CassandraResourceMigrateCassandraTableToAutoscaleOperation MigrateCassandraTableToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
-            scope.Start();
-            try
-            {
-                var response = _cassandraResourcesRestClient.MigrateCassandraTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CassandraResourceMigrateCassandraTableToAutoscaleOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CassandraResourceMigrateCassandraTableToManualThroughputOperation> MigrateCassandraTableToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = await _cassandraResourcesRestClient.MigrateCassandraTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraResourceMigrateCassandraTableToManualThroughputOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CassandraResourceMigrateCassandraTableToManualThroughputOperation MigrateCassandraTableToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
-            scope.Start();
-            try
-            {
-                var response = _cassandraResourcesRestClient.MigrateCassandraTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CassandraResourceMigrateCassandraTableToManualThroughputOperation(_clientDiagnostics, Pipeline, _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

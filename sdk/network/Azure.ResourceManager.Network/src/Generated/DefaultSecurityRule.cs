@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DefaultSecurityRulesRestOperations _defaultSecurityRulesRestClient;
+
+        private readonly ClientDiagnostics _defaultSecurityRuleClientDiagnostics;
+        private readonly DefaultSecurityRulesRestOperations _defaultSecurityRuleRestClient;
         private readonly SecurityRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRule"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DefaultSecurityRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DefaultSecurityRule(ArmResource options, SecurityRuleData data) : base(options, new ResourceIdentifier(data.Id))
+        internal DefaultSecurityRule(ArmClient client, SecurityRuleData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRule"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DefaultSecurityRule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DefaultSecurityRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRule"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DefaultSecurityRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
+            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(_defaultSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,14 +87,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DefaultSecurityRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRule.Get");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRule.Get");
             scope.Start();
             try
             {
-                var response = await _defaultSecurityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DefaultSecurityRule(this, response.Value), response.GetRawResponse());
+                    throw await _defaultSecurityRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +107,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DefaultSecurityRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRule.Get");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRule.Get");
             scope.Start();
             try
             {
-                var response = _defaultSecurityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _defaultSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DefaultSecurityRule(this, response.Value), response.GetRawResponse());
+                    throw _defaultSecurityRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRule.GetAvailableLocations");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRule.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -164,7 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DefaultSecurityRule.GetAvailableLocations");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRule.GetAvailableLocations");
             scope.Start();
             try
             {

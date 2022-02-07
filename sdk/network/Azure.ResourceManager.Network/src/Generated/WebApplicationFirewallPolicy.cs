@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPoliciesRestClient;
+
+        private readonly ClientDiagnostics _webApplicationFirewallPolicyClientDiagnostics;
+        private readonly WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPolicyRestClient;
         private readonly WebApplicationFirewallPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicy"/> class for mocking. </summary>
@@ -38,41 +39,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "WebApplicationFirewallPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebApplicationFirewallPolicy(ArmResource options, WebApplicationFirewallPolicyData data) : base(options, new ResourceIdentifier(data.Id))
+        internal WebApplicationFirewallPolicy(ArmClient client, WebApplicationFirewallPolicyData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebApplicationFirewallPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal WebApplicationFirewallPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="WebApplicationFirewallPolicy"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebApplicationFirewallPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _webApplicationFirewallPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string webApplicationFirewallPolicyApiVersion);
+            _webApplicationFirewallPolicyRestClient = new WebApplicationFirewallPoliciesRestOperations(_webApplicationFirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webApplicationFirewallPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,14 +88,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Get");
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _webApplicationFirewallPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webApplicationFirewallPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _webApplicationFirewallPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,14 +108,58 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebApplicationFirewallPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Get");
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Get");
             scope.Start();
             try
             {
-                var response = _webApplicationFirewallPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _webApplicationFirewallPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebApplicationFirewallPolicy(this, response.Value), response.GetRawResponse());
+                    throw _webApplicationFirewallPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes Policy. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<WebApplicationFirewallPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _webApplicationFirewallPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebApplicationFirewallPolicyDeleteOperation(_webApplicationFirewallPolicyClientDiagnostics, Pipeline, _webApplicationFirewallPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes Policy. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual WebApplicationFirewallPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Delete");
+            scope.Start();
+            try
+            {
+                var response = _webApplicationFirewallPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new WebApplicationFirewallPolicyDeleteOperation(_webApplicationFirewallPolicyClientDiagnostics, Pipeline, _webApplicationFirewallPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -147,7 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.GetAvailableLocations");
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -165,55 +191,11 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.GetAvailableLocations");
+            using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicy.GetAvailableLocations");
             scope.Start();
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes Policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<WebApplicationFirewallPolicyDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _webApplicationFirewallPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebApplicationFirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _webApplicationFirewallPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes Policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual WebApplicationFirewallPolicyDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicy.Delete");
-            scope.Start();
-            try
-            {
-                var response = _webApplicationFirewallPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WebApplicationFirewallPolicyDeleteOperation(_clientDiagnostics, Pipeline, _webApplicationFirewallPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(false, encryption.Value.Data.AutoRotationEnabled);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(encryptionProtectorName));
+            Assert.IsTrue(await collection.ExistsAsync(encryptionProtectorName));
 
             // 3.Get
             var getEncryption = await collection.GetAsync(encryptionProtectorName);

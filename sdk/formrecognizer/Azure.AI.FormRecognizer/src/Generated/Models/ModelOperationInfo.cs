@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -37,6 +39,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
@@ -47,7 +50,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        internal ModelOperationInfo(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
             OperationId = operationId;
             Status = status;
@@ -56,6 +61,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
+            ApiVersion = apiVersion;
+            Tags = tags;
         }
 
         /// <summary> Operation ID. </summary>

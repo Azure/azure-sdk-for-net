@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources
     internal partial class DataPolicyManifestsRestOperations
     {
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
@@ -27,14 +28,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DataPolicyManifestsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public DataPolicyManifestsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public DataPolicyManifestsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2020-09-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateGetByPolicyModeRequest(string policyMode)
@@ -46,10 +50,10 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests/", false);
             uri.AppendPath(policyMode, true);
-            uri.AppendQuery("api-version", "2020-09-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -119,14 +123,14 @@ namespace Azure.ResourceManager.Resources
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests", false);
-            uri.AppendQuery("api-version", "2020-09-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, false);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -182,7 +186,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

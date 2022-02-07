@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobVersionsRestOperations _jobVersionsRestClient;
+
+        private readonly ClientDiagnostics _jobVersionClientDiagnostics;
+        private readonly JobVersionsRestOperations _jobVersionRestClient;
         private readonly JobVersionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="JobVersion"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "JobVersion"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobVersion(ArmResource options, JobVersionData data) : base(options, data.Id)
+        internal JobVersion(ArmClient client, JobVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobVersionsRestClient = new JobVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="JobVersion"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobVersion(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal JobVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobVersionsRestClient = new JobVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="JobVersion"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobVersion(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobVersionsRestClient = new JobVersionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _jobVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string jobVersionApiVersion);
+            _jobVersionRestClient = new JobVersionsRestOperations(_jobVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,6 +83,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ServerJobAgentJobVersionSteps in the ServerJobAgentJobVersionStep. </summary>
+        /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a ServerJobAgentJobVersionStep. </returns>
+        public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
+        {
+            return new ServerJobAgentJobVersionStepCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// OperationId: JobVersions_Get
@@ -108,14 +97,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<JobVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersion.Get");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.Get");
             scope.Start();
             try
             {
-                var response = await _jobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                var response = await _jobVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                    throw await _jobVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,14 +120,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JobVersion> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersion.Get");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.Get");
             scope.Start();
             try
             {
-                var response = _jobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken);
+                var response = _jobVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobVersion(this, response.Value), response.GetRawResponse());
+                    throw _jobVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -170,7 +159,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
+            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -182,15 +171,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        #region ServerJobAgentJobVersionStep
-
-        /// <summary> Gets a collection of ServerJobAgentJobVersionSteps in the JobVersion. </summary>
-        /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a JobVersion. </returns>
-        public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
-        {
-            return new ServerJobAgentJobVersionStepCollection(this);
-        }
-        #endregion
     }
 }

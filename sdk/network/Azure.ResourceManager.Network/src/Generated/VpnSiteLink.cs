@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VpnSiteLinksRestOperations _vpnSiteLinksRestClient;
+
+        private readonly ClientDiagnostics _vpnSiteLinkClientDiagnostics;
+        private readonly VpnSiteLinksRestOperations _vpnSiteLinkRestClient;
         private readonly VpnSiteLinkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VpnSiteLink"/> class for mocking. </summary>
@@ -37,41 +38,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VpnSiteLink"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnSiteLink(ArmResource options, VpnSiteLinkData data) : base(options, new ResourceIdentifier(data.Id))
+        internal VpnSiteLink(ArmClient client, VpnSiteLinkData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnSiteLink"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VpnSiteLink(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VpnSiteLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VpnSiteLink"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VpnSiteLink(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _vpnSiteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string vpnSiteLinkApiVersion);
+            _vpnSiteLinkRestClient = new VpnSiteLinksRestOperations(_vpnSiteLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,14 +87,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VpnSiteLink>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLink.Get");
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLink.Get");
             scope.Start();
             try
             {
-                var response = await _vpnSiteLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vpnSiteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnSiteLink(this, response.Value), response.GetRawResponse());
+                    throw await _vpnSiteLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VpnSiteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,14 +107,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VpnSiteLink> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLink.Get");
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLink.Get");
             scope.Start();
             try
             {
-                var response = _vpnSiteLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _vpnSiteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLink(this, response.Value), response.GetRawResponse());
+                    throw _vpnSiteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLink.GetAvailableLocations");
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLink.GetAvailableLocations");
             scope.Start();
             try
             {
@@ -164,7 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
         public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteLink.GetAvailableLocations");
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLink.GetAvailableLocations");
             scope.Start();
             try
             {

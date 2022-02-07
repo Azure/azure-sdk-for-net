@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<HubRouteTable> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of HubRouteTableCreateOrUpdateOperation for mocking. </summary>
         protected HubRouteTableCreateOrUpdateOperation()
         {
         }
 
-        internal HubRouteTableCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal HubRouteTableCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<HubRouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "HubRouteTableCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
-            return new HubRouteTable(_operationBase, data);
+            return new HubRouteTable(_armClient, data);
         }
 
         async ValueTask<HubRouteTable> IOperationSource<HubRouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
-            return new HubRouteTable(_operationBase, data);
+            return new HubRouteTable(_armClient, data);
         }
     }
 }

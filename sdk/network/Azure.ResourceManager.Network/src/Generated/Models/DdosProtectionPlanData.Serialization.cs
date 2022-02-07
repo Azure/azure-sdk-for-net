@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
@@ -80,6 +82,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -125,7 +132,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, tags, location, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, systemData, tags, location, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }
