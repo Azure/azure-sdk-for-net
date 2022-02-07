@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    /// <summary> Operation to delete a CommunicationService. </summary>
-    public partial class CommunicationServiceDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class CommunicationArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of CommunicationServiceDeleteOperation for mocking. </summary>
-        protected CommunicationServiceDeleteOperation()
+        /// <summary> Initializes a new instance of CommunicationArmOperation for mocking. </summary>
+        protected CommunicationArmOperation()
         {
         }
 
-        internal CommunicationServiceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CommunicationArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CommunicationServiceDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal CommunicationArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "CommunicationArmOperation");
         }
 
         /// <inheritdoc />

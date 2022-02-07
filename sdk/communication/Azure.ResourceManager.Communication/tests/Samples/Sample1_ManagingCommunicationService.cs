@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
                 Location = "global",
                 DataLocation = "UnitedStates",
             };
-            CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
+            ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
             CommunicationService communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }

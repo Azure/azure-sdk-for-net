@@ -44,7 +44,7 @@ CommunicationServiceData data = new CommunicationServiceData()
     Location = "global",
     DataLocation = "UnitedStates",
 };
-CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
+ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
 CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
