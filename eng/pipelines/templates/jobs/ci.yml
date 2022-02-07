@@ -112,6 +112,7 @@ jobs:
         condition: succeededOrFailed()
         inputs:
           BuildDropPath: $(Build.ArtifactStagingDirectory)
+
       - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
         parameters:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
@@ -198,6 +199,8 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/credscan.yml
         parameters:
           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
