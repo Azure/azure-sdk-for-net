@@ -55,20 +55,21 @@ namespace Azure.Storage
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
             => AuthorizeRequestInternal(message, true);
 
-        private async ValueTask AuthorizeRequestInternal(HttpMessage message, bool async)
+        private ValueTask AuthorizeRequestInternal(HttpMessage message, bool async)
         {
             if (tenantId != null || !_enableTenantDiscovery)
             {
                 TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);
                 if (async)
                 {
-                    await base.AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
+                    base.AuthenticateAndAuthorizeRequestAsync(message, context);
                 }
                 else
                 {
                     base.AuthenticateAndAuthorizeRequest(message, context);
                 }
             }
+            return default;
         }
 
         /// <inheritdoc />
