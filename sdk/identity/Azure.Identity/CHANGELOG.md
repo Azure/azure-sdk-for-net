@@ -3,7 +3,8 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_. 
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_.
+- `ManagedIdentityCredential` now supports accepting a `ResourceIdentifier` argument to specify a User Assigned Managed Identity by resource Id rather than client Id. `DefaultAzureCredential` also supports this via the `ManagedIdentityResourceId` property of `DefaultAzureCredentialOptions`.
 
 ### Breaking Changes
 
