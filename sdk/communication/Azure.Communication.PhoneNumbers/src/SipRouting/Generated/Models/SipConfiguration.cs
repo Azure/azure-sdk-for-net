@@ -27,5 +27,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Trunks = new ChangeTrackingDictionary<string, SipTrunk>();
             Routes = new ChangeTrackingList<SipTrunkRoute>();
         }
+
+        /// <summary> Initializes a new instance of SipConfiguration. </summary>
+        /// <param name="trunks">
+        /// SIP trunks for routing calls.
+        /// 
+        /// Map key is trunk&apos;s FQDN (1-249 characters).
+        /// </param>
+        /// <param name="routes"> Trunk routes for routing calls. </param>
+        internal SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks, IReadOnlyList<SipTrunkRoute> routes)
+        {
+            Trunks = trunks;
+            Routes = routes;
+        }
     }
 }

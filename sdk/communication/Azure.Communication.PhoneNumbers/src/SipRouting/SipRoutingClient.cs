@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
-using Azure.Communication.PhoneNumbers.SipRouting;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.ObjectModel;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
@@ -246,13 +243,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="fqdn">Trunk FQDN to be deleted.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> DeleteTrunk(
-            string fqdn,
+        public virtual Response<Uri> DeleteTrunk(
+            Uri fqdn,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn, null } });
-
-            return UpdateSipConfiguration(config,cancellationToken);
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn.AbsoluteUri, null } });
+            var response = UpdateSipConfiguration(config, cancellationToken);
+            return Response.FromValue(fqdn, response.GetRawResponse());
         }
 
         /// <summary>
@@ -261,33 +258,57 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="fqdn">trunk FQDN to be deleted.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> DeleteTrunkAsync(
-            string fqdn,
+        public virtual async Task<Response<Uri>> DeleteTrunkAsync(
+            Uri fqdn,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn, null } });
-
-            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn.AbsoluteUri, null } });
+            var response = await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(fqdn, response.GetRawResponse());
         }
 
         /// <summary>
-        /// Get <see cref="SipTrunk"/>.
+        /// Get List of configured <see cref="SipTrunk"/>.
         /// </summary>
         /// <returns>List of configured trunks.</returns>
-        public virtual Response<IEnumerable<SipTrunk>> GetTrunks(
+        public virtual Response<IReadOnlyList<SipTrunk>> GetTrunks(
             CancellationToken cancellationToken = default)
         {
-            return GetSipConfiguration(cancellationToken);
+            var response = GetSipConfiguration(cancellationToken);
+            return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
         }
 
         /// <summary>
-        /// Get <see cref="SipTrunk"/>.
+        /// Get List of configured <see cref="SipTrunk"/>.
         /// </summary>
         /// <returns>List of configured trunks.</returns>
-        public virtual Response<IEnumerable<SipTrunk>> GetTrunksAsync(
+        public virtual async Task<Response<IReadOnlyList<SipTrunk>>> GetTrunksAsync(
             CancellationToken cancellationToken = default)
         {
-            return GetSipConfigurationAsync(cancellationToken);
+            var response = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get List of configured <see cref="SipTrunkRoute"/>.
+        /// </summary>
+        /// <returns>List of configured routes.</returns>
+        public virtual Response<IReadOnlyList<SipTrunkRoute>> GetRoutes(
+            CancellationToken cancellationToken = default)
+        {
+            var response = GetSipConfiguration(cancellationToken);
+            return Response.FromValue(response.Value.Routes, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get List of configured <see cref="SipTrunkRoute"/>.
+        /// </summary>
+        /// <returns>List of configured routes.</returns>
+        public virtual async Task<Response<IReadOnlyList<SipTrunkRoute>>> GetRoutesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var response = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Routes, response.GetRawResponse());
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
@@ -10,29 +11,41 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     public partial class SipConfiguration
     {
-        /// <summary> Initializes a new instance of SipConfiguration. </summary>
-        /// <param name="trunks"> SIP trunks for routing calls. Map key is trunk&apos;s FQDN (1-249 characters). </param>
-        /// <param name="routes"> Trunk routes for routing calls. </param>
-        public SipConfiguration(IDictionary<string, SipTrunk> trunks, IEnumerable<SipTrunkRoute> routes)
-        {
-            Trunks = trunks;
-            Routes = routes.ToList();
-        }
-
         /// <summary>
         /// SIP trunks for routing calls.
         /// Map key is trunk&apos;s FQDN (1-249 characters).
         /// </summary>
-        public IDictionary<string, SipTrunk>  Trunks { get; }
+        public IReadOnlyDictionary<string, SipTrunk> Trunks { get; }
+
         /// <summary> Trunk routes for routing calls. </summary>
-        public IEnumerable<SipTrunkRoute> Routes { get; }
+        public IReadOnlyList<SipTrunkRoute> Routes { get; }
+
+        /// <summary> Initializes a new instance of SipConfiguration. </summary>
+        /// <param name="trunks"> SIP trunks for routing calls. Map key is trunk&apos;s FQDN (1-249 characters). </param>
+        /// <param name="routes"> Trunk routes for routing calls. </param>
+        public SipConfiguration(IEnumerable<SipTrunk> trunks, IEnumerable<SipTrunkRoute> routes)
+        {
+            Trunks = (IReadOnlyDictionary <string,SipTrunk>)trunks.Zip(trunks.Select(x => x.Name), (k, v) => new { k, v })
+              .ToDictionary(x => x.k, x => x.v);
+            Routes = routes.ToList();
+        }
+
+        internal SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks)
+        {
+            Trunks = trunks;
+        }
+
+        internal SipConfiguration(IEnumerable<SipTrunkRoute> routes)
+        {
+            Routes = routes.ToList();
+        }
 
         // <summary> Initializes a new instance of SipConfiguration. </summary>
         /// <param name="writer"></param>
         internal void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Trunks != null)
+            if (Optional.IsCollectionDefined(Trunks))
             {
                 writer.WritePropertyName("trunks");
                 writer.WriteStartObject();
@@ -51,7 +64,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 }
                 writer.WriteEndObject();
             }
-            if (Routes != null)
+            if (Optional.IsCollectionDefined(Trunks))
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();
@@ -66,8 +79,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         internal static SipConfiguration DeserializeSipConfiguration(JsonElement element)
         {
-            Optional<IDictionary<string, SipTrunk>> trunks = default;
-            Optional<IList<SipTrunkRoute>> routes = default;
+            Optional<IReadOnlyDictionary<string, SipTrunk>> trunks = default;
+            Optional<IReadOnlyList<SipTrunkRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trunks"))
@@ -77,10 +90,19 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, SipTrunk> dictionary = new Dictionary<string, SipTrunk>();
+                    Dictionary<string,SipTrunk> dictionary = new Dictionary<string, SipTrunk>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SipTrunk.DeserializeSipTrunk(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            var sipTrunk = SipTrunk.DeserializeSipTrunk(property0.Value);
+                            sipTrunk.Name = property0.Name;
+                            dictionary.Add(property0.Name, sipTrunk);
+                        }
                     }
                     trunks = dictionary;
                     continue;
