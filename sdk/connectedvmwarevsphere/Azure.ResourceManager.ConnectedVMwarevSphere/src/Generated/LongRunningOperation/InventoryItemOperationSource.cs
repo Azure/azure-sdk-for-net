@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class InventoryItemSource : IOperationSource<InventoryItem>
+    internal class InventoryItemOperationSource : IOperationSource<InventoryItem>
     {
         private readonly ArmClient _client;
 
-        internal InventoryItemSource(ArmClient client)
+        internal InventoryItemOperationSource(ArmClient client)
         {
             _client = client;
         }

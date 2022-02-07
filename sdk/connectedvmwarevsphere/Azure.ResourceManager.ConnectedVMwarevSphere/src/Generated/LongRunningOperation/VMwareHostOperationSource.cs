@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VMwareHostSource : IOperationSource<VMwareHost>
+    internal class VMwareHostOperationSource : IOperationSource<VMwareHost>
     {
         private readonly ArmClient _client;
 
-        internal VMwareHostSource(ArmClient client)
+        internal VMwareHostOperationSource(ArmClient client)
         {
             _client = client;
         }

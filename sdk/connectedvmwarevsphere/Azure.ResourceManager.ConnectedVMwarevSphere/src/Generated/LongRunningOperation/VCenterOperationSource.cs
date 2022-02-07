@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VMwareClusterSource : IOperationSource<VMwareCluster>
+    internal class VCenterOperationSource : IOperationSource<VCenter>
     {
         private readonly ArmClient _client;
 
-        internal VMwareClusterSource(ArmClient client)
+        internal VCenterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        VMwareCluster IOperationSource<VMwareCluster>.CreateResult(Response response, CancellationToken cancellationToken)
+        VCenter IOperationSource<VCenter>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
-            return new VMwareCluster(_client, data);
+            var data = VCenterData.DeserializeVCenterData(document.RootElement);
+            return new VCenter(_client, data);
         }
 
-        async ValueTask<VMwareCluster> IOperationSource<VMwareCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VCenter> IOperationSource<VCenter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VMwareClusterData.DeserializeVMwareClusterData(document.RootElement);
-            return new VMwareCluster(_client, data);
+            var data = VCenterData.DeserializeVCenterData(document.RootElement);
+            return new VCenter(_client, data);
         }
     }
 }

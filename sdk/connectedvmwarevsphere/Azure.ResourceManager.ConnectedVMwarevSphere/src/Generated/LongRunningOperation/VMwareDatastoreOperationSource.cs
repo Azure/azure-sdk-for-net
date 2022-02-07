@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VMwareDatastoreSource : IOperationSource<VMwareDatastore>
+    internal class VMwareDatastoreOperationSource : IOperationSource<VMwareDatastore>
     {
         private readonly ArmClient _client;
 
-        internal VMwareDatastoreSource(ArmClient client)
+        internal VMwareDatastoreOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vMwareDatastoreDatastoresRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vMwareDatastoreDatastoresRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

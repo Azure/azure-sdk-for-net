@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VirtualMachineTemplateSource : IOperationSource<VirtualMachineTemplate>
+    internal class VirtualMachineTemplateOperationSource : IOperationSource<VirtualMachineTemplate>
     {
         private readonly ArmClient _client;
 
-        internal VirtualMachineTemplateSource(ArmClient client)
+        internal VirtualMachineTemplateOperationSource(ArmClient client)
         {
             _client = client;
         }

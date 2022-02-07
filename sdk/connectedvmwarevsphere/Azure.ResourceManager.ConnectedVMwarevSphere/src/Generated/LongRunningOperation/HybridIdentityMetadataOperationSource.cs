@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class HybridIdentityMetadataSource : IOperationSource<HybridIdentityMetadata>
+    internal class HybridIdentityMetadataOperationSource : IOperationSource<HybridIdentityMetadata>
     {
         private readonly ArmClient _client;
 
-        internal HybridIdentityMetadataSource(ArmClient client)
+        internal HybridIdentityMetadataOperationSource(ArmClient client)
         {
             _client = client;
         }

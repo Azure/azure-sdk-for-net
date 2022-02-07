@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _virtualMachineTemplateRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineTemplate>(new VirtualMachineTemplateSource(Client), _virtualMachineTemplateClientDiagnostics, Pipeline, _virtualMachineTemplateRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineTemplate>(new VirtualMachineTemplateOperationSource(Client), _virtualMachineTemplateClientDiagnostics, Pipeline, _virtualMachineTemplateRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _virtualMachineTemplateRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineTemplate>(new VirtualMachineTemplateSource(Client), _virtualMachineTemplateClientDiagnostics, Pipeline, _virtualMachineTemplateRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineTemplate>(new VirtualMachineTemplateOperationSource(Client), _virtualMachineTemplateClientDiagnostics, Pipeline, _virtualMachineTemplateRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

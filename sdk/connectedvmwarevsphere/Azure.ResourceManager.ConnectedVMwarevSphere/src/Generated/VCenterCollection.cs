@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vCenterRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterOperationSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vCenterRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenter>(new VCenterOperationSource(Client), _vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

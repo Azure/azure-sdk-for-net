@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vMwareHostHostsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHost>(new VMwareHostSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHost>(new VMwareHostOperationSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vMwareHostHostsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, hostName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHost>(new VMwareHostSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHost>(new VMwareHostOperationSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

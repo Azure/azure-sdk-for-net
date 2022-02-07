@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _virtualNetworkRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualNetwork>(new VirtualNetworkSource(Client), _virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualNetwork>(new VirtualNetworkOperationSource(Client), _virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _virtualNetworkRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualNetwork>(new VirtualNetworkSource(Client), _virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualNetwork>(new VirtualNetworkOperationSource(Client), _virtualNetworkClientDiagnostics, Pipeline, _virtualNetworkRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
