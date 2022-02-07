@@ -18,6 +18,10 @@ using Azure.Storage.DataMovement;
 using Azure.Core;
 using Azure.Identity;
 using System.Linq;
+using System.Threading;
+using Microsoft;
+using System.Security.AccessControl;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -408,13 +412,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadDirectoryJobId4 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory4, downloadPath);
             string downloadDirectoryJobId5 = blobTransferManager.ScheduleDownloadDirectory(sourceBlobDirectory5, downloadPath);
 
-            //List all jobs
-            IList<StorageTransferJobDetails> list = blobTransferManager.ListJobs();
-
             // Get Job information with using Job Id
-            StorageTransferJobDetails job = blobTransferManager.GetJob(downloadDirectoryJobId3);
-            // Get Job information using job id from list
-            StorageTransferJobDetails job2 = blobTransferManager.GetJob(list[1].JobId);
+            BlobTransferJobProperties job = blobTransferManager.GetJobProperties(downloadDirectoryJobId3);
 
             // Pause transfers
             blobTransferManager.PauseTransfers();
@@ -452,30 +451,27 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 // Get a reference to a destination blobs
-                BlobClient destinationBlob = container.GetBlobClient(Randomize("sample-blob"));
-                BlobClient destinationBlob2 = container.GetBlobClient(Randomize("sample-blob"));
+                BlobClient sourceBlob = container.GetBlobClient(Randomize("sample-blob"));
+                BlobClient destinationBlob = container.GetBlobClient(Randomize("sample-blob2"));
 
                 // Upload file data
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
                 // Create simple transfer single blob upload job
-                string jobId = transferManager.ScheduleUpload(originalPath, destinationBlob);
+                string jobId = transferManager.ScheduleUpload(originalPath, sourceBlob);
 
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
 
                 // Also I want to specify the progress handler
                 Progress<long> blob2Progress = new Progress<long>();
-                transferManager.ScheduleUpload(
-                    originalPath,
-                    destinationBlob2,
-                    uploadOptions: new BlobUploadOptions()
+                transferManager.ScheduleCopy(
+                    sourceBlob.Uri,
+                    destinationBlob,
+                    copyMethod: BlobServiceCopyMethod.ServiceSideAsyncCopy,
+                    copyOptions: new BlobCopyFromUriOptions()
                     {
-                        ProgressHandler = blob2Progress,
-                        TransferOptions = new StorageTransferOptions()
-                        {
-                            MaximumConcurrency = 4
-                        }
+                        AccessTier = AccessTier.Hot
                     });
             }
             finally
@@ -615,9 +611,37 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Transfer Manager
                 BlobTransferManager transferManager = new BlobTransferManager(default);
 
+                CancellationTokenSource cts = new CancellationTokenSource();
+
+                List<string> failedDirectories = new List<string>();
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
-                Progress<TransferProgressHandler> blob2Progress = new Progress<TransferProgressHandler>();
+                TransferProgressHandler blob2Progress = new TransferProgressHandler();
+                blob2Progress.DirectoriesSkipped += async (PathTransferSkippedEventArgs args) =>
+                {
+                    if (args.Exception.Message == "Permissions Denied")
+                    {
+                        Console.WriteLine("Permissions denied, some users may either choose to do two things");
+                        // Option 1: Cancel the entire job, resolve error and then resume job later by adding each directory manually
+                        cts.Cancel();
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                        {
+                            DirectoryInfo skippedDirectory = new DirectoryInfo(args.Exception.Source);
+                            DirectorySecurity rights = skippedDirectory.GetAccessControl();
+                            rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
+                            skippedDirectory.SetAccessControl(rights);
+                            failedDirectories.Add(args.Exception.Source);
+
+                            // Option 2: Resolve the exception.
+                            await transferManager.PauseJob(args.Job.JobId);
+                            rights.AddAccessRule(new FileSystemAccessRule("userIdentity", FileSystemRights.FullControl, AccessControlType.Allow));
+                            skippedDirectory.SetAccessControl(rights);
+                            await transferManager.ResumeJob(args.Job.JobId);
+                        }
+                    }
+                    // Remove stub
+                    await Task.CompletedTask;
+                };
                 string jobId = transferManager.ScheduleDownloadDirectory(
                     sourceDirectoryBlob2,
                     downloadPath2,
@@ -629,18 +653,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                             MaximumConcurrency = 4
                         }
                     });
-
-                // Some error happens here
-                // For example let's say we hit a LeaseIdMissing error. That means the customer
-                // now needs to specify the container lease id so they can proceed with the transfer
-
-                /*
-                TransferException exception = ??;
-                BlobClient b = exception.GetBlobClient();
-                string leaseId = "containerLeaseId";
-                BlobLeaseClient containerClient = b.GetParentBlobContainerClient().GetBlobLeaseClient(leaseId);
-                BlobVirtualDirectoryClient directoryClient
-                */
             }
             finally
             {

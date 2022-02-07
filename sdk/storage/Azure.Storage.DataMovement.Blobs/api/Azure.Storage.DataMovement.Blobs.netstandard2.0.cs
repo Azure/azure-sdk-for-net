@@ -4,8 +4,12 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         protected internal BlobTransferManager() { }
         public BlobTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
-        public Azure.Storage.DataMovement.Blobs.Models.BlobTransferJobProperties GetJobDetails(string jobId) { throw null; }
+        public override void CancelTransfers() { }
+        public override void Clean() { }
+        public Azure.Storage.DataMovement.Blobs.Models.BlobTransferJobProperties GetJobProperties(string jobId) { throw null; }
         public System.Threading.Tasks.Task PauseJob(string jobId) { throw null; }
+        public override void PauseTransfers() { }
+        public System.Threading.Tasks.Task ResumeJob(string jobId) { throw null; }
         public string ScheduleCopy(System.Uri sourceUri, Azure.Storage.Blobs.BlobClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleCopyDirectory(System.Uri sourceUri, Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient destinationClient, Azure.Storage.DataMovement.Blobs.Models.BlobServiceCopyMethod copyMethod, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryCopyFromUriOptions copyOptions = null) { throw null; }
         public string ScheduleDownload(Azure.Storage.Blobs.BlobClient sourceClient, string destinationLocalPath, Azure.Storage.Blobs.Models.BlobDownloadToOptions options = null) { throw null; }
@@ -67,7 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public partial class BlobDirectoryDownloadOptions
     {
         public BlobDirectoryDownloadOptions() { }
-        public System.IProgress<Azure.Storage.DataMovement.TransferProgressHandler> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.TransferProgressHandler ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.DownloadTransactionalHashingOptions TransactionalHashingOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }

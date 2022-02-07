@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// progress updates about data transfers.
         /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
         /// </summary>
-        public IProgress<TransferProgressHandler> ProgressHandler { get; set; }
+        public TransferProgressHandler ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="StorageTransferOptions"/> to configure

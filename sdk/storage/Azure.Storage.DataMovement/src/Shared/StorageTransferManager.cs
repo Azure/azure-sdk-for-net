@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement
     /// TODO: update description to include page blobs, append blobs, SMB Files
     /// and DataLake Files once added.
     /// </summary>
-    public class StorageTransferManager
+    public abstract class StorageTransferManager
     {
         // Not sure if we should keep the jobs that in in progress here
         // private IList<StorageTransferJob> _jobsInProgress;
@@ -40,11 +40,6 @@ namespace Azure.Storage.DataMovement
         private StorageTransferManagerOptions Options => _options;
 
         /// <summary>
-        /// The current state of the StorageTransferMangager
-        /// </summary>
-        private StorageManagerTransferStatus _managerTransferStatus;
-
-        /// <summary>
         /// Constructor for mocking
         /// </summary>
         protected internal StorageTransferManager()
@@ -59,8 +54,15 @@ namespace Azure.Storage.DataMovement
         public StorageTransferManager(StorageTransferManagerOptions options)
         {
             _options = options;
-            _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
+
+        /// <summary>
+        /// Pauses transfers that are currently being processed.
+        /// Does not allow any other transfer start.
+        /// </summary>
+        /// TODO: Returns actual object, or at least in a designated log
+        /// file we have a place where people can continue transfers
+        public abstract void PauseTransfers();
 
         /// <summary>
         /// Cancel Transfers that are currently being processed.
@@ -72,51 +74,12 @@ namespace Azure.Storage.DataMovement
         ///
         /// In order to rerun the job, the customer must readd the job back in.
         /// </summary>
-        public virtual void CancelTransfers()
-        {
-            // This would remove all transfers from the queue and not log the current progress
-            // to the file. Maybe we would also remove the file too as a part of cleanup.
-            _managerTransferStatus = StorageManagerTransferStatus.Cancelling;
-            foreach (TransferJobInternal job in _totalJobs)
-            {
-                // Probably look to do this in parallel.
-                // TODO: catch any errors that fly up the stack and attempt
-                // to delete the other log or plan files, but throw the proper exception
-                // or list of files that could not be deleted.
-                job.PlanJobWriter.RemovePlanFile();
-            }
-        }
+        public abstract void CancelTransfers();
 
         /// <summary>
         /// Removes all plan files/ DataTransferState Transfer files.
         /// Removes all logs
         /// </summary>
-        public virtual void Clean()
-        {
-            if (_managerTransferStatus == StorageManagerTransferStatus.InProgress)
-            {
-                // TODO: throw proper exception
-                throw new Exception("Please cancel or pause the transfer jobs before cleaning");
-            }
-            else if (_managerTransferStatus == StorageManagerTransferStatus.Pausing)
-            {
-                // TODO: throw proper exception
-                throw new Exception("Please wait until all transfer jobs have paused");
-            }
-            else if (_managerTransferStatus == StorageManagerTransferStatus.Cancelling)
-            {
-                throw new Exception("Please wait until all transfer jobs have cancelled");
-            }
-            _managerTransferStatus = StorageManagerTransferStatus.Cleaning;
-            foreach (TransferJobInternal job in _totalJobs)
-            {
-                // Probably look to do this in parallel.
-                // TODO: catch any errors that fly up the stack and attempt
-                // to delete the other log or plan files, but throw the proper exception
-                // or list of files that could not be deleted.
-                job.Logger.removeLogFile();
-                job.PlanJobWriter.RemovePlanFile();
-            }
-        }
+        public abstract void Clean();
     }
 }

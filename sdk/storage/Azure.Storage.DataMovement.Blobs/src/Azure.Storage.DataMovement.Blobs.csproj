@@ -96,5 +96,6 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)\TransferJobLoggerFactory.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\TransferJobInternal.cs" LinkBase="SharedDataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)\Errors.DataMovement.cs" LinkBase="SharedDataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)\StorageManagerTransferStatus.cs" LinkBase="SharedDataMovement" />
   </ItemGroup>
 </Project>

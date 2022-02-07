@@ -25,15 +25,13 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.Models.StorageTransferJobDetails Job { get { throw null; } }
         public Azure.Response Response { get { throw null; } }
     }
-    public partial class StorageTransferManager
+    public abstract partial class StorageTransferManager
     {
         protected internal StorageTransferManager() { }
         public StorageTransferManager(Azure.Storage.DataMovement.Models.StorageTransferManagerOptions options) { }
-        public virtual void CancelTransfers() { }
-        public virtual void Clean() { }
-        public virtual Azure.Storage.DataMovement.Models.StorageTransferJobDetails GetJob(string jobId) { throw null; }
-        public virtual System.Collections.Generic.IList<Azure.Storage.DataMovement.Models.StorageTransferJobDetails> ListJobs() { throw null; }
-        public virtual void PauseTransfers() { }
+        public abstract void CancelTransfers();
+        public abstract void Clean();
+        public abstract void PauseTransfers();
     }
     public partial class TransferProgressHandler
     {

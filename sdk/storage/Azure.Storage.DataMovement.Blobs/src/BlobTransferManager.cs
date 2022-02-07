@@ -46,6 +46,11 @@ namespace Azure.Storage.DataMovement.Blobs
         private TaskFactory _taskFactory { get; set; }
 
         /// <summary>
+        /// The current state of the StorageTransferMangager
+        /// </summary>
+        internal StorageManagerTransferStatus _managerTransferStatus;
+
+        /// <summary>
         /// Constructor for mocking
         /// </summary>
         protected internal BlobTransferManager()
@@ -62,6 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _jobTransferScheduler = new BlobJobTransferScheduler(options?.ConcurrencyForLocalFilesystemListing, options?.ConcurrencyForServiceListing);
             _taskFactory = new TaskFactory(_jobTransferScheduler);
+            _managerTransferStatus = StorageManagerTransferStatus.Idle;
         }
 
         /// <summary>
@@ -394,7 +400,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public BlobTransferJobProperties GetJobDetails(string jobId)
+        public BlobTransferJobProperties GetJobProperties(string jobId)
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {
@@ -469,20 +475,77 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public virtual void PauseTransfers()
+        public override void PauseTransfers()
         {
             _managerTransferStatus = StorageManagerTransferStatus.Pausing;
 
-            foreach (BlobTransferJobInternal job in _totalTransferJobs)
+            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
             {
-                if (!job.CancellationTokenSource.IsCancellationRequested)
+                if (!job.Value.CancellationTokenSource.IsCancellationRequested)
                 {
-                    job.CancellationTokenSource.Cancel(true);
+                    job.Value.CancellationTokenSource.Cancel(true);
                 }
                 //TODO: log cancellation of job
                 //Call job update transfer status
             }
             _managerTransferStatus = StorageManagerTransferStatus.Idle;
+        }
+
+        /// <summary>
+        /// Cancel Transfers that are currently being processed.
+        /// Removes all transfers that are being processed and waiting
+        /// to be performed.
+        ///
+        /// In cancelling tasks, we are also removing all the transfer state
+        /// plan files of all the jobs because we are removing all jobs.
+        ///
+        /// In order to rerun the job, the customer must readd the job back in.
+        /// </summary>
+        public override void CancelTransfers()
+        {
+            // This would remove all transfers from the queue and not log the current progress
+            // to the file. Maybe we would also remove the file too as a part of cleanup.
+            _managerTransferStatus = StorageManagerTransferStatus.Cancelling;
+            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            {
+                // Probably look to do this in parallel.
+                // TODO: catch any errors that fly up the stack and attempt
+                // to delete the other log or plan files, but throw the proper exception
+                // or list of files that could not be deleted.
+                job.Value.PlanJobWriter.RemovePlanFile();
+            }
+        }
+
+        /// <summary>
+        /// Removes all plan files/ DataTransferState Transfer files.
+        /// Removes all logs
+        /// </summary>
+        public override void Clean()
+        {
+            if (_managerTransferStatus == StorageManagerTransferStatus.InProgress)
+            {
+                // TODO: throw proper exception
+                throw new Exception("Please cancel or pause the transfer jobs before cleaning");
+            }
+            else if (_managerTransferStatus == StorageManagerTransferStatus.Pausing)
+            {
+                // TODO: throw proper exception
+                throw new Exception("Please wait until all transfer jobs have paused");
+            }
+            else if (_managerTransferStatus == StorageManagerTransferStatus.Cancelling)
+            {
+                throw new Exception("Please wait until all transfer jobs have cancelled");
+            }
+            _managerTransferStatus = StorageManagerTransferStatus.Cleaning;
+            foreach (KeyValuePair<string, BlobTransferJobInternal> job in _totalTransferJobs)
+            {
+                // Probably look to do this in parallel.
+                // TODO: catch any errors that fly up the stack and attempt
+                // to delete the other log or plan files, but throw the proper exception
+                // or list of files that could not be deleted.
+                job.Value.Logger.removeLogFile();
+                job.Value.PlanJobWriter.RemovePlanFile();
+            }
         }
     }
 }
