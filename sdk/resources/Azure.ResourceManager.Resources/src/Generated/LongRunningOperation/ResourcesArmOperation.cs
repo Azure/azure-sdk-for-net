@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
-    /// <summary> Deletes the JIT request. </summary>
-    public partial class JitRequestDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class ResourcesArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of JitRequestDeleteOperation for mocking. </summary>
-        protected JitRequestDeleteOperation()
+        /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>
+        protected ResourcesArmOperation()
         {
         }
 
-        internal JitRequestDeleteOperation(Response response)
+        internal ResourcesArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ResourcesArmOperation");
         }
 
         /// <inheritdoc />

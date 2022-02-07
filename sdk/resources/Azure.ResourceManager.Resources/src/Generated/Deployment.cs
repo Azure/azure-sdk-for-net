@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeploymentDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentClientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
                 var response = await _deploymentRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentDeleteOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response);
+                var operation = new ResourcesArmOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeploymentDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentClientDiagnostics.CreateScope("Deployment.Delete");
             scope.Start();
             try
             {
                 var response = _deploymentRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new DeploymentDeleteOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response);
+                var operation = new ResourcesArmOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentValidateOperation> ValidateAsync(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DeploymentValidateResult>> ValidateAsync(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _deploymentRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentValidateOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response);
+                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentValidateOperation Validate(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeploymentValidateResult> Validate(bool waitForCompletion, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _deploymentRestClient.ValidateAtScope(Id.Parent, Id.Name, parameters, cancellationToken);
-                var operation = new DeploymentValidateOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response);
+                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<DeploymentWhatIfOperation> WhatIfAsync(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.Parent.ResourceType == Tenant.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="properties"> The deployment properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public virtual DeploymentWhatIfOperation WhatIf(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WhatIfOperationResult> WhatIf(bool waitForCompletion, string location, DeploymentWhatIfProperties properties, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.Parent.ResourceType == Tenant.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ManagementGroup.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, location, properties, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, location, properties).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == Subscription.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Resources
                 else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location, cancellationToken);
-                    var operation = new DeploymentWhatIfOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, properties, location).Request, response, OperationFinalStateVia.Location);
                     if (waitForCompletion)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
