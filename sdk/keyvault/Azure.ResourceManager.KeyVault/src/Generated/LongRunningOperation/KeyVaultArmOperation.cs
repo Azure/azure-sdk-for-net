@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-    public partial class DeletedVaultPurgeDeletedOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class KeyVaultArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of DeletedVaultPurgeDeletedOperation for mocking. </summary>
-        protected DeletedVaultPurgeDeletedOperation()
+        /// <summary> Initializes a new instance of KeyVaultArmOperation for mocking. </summary>
+        protected KeyVaultArmOperation()
         {
         }
 
-        internal DeletedVaultPurgeDeletedOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal KeyVaultArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeletedVaultPurgeDeletedOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal KeyVaultArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "KeyVaultArmOperation");
         }
 
         /// <inheritdoc />

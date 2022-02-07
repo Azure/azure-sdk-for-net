@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SecretCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Secret>> CreateOrUpdateAsync(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             if (parameters == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _secretRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SecretCreateOrUpdateOperation(Client, response);
+                var operation = new KeyVaultArmOperation<Secret>(Response.FromValue(new Secret(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SecretCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Secret> CreateOrUpdate(bool waitForCompletion, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
             if (parameters == null)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _secretRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, parameters, cancellationToken);
-                var operation = new SecretCreateOrUpdateOperation(Client, response);
+                var operation = new KeyVaultArmOperation<Secret>(Response.FromValue(new Secret(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
