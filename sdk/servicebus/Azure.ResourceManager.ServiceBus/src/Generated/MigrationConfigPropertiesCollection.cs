@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<MigrationConfigPropertiesCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<MigrationConfigProperties>> CreateOrUpdateAsync(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _migrationConfigPropertiesMigrationConfigsRestClient.CreateAndStartMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrationConfigPropertiesCreateOrUpdateOperation(Client, _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response);
+                var operation = new ServiceBusArmOperation<MigrationConfigProperties>(new MigrationConfigPropertiesOperationSource(Client), _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual MigrationConfigPropertiesCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MigrationConfigProperties> CreateOrUpdate(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _migrationConfigPropertiesMigrationConfigsRestClient.CreateAndStartMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters, cancellationToken);
-                var operation = new MigrationConfigPropertiesCreateOrUpdateOperation(Client, _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response);
+                var operation = new ServiceBusArmOperation<MigrationConfigProperties>(new MigrationConfigPropertiesOperationSource(Client), _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkRuleSetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NetworkRuleSet>> CreateOrUpdateAsync(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _networkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkRuleSetCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkRuleSetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkRuleSet> CreateOrUpdate(bool waitForCompletion, NetworkRuleSetData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _networkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new NetworkRuleSetCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<NetworkRuleSet>(Response.FromValue(new NetworkRuleSet(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

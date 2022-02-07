@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.ServiceBus.Models
+namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> Deletes an Alias(Disaster Recovery configuration). </summary>
-    public partial class DisasterRecoveryDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class ServiceBusArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of DisasterRecoveryDeleteOperation for mocking. </summary>
-        protected DisasterRecoveryDeleteOperation()
+        /// <summary> Initializes a new instance of ServiceBusArmOperation for mocking. </summary>
+        protected ServiceBusArmOperation()
         {
         }
 
-        internal DisasterRecoveryDeleteOperation(Response response)
+        internal ServiceBusArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal ServiceBusArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ServiceBusArmOperation");
         }
 
         /// <inheritdoc />
