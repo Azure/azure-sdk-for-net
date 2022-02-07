@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AfdCustomDomainDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Delete");
             scope.Start();
             try
             {
                 var response = await _afdCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainDeleteOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AfdCustomDomainDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.Delete");
             scope.Start();
             try
             {
                 var response = _afdCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdCustomDomainDeleteOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdCustomDomainUpdateOperation> UpdateAsync(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdCustomDomain>> UpdateAsync(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (customDomainUpdateProperties == null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdCustomDomainRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainUpdateProperties"/> is null. </exception>
-        public virtual AfdCustomDomainUpdateOperation Update(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdCustomDomain> Update(bool waitForCompletion, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (customDomainUpdateProperties == null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdCustomDomainRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties, cancellationToken);
-                var operation = new AfdCustomDomainUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Updates the domain validation token. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AfdCustomDomainRefreshValidationTokenOperation> RefreshValidationTokenAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ValidationToken>> RefreshValidationTokenAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.RefreshValidationToken");
             scope.Start();
             try
             {
                 var response = await _afdCustomDomainRestClient.RefreshValidationTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation<ValidationToken>(new ValidationTokenSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Updates the domain validation token. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AfdCustomDomainRefreshValidationTokenOperation RefreshValidationToken(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ValidationToken> RefreshValidationToken(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdCustomDomainClientDiagnostics.CreateScope("AfdCustomDomain.RefreshValidationToken");
             scope.Start();
             try
             {
                 var response = _afdCustomDomainRestClient.RefreshValidationToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdCustomDomainRefreshValidationTokenOperation(_afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation<ValidationToken>(new ValidationTokenSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateRefreshValidationTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

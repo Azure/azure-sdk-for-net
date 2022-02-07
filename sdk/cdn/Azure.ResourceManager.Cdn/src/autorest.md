@@ -11,6 +11,13 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d89568
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+operation-id-mappings:
+  CdnEndpoint:
+      subscriptionId: Microsoft.Resources/subscriptions
+      resourceGroupName: Microsoft.Resources/resourceGroups
+      profileName: Microsoft.Cdn/operationresults/profileresults
+      endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
+
 modelerfour:
   lenient-model-deduplication: true
 no-property-type-replacement: 

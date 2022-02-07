@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Cdn.Models
+namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> Deletes an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
-    public partial class AfdRouteDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class CdnArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of AfdRouteDeleteOperation for mocking. </summary>
-        protected AfdRouteDeleteOperation()
+        /// <summary> Initializes a new instance of CdnArmOperation for mocking. </summary>
+        protected CdnArmOperation()
         {
         }
 
-        internal AfdRouteDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CdnArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AfdRouteDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal CdnArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "CdnArmOperation");
         }
 
         /// <inheritdoc />
