@@ -13,8 +13,6 @@ skip-csproj: true
 output-folder: Generated/
 operation-id-mappings:
   CdnEndpoint:
-      subscriptionId: Microsoft.Resources/subscriptions
-      resourceGroupName: Microsoft.Resources/resourceGroups
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
 
