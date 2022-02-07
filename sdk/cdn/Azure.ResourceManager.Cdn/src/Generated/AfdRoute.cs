@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdRouteRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdRouteRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties, cancellationToken);
-                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

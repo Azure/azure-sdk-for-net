@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdOriginGroupSource : IOperationSource<AfdOriginGroup>
+    internal class AfdOriginGroupOperationSource : IOperationSource<AfdOriginGroup>
     {
         private readonly ArmClient _client;
 
-        internal AfdOriginGroupSource(ArmClient client)
+        internal AfdOriginGroupOperationSource(ArmClient client)
         {
             _client = client;
         }

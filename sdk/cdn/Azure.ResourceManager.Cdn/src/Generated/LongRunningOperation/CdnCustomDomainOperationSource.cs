@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnCustomDomainSource : IOperationSource<CdnCustomDomain>
+    internal class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomain>
     {
         private readonly ArmClient _client;
 
-        internal CdnCustomDomainSource(ArmClient client)
+        internal CdnCustomDomainOperationSource(ArmClient client)
         {
             _client = client;
         }

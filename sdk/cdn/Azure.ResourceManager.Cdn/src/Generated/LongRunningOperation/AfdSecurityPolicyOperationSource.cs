@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdSecurityPolicySource : IOperationSource<AfdSecurityPolicy>
+    internal class AfdSecurityPolicyOperationSource : IOperationSource<AfdSecurityPolicy>
     {
         private readonly ArmClient _client;
 
-        internal AfdSecurityPolicySource(ArmClient client)
+        internal AfdSecurityPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }

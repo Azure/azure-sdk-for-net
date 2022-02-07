@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdSecurityPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<AfdSecurityPolicy>(new AfdSecurityPolicySource(Client), _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<AfdSecurityPolicy>(new AfdSecurityPolicyOperationSource(Client), _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdSecurityPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy, cancellationToken);
-                var operation = new CdnArmOperation<AfdSecurityPolicy>(new AfdSecurityPolicySource(Client), _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<AfdSecurityPolicy>(new AfdSecurityPolicyOperationSource(Client), _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, securityPolicy).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

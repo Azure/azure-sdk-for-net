@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<Profile>(new ProfileSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new CdnArmOperation<Profile>(new ProfileSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

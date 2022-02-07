@@ -10,20 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class ValidationTokenSource : IOperationSource<ValidationToken>
+    internal class ValidationTokenOperationSource : IOperationSource<ValidationToken>
     {
-        private readonly ArmClient _client;
-
-        internal ValidationTokenSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         ValidationToken IOperationSource<ValidationToken>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);

@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnEndpointSource : IOperationSource<CdnEndpoint>
+    internal class CdnEndpointOperationSource : IOperationSource<CdnEndpoint>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
             { "endpointName", "Microsoft.Cdn/operationresults/profileresults/endpointresults" },
         };
 
-        internal CdnEndpointSource(ArmClient client)
+        internal CdnEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }

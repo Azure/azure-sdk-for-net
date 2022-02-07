@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicySource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicyOperationSource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters, cancellationToken);
-                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicySource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnWebApplicationFirewallPolicy>(new CdnWebApplicationFirewallPolicyOperationSource(Client), _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _cdnWebApplicationFirewallPolicyPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cdnWebApplicationFirewallPolicyPatchParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

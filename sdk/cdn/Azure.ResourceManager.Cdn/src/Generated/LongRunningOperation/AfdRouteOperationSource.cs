@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnOriginSource : IOperationSource<CdnOrigin>
+    internal class AfdRouteOperationSource : IOperationSource<AfdRoute>
     {
         private readonly ArmClient _client;
 
-        internal CdnOriginSource(ArmClient client)
+        internal AfdRouteOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        CdnOrigin IOperationSource<CdnOrigin>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdRoute IOperationSource<AfdRoute>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
-            return new CdnOrigin(_client, data);
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_client, data);
         }
 
-        async ValueTask<CdnOrigin> IOperationSource<CdnOrigin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdRoute> IOperationSource<AfdRoute>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
-            return new CdnOrigin(_client, data);
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_client, data);
         }
     }
 }

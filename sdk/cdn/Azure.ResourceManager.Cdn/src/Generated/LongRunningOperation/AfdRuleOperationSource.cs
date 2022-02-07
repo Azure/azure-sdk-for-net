@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class ProfileSource : IOperationSource<Profile>
+    internal class AfdRuleOperationSource : IOperationSource<AfdRule>
     {
         private readonly ArmClient _client;
 
-        internal ProfileSource(ArmClient client)
+        internal AfdRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        Profile IOperationSource<Profile>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdRule IOperationSource<AfdRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_client, data);
+            var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
+            return new AfdRule(_client, data);
         }
 
-        async ValueTask<Profile> IOperationSource<Profile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdRule> IOperationSource<AfdRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_client, data);
+            var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
+            return new AfdRule(_client, data);
         }
     }
 }

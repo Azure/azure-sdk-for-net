@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnWebApplicationFirewallPolicySource : IOperationSource<CdnWebApplicationFirewallPolicy>
+    internal class CdnWebApplicationFirewallPolicyOperationSource : IOperationSource<CdnWebApplicationFirewallPolicy>
     {
         private readonly ArmClient _client;
 
-        internal CdnWebApplicationFirewallPolicySource(ArmClient client)
+        internal CdnWebApplicationFirewallPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdRuleSetSource : IOperationSource<AfdRuleSet>
+    internal class CdnOriginOperationSource : IOperationSource<CdnOrigin>
     {
         private readonly ArmClient _client;
 
-        internal AfdRuleSetSource(ArmClient client)
+        internal CdnOriginOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        AfdRuleSet IOperationSource<AfdRuleSet>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnOrigin IOperationSource<CdnOrigin>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement);
-            return new AfdRuleSet(_client, data);
+            var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
+            return new CdnOrigin(_client, data);
         }
 
-        async ValueTask<AfdRuleSet> IOperationSource<AfdRuleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnOrigin> IOperationSource<CdnOrigin>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AfdRuleSetData.DeserializeAfdRuleSetData(document.RootElement);
-            return new AfdRuleSet(_client, data);
+            var data = CdnOriginData.DeserializeCdnOriginData(document.RootElement);
+            return new CdnOrigin(_client, data);
         }
     }
 }

@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdRouteSource : IOperationSource<AfdRoute>
+    internal class AfdSecretOperationSource : IOperationSource<AfdSecret>
     {
         private readonly ArmClient _client;
 
-        internal AfdRouteSource(ArmClient client)
+        internal AfdSecretOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        AfdRoute IOperationSource<AfdRoute>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdSecret IOperationSource<AfdSecret>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
-            return new AfdRoute(_client, data);
+            var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
+            return new AfdSecret(_client, data);
         }
 
-        async ValueTask<AfdRoute> IOperationSource<AfdRoute>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdSecret> IOperationSource<AfdSecret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
-            return new AfdRoute(_client, data);
+            var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
+            return new AfdSecret(_client, data);
         }
     }
 }
