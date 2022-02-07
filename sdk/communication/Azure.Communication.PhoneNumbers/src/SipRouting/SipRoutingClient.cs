@@ -11,6 +11,7 @@ using Azure.Communication.Pipeline;
 using Azure.Communication.PhoneNumbers.SipRouting;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Collections.ObjectModel;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
@@ -161,36 +162,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         }
 
         /// <summary>
-        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list. Other configuration settings are not affected.
-        /// </summary>
-        /// <param name="trunks">List of SIP trunk gateways.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> UpdateSipConfiguration(
-            IDictionary<string, SipTrunk> trunks,
-            CancellationToken cancellationToken = default)
-        {
-            var config = new SipConfiguration(trunks, new List<SipTrunkRoute>());
-
-            return UpdateSipConfiguration(config, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
-        /// </summary>
-        /// <param name="routes">List of online routing settings.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> UpdateSipConfiguration(
-            IEnumerable<SipTrunkRoute> routes,
-            CancellationToken cancellationToken = default)
-        {
-            var config = new SipConfiguration(new Dictionary<string,SipTrunk>(), routes);
-
-            return UpdateSipConfiguration(config, cancellationToken);
-        }
-
-        /// <summary>
         /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list and routing settings.
         /// </summary>
         /// <param name="config">Updated configuration.</param>
@@ -216,29 +187,107 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary>
         /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list. Other configuration settings are not affected.
         /// </summary>
-        /// <param name="trunks">List of SIP trunk gateways.</param>
+        /// <param name="trunk">SIP trunk gateway.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> UpdateSipConfigurationAsync(
-            IDictionary<string,SipTrunk> trunks,
+        public virtual Response<SipConfiguration> SetTrunk(
+            SipTrunk trunk,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(trunks, new List<SipTrunkRoute>());
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Name, trunk } });
+            return UpdateSipConfiguration(config, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="route">Online routing setting.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual Response<SipConfiguration> SetRoute(
+            SipTrunkRoute route,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new List<SipTrunkRoute> { route});
+            return UpdateSipConfiguration(config, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update <see cref="SipConfiguration"/> for resource with SIP trunk gateways list. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="trunk">SIP trunk gateway.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual async Task<Response<SipConfiguration>> SetTrunkAsync(
+            SipTrunk trunk,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Name, trunk } });
             return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
         /// </summary>
-        /// <param name="routes">List of online routing settings.</param>
+        /// <param name="route">Online routing setting.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> UpdateSipConfigurationAsync(
-            IEnumerable<SipTrunkRoute> routes,
+        public virtual async Task<Response<SipConfiguration>> SetRouteAsync(
+            SipTrunkRoute route,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(null, routes);
+            var config = new SipConfiguration(new List<SipTrunkRoute>{ route });
             return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <param name="fqdn">Trunk FQDN to be deleted.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual Response<SipConfiguration> DeleteTrunk(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn, null } });
+
+            return UpdateSipConfiguration(config,cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <param name="fqdn">trunk FQDN to be deleted.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual async Task<Response<SipConfiguration>> DeleteTrunkAsync(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn, null } });
+
+            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <returns>List of configured trunks.</returns>
+        public virtual Response<IEnumerable<SipTrunk>> GetTrunks(
+            CancellationToken cancellationToken = default)
+        {
+            return GetSipConfiguration(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <returns>List of configured trunks.</returns>
+        public virtual Response<IEnumerable<SipTrunk>> GetTrunksAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return GetSipConfigurationAsync(cancellationToken);
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
