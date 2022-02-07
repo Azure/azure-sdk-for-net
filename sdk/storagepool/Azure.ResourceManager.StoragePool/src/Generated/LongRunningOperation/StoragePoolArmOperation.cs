@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.StoragePool.Models
+namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> Delete a Disk pool; attached disks are not affected. This delete operation can take 10 minutes to complete. This is expected service behavior. </summary>
-    public partial class DiskPoolDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class StoragePoolArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of DiskPoolDeleteOperation for mocking. </summary>
-        protected DiskPoolDeleteOperation()
+        /// <summary> Initializes a new instance of StoragePoolArmOperation for mocking. </summary>
+        protected StoragePoolArmOperation()
         {
         }
 
-        internal DiskPoolDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal StoragePoolArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DiskPoolDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal StoragePoolArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "StoragePoolArmOperation");
         }
 
         /// <inheritdoc />
