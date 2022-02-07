@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,9 +24,8 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary> A class representing collection of WebPubSub and their operations over its parent. </summary>
     public partial class WebPubSubCollection : ArmCollection, IEnumerable<WebPubSub>, IAsyncEnumerable<WebPubSub>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _webPubSubClientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSubCollection"/> class for mocking. </summary>
@@ -33,76 +33,46 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal WebPubSubCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal WebPubSubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webPubSubRestClient = new WebPubSubRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSub.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(WebPubSub.ResourceType, out string webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(_webPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        // Collection level operations.
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+        }
 
         /// <summary> Create or update a resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubCreateOrUpdateOperation CreateOrUpdate(string resourceName, WebPubSubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<WebPubSubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _webPubSubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new WebPubSubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a resource. </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="parameters"> Parameters for the create or update operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubCreateOrUpdateOperation> CreateOrUpdateAsync(string resourceName, WebPubSubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var operation = new WebPubSubCreateOrUpdateOperation(Client, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,25 +84,30 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the resource and its properties. </summary>
+        /// <summary> Create or update a resource. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<WebPubSub> Get(string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual WebPubSubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceName, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(resourceName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSub(Parent, response.Value), response.GetRawResponse());
+                var response = _webPubSubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
+                var operation = new WebPubSubCreateOrUpdateOperation(Client, _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -144,22 +119,20 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Get the resource and its properties. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async virtual Task<Response<WebPubSub>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebPubSub(Parent, response.Value), response.GetRawResponse());
+                    throw await _webPubSubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,25 +141,23 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Get the resource and its properties. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<WebPubSub> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSub> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
-                var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<WebPubSub>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                if (response.Value == null)
+                    throw _webPubSubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,25 +166,97 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSub> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WebPubSub>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webPubSubRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WebPubSub>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webPubSubRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSub> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<WebPubSub> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webPubSubRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WebPubSub> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webPubSubRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetIfExistsAsync");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<WebPubSub>(null, response.GetRawResponse())
-                    : Response.FromValue(new WebPubSub(this, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,18 +265,16 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.Exists");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -250,20 +291,20 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<WebPubSub>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.ExistsAsync");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,120 +313,23 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebPubSub> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual Response<WebPubSub> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<WebPubSub> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebPubSub> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebPubSub> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<WebPubSub>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebPubSub>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="WebPubSub" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
+            using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(WebPubSub.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="WebPubSub" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(WebPubSub.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<WebPubSub>(null, response.GetRawResponse());
+                return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,8 +352,5 @@ namespace Azure.ResourceManager.WebPubSub
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebPubSub, WebPubSubData> Construct() { }
     }
 }

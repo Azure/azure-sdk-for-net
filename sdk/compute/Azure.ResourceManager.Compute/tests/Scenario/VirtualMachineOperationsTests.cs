@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(vmName, input);
+            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            await vm.DeleteAsync();
+            await vm.DeleteAsync(true);
         }
 
         [TestCase]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
             //var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
             //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
-            await vm.DeallocateAsync();
+            await vm.DeallocateAsync(true);
             var update = new VirtualMachineUpdate()
             {
                 HardwareProfile = new HardwareProfile
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     VmSize = VirtualMachineSizeTypes.StandardF1
                 }
             };
-            var lro = await vm.UpdateAsync(update);
+            var lro = await vm.UpdateAsync(true, update);
             VirtualMachine updatedVM = lro.Value;
 
             Assert.AreEqual(VirtualMachineSizeTypes.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            await vm.PowerOffAsync();
+            await vm.PowerOffAsync(true);
         }
     }
 }

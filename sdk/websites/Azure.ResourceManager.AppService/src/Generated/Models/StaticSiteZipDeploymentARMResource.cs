@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,13 +22,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="appZipUrl"> URL for the zipped app content. </param>
         /// <param name="apiZipUrl"> URL for the zipped api content. </param>
         /// <param name="deploymentTitle"> A title to label the deployment. </param>
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
-        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType type, string kind, string appZipUrl, string apiZipUrl, string deploymentTitle, string provider, string functionLanguage) : base(id, name, type, kind)
+        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string appZipUrl, string apiZipUrl, string deploymentTitle, string provider, string functionLanguage) : base(id, name, type, systemData, kind)
         {
             AppZipUrl = appZipUrl;
             ApiZipUrl = apiZipUrl;

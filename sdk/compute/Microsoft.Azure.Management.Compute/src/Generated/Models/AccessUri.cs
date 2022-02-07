@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the AccessUri class.
         /// </summary>
         /// <param name="accessSAS">A SAS uri for accessing a disk.</param>
-        public AccessUri(string accessSAS = default(string))
+        /// <param name="securityDataAccessSAS">A SAS uri for accessing a VM
+        /// guest state.</param>
+        public AccessUri(string accessSAS = default(string), string securityDataAccessSAS = default(string))
         {
             AccessSAS = accessSAS;
+            SecurityDataAccessSAS = securityDataAccessSAS;
             CustomInit();
         }
 
@@ -46,6 +49,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "accessSAS")]
         public string AccessSAS { get; private set; }
+
+        /// <summary>
+        /// Gets a SAS uri for accessing a VM guest state.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityDataAccessSAS")]
+        public string SecurityDataAccessSAS { get; private set; }
 
     }
 }

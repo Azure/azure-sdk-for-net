@@ -7,8 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="state"></param>
         /// <param name="statusUrl"> Link to the GetStatusApi in Kudu. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="consoleUrl"> Link to the console to web app instance. </param>
         /// <param name="healthCheckUrl"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType type, string kind, SiteRuntimeState? state, string statusUrl, string detectorUrl, string consoleUrl, string healthCheckUrl, IDictionary<string, ContainerInfo> containers) : base(id, name, type, kind)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, SiteRuntimeState? state, string statusUrl, string detectorUrl, string consoleUrl, string healthCheckUrl, IDictionary<string, ContainerInfo> containers) : base(id, name, type, systemData, kind)
         {
             State = state;
             StatusUrl = statusUrl;

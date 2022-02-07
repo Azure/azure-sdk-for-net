@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="displayName"> The display name of the policy set definition. </param>
         /// <param name="description"> The policy set definition description. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string displayName, string description, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, type)
+        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string displayName, string description, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, type, systemData)
         {
             PolicyType = policyType;
             DisplayName = displayName;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<OutboundFirewallRule> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of OutboundFirewallRuleCreateOrUpdateOperation for mocking. </summary>
         protected OutboundFirewallRuleCreateOrUpdateOperation()
         {
         }
 
-        internal OutboundFirewallRuleCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal OutboundFirewallRuleCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<OutboundFirewallRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OutboundFirewallRuleCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         OutboundFirewallRule IOperationSource<OutboundFirewallRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new OutboundFirewallRule(_operationBase, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement));
+            var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
+            return new OutboundFirewallRule(_armClient, data);
         }
 
         async ValueTask<OutboundFirewallRule> IOperationSource<OutboundFirewallRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new OutboundFirewallRule(_operationBase, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement));
+            var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
+            return new OutboundFirewallRule(_armClient, data);
         }
     }
 }

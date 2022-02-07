@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="resourceUri"> The resource uri of the database. </param>
         /// <param name="name"> The name information for the metric. </param>
-        internal MetricDefinition(IReadOnlyList<MetricAvailability> metricAvailabilities, PrimaryAggregationType? primaryAggregationType, UnitType? unit, string resourceUri, MetricName name)
+        internal MetricDefinition(IReadOnlyList<MetricAvailability> metricAvailabilities, PrimaryAggregationType? primaryAggregationType, UnitType? unit, Uri resourceUri, MetricName name)
         {
             MetricAvailabilities = metricAvailabilities;
             PrimaryAggregationType = primaryAggregationType;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The unit of the metric. </summary>
         public UnitType? Unit { get; }
         /// <summary> The resource uri of the database. </summary>
-        public string ResourceUri { get; }
+        public Uri ResourceUri { get; }
         /// <summary> The name information for the metric. </summary>
         public MetricName Name { get; }
     }

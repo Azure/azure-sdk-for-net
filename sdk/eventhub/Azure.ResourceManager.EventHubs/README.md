@@ -50,8 +50,8 @@ Before creating a namespace, we need to have a resource group.
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -60,8 +60,8 @@ Then we can create a namespace inside this resource group.
 ```C# Snippet:Managing_Namespaces_CreateNamespace
 string namespaceName = "myNamespace";
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-Location location = Location.EastUS2;
-EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+AzureLocation location = AzureLocation.EastUS2;
+EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
@@ -102,7 +102,7 @@ if (await namespaceCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-await eventHubNamespace.DeleteAsync();
+await eventHubNamespace.DeleteAsync(true);
 ```
 
 ### Add a tag to the namespace

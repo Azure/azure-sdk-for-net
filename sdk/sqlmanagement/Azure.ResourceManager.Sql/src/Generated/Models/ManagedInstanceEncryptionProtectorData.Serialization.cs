@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> serverKeyName = default;
             Optional<ServerKeyType> serverKeyType = default;
             Optional<string> uri = default;
@@ -69,6 +70,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceEncryptionProtectorData(id, name, type, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
+            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

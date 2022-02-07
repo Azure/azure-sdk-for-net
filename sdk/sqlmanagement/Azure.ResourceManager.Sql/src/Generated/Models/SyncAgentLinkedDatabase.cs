@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseType"> Type of the sync agent linked database. </param>
         /// <param name="databaseId"> Id of the sync agent linked database. </param>
         /// <param name="description"> Description of the sync agent linked database. </param>
         /// <param name="serverName"> Server name of the sync agent linked database. </param>
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
-        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType type, SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, type)
+        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, type, systemData)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;

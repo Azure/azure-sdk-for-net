@@ -5,8 +5,9 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,10 +23,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
         /// <param name="signalAvailability"> Is there a health signal for the resource. </param>
-        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType type, string kind, string category, bool? signalAvailability) : base(id, name, type, kind)
+        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string category, bool? signalAvailability) : base(id, name, type, systemData, kind)
         {
             Category = category;
             SignalAvailability = signalAvailability;

@@ -45,6 +45,10 @@ param (
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
 
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $false)]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $ProvisionerApplicationOid,
+
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
 
@@ -143,14 +147,24 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         $spPassword = $servicePrincipal.Secret
         $appId = $servicePrincipal.ApplicationId
     } else {
-        Write-Verbose "Creating password for service principal via MS Graph API"
-        # Microsoft graph objects (Az version >= 7.0.0) do not provision a secret # on creation so it must be added separately.
-        # Submitting a password credential object without specifying a password will result in one being generated on the server side.
-        $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
-        $password.DisplayName = "Password for $displayName"
-        $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
-        $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
-        $appId = $servicePrincipal.AppId
+        if ((Get-Module Az.Resources).Version -eq "5.1.0") {
+            Write-Verbose "Creating password and credential for service principal via MS Graph API"
+            Write-Warning "Please update Az.Resources to >= 5.2.0 by running 'Update-Module Az'"
+            # Microsoft graph objects (Az.Resources version == 5.1.0) do not provision a secret on creation so it must be added separately.
+            # Submitting a password credential object without specifying a password will result in one being generated on the server side.
+            $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
+            $password.DisplayName = "Password for $displayName"
+            $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
+            $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
+            $appId = $servicePrincipal.AppId
+        } else {
+            Write-Verbose "Creating service principal credential via MS Graph API"
+            # In 5.2.0 the password credential issue was fixed (see https://github.com/Azure/azure-powershell/pull/16690) but the
+            # parameter set was changed making the above call fail due to a missing ServicePrincipalId parameter.
+            $credential = Retry { $servicePrincipal | New-AzADSpCredential }
+            $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
+            $appId = $servicePrincipal.AppId
+        }
     }
 
     return @{
@@ -471,19 +485,19 @@ try {
     $context = Get-AzContext;
 
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
-    $provisionerApplicationOid = if (!$ProvisionerApplicationId) {
+    if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
             $user = Get-AzADUser -UserPrincipalName $context.Account.Id
-            $user.Id
+            $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
-            $sp.Id
+            $ProvisionerApplicationOid = $sp.Id
         } else {
             Write-Warning "Getting the OID for provisioner type '$($context.Account.Type)' is not supported and will not be passed to deployments (seldom required)."
         }
-    } else {
+    } elseif (!$ProvisionerApplicationOid) {
         $sp = Get-AzADServicePrincipal -ApplicationId $ProvisionerApplicationId
-        $sp.Id
+        $ProvisionerApplicationOid = $sp.Id
     }
 
     # If the ServiceDirectory has multiple segments use the last directory name
@@ -641,7 +655,9 @@ try {
         baseName = $BaseName
         testApplicationId = $TestApplicationId
         testApplicationOid = "$TestApplicationOid"
-        provisionerApplicationOid = "$provisionerApplicationOid"
+    }
+    if ($ProvisionerApplicationOid) {
+        $templateParameters["provisionerApplicationOid"] = "$ProvisionerApplicationOid"
     }
 
     if ($TenantId) {

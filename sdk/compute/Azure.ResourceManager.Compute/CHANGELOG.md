@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2022-01-29)
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added Resource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Couple of renamings.
 
 ## 1.0.0-beta.5 (2021-12-28)
 
@@ -196,13 +205,14 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.Linq;
+using Azure.Core;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
-var location = Location.WestUS;
+var location = AzureLocation.WestUS;
 // Create ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
 ResourceGroup resourceGroup = rgOperation.Value;
 
 // Create AvailabilitySet
@@ -212,7 +222,7 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync("myAvailabilitySet", availabilitySetData);
+AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
 AvailabilitySet availabilitySet = asetOperation.Value;
 
 // Create VNet
@@ -229,7 +239,7 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
 VirtualNetwork vnet = vnetOperation.Value;
 
 // Create Network interface
@@ -247,19 +257,19 @@ var nicData = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
 NetworkInterface nic = nicOperation.Value;
 
 var vmData = new VirtualMachineData(location)
 {
     AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
     NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-    OsProfile = new OSProfile
+    OSProfile = new OSProfile
     {
         ComputerName = "testVM",
         AdminUsername = "username",
         AdminPassword = "(YourPassword)",
-        LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
+        LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
     },
     StorageProfile = new StorageProfile()
     {
@@ -273,7 +283,7 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync("myVirtualMachine", vmData);
+VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
 VirtualMachine vm = vmOperation.Value;
 ```
 
@@ -301,7 +311,7 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```C# Snippet:Changelog_CreateVMExtension
-var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",

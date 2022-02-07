@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="minResourcePercent"> The workload group minimum percentage resource. </param>
         /// <param name="maxResourcePercent"> The workload group cap percentage resource. </param>
         /// <param name="minResourcePercentPerRequest"> The workload group request minimum grant percentage. </param>
         /// <param name="maxResourcePercentPerRequest"> The workload group request maximum grant percentage. </param>
         /// <param name="importance"> The workload group importance level. </param>
         /// <param name="queryExecutionTimeout"> The workload group query execution timeout. </param>
-        internal WorkloadGroupData(ResourceIdentifier id, string name, ResourceType type, int? minResourcePercent, int? maxResourcePercent, double? minResourcePercentPerRequest, double? maxResourcePercentPerRequest, string importance, int? queryExecutionTimeout) : base(id, name, type)
+        internal WorkloadGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, int? minResourcePercent, int? maxResourcePercent, double? minResourcePercentPerRequest, double? maxResourcePercentPerRequest, string importance, int? queryExecutionTimeout) : base(id, name, type, systemData)
         {
             MinResourcePercent = minResourcePercent;
             MaxResourcePercent = maxResourcePercent;

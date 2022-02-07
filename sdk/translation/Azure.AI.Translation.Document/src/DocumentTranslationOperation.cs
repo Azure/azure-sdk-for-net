@@ -285,8 +285,7 @@ namespace Azure.AI.Translation.Document
                     }
                     else if (update.Value.Status == DocumentTranslationStatus.ValidationFailed)
                     {
-                        ResponseError error = update.Value.Error;
-                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.Code, CreateAdditionalInformation(error));
+                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, update.Value.Error, CreateAdditionalInformation(update.Value.Error));
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }

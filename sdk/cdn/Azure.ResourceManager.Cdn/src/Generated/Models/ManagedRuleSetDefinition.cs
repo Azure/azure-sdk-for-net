@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
         /// <param name="ruleSetType"> Type of the managed rule set. </param>

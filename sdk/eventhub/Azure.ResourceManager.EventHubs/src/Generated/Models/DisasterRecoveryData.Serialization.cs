@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
@@ -36,11 +35,11 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningStateDR> provisioningState = default;
             Optional<string> partnerNamespace = default;
             Optional<string> alternateName = default;
@@ -48,16 +47,6 @@ namespace Azure.ResourceManager.EventHubs
             Optional<long> pendingReplicationOperationsCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -76,6 +65,11 @@ namespace Azure.ResourceManager.EventHubs
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -131,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new DisasterRecoveryData(id, name, type, location.Value, systemData, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
+            return new DisasterRecoveryData(id, name, type, systemData, location.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
         }
     }
 }

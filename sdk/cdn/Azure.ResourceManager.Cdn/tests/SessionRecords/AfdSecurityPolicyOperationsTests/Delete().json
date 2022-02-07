@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,12 +45,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1207?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1207?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "31",
         "Content-Type": "application/json",
         "traceparent": "00-64cd39eb5a6afc4d8cf0f4866035c104-0b462168da94eb41-00",
         "User-Agent": [
@@ -61,6 +61,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus"
       },
       "StatusCode": 201,
@@ -94,7 +95,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "77",
+        "Content-Length": "87",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210929.1",
@@ -107,6 +108,7 @@
         "sku": {
           "name": "Premium_AzureFrontDoor"
         },
+        "tags": {},
         "location": "Global",
         "properties": {}
       },
@@ -1947,7 +1949,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "70",
+        "Content-Length": "80",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210929.1",
@@ -1957,6 +1959,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus",
         "properties": {
           "originResponseTimeoutSeconds": 60
@@ -5372,7 +5375,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
                   }
                 ],
                 "patternsToMatch": [
@@ -5416,7 +5419,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
                   }
                 ],
                 "patternsToMatch": [
@@ -6690,7 +6693,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-1207/providers/Microsoft.Cdn/profiles/AFDProfile-6423/afdEndpoints/AFDEndpoint-9543"
                   }
                 ],
                 "patternsToMatch": [

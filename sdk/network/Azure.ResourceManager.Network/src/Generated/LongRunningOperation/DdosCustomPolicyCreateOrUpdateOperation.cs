@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<DdosCustomPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DdosCustomPolicyCreateOrUpdateOperation for mocking. </summary>
         protected DdosCustomPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal DdosCustomPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DdosCustomPolicyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DdosCustomPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosCustomPolicyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         DdosCustomPolicy IOperationSource<DdosCustomPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
+            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
+            return new DdosCustomPolicy(_armClient, data);
         }
 
         async ValueTask<DdosCustomPolicy> IOperationSource<DdosCustomPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
+            var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
+            return new DdosCustomPolicy(_armClient, data);
         }
     }
 }

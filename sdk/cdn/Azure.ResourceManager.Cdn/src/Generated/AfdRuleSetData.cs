@@ -5,13 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRuleSet data model. </summary>
-    public partial class AfdRuleSetData : ProxyResource
+    public partial class AfdRuleSetData : Resource
     {
         /// <summary> Initializes a new instance of AfdRuleSetData. </summary>
         public AfdRuleSetData()
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         internal AfdRuleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)

@@ -8,10 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
@@ -20,92 +22,59 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
-    public partial class SiteVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteVirtualNetworkConnection>
+    public partial class SiteVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteVirtualNetworkConnection>, IAsyncEnumerable<SiteVirtualNetworkConnection>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteVirtualNetworkConnectionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteVirtualNetworkConnectionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionCollection"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteVirtualNetworkConnectionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteVirtualNetworkConnectionCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(SiteVirtualNetworkConnection.ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
+            _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => WebSite.ResourceType;
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_CreateOrUpdateVnetConnection
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
-        /// <param name="vnetName"> Name of an existing Virtual Network. </param>
-        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateOrUpdateVnetConnectionOperation CreateOrUpdate(string vnetName, VnetInfoResourceData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(connectionEnvelope));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _webAppsRestClient.CreateOrUpdateVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken);
-                var operation = new WebAppCreateOrUpdateVnetConnectionOperation(Parent, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            if (id.ResourceType != WebSite.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// OperationId: WebApps_CreateOrUpdateVnetConnection
         /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vnetName"> Name of an existing Virtual Network. </param>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateOrUpdateVnetConnectionOperation> CreateOrUpdateAsync(string vnetName, VnetInfoResourceData connectionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<SiteVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             if (connectionEnvelope == null)
             {
                 throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.CreateOrUpdateVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateOrUpdateVnetConnectionOperation(Parent, response);
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,26 +88,31 @@ namespace Azure.ResourceManager.AppService
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetVnetConnection
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
-        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// OperationId: WebApps_CreateOrUpdateVnetConnection
+        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="vnetName"> Name of an existing Virtual Network. </param>
+        /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<SiteVirtualNetworkConnection> Get(string vnetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
+        public virtual SiteVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+            if (connectionEnvelope == null)
             {
-                throw new ArgumentNullException(nameof(vnetName));
+                throw new ArgumentNullException(nameof(connectionEnvelope));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnection(Parent, response.Value), response.GetRawResponse());
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, connectionEnvelope, cancellationToken);
+                var operation = new SiteVirtualNetworkConnectionCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -153,22 +127,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public async virtual Task<Response<SiteVirtualNetworkConnection>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteVirtualNetworkConnection(Parent, response.Value), response.GetRawResponse());
+                    throw await _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,25 +149,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetVnetConnection
+        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<SiteVirtualNetworkConnection> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteVirtualNetworkConnection> Get(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
+                if (response.Value == null)
+                    throw _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,70 +177,71 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListVnetConnections
+        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public async virtual Task<Response<SiteVirtualNetworkConnection>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteVirtualNetworkConnection> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
+            async Task<Page<SiteVirtualNetworkConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(vnetName));
+                using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteVirtualNetworkConnectionWebAppsRestClient.ListVnetConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _webAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteVirtualNetworkConnection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_ListVnetConnections
+        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteVirtualNetworkConnection> GetAll(CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
+            Page<SiteVirtualNetworkConnection> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(vnetName));
+                using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteVirtualNetworkConnectionWebAppsRestClient.ListVnetConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new SiteVirtualNetworkConnection(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(vnetName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetVnetConnection
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.ExistsAsync");
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -281,19 +255,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListVnetConnections
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// OperationId: WebApps_GetVnetConnection
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<SiteVirtualNetworkConnection>> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListVnetConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(response.Value.Select(value => new SiteVirtualNetworkConnection(Parent, value)).ToArray() as IReadOnlyList<SiteVirtualNetworkConnection>, response.GetRawResponse());
+                var response = GetIfExists(vnetName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,19 +281,54 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListVnetConnections
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// OperationId: WebApps_GetVnetConnection
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<IReadOnlyList<SiteVirtualNetworkConnection>>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public async virtual Task<Response<SiteVirtualNetworkConnection>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetAll");
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListVnetConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Select(value => new SiteVirtualNetworkConnection(Parent, value)).ToArray() as IReadOnlyList<SiteVirtualNetworkConnection>, response.GetRawResponse());
+                var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// OperationId: WebApps_GetVnetConnection
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual Response<SiteVirtualNetworkConnection> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+
+            using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteVirtualNetworkConnection>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,15 +339,17 @@ namespace Azure.ResourceManager.AppService
 
         IEnumerator<SiteVirtualNetworkConnection> IEnumerable<SiteVirtualNetworkConnection>.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SiteVirtualNetworkConnection, VnetInfoResourceData> Construct() { }
+        IAsyncEnumerator<SiteVirtualNetworkConnection> IAsyncEnumerable<SiteVirtualNetworkConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
     }
 }

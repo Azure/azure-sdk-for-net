@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<Profile> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ProfileUpdateOperation for mocking. </summary>
         protected ProfileUpdateOperation()
         {
         }
 
-        internal ProfileUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ProfileUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Profile>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "ProfileUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         Profile IOperationSource<Profile>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Profile(_operationBase, ProfileData.DeserializeProfileData(document.RootElement));
+            var data = ProfileData.DeserializeProfileData(document.RootElement);
+            return new Profile(_armClient, data);
         }
 
         async ValueTask<Profile> IOperationSource<Profile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Profile(_operationBase, ProfileData.DeserializeProfileData(document.RootElement));
+            var data = ProfileData.DeserializeProfileData(document.RootElement);
+            return new Profile(_armClient, data);
         }
     }
 }

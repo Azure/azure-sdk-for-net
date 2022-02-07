@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,92 +24,58 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary> A class representing collection of AddressResource and their operations over its parent. </summary>
     public partial class AddressResourceCollection : ArmCollection, IEnumerable<AddressResource>, IAsyncEnumerable<AddressResource>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _restClient;
+        private readonly ClientDiagnostics _addressResourceClientDiagnostics;
+        private readonly EdgeOrderManagementRestOperations _addressResourceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AddressResourceCollection"/> class for mocking. </summary>
         protected AddressResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressResourceCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AddressResourceCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="AddressResourceCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AddressResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new EdgeOrderManagementRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _addressResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", AddressResource.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(AddressResource.ResourceType, out string addressResourceApiVersion);
+            _addressResourceRestClient = new EdgeOrderManagementRestOperations(_addressResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, addressResourceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CreateAddress
-        /// <summary> Creates a new address with the specified parameters. Existing address can be updated with this API. </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public virtual EdgeOrderManagementCreateAddressOperation CreateOrUpdate(string addressName, AddressResourceData addressResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressResource == null)
-            {
-                throw new ArgumentNullException(nameof(addressResource));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _restClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken);
-                var operation = new EdgeOrderManagementCreateAddressOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            if (id.ResourceType != ResourceGroup.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: CreateAddress
         /// <summary> Creates a new address with the specified parameters. Existing address can be updated with this API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async virtual Task<EdgeOrderManagementCreateAddressOperation> CreateOrUpdateAsync(string addressName, AddressResourceData addressResource, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<AddressResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             if (addressResource == null)
             {
                 throw new ArgumentNullException(nameof(addressResource));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.CreateOrUpdate");
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderManagementCreateAddressOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                var response = await _addressResourceRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
+                var operation = new AddressResourceCreateOrUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,26 +89,31 @@ namespace Azure.ResourceManager.EdgeOrder
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetAddressByName
-        /// <summary> Gets information about the specified address. </summary>
+        /// OperationId: CreateAddress
+        /// <summary> Creates a new address with the specified parameters. Existing address can be updated with this API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual Response<AddressResource> Get(string addressName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
+        public virtual AddressResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            if (addressResource == null)
             {
-                throw new ArgumentNullException(nameof(addressName));
+                throw new ArgumentNullException(nameof(addressResource));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Get");
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AddressResource(Parent, response.Value), response.GetRawResponse());
+                var response = _addressResourceRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken);
+                var operation = new AddressResourceCreateOrUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -156,22 +128,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Gets information about the specified address. </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
         public async virtual Task<Response<AddressResource>> GetAsync(string addressName, CancellationToken cancellationToken = default)
         {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Get");
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+                var response = await _addressResourceRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AddressResource(Parent, response.Value), response.GetRawResponse());
+                    throw await _addressResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,151 +150,32 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual Response<AddressResource> GetIfExists(string addressName, CancellationToken cancellationToken = default)
-        {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<AddressResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
-        {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<AddressResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new AddressResource(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual Response<bool> Exists(string addressName, CancellationToken cancellationToken = default)
-        {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(addressName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
-        {
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ListAddressesAtResourceGroupLevel
-        /// <summary> Lists all the addresses available under the given resource group. </summary>
-        /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// OperationId: GetAddressByName
+        /// <summary> Gets information about the specified address. </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AddressResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public virtual Response<AddressResource> Get(string addressName, CancellationToken cancellationToken = default)
         {
-            Page<AddressResource> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListAddressesAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _addressResourceRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
+                if (response.Value == null)
+                    throw _addressResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
             }
-            Page<AddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListAddressesAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses
@@ -339,12 +190,12 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             async Task<Page<AddressResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
+                using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAddressesAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _addressResourceRestClient.ListAddressesAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -354,12 +205,12 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             async Task<Page<AddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
+                using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAddressesAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _addressResourceRestClient.ListAddressesAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -370,21 +221,67 @@ namespace Azure.ResourceManager.EdgeOrder
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="AddressResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ListAddressesAtResourceGroupLevel
+        /// <summary> Lists all the addresses available under the given resource group. </summary>
+        /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AddressResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAllAsGenericResources");
+            Page<AddressResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _addressResourceRestClient.ListAddressesAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _addressResourceRestClient.ListAddressesAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: GetAddressByName
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(AddressResource.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await GetIfExistsAsync(addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -393,21 +290,80 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary> Filters the list of <see cref="AddressResource" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: GetAddressByName
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public virtual Response<bool> Exists(string addressName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AddressResourceCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(AddressResource.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(addressName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: GetAddressByName
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public async virtual Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _addressResourceRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: GetAddressByName
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public virtual Response<AddressResource> GetIfExists(string addressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+
+            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _addressResourceRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -430,8 +386,5 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, AddressResource, AddressResourceData> Construct() { }
     }
 }

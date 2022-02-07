@@ -86,12 +86,6 @@ function DeployStressTests(
         $subscription = 'Azure SDK Test Resources'
     }
 
-    if (!$repository) {
-        $repository = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $namespace
-        $repository -replace '\W'
-    }
-
     if ($login) {
         if (!$clusterGroup -or !$subscription) {
             throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
@@ -156,10 +150,24 @@ function DeployStressPackage(
     }
     $imageTag += "/$($pkg.Namespace)/$($pkg.ReleaseName):${deployId}"
 
-    if ($pushImages) {
+    $dockerFilePath = if ($pkg.Dockerfile) {
+        Join-Path $pkg.Directory $pkg.Dockerfile
+    } else {
+        "$($pkg.Directory)/Dockerfile"
+    }
+    $dockerFilePath = [System.IO.Path]::GetFullPath($dockerFilePath)
+
+    if ($pushImages -and (Test-Path $dockerFilePath)) {
         Write-Host "Building and pushing stress test docker image '$imageTag'"
-        $dockerFile = Get-ChildItem "$($pkg.Directory)/Dockerfile"
-        Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
+        $dockerFile = Get-ChildItem $dockerFilePath
+        $dockerBuildFolder = if ($pkg.DockerBuildDir) {
+            Join-Path $pkg.Directory $pkg.DockerBuildDir
+        } else {
+            $dockerFile.DirectoryName
+        }
+        $dockerBuildFolder = [System.IO.Path]::GetFullPath($dockerBuildFolder).Trim()
+
+        Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
         if ($LASTEXITCODE) { return }
         Run docker push $imageTag
         if ($LASTEXITCODE) {

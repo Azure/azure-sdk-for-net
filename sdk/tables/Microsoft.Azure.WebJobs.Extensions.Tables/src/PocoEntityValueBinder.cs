@@ -7,11 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
-    internal class PocoEntityValueBinder<TElement> : IValueBinder, IWatchable, IWatcher
+    internal class PocoEntityValueBinder<TElement> : IValueBinder
     {
         private readonly TableEntityContext _entityContext;
         private readonly ValueBindingContext _valueBindingContext;
@@ -34,8 +33,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
         }
 
         public Type Type => typeof(TElement);
-
-        public IWatcher Watcher => this;
 
         public async Task<object> GetValueAsync()
         {
@@ -117,13 +114,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             return false;
-        }
-
-        public ParameterLog GetStatus()
-        {
-            // TODO: check if we still need the log feature and fix
-            // To take entity changes into account
-            return new TableParameterLog { EntitiesWritten = 1 };
         }
     }
 }

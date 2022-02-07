@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
@@ -27,13 +26,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
         /// <param name="accountName"> The name of the global database account. </param>
         /// <param name="creationTime"> The creation time of the restorable database account (ISO-8601 format). </param>
         /// <param name="deletionTime"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        internal RestorableDatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, string location, string accountName, DateTimeOffset? creationTime, DateTimeOffset? deletionTime, ApiType? apiType, IReadOnlyList<RestorableLocationResource> restorableLocations) : base(id, name, type)
+        internal RestorableDatabaseAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, string accountName, DateTimeOffset? creationTime, DateTimeOffset? deletionTime, ApiType? apiType, IReadOnlyList<RestorableLocationResource> restorableLocations) : base(id, name, type, systemData)
         {
             Location = location;
             AccountName = accountName;

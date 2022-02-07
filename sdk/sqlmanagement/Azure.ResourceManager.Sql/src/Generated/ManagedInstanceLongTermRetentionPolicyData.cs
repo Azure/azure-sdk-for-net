@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
-        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType type, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear) : base(id, name, type)
+        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear) : base(id, name, type, systemData)
         {
             WeeklyRetention = weeklyRetention;
             MonthlyRetention = monthlyRetention;

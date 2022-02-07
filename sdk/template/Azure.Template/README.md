@@ -47,6 +47,7 @@ The *Key concepts* section should describe the functionality of the main classes
 Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
@@ -72,20 +73,12 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 * [Get the thing](#get-the-thing)
 * [List the things](#list-the-things)
 
-### Create the thing
+### Get a secret
 
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
-```
-
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+The `GetSecret` method retrieves a secret from the service.
 
 ```C# Snippet:GetSecret
+string endpoint = "https://myvault.vault.azure.net";
 var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
 
 SecretBundle secret = client.GetSecret("TestSecret");

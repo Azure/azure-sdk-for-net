@@ -48,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             {
                 Size = 3,
                 UserId = "sd53lsY=",
-                ConfidenceThreshold = 0.2,
+                ConfidenceThreshold = 0.5,
                 AnswerContext = new(27)
                 {
                     PreviousQuestion = "How long should my Surface battery last?",

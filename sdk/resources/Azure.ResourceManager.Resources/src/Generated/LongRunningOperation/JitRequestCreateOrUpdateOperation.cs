@@ -12,34 +12,34 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Creates or updates the JIT request. </summary>
-    public partial class JitRequestCreateOrUpdateOperation : Operation<JitRequestDefinition>, IOperationSource<JitRequestDefinition>
+    public partial class JitRequestCreateOrUpdateOperation : Operation<JitRequest>, IOperationSource<JitRequest>
     {
-        private readonly OperationInternals<JitRequestDefinition> _operation;
+        private readonly OperationInternals<JitRequest> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of JitRequestCreateOrUpdateOperation for mocking. </summary>
         protected JitRequestCreateOrUpdateOperation()
         {
         }
 
-        internal JitRequestCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal JitRequestCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<JitRequestDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JitRequestCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<JitRequest>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JitRequestCreateOrUpdateOperation");
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override JitRequestDefinition Value => _operation.Value;
+        public override JitRequest Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,23 @@ namespace Azure.ResourceManager.Resources.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<JitRequestDefinition>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<JitRequest>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<JitRequestDefinition>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<JitRequest>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        JitRequestDefinition IOperationSource<JitRequestDefinition>.CreateResult(Response response, CancellationToken cancellationToken)
+        JitRequest IOperationSource<JitRequest>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new JitRequestDefinition(_operationBase, JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement));
+            var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
+            return new JitRequest(_armClient, data);
         }
 
-        async ValueTask<JitRequestDefinition> IOperationSource<JitRequestDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<JitRequest> IOperationSource<JitRequest>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new JitRequestDefinition(_operationBase, JitRequestDefinitionData.DeserializeJitRequestDefinitionData(document.RootElement));
+            var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
+            return new JitRequest(_armClient, data);
         }
     }
 }

@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineData(Location location) : base(location)
+        public VirtualMachineData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
@@ -28,10 +26,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
-        /// <param name="systemData"> The system data. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="resourcePoolId">
@@ -41,7 +39,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="templateId"> Gets or sets the ARM Id of the template resource to deploy the virtual machine. </param>
         /// <param name="vCenterId"> Gets or sets the ARM Id of the vCenter resource in which this resource pool resides. </param>
         /// <param name="placementProfile"> Placement properties. </param>
-        /// <param name="osProfile"> OS properties. </param>
+        /// <param name="oSProfile"> OS properties. </param>
         /// <param name="hardwareProfile"> Hardware properties. </param>
         /// <param name="networkProfile"> Network properties. </param>
         /// <param name="storageProfile"> Storage properties. </param>
@@ -59,17 +57,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
         /// <param name="vmId"> Gets or sets a unique identifier for the vm resource. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CheckNameAvailabilityRequest extendedLocation, SystemData systemData, string kind, VMwareIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OsProfile osProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, type, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, SystemAssignedServiceIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OSProfile oSProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, type, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
-            SystemData = systemData;
             Kind = kind;
             Identity = identity;
             ResourcePoolId = resourcePoolId;
             TemplateId = templateId;
             VCenterId = vCenterId;
             PlacementProfile = placementProfile;
-            OsProfile = osProfile;
+            OSProfile = oSProfile;
             HardwareProfile = hardwareProfile;
             NetworkProfile = networkProfile;
             StorageProfile = storageProfile;
@@ -90,13 +87,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Gets or sets the extended location. </summary>
-        public CheckNameAvailabilityRequest ExtendedLocation { get; set; }
-        /// <summary> The system data. </summary>
-        public SystemData SystemData { get; }
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; set; }
         /// <summary> The identity of the resource. </summary>
-        public VMwareIdentity Identity { get; set; }
+        public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary>
         /// Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will
         /// deploy.
@@ -109,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Placement properties. </summary>
         public PlacementProfile PlacementProfile { get; set; }
         /// <summary> OS properties. </summary>
-        public OsProfile OsProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Hardware properties. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Network properties. </summary>

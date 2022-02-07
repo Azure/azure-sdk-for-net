@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
             DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
-            await instance.DeleteAsync();
+            await instance.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await instance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -42,12 +42,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateInstance instance = await account.GetDeviceUpdateInstances().GetAsync("Instance");
             TagUpdateOptions updateOptions = new TagUpdateOptions();
             updateOptions.Tags.Add("newTag", "newValue");
-            var lro = await instance.UpdateAsync(updateOptions);
-            DeviceUpdateInstance updatedInstance = lro.Value;
+            DeviceUpdateInstance updatedInstance = await instance.UpdateAsync(updateOptions);
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
             updateOptions.Tags.Clear();
-            lro = await instance.UpdateAsync(updateOptions);
-            updatedInstance = lro.Value;
+            updatedInstance = await instance.UpdateAsync(updateOptions);
             ResourceDataHelper.AssertInstanceUpdate(updatedInstance, updateOptions);
         }
     }

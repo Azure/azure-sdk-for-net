@@ -24,6 +24,11 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("groupForReplace");
                 writer.WriteStringValue(GroupForReplace);
             }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition");
+                writer.WriteObjectValue(Condition);
+            }
             writer.WriteEndObject();
         }
     }

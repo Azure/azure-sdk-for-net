@@ -87,7 +87,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-            scope.AddAttribute("otel.status_code", message.ResponseClassifier.IsErrorResponse(message) ? "ERROR" : "UNSET");
+            scope.AddAttribute("otel.status_code", message.Response.IsError ? "ERROR" : "UNSET");
         }
 
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)

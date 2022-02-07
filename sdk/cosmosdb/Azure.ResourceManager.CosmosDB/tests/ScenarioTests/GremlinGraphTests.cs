@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _gremlinDatabase.Delete();
-            _databaseAccount.Delete();
+            _gremlinDatabase.Delete(true);
+            _databaseAccount.Delete(true);
         }
 
         [SetUp]
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraph graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             if (graph != null)
             {
-                await graph.DeleteAsync();
+                await graph.DeleteAsync(true);
             }
         }
 
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(_graphName, parameters)).WaitForCompletionAsync();
+            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(false, _graphName, parameters)).WaitForCompletionAsync();
             Assert.AreEqual(_graphName, grpah.Data.Resource.Id);
             VerifyGremlinGraphCreation(grpah, parameters);
             // Seems bug in swagger definition
@@ -113,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = await throughput.CreateOrUpdate(new ThroughputSettingsUpdateOptions(Resources.Models.Location.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null))).WaitForCompletionAsync();
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateGremlinGraphToAutoscale().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(true)).Value;
             AssertAutoscale(throughputData);
         }
 
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = await throughput.MigrateGremlinGraphToManualThroughput().WaitForCompletionAsync();
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(true)).Value;
             AssertManualThroughput(throughputData);
         }
 
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task GremlinGraphDelete()
         {
             var graph = await CreateGremlinGraph(null);
-            await graph.DeleteAsync();
+            await graph.DeleteAsync(true);
 
             graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             Assert.Null(graph);
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(_graphName, parameters);
+            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(true, _graphName, parameters);
             return graphLro.Value;
         }
 
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateUpdateOptions(Resources.Models.Location.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
+            return new GremlinGraphCreateUpdateOptions(AzureLocation.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }

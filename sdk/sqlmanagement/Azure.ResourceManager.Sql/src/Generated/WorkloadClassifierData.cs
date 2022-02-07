@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="memberName"> The workload classifier member name. </param>
         /// <param name="label"> The workload classifier label. </param>
         /// <param name="context"> The workload classifier context. </param>
         /// <param name="startTime"> The workload classifier start time for classification. </param>
         /// <param name="endTime"> The workload classifier end time for classification. </param>
         /// <param name="importance"> The workload classifier importance. </param>
-        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType type, string memberName, string label, string context, string startTime, string endTime, string importance) : base(id, name, type)
+        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance) : base(id, name, type, systemData)
         {
             MemberName = memberName;
             Label = label;

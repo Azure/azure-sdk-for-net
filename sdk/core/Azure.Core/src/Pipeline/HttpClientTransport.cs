@@ -159,13 +159,14 @@ namespace Azure.Core.Pipeline
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
+                // UseCookies is not supported on "browser"
                 return new HttpClientHandler();
             }
 
 #if NETCOREAPP
-            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false }, options);
+            return ApplyOptionsToHandler(new SocketsHttpHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
 #else
-            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false }, options);
+            return ApplyOptionsToHandler(new HttpClientHandler { AllowAutoRedirect = false, UseCookies = UseCookies() }, options);
 #endif
         }
 
@@ -593,12 +594,16 @@ namespace Azure.Core.Pipeline
             return httpHandler;
         }
 
-        internal override void DisposeInternal()
+        /// <summary>
+        /// Disposes the underlying <see cref="HttpClient"/>.
+        /// </summary>
+        public void Dispose()
         {
             if (this != Shared)
             {
                 Client.Dispose();
             }
+            GC.SuppressFinalize(this);
         }
 
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
@@ -609,5 +614,9 @@ namespace Azure.Core.Pipeline
             httpRequest.Properties[name] = value;
 #endif
         }
+
+        private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
+            "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
+            "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
     }
 }

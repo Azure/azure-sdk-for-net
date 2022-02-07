@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<VirtualCluster> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualClusterUpdateOperation for mocking. </summary>
         protected VirtualClusterUpdateOperation()
         {
         }
 
-        internal VirtualClusterUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualClusterUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualClusterUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         VirtualCluster IOperationSource<VirtualCluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualCluster(_operationBase, VirtualClusterData.DeserializeVirtualClusterData(document.RootElement));
+            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
+            return new VirtualCluster(_armClient, data);
         }
 
         async ValueTask<VirtualCluster> IOperationSource<VirtualCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualCluster(_operationBase, VirtualClusterData.DeserializeVirtualClusterData(document.RootElement));
+            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
+            return new VirtualCluster(_armClient, data);
         }
     }
 }

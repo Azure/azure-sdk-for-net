@@ -7,9 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
@@ -19,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         /// <summary> Initializes a new instance of WebPubSubData. </summary>
         /// <param name="location"> The location. </param>
-        public WebPubSubData(Location location) : base(location)
+        public WebPubSubData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkData>();
@@ -29,11 +27,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The billing information of the resource.(e.g. Free, Standard). </param>
         /// <param name="identity"> The managed identity response. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -66,11 +64,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, WebPubSubSku sku, ManagedIdentity identity, SystemData systemData, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
             HostName = hostName;
@@ -93,8 +90,6 @@ namespace Azure.ResourceManager.WebPubSub
         public WebPubSubSku Sku { get; set; }
         /// <summary> The managed identity response. </summary>
         public ManagedIdentity Identity { get; set; }
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>

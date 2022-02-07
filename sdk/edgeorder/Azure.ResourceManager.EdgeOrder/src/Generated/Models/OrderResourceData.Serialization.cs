@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
 
@@ -27,25 +26,15 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static OrderResourceData DeserializeOrderResourceData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IReadOnlyList<string>> orderItemIds = default;
             Optional<StageDetails> currentStage = default;
             Optional<IReadOnlyList<StageDetails>> orderStageHistory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -59,6 +48,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -27,9 +27,11 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
-        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
+
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics;
+        private readonly ManagedDatabaseColumnsRestOperations _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient;
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics;
+        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient;
         private readonly DatabaseColumnData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableColumn"/> class for mocking. </summary>
@@ -38,45 +40,32 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceDatabaseSchemaTableColumn"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaTableColumn(ArmResource options, DatabaseColumnData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal ManagedInstanceDatabaseSchemaTableColumn(ArmClient client, DatabaseColumnData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableColumn"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaTableColumn(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ManagedInstanceDatabaseSchemaTableColumn(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableColumn"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedInstanceDatabaseSchemaTableColumn(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(_managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas/tables/columns";
-
-        /// <summary> Gets the valid resource type for the operations. </summary>
-        protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,6 +82,19 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it in the ManagedInstanceDatabaseSchemaTableColumn. </summary>
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
+        public virtual ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel()
+        {
+            return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(Client, new ResourceIdentifier(Id.ToString() + "/sensitivityLabels/current"));
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// OperationId: ManagedDatabaseColumns_Get
@@ -100,14 +102,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagedInstanceDatabaseSchemaTableColumn>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.Get");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
+                    throw await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,14 +125,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceDatabaseSchemaTableColumn> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.Get");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
+                    throw _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,34 +141,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/disable
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/recommended/disable
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// OperationId: ManagedDatabaseSensitivityLabels_DisableRecommendation
         /// <summary> Disables sensitivity recommendations on a given column. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> DisableRecommendationManagedDatabaseSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.DisableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelsRestClient.DisableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.DisableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -176,18 +162,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/disable
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/recommended/disable
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// OperationId: ManagedDatabaseSensitivityLabels_DisableRecommendation
         /// <summary> Disables sensitivity recommendations on a given column. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DisableRecommendationManagedDatabaseSensitivityLabel(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.DisableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelsRestClient.DisableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.DisableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -197,18 +183,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/enable
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/recommended/enable
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// OperationId: ManagedDatabaseSensitivityLabels_EnableRecommendation
         /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> EnableRecommendationManagedDatabaseSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.EnableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelsRestClient.EnableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.EnableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -218,18 +204,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}/enable
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/recommended/enable
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// OperationId: ManagedDatabaseSensitivityLabels_EnableRecommendation
         /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response EnableRecommendationManagedDatabaseSensitivityLabel(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.EnableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelsRestClient.EnableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedInstanceDatabaseSchemaTableColumnSensitivityLabelManagedDatabaseSensitivityLabelsRestClient.EnableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -239,14 +225,40 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel
-
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it in the ManagedInstanceDatabaseSchemaTableColumn. </summary>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel()
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(this, new ResourceIdentifier(Id.ToString() + "/sensitivityLabels/current"));
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumn.GetAvailableLocations");
+            scope.Start();
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

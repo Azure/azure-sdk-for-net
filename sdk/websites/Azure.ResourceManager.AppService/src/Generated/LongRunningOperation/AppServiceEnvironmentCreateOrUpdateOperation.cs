@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<AppServiceEnvironment> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentCreateOrUpdateOperation for mocking. </summary>
         protected AppServiceEnvironmentCreateOrUpdateOperation()
         {
         }
 
-        internal AppServiceEnvironmentCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AppServiceEnvironmentCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AppServiceEnvironment>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AppServiceEnvironmentCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
         AppServiceEnvironment IOperationSource<AppServiceEnvironment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
+            var data = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
+            return new AppServiceEnvironment(_armClient, data);
         }
 
         async ValueTask<AppServiceEnvironment> IOperationSource<AppServiceEnvironment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AppServiceEnvironment(_operationBase, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement));
+            var data = AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(document.RootElement);
+            return new AppServiceEnvironment(_armClient, data);
         }
     }
 }

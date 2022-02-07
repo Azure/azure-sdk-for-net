@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
         }
 
-        internal ConsumerGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ConsumerGroupData> response)
+        internal ConsumerGroupCreateOrUpdateOperation(ArmClient armClient, Response<ConsumerGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<ConsumerGroup>(Response.FromValue(new ConsumerGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ConsumerGroup>(Response.FromValue(new ConsumerGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
