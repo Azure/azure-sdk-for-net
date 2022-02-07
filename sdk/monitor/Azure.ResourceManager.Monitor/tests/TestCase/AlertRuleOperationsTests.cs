@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             return lro.Value;
         }
 
-        [TestCase]
+        [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
         [RecordedTest]
         public async Task Delete()
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             await alert.DeleteAsync(true);
         }
 
-        [TestCase]
+        [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
         [RecordedTest]
         public async Task Get()
         {

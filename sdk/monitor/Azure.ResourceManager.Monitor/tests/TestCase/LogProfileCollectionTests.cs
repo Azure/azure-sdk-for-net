@@ -24,7 +24,22 @@ namespace Azure.ResourceManager.Monitor.Tests
             return SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
         }
 
-        [TestCase]
+        [TearDown]
+        protected void CleanUp()
+        {
+            CleanUpAsync().Wait();
+        }
+
+        private async Task CleanUpAsync()
+        {
+            var collection = SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                await item.DeleteAsync(true);
+            }
+        }
+
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
@@ -36,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.AreEqual(name, logProfile.Data.Name);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -49,20 +63,14 @@ namespace Azure.ResourceManager.Monitor.Tests
             ResourceDataHelper.AssertLogProfile(lgoProfile1.Data, logProfile2.Data);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetLogProfileCollectionAsync();
             var input = ResourceDataHelper.GetBasicLogProfileData("global");
             _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testLogProfile-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testLogProfile-"), input);
-            int count = 0;
-            await foreach (var logProfile in collection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 2);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(list.Count, 1);
         }
     }
 }
