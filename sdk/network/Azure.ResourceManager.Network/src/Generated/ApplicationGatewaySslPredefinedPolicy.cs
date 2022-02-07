@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewaySslPredefinedPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(ArmClient armClient, ApplicationGatewaySslPredefinedPolicyData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal ApplicationGatewaySslPredefinedPolicy(ArmClient client, ApplicationGatewaySslPredefinedPolicyData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewaySslPredefinedPolicy"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ApplicationGatewaySslPredefinedPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
             _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient = new ApplicationGatewaysRestOperations(_applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewaySslPredefinedPolicyApplicationGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationGatewaySslPredefinedPolicyApplicationGatewaysRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _applicationGatewaySslPredefinedPolicyApplicationGatewaysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewaySslPredefinedPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

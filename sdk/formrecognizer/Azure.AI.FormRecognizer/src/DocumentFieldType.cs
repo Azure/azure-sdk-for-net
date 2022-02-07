@@ -71,6 +71,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Used for <see cref="DocumentSignatureType"/> type.
         /// </summary>
-        Signature
+        Signature,
+
+        /// <summary>
+        /// Used for <see cref="CurrencyValue"/> type.
+        /// </summary>
+        Currency
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri");
-                writer.WriteStringValue(PrimaryScriptUri);
+                writer.WriteStringValue(PrimaryScriptUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SupportingScriptUris))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
             Optional<IReadOnlyDictionary<string, object>> outputs = default;
-            Optional<string> primaryScriptUri = default;
+            Optional<Uri> primaryScriptUri = default;
             Optional<IList<string>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
@@ -266,7 +266,12 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("primaryScriptUri"))
                         {
-                            primaryScriptUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryScriptUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("supportingScriptUris"))

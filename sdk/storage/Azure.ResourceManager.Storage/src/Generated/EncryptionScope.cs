@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of the <see cref = "EncryptionScope"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EncryptionScope(ArmClient armClient, EncryptionScopeData data) : this(armClient, data.Id)
+        internal EncryptionScope(ArmClient client, EncryptionScopeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="EncryptionScope"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EncryptionScope(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal EncryptionScope(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string encryptionScopeApiVersion);
             _encryptionScopeRestClient = new EncryptionScopesRestOperations(_encryptionScopeClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionScopeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _encryptionScopeClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new EncryptionScope(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EncryptionScope(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,7 +114,57 @@ namespace Azure.ResourceManager.Storage
                 var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _encryptionScopeClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScope(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EncryptionScope(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
+        /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
+        public async virtual Task<Response<EncryptionScope>> UpdateAsync(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
+        {
+            if (encryptionScope == null)
+            {
+                throw new ArgumentNullException(nameof(encryptionScope));
+            }
+
+            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
+            scope.Start();
+            try
+            {
+                var response = await _encryptionScopeRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionScope, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new EncryptionScope(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
+        /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
+        public virtual Response<EncryptionScope> Update(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
+        {
+            if (encryptionScope == null)
+            {
+                throw new ArgumentNullException(nameof(encryptionScope));
+            }
+
+            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
+            scope.Start();
+            try
+            {
+                var response = _encryptionScopeRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionScope, cancellationToken);
+                return Response.FromValue(new EncryptionScope(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,56 +201,6 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
-        /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
-        public async virtual Task<Response<EncryptionScope>> UpdateAsync(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
-        {
-            if (encryptionScope == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScope));
-            }
-
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
-            scope.Start();
-            try
-            {
-                var response = await _encryptionScopeRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionScope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new EncryptionScope(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
-        /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
-        public virtual Response<EncryptionScope> Update(EncryptionScopeData encryptionScope, CancellationToken cancellationToken = default)
-        {
-            if (encryptionScope == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScope));
-            }
-
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.Update");
-            scope.Start();
-            try
-            {
-                var response = _encryptionScopeRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionScope, cancellationToken);
-                return Response.FromValue(new EncryptionScope(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

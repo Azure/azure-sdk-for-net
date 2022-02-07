@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.EdgeOrder.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             string orderId = string.Format(EdgeOrderManagementTestUtilities.OrderArmIdFormat,
                 TestEnvironment.SubscriptionId, _resourceGroupName, EdgeOrderManagementTestUtilities.DefaultResourceLocation, _orderItemName);
 
-            _orderItemResourceCollection = GetOrderItemResourceCollection(_resourceGroupName);
+            _orderItemResourceCollection = await GetOrderItemResourceCollectionAsync(_resourceGroupName);
 
             OrderItemResourceData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
                 GetDefaultOrderItemDetails(), addressDetails, orderId);
@@ -93,7 +94,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(2)]
         public async Task TestListOrdersAtResourceGroupLevel()
         {
-            AsyncPageable<OrderResource> orders = ResourceGroupExtensions.GetOrderResourcesAsync(GetResourceGroup(_resourceGroupName));
+            ResourceGroup rg = await GetResourceGroupAsync(_resourceGroupName);
+            AsyncPageable<OrderResource> orders = ResourceGroupExtensions.GetOrderResourcesAsync(rg);
             List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
 
             Assert.NotNull(ordersResult);

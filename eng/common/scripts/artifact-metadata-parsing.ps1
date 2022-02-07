@@ -46,7 +46,10 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
 # Retrieves the list of all tags that exist on the target repository
 function GetExistingTags($apiUrl) {
   try {
-    return (Invoke-RestMethod -Method "GET" -Uri "$apiUrl/git/refs/tags" -MaximumRetryCount 3 -RetryIntervalSec 10) | % { $_.ref.Replace("refs/tags/", "") }
+    $headers = @{
+      "Authorization" = "token $($env:GH_TOKEN)"
+    }
+    return (Invoke-RestMethod -Method "GET" -Uri "$apiUrl/git/refs/tags" -Headers $headers -MaximumRetryCount 3 -RetryIntervalSec 10) | % { $_.ref.Replace("refs/tags/", "") }
   }
   catch {
     Write-Host $_

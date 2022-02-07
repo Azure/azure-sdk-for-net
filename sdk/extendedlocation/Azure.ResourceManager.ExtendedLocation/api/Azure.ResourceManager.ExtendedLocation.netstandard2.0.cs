@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.ExtendedLocation
 {
     public static partial class ArmClientExtensions
     {
-        public static Azure.ResourceManager.ExtendedLocation.CustomLocation GetCustomLocation(this Azure.ResourceManager.ArmClient armClient, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ExtendedLocation.CustomLocation GetCustomLocation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class CustomLocation : Azure.ResourceManager.Core.ArmResource
     {

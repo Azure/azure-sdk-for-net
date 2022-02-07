@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
     public class VaultOperationsTests : VaultOperationsTestsBase
     {
         public VaultOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

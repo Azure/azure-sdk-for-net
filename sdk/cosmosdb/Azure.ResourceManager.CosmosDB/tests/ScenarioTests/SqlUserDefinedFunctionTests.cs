@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            userDefinedFunction = await SqlUserDefinedFunctionCollection.CreateOrUpdate(false, _userDefinedFunctionName, updateOptions).WaitForCompletionAsync();
+            userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(true, _userDefinedFunctionName, updateOptions)).Value;
             Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.Id);
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
 

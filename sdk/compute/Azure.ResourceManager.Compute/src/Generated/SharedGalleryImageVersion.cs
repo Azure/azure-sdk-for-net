@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SharedGalleryImageVersion(ArmClient armClient, SharedGalleryImageVersionData data) : this(armClient, data.Id)
+        internal SharedGalleryImageVersion(ArmClient client, SharedGalleryImageVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedGalleryImageVersion(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SharedGalleryImageVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sharedGalleryImageVersionApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sharedGalleryImageVersionApiVersion);
             _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(_sharedGalleryImageVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw await _sharedGalleryImageVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw _sharedGalleryImageVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGalleryImageVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
