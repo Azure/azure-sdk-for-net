@@ -1,0 +1,463 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9a2dea8030872f4cadeb9d5f0f606efd-4b5b9b1ef1a6e543-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20220126.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "522b5f772822bfd7eb7d6896bb3e3e03",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "468",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 28 Jan 2022 07:04:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "65209d6f-571c-41e1-ba62-27caa3809543",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "65209d6f-571c-41e1-ba62-27caa3809543",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220128T070418Z:65209d6f-571c-41e1-ba62-27caa3809543"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "tagKey1": "tagValue1",
+          "tagKey2": "tagValue2"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-2033?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20220126.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "838a86ff529c9fadb6cb37f52b873266",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 28 Jan 2022 07:04:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2627eca7-c5b8-4342-936e-7a8c935d5f91",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "2627eca7-c5b8-4342-936e-7a8c935d5f91",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220128T070419Z:2627eca7-c5b8-4342-936e-7a8c935d5f91"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2033",
+        "name": "testRG-2033",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-2033/providers/Microsoft.Insights/autoscalesettings/testAutoscaleSettings-4576?api-version=2015-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1818",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Monitor/1.0.0-alpha.20220126.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "53a68ff25dc60035c7410f91ac96857b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "profiles": [
+            {
+              "name": "Profiles2",
+              "capacity": {
+                "minimum": "1",
+                "maximum": "1",
+                "default": "1"
+              },
+              "rules": [
+                {
+                  "metricTrigger": {
+                    "metricName": "AbandonMessage",
+                    "metricNamespace": "microsoft.servicebus/namespaces",
+                    "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                    "metricResourceLocation": "Eest US 2",
+                    "timeGrain": "PT1M",
+                    "statistic": "Average",
+                    "timeWindow": "PT10M",
+                    "timeAggregation": "Average",
+                    "operator": "GreaterThan",
+                    "threshold": 70,
+                    "dividePerInstance": false
+                  },
+                  "scaleAction": {
+                    "direction": "Increase",
+                    "type": "ServiceAllowedNextValue",
+                    "value": "1",
+                    "cooldown": "PT5M"
+                  }
+                }
+              ],
+              "fixedDate": {
+                "timeZone": "UTC",
+                "start": "2014-04-15T21:06:11.7882792Z",
+                "end": "2014-04-15T21:06:11.7882792Z"
+              }
+            },
+            {
+              "name": "Profiles3",
+              "capacity": {
+                "minimum": "1",
+                "maximum": "1",
+                "default": "1"
+              },
+              "rules": [
+                {
+                  "metricTrigger": {
+                    "metricName": "AbandonMessage",
+                    "metricNamespace": "microsoft.servicebus/namespaces",
+                    "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                    "metricResourceLocation": "Eest US 2",
+                    "timeGrain": "PT1M",
+                    "statistic": "Average",
+                    "timeWindow": "PT10M",
+                    "timeAggregation": "Average",
+                    "operator": "GreaterThan",
+                    "threshold": 70,
+                    "dividePerInstance": false
+                  },
+                  "scaleAction": {
+                    "direction": "Increase",
+                    "type": "ServiceAllowedNextValue",
+                    "value": "1",
+                    "cooldown": "PT5M"
+                  }
+                }
+              ],
+              "recurrence": {
+                "frequency": "Week",
+                "schedule": {
+                  "timeZone": "UTC-11",
+                  "days": [
+                    "Monday"
+                  ],
+                  "hours": [
+                    0
+                  ],
+                  "minutes": [
+                    10
+                  ]
+                }
+              }
+            }
+          ],
+          "enabled": true,
+          "targetResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+          "targetResourceLocation": "eastus"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2082",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 28 Jan 2022 07:04:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "57f4d997-081b-4cb0-b999-74a13a409cce",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "4a76dc87-5ffa-4f0a-b670-05e8bef508a3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220128T070430Z:57f4d997-081b-4cb0-b999-74a13a409cce"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2033/providers/microsoft.insights/autoscalesettings/testAutoscaleSettings-4576",
+        "name": "testAutoscaleSettings-4576",
+        "type": "Microsoft.Insights/autoscaleSettings",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "profiles": [
+            {
+              "name": "Profiles2",
+              "capacity": {
+                "minimum": "1",
+                "maximum": "1",
+                "default": "1"
+              },
+              "rules": [
+                {
+                  "metricTrigger": {
+                    "metricName": "AbandonMessage",
+                    "metricNamespace": "microsoft.servicebus/namespaces",
+                    "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                    "timeGrain": "PT1M",
+                    "statistic": "Average",
+                    "timeWindow": "PT10M",
+                    "timeAggregation": "Average",
+                    "operator": "GreaterThan",
+                    "threshold": 70.0,
+                    "dimensions": null,
+                    "dividePerInstance": false
+                  },
+                  "scaleAction": {
+                    "direction": "Increase",
+                    "type": "ServiceAllowedNextValue",
+                    "value": "1",
+                    "cooldown": "PT5M"
+                  }
+                }
+              ],
+              "fixedDate": {
+                "timeZone": "UTC",
+                "start": "2014-04-15T21:06:11.7882792Z",
+                "end": "2014-04-15T21:06:11.7882792Z"
+              }
+            },
+            {
+              "name": "Profiles3",
+              "capacity": {
+                "minimum": "1",
+                "maximum": "1",
+                "default": "1"
+              },
+              "rules": [
+                {
+                  "metricTrigger": {
+                    "metricName": "AbandonMessage",
+                    "metricNamespace": "microsoft.servicebus/namespaces",
+                    "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                    "timeGrain": "PT1M",
+                    "statistic": "Average",
+                    "timeWindow": "PT10M",
+                    "timeAggregation": "Average",
+                    "operator": "GreaterThan",
+                    "threshold": 70.0,
+                    "dimensions": null,
+                    "dividePerInstance": false
+                  },
+                  "scaleAction": {
+                    "direction": "Increase",
+                    "type": "ServiceAllowedNextValue",
+                    "value": "1",
+                    "cooldown": "PT5M"
+                  }
+                }
+              ],
+              "recurrence": {
+                "frequency": "Week",
+                "schedule": {
+                  "timeZone": "UTC-11",
+                  "days": [
+                    "Monday"
+                  ],
+                  "hours": [
+                    0
+                  ],
+                  "minutes": [
+                    10
+                  ]
+                }
+              }
+            }
+          ],
+          "enabled": true,
+          "name": "testAutoscaleSettings-4576",
+          "targetResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+          "notifications": null,
+          "predictiveAutoscalePolicy": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-2033/providers/Microsoft.Insights/autoscalesettings?api-version=2015-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Monitor/1.0.0-alpha.20220126.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "4a4baa3ada027d0cb36c5ca0cabff635",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2094",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 28 Jan 2022 07:04:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "73f0c940-347b-4290-bb9b-56a9306bca7e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "691d45c0-d301-4b56-8add-85564921e36d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220128T070431Z:73f0c940-347b-4290-bb9b-56a9306bca7e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2033/providers/microsoft.insights/autoscalesettings/testAutoscaleSettings-4576",
+            "name": "testAutoscaleSettings-4576",
+            "type": "Microsoft.Insights/autoscaleSettings",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+              "profiles": [
+                {
+                  "name": "Profiles2",
+                  "capacity": {
+                    "minimum": "1",
+                    "maximum": "1",
+                    "default": "1"
+                  },
+                  "rules": [
+                    {
+                      "metricTrigger": {
+                        "metricName": "AbandonMessage",
+                        "metricNamespace": "microsoft.servicebus/namespaces",
+                        "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                        "timeGrain": "PT1M",
+                        "statistic": "Average",
+                        "timeWindow": "PT10M",
+                        "timeAggregation": "Average",
+                        "operator": "GreaterThan",
+                        "threshold": 70.0,
+                        "dimensions": null,
+                        "dividePerInstance": false
+                      },
+                      "scaleAction": {
+                        "direction": "Increase",
+                        "type": "ServiceAllowedNextValue",
+                        "value": "1",
+                        "cooldown": "PT5M"
+                      }
+                    }
+                  ],
+                  "fixedDate": {
+                    "timeZone": "UTC",
+                    "start": "2014-04-15T21:06:11.7882792Z",
+                    "end": "2014-04-15T21:06:11.7882792Z"
+                  }
+                },
+                {
+                  "name": "Profiles3",
+                  "capacity": {
+                    "minimum": "1",
+                    "maximum": "1",
+                    "default": "1"
+                  },
+                  "rules": [
+                    {
+                      "metricTrigger": {
+                        "metricName": "AbandonMessage",
+                        "metricNamespace": "microsoft.servicebus/namespaces",
+                        "metricResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                        "timeGrain": "PT1M",
+                        "statistic": "Average",
+                        "timeWindow": "PT10M",
+                        "timeAggregation": "Average",
+                        "operator": "GreaterThan",
+                        "threshold": 70.0,
+                        "dimensions": null,
+                        "dividePerInstance": false
+                      },
+                      "scaleAction": {
+                        "direction": "Increase",
+                        "type": "ServiceAllowedNextValue",
+                        "value": "1",
+                        "cooldown": "PT5M"
+                      }
+                    }
+                  ],
+                  "recurrence": {
+                    "frequency": "Week",
+                    "schedule": {
+                      "timeZone": "UTC-11",
+                      "days": [
+                        "Monday"
+                      ],
+                      "hours": [
+                        0
+                      ],
+                      "minutes": [
+                        10
+                      ]
+                    }
+                  }
+                }
+              ],
+              "enabled": true,
+              "name": "testAutoscaleSettings-4576",
+              "targetResourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+              "notifications": null,
+              "predictiveAutoscalePolicy": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1871161260",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

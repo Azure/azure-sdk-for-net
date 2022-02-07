@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Tests;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Tests
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         private async Task<DiagnosticSettingsCollection> GetDiagnosticSettingsCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetDiagnosticSettings();
+            return DefaultSubscription.GetDiagnosticSettings();
         }
 
         [TestCase]

@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             var data = new DiagnosticSettingsData()
             {
                 StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-5335/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8010",
-                //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
-                EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412",
-                EventHubName = "myeventhub",
-                WorkspaceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.eventhub/namespaces/testnamespacemgmt1412",
+                ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",
+                //EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280/eventhubs/testfordiagnosticsetting/authorizationRules/testfordiagonst",
+                //EventHubName = "myeventhub",
+                WorkspaceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.operationalinsights/workspaces/myworkspace",
                 LogAnalyticsDestinationType = "Dedicated",
                 Metrics =
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 {
                     new LogSettings(true)
                 {
-                    Category = "allLogs",
+                    Category = "Alert",
                     RetentionPolicy= new RetentionPolicy(false, 0)
                 }
                 }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             RetentionPolicy retentionPolicy = new RetentionPolicy(true, 4);
             var data = new LogProfileData(location, locations, categories, retentionPolicy)
             {
-                ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/authorizationrules",
                 //StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-6327/providers/Microsoft.Storage/storageAccounts/teststoragemgmt2325"
             };
             return data;

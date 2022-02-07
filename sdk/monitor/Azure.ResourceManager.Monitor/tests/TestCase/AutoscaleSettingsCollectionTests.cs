@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var collection = await GetAutoscaleSettingsCollectionAsync();
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus");
+            // = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
             _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
-            int count = 0;
+            int count = 1;
             await foreach (var autoscaleSetting in collection.GetAllAsync())
             {
                 count++;
