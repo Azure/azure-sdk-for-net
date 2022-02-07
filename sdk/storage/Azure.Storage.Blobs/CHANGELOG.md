@@ -1,5 +1,15 @@
 # Release History
 
+## 12.11.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.11.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
 - Added support for BlobContainerClient.FilterBlobsByTag().
