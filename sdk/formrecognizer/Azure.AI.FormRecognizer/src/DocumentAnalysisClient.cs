@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             options ??= new DocumentAnalysisClientOptions();
 
-            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience.ToString()) ? DocumentAnalysisAudience.AzurePublicCloud : options.Audience)}/.default";
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? DocumentAnalysisAudience.AzurePublicCloud : options.Audience)}/.default";
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));

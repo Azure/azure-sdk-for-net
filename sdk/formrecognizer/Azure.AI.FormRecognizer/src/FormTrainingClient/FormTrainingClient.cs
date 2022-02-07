@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience.ToString()) ? FormRecognizerAudience.AzurePublicCloud : options.Audience)}/.default";
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? FormRecognizerAudience.AzurePublicCloud : options.Audience)}/.default";
 
             Diagnostics = new ClientDiagnostics(options);
             ServiceVersion = options.Version;
