@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor.Models;
@@ -15,6 +16,22 @@ namespace Azure.ResourceManager.Monitor.Tests
         public LogProfileOperationsTests(bool isAsync)
             : base(isAsync)
         {
+        }
+
+        [TearDown]
+        protected void CleanUp()
+        {
+            CleanUpAsync().Wait();
+        }
+
+        private async Task CleanUpAsync()
+        {
+            var collection = SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                await item.DeleteAsync(true);
+            }
         }
 
         private async Task<LogProfile> CreateLogProfileAsync(string logProfileName)
@@ -40,9 +57,10 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var logProfileName = Recording.GenerateAssetName("testLogProfile-");
             var logProfile = await CreateLogProfileAsync(logProfileName);
+            Thread.Sleep(1000);
             LogProfile logProfile2 = await logProfile.GetAsync();
 
-            ResourceDataHelper.AssertLogProfile(logProfile.Data, logProfile2.Data);
+            Assert.AreEqual(logProfile.Data.Name, logProfile2.Data.Name);
         }
     }
 }

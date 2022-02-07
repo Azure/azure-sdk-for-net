@@ -98,11 +98,42 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static AlertRuleData GetBasicAlertRuleData(AzureLocation location)
         {
-            RuleDataSource ruleDataSource = new RuleMetricDataSource("Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/microsoft.insights/metricalerts/testAlertRule", "global", "Microsoft.EventHub/namespaces", "ActiveConnections");
-            var ruleCondition = new ThresholdRuleCondition("Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria", ruleDataSource, ConditionOperator.GreaterThan, 3.0, TimeSpan.FromMinutes(15), TimeAggregationOperator.Average);
+            var ruleWebhookAction = new RuleWebhookAction()
+            {
+                ServiceUri = "https://www.contoso.com/alerts?type=HighCPU",
+                Properties = { new KeyValuePair<string, string>("key1", "value1") }
+            };
+            //RuleMetricDataSource ruleDataSource = new RuleMetricDataSource(
+            //    "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
+            //    "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280",
+            //    "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/microsoft.insights/metricalerts/testAlertRule",
+            //    "global",
+            //    "Microsoft.EventHub/namespaces",
+            //    "ActiveConnections");
+            RuleMetricDataSource ruleDataSource = new RuleMetricDataSource()
+            {
+                //LegacyResourceId = "",
+                MetricName = "testrulemetric",
+                MetricNamespace = "Microsoft.Compute/virtualMachines",
+                ResourceLocation = location,
+                ResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01"
+            };
+            //var ruleCondition = new ThresholdRuleCondition(
+            //    "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+            //    ruleDataSource,
+            //    ConditionOperator.GreaterThan,
+            //    3.0,
+            //    TimeSpan.FromMinutes(15),
+            //    TimeAggregationOperator.Average);
+            var ruleCondition = new ThresholdRuleCondition(ConditionOperator.GreaterThan, 3.0)
+            {
+                WindowSize = TimeSpan.FromMinutes(15),
+                TimeAggregation = TimeAggregationOperator.Average,
+                DataSource = ruleDataSource
+            };
             var data = new AlertRuleData(location, "testAlertRule", true, ruleCondition)
             {
-                Actions = { }
+                Actions = { ruleWebhookAction }
             };
             return data;
         }

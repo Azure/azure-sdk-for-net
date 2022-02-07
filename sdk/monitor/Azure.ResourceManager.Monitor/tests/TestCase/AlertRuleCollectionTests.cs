@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class AlertRuleCollectionTests : MonitorTestBase
     {
         public AlertRuleCollectionTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)
         {
         }
 
@@ -24,19 +24,20 @@ namespace Azure.ResourceManager.Monitor.Tests
             return resourceGroup.GetAlertRules();
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
             var container = await GetAlertRuleCollectionAsync();
             var name = Recording.GenerateAssetName("testAlertRule");
             var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(false, name, input);
-            var alert = lro.Value;
-            Assert.AreEqual(name, alert.Data.Name);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await container.CreateOrUpdateAsync(true, name, input));
+            Assert.That(ex.Message, Is.SupersetOf("Creating or editing classic alert rules based on this metric is no longer supported"));
+            //var lro = await container.CreateOrUpdateAsync(true, name, input);
+            //var alert = lro.Value;
+            //Assert.AreEqual(name, alert.Data.Name);
         }
 
-        [TestCase]
+        [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
         [RecordedTest]
         public async Task Get()
         {
@@ -49,20 +50,15 @@ namespace Azure.ResourceManager.Monitor.Tests
             ResourceDataHelper.AssertAlertRule(alert1.Data, alert2.Data);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetAlertRuleCollectionAsync();
-            var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
-            int count = 0;
-            await foreach (var alertRule in collection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 2);
+            //var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
+            //_ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
+            //_ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
+            var alertRules = collection.GetAllAsync().ToEnumerableAsync();
+            Assert.GreaterOrEqual(alertRules.Result.Count, 0);
         }
     }
 }

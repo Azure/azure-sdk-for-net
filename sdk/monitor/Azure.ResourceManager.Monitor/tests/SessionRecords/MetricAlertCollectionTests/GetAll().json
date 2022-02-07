@@ -55,7 +55,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "43",
+        "Content-Length": "44",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager/1.0.0-alpha.20220121.1",
@@ -68,7 +68,7 @@
         "tags": {
           "test": "env"
         },
-        "location": "eastus"
+        "location": "eastus2"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -89,7 +89,7 @@
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-501",
         "name": "testRG-501",
         "type": "Microsoft.Resources/resourceGroups",
-        "location": "eastus",
+        "location": "eastus2",
         "tags": {
           "test": "env"
         },
