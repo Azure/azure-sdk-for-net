@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the rule with GetAsync()
             AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
             // With UpdateAsync(), we can update the rule
-            AfdRuleUpdateOptions input = new AfdRuleUpdateOptions
+            RuleUpdateOptions input = new RuleUpdateOptions
             {
                 Order = 2
             };

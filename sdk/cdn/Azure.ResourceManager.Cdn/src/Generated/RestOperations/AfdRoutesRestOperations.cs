@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(routeUpdateProperties);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -430,10 +430,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
-        /// <param name="options"> Route update properties. </param>
+        /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="options"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(routeName));
             }
-            if (options == null)
+            if (routeUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,10 +478,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
-        /// <param name="options"> Route update properties. </param>
+        /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="options"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="routeName"/>, or <paramref name="routeUpdateProperties"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -503,12 +503,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(routeName));
             }
-            if (options == null)
+            if (routeUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, endpointName, routeName, routeUpdateProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

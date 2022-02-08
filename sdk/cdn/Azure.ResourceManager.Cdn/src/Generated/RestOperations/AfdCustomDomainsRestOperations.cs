@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions customDomainUpdateProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(customDomainUpdateProperties);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -391,10 +391,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
-        /// <param name="options"> Domain properties. </param>
+        /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="options"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainUpdateProperties"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -412,12 +412,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
-            if (options == null)
+            if (customDomainUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(customDomainUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, customDomainUpdateProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
-        /// <param name="options"> Domain properties. </param>
+        /// <param name="customDomainUpdateProperties"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="options"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/>, or <paramref name="customDomainUpdateProperties"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, AfdCustomDomainUpdateOptions customDomainUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(customDomainName));
             }
-            if (options == null)
+            if (customDomainUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(customDomainUpdateProperties));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, options);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, customDomainUpdateProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

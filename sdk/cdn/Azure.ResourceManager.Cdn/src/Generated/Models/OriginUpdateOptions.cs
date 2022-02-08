@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Origin properties needed for origin update. </summary>
-    public partial class CdnOriginUpdateOptions
+    public partial class OriginUpdateOptions
     {
-        /// <summary> Initializes a new instance of CdnOriginUpdateOptions. </summary>
-        public CdnOriginUpdateOptions()
+        /// <summary> Initializes a new instance of OriginUpdateOptions. </summary>
+        public OriginUpdateOptions()
         {
         }
 

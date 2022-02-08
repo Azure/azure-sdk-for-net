@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Route update properties. </param>
+        /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<AfdRouteUpdateOperation> UpdateAsync(bool waitForCompletion, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="routeUpdateProperties"/> is null. </exception>
+        public async virtual Task<AfdRouteUpdateOperation> UpdateAsync(bool waitForCompletion, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
-            if (options == null)
+            if (routeUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Update");
             scope.Start();
             try
             {
-                var response = await _afdRouteRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRouteUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response);
+                var response = await _afdRouteRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdRouteUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,22 +198,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Route update properties. </param>
+        /// <param name="routeUpdateProperties"> Route update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual AfdRouteUpdateOperation Update(bool waitForCompletion, AfdRouteUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="routeUpdateProperties"/> is null. </exception>
+        public virtual AfdRouteUpdateOperation Update(bool waitForCompletion, RouteUpdateOptions routeUpdateProperties, CancellationToken cancellationToken = default)
         {
-            if (options == null)
+            if (routeUpdateProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(routeUpdateProperties));
             }
 
             using var scope = _afdRouteClientDiagnostics.CreateScope("AfdRoute.Update");
             scope.Start();
             try
             {
-                var response = _afdRouteRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new AfdRouteUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response);
+                var response = _afdRouteRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties, cancellationToken);
+                var operation = new AfdRouteUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, routeUpdateProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing Secret within a profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Security policy update properties. </param>
+        /// <param name="securityPolicyProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<AfdSecurityPolicyUpdateOperation> UpdateAsync(bool waitForCompletion, AfdSecurityPolicyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
+        public async virtual Task<AfdSecurityPolicyUpdateOperation> UpdateAsync(bool waitForCompletion, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
         {
-            if (options == null)
+            if (securityPolicyProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
             using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = await _afdSecurityPolicyRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecurityPolicyUpdateOperation(Client, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response);
+                var response = await _afdSecurityPolicyRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdSecurityPolicyUpdateOperation(Client, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,22 +198,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing Secret within a profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Security policy update properties. </param>
+        /// <param name="securityPolicyProperties"> Security policy update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual AfdSecurityPolicyUpdateOperation Update(bool waitForCompletion, AfdSecurityPolicyUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyProperties"/> is null. </exception>
+        public virtual AfdSecurityPolicyUpdateOperation Update(bool waitForCompletion, SecurityPolicyProperties securityPolicyProperties, CancellationToken cancellationToken = default)
         {
-            if (options == null)
+            if (securityPolicyProperties == null)
             {
-                throw new ArgumentNullException(nameof(options));
+                throw new ArgumentNullException(nameof(securityPolicyProperties));
             }
 
             using var scope = _afdSecurityPolicyClientDiagnostics.CreateScope("AfdSecurityPolicy.Update");
             scope.Start();
             try
             {
-                var response = _afdSecurityPolicyRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new AfdSecurityPolicyUpdateOperation(Client, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response);
+                var response = _afdSecurityPolicyRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties, cancellationToken);
+                var operation = new AfdSecurityPolicyUpdateOperation(Client, _afdSecurityPolicyClientDiagnostics, Pipeline, _afdSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityPolicyProperties).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
