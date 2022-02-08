@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, HCICluster, HCIClusterData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, HCICluster, HCIClusterData> Construct() { }
     }
 }

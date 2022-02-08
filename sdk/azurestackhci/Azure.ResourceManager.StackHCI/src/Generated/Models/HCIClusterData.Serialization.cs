@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.StackHCI
         internal static HCIClusterData DeserializeHCIClusterData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

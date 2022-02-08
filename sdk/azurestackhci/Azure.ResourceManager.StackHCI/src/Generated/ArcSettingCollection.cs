@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StackHCI.Models;
 
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ArcSetting, ArcSettingData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, ArcSetting, ArcSettingData> Construct() { }
     }
 }
