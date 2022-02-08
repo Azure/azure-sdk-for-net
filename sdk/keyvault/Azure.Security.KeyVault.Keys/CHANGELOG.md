@@ -8,7 +8,7 @@
 
 ### Breaking Changes
 
-- `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to propery round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+- `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
 - `KeyRotationLifetimeAction.TimeAfterCreate` and `TimeBeforeExpiry` were changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
 
 ### Bugs Fixed
