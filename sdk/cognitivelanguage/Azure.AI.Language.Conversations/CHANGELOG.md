@@ -14,7 +14,7 @@
 
 ### Bugs Fixed
 
-- Made following property public `TargetIntentResult.TargetKind` instead of internal
+- Made following property public `TargetIntentResult.TargetKind` instead of internal.
 
 ### Other Changes
 
