@@ -171,7 +171,7 @@
         "x-ms-date": "Tue, 30 Nov 2021 19:31:25 GMT",
         "x-ms-file-rename-ignore-readonly": "false",
         "x-ms-file-rename-replace-if-exists": "true",
-        "x-ms-file-rename-source": "/?test-file-4bfcd1f5-db1e-89f4-3fe8-6414b1d973b9=",
+        "x-ms-file-rename-source": "/?test-file-4bfcd1f5-db1e-89f4-3fe8-6414b1d973b9",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2021-04-10"
       },
