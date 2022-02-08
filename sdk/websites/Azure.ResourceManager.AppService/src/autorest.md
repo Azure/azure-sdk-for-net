@@ -7,6 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
+save-inputs: true
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService

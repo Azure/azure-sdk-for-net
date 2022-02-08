@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a backup of an app by its ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SiteBackupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackup.Delete");
             scope.Start();
             try
             {
                 var response = await _siteBackupWebAppsRestClient.DeleteBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteBackupDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Deletes a backup of an app by its ID. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SiteBackupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackup.Delete");
             scope.Start();
             try
             {
                 var response = _siteBackupWebAppsRestClient.DeleteBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SiteBackupDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<SiteBackupRestoreOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RestoreAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteBackupWebAppsRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteBackupRestoreOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
+                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual SiteBackupRestoreOperation Restore(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Restore(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteBackupWebAppsRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken);
-                var operation = new SiteBackupRestoreOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response);
+                var operation = new AppServiceArmOperation(_siteBackupWebAppsClientDiagnostics, Pipeline, _siteBackupWebAppsRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public async virtual Task<SiteSlotPrivateAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotPrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, access, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotPrivateAccessCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotPrivateAccess>(Response.FromValue(new SiteSlotPrivateAccess(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public virtual SiteSlotPrivateAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotPrivateAccess> CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, access, cancellationToken);
-                var operation = new SiteSlotPrivateAccessCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotPrivateAccess>(Response.FromValue(new SiteSlotPrivateAccess(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

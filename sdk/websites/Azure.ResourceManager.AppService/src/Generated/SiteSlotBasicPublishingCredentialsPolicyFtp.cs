@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public async virtual Task<SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotBasicPublishingCredentialsPolicyFtp>> CreateOrUpdateAsync(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotBasicPublishingCredentialsPolicyFtp>(Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="csmPublishingAccessPoliciesEntity"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="csmPublishingAccessPoliciesEntity"/> is null. </exception>
-        public virtual SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotBasicPublishingCredentialsPolicyFtp> CreateOrUpdate(bool waitForCompletion, CsmPublishingCredentialsPoliciesEntityData csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default)
         {
             if (csmPublishingAccessPoliciesEntity == null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotBasicPublishingCredentialsPolicyFtpWebAppsRestClient.UpdateFtpAllowedSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, csmPublishingAccessPoliciesEntity, cancellationToken);
-                var operation = new SiteSlotBasicPublishingCredentialsPolicyFtpCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotBasicPublishingCredentialsPolicyFtp>(Response.FromValue(new SiteSlotBasicPublishingCredentialsPolicyFtp(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

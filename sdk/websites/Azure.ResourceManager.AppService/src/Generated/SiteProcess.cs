@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SiteProcessDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcess.Delete");
             scope.Start();
             try
             {
                 var response = await _siteProcessWebAppsRestClient.DeleteProcessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteProcessDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SiteProcessDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcess.Delete");
             scope.Start();
             try
             {
                 var response = _siteProcessWebAppsRestClient.DeleteProcess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SiteProcessDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

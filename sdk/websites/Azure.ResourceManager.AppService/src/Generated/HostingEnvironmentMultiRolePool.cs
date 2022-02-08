@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<HostingEnvironmentMultiRolePoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<HostingEnvironmentMultiRolePool>> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (multiRolePoolEnvelope == null)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new HostingEnvironmentMultiRolePoolCreateOrUpdateOperation(Client, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePool>(new HostingEnvironmentMultiRolePoolOperationSource(Client), _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public virtual HostingEnvironmentMultiRolePoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostingEnvironmentMultiRolePool> CreateOrUpdate(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
             if (multiRolePoolEnvelope == null)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken);
-                var operation = new HostingEnvironmentMultiRolePoolCreateOrUpdateOperation(Client, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePool>(new HostingEnvironmentMultiRolePoolOperationSource(Client), _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

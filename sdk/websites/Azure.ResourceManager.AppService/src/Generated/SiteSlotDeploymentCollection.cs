@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
-        public async virtual Task<SiteSlotDeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotDeployment>> CreateOrUpdateAsync(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             if (deployment == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, deployment, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotDeploymentCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotDeployment>(Response.FromValue(new SiteSlotDeployment(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
-        public virtual SiteSlotDeploymentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotDeployment> CreateOrUpdate(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             if (deployment == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, deployment, cancellationToken);
-                var operation = new SiteSlotDeploymentCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotDeployment>(Response.FromValue(new SiteSlotDeployment(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

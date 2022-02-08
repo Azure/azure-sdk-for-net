@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public async virtual Task<SiteSlotConfigLogsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotConfigLogs>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfigSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotConfigLogsCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public virtual SiteSlotConfigLogsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotConfigLogs> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             if (siteLogsConfig == null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotConfigLogsWebAppsRestClient.UpdateDiagnosticLogsConfigSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken);
-                var operation = new SiteSlotConfigLogsCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotConfigLogs>(Response.FromValue(new SiteSlotConfigLogs(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public async virtual Task<SiteSlotInstanceExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (msDeploy == null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotInstanceExtensionCreateOrUpdateOperation(Client, _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                var operation = new AppServiceArmOperation<SiteSlotInstanceExtension>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public virtual SiteSlotInstanceExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotInstanceExtension> CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (msDeploy == null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new SiteSlotInstanceExtensionCreateOrUpdateOperation(Client, _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                var operation = new AppServiceArmOperation<SiteSlotInstanceExtension>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

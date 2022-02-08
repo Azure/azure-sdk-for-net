@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<SiteSlotCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlot>> CreateOrUpdateAsync(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             if (siteEnvelope == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotWebAppsRestClient.CreateOrUpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotCreateOrUpdateOperation(Client, _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<SiteSlot>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual SiteSlotCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlot> CreateOrUpdate(bool waitForCompletion, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             if (siteEnvelope == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotWebAppsRestClient.CreateOrUpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken);
-                var operation = new SiteSlotCreateOrUpdateOperation(Client, _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<SiteSlot>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

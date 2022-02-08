@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Kubernetes Environment. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<KubeEnvironmentDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = await _kubeEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KubeEnvironmentDeleteOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new AppServiceArmOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a Kubernetes Environment. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual KubeEnvironmentDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = _kubeEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KubeEnvironmentDeleteOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new AppServiceArmOperation(_kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

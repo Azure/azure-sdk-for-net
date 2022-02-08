@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<SiteSlotConfigWebCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotConfigWeb>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotConfigWebCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotConfigWeb>(Response.FromValue(new SiteSlotConfigWeb(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual SiteSlotConfigWebCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotConfigWeb> CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             if (siteConfig == null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken);
-                var operation = new SiteSlotConfigWebCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotConfigWeb>(Response.FromValue(new SiteSlotConfigWeb(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

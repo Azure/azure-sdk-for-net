@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteARMResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<StaticSiteARMResource>> CreateOrUpdateAsync(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (staticSiteEnvelope == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteARMResourceStaticSitesRestClient.CreateOrUpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteARMResourceCreateOrUpdateOperation(Client, _staticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteARMResourceStaticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<StaticSiteARMResource>(new StaticSiteARMResourceOperationSource(Client), _staticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteARMResourceStaticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="staticSiteEnvelope"/> is null. </exception>
-        public virtual StaticSiteARMResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteARMResource> CreateOrUpdate(bool waitForCompletion, string name, StaticSiteARMResourceData staticSiteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (staticSiteEnvelope == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteARMResourceStaticSitesRestClient.CreateOrUpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope, cancellationToken);
-                var operation = new StaticSiteARMResourceCreateOrUpdateOperation(Client, _staticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteARMResourceStaticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<StaticSiteARMResource>(new StaticSiteARMResourceOperationSource(Client), _staticSiteARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteARMResourceStaticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, name, staticSiteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
