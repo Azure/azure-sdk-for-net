@@ -45,23 +45,49 @@ namespace Azure.Core.TestFramework
             _filter = filter;
         }
 
-        public override void Process(HttpMessage message)
-        {
-            RedirectToTestProxy(message);
-            _innerTransport.Process(message);
-            ProcessResponseAsync(message, false).EnsureCompleted();
-        }
+        public override void Process(HttpMessage message) =>
+            ProcessAsyncInternalAsync(message, false).EnsureCompleted();
 
-        public override async ValueTask ProcessAsync(HttpMessage message)
+        public override async ValueTask ProcessAsync(HttpMessage message) =>
+            await ProcessAsyncInternalAsync(message, true);
+
+        private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
-            RedirectToTestProxy(message);
-            await _innerTransport.ProcessAsync(message);
-            await ProcessResponseAsync(message, true);
+            try
+            {
+                RedirectToTestProxy(message);
+                if (async)
+                {
+                    await _innerTransport.ProcessAsync(message);
+                }
+                else
+                {
+                    _innerTransport.Process(message);
+                }
+
+                await ProcessResponseAsync(message, true);
+            }
+            finally
+            {
+                // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
+                // e.g. KeyVault caches tokens based on URI
+                message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string original);
+
+                var originalBaseUri = new Uri(original);
+                message.Request.Uri.Scheme = originalBaseUri.Scheme;
+                message.Request.Uri.Host = originalBaseUri.Host;
+                message.Request.Uri.Port = originalBaseUri.Port;
+
+                if (_isWebRequestTransport)
+                {
+                    ServicePointManager.ServerCertificateValidationCallback -= ServerCertificateCustomValidationCallback;
+                }
+            }
         }
 
         private async Task ProcessResponseAsync(HttpMessage message, bool async)
         {
-            if (message.Response.Headers.Contains("x-request-mismatch"))
+            if (message.HasResponse && message.Response.Headers.Contains("x-request-mismatch"))
             {
                 var streamReader = new StreamReader(message.Response.ContentStream);
                 string response;
@@ -75,20 +101,6 @@ namespace Azure.Core.TestFramework
                 }
                 using var doc = JsonDocument.Parse(response);
                 throw new TestRecordingMismatchException(doc.RootElement.GetProperty("Message").GetString());
-            }
-
-            // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
-            // e.g. KeyVault caches tokens based on URI
-            message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string original);
-
-            var originalBaseUri = new Uri(original);
-            message.Request.Uri.Scheme = originalBaseUri.Scheme;
-            message.Request.Uri.Host = originalBaseUri.Host;
-            message.Request.Uri.Port = originalBaseUri.Port;
-
-            if (_isWebRequestTransport)
-            {
-                ServicePointManager.ServerCertificateValidationCallback -= ServerCertificateCustomValidationCallback;
             }
         }
 
