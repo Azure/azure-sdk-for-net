@@ -149,6 +149,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26841")]
         [PlaybackOnly("One location only support one MHSM")]
         [RecordedTest]
         public async Task ManagedHsmListKeys()

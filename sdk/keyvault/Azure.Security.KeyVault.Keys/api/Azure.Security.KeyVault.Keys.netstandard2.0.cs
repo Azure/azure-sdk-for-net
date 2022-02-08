@@ -267,6 +267,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyReleasePolicy(System.BinaryData encodedPolicy) { }
         public string ContentType { get { throw null; } set { } }
         public System.BinaryData EncodedPolicy { get { throw null; } }
+        public bool? Immutable { get { throw null; } set { } }
     }
     public partial class KeyRotationLifetimeAction
     {
