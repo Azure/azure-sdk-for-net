@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
-    [BlobsClientTestFixture]
     public class ProgressHandlingTests : BlobTestBase
     {
         public ProgressHandlingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
