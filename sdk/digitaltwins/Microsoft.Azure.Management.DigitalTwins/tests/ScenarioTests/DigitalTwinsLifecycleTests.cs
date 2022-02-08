@@ -233,7 +233,7 @@ namespace DigitalTwins.Tests.ScenarioTests
 
                     tsdbConnection.Should().NotBeNull();
                     tsdbConnection.Properties.Should().NotBeNull();
-                    tsdbConnection.Properties.ProvisioningState.Should().Be(ProvisioningState.Provisioning);
+                    tsdbConnection.Properties.ProvisioningState.Should().Be(TimeSeriesDatabaseConnectionState.Provisioning);
 
                     // Attempting to create another time series database connection should fail
                     Func<Task> createAction = async () => await DigitalTwinsClient.TimeSeriesDatabaseConnections.CreateOrUpdateAsync(
@@ -278,7 +278,7 @@ namespace DigitalTwins.Tests.ScenarioTests
 
                     deletedTsdbConnection.Should().NotBeNull();
                     deletedTsdbConnection.Properties.Should().NotBeNull();
-                    deletedTsdbConnection.Properties.ProvisioningState.Should().Be(ProvisioningState.Deleted);
+                    deletedTsdbConnection.Properties.ProvisioningState.Should().Be(TimeSeriesDatabaseConnectionState.Deleting);
                 }
                 finally
                 {
