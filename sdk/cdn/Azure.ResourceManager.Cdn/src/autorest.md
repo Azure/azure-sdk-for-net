@@ -19,11 +19,11 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
+  - AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
   AfdProfiles_CheckHostNameAvailability: CheckAfdProfileHostNameAvailability
-  Validate_Secret: ValidateSecret
 directive:
   - from: swagger-document
     where: $.definitions.DeliveryRuleAction.properties.name
@@ -68,6 +68,19 @@ directive:
     transform: >
         $.secret = {
             "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Resource ID."
+                }
+            }
+        }
+  - from: swagger-document
+    where: $.definitions.AFDDomainUpdatePropertiesParameters.properties
+    transform: >
+        $.preValidatedCustomDomainResourceId = {
+            "description": "Resource reference to the Azure resource where custom domain ownership was prevalidated",
             "type": "object",
             "properties": {
                 "id": {
@@ -139,6 +152,18 @@ directive:
   - from: swagger-document
     where: $.definitions.ProfileProperties.properties.originResponseTimeoutSeconds
     transform: $['x-nullable'] = true  
+  - from: swagger-document
+    where: $.definitions.CustomDomainProperties.properties.customHttpsParameters
+    transform: $['x-nullable'] = true  
+  - from: swagger-document
+    where: $.definitions.AFDDomainUpdatePropertiesParameters.properties.preValidatedCustomDomainResourceId
+    transform: $['x-nullable'] = true 
+  - from: swagger-document
+    where: $.definitions.RouteConfigurationOverrideActionParameters.properties.originGroupOverride
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.RouteUpdatePropertiesParameters.properties.cacheConfiguration
+    transform: $['x-nullable'] = true 
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
@@ -269,4 +294,5 @@ directive:
           "name": "validationStatus",
           "modelAsString": true
       }
+  - remove-operation: Validate_Secret
 ```

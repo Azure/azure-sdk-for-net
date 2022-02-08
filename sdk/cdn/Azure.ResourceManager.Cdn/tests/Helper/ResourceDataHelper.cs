@@ -102,14 +102,15 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any));
 
-        public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+        public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleRouteConfigurationOverrideAction(new RouteConfigurationOverrideActionParameters(RouteConfigurationOverrideActionParametersTypeName.DeliveryRuleRouteConfigurationOverrideActionParameters)
         {
-            CacheDuration = "00:00:20"
-        });
-
-        public static DeliveryRuleAction UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
-        {
-            CacheDuration = "00:00:30"
+            CacheConfiguration = new CacheConfiguration()
+            {
+                QueryStringCachingBehavior = RuleQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
+                QueryParameters = "a=test",
+                IsCompressionEnabled = RuleIsCompressionEnabled.Enabled,
+                CacheBehavior = RuleCacheBehavior.HonorOrigin
+            }
         });
 
         public static AfdRouteData CreateAfdRouteData(AfdOriginGroup originGroup) => new AfdRouteData
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Parameters = new CustomerCertificateParameters(new WritableSubResource
             {
-                Id = new ResourceIdentifier("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert")
+                Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate")
             })
             {
                 UseLatestVersion = true
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).SecretVersion);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateParameters)getResult.Data.Parameters).CertificateAuthority);
             Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).UseLatestVersion);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.ToString().ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.ToString().ToLower());
+            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.Name.ToString().ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.Name.ToString().ToLower());
             Assert.True(((CustomerCertificateParameters)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateParameters)getResult.Data.Parameters).SubjectAlternativeNames));
         }
     }

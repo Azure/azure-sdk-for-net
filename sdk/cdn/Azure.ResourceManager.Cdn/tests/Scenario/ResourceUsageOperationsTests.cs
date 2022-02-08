@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     Assert.AreEqual(tempResourceUsage.Limit, 25);
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.AreEqual(count, 2);
         }
     }
 }

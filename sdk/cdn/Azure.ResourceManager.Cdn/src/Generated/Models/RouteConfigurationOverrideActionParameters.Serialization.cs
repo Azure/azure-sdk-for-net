@@ -19,8 +19,15 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(TypeName.ToString());
             if (Optional.IsDefined(OriginGroupOverride))
             {
-                writer.WritePropertyName("originGroupOverride");
-                writer.WriteObjectValue(OriginGroupOverride);
+                if (OriginGroupOverride != null)
+                {
+                    writer.WritePropertyName("originGroupOverride");
+                    writer.WriteObjectValue(OriginGroupOverride);
+                }
+                else
+                {
+                    writer.WriteNull("originGroupOverride");
+                }
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
@@ -46,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        originGroupOverride = null;
                         continue;
                     }
                     originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value);

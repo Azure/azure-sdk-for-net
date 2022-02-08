@@ -69,8 +69,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("cacheConfiguration");
-                writer.WriteObjectValue(CacheConfiguration);
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {

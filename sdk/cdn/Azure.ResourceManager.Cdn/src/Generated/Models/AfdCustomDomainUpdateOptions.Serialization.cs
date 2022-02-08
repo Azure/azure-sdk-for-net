@@ -29,8 +29,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResourceId))
             {
-                writer.WritePropertyName("preValidatedCustomDomainResourceId");
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResourceId);
+                if (PreValidatedCustomDomainResourceId != null)
+                {
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId");
+                    writer.WriteObjectValue(PreValidatedCustomDomainResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("preValidatedCustomDomainResourceId");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

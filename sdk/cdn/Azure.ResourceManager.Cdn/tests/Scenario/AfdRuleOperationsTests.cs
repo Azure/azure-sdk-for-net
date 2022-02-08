@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Order = 2
             };
             updateOptions.Conditions.Add(ResourceDataHelper.CreateDeliveryRuleCondition());
-            updateOptions.Actions.Add(ResourceDataHelper.UpdateDeliveryRuleOperation());
+            updateOptions.Actions.Add(ResourceDataHelper.CreateDeliveryRuleOperation());
             var lro = await afdRule.UpdateAsync(true, updateOptions);
             AfdRule updatedAfdRule = lro.Value;
             ResourceDataHelper.AssertAfdRuleUpdate(updatedAfdRule, updateOptions);

@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await afdProfile.GetLogAnalyticsResourcesAfdProfileAsync();
-            Assert.AreEqual(resourcesResponse.CustomDomains.Count, 0);
-            Assert.AreEqual(resourcesResponse.Endpoints.Count, 1);
+            Assert.AreEqual(resourcesResponse.CustomDomains.Count, 1);
+            Assert.AreEqual(resourcesResponse.Endpoints.Count, 2);
         }
 
         [TestCase]
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
-            CheckHostNameAvailabilityInput input = new CheckHostNameAvailabilityInput("fakeName");
+            CheckHostNameAvailabilityInput input = new CheckHostNameAvailabilityInput("customdomain4afdtest.azuretest.net");
             CheckNameAvailabilityOutput result = await afdProfile.CheckAfdProfileHostNameAvailabilityAsync(input);
             Assert.AreEqual(result.NameAvailable, true);
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
                 {
-                    MinimumTlsVersion = AfdMinimumTlsVersion.Tls12
+                    MinimumTlsVersion = AfdMinimumTlsVersion.Tls10
                 },
             };
             var lro = await afdCustomDomain.UpdateAsync(true, updateOptions);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             AfdCustomDomain afdCustomDomain = await afdProfile.GetAfdCustomDomains().GetAsync("customdomain4afd-azuretest-net");
-            Assert.ThrowsAsync<RequestFailedException>(async () => await afdCustomDomain.RefreshValidationTokenAsync(true));
+            Assert.DoesNotThrowAsync(async () => await afdCustomDomain.RefreshValidationTokenAsync(true));
         }
     }
 }

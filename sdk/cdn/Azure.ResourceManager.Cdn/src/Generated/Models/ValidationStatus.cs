@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The validation status. </summary>
-    public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
+    internal readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
     {
         private readonly string _value;
 

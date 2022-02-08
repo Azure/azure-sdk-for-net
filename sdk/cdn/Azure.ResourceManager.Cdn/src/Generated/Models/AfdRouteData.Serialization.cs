@@ -73,8 +73,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("cacheConfiguration");
-                writer.WriteObjectValue(CacheConfiguration);
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
@@ -235,7 +242,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                cacheConfiguration = null;
                                 continue;
                             }
                             cacheConfiguration = AfdRouteCacheConfiguration.DeserializeAfdRouteCacheConfiguration(property0.Value);

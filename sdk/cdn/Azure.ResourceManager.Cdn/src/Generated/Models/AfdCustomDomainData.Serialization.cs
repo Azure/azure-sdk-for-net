@@ -32,8 +32,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResourceId))
             {
-                writer.WritePropertyName("preValidatedCustomDomainResourceId");
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResourceId);
+                if (PreValidatedCustomDomainResourceId != null)
+                {
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId");
+                    writer.WriteObjectValue(PreValidatedCustomDomainResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("preValidatedCustomDomainResourceId");
+                }
             }
             if (Optional.IsDefined(HostName))
             {
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> profileName = default;
             Optional<AfdCustomDomainHttpsParameters> tlsSettings = default;
             Optional<WritableSubResource> azureDnsZone = default;
-            Optional<WritableSubResource> preValidatedCustomDomainResourceId = default;
+            Optional<AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
             Optional<DomainValidationState> domainValidationState = default;
@@ -119,10 +126,10 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            preValidatedCustomDomainResourceId = AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeAfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdCustomDomainData(id, name, type, systemData, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
+            return new AfdCustomDomainData(id, name, type, systemData, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
         }
     }
 }

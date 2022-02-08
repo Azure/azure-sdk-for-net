@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource reference to the Azure DNS zone. </summary>
         public WritableSubResource AzureDnsZone { get; set; }
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        public WritableSubResource PreValidatedCustomDomainResourceId { get; set; }
+        public AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; set; }
     }
 }
