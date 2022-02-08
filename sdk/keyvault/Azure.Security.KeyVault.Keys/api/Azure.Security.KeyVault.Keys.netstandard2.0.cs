@@ -273,14 +273,14 @@ namespace Azure.Security.KeyVault.Keys
     {
         public KeyRotationLifetimeAction() { }
         public Azure.Security.KeyVault.Keys.KeyRotationPolicyAction Action { get { throw null; } set { } }
-        public System.TimeSpan? TimeAfterCreate { get { throw null; } set { } }
-        public System.TimeSpan? TimeBeforeExpiry { get { throw null; } set { } }
+        public string TimeAfterCreate { get { throw null; } set { } }
+        public string TimeBeforeExpiry { get { throw null; } set { } }
     }
     public partial class KeyRotationPolicy
     {
         public KeyRotationPolicy() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.TimeSpan? ExpiresIn { get { throw null; } set { } }
+        public string ExpiresIn { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Keys.KeyRotationLifetimeAction> LifetimeActions { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
