@@ -194,7 +194,7 @@
 
 # PRLabel: %Communication
 /sdk/communication/                                     @acsdevx-msft
-/sdk/communication/Azure.Communication.PhoneNumbers/    @whisper6284 @miguhern @lucasrsant
+/sdk/communication/Azure.Communication.PhoneNumbers/    @whisper6284 @miguhern @lucasrsant @RoyHerrod @danielav7
 /sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
 /sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk
 
