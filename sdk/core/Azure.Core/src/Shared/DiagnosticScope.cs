@@ -314,7 +314,7 @@ namespace Azure.Core.Pipeline
 
             public void SetStartTime(DateTime startTime)
             {
-                _startTime = startTime;
+                _startTime = startTime.ToUniversalTime();
                 _currentActivity?.SetStartTime(startTime);
             }
 
