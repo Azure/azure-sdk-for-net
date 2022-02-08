@@ -69,7 +69,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ```C# Snippet:GetRelayConfigurationAsync
 Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
-DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
 IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
@@ -88,7 +88,7 @@ foreach (CommunicationIceServer iceServer in iceServers)
 
 ```C# Snippet:GetRelayConfigurationAsyncWithNearestRouteType
 Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user,RouteType.Nearest);
-DateTimeOffset? turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
 IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
