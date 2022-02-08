@@ -64,14 +64,14 @@ namespace Azure.Identity.Tests
 
         private static IEnumerable<object[]> ErrorScenarios()
         {
-            yield return new object[]{"'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
-            yield return new object[]{"pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
-            yield return new object[]{"pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
-            yield return new object[]{"Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError };
-            yield return new object[]{"NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError };
-            yield return new object[]{"Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError };
-            yield return new object[]{"No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError };
-            yield return new object[]{"cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError };
+            yield return new object[] { "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[] { "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError };
         }
 
         [Test]
@@ -94,10 +94,7 @@ namespace Azure.Identity.Tests
             {
                 var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
                 TestContext.WriteLine(processOutput);
-                var testProcess = new TestProcess
-                {
-                    Output = processOutput,
-                };
+                var testProcess = new TestProcess { Output = processOutput, };
                 AzurePowerShellCredential credential = InstrumentClient(
                     new AzurePowerShellCredential(
                         new AzurePowerShellCredentialOptions(),
