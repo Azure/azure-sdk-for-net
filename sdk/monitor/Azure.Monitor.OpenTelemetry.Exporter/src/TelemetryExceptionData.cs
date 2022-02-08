@@ -15,7 +15,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryExceptionData(int version, LogRecord logRecord) : base(version)
         {
+            Properties = new ChangeTrackingDictionary<string, string>();
+            Measurements = new ChangeTrackingDictionary<string, double>();
+
             var message = LogsHelper.GetMessage(logRecord);
+            LogsHelper.SetLogStateValuesToProperties(logRecord, Properties);
+
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
             ProblemId = LogsHelper.GetProblemId(logRecord.Exception);
 
@@ -44,8 +49,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Exceptions = exceptions;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
         private void ConvertExceptionTree(Exception exception, string message, TelemetryExceptionDetails parentExceptionDetails, List<TelemetryExceptionDetails> exceptions)

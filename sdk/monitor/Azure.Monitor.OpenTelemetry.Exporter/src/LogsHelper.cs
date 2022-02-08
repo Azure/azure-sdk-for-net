@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
@@ -62,10 +63,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 message = logRecord.State.ToString();
             }
-
-            // TODO: Parse logRecord.StateValues to extract originalformat / telemetry properties.
+            else if (logRecord.StateValues != null)
+            {
+                var orginalFormatState = logRecord.StateValues.Where(s => s.Key == "{OriginalFormat}").FirstOrDefault();
+                // If {OriginalFormat} is not found in StateValues
+                // SingleOrDefault will create a new KeyValuePair object with the Key and the Value to NULL
+                message = orginalFormatState.Value?.ToString();
+            }
 
             return message;
+        }
+
+        internal static void SetLogStateValuesToProperties(LogRecord logRecord, IDictionary<string, string> properties)
+        {
+            if (logRecord.StateValues != null)
+            {
+                for (int i = 0; i < logRecord.StateValues.Count; i++)
+                {
+                    properties.Add(logRecord.StateValues[i].Key, logRecord.StateValues[i].Value.ToString());
+                }
+            }
         }
 
         internal static string GetProblemId(Exception exception)
