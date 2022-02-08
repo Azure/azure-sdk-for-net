@@ -26,6 +26,13 @@ particular file:
 The warning will then list an error code and description of why the potential credential was flagged.
 
 ## True Positives
+If an Azure service access secret was leaked follow the following procedure:
+
+1. Rotate the affected secrets.
+2. Send an email to azuresdkengsysteam@microsoft.com with a list of affected resources and describe the way the leak happened.
+3. Check if any unexpected changes were done to the resource while the secret was exposed.
+4. If secret was leaked via a git commit try to erase it from the git history by squashing commits or rebasing while excluding the commit. Don't try to erase if the change was already merged to a master branch, just open a new PR that removes the secret.
+
 If CredScan discovers an actual credential, please contact the EngSys team at azuresdkengsysteam@microsoft.com so any
 remediation can be done.
 
