@@ -11,10 +11,6 @@
 - `MessageWithMetadata` is now in the `Azure` namespace rather than `Azure.Messaging`.
 - Changed `ContentType` property of `MessageWithMetadata` from a `string` to a `ContentType`
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 0.1.0-preview.19 (2022-01-11)
 
 ### Features Added
