@@ -564,12 +564,12 @@ namespace Azure.AI.Personalizer
                 //ToDo: TASK 13057958 Working on changes to support token authentication in RLClient
                 //config["http.token.key"] = authValue;
             }
-            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/interactions";
-            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.2/logs/observations";
+            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/observations";
             config["interaction.subsample.rate"] = Convert.ToString(subsampleRate, CultureInfo.InvariantCulture);
             config["observation.subsample.rate"] = Convert.ToString(subsampleRate, CultureInfo.InvariantCulture);
             //ToDo: TASK 13057958 Working on changes to support model api in RL.Net
-            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.1/model";
+            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.3/model";
             config["vw.commandline"] = _personalizerPolicy.Arguments;
             config["protocol.version"] = "2";
             config["initial_exploration.epsilon"] = Convert.ToString(_personalizerServiceProperties.ExplorationPercentage, CultureInfo.InvariantCulture);
