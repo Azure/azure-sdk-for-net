@@ -11,7 +11,7 @@ steps:
       | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
-      Set-Content "credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: CredScan setup
