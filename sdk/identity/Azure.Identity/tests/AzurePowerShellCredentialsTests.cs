@@ -70,6 +70,8 @@ namespace Azure.Identity.Tests
             yield return new object[]{"Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError };
             yield return new object[]{"NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError };
             yield return new object[]{"Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[]{"No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError };
+            yield return new object[]{"cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError };
         }
 
         [Test]

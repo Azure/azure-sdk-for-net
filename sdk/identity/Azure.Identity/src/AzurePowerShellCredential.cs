@@ -170,7 +170,11 @@ namespace Azure.Identity
             {
                 throw new Win32Exception(ERROR_FILE_NOT_FOUND);
             }
-            if (output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1)
+
+            var needsLogin = output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1 ||
+                             output.IndexOf("No accounts were found in the cache", StringComparison.OrdinalIgnoreCase) != -1 ||
+                             output.IndexOf("cannot retrieve access token", StringComparison.OrdinalIgnoreCase) != -1;
+            if (needsLogin)
             {
                 throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
             }
