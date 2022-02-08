@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class TraceHelper
     {
-        private const int version = 2;
+        private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
         internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
@@ -33,11 +33,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     case TelemetryType.Request:
                         telemetryData.BaseType = "RequestData";
-                        telemetryData.BaseData = new RequestData(version, activity, ref monitorTags);
+                        telemetryData.BaseData = new RequestData(Version, activity, ref monitorTags);
                         break;
                     case TelemetryType.Dependency:
                         telemetryData.BaseType = "RemoteDependencyData";
-                        telemetryData.BaseData = new RemoteDependencyData(version, activity, ref monitorTags);
+                        telemetryData.BaseData = new RemoteDependencyData(Version, activity, ref monitorTags);
                         break;
                 }
 

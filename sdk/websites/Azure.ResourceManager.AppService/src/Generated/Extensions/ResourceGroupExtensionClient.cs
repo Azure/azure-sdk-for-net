@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         private ClientDiagnostics _resourceHealthMetadataClientDiagnostics;
@@ -31,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -44,8 +45,64 @@ namespace Azure.ResourceManager.AppService
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of AppServiceCertificateOrders in the AppServiceCertificateOrder. </summary>
+        /// <returns> An object representing collection of AppServiceCertificateOrders and their operations over a AppServiceCertificateOrder. </returns>
+        public virtual AppServiceCertificateOrderCollection GetAppServiceCertificateOrders()
+        {
+            return new AppServiceCertificateOrderCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of AppServiceDomains in the AppServiceDomain. </summary>
+        /// <returns> An object representing collection of AppServiceDomains and their operations over a AppServiceDomain. </returns>
+        public virtual AppServiceDomainCollection GetAppServiceDomains()
+        {
+            return new AppServiceDomainCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of AppServiceEnvironments in the AppServiceEnvironment. </summary>
+        /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironment. </returns>
+        public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
+        {
+            return new AppServiceEnvironmentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of AppServicePlans in the AppServicePlan. </summary>
+        /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlan. </returns>
+        public virtual AppServicePlanCollection GetAppServicePlans()
+        {
+            return new AppServicePlanCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of Certificates in the Certificate. </summary>
+        /// <returns> An object representing collection of Certificates and their operations over a Certificate. </returns>
+        public virtual CertificateCollection GetCertificates()
+        {
+            return new CertificateCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of KubeEnvironments in the KubeEnvironment. </summary>
+        /// <returns> An object representing collection of KubeEnvironments and their operations over a KubeEnvironment. </returns>
+        public virtual KubeEnvironmentCollection GetKubeEnvironments()
+        {
+            return new KubeEnvironmentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
+        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
+        public virtual StaticSiteARMResourceCollection GetStaticSiteARMResources()
+        {
+            return new StaticSiteARMResourceCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of WebSites in the WebSite. </summary>
+        /// <returns> An object representing collection of WebSites and their operations over a WebSite. </returns>
+        public virtual WebSiteCollection GetWebSites()
+        {
+            return new WebSiteCollection(Client, Id);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
@@ -53,17 +110,17 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
         /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteResourceHealthMetadata>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadata(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -71,14 +128,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteResourceHealthMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadata(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -94,17 +151,17 @@ namespace Azure.ResourceManager.AppService
         /// OperationId: ResourceHealthMetadata_ListByResourceGroup
         /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
         {
-            Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
+            Page<SiteResourceHealthMetadata> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadata(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -112,14 +169,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteResourceHealthMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadata(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -136,14 +193,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async virtual Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Move");
             scope.Start();
             try
@@ -164,14 +215,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Move resources between resource groups. </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public virtual Response Move(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Move");
             scope.Start();
             try
@@ -192,14 +237,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public async virtual Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Validate");
             scope.Start();
             try
@@ -220,14 +259,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
         public virtual Response<ValidateResponse> Validate(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
-            if (validateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(validateRequest));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.Validate");
             scope.Start();
             try
@@ -248,14 +281,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public async virtual Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.ValidateMove");
             scope.Start();
             try
@@ -276,14 +303,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate whether a resource can be moved. </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
         public virtual Response ValidateMove(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            if (moveResourceEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(moveResourceEnvelope));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupExtensionClient.ValidateMove");
             scope.Start();
             try

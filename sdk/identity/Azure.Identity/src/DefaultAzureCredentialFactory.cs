@@ -24,13 +24,15 @@ namespace Azure.Identity
             return new EnvironmentCredential(Pipeline);
         }
 
-        public virtual TokenCredential CreateManagedIdentityCredential(string clientId)
+        public virtual TokenCredential CreateManagedIdentityCredential(DefaultAzureCredentialOptions options)
         {
             return new ManagedIdentityCredential(new ManagedIdentityClient(
                 new ManagedIdentityClientOptions
                 {
-                    ClientId = clientId,
+                    ResourceIdentifier = options.ManagedIdentityResourceId,
+                    ClientId = options.ManagedIdentityClientId,
                     Pipeline = Pipeline,
+                    Options = options,
                     InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1)
                 })
             );

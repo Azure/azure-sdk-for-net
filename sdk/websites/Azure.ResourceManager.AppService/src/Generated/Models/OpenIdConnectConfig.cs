@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="issuer"> The endpoint that issues the token. </param>
         /// <param name="certificationUri"> The endpoint that provides the keys necessary to validate the token. </param>
         /// <param name="wellKnownOpenIdConfiguration"> The endpoint that contains all the configuration endpoints for the provider. </param>
-        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, string certificationUri, string wellKnownOpenIdConfiguration)
+        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, Uri certificationUri, string wellKnownOpenIdConfiguration)
         {
             AuthorizationEndpoint = authorizationEndpoint;
             TokenEndpoint = tokenEndpoint;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The endpoint that issues the token. </summary>
         public string Issuer { get; set; }
         /// <summary> The endpoint that provides the keys necessary to validate the token. </summary>
-        public string CertificationUri { get; set; }
+        public Uri CertificationUri { get; set; }
         /// <summary> The endpoint that contains all the configuration endpoints for the provider. </summary>
         public string WellKnownOpenIdConfiguration { get; set; }
     }

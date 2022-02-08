@@ -31,15 +31,5 @@ namespace Azure.ResourceManager
 
             ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
-
-        /// <summary>
-        /// Gets the api version override if it has been set for the current client options.
-        /// </summary>
-        /// <param name="resourceType"> The resource type to get the version for. </param>
-        /// <param name="apiVersion"> The api version to variable to set. </param>
-        public bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
-        {
-            return ResourceApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
-        }
     }
 }

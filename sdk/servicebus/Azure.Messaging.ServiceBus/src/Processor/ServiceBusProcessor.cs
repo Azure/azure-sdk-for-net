@@ -377,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != default)
                 {
@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
 
             remove
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != value)
                 {

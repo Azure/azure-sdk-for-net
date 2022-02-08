@@ -386,14 +386,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
-            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             for (int i = 0; i < 3; i++)
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
                 await Task.Delay(1000);
             }
-            var consumer = new EventHubConsumerClient(
+            await using var consumer = new EventHubConsumerClient(
                 EventHubConsumerClient.DefaultConsumerGroupName,
                 EventHubsTestEnvironment.Instance.EventHubsConnectionString,
                 _eventHubScope.EventHubName);
@@ -416,8 +416,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-                            // for some reason, this doesn't seem to work reliably if including milliseconds in the format
-                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                            // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
+                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.AddMilliseconds(-150).ToString("yyyy-MM-ddTHH:mm:ssZ"));
                             options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
                         });
                     });

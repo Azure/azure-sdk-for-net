@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        protected internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal virtual DiagnosticsOptions DiagnosticOptions { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        protected internal virtual Uri BaseUri { get; private set; }
+        internal virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; private set; }
+        internal virtual HttpPipeline Pipeline { get; private set; }
 
         /// <summary>
         /// Gets the Azure subscriptions.
@@ -264,5 +265,17 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> A collection of the management groups. </returns>
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
+
+        /// <summary>
+        /// Gets a client using this instance of ArmClient to copy the client settings from.
+        /// </summary>
+        /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
+        /// <param name="ctor"> Delegate method that will construct the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetClient<T>(Func<T> ctor)
+            where T : ArmResource
+        {
+            return ctor();
+        }
     }
 }

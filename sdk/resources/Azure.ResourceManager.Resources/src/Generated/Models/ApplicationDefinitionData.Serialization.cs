@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(PackageFileUri))
             {
                 writer.WritePropertyName("packageFileUri");
-                writer.WriteStringValue(PackageFileUri);
+                writer.WriteStringValue(PackageFileUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MainTemplate))
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IList<ApplicationAuthorization>> authorizations = default;
             Optional<IList<ApplicationDefinitionArtifact>> artifacts = default;
             Optional<string> description = default;
-            Optional<string> packageFileUri = default;
+            Optional<Uri> packageFileUri = default;
             Optional<object> mainTemplate = default;
             Optional<object> createUiDefinition = default;
             Optional<ApplicationNotificationPolicy> notificationPolicy = default;
@@ -268,7 +269,12 @@ namespace Azure.ResourceManager.Resources
                         }
                         if (property0.NameEquals("packageFileUri"))
                         {
-                            packageFileUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            packageFileUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("mainTemplate"))

@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OSType))
             {
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Compute
             SystemData systemData = default;
             Optional<string> description = default;
             Optional<string> eula = default;
-            Optional<string> privacyStatementUri = default;
-            Optional<string> releaseNoteUri = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
             Optional<OperatingSystemTypes> osType = default;
             Optional<OperatingSystemStateTypes> osState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
@@ -185,12 +185,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            privacyStatementUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("releaseNoteUri"))
                         {
-                            releaseNoteUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osType"))
