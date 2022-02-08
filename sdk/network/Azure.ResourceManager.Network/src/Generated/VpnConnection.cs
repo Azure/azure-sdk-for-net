@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VpnConnection"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnConnection(ArmClient armClient, VpnConnectionData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal VpnConnection(ArmClient client, VpnConnectionData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnConnection"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VpnConnection(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal VpnConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string vpnConnectionApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string vpnConnectionApiVersion);
             _vpnConnectionRestClient = new VpnConnectionsRestOperations(_vpnConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +83,13 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of VpnSiteLinkConnections in the VpnSiteLinkConnection. </summary>
+        /// <returns> An object representing collection of VpnSiteLinkConnections and their operations over a VpnSiteLinkConnection. </returns>
+        public virtual VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
+        {
+            return new VpnSiteLinkConnectionCollection(Client, Id);
+        }
+
         /// <summary> Retrieves the details of a vpn connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VpnConnection>> GetAsync(CancellationToken cancellationToken = default)
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _vpnConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VpnConnection(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,43 +121,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _vpnConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnConnection(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _vpnConnectionClientDiagnostics.CreateScope("VpnConnection.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new VpnConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,15 +265,5 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
-
-        #region VpnSiteLinkConnection
-
-        /// <summary> Gets a collection of VpnSiteLinkConnections in the VpnConnection. </summary>
-        /// <returns> An object representing collection of VpnSiteLinkConnections and their operations over a VpnConnection. </returns>
-        public virtual VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
-        {
-            return new VpnSiteLinkConnectionCollection(this);
-        }
-        #endregion
     }
 }

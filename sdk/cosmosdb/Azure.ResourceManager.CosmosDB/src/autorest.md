@@ -21,6 +21,9 @@ modelerfour:
 
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 directive:
+- from: cosmos-db.json
+  where: $.definitions.MetricDefinition.properties.resourceUri
+  transform: $["x-ms-client-name"] = "ResourceId"
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,9 +19,9 @@ namespace Azure.ResourceManager.DeviceUpdate
     {
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return subscription.GetCachedClient((armClient) =>
+            return subscription.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(armClient, subscription.Id);
+                return new SubscriptionExtensionClient(client, subscription.Id);
             }
             );
         }
@@ -28,33 +29,46 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: CheckNameAvailability
+        /// <summary> Checks ADU resource name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async static Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return await GetExtensionClient(subscription).CheckDeviceUpdateNameAvailabilityAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: CheckNameAvailability
+        /// <summary> Checks ADU resource name availability. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public static Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(this Subscription subscription, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetExtensionClient(subscription).CheckDeviceUpdateNameAvailability(request, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Accounts_ListBySubscription
+        /// <summary> Returns list of Accounts. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeviceUpdateAccountsAsync(cancellationToken);
@@ -63,9 +77,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: Accounts_ListBySubscription
+        /// <summary> Returns list of Accounts. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceUpdateAccount> GetDeviceUpdateAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeviceUpdateAccounts(cancellationToken);

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -51,32 +52,32 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SqlServer"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServer(ArmClient armClient, SqlServerData data) : this(armClient, data.Id)
+        internal SqlServer(ArmClient client, SqlServerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlServer"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlServer(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SqlServer(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
             _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
+            Client.TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            Client.TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
             _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _serverUsagesRestClient = new ServerUsagesRestOperations(_serverUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRule.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
+            Client.TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
             _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _serverOperationsRestClient = new ServerRestOperations(_serverOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -111,6 +112,195 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of RecoverableDatabases in the RecoverableDatabase. </summary>
+        /// <returns> An object representing collection of RecoverableDatabases and their operations over a RecoverableDatabase. </returns>
+        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
+        {
+            return new RecoverableDatabaseCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SqlDatabases in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabases and their operations over a SqlDatabase. </returns>
+        public virtual SqlDatabaseCollection GetSqlDatabases()
+        {
+            return new SqlDatabaseCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ElasticPools in the ElasticPool. </summary>
+        /// <returns> An object representing collection of ElasticPools and their operations over a ElasticPool. </returns>
+        public virtual ElasticPoolCollection GetElasticPools()
+        {
+            return new ElasticPoolCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerCommunicationLinks in the ServerCommunicationLink. </summary>
+        /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a ServerCommunicationLink. </returns>
+        public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
+        {
+            return new ServerCommunicationLinkCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServiceObjectives in the ServiceObjective. </summary>
+        /// <returns> An object representing collection of ServiceObjectives and their operations over a ServiceObjective. </returns>
+        public virtual ServiceObjectiveCollection GetServiceObjectives()
+        {
+            return new ServiceObjectiveCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the ExtendedServerBlobAuditingPolicy. </summary>
+        /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a ExtendedServerBlobAuditingPolicy. </returns>
+        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
+        {
+            return new ExtendedServerBlobAuditingPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerBlobAuditingPolicies in the ServerBlobAuditingPolicy. </summary>
+        /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a ServerBlobAuditingPolicy. </returns>
+        public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
+        {
+            return new ServerBlobAuditingPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerAdvisors in the ServerAdvisor. </summary>
+        /// <returns> An object representing collection of ServerAdvisors and their operations over a ServerAdvisor. </returns>
+        public virtual ServerAdvisorCollection GetServerAdvisors()
+        {
+            return new ServerAdvisorCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of EncryptionProtectors in the EncryptionProtector. </summary>
+        /// <returns> An object representing collection of EncryptionProtectors and their operations over a EncryptionProtector. </returns>
+        public virtual EncryptionProtectorCollection GetEncryptionProtectors()
+        {
+            return new EncryptionProtectorCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of FailoverGroups in the FailoverGroup. </summary>
+        /// <returns> An object representing collection of FailoverGroups and their operations over a FailoverGroup. </returns>
+        public virtual FailoverGroupCollection GetFailoverGroups()
+        {
+            return new FailoverGroupCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of FirewallRules in the FirewallRule. </summary>
+        /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRule. </returns>
+        public virtual FirewallRuleCollection GetFirewallRules()
+        {
+            return new FirewallRuleCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of JobAgents in the JobAgent. </summary>
+        /// <returns> An object representing collection of JobAgents and their operations over a JobAgent. </returns>
+        public virtual JobAgentCollection GetJobAgents()
+        {
+            return new JobAgentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of PrivateEndpointConnections in the PrivateEndpointConnection. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
+        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        {
+            return new PrivateEndpointConnectionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of PrivateLinkResources in the PrivateLinkResource. </summary>
+        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
+        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        {
+            return new PrivateLinkResourceCollection(Client, Id);
+        }
+
+        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the SqlServer. </summary>
+        /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
+        public virtual ServerAutomaticTuning GetServerAutomaticTuning()
+        {
+            return new ServerAutomaticTuning(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+        }
+
+        /// <summary> Gets a collection of ServerAzureADAdministrators in the ServerAzureADAdministrator. </summary>
+        /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a ServerAzureADAdministrator. </returns>
+        public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
+        {
+            return new ServerAzureADAdministratorCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerAzureADOnlyAuthentications in the ServerAzureADOnlyAuthentication. </summary>
+        /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a ServerAzureADOnlyAuthentication. </returns>
+        public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
+        {
+            return new ServerAzureADOnlyAuthenticationCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerDevOpsAuditingSettings in the ServerDevOpsAuditingSettings. </summary>
+        /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a ServerDevOpsAuditingSettings. </returns>
+        public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
+        {
+            return new ServerDevOpsAuditingSettingsCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerDnsAliases in the ServerDnsAlias. </summary>
+        /// <returns> An object representing collection of ServerDnsAliases and their operations over a ServerDnsAlias. </returns>
+        public virtual ServerDnsAliasCollection GetServerDnsAliases()
+        {
+            return new ServerDnsAliasCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerKeys in the ServerKey. </summary>
+        /// <returns> An object representing collection of ServerKeys and their operations over a ServerKey. </returns>
+        public virtual ServerKeyCollection GetServerKeys()
+        {
+            return new ServerKeyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerSecurityAlertPolicies in the ServerSecurityAlertPolicy. </summary>
+        /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a ServerSecurityAlertPolicy. </returns>
+        public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
+        {
+            return new ServerSecurityAlertPolicyCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerVulnerabilityAssessments in the ServerVulnerabilityAssessment. </summary>
+        /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a ServerVulnerabilityAssessment. </returns>
+        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
+        {
+            return new ServerVulnerabilityAssessmentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of SyncAgents in the SyncAgent. </summary>
+        /// <returns> An object representing collection of SyncAgents and their operations over a SyncAgent. </returns>
+        public virtual SyncAgentCollection GetSyncAgents()
+        {
+            return new SyncAgentCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkRules in the VirtualNetworkRule. </summary>
+        /// <returns> An object representing collection of VirtualNetworkRules and their operations over a VirtualNetworkRule. </returns>
+        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        {
+            return new VirtualNetworkRuleCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of OutboundFirewallRules in the OutboundFirewallRule. </summary>
+        /// <returns> An object representing collection of OutboundFirewallRules and their operations over a OutboundFirewallRule. </returns>
+        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
+        {
+            return new OutboundFirewallRuleCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of RestorableDroppedDatabases in the RestorableDroppedDatabase. </summary>
+        /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a RestorableDroppedDatabase. </returns>
+        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
+        {
+            return new RestorableDroppedDatabaseCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of ServerConnectionPolicies in the ServerConnectionPolicy. </summary>
+        /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a ServerConnectionPolicy. </returns>
+        public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
+        {
+            return new ServerConnectionPolicyCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_Get
@@ -126,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sqlServerServersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,43 +340,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _sqlServerServersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServer(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,166 +399,6 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<SqlServer> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<SqlServer> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<SqlServer> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-
-            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new SqlServer(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// OperationId: Servers_Update
@@ -425,7 +419,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlServerUpdateOperation(ArmClient, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new SqlServerUpdateOperation(Client, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -457,7 +451,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new SqlServerUpdateOperation(ArmClient, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new SqlServerUpdateOperation(Client, _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -474,17 +468,17 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: Databases_ListInaccessibleByServer
         /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseData> GetInaccessibleDatabasesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabase> GetInaccessibleDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlDatabase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
                     var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -492,14 +486,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SqlDatabaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
                     var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -515,17 +509,17 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: Databases_ListInaccessibleByServer
         /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseData> GetInaccessibleDatabases(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabase> GetInaccessibleDatabases(CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseData> FirstPageFunc(int? pageSizeHint)
+            Page<SqlDatabase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
                     var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -533,14 +527,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SqlDatabaseData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServer.GetInaccessibleDatabases");
                 scope.Start();
                 try
                 {
                     var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -556,17 +550,17 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: ReplicationLinks_ListByServer
         /// <summary> Gets a list of replication links. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicationLinkData> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReplicationLink> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationLinkData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ReplicationLink>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
                     var response = await _replicationLinkRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -574,14 +568,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ReplicationLinkData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ReplicationLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
                     var response = await _replicationLinkRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -597,17 +591,17 @@ namespace Azure.ResourceManager.Sql
         /// OperationId: ReplicationLinks_ListByServer
         /// <summary> Gets a list of replication links. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationLinkData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicationLinkData> GetReplicationLinks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReplicationLink> GetReplicationLinks(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationLinkData> FirstPageFunc(int? pageSizeHint)
+            Page<ReplicationLink> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
                     var response = _replicationLinkRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -615,14 +609,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ReplicationLinkData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ReplicationLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("SqlServer.GetReplicationLinks");
                 scope.Start();
                 try
                 {
                     var response = _replicationLinkRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -692,7 +686,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<FirewallRuleData>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<FirewallRule>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -704,7 +698,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _firewallRuleRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new FirewallRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -720,7 +714,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<FirewallRuleData> ReplaceFirewallRule(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public virtual Response<FirewallRule> ReplaceFirewallRule(FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -732,7 +726,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _firewallRuleRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return response;
+                return Response.FromValue(new FirewallRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -951,274 +945,202 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        #region RecoverableDatabase
-
-        /// <summary> Gets a collection of RecoverableDatabases in the SqlServer. </summary>
-        /// <returns> An object representing collection of RecoverableDatabases and their operations over a SqlServer. </returns>
-        public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new RecoverableDatabaseCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region SqlDatabase
-
-        /// <summary> Gets a collection of SqlDatabases in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlDatabases and their operations over a SqlServer. </returns>
-        public virtual SqlDatabaseCollection GetSqlDatabases()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<SqlServer> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new SqlDatabaseCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ElasticPool
-
-        /// <summary> Gets a collection of ElasticPools in the SqlServer. </summary>
-        /// <returns> An object representing collection of ElasticPools and their operations over a SqlServer. </returns>
-        public virtual ElasticPoolCollection GetElasticPools()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new ElasticPoolCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ServerCommunicationLink
-
-        /// <summary> Gets a collection of ServerCommunicationLinks in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a SqlServer. </returns>
-        public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<SqlServer> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new ServerCommunicationLinkCollection(this);
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ServiceObjective
-
-        /// <summary> Gets a collection of ServiceObjectives in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServiceObjectives and their operations over a SqlServer. </returns>
-        public virtual ServiceObjectiveCollection GetServiceObjectives()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return new ServiceObjectiveCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region ExtendedServerBlobAuditingPolicy
-
-        /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the SqlServer. </summary>
-        /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// OperationId: Servers_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<SqlServer> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            return new ExtendedServerBlobAuditingPolicyCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
-
-        #region ServerBlobAuditingPolicy
-
-        /// <summary> Gets a collection of ServerBlobAuditingPolicies in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a SqlServer. </returns>
-        public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
-        {
-            return new ServerBlobAuditingPolicyCollection(this);
-        }
-        #endregion
-
-        #region ServerAdvisor
-
-        /// <summary> Gets a collection of ServerAdvisors in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAdvisors and their operations over a SqlServer. </returns>
-        public virtual ServerAdvisorCollection GetServerAdvisors()
-        {
-            return new ServerAdvisorCollection(this);
-        }
-        #endregion
-
-        #region EncryptionProtector
-
-        /// <summary> Gets a collection of EncryptionProtectors in the SqlServer. </summary>
-        /// <returns> An object representing collection of EncryptionProtectors and their operations over a SqlServer. </returns>
-        public virtual EncryptionProtectorCollection GetEncryptionProtectors()
-        {
-            return new EncryptionProtectorCollection(this);
-        }
-        #endregion
-
-        #region FailoverGroup
-
-        /// <summary> Gets a collection of FailoverGroups in the SqlServer. </summary>
-        /// <returns> An object representing collection of FailoverGroups and their operations over a SqlServer. </returns>
-        public virtual FailoverGroupCollection GetFailoverGroups()
-        {
-            return new FailoverGroupCollection(this);
-        }
-        #endregion
-
-        #region FirewallRule
-
-        /// <summary> Gets a collection of FirewallRules in the SqlServer. </summary>
-        /// <returns> An object representing collection of FirewallRules and their operations over a SqlServer. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
-        {
-            return new FirewallRuleCollection(this);
-        }
-        #endregion
-
-        #region JobAgent
-
-        /// <summary> Gets a collection of JobAgents in the SqlServer. </summary>
-        /// <returns> An object representing collection of JobAgents and their operations over a SqlServer. </returns>
-        public virtual JobAgentCollection GetJobAgents()
-        {
-            return new JobAgentCollection(this);
-        }
-        #endregion
-
-        #region PrivateEndpointConnection
-
-        /// <summary> Gets a collection of PrivateEndpointConnections in the SqlServer. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a SqlServer. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
-        {
-            return new PrivateEndpointConnectionCollection(this);
-        }
-        #endregion
-
-        #region PrivateLinkResource
-
-        /// <summary> Gets a collection of PrivateLinkResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a SqlServer. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
-        {
-            return new PrivateLinkResourceCollection(this);
-        }
-        #endregion
-
-        #region ServerAutomaticTuning
-
-        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the SqlServer. </summary>
-        /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
-        public virtual ServerAutomaticTuning GetServerAutomaticTuning()
-        {
-            return new ServerAutomaticTuning(ArmClient, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
-        }
-        #endregion
-
-        #region ServerAzureADAdministrator
-
-        /// <summary> Gets a collection of ServerAzureADAdministrators in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a SqlServer. </returns>
-        public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
-        {
-            return new ServerAzureADAdministratorCollection(this);
-        }
-        #endregion
-
-        #region ServerAzureADOnlyAuthentication
-
-        /// <summary> Gets a collection of ServerAzureADOnlyAuthentications in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a SqlServer. </returns>
-        public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
-        {
-            return new ServerAzureADOnlyAuthenticationCollection(this);
-        }
-        #endregion
-
-        #region ServerDevOpsAuditingSettings
-
-        /// <summary> Gets a collection of ServerDevOpsAuditingSettings in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a SqlServer. </returns>
-        public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
-        {
-            return new ServerDevOpsAuditingSettingsCollection(this);
-        }
-        #endregion
-
-        #region ServerDnsAlias
-
-        /// <summary> Gets a collection of ServerDnsAliases in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerDnsAliases and their operations over a SqlServer. </returns>
-        public virtual ServerDnsAliasCollection GetServerDnsAliases()
-        {
-            return new ServerDnsAliasCollection(this);
-        }
-        #endregion
-
-        #region ServerKey
-
-        /// <summary> Gets a collection of ServerKeys in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerKeys and their operations over a SqlServer. </returns>
-        public virtual ServerKeyCollection GetServerKeys()
-        {
-            return new ServerKeyCollection(this);
-        }
-        #endregion
-
-        #region ServerSecurityAlertPolicy
-
-        /// <summary> Gets a collection of ServerSecurityAlertPolicies in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a SqlServer. </returns>
-        public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
-        {
-            return new ServerSecurityAlertPolicyCollection(this);
-        }
-        #endregion
-
-        #region ServerVulnerabilityAssessment
-
-        /// <summary> Gets a collection of ServerVulnerabilityAssessments in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a SqlServer. </returns>
-        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
-        {
-            return new ServerVulnerabilityAssessmentCollection(this);
-        }
-        #endregion
-
-        #region SyncAgent
-
-        /// <summary> Gets a collection of SyncAgents in the SqlServer. </summary>
-        /// <returns> An object representing collection of SyncAgents and their operations over a SqlServer. </returns>
-        public virtual SyncAgentCollection GetSyncAgents()
-        {
-            return new SyncAgentCollection(this);
-        }
-        #endregion
-
-        #region VirtualNetworkRule
-
-        /// <summary> Gets a collection of VirtualNetworkRules in the SqlServer. </summary>
-        /// <returns> An object representing collection of VirtualNetworkRules and their operations over a SqlServer. </returns>
-        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
-        {
-            return new VirtualNetworkRuleCollection(this);
-        }
-        #endregion
-
-        #region OutboundFirewallRule
-
-        /// <summary> Gets a collection of OutboundFirewallRules in the SqlServer. </summary>
-        /// <returns> An object representing collection of OutboundFirewallRules and their operations over a SqlServer. </returns>
-        public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
-        {
-            return new OutboundFirewallRuleCollection(this);
-        }
-        #endregion
-
-        #region RestorableDroppedDatabase
-
-        /// <summary> Gets a collection of RestorableDroppedDatabases in the SqlServer. </summary>
-        /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a SqlServer. </returns>
-        public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
-        {
-            return new RestorableDroppedDatabaseCollection(this);
-        }
-        #endregion
-
-        #region ServerConnectionPolicy
-
-        /// <summary> Gets a collection of ServerConnectionPolicies in the SqlServer. </summary>
-        /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a SqlServer. </returns>
-        public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
-        {
-            return new ServerConnectionPolicyCollection(this);
-        }
-        #endregion
     }
 }

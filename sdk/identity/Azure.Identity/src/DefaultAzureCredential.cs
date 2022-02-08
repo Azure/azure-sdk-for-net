@@ -200,7 +200,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeManagedIdentityCredential)
             {
-                chain[i++] = factory.CreateManagedIdentityCredential(options.ManagedIdentityClientId);
+                chain[i++] = factory.CreateManagedIdentityCredential(options);
             }
 
             if (!options.ExcludeSharedTokenCacheCredential)

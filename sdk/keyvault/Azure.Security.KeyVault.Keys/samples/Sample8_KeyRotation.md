@@ -38,13 +38,13 @@ for the key that will be created when rotated.
 ```C# Snippet:KeysSample8UpdateRotationPolicy
 KeyRotationPolicy policy = new KeyRotationPolicy()
 {
-    ExpiresIn = TimeSpan.FromDays(90),
+    ExpiresIn = "P90D",
     LifetimeActions =
     {
         new KeyRotationLifetimeAction()
         {
             Action = KeyRotationPolicyAction.Rotate,
-            TimeBeforeExpiry = TimeSpan.FromDays(30)
+            TimeBeforeExpiry = "P30D"
         }
     }
 };

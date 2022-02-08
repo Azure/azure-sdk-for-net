@@ -56,7 +56,7 @@ VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;
 VaultProperties.EnableSoftDelete = true;
-VaultProperties.VaultUri = "";
+VaultProperties.VaultUri = new Uri("http://vaulturi.com");
 VaultProperties.NetworkAcls = new NetworkRuleSet()
 {
     Bypass = "AzureServices",

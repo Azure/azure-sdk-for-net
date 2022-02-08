@@ -1,12 +1,9 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 4.8.2 (2022-02-08)
 
 ### Bugs Fixed
+- Fixed deserialization bugs in `StorageDirectoryDeletedEventData` and `EventHubCaptureFileCreatedEventData` system events.
 
 ### Other Changes
 
