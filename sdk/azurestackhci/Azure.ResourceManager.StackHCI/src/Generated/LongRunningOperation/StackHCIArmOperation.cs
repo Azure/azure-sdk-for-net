@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.StackHCI.Models
+namespace Azure.ResourceManager.StackHCI
 {
-    /// <summary> Delete ArcSetting resource details of HCI Cluster. </summary>
-    public partial class ArcSettingDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class StackHCIArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ArcSettingDeleteOperation for mocking. </summary>
-        protected ArcSettingDeleteOperation()
+        /// <summary> Initializes a new instance of StackHCIArmOperation for mocking. </summary>
+        protected StackHCIArmOperation()
         {
         }
 
-        internal ArcSettingDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal StackHCIArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ArcSettingDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal StackHCIArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "StackHCIArmOperation");
         }
 
         /// <inheritdoc />

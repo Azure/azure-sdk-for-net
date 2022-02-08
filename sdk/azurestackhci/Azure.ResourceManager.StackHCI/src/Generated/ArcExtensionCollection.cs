@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public async virtual Task<ArcExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ArcExtension>> CreateOrUpdateAsync(bool waitForCompletion, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (extension == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.StackHCI
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcExtensionCreateOrUpdateOperation(Client, _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response);
+                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public virtual ArcExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcExtension> CreateOrUpdate(bool waitForCompletion, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (extension == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.StackHCI
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken);
-                var operation = new ArcExtensionCreateOrUpdateOperation(Client, _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response);
+                var operation = new StackHCIArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
