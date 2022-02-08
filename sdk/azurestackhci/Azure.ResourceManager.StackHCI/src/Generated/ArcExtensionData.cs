@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
         /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType type, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type)
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;

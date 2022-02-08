@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.StackHCI.Models
 {
-    /// <summary> Delete particular Arc Extension of HCI Cluster. </summary>
-    public partial class ExtensionDeleteOperation : Operation
+    /// <summary> Delete an HCI cluster. </summary>
+    public partial class HCIClusterDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ExtensionDeleteOperation for mocking. </summary>
-        protected ExtensionDeleteOperation()
+        /// <summary> Initializes a new instance of HCIClusterDeleteOperation for mocking. </summary>
+        protected HCIClusterDeleteOperation()
         {
         }
 
-        internal ExtensionDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal HCIClusterDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExtensionDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

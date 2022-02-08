@@ -10,31 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.StackHCI;
 
 namespace Azure.ResourceManager.StackHCI.Models
 {
-    /// <summary> Create ArcSetting for HCI cluster. </summary>
-    public partial class ArcSettingCreateOperation : Operation<ArcSetting>
+    /// <summary> Create an HCI cluster. </summary>
+    public partial class HCIClusterCreateOrUpdateOperation : Operation<HCICluster>
     {
-        private readonly OperationOrResponseInternals<ArcSetting> _operation;
+        private readonly OperationOrResponseInternals<HCICluster> _operation;
 
-        /// <summary> Initializes a new instance of ArcSettingCreateOperation for mocking. </summary>
-        protected ArcSettingCreateOperation()
+        /// <summary> Initializes a new instance of HCIClusterCreateOrUpdateOperation for mocking. </summary>
+        protected HCIClusterCreateOrUpdateOperation()
         {
         }
 
-        internal ArcSettingCreateOperation(ArmResource operationsBase, Response<ArcSettingData> response)
+        internal HCIClusterCreateOrUpdateOperation(ArmClient armClient, Response<HCIClusterData> response)
         {
-            _operation = new OperationOrResponseInternals<ArcSetting>(Response.FromValue(new ArcSetting(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<HCICluster>(Response.FromValue(new HCICluster(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ArcSetting Value => _operation.Value;
+        public override HCICluster Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.StackHCI.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ArcSetting>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<HCICluster>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ArcSetting>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<HCICluster>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

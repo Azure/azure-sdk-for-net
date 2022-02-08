@@ -12,27 +12,27 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.StackHCI;
 
 namespace Azure.ResourceManager.StackHCI.Models
 {
     /// <summary> Create Extension for HCI cluster. </summary>
-    public partial class ExtensionCreateOperation : Operation<ArcExtension>, IOperationSource<ArcExtension>
+    public partial class ArcExtensionCreateOrUpdateOperation : Operation<ArcExtension>, IOperationSource<ArcExtension>
     {
         private readonly OperationInternals<ArcExtension> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
-        /// <summary> Initializes a new instance of ExtensionCreateOperation for mocking. </summary>
-        protected ExtensionCreateOperation()
+        /// <summary> Initializes a new instance of ArcExtensionCreateOrUpdateOperation for mocking. </summary>
+        protected ArcExtensionCreateOrUpdateOperation()
         {
         }
 
-        internal ExtensionCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ArcExtensionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ArcExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExtensionCreateOperation");
-            _operationBase = operationsBase;
+            _operation = new OperationInternals<ArcExtension>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ArcExtensionCreateOrUpdateOperation");
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.StackHCI.Models
         ArcExtension IOperationSource<ArcExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ArcExtension(_operationBase, ArcExtensionData.DeserializeArcExtensionData(document.RootElement));
+            var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
+            return new ArcExtension(_armClient, data);
         }
 
         async ValueTask<ArcExtension> IOperationSource<ArcExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ArcExtension(_operationBase, ArcExtensionData.DeserializeArcExtensionData(document.RootElement));
+            var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
+            return new ArcExtension(_armClient, data);
         }
     }
 }

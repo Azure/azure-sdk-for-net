@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.StackHCI
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ExtensionAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeExtensionState>> perNodeExtensionDetails = default;
@@ -111,10 +113,10 @@ namespace Azure.ResourceManager.StackHCI
             Optional<object> settings = default;
             Optional<object> protectedSettings = default;
             Optional<string> createdBy = default;
-            Optional<CreatedByType> createdByType = default;
+            Optional<Models.CreatedByType> createdByType = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<string> lastModifiedBy = default;
-            Optional<CreatedByType> lastModifiedByType = default;
+            Optional<Models.CreatedByType> lastModifiedByType = default;
             Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,6 +133,11 @@ namespace Azure.ResourceManager.StackHCI
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -263,7 +270,7 @@ namespace Azure.ResourceManager.StackHCI
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdByType = new CreatedByType(property0.Value.GetString());
+                            createdByType = new Models.CreatedByType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdAt"))
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.StackHCI
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedByType = new CreatedByType(property0.Value.GetString());
+                            lastModifiedByType = new Models.CreatedByType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedAt"))
@@ -305,7 +312,7 @@ namespace Azure.ResourceManager.StackHCI
                     continue;
                 }
             }
-            return new ArcExtensionData(id, name, type, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new ArcExtensionData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

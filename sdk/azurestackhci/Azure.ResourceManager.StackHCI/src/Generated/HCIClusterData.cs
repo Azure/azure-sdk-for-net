@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal HCIClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Status? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, tags, location)
+        internal HCIClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Status? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
