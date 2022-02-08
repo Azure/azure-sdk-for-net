@@ -431,6 +431,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, InstanceFailoverGroup, InstanceFailoverGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, InstanceFailoverGroup, InstanceFailoverGroupData> Construct() { }
     }
 }

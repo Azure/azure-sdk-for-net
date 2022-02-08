@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, SshPublicKey, SshPublicKeyData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, SshPublicKey, SshPublicKeyData> Construct() { }
     }
 }

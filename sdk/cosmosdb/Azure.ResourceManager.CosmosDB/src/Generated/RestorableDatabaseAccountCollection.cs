@@ -314,6 +314,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, RestorableDatabaseAccount, RestorableDatabaseAccountData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, RestorableDatabaseAccount, RestorableDatabaseAccountData> Construct() { }
     }
 }

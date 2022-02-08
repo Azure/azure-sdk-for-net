@@ -8,6 +8,7 @@ using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {

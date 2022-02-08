@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData> Construct() { }
     }
 }

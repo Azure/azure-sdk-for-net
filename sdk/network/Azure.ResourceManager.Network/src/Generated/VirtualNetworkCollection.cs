@@ -416,6 +416,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualNetwork, VirtualNetworkData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualNetwork, VirtualNetworkData> Construct() { }
     }
 }

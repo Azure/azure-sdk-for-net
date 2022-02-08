@@ -353,6 +353,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, VirtualCluster, VirtualClusterData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualCluster, VirtualClusterData> Construct() { }
     }
 }

@@ -1,23 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <Version>1.1.0-beta.2</Version>
     <PackageId>Azure.ResourceManager.Communication</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Communication.
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/CHANGELOG.md.
     </Description>
     <PackageTags>azure;management;communication</PackageTags>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\README.md" Link="README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
 </Project>

@@ -410,6 +410,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, LocalNetworkGateway, LocalNetworkGatewayData> Construct() { }
     }
 }

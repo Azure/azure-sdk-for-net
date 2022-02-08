@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -363,6 +362,6 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, WebPubSubHub, WebPubSubHubData> Construct() { }
+        // public ArmBuilder<Azure.Core.ResourceIdentifier, WebPubSubHub, WebPubSubHubData> Construct() { }
     }
 }

@@ -5752,7 +5752,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
                   }
                 ],
                 "patternsToMatch": [
@@ -5796,7 +5796,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
                   }
                 ],
                 "patternsToMatch": [
@@ -6956,7 +6956,7 @@
               {
                 "domains": [
                   {
-                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
+                    "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
                   }
                 ],
                 "patternsToMatch": [
@@ -7017,7 +7017,7 @@
                   {
                     "domains": [
                       {
-                        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
+                        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-6500/providers/Microsoft.Cdn/profiles/AFDProfile-1542/afdEndpoints/AFDEndpoint-3697"
                       }
                     ],
                     "patternsToMatch": [
