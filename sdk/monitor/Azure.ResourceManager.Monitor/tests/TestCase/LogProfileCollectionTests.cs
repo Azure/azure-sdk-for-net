@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class LogProfileCollectionTests : MonitorTestBase
     {
         public LogProfileCollectionTests(bool isAsync)
-           : base(isAsync, RecordedTestMode.Record)
+           : base(isAsync)
         {
         }
 

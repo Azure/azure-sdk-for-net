@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
             ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
             _diagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+			//ValidateResourceId(Id);
 #endif
         }
 
