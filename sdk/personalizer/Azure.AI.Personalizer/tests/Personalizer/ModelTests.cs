@@ -17,14 +17,21 @@ namespace Azure.AI.Personalizer.Tests
         public async Task ModelTest()
         {
             PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
-            await GetModel(client);
+            await GetModel(false, client);
             await GetModelProperties(client);
+            Response<Stream> response = await GetModel(true, client);
+            await ImportModel(response.Value, client);
             await ResetModel(client);
         }
 
-        private async Task GetModel(PersonalizerAdministrationClient client)
+        private async Task<Response<Stream>> GetModel(bool signed, PersonalizerAdministrationClient client)
         {
-            await client.GetPersonalizerModelAsync();
+            return await client.GetPersonalizerModelAsync(signed);
+        }
+
+        private async Task<Response> ImportModel(Stream modelStream, PersonalizerAdministrationClient client)
+        {
+            return await client.ImportPersonalizerModelAsync(modelStream);
         }
 
         private async Task ResetModel(PersonalizerAdministrationClient client)
