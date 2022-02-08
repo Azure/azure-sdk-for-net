@@ -1,10 +1,13 @@
 # Release History
 
-## 1.0.0-beta.3 (2022-01-29)
+## 1.0.0-beta.3 (2022-02-08)
+
+### Features Added
+
+- Bump API version to `2021-06-01`
 
 ### Breaking Changes
 
-- Upgraded api version to 2021-06-01
 - waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
 - Removed GetAllAsGenericResources in [Resource]Collections.
 - Added Resource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters

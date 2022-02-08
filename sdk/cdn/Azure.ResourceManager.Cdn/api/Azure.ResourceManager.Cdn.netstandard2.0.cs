@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
         public Azure.ResourceManager.Cdn.Models.DeploymentStatus? DeploymentStatus { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.DomainValidationState? DomainValidationState { get { throw null; } }
         public string HostName { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PreValidatedCustomDomainResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdCustomDomainHttpsParameters TlsSettings { get { throw null; } set { } }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Cdn
     {
         public ProfileData(Azure.Core.AzureLocation location, Azure.ResourceManager.Cdn.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public string FrontDoorId { get { throw null; } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } }
         public int? OriginResponseTimeoutSeconds { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -801,8 +801,6 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ResourceUsage> GetResourceUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeOutput> ValidateProbe(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Cdn.Models.ValidateProbeInput validateProbeInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeOutput>> ValidateProbeAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Cdn.Models.ValidateProbeInput validateProbeInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateSecretOutput> ValidateSecret(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Cdn.Models.ValidateSecretInput validateSecretInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateSecretOutput>> ValidateSecretAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Cdn.Models.ValidateSecretInput validateSecretInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class TenantExtensions
     {
@@ -923,9 +921,14 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public AfdCustomDomainUpdateOptions() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource AzureDnsZone { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource PreValidatedCustomDomainResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdCustomDomainHttpsParameters TlsSettings { get { throw null; } set { } }
+    }
+    public partial class AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+    {
+        public AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId() { }
+        public string Id { get { throw null; } set { } }
     }
     public partial class AfdEndpointCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Cdn.AfdEndpoint>
     {
@@ -2901,6 +2904,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public ManagedRuleSetList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
     }
+    public partial class ManagedServiceIdentity
+    {
+        public ManagedServiceIdentity() { }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Cdn.Models.ManagedServiceIdentityType>
     {
@@ -4795,39 +4806,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public string ErrorCode { get { throw null; } }
         public bool? IsValid { get { throw null; } }
         public string Message { get { throw null; } }
-    }
-    public partial class ValidateSecretInput
-    {
-        public ValidateSecretInput(Azure.ResourceManager.Cdn.Models.SecretType secretType, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource SecretSource { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecretType SecretType { get { throw null; } }
-        public string SecretVersion { get { throw null; } set { } }
-    }
-    public partial class ValidateSecretOutput
-    {
-        internal ValidateSecretOutput() { }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ValidationStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ValidationStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.ValidationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ValidationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ValidationStatus AccessDenied { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ValidationStatus CertificateExpired { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ValidationStatus Invalid { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ValidationStatus Valid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.ValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ValidationStatus left, Azure.ResourceManager.Cdn.Models.ValidationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.ValidationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ValidationStatus left, Azure.ResourceManager.Cdn.Models.ValidationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WafAction : System.IEquatable<Azure.ResourceManager.Cdn.Models.WafAction>
