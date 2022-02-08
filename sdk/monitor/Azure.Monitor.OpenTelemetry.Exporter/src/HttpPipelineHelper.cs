@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return st.ToArray();
         }
 
-        internal static string GetPartialContentForRetry(TrackResponse response, HttpMessage message)
+        internal static byte[] GetPartialContentForRetry(TrackResponse response, HttpMessage message)
         {
             string partialContent = null;
             var fullContent = Encoding.UTF8.GetString(GetRequestContent(message.Request.Content))?.Split('\n');
@@ -90,54 +90,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
-            return partialContent;
-        }
-
-        internal static int SavePartialTelemetryToStorage(IPersistentStorage storage, HttpMessage message)
-        {
-            if (storage == null)
+            if (partialContent == null)
             {
-                // log storage not initialized.
-                return GetItemsAccepted(message);
+                return null;
             }
 
-            TrackResponse response = GetTrackResponse(message);
-            var partialContent = GetPartialContentForRetry(response, message);
-            if (partialContent != null)
-            {
-                var retryInterval = GetRetryInterval(message);
-                var blob = storage.CreateBlob(Encoding.UTF8.GetBytes(partialContent), retryInterval);
-                if (blob != null)
-                {
-                    // log partial telemetry saved offline.
-                    // unsuccessfull message will be logged by persistent storage.
-                }
-            }
-
-            return response.ItemsAccepted.GetValueOrDefault();
-        }
-
-        internal static void SaveTelemetryToStorage(IPersistentStorage storage, HttpMessage message, bool readRetryHeader = false)
-        {
-            if (storage == null)
-            {
-                // log storage not initialized.
-                return;
-            }
-
-            var content =  GetRequestContent(message.Request.Content);
-            var retryInterval = MinimumRetryInterval;
-            if (readRetryHeader)
-            {
-                retryInterval = GetRetryInterval(message);
-            }
-
-            var blob = storage.CreateBlob(content, retryInterval);
-            if (blob != null)
-            {
-                // log telemetry saved offline.
-                // unsuccessfull message will be logged by persistent storage.
-            }
+            return Encoding.UTF8.GetBytes(partialContent);
         }
     }
 }

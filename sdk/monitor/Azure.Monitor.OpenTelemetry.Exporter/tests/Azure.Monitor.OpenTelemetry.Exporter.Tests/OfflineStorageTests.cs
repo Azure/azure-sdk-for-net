@@ -169,7 +169,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
             options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            options.StorageDirectory = PersistentStorageExtensions.GetDefaultStorageDirectory();
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage to reduce maintenance period

@@ -5,10 +5,11 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
+using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal static class StorageHelper
+    internal static class PersistentStorageExtensions
     {
         private static string defaultStorageDirectory;
         private const string nonWindowsVarTmp = "/var/tmp/";
@@ -111,6 +112,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return false;
+        }
+
+        internal static void SaveTelemetry(this IPersistentStorage storage, byte[] content, int leaseTime)
+        {
+            var blob  = storage.CreateBlob(content, leaseTime);
+            if (blob != null)
+            {
+                // log telemetry saved offline.
+                // unsuccessfull message will be logged by persistent storage.
+            }
         }
     }
 }
