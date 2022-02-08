@@ -1,6 +1,13 @@
 # Instructions for CODEOWNERS file format and automatic build failure notifications:
 # https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
 
+################
+# Automation
+################
+
+# Git Hub integration and bot rules
+/.github/                                       @AlexGhiondea @jsquire
+
 #########
 # SDK
 #########

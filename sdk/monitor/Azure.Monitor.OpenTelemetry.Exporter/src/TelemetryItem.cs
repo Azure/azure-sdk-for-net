@@ -17,32 +17,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             [TelemetryType.Request] = "Request",
             [TelemetryType.Dependency] = "RemoteDependency",
-            [TelemetryType.Message] = "Message",
-            [TelemetryType.Event] = "Event",
-            [TelemetryType.Metric] = "Metric",
         };
 
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags)
         {
-            this.Name = PartA_Name_Mapping[activity.GetTelemetryType()];
-            this.Time = FormatUtcTimestamp(activity.StartTimeUtc);
-            this.Tags = new ChangeTrackingDictionary<string, string>();
+            Name = PartA_Name_Mapping[activity.GetTelemetryType()];
+            Time = FormatUtcTimestamp(activity.StartTimeUtc);
+            Tags = new ChangeTrackingDictionary<string, string>();
 
             if (activity.ParentSpanId != default)
             {
-                this.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
+                Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
 
-            this.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+            Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             // todo: update swagger to include this key.
-            this.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
-                this.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
-                this.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
+                Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
             }
 
             this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
@@ -50,21 +47,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryItem (LogRecord logRecord)
         {
-            this.Name = PartA_Name_Mapping[TelemetryType.Message];
-            this.Time = FormatUtcTimestamp(logRecord.Timestamp);
-            this.Tags = new ChangeTrackingDictionary<string, string>();
+            Name = logRecord.Exception != null ? "Exception" : "Message";
+            Time = FormatUtcTimestamp(logRecord.Timestamp);
+            Tags = new ChangeTrackingDictionary<string, string>();
 
             if (logRecord.TraceId != default)
             {
-                this.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+                Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
             }
 
             if (logRecord.SpanId != default)
             {
-                this.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+                Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            this.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
         }
 
         internal void SetResource(string roleName, string roleInstance)

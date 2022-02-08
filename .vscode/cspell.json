@@ -98,6 +98,14 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",

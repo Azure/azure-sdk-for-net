@@ -80,10 +80,10 @@ Details on generating a class using the Apache Avro library can be found in the 
 
 In order to encode an `EventData` instance with Avro information, you can do the following:
 ```C# Snippet:SchemaRegistryAvroEncodeEventData
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
-EventData eventData = await encoder.EncodeMessageDataAsync<EventData>(employee);
+EventData eventData = (EventData) await encoder.EncodeMessageDataAsync(employee, messageType: typeof(EventData));
 
 // the schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
@@ -94,7 +94,28 @@ Console.WriteLine(eventData.EventBody);
 
 To decode an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
-Employee deserialized = await encoder.DecodeMessageDataAsync<Employee>(eventData);
+Employee deserialized = (Employee) await encoder.DecodeMessageDataAsync(eventData, typeof(Employee));
+Console.WriteLine(deserialized.Age);
+Console.WriteLine(deserialized.Name);
+```
+
+You can also use generic methods to encode and decode the data. This may be more convenient if you are not building a library on top of the Avro encoder, as you won't have to worry about the virality of generics:
+```C# Snippet:SchemaRegistryAvroEncodeEventDataGenerics
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
+
+var employee = new Employee { Age = 42, Name = "Caketown" };
+EventData eventData = await encoder.EncodeMessageDataAsync<EventData, Employee>(employee);
+
+// the schema Id will be included as a parameter of the content type
+Console.WriteLine(eventData.ContentType);
+
+// the serialized Avro data will be stored in the EventBody
+Console.WriteLine(eventData.EventBody);
+```
+
+Similarly, to decode:
+```C# Snippet:SchemaRegistryAvroDecodeEventDataGenerics
+Employee deserialized = (Employee) await encoder.DecodeMessageDataAsync<Employee>(eventData);
 Console.WriteLine(deserialized.Age);
 Console.WriteLine(deserialized.Name);
 ```
@@ -103,8 +124,8 @@ Console.WriteLine(deserialized.Name);
 
 It is also possible to encode and decode using `MessageWithMetadata`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageWithMetadata`.
 ```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageWithMetadata
-var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions() { AutoRegisterSchemas = true });
-MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata>(employee, typeof(Employee));
+var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroEncoderOptions { AutoRegisterSchemas = true });
+MessageWithMetadata messageData = await encoder.EncodeMessageDataAsync<MessageWithMetadata, Employee>(employee);
 
 Employee decodedEmployee = await encoder.DecodeMessageDataAsync<Employee>(messageData);
 ```
