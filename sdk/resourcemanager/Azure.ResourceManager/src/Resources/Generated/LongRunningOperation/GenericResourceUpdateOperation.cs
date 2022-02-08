@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationInternals<GenericResource> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of GenericResourceUpdateOperation for mocking. </summary>
         protected GenericResourceUpdateOperation()
         {
         }
 
-        internal GenericResourceUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GenericResourceUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GenericResourceUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Resources.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
-            return new GenericResource(_operationBase, data);
+            return new GenericResource(_armClient, data);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
-            return new GenericResource(_operationBase, data);
+            return new GenericResource(_armClient, data);
         }
     }
 }

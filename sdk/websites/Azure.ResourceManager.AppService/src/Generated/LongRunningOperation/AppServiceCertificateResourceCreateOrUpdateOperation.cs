@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<AppServiceCertificateResource> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AppServiceCertificateResourceCreateOrUpdateOperation for mocking. </summary>
         protected AppServiceCertificateResourceCreateOrUpdateOperation()
         {
         }
 
-        internal AppServiceCertificateResourceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AppServiceCertificateResourceCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AppServiceCertificateResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AppServiceCertificateResourceCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement);
-            return new AppServiceCertificateResource(_operationBase, data);
+            return new AppServiceCertificateResource(_armClient, data);
         }
 
         async ValueTask<AppServiceCertificateResource> IOperationSource<AppServiceCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceCertificateResourceData.DeserializeAppServiceCertificateResourceData(document.RootElement);
-            return new AppServiceCertificateResource(_operationBase, data);
+            return new AppServiceCertificateResource(_armClient, data);
         }
     }
 }

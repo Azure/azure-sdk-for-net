@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly OperationInternals<SitePrivateEndpointConnection> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of SitePrivateEndpointConnectionCreateOrUpdateOperation for mocking. </summary>
         protected SitePrivateEndpointConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal SitePrivateEndpointConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SitePrivateEndpointConnectionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SitePrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SitePrivateEndpointConnectionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new SitePrivateEndpointConnection(_operationBase, data);
+            return new SitePrivateEndpointConnection(_armClient, data);
         }
 
         async ValueTask<SitePrivateEndpointConnection> IOperationSource<SitePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new SitePrivateEndpointConnection(_operationBase, data);
+            return new SitePrivateEndpointConnection(_armClient, data);
         }
     }
 }

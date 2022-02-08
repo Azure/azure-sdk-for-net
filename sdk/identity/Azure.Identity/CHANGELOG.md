@@ -3,13 +3,20 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable.
+- `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_.
+- `ManagedIdentityCredential` now supports accepting a `ResourceIdentifier` argument to specify a User Assigned Managed Identity by resource Id rather than client Id. `DefaultAzureCredential` also supports this via the `ManagedIdentityResourceId` property of `DefaultAzureCredentialOptions`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Trevor Lacey _([GitHub](https://github.com/trevorlacey-msft))_
 
 ## 1.5.0 (2021-10-14)
 
@@ -50,7 +57,7 @@
 
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
-- Tomas Pajurek _([tpajurek-dtml](https://github.com/tpajurek-dtml))_
+- Tomas Pajurek _([tpajurek-dtml](https://github.com/tomas-pajurek))_
 
 ### Features Added
 
@@ -65,7 +72,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Bugs Fixed
 
 - Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
-- Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tpajurek-dtml](https://github.com/tpajurek-dtml))_.
+- Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tomas-pajurek](https://github.com/tomas-pajurek))_.
 - Handled an additional error scenario for AzureCliCredential that prompts developers to run `az login` when needed. [#21758](https://github.com/Azure/azure-sdk-for-net/issues/21758)
 - Fixed an issue in `EnvironmentCredential` where the supplied `options` were not getting properly applied. [#22787](https://github.com/Azure/azure-sdk-for-net/issues/22787)
 - Fixed DateTime parsing to use the current culture in AzurePowerShellCredential. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)

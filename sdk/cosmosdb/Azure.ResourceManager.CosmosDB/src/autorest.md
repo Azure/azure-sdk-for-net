@@ -10,8 +10,8 @@ csharp: true
 library-name: CosmosDB
 skip-csproj: true
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-06-csharp
+require: https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/readme.md
+tag: package-2021-10-csharp
 output-folder: Generated/
 clear-output-folder: true
 flatten-payloads: false
@@ -21,6 +21,9 @@ modelerfour:
 
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 directive:
+- from: cosmos-db.json
+  where: $.definitions.MetricDefinition.properties.resourceUri
+  transform: $["x-ms-client-name"] = "ResourceId"
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
@@ -73,6 +76,9 @@ directive:
 - rename-model:
     from: GremlinGraphListResult
     to: GremlinGraphList
+- rename-model:
+    from: LocationGetResult
+    to: CosmosDBLocation
 - rename-model:
     from: DatabaseAccountGetResults
     to: DatabaseAccount
@@ -324,17 +330,18 @@ directive:
     };
 ```
 
-### Tag: package-2021-06-csharp
+### Tag: package-2021-10-csharp
 
-These settings apply only when `--tag=package-2021-06-csharp` is specified on the command line. We have to remove the following files:
+These settings apply only when `--tag=package-2021-10-csharp` is specified on the command line. We have to remove the following files:
 
 - `notebook.json`: that feature is offline due to security issues
 - `rbac.json`: a [bug](https://github.com/Azure/azure-rest-api-specs/issues/16560) is blocking SDK
 
-```yaml $(tag) == 'package-2021-06-csharp'
+```yaml $(tag) == 'package-2021-10-csharp'
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/cosmos-db.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateEndpointConnection.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/cosmos-db.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateEndpointConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateLinkResources.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/managedCassandra.json
 ```

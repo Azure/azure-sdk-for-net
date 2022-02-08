@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "145",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f24944fa14cbe0469ac7daba4eb0c878-1832e22054313342-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "8290473d8843e333459a537d457186a9",
+        "traceparent": "00-ddfc4add887428e0d321658e110c5b19-392602e483a2220a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5fb9365cb7d226f942b30da7f4b9174f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,155 +18,586 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "95aac120-b90f-48b9-8906-1358edf8a8b1",
+        "apim-request-id": "4f834459-4b70-4e6c-9ee3-627d1a36907a",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 14:25:21 GMT",
-        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+        "Date": "Tue, 25 Jan 2022 22:21:57 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "613"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "230"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "e07c214a74dc44aa00ef956d729756d5",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "60a7ebee9341064c4e6b985e9eb70adf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ac4e63a8-4317-408a-8af2-91b4856c42a8",
+        "apim-request-id": "4e9158de-b62a-4119-90a7-a85eb2d8306f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:25:21 GMT",
+        "Date": "Tue, 25 Jan 2022 22:21:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "87"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:25:21Z",
-        "lastUpdatedDateTime": "2021-09-28T14:25:21Z"
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "49edc956eb96e6f9fe858ef7ad49ef93",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "21886bb15ce9fbf5f5d6ae1e80e482d5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d5193d7f-b448-49a8-a52b-d16b8608a2fa",
+        "apim-request-id": "4fb779b9-90d6-404b-8f2d-b888e187d3cc",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:25:23 GMT",
+        "Date": "Tue, 25 Jan 2022 22:21:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "72"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:25:21Z",
-        "lastUpdatedDateTime": "2021-09-28T14:25:21Z"
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "fdadcf385985c8649d4c8254f2c570ad",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8684562dbe46c8e1eab211671e9b878b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fc4640a2-82d0-4ca7-8294-19c96d4ec891",
+        "apim-request-id": "fb117013-ba9c-4e7b-96b3-78cbf4c0f765",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:25:24 GMT",
+        "Date": "Tue, 25 Jan 2022 22:21:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:25:21Z",
-        "lastUpdatedDateTime": "2021-09-28T14:25:21Z"
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "7c267d433c845f132896e156e5b296b7",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "89f62da8f6319266f6ab6a6be42e866a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "587b0390-9c11-457a-b0a9-386b7f26f8dd",
-        "Connection": "close",
+        "apim-request-id": "098aaf2a-3a91-4602-be9c-dd14a65a04ed",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:25:25 GMT",
+        "Date": "Tue, 25 Jan 2022 22:22:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "84"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:25:21Z",
-        "lastUpdatedDateTime": "2021-09-28T14:25:21Z"
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/95aac120-b90f-48b9-8906-1358edf8a8b1?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "a334020059eafc4f6524ac4a68a4f338",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4831c3e98432f39889bf36364b8edd5a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a8a60304-b012-4ab6-8113-280c22bee0bf",
+        "apim-request-id": "45389ae4-31ec-46dd-aedd-1f0be27ff7f6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:25:26 GMT",
+        "Date": "Tue, 25 Jan 2022 22:22:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "176"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5275234ef8ee36a4f0f28f9a5376e3bc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "462c1f04-6dbf-41af-afe3-ccfb2aaf2806",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:03 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5a7da62c3f69245895030072bf2f4668",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c31ccdeb-f5ff-4213-a708-8d3e23b03b42",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:04 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c11c10ce34b8f07b1efa5740f4fd9f12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5ef70314-edf0-4bfc-8d72-bacd10bc9b9a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a40a79db82100ff0ca51bdebf83277c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "108066a4-e92a-4a17-b45a-1ea2fe139d52",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "43cc27ab225af7042b8d3c6ee7172f97",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3062e043-1383-4397-8154-06aea29d1753",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4596ed63a2254b581f0df6677790f7ec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "01d2267e-00f0-46d6-a677-be4496396b0d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cd9497835c31b9b875127982468227b2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "07fccc9c-2780-4bb5-8e9a-4674101fe8fc",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0a872621319b099bcf81234c2b9c809a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7089be6c-5b42-406c-91ce-9c5682ac103e",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:11 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "50eb4f956282076535ddcf1228d5059d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "077def84-518d-4ae8-884c-8dab6f8bb921",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:12 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "514543e5ec095251fb8bfeb0386b8dd8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3966e731-6c5f-410d-847a-d0fa8ac0a5fa",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:14 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f7ecde92d797bf30c07fd5be6188e0f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fd9b3aa9-ca1f-4b52-81bf-4938e3f36d65",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:15 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e766857b2f57a890fd9854f764b5cfca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6e718160-d7ea-4b1b-846b-52dab142dcbf",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4a80f64f0de90e061386908a1793f073",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0bed7dad-972e-4332-91be-d8d604a58b9b",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b23404aaa60462814d43f9fe83385a0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ad5deefa-3d3a-45b1-a4d7-3b8e5f150a0a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6a6e0ab096086e107f58d3d19e06916a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "64a31692-40f7-4fd0-9328-0462bf55a852",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:19 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:21:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-invoice/analyzeResults/4f834459-4b70-4e6c-9ee3-627d1a36907a?api-version=2022-01-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5f4ce1a81c81a9c5751dfca514088bdb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a5c0df43-a644-49d1-86ff-0c2384214119",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 25 Jan 2022 22:22:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "97"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T14:25:21Z",
-        "lastUpdatedDateTime": "2021-09-28T14:25:26Z",
+        "createdDateTime": "2022-01-25T22:21:57Z",
+        "lastUpdatedDateTime": "2022-01-25T22:22:21Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
+          "apiVersion": "2022-01-30-preview",
           "modelId": "prebuilt-invoice",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\nMaple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\nwaitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\nbelow, and attach a check made out to:\nContoso Ltd.\n2345 Dogwood Lane\nBirch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\n$1,500\nPre-keynote thank you\nLogo on poster\nFull page ad in program guide\nSilver Sponsor\nFull booth\n$1,200\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\nBronze Sponsor\nFull booth\n$1,000\nLogo on poster\n50% discount on program guide\nadvertisements\nFull Booth\nFull booth\n$600\n50% discount on program guide\nadvertisements\nHalf Booth\nFull booth\n$350\n25% discount on program guide\nadvertisements\n:unselected:\nVendor #:121\nVendor Details:\nCompany Name: Southridge Video\nContact: Jamie@southridgevideo.com\nPreferred Package: Gold\nSpecial Requests: N/a",
+          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\nMaple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\nwaitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\nbelow, and attach a check made out to:\nContoso Ltd.\n2345 Dogwood Lane\nBirch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\nPre-keynote thank you\nLogo on poster\nFull page ad in program guide\n$1,500\nSilver Sponsor\nFull booth\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\n$1,200\nBronze Sponsor\n\u00B7\nFull booth\nLogo on poster\n50% discount on program guide\nadvertisements\n$1,000\nFull Booth\nFull booth\n50% discount on program guide\nadvertisements\n$600\nHalf Booth\nFull booth\n25% discount on program guide\nadvertisements\n$350\nVendor #:121\nVendor Details:\nCompany Name: Southridge Video\nContact: Jamie@southridgevideo.com\nPreferred Package: Gold\nSpecial Requests: N/a",
           "pages": [
             {
               "pageNumber": 1,
@@ -1526,24 +1957,6 @@
                   }
                 },
                 {
-                  "content": "$1,500",
-                  "boundingBox": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 455,
-                    "length": 6
-                  }
-                },
-                {
                   "content": "Pre-keynote",
                   "boundingBox": [
                     3.214,
@@ -1557,7 +1970,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 462,
+                    "offset": 455,
                     "length": 11
                   }
                 },
@@ -1575,7 +1988,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 474,
+                    "offset": 467,
                     "length": 5
                   }
                 },
@@ -1593,7 +2006,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 480,
+                    "offset": 473,
                     "length": 3
                   }
                 },
@@ -1611,7 +2024,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 484,
+                    "offset": 477,
                     "length": 4
                   }
                 },
@@ -1629,7 +2042,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 489,
+                    "offset": 482,
                     "length": 2
                   }
                 },
@@ -1647,7 +2060,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 492,
+                    "offset": 485,
                     "length": 6
                   }
                 },
@@ -1665,7 +2078,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 499,
+                    "offset": 492,
                     "length": 4
                   }
                 },
@@ -1683,7 +2096,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 504,
+                    "offset": 497,
                     "length": 4
                   }
                 },
@@ -1701,7 +2114,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 509,
+                    "offset": 502,
                     "length": 2
                   }
                 },
@@ -1719,7 +2132,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 512,
+                    "offset": 505,
                     "length": 2
                   }
                 },
@@ -1737,7 +2150,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 515,
+                    "offset": 508,
                     "length": 7
                   }
                 },
@@ -1755,8 +2168,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 523,
+                    "offset": 516,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$1,500",
+                  "boundingBox": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 522,
+                    "length": 6
                   }
                 },
                 {
@@ -1832,24 +2263,6 @@
                   }
                 },
                 {
-                  "content": "$1,200",
-                  "boundingBox": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 555,
-                    "length": 6
-                  }
-                },
-                {
                   "content": "Post-keynote",
                   "boundingBox": [
                     3.214,
@@ -1863,7 +2276,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 562,
+                    "offset": 555,
                     "length": 12
                   }
                 },
@@ -1881,7 +2294,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 575,
+                    "offset": 568,
                     "length": 5
                   }
                 },
@@ -1899,7 +2312,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 581,
+                    "offset": 574,
                     "length": 3
                   }
                 },
@@ -1917,7 +2330,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 585,
+                    "offset": 578,
                     "length": 4
                   }
                 },
@@ -1935,7 +2348,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 590,
+                    "offset": 583,
                     "length": 2
                   }
                 },
@@ -1953,7 +2366,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 593,
+                    "offset": 586,
                     "length": 6
                   }
                 },
@@ -1971,7 +2384,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 600,
+                    "offset": 593,
                     "length": 4
                   }
                 },
@@ -1989,7 +2402,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 605,
+                    "offset": 598,
                     "length": 4
                   }
                 },
@@ -2007,7 +2420,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 610,
+                    "offset": 603,
                     "length": 2
                   }
                 },
@@ -2025,7 +2438,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 613,
+                    "offset": 606,
                     "length": 2
                   }
                 },
@@ -2043,7 +2456,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 616,
+                    "offset": 609,
                     "length": 7
                   }
                 },
@@ -2061,8 +2474,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 624,
+                    "offset": 617,
                     "length": 5
+                  }
+                },
+                {
+                  "content": "$1,200",
+                  "boundingBox": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 623,
+                    "length": 6
                   }
                 },
                 {
@@ -2102,6 +2533,24 @@
                   }
                 },
                 {
+                  "content": "\u00B7",
+                  "boundingBox": [
+                    2.9463,
+                    6.8655,
+                    3.0132,
+                    6.8655,
+                    3.0132,
+                    6.98,
+                    2.9511,
+                    6.98
+                  ],
+                  "confidence": 0.232,
+                  "span": {
+                    "offset": 645,
+                    "length": 1
+                  }
+                },
+                {
                   "content": "Full",
                   "boundingBox": [
                     3.214,
@@ -2115,7 +2564,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 645,
+                    "offset": 647,
                     "length": 4
                   }
                 },
@@ -2133,26 +2582,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 650,
+                    "offset": 652,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$1,000",
-                  "boundingBox": [
-                    5.8328,
-                    6.8227,
-                    6.2829,
-                    6.8227,
-                    6.2829,
-                    6.9718,
-                    5.8328,
-                    6.9718
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 656,
-                    "length": 6
                   }
                 },
                 {
@@ -2169,7 +2600,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 663,
+                    "offset": 658,
                     "length": 4
                   }
                 },
@@ -2187,7 +2618,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 668,
+                    "offset": 663,
                     "length": 2
                   }
                 },
@@ -2205,7 +2636,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 671,
+                    "offset": 666,
                     "length": 6
                   }
                 },
@@ -2223,7 +2654,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 678,
+                    "offset": 673,
                     "length": 3
                   }
                 },
@@ -2241,7 +2672,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 682,
+                    "offset": 677,
                     "length": 8
                   }
                 },
@@ -2259,7 +2690,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 691,
+                    "offset": 686,
                     "length": 2
                   }
                 },
@@ -2277,7 +2708,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 694,
+                    "offset": 689,
                     "length": 7
                   }
                 },
@@ -2295,7 +2726,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 702,
+                    "offset": 697,
                     "length": 5
                   }
                 },
@@ -2313,8 +2744,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 708,
+                    "offset": 703,
                     "length": 14
+                  }
+                },
+                {
+                  "content": "$1,000",
+                  "boundingBox": [
+                    5.8328,
+                    6.8227,
+                    6.2829,
+                    6.8227,
+                    6.2829,
+                    6.9718,
+                    5.8328,
+                    6.9718
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 718,
+                    "length": 6
                   }
                 },
                 {
@@ -2331,7 +2780,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 723,
+                    "offset": 725,
                     "length": 4
                   }
                 },
@@ -2349,7 +2798,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 728,
+                    "offset": 730,
                     "length": 5
                   }
                 },
@@ -2367,7 +2816,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 734,
+                    "offset": 736,
                     "length": 4
                   }
                 },
@@ -2385,26 +2834,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 739,
+                    "offset": 741,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$600",
-                  "boundingBox": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 745,
-                    "length": 4
                   }
                 },
                 {
@@ -2421,7 +2852,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 750,
+                    "offset": 747,
                     "length": 3
                   }
                 },
@@ -2439,7 +2870,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 754,
+                    "offset": 751,
                     "length": 8
                   }
                 },
@@ -2457,7 +2888,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 763,
+                    "offset": 760,
                     "length": 2
                   }
                 },
@@ -2475,7 +2906,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 766,
+                    "offset": 763,
                     "length": 7
                   }
                 },
@@ -2493,7 +2924,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 774,
+                    "offset": 771,
                     "length": 5
                   }
                 },
@@ -2511,8 +2942,26 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 780,
+                    "offset": 777,
                     "length": 14
+                  }
+                },
+                {
+                  "content": "$600",
+                  "boundingBox": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 792,
+                    "length": 4
                   }
                 },
                 {
@@ -2529,7 +2978,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 795,
+                    "offset": 797,
                     "length": 4
                   }
                 },
@@ -2547,7 +2996,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 800,
+                    "offset": 802,
                     "length": 5
                   }
                 },
@@ -2565,7 +3014,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 806,
+                    "offset": 808,
                     "length": 4
                   }
                 },
@@ -2583,26 +3032,8 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 811,
+                    "offset": 813,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "$350",
-                  "boundingBox": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 817,
-                    "length": 4
                   }
                 },
                 {
@@ -2619,7 +3050,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 822,
+                    "offset": 819,
                     "length": 3
                   }
                 },
@@ -2637,7 +3068,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 826,
+                    "offset": 823,
                     "length": 8
                   }
                 },
@@ -2655,7 +3086,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 835,
+                    "offset": 832,
                     "length": 2
                   }
                 },
@@ -2673,7 +3104,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 838,
+                    "offset": 835,
                     "length": 7
                   }
                 },
@@ -2691,7 +3122,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 846,
+                    "offset": 843,
                     "length": 5
                   }
                 },
@@ -2709,31 +3140,30 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 852,
+                    "offset": 849,
                     "length": 14
                   }
-                }
-              ],
-              "selectionMarks": [
+                },
                 {
-                  "state": "unselected",
+                  "content": "$350",
                   "boundingBox": [
-                    2.9426,
-                    6.645,
-                    3.0304,
-                    6.645,
-                    3.0304,
-                    6.7283,
-                    2.9426,
-                    6.7283
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
                   ],
-                  "confidence": 0.223,
+                  "confidence": 1,
                   "span": {
-                    "offset": 867,
-                    "length": 12
+                    "offset": 864,
+                    "length": 4
                   }
                 }
               ],
+              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Vendor #:121",
@@ -3021,25 +3451,6 @@
                   ]
                 },
                 {
-                  "content": "$1,500",
-                  "boundingBox": [
-                    5.8328,
-                    4.8977,
-                    6.2829,
-                    4.8977,
-                    6.2829,
-                    5.0468,
-                    5.8328,
-                    5.0468
-                  ],
-                  "spans": [
-                    {
-                      "offset": 455,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
                   "content": "Pre-keynote thank you",
                   "boundingBox": [
                     3.214,
@@ -3053,7 +3464,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 462,
+                      "offset": 455,
                       "length": 21
                     }
                   ]
@@ -3072,7 +3483,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 484,
+                      "offset": 477,
                       "length": 14
                     }
                   ]
@@ -3091,8 +3502,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 499,
+                      "offset": 492,
                       "length": 29
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,500",
+                  "boundingBox": [
+                    5.8328,
+                    4.8977,
+                    6.2829,
+                    4.8977,
+                    6.2829,
+                    5.0468,
+                    5.8328,
+                    5.0468
+                  ],
+                  "spans": [
+                    {
+                      "offset": 522,
+                      "length": 6
                     }
                   ]
                 },
@@ -3135,25 +3565,6 @@
                   ]
                 },
                 {
-                  "content": "$1,200",
-                  "boundingBox": [
-                    5.8328,
-                    5.9677,
-                    6.2829,
-                    5.9677,
-                    6.2829,
-                    6.1168,
-                    5.8328,
-                    6.1168
-                  ],
-                  "spans": [
-                    {
-                      "offset": 555,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
                   "content": "Post-keynote thank you",
                   "boundingBox": [
                     3.214,
@@ -3167,7 +3578,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 562,
+                      "offset": 555,
                       "length": 22
                     }
                   ]
@@ -3186,7 +3597,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 585,
+                      "offset": 578,
                       "length": 14
                     }
                   ]
@@ -3205,8 +3616,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 600,
+                      "offset": 593,
                       "length": 29
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,200",
+                  "boundingBox": [
+                    5.8328,
+                    5.9677,
+                    6.2829,
+                    5.9677,
+                    6.2829,
+                    6.1168,
+                    5.8328,
+                    6.1168
+                  ],
+                  "spans": [
+                    {
+                      "offset": 623,
+                      "length": 6
                     }
                   ]
                 },
@@ -3230,6 +3660,25 @@
                   ]
                 },
                 {
+                  "content": "\u00B7",
+                  "boundingBox": [
+                    2.9463,
+                    6.8655,
+                    3.0275,
+                    6.8655,
+                    3.0371,
+                    6.9753,
+                    2.9559,
+                    6.98
+                  ],
+                  "spans": [
+                    {
+                      "offset": 645,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
                   "content": "Full booth",
                   "boundingBox": [
                     3.214,
@@ -3243,27 +3692,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 645,
+                      "offset": 647,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$1,000",
-                  "boundingBox": [
-                    5.8328,
-                    6.8227,
-                    6.2829,
-                    6.8227,
-                    6.2829,
-                    6.9718,
-                    5.8328,
-                    6.9718
-                  ],
-                  "spans": [
-                    {
-                      "offset": 656,
-                      "length": 6
                     }
                   ]
                 },
@@ -3281,7 +3711,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 663,
+                      "offset": 658,
                       "length": 14
                     }
                   ]
@@ -3300,7 +3730,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 678,
+                      "offset": 673,
                       "length": 29
                     }
                   ]
@@ -3319,8 +3749,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 708,
+                      "offset": 703,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$1,000",
+                  "boundingBox": [
+                    5.8328,
+                    6.8227,
+                    6.2829,
+                    6.8227,
+                    6.2829,
+                    6.9718,
+                    5.8328,
+                    6.9718
+                  ],
+                  "spans": [
+                    {
+                      "offset": 718,
+                      "length": 6
                     }
                   ]
                 },
@@ -3338,7 +3787,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 725,
                       "length": 10
                     }
                   ]
@@ -3357,27 +3806,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 734,
+                      "offset": 736,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$600",
-                  "boundingBox": [
-                    5.8328,
-                    7.6711,
-                    6.1586,
-                    7.6711,
-                    6.1586,
-                    7.8165,
-                    5.8328,
-                    7.8165
-                  ],
-                  "spans": [
-                    {
-                      "offset": 745,
-                      "length": 4
                     }
                   ]
                 },
@@ -3395,7 +3825,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 750,
+                      "offset": 747,
                       "length": 29
                     }
                   ]
@@ -3414,8 +3844,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 780,
+                      "offset": 777,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$600",
+                  "boundingBox": [
+                    5.8328,
+                    7.6711,
+                    6.1586,
+                    7.6711,
+                    6.1586,
+                    7.8165,
+                    5.8328,
+                    7.8165
+                  ],
+                  "spans": [
+                    {
+                      "offset": 792,
+                      "length": 4
                     }
                   ]
                 },
@@ -3433,7 +3882,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 797,
                       "length": 10
                     }
                   ]
@@ -3452,27 +3901,8 @@
                   ],
                   "spans": [
                     {
-                      "offset": 806,
+                      "offset": 808,
                       "length": 10
-                    }
-                  ]
-                },
-                {
-                  "content": "$350",
-                  "boundingBox": [
-                    5.8328,
-                    8.3061,
-                    6.1586,
-                    8.3061,
-                    6.1586,
-                    8.4515,
-                    5.8328,
-                    8.4515
-                  ],
-                  "spans": [
-                    {
-                      "offset": 817,
-                      "length": 4
                     }
                   ]
                 },
@@ -3490,7 +3920,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 822,
+                      "offset": 819,
                       "length": 29
                     }
                   ]
@@ -3509,8 +3939,27 @@
                   ],
                   "spans": [
                     {
-                      "offset": 852,
+                      "offset": 849,
                       "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "$350",
+                  "boundingBox": [
+                    5.8328,
+                    8.3061,
+                    6.1586,
+                    8.3061,
+                    6.1586,
+                    8.4515,
+                    5.8328,
+                    8.4515
+                  ],
+                  "spans": [
+                    {
+                      "offset": 864,
+                      "length": 4
                     }
                   ]
                 }
@@ -3518,7 +3967,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 879
+                  "length": 868
                 }
               ]
             },
@@ -3543,7 +3992,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 880,
+                    "offset": 869,
                     "length": 6
                   }
                 },
@@ -3561,7 +4010,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 887,
+                    "offset": 876,
                     "length": 5
                   }
                 },
@@ -3579,7 +4028,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 893,
+                    "offset": 882,
                     "length": 6
                   }
                 },
@@ -3597,7 +4046,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 900,
+                    "offset": 889,
                     "length": 8
                   }
                 },
@@ -3615,7 +4064,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 909,
+                    "offset": 898,
                     "length": 7
                   }
                 },
@@ -3633,7 +4082,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 917,
+                    "offset": 906,
                     "length": 5
                   }
                 },
@@ -3651,7 +4100,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 923,
+                    "offset": 912,
                     "length": 10
                   }
                 },
@@ -3669,7 +4118,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 934,
+                    "offset": 923,
                     "length": 5
                   }
                 },
@@ -3687,7 +4136,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 940,
+                    "offset": 929,
                     "length": 8
                   }
                 },
@@ -3705,7 +4154,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 949,
+                    "offset": 938,
                     "length": 25
                   }
                 },
@@ -3723,7 +4172,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 975,
+                    "offset": 964,
                     "length": 9
                   }
                 },
@@ -3741,7 +4190,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 985,
+                    "offset": 974,
                     "length": 8
                   }
                 },
@@ -3759,7 +4208,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 994,
+                    "offset": 983,
                     "length": 4
                   }
                 },
@@ -3777,7 +4226,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 999,
+                    "offset": 988,
                     "length": 7
                   }
                 },
@@ -3795,7 +4244,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1007,
+                    "offset": 996,
                     "length": 9
                   }
                 },
@@ -3813,7 +4262,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1017,
+                    "offset": 1006,
                     "length": 3
                   }
                 }
@@ -3834,7 +4283,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 880,
+                      "offset": 869,
                       "length": 12
                     }
                   ]
@@ -3853,7 +4302,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 893,
+                      "offset": 882,
                       "length": 15
                     }
                   ]
@@ -3872,7 +4321,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 909,
+                      "offset": 898,
                       "length": 30
                     }
                   ]
@@ -3891,7 +4340,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 940,
+                      "offset": 929,
                       "length": 34
                     }
                   ]
@@ -3910,7 +4359,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 975,
+                      "offset": 964,
                       "length": 23
                     }
                   ]
@@ -3929,7 +4378,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 999,
+                      "offset": 988,
                       "length": 21
                     }
                   ]
@@ -3937,7 +4386,7 @@
               ],
               "spans": [
                 {
-                  "offset": 879,
+                  "offset": 868,
                   "length": 141
                 }
               ]
@@ -3945,7 +4394,7 @@
           ],
           "tables": [
             {
-              "rowCount": 14,
+              "rowCount": 6,
               "columnCount": 3,
               "cells": [
                 {
@@ -3959,14 +4408,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        4.643,
-                        2.6225,
-                        4.643,
-                        2.6225,
-                        4.858,
-                        0.9997,
-                        4.8515
+                        0.9996,
+                        4.646,
+                        2.6212,
+                        4.646,
+                        2.6212,
+                        4.8546,
+                        0.9996,
+                        4.8546
                       ]
                     }
                   ],
@@ -3988,14 +4437,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        4.643,
-                        5.7478,
-                        4.643,
-                        5.7478,
-                        4.858,
-                        2.6225,
-                        4.858
+                        2.6212,
+                        4.646,
+                        5.7443,
+                        4.646,
+                        5.7443,
+                        4.8546,
+                        2.6212,
+                        4.8546
                       ]
                     }
                   ],
@@ -4017,14 +4466,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        4.643,
-                        7.4907,
-                        4.6495,
-                        7.4907,
-                        4.858,
-                        5.7478,
-                        4.858
+                        5.7443,
+                        4.646,
+                        7.486,
+                        4.646,
+                        7.486,
+                        4.8546,
+                        5.7443,
+                        4.8546
                       ]
                     }
                   ],
@@ -4045,14 +4494,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        4.8515,
-                        2.6225,
-                        4.858,
-                        2.6225,
-                        5.0927,
-                        0.9997,
-                        5.0861
+                        0.9996,
+                        4.8546,
+                        2.6212,
+                        4.8546,
+                        2.6212,
+                        5.9234,
+                        0.9996,
+                        5.9234
                       ]
                     }
                   ],
@@ -4068,26 +4517,26 @@
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "Full booth Pre-keynote thank you Logo on poster Full page ad in program guide",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        4.858,
-                        5.7478,
-                        4.858,
-                        5.7478,
-                        5.0927,
-                        2.6225,
-                        5.0927
+                        2.6212,
+                        4.8546,
+                        5.7443,
+                        4.8546,
+                        5.7443,
+                        5.9299,
+                        2.6212,
+                        5.9234
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 444,
-                      "length": 10
+                      "length": 77
                     }
                   ]
                 },
@@ -4101,20 +4550,20 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        4.858,
-                        7.4907,
-                        4.858,
-                        7.4907,
-                        5.0861,
-                        5.7478,
-                        5.0927
+                        5.7443,
+                        4.8546,
+                        7.486,
+                        4.8546,
+                        7.486,
+                        5.9299,
+                        5.7443,
+                        5.9299
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 455,
+                      "offset": 522,
                       "length": 6
                     }
                   ]
@@ -4122,118 +4571,21 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 0,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        0.9997,
-                        5.0861,
-                        2.6225,
-                        5.0927,
-                        2.6225,
-                        5.9269,
-                        0.9997,
-                        5.9203
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 2,
-                  "columnIndex": 1,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "Pre-keynote thank you Logo on poster Full page ad in program guide",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        5.0927,
-                        5.7478,
-                        5.0927,
-                        5.7478,
-                        5.9269,
-                        2.6225,
-                        5.9269
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 462,
-                      "length": 66
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 2,
-                  "columnIndex": 2,
                   "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        5.0927,
-                        7.4907,
-                        5.0861,
-                        7.4907,
-                        5.7574,
-                        5.7478,
-                        5.7509
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 3,
-                  "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        5.7509,
-                        7.4907,
-                        5.7574,
-                        7.4907,
-                        5.9269,
-                        5.7478,
-                        5.9269
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 4,
-                  "columnIndex": 0,
-                  "rowSpan": 3,
                   "columnSpan": 1,
                   "content": "Silver Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        5.9203,
-                        2.6225,
-                        5.9269,
-                        2.6225,
-                        6.7806,
-                        0.9997,
-                        6.7806
+                        0.9996,
+                        5.9234,
+                        2.6212,
+                        5.9234,
+                        2.6212,
+                        6.7836,
+                        0.9996,
+                        6.7836
                       ]
                     }
                   ],
@@ -4245,162 +4597,79 @@
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 2,
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "Full booth Post-keynote thank you Logo on poster Half page ad in program guide",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        5.9269,
-                        5.7478,
-                        5.9269,
-                        5.7478,
-                        6.1615,
-                        2.6225,
-                        6.1615
+                        2.6212,
+                        5.9234,
+                        5.7443,
+                        5.9299,
+                        5.7443,
+                        6.7836,
+                        2.6212,
+                        6.7836
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 544,
-                      "length": 10
+                      "length": 78
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 2,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$1,200",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        5.9269,
-                        7.4907,
-                        5.9269,
-                        7.4907,
-                        6.3831,
-                        5.7478,
-                        6.3765
+                        5.7443,
+                        5.9299,
+                        7.486,
+                        5.9299,
+                        7.486,
+                        6.7771,
+                        5.7443,
+                        6.7836
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 555,
+                      "offset": 623,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 5,
-                  "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Post-keynote thank you",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        6.1615,
-                        5.7478,
-                        6.1615,
-                        5.7478,
-                        6.3765,
-                        2.6225,
-                        6.3765
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 562,
-                      "length": 22
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 6,
-                  "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Logo on poster\nHalf page ad in program guide :unselected:",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        6.3765,
-                        5.7478,
-                        6.3765,
-                        5.7478,
-                        6.7806,
-                        2.6225,
-                        6.7806
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 585,
-                      "length": 44
-                    },
-                    {
-                      "offset": 867,
-                      "length": 12
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 6,
-                  "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.7478,
-                        6.3765,
-                        7.4907,
-                        6.3831,
-                        7.4907,
-                        6.7806,
-                        5.7478,
-                        6.7806
-                      ]
-                    }
-                  ],
-                  "spans": []
-                },
-                {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 0,
-                  "rowSpan": 3,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Bronze Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        6.7806,
-                        2.6225,
-                        6.7806,
-                        2.6225,
-                        7.6279,
-                        0.9997,
-                        7.6279
+                        0.9996,
+                        6.7836,
+                        2.6212,
+                        6.7836,
+                        2.6212,
+                        7.6309,
+                        0.9996,
+                        7.6309
                       ]
                     }
                   ],
@@ -4412,261 +4681,225 @@
                   ]
                 },
                 {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 1,
                   "rowSpan": 1,
                   "columnSpan": 1,
-                  "content": "Full booth",
+                  "content": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        6.7806,
-                        5.7478,
-                        6.7806,
-                        5.7478,
-                        7.0152,
-                        2.6225,
-                        7.0152
+                        2.6212,
+                        6.7836,
+                        5.7443,
+                        6.7836,
+                        5.7443,
+                        7.6309,
+                        2.6212,
+                        7.6309
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 645,
-                      "length": 10
+                      "length": 72
                     }
                   ]
                 },
                 {
-                  "rowIndex": 7,
+                  "rowIndex": 3,
                   "columnIndex": 2,
-                  "rowSpan": 3,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$1,000",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        6.7806,
-                        7.4907,
-                        6.7806,
-                        7.4907,
-                        7.6344,
-                        5.7478,
-                        7.6279
+                        5.7443,
+                        6.7836,
+                        7.486,
+                        6.7771,
+                        7.486,
+                        7.6309,
+                        5.7443,
+                        7.6309
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 656,
+                      "offset": 718,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 8,
-                  "columnIndex": 1,
-                  "rowSpan": 2,
-                  "columnSpan": 1,
-                  "content": "Logo on poster 50% discount on program guide advertisements",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.6225,
-                        7.0152,
-                        5.7478,
-                        7.0152,
-                        5.7478,
-                        7.6279,
-                        2.6225,
-                        7.6279
-                      ]
-                    }
-                  ],
-                  "spans": [
-                    {
-                      "offset": 663,
-                      "length": 59
-                    }
-                  ]
-                },
-                {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 0,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full Booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        7.6279,
-                        2.6225,
-                        7.6279,
-                        2.6225,
-                        8.2665,
-                        0.9997,
-                        8.2665
+                        0.9996,
+                        7.6309,
+                        2.6212,
+                        7.6309,
+                        2.6212,
+                        8.2696,
+                        0.9996,
+                        8.263
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 723,
+                      "offset": 725,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 1,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full booth 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        7.6279,
-                        5.7478,
-                        7.6279,
-                        5.7478,
-                        8.2665,
-                        2.6225,
-                        8.2665
+                        2.6212,
+                        7.6309,
+                        5.7443,
+                        7.6309,
+                        5.7443,
+                        8.2696,
+                        2.6212,
+                        8.2696
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 734,
-                      "length": 10
-                    },
-                    {
-                      "offset": 750,
-                      "length": 44
+                      "offset": 736,
+                      "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 10,
+                  "rowIndex": 4,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$600",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        7.6279,
-                        7.4907,
-                        7.6344,
-                        7.4907,
-                        8.2665,
-                        5.7478,
-                        8.2665
+                        5.7443,
+                        7.6309,
+                        7.486,
+                        7.6309,
+                        7.486,
+                        8.263,
+                        5.7443,
+                        8.2696
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 745,
+                      "offset": 792,
                       "length": 4
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 0,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Half Booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.9997,
-                        8.2665,
-                        2.6225,
-                        8.2665,
-                        2.6225,
-                        8.8987,
-                        0.9997,
-                        8.8987
+                        0.9996,
+                        8.263,
+                        2.6212,
+                        8.2696,
+                        2.6212,
+                        8.9017,
+                        0.9996,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 795,
+                      "offset": 797,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 1,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "Full booth 25% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        2.6225,
-                        8.2665,
-                        5.7478,
-                        8.2665,
-                        5.7478,
-                        8.8987,
-                        2.6225,
-                        8.8987
+                        2.6212,
+                        8.2696,
+                        5.7443,
+                        8.2696,
+                        5.7443,
+                        8.9017,
+                        2.6212,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 806,
-                      "length": 10
-                    },
-                    {
-                      "offset": 822,
-                      "length": 44
+                      "offset": 808,
+                      "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 12,
+                  "rowIndex": 5,
                   "columnIndex": 2,
-                  "rowSpan": 2,
+                  "rowSpan": 1,
                   "columnSpan": 1,
                   "content": "$350",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        5.7478,
-                        8.2665,
-                        7.4907,
-                        8.2665,
-                        7.4907,
-                        8.9052,
-                        5.7478,
-                        8.8987
+                        5.7443,
+                        8.2696,
+                        7.486,
+                        8.263,
+                        7.486,
+                        8.9017,
+                        5.7443,
+                        8.9017
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 817,
+                      "offset": 864,
                       "length": 4
                     }
                   ]
@@ -4676,28 +4909,29 @@
                 {
                   "pageNumber": 1,
                   "boundingBox": [
-                    0.993,
-                    4.6286,
-                    7.5046,
-                    4.6277,
-                    7.506,
-                    8.9112,
-                    0.9934,
-                    8.9116
+                    0.992,
+                    4.6405,
+                    7.4968,
+                    4.6393,
+                    7.4975,
+                    8.9168,
+                    0.9924,
+                    8.9192
                   ]
                 }
               ],
               "spans": [
                 {
                   "offset": 408,
-                  "length": 471
+                  "length": 460
                 }
               ]
             }
           ],
+          "styles": [],
           "documents": [
             {
-              "docType": "prebuilt:invoice",
+              "docType": "invoice",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
@@ -4734,8 +4968,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1500,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1500.0
+                          },
                           "content": "$1,500",
                           "boundingRegions": [
                             {
@@ -4752,10 +4989,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.778,
+                          "confidence": 0.961,
                           "spans": [
                             {
-                              "offset": 455,
+                              "offset": 522,
                               "length": 6
                             }
                           ]
@@ -4779,20 +5016,16 @@
                               ]
                             }
                           ],
-                          "confidence": 0.771,
+                          "confidence": 0.859,
                           "spans": [
                             {
                               "offset": 444,
-                              "length": 10
-                            },
-                            {
-                              "offset": 462,
-                              "length": 66
+                              "length": 77
                             }
                           ]
                         }
                       },
-                      "content": "Gold Sponsor Full booth $1,500 Pre-keynote thank you Logo on poster Full page ad in program guide",
+                      "content": "Gold Sponsor Full booth Pre-keynote thank you Logo on poster Full page ad in program guide $1,500",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -4808,7 +5041,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.937,
+                      "confidence": 0.915,
                       "spans": [
                         {
                           "offset": 431,
@@ -4820,8 +5053,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1200,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1200.0
+                          },
                           "content": "$1,200",
                           "boundingRegions": [
                             {
@@ -4838,10 +5074,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.731,
+                          "confidence": 0.963,
                           "spans": [
                             {
-                              "offset": 555,
+                              "offset": 623,
                               "length": 6
                             }
                           ]
@@ -4865,47 +5101,16 @@
                               ]
                             }
                           ],
-                          "confidence": 0.698,
+                          "confidence": 0.858,
                           "spans": [
                             {
                               "offset": 544,
-                              "length": 10
-                            },
-                            {
-                              "offset": 562,
-                              "length": 67
-                            }
-                          ]
-                        },
-                        "ProductCode": {
-                          "type": "string",
-                          "valueString": "Silver Sponsor",
-                          "content": "Silver Sponsor",
-                          "boundingRegions": [
-                            {
-                              "pageNumber": 1,
-                              "boundingBox": [
-                                1.0842,
-                                5.9786,
-                                2.0339,
-                                5.9786,
-                                2.0339,
-                                6.1228,
-                                1.0842,
-                                6.1228
-                              ]
-                            }
-                          ],
-                          "confidence": 0,
-                          "spans": [
-                            {
-                              "offset": 529,
-                              "length": 14
+                              "length": 78
                             }
                           ]
                         }
                       },
-                      "content": "Silver Sponsor Full booth $1,200 Post-keynote thank you Logo on poster Half page ad in program guide",
+                      "content": "Silver Sponsor Full booth Post-keynote thank you Logo on poster Half page ad in program guide $1,200",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -4921,7 +5126,7 @@
                           ]
                         }
                       ],
-                      "confidence": 0.94,
+                      "confidence": 0.923,
                       "spans": [
                         {
                           "offset": 529,
@@ -4933,8 +5138,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 1000,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 1000.0
+                          },
                           "content": "$1,000",
                           "boundingRegions": [
                             {
@@ -4951,47 +5159,43 @@
                               ]
                             }
                           ],
-                          "confidence": 0.698,
+                          "confidence": 0.96,
                           "spans": [
                             {
-                              "offset": 656,
+                              "offset": 718,
                               "length": 6
                             }
                           ]
                         },
                         "Description": {
                           "type": "string",
-                          "valueString": "Full booth Logo on poster 50% discount on program guide advertisements",
-                          "content": "Full booth Logo on poster 50% discount on program guide advertisements",
+                          "valueString": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
+                          "content": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
                               "boundingBox": [
-                                3.2075,
+                                2.9463,
                                 6.8419,
                                 5.3419,
                                 6.8419,
                                 5.3419,
                                 7.5863,
-                                3.2075,
+                                2.9463,
                                 7.5863
                               ]
                             }
                           ],
-                          "confidence": 0.669,
+                          "confidence": 0.355,
                           "spans": [
                             {
                               "offset": 645,
-                              "length": 10
-                            },
-                            {
-                              "offset": 663,
-                              "length": 59
+                              "length": 72
                             }
                           ]
                         }
                       },
-                      "content": "Bronze Sponsor Full booth $1,000 Logo on poster 50% discount on program guide advertisements",
+                      "content": "Bronze Sponsor \u00B7 Full booth Logo on poster 50% discount on program guide advertisements $1,000",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
@@ -5007,11 +5211,11 @@
                           ]
                         }
                       ],
-                      "confidence": 0.903,
+                      "confidence": 0.908,
                       "spans": [
                         {
                           "offset": 630,
-                          "length": 92
+                          "length": 94
                         }
                       ]
                     },
@@ -5019,8 +5223,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 600,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 600.0
+                          },
                           "content": "$600",
                           "boundingRegions": [
                             {
@@ -5037,10 +5244,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.568,
+                          "confidence": 0.958,
                           "spans": [
                             {
-                              "offset": 745,
+                              "offset": 792,
                               "length": 4
                             }
                           ]
@@ -5064,15 +5271,11 @@
                               ]
                             }
                           ],
-                          "confidence": 0.662,
+                          "confidence": 0.616,
                           "spans": [
                             {
-                              "offset": 734,
-                              "length": 10
-                            },
-                            {
-                              "offset": 750,
-                              "length": 44
+                              "offset": 736,
+                              "length": 55
                             }
                           ]
                         }
@@ -5093,10 +5296,10 @@
                           ]
                         }
                       ],
-                      "confidence": 0.765,
+                      "confidence": 0.96,
                       "spans": [
                         {
-                          "offset": 723,
+                          "offset": 725,
                           "length": 71
                         }
                       ]
@@ -5105,8 +5308,11 @@
                       "type": "object",
                       "valueObject": {
                         "Amount": {
-                          "type": "number",
-                          "valueNumber": 350,
+                          "type": "currency",
+                          "valueCurrency": {
+                            "currencySymbol": "$",
+                            "amount": 350.0
+                          },
                           "content": "$350",
                           "boundingRegions": [
                             {
@@ -5123,10 +5329,10 @@
                               ]
                             }
                           ],
-                          "confidence": 0.696,
+                          "confidence": 0.958,
                           "spans": [
                             {
-                              "offset": 817,
+                              "offset": 864,
                               "length": 4
                             }
                           ]
@@ -5150,42 +5356,11 @@
                               ]
                             }
                           ],
-                          "confidence": 0.773,
+                          "confidence": 0.578,
                           "spans": [
                             {
-                              "offset": 806,
-                              "length": 10
-                            },
-                            {
-                              "offset": 822,
-                              "length": 44
-                            }
-                          ]
-                        },
-                        "ProductCode": {
-                          "type": "string",
-                          "valueString": "Half",
-                          "content": "Half",
-                          "boundingRegions": [
-                            {
-                              "pageNumber": 1,
-                              "boundingBox": [
-                                1.0923,
-                                8.3162,
-                                1.3522,
-                                8.3162,
-                                1.3522,
-                                8.433,
-                                1.0923,
-                                8.433
-                              ]
-                            }
-                          ],
-                          "confidence": 0.305,
-                          "spans": [
-                            {
-                              "offset": 795,
-                              "length": 4
+                              "offset": 808,
+                              "length": 55
                             }
                           ]
                         }
@@ -5206,20 +5381,15 @@
                           ]
                         }
                       ],
-                      "confidence": 0.931,
+                      "confidence": 0.96,
                       "spans": [
                         {
-                          "offset": 795,
+                          "offset": 797,
                           "length": 71
                         }
                       ]
                     }
                   ]
-                },
-                "Locale": {
-                  "type": "string",
-                  "valueString": "en-US",
-                  "confidence": 1
                 },
                 "RemittanceAddress": {
                   "type": "string",
@@ -5240,7 +5410,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.868,
+                  "confidence": 0.756,
                   "spans": [
                     {
                       "offset": 363,
@@ -5267,64 +5437,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.946,
+                  "confidence": 0.718,
                   "spans": [
                     {
                       "offset": 350,
-                      "length": 12
-                    }
-                  ]
-                },
-                "VendorAddress": {
-                  "type": "string",
-                  "valueString": "Elm Conference Center in",
-                  "content": "Elm Conference Center in",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.3787,
-                        2.5846,
-                        7.0776,
-                        2.5846,
-                        7.0776,
-                        2.7013,
-                        5.3787,
-                        2.7013
-                      ]
-                    }
-                  ],
-                  "confidence": 0.524,
-                  "spans": [
-                    {
-                      "offset": 96,
-                      "length": 24
-                    }
-                  ]
-                },
-                "VendorAddressRecipient": {
-                  "type": "string",
-                  "valueString": "Contoso Ltd.",
-                  "content": "Contoso Ltd.",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        1.0078,
-                        2.5856,
-                        1.843,
-                        2.5856,
-                        1.843,
-                        2.7013,
-                        1.0078,
-                        2.7013
-                      ]
-                    }
-                  ],
-                  "confidence": 0.513,
-                  "spans": [
-                    {
-                      "offset": 33,
                       "length": 12
                     }
                   ]
@@ -5348,10 +5464,10 @@
                       ]
                     }
                   ],
-                  "confidence": 0.951,
+                  "confidence": 0.843,
                   "spans": [
                     {
-                      "offset": 923,
+                      "offset": 912,
                       "length": 16
                     }
                   ]
@@ -5361,7 +5477,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 1020
+                  "length": 1009
                 }
               ]
             }
@@ -5372,7 +5488,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "1985486111"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
+    "RandomSeed": "524384490"
   }
 }

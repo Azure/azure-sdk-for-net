@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        internal SiteDomainOwnershipIdentifierCreateOrUpdateOperation(ArmResource operationsBase, Response<IdentifierData> response)
+        internal SiteDomainOwnershipIdentifierCreateOrUpdateOperation(ArmClient armClient, Response<IdentifierData> response)
         {
-            _operation = new OperationOrResponseInternals<SiteDomainOwnershipIdentifier>(Response.FromValue(new SiteDomainOwnershipIdentifier(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<SiteDomainOwnershipIdentifier>(Response.FromValue(new SiteDomainOwnershipIdentifier(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

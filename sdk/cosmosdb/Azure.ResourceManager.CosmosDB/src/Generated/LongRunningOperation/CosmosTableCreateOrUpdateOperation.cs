@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly OperationInternals<CosmosTable> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of CosmosTableCreateOrUpdateOperation for mocking. </summary>
         protected CosmosTableCreateOrUpdateOperation()
         {
         }
 
-        internal CosmosTableCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CosmosTableCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CosmosTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CosmosTableCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
-            return new CosmosTable(_operationBase, data);
+            return new CosmosTable(_armClient, data);
         }
 
         async ValueTask<CosmosTable> IOperationSource<CosmosTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosTableData.DeserializeCosmosTableData(document.RootElement);
-            return new CosmosTable(_operationBase, data);
+            return new CosmosTable(_armClient, data);
         }
     }
 }

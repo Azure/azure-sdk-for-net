@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="buildId"> An identifier for the static site build. </param>
         /// <param name="sourceBranch"> The source branch. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
-        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType type, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps) : base(id, name, type, kind)
+        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps) : base(id, name, type, systemData, kind)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;

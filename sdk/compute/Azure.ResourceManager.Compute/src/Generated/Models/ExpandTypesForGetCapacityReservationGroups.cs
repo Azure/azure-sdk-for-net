@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string VirtualMachineScaleSetVMsRefValue = "virtualMachineScaleSetVMs/$ref";
+        private const string VirtualMachineScaleSetVmsRefValue = "virtualMachineScaleSetVMs/$ref";
         private const string VirtualMachinesRefValue = "virtualMachines/$ref";
 
         /// <summary> virtualMachineScaleSetVMs/$ref. </summary>
-        public static ExpandTypesForGetCapacityReservationGroups VirtualMachineScaleSetVMsRef { get; } = new ExpandTypesForGetCapacityReservationGroups(VirtualMachineScaleSetVMsRefValue);
+        public static ExpandTypesForGetCapacityReservationGroups VirtualMachineScaleSetVmsRef { get; } = new ExpandTypesForGetCapacityReservationGroups(VirtualMachineScaleSetVmsRefValue);
         /// <summary> virtualMachines/$ref. </summary>
         public static ExpandTypesForGetCapacityReservationGroups VirtualMachinesRef { get; } = new ExpandTypesForGetCapacityReservationGroups(VirtualMachinesRefValue);
         /// <summary> Determines if two <see cref="ExpandTypesForGetCapacityReservationGroups"/> values are the same. </summary>

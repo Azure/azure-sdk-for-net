@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Azure.Identity
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
+        private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
 
         internal string RedirectUrl { get; }
 
@@ -47,6 +49,13 @@ namespace Azure.Identity
             RegionalAuthority = regionalAuthority;
         }
 
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        {
+            _asyncAssertionCallback = assertionCallback;
+            RegionalAuthority = regionalAuthority;
+        }
+
         internal RegionalAuthority? RegionalAuthority { get; }
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -64,6 +73,11 @@ namespace Azure.Identity
             if (_assertionCallback != null)
             {
                 confClientBuilder.WithClientAssertion(_assertionCallback);
+            }
+
+            if (_asyncAssertionCallback != null)
+            {
+                confClientBuilder.WithClientAssertion(_asyncAssertionCallback);
             }
 
             if (_certificateProvider != null)

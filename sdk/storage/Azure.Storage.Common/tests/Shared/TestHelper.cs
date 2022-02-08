@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
@@ -148,6 +149,18 @@ namespace Azure.Storage.Test
             T actual = property();
             Assert.AreEqual(expected, actual); // first call calculates and caches value
             Assert.AreSame(actual, property()); // subsequent calls use cached value
+        }
+
+        public static void AssertInconclusiveRecordingFriendly(RecordedTestMode mode, string message = default)
+        {
+            if (mode == RecordedTestMode.Record)
+            {
+                Assert.Pass(string.Join("\n", "Results inconclusive. Passing for ease of recording management.", message));
+            }
+            else
+            {
+                Assert.Inconclusive(message);
+            }
         }
     }
 }

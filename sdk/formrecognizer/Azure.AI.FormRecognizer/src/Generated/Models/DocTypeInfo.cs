@@ -30,17 +30,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Initializes a new instance of DocTypeInfo. </summary>
         /// <param name="description"> Model description. </param>
+        /// <param name="buildMode"> Custom model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
-        internal DocTypeInfo(string description, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema, IReadOnlyDictionary<string, float> fieldConfidence)
+        internal DocTypeInfo(string description, DocumentBuildMode? buildMode, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema, IReadOnlyDictionary<string, float> fieldConfidence)
         {
             Description = description;
+            BuildMode = buildMode;
             FieldSchema = fieldSchema;
             FieldConfidence = fieldConfidence;
         }
 
         /// <summary> Model description. </summary>
         public string Description { get; }
+        /// <summary> Custom model build mode. </summary>
+        public DocumentBuildMode? BuildMode { get; }
         /// <summary> Estimated confidence for each field. </summary>
         public IReadOnlyDictionary<string, float> FieldConfidence { get; }
     }

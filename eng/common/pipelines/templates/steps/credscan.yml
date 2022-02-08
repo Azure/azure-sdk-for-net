@@ -2,28 +2,28 @@ parameters:
   SuppressionFilePath: 'eng/CredScanSuppression.json'
   BaselineFilePath: ''
   SourceDirectory: $(Build.SourcesDirectory)
+  ServiceDirectory: ''
 
 steps:
 - pwsh: |
-    New-Item -Path "${{ parameters.SourceDirectory }}" -Name "credscan.tsv"
     if ("$(Build.Reason)" -eq 'PullRequest') {
       (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
       | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
-      Set-Content "credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
-  displayName: Put changed files to folder     
+  displayName: CredScan setup
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
-  displayName: Scanning for credentials
+  displayName: CredScan running
   inputs:
     toolMajorVersion: V2
     toolVersion: latest
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-  displayName: 'Post Analysis'
+  displayName: CredScan result analysis
   inputs:
     GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
     GdnBreakAllTools: false
@@ -35,6 +35,6 @@ steps:
     # GdnBreakOutputBaseline: baseline
   condition: succeededOrFailed()
 - pwsh: |
-    Write-Host "The cred scan step failed, please check https://aka.ms/azsdk/credscan for more information."
-  displayName: Troubleshooting for errors
+    Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
+  displayName: CredScan troubleshooting guide
   condition: failed()

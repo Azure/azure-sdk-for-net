@@ -32,9 +32,48 @@
         }
     },
     "variables": {
+        "webpubsubName": "[concat('e2e-', parameters('baseName'))]",
+        "webpubsubResourceId": "[resourceId('Microsoft.SignalRService/WebPubSub', variables('webpubsubName'))]"
     },
     "resources": [
+        
+        {
+            "type": "Microsoft.SignalRService/WebPubSub",
+            "apiVersion": "2021-10-01",
+            "name": "[variables('webpubsubName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_S1",
+                "tier": "Standard",
+                "size": "S1",
+                "capacity": 1
+            },
+            "properties": {
+                "tls": {
+                    "clientCertEnabled": false
+                },
+                "networkACLs": {
+                    "defaultAction": "Deny",
+                    "publicNetwork": {
+                        "allow": [
+                            "ServerConnection",
+                            "ClientConnection",
+                            "RESTAPI",
+                            "Trace"
+                        ]
+                    },
+                    "privateEndpoints": []
+                },
+                "publicNetworkAccess": "Enabled",
+                "disableLocalAuth": false,
+                "disableAadAuth": false
+            }
+        }
     ],
     "outputs": {
+        "WEBPUBSUB_CONNECTIONSTRING": {
+            "type": "string",
+            "value": "[listkeys(variables('webpubsubResourceId'), '2021-10-01').primaryConnectionString]"
+        }
     }
 }

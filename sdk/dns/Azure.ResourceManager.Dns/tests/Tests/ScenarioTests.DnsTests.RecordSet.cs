@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
+    [Ignore("These tests will work once the conversion to new track 2 is complete")]
     public class ScenarioTestsRecordSets : DnsManagementClientBase
     {
         private string location;

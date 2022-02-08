@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopLevelDomainsRestOperations _topLevelDomainsRestClient;
+
+        private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
+        private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
         private readonly TopLevelDomainData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomain"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TopLevelDomain"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TopLevelDomain(ArmResource options, TopLevelDomainData data) : base(options, data.Id)
+        internal TopLevelDomain(ArmClient client, TopLevelDomainData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomain"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TopLevelDomain(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal TopLevelDomain(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="TopLevelDomain"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TopLevelDomain(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _topLevelDomainsRestClient = new TopLevelDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TopLevelDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.Get");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.Get");
             scope.Start();
             try
             {
-                var response = await _topLevelDomainsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
+                    throw await _topLevelDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +113,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TopLevelDomain> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.Get");
+            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.Get");
             scope.Start();
             try
             {
-                var response = _topLevelDomainsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomain(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _topLevelDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,11 +146,11 @@ namespace Azure.ResourceManager.AppService
 
             async Task<Page<TldLegalAgreement>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
                 scope.Start();
                 try
                 {
-                    var response = await _topLevelDomainsRestClient.ListAgreementsAsync(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _topLevelDomainRestClient.ListAgreementsAsync(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,11 +161,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<TldLegalAgreement>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
                 scope.Start();
                 try
                 {
-                    var response = await _topLevelDomainsRestClient.ListAgreementsNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _topLevelDomainRestClient.ListAgreementsNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -252,11 +194,11 @@ namespace Azure.ResourceManager.AppService
 
             Page<TldLegalAgreement> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
                 scope.Start();
                 try
                 {
-                    var response = _topLevelDomainsRestClient.ListAgreements(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
+                    var response = _topLevelDomainRestClient.ListAgreements(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -267,11 +209,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<TldLegalAgreement> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
+                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomain.GetAgreements");
                 scope.Start();
                 try
                 {
-                    var response = _topLevelDomainsRestClient.ListAgreementsNextPage(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
+                    var response = _topLevelDomainRestClient.ListAgreementsNextPage(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

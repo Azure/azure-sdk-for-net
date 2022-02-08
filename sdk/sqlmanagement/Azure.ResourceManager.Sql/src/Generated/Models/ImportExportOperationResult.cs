@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
         /// <param name="queuedTime"> Queued time. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
-        internal ImportExportOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, string blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections) : base(id, name, type)
+        internal ImportExportOperationResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, Uri blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections) : base(id, name, type, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Last modified time. </summary>
         public string LastModifiedTime { get; }
         /// <summary> Blob Uri. </summary>
-        public string BlobUri { get; }
+        public Uri BlobUri { get; }
         /// <summary> Server name. </summary>
         public string ServerName { get; }
         /// <summary> Database name. </summary>
