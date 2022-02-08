@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StackHCI.Models
 {
-    public partial class ClusterPatch : IUtf8JsonSerializable
+    public partial class ClusterUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

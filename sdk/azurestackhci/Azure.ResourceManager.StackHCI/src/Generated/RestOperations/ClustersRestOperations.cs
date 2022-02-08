@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, ClusterPatch cluster)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.StackHCI
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cluster);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -429,10 +429,10 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="cluster"/> is null. </exception>
-        public async Task<Response<HCIClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterPatch cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response<HCIClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -446,12 +446,12 @@ namespace Azure.ResourceManager.StackHCI
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
-            if (cluster == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(cluster));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, cluster);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -471,10 +471,10 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="cluster"/> is null. </exception>
-        public Response<HCIClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ClusterPatch cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
+        public Response<HCIClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -488,12 +488,12 @@ namespace Azure.ResourceManager.StackHCI
             {
                 throw new ArgumentNullException(nameof(clusterName));
             }
-            if (cluster == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(cluster));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, cluster);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

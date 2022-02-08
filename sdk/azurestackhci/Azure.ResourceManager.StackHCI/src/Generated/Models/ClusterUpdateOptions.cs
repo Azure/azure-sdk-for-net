@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.StackHCI.Models
 {
     /// <summary> Cluster details to update. </summary>
-    public partial class ClusterPatch
+    public partial class ClusterUpdateOptions
     {
-        /// <summary> Initializes a new instance of ClusterPatch. </summary>
-        public ClusterPatch()
+        /// <summary> Initializes a new instance of ClusterUpdateOptions. </summary>
+        public ClusterUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

@@ -176,21 +176,21 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         /// <summary> Update an HCI cluster. </summary>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cluster"/> is null. </exception>
-        public async virtual Task<Response<HCICluster>> UpdateAsync(ClusterPatch cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<HCICluster>> UpdateAsync(ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (cluster == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(cluster));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _hCIClusterClustersClientDiagnostics.CreateScope("HCICluster.Update");
             scope.Start();
             try
             {
-                var response = await _hCIClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cluster, cancellationToken).ConfigureAwait(false);
+                var response = await _hCIClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HCICluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,21 +201,21 @@ namespace Azure.ResourceManager.StackHCI
         }
 
         /// <summary> Update an HCI cluster. </summary>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cluster"/> is null. </exception>
-        public virtual Response<HCICluster> Update(ClusterPatch cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<HCICluster> Update(ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (cluster == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(cluster));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _hCIClusterClustersClientDiagnostics.CreateScope("HCICluster.Update");
             scope.Start();
             try
             {
-                var response = _hCIClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cluster, cancellationToken);
+                var response = _hCIClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new HCICluster(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
