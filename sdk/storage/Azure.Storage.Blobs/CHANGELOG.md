@@ -3,6 +3,7 @@
 ## 12.11.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added support for progress reporting with DownloadToAsync().
 
 ### Breaking Changes
 
