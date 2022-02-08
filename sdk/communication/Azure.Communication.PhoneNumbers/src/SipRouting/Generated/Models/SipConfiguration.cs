@@ -21,12 +21,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// </summary>
     public partial class SipConfiguration
     {
-        /// <summary> Initializes a new instance of SipConfiguration. </summary>
-        public SipConfiguration()
-        {
-            Trunks = new ChangeTrackingDictionary<string, SipTrunk>();
-            Routes = new ChangeTrackingList<SipTrunkRoute>();
-        }
 
         /// <summary> Initializes a new instance of SipConfiguration. </summary>
         /// <param name="trunks">

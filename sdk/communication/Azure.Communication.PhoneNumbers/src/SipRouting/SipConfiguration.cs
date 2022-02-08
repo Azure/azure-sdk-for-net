@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
+    [CodeGenSuppress("SipConfiguration")]
     public partial class SipConfiguration
     {
         /// <summary>
@@ -25,9 +26,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="routes"> Trunk routes for routing calls. </param>
         public SipConfiguration(IEnumerable<SipTrunk> trunks, IEnumerable<SipTrunkRoute> routes)
         {
-            Trunks = (IReadOnlyDictionary <string,SipTrunk>)trunks.Zip(trunks.Select(x => x.Name), (k, v) => new { k, v })
-              .ToDictionary(x => x.k, x => x.v);
-            Routes = routes.ToList();
+            var trunkDictionary = new Dictionary<string, SipTrunk>();
+
+            foreach (var trunk in trunks)
+            {
+                trunkDictionary.Add(trunk.Fqdn, trunk);
+            }
+
+            Trunks = new ReadOnlyDictionary<string, SipTrunk>(trunkDictionary);
+            Routes = routes.ToList().AsReadOnly();
         }
 
         internal SipConfiguration(IReadOnlyDictionary<string, SipTrunk> trunks)
@@ -45,7 +52,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         internal void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Trunks))
+            if (Trunks != null)
             {
                 writer.WritePropertyName("trunks");
                 writer.WriteStartObject();
@@ -64,7 +71,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Trunks))
+            if (Routes != null)
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();
@@ -100,7 +107,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         else
                         {
                             var sipTrunk = SipTrunk.DeserializeSipTrunk(property0.Value);
-                            sipTrunk.Name = property0.Name;
+                            sipTrunk.Fqdn = property0.Name;
                             dictionary.Add(property0.Name, sipTrunk);
                         }
                     }

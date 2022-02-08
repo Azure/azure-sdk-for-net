@@ -35,6 +35,7 @@ directive:
   transform: >
     delete $.TrunkPatch
 ```
+
 ### Remove SipConfigurationPatch type
 ``` yaml
 directive:
@@ -44,7 +45,7 @@ directive:
     delete $.SipConfigurationPatch
 ```
 
-### Relax constraints on SipTrunk to use it instead of TrunkPatch
+### Relax constraints on SipTrunk object to use it instead of TrunkPatch
 ``` yaml
 directive:
   from: swagger-document

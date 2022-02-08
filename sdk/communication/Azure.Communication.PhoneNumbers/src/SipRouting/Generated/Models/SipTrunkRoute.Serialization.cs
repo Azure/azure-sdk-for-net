@@ -43,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Optional<string> description = default;
             string name = default;
             string numberPattern = default;
-            Optional<IList<string>> trunks = default;
+            Optional<IReadOnlyList<string>> trunks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))

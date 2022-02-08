@@ -14,31 +14,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// <summary> Represents a trunk route for routing calls. </summary>
     public partial class SipTrunkRoute
     {
-        /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
-        /// <param name="name"> Gets or sets name of the route. </param>
-        /// <param name="numberPattern">
-        /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
-        /// 
-        /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// 
-        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="numberPattern"/> is null. </exception>
-        public SipTrunkRoute(string name, string numberPattern)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (numberPattern == null)
-            {
-                throw new ArgumentNullException(nameof(numberPattern));
-            }
-
-            Name = name;
-            NumberPattern = numberPattern;
-            Trunks = new ChangeTrackingList<string>();
-        }
 
         /// <summary> Initializes a new instance of SipTrunkRoute. </summary>
         /// <param name="description"> Gets or sets description of the route. </param>
@@ -51,27 +26,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         /// </param>
         /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>
-        internal SipTrunkRoute(string description, string name, string numberPattern, IList<string> trunks)
+        internal SipTrunkRoute(string description, string name, string numberPattern, IReadOnlyList<string> trunks)
         {
             Description = description;
             Name = name;
             NumberPattern = numberPattern;
             Trunks = trunks;
         }
-
-        /// <summary> Gets or sets description of the route. </summary>
-        public string Description { get; set; }
-        /// <summary> Gets or sets name of the route. </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
-        /// 
-        /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// 
-        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
-        /// </summary>
-        public string NumberPattern { get; set; }
-        /// <summary> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </summary>
-        public IList<string> Trunks { get; }
     }
 }

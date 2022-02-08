@@ -15,7 +15,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="sipSignalingPort"> Gets or sets SIP signaling port for the gateway. </param>
         public SipTrunk(string name, int? sipSignalingPort)
         {
-            Name = name;
+            Fqdn = name;
+            SipSignalingPort = sipSignalingPort;
+        }
+
+        private SipTrunk(int? sipSignalingPort)
+        {
             SipSignalingPort = sipSignalingPort;
         }
 
@@ -23,6 +28,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public int? SipSignalingPort { get; }
 
         /// <summary> Name of the trunk. </summary>
-        public string Name { get; internal set; }
+        public string Fqdn { get; internal set; }
     }
 }

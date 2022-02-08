@@ -26,5 +26,23 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             routes ??= new List<SipTrunkRoute>();
             return new SipConfiguration(trunks, routes);
         }
+
+        /// <summary> Initializes new instance of SipTrunkRoute class. </summary>
+        /// <param name="description"> Gets or sets description of the route. </param>
+        /// <param name="name"> Gets or sets name of the route. </param>
+        /// <param name="numberPattern">
+        /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
+        /// 
+        /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
+        /// 
+        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
+        /// </param>
+        /// <param name="trunks"> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </param>
+        /// <returns> A new <see cref="SipRouting.SipTrunkRoute"/> instance for mocking. </returns>
+        public static SipTrunkRoute SipTrunkRoute(string description = default, string name = default, string numberPattern = default, IReadOnlyList<string> trunks = default)
+        {
+            trunks ??= new List<string>();
+            return new SipTrunkRoute(description, name, numberPattern, trunks);
+        }
     }
 }
