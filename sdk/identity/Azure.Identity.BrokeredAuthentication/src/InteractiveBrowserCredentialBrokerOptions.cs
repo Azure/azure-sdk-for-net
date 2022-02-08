@@ -9,7 +9,7 @@ using Microsoft.Identity.Client.Desktop;
 namespace Azure.Identity.BrokeredAuthentication
 {
     /// <summary>
-    /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieue of the system browser if available.
+    /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of the system browser if available.
     /// </summary>
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions
     {

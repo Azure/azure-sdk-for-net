@@ -9,7 +9,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DefineConstants>IDENTITYCORE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

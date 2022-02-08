@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
-  <!--Only Add Microsoft.Identity.Client.Desktop when compiled for desktop or net core 3.1-->
+  <!--Only Add Microsoft.Identity.Client.Desktop when compiled for desktop-->
   <ItemGroup Condition="('$(TargetFramework)' == 'net461')">
     <PackageReference Include="Microsoft.Identity.Client.Desktop" />
   </ItemGroup>
