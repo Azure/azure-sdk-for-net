@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
-        internal UserData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, string scmUri) : base(id, name, type, systemData, kind)
+        internal UserData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri) : base(id, name, type, systemData, kind)
         {
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Password hash salt used for publishing. </summary>
         public string PublishingPasswordHashSalt { get; set; }
         /// <summary> Url of SCM site. </summary>
-        public string ScmUri { get; set; }
+        public Uri ScmUri { get; set; }
     }
 }

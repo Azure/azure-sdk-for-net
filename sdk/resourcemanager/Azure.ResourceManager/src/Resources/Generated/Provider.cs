@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,21 +40,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Provider"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Provider(ArmClient armClient, ProviderData data) : this(armClient, data.Id)
+        internal Provider(ArmClient client, ProviderData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="Provider"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Provider(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal Provider(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string providerApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string providerApiVersion);
             _providerRestClient = new ProvidersRestOperations(_providerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
             _providerResourceTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
             _providerResourceTypesRestClient = new ProviderResourceTypesRestOperations(_providerResourceTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
@@ -88,6 +87,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of Features in the Feature. </summary>
+        /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
+        public virtual FeatureCollection GetFeatures()
+        {
+            return new FeatureCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
         /// ContextualPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
         /// OperationId: Providers_Get
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _providerRestClient.GetAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _providerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _providerRestClient.Get(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 if (response.Value == null)
                     throw _providerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _providerRestClient.UnregisterAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _providerRestClient.Unregister(Id.SubscriptionId, Id.Provider, cancellationToken);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,7 +249,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _providerRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, properties, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,7 +271,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _providerRestClient.Register(Id.SubscriptionId, Id.Provider, properties, cancellationToken);
-                return Response.FromValue(new Provider(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -327,15 +333,5 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
-
-        #region Feature
-
-        /// <summary> Gets a collection of Features in the Provider. </summary>
-        /// <returns> An object representing collection of Features and their operations over a Provider. </returns>
-        public virtual FeatureCollection GetFeatures()
-        {
-            return new FeatureCollection(this);
-        }
-        #endregion
     }
 }

@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -22,7 +20,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// The task run will have the information of request and result of a run.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TaskRun : Resource
+    public partial class TaskRun : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the TaskRun class.
@@ -35,12 +33,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TaskRun class.
         /// </summary>
-        /// <param name="location">The location of the resource. This cannot be
-        /// changed after the resource is created.</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="identity">Identity for the resource.</param>
         /// <param name="provisioningState">The provisioning state of this task
         /// run. Possible values include: 'Creating', 'Updating', 'Deleting',
@@ -50,14 +47,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="runResult">The result of this task run</param>
         /// <param name="forceUpdateTag">How the run should be forced to rerun
         /// even if the run request configuration has not changed</param>
-        public TaskRun(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), RunRequest runRequest = default(RunRequest), Run runResult = default(Run), string forceUpdateTag = default(string))
-            : base(location, id, name, type, tags)
+        /// <param name="location">The location of the resource</param>
+        public TaskRun(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), RunRequest runRequest = default(RunRequest), Run runResult = default(Run), string forceUpdateTag = default(string), string location = default(string))
+            : base(id, name, type, systemData)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
             RunRequest = runRequest;
             RunResult = runResult;
             ForceUpdateTag = forceUpdateTag;
+            Location = location;
             CustomInit();
         }
 
@@ -100,14 +99,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string ForceUpdateTag { get; set; }
 
         /// <summary>
+        /// Gets or sets the location of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (RunResult != null)
             {
                 RunResult.Validate();

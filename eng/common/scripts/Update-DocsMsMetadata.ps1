@@ -180,9 +180,12 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   }
 
   # Copy package info file to the docs repo
+  $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
+  $readMePath = $docsMsMetadata.LatestReadMeLocation
   $metadataMoniker = 'latest'
-  if ($originalVersion.IsPrerelease) {
+  if ($originalVersion -and $originalVersion.IsPrerelease) {
     $metadataMoniker = 'preview'
+    $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
@@ -203,11 +206,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
   if ($readmeContent) { 
     $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
   }
-  $docsMsMetadata = &$GetDocsMsMetadataForPackageFn $packageInfo
-  $readMePath = $docsMsMetadata.LatestReadMeLocation
-  if ($originalVersion.IsPrerelease) { 
-    $readMePath = $docsMsMetadata.PreviewReadMeLocation
-  }
 
   $suffix = $docsMsMetadata.Suffix
   $readMeName = "$($docsMsMetadata.DocsMsReadMeName.ToLower())-readme${suffix}.md"
@@ -225,10 +223,6 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     Write-Host "Validating the package..."
     &$ValidateDocsMsPackagesFn -PackageInfo $packageInfo -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
-    if ($LASTEXITCODE) {
-      LogError "The package failed Doc.Ms validation. Check https://aka.ms/azsdk/docs/docker for more details on how to diagnose this issue."
-      exit $LASTEXITCODE
-    }
   }
   Write-Host "Updating the package json ..."
   UpdateDocsMsMetadataForPackage $packageInfoLocation $packageInfo

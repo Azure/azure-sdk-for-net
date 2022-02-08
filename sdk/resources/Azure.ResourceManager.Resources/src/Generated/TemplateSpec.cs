@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TemplateSpec"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TemplateSpec(ArmClient armClient, TemplateSpecData data) : this(armClient, data.Id)
+        internal TemplateSpec(ArmClient client, TemplateSpecData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="TemplateSpec"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateSpec(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TemplateSpec(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
             _templateSpecRestClient = new TemplateSpecsRestOperations(_templateSpecClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +84,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpecVersion. </summary>
+        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpecVersion. </returns>
+        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
+        {
+            return new TemplateSpecVersionCollection(Client, Id);
+        }
+
         /// <summary> Gets a Template Spec with a given name. </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _templateSpecClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,43 +124,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _templateSpecClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +187,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +206,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new TemplateSpec(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,15 +214,5 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
-
-        #region TemplateSpecVersion
-
-        /// <summary> Gets a collection of TemplateSpecVersions in the TemplateSpec. </summary>
-        /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpec. </returns>
-        public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
-        {
-            return new TemplateSpecVersionCollection(this);
-        }
-        #endregion
     }
 }
