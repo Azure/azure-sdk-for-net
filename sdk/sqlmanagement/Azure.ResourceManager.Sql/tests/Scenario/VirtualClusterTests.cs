@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync();
+                await item.DeleteAsync(true);
             }
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 1.CheckIfExist
             string virtualClusterName = (await _resourceGroup.GetVirtualClusters().GetAllAsync().ToEnumerableAsync()).FirstOrDefault().Data.Name;
-            Assert.IsTrue(_resourceGroup.GetVirtualClusters().Exists(virtualClusterName));
-            Assert.IsFalse(_resourceGroup.GetVirtualClusters().Exists(virtualClusterName + "0"));
+            Assert.IsTrue(await _resourceGroup.GetVirtualClusters().ExistsAsync(virtualClusterName));
+            Assert.IsFalse(await _resourceGroup.GetVirtualClusters().ExistsAsync(virtualClusterName + "0"));
 
             // 2.Get
             var getVirtualCluster = await _resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName);

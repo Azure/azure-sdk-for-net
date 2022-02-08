@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<JobAgent> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of JobAgentUpdateOperation for mocking. </summary>
         protected JobAgentUpdateOperation()
         {
         }
 
-        internal JobAgentUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal JobAgentUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<JobAgent>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JobAgentUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         JobAgent IOperationSource<JobAgent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new JobAgent(_operationBase, JobAgentData.DeserializeJobAgentData(document.RootElement));
+            var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
+            return new JobAgent(_armClient, data);
         }
 
         async ValueTask<JobAgent> IOperationSource<JobAgent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new JobAgent(_operationBase, JobAgentData.DeserializeJobAgentData(document.RootElement));
+            var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
+            return new JobAgent(_armClient, data);
         }
     }
 }

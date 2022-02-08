@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<VirtualNetworkRule> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworkRuleCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworkRuleCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkRuleCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualNetworkRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkRuleCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         VirtualNetworkRule IOperationSource<VirtualNetworkRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new VirtualNetworkRule(_operationBase, VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement));
+            var data = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+            return new VirtualNetworkRule(_armClient, data);
         }
 
         async ValueTask<VirtualNetworkRule> IOperationSource<VirtualNetworkRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new VirtualNetworkRule(_operationBase, VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement));
+            var data = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+            return new VirtualNetworkRule(_armClient, data);
         }
     }
 }

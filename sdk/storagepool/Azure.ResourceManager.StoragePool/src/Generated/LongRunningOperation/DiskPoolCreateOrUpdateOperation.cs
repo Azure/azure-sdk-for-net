@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         private readonly OperationInternals<DiskPool> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DiskPoolCreateOrUpdateOperation for mocking. </summary>
         protected DiskPoolCreateOrUpdateOperation()
         {
         }
 
-        internal DiskPoolCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DiskPoolCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DiskPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DiskPoolCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         DiskPool IOperationSource<DiskPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DiskPool(_operationBase, DiskPoolData.DeserializeDiskPoolData(document.RootElement));
+            var data = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
+            return new DiskPool(_armClient, data);
         }
 
         async ValueTask<DiskPool> IOperationSource<DiskPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DiskPool(_operationBase, DiskPoolData.DeserializeDiskPoolData(document.RootElement));
+            var data = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
+            return new DiskPool(_armClient, data);
         }
     }
 }

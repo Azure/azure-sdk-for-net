@@ -9,6 +9,7 @@
 
 ### Bugs Fixed
 - Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+- TextAnalyticsAudience has been added to allow the user to select the Azure cloud where the resource is located. Issue [18520](https://github.com/Azure/azure-sdk-for-net/issues/18520).
 
 ### Other Changes
 
@@ -99,7 +100,7 @@
 - `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
 - Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
 - Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
-- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainty` and `EntityConditionality`.
 - Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes
@@ -223,7 +224,7 @@
 - `CharacterCount` in `TextDocumentStatistics` has been renamed to `GraphemeCount`.
 - Unified `DocumentSentimentLabel` and `SentenceSentimentLabel` into `TextSentiment`.
 - `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScores`.
-- Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
+- Extensible ENUM `SubCategory` has been deleted and managed as a string throughout the code.
 - `Score` has been renamed to `ConfidenceScore` for types `CategorizedEntity`, `LinkedEntityMatch`, and `PiiEntity`.
 
 ### New Features
@@ -235,7 +236,7 @@
 - The `TextAnalyticsError` model has been simplified to an object with properties `Code`, `Message`, and `Target`.
 - To use an API key as the credential for authenticating the client, a new credential class `TextAnalyticsApiKeyCredential("<api_key>")` must be passed in for the credential parameter.
 Passing the API key as a string is no longer supported.
-- Reference to `subcription key` changed to `API key`.
+- Reference to `subscription key` changed to `API key`.
 - `DetectLanguages` has been renamed to `DetectLanguage`. Same applies for `DetectLanguagesAsync` to `DetectLanguageAsync`.
 - All batch overload methods have been renamed by adding the suffix `Batch` or `BatchAsync` accordingly. For example, instead of `AnalyzeSentimentAsync` now we have `AnalyzeSentimentBatchAsync`.
 - Added a new parameter `TextAnalyticsRequestOptions` options to batch method overloads accepting a list of documents for allowing the users to opt for batch operation statistics.
@@ -258,7 +259,7 @@ Credential class `TextAnalyticsApiKeyCredential` provides an `UpdateCredential()
 
 ### Fixes and improvements
 A new `HasError` property has added to `<document>Collection` types to allow you to check if an operation on a particular document succeeded or failed.
-If you try to access a result attribute where the operation was unsuccesful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
+If you try to access a result attribute where the operation was unsuccessful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
 
 ## 1.0.0-preview.1 (2020-01-09)
 This is the first preview of the `Azure.AI.TextAnalytics` client library. It is not a direct replacement for `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`, as applications currently using that library would require code changes to use `Azure.AI.TextAnalytics`.

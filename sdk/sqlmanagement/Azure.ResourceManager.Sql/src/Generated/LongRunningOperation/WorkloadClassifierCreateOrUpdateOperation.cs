@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<WorkloadClassifier> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of WorkloadClassifierCreateOrUpdateOperation for mocking. </summary>
         protected WorkloadClassifierCreateOrUpdateOperation()
         {
         }
 
-        internal WorkloadClassifierCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkloadClassifierCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WorkloadClassifier>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadClassifierCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         WorkloadClassifier IOperationSource<WorkloadClassifier>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WorkloadClassifier(_operationBase, WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement));
+            var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+            return new WorkloadClassifier(_armClient, data);
         }
 
         async ValueTask<WorkloadClassifier> IOperationSource<WorkloadClassifier>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WorkloadClassifier(_operationBase, WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement));
+            var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+            return new WorkloadClassifier(_armClient, data);
         }
     }
 }

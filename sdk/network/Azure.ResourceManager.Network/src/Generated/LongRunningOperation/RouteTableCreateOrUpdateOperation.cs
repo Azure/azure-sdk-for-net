@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<RouteTable> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of RouteTableCreateOrUpdateOperation for mocking. </summary>
         protected RouteTableCreateOrUpdateOperation()
         {
         }
 
-        internal RouteTableCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteTableCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<RouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteTableCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         RouteTable IOperationSource<RouteTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
+            var data = RouteTableData.DeserializeRouteTableData(document.RootElement);
+            return new RouteTable(_armClient, data);
         }
 
         async ValueTask<RouteTable> IOperationSource<RouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
+            var data = RouteTableData.DeserializeRouteTableData(document.RootElement);
+            return new RouteTable(_armClient, data);
         }
     }
 }

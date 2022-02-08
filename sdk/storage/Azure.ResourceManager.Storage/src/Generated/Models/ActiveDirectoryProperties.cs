@@ -55,6 +55,27 @@ namespace Azure.ResourceManager.Storage.Models
             AzureStorageSid = azureStorageSid;
         }
 
+        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
+        /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
+        /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
+        /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
+        /// <param name="domainGuid"> Specifies the domain GUID. </param>
+        /// <param name="domainSid"> Specifies the security identifier (SID). </param>
+        /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
+        /// <param name="samAccountName"> Specifies the Active Directory SAMAccountName for Azure Storage. </param>
+        /// <param name="accountType"> Specifies the Active Directory account type for Azure Storage. </param>
+        internal ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryPropertiesAccountType? accountType)
+        {
+            DomainName = domainName;
+            NetBiosDomainName = netBiosDomainName;
+            ForestName = forestName;
+            DomainGuid = domainGuid;
+            DomainSid = domainSid;
+            AzureStorageSid = azureStorageSid;
+            SamAccountName = samAccountName;
+            AccountType = accountType;
+        }
+
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. </summary>
         public string DomainName { get; set; }
         /// <summary> Specifies the NetBIOS domain name. </summary>
@@ -67,5 +88,9 @@ namespace Azure.ResourceManager.Storage.Models
         public string DomainSid { get; set; }
         /// <summary> Specifies the security identifier (SID) for Azure Storage. </summary>
         public string AzureStorageSid { get; set; }
+        /// <summary> Specifies the Active Directory SAMAccountName for Azure Storage. </summary>
+        public string SamAccountName { get; set; }
+        /// <summary> Specifies the Active Directory account type for Azure Storage. </summary>
+        public ActiveDirectoryPropertiesAccountType? AccountType { get; set; }
     }
 }

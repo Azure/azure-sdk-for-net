@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The ChangePointDetectResponse. </summary>
+    /// <summary> The response of change point detection. </summary>
     public partial class ChangePointDetectResponse
     {
         /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>

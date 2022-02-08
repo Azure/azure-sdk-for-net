@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerKey> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerKeyCreateOrUpdateOperation for mocking. </summary>
         protected ServerKeyCreateOrUpdateOperation()
         {
         }
 
-        internal ServerKeyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerKeyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerKeyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerKey IOperationSource<ServerKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerKey(_operationBase, ServerKeyData.DeserializeServerKeyData(document.RootElement));
+            var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
+            return new ServerKey(_armClient, data);
         }
 
         async ValueTask<ServerKey> IOperationSource<ServerKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerKey(_operationBase, ServerKeyData.DeserializeServerKeyData(document.RootElement));
+            var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
+            return new ServerKey(_armClient, data);
         }
     }
 }

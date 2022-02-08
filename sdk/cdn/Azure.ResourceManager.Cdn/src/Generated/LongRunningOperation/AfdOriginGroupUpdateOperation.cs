@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<AfdOriginGroup> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdOriginGroupUpdateOperation for mocking. </summary>
         protected AfdOriginGroupUpdateOperation()
         {
         }
 
-        internal AfdOriginGroupUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdOriginGroupUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AfdOriginGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdOriginGroupUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdOriginGroup IOperationSource<AfdOriginGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdOriginGroup(_operationBase, AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement));
+            var data = AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement);
+            return new AfdOriginGroup(_armClient, data);
         }
 
         async ValueTask<AfdOriginGroup> IOperationSource<AfdOriginGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdOriginGroup(_operationBase, AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement));
+            var data = AfdOriginGroupData.DeserializeAfdOriginGroupData(document.RootElement);
+            return new AfdOriginGroup(_armClient, data);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         private readonly OperationInternals<WebPubSub> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of WebPubSubUpdateOperation for mocking. </summary>
         protected WebPubSubUpdateOperation()
         {
         }
 
-        internal WebPubSubUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WebPubSubUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WebPubSub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         WebPubSub IOperationSource<WebPubSub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WebPubSub(_operationBase, WebPubSubData.DeserializeWebPubSubData(document.RootElement));
+            var data = WebPubSubData.DeserializeWebPubSubData(document.RootElement);
+            return new WebPubSub(_armClient, data);
         }
 
         async ValueTask<WebPubSub> IOperationSource<WebPubSub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WebPubSub(_operationBase, WebPubSubData.DeserializeWebPubSubData(document.RootElement));
+            var data = WebPubSubData.DeserializeWebPubSubData(document.RootElement);
+            return new WebPubSub(_armClient, data);
         }
     }
 }

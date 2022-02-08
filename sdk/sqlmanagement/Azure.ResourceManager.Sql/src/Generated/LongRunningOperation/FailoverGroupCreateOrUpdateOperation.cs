@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<FailoverGroup> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of FailoverGroupCreateOrUpdateOperation for mocking. </summary>
         protected FailoverGroupCreateOrUpdateOperation()
         {
         }
 
-        internal FailoverGroupCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal FailoverGroupCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<FailoverGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "FailoverGroupCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         FailoverGroup IOperationSource<FailoverGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new FailoverGroup(_operationBase, FailoverGroupData.DeserializeFailoverGroupData(document.RootElement));
+            var data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement);
+            return new FailoverGroup(_armClient, data);
         }
 
         async ValueTask<FailoverGroup> IOperationSource<FailoverGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new FailoverGroup(_operationBase, FailoverGroupData.DeserializeFailoverGroupData(document.RootElement));
+            var data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement);
+            return new FailoverGroup(_armClient, data);
         }
     }
 }

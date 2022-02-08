@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 PlatformFaultDomainCount = 2,
                 Sku = new Compute.Models.Sku() { Name = "Aligned" }
             };
-            AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync("myAvailabilitySet", availabilitySetData);
+            AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
             AvailabilitySet availabilitySet = asetOperation.Value;
 
             // Create VNet
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 },
             };
-            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
             VirtualNetwork vnet = vnetOperation.Value;
 
             // Create Network interface
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
             NetworkInterface nic = nicOperation.Value;
 
             var vmData = new VirtualMachineData(location)
             {
                 AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
                 NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-                OsProfile = new OSProfile
+                OSProfile = new OSProfile
                 {
                     ComputerName = "testVM",
                     AdminUsername = "username",
                     AdminPassword = "(YourPassword)",
-                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
+                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
                 },
                 StorageProfile = new StorageProfile()
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
             };
-            VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync("myVirtualMachine", vmData);
+            VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
             VirtualMachine vm = vmOperation.Value;
             #endregion
         }

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("memorySizeMB");
                 writer.WriteNumberValue(MemorySizeMB.Value);
             }
-            if (Optional.IsDefined(NumCPUs))
+            if (Optional.IsDefined(NumCpus))
             {
                 writer.WritePropertyName("numCPUs");
-                writer.WriteNumberValue(NumCPUs.Value);
+                writer.WriteNumberValue(NumCpus.Value);
             }
             if (Optional.IsDefined(NumCoresPerSocket))
             {

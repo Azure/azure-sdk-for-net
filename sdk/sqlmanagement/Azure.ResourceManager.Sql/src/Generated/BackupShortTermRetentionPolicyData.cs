@@ -23,9 +23,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
-        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType type, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours) : base(id, name, type)
+        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours) : base(id, name, type, systemData)
         {
             RetentionDays = retentionDays;
             DiffBackupIntervalInHours = diffBackupIntervalInHours;

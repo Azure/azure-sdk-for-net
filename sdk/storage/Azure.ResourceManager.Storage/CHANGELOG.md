@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2022-01-30)
+
+### Features Added
+
+- Bump API version to `2021-08-01`
+
+### Breaking Changes
+
+- `waitForCompletion` is now a required parameter and moved to the first parameter in LRO operations
+- Move optional body parameters right after required parameters
 
 ## 1.0.0-beta.5 (2021-12-28)
 
@@ -116,7 +127,7 @@ Models.Sku sku = new Models.Sku(SkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Models.Sku(SkuName.StandardGRS), Kind.Storage, AzureLocation.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
+StorageAccount account = storageAccountCollection.CreateOrUpdate(true, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

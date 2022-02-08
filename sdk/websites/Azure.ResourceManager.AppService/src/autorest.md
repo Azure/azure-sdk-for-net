@@ -100,6 +100,7 @@ override-operation-name:
   StaticSites_ListStaticSiteUsers: GetUsers
   StaticSites_ResetStaticSiteApiKey: ResetApiKey
   StaticSites_UpdateStaticSiteUser: UpdateUser
+  CheckNameAvailability: CheckAppServiceNameAvailability
 
 mgmt-debug:
   show-request-path: true

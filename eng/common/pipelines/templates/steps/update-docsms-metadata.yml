@@ -94,7 +94,10 @@ steps:
       -Language '${{parameters.Language}}' `
       -RepoId '${{ parameters.RepoId }}' `
       -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
-      -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
+      -PackageSourceOverride '${{ parameters.PackageSourceOverride }}' `
+      -TenantId '$(opensource-aad-tenant-id)' `
+      -ClientId '$(opensource-aad-app-id)' `
+      -ClientSecret '$(opensource-aad-secret)' 
   displayName: Apply Documentation Updates
 
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml

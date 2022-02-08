@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Gets or sets the type of the os. </summary>
-        public OsType? OsType { get; }
+        public OSType? OsType { get; }
         /// <summary> Gets or sets os name. </summary>
         public string OsName { get; }
         /// <summary> Gets or sets the nic ip addresses. </summary>

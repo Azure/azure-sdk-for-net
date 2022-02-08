@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
             };
 
-            VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+            VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, input).WaitForCompletionAsync();
             #endregion
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
             VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
-            await virtualNetwork.DeleteAsync();
+            await virtualNetwork.DeleteAsync(true);
             #endregion
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

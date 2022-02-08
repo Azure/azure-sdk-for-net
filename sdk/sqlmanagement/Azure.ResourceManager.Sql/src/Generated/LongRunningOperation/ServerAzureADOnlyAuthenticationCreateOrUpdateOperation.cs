@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerAzureADOnlyAuthentication> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerAzureADOnlyAuthenticationCreateOrUpdateOperation for mocking. </summary>
         protected ServerAzureADOnlyAuthenticationCreateOrUpdateOperation()
         {
         }
 
-        internal ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerAzureADOnlyAuthenticationCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerAzureADOnlyAuthentication>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerAzureADOnlyAuthenticationCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ServerAzureADOnlyAuthentication IOperationSource<ServerAzureADOnlyAuthentication>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ServerAzureADOnlyAuthentication(_operationBase, ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement);
+            return new ServerAzureADOnlyAuthentication(_armClient, data);
         }
 
         async ValueTask<ServerAzureADOnlyAuthentication> IOperationSource<ServerAzureADOnlyAuthentication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ServerAzureADOnlyAuthentication(_operationBase, ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ServerAzureADOnlyAuthenticationData.DeserializeServerAzureADOnlyAuthenticationData(document.RootElement);
+            return new ServerAzureADOnlyAuthentication(_armClient, data);
         }
     }
 }

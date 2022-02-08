@@ -1,6 +1,21 @@
 # Release History
 
-## 0.1.0-preview.19 (Unreleased)
+## 0.1.0-preview.20 (2022-02-07)
+
+### Features Added
+
+- `MessageWithMetadata` is now a concrete rather than abstract class.
+
+### Breaking Changes
+
+- `MessageWithMetadata` is now in the `Azure` namespace rather than `Azure.Messaging`.
+- Changed `ContentType` property of `MessageWithMetadata` from a `string` to a `ContentType`
+
+### Bugs Fixed
+
+### Other Changes
+
+## 0.1.0-preview.19 (2022-01-11)
 
 ### Features Added
 
@@ -13,10 +28,6 @@
     - `ExceptionFormattingResponseClassifier`
     - `ResponseExtensions`
     - `ResponsePropertiesPolicy`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.18 (2021-11-03)
 

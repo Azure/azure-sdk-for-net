@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             Assert.AreEqual(cdnEndpointName, cdnEndpoint.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(null, cdnEndpoint.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(cdnEndpointName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(true, null, cdnEndpoint.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(true, cdnEndpointName, null));
         }
 
         [TestCase]

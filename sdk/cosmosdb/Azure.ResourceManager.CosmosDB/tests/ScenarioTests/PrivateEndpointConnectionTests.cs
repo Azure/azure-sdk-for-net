@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete();
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             foreach (var connection in privateEndpointConnections)
             {
-                await connection.DeleteAsync();
+                await connection.DeleteAsync(true);
             }
         }
 
@@ -70,13 +70,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual("Pending", privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
 
-            _ = await PrivateEndpointConnectionCollection.CreateOrUpdate(privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData() {
+            _ = await PrivateEndpointConnectionCollection.CreateOrUpdateAsync(true, privateEndpointConnection.Data.Name, new PrivateEndpointConnectionData()
+            {
                 PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionStateProperty()
                 {
                     Status = "Approved",
                     Description = "Approved by test",
                 }
-            }).WaitForCompletionAsync();
+            });
             privateEndpoint= await privateEndpoint.GetAsync();
             privateEndpointConnection = await PrivateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             PrivateEndpointConnection privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
             Assert.IsNotNull(privateEndpointConnection);
 
-            await privateEndpointConnection.DeleteAsync();
+            await privateEndpointConnection.DeleteAsync(true);
             privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnection.Data.Name);
             Assert.Null(privateEndpointConnection);
         }
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            VirtualNetwork virtualNetwork =  await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(vnetName, vnet).WaitForCompletionAsync();
+            VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnet)).Value;
 
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 },
             };
 
-            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(name, privateEndpointData).WaitForCompletionAsync();
+            return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(true, name, privateEndpointData)).Value;
         }
 
         private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnection actualValue)
