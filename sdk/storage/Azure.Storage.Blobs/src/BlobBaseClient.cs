@@ -2065,7 +2065,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2104,7 +2104,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2142,7 +2142,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2181,7 +2181,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
