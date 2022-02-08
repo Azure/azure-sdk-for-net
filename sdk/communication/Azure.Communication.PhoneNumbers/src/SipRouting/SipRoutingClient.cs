@@ -187,26 +187,24 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="trunk">SIP trunk gateway.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> SetTrunk(
+        public virtual Response<SipTrunk> SetTrunk(
             SipTrunk trunk,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Name, trunk } });
-            return UpdateSipConfiguration(config, cancellationToken);
-        }
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Fqdn, trunk } });
 
-        /// <summary>
-        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
-        /// </summary>
-        /// <param name="route">Online routing setting.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>Updated configuration value.</returns>
-        public virtual Response<SipConfiguration> SetRoute(
-            SipTrunkRoute route,
-            CancellationToken cancellationToken = default)
-        {
-            var config = new SipConfiguration(new List<SipTrunkRoute> { route});
-            return UpdateSipConfiguration(config, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetTrunk)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.PatchSipConfiguration(config, cancellationToken);
+                return Response.FromValue(response.Value.Trunks.First(x => x.Key.Equals(trunk.Fqdn)).Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -215,12 +213,24 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="trunk">SIP trunk gateway.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> SetTrunkAsync(
+        public virtual async Task<Response<SipTrunk>> SetTrunkAsync(
             SipTrunk trunk,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Name, trunk } });
-            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunk.Fqdn, trunk } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetTrunk)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Trunks.First(x => x.Key.Equals(trunk.Fqdn)).Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -229,42 +239,188 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="route">Online routing setting.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<SipConfiguration>> SetRouteAsync(
+        public virtual Response<SipTrunkRoute> SetRoute(
             SipTrunkRoute route,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new List<SipTrunkRoute>{ route });
-            return await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetRoute)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = GetSipConfiguration(cancellationToken);
+                var currentRoutes = currentConfig.Value.Routes.ToList();
+
+                var index = currentRoutes.FindIndex(x => x.Name.Equals(route.Name));
+
+                if (index >= 0)
+                {
+                    currentRoutes[index] = route;
+                }
+                else
+                {
+                    currentRoutes.Add(route);
+                }
+
+                var config = new SipConfiguration(currentRoutes);
+
+                var response = _restClient.PatchSipConfiguration(config, cancellationToken);
+                return Response.FromValue(response.Value.Routes.First(x => x.Name.Equals(route.Name)), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update <see cref="SipConfiguration"/> for resource with online routing settings. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="route">Online routing setting.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual async Task<Response<SipTrunkRoute>> SetRouteAsync(
+            SipTrunkRoute route,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetRoute)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var currentRoutes = currentConfig.Value.Routes.ToList();
+
+                var index = currentRoutes.FindIndex(x => x.Name.Equals(route.Name));
+
+                if (index >= 0)
+                {
+                    currentRoutes[index] = route;
+                }
+                else
+                {
+                    currentRoutes.Add(route);
+                }
+
+                var config = new SipConfiguration(currentRoutes);
+
+                var response = await _restClient.PatchSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Routes.First(x => x.Name.Equals(route.Name)), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Delete <see cref="SipTrunk"/>.
         /// </summary>
-        /// <param name="fqdn">Trunk FQDN to be deleted.</param>
+        /// <param name="trunkFqdn">Trunk FQDN to be deleted.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual Response<Uri> DeleteTrunk(
-            Uri fqdn,
+        public virtual Response<SipTrunk> DeleteTrunk(
+            string trunkFqdn,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn.AbsoluteUri, null } });
-            var response = UpdateSipConfiguration(config, cancellationToken);
-            return Response.FromValue(fqdn, response.GetRawResponse());
+            var removeConfig = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunkFqdn, null } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteTrunk)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = GetSipConfiguration(cancellationToken);
+                var trunkToRemove = currentConfig.Value.Trunks.FirstOrDefault(x => x.Key.Equals(trunkFqdn)).Value;
+                var response = _restClient.PatchSipConfiguration(removeConfig, cancellationToken);
+                return Response.FromValue(trunkToRemove, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Delete <see cref="SipTrunk"/>.
         /// </summary>
-        /// <param name="fqdn">trunk FQDN to be deleted.</param>
+        /// <param name="trunkFqdn">trunk FQDN to be deleted.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>Updated configuration value.</returns>
-        public virtual async Task<Response<Uri>> DeleteTrunkAsync(
-            Uri fqdn,
+        public virtual async Task<Response<string>> DeleteTrunkAsync(
+            string trunkFqdn,
             CancellationToken cancellationToken = default)
         {
-            var config = new SipConfiguration(new Dictionary<string, SipTrunk> { { fqdn.AbsoluteUri, null } });
-            var response = await UpdateSipConfigurationAsync(config, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(fqdn, response.GetRawResponse());
+            var removeConfig = new SipConfiguration(new Dictionary<string, SipTrunk> { { trunkFqdn, null } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteTrunk)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var trunkToRemove = currentConfig.Value.Trunks.FirstOrDefault(x => x.Key.Equals(trunkFqdn)).Value;
+                var response = await _restClient.PatchSipConfigurationAsync(removeConfig, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(trunkFqdn, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <param name="routeName">Name of the route to be deleted.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual Response<SipTrunkRoute> DeleteRoute(
+            string routeName,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteRoute)}");
+            scope.Start();
+            try
+            {
+                var currentConfiguration = GetSipConfiguration(cancellationToken);
+                var routeToRemove = currentConfiguration.Value.Routes.FirstOrDefault(x => x.Name.Equals(routeName));
+                var modifiedConfig = new SipConfiguration(currentConfiguration.Value.Routes.Where(x => !x.Name.Equals(routeName)).ToList());
+                var response = _restClient.PatchSipConfiguration(modifiedConfig, cancellationToken);
+                return Response.FromValue(routeToRemove, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipTrunk"/>.
+        /// </summary>
+        /// <param name="routeName">Name of the route to be deleted.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>Updated configuration value.</returns>
+        public virtual async Task<Response<SipTrunkRoute>> DeleteRouteAsync(
+            string routeName,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteRoute)}");
+            scope.Start();
+            try
+            {
+                var currentConfiguration = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var routeToRemove = currentConfiguration.Value.Routes.FirstOrDefault(x => x.Name.Equals(routeName));
+                var modifiedConfig = new SipConfiguration(currentConfiguration.Value.Routes.Where(x => !x.Name.Equals(routeName)).ToList());
+                var response = await _restClient.PatchSipConfigurationAsync(modifiedConfig, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(routeToRemove, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -274,8 +430,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public virtual Response<IReadOnlyList<SipTrunk>> GetTrunks(
             CancellationToken cancellationToken = default)
         {
-            var response = GetSipConfiguration(cancellationToken);
-            return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunks)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetSipConfiguration(cancellationToken);
+                return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -285,8 +451,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public virtual async Task<Response<IReadOnlyList<SipTrunk>>> GetTrunksAsync(
             CancellationToken cancellationToken = default)
         {
-            var response = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunks)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -296,8 +472,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public virtual Response<IReadOnlyList<SipTrunkRoute>> GetRoutes(
             CancellationToken cancellationToken = default)
         {
-            var response = GetSipConfiguration(cancellationToken);
-            return Response.FromValue(response.Value.Routes, response.GetRawResponse());
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutes)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetSipConfiguration(cancellationToken);
+                return Response.FromValue(response.Value.Routes, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -307,8 +493,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public virtual async Task<Response<IReadOnlyList<SipTrunkRoute>>> GetRoutesAsync(
             CancellationToken cancellationToken = default)
         {
-            var response = await GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value.Routes, response.GetRawResponse());
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutes)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Routes, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
