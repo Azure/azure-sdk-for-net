@@ -20,6 +20,7 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
   - AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+  - ManagedServiceIdentity
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription

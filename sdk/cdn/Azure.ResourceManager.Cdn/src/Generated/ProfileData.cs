@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        internal ProfileData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, ProfileResourceState? resourceState, ManagedServiceIdentity identity, string provisioningState, string frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, type, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, ProfileResourceState? resourceState, Models.ManagedServiceIdentity identity, string provisioningState, string frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, type, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Managed service identity. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public Models.ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning status of the profile. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Id of the frontdoor. </summary>

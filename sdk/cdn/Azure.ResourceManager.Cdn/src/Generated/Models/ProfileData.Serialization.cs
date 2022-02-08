@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
             Azure.Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<Models.ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             Optional<string> frontDoorId = default;
             Optional<int?> originResponseTimeoutSeconds = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
+                            identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), identity, provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), identity.Value, provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }
