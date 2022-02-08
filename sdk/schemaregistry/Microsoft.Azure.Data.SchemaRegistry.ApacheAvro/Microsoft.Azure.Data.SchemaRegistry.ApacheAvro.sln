@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.ServiceBus", "..\..\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{69E3D417-F0A9-4C6B-B9C5-8C29E9F2A660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Experimental", "..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{1F40A16B-5809-4138-A362-CA360DE98A94}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
