@@ -47,10 +47,18 @@ namespace Azure.ResourceManager
 }
 namespace Azure.ResourceManager.Core
 {
-    public abstract partial class ArmCollection : Azure.ResourceManager.Core.ArmResource
+    public abstract partial class ArmCollection
     {
         protected ArmCollection() { }
         protected ArmCollection(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
+        protected internal System.Uri BaseUri { get { throw null; } }
+        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
+        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
+        public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> func) where T : class { throw null; }
+        protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
     public abstract partial class ArmResource
     {
@@ -416,6 +424,15 @@ namespace Azure.ResourceManager.Models
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public Azure.Core.ResourceType Type { get { throw null; } }
     }
+    public abstract partial class ResourceData
+    {
+        protected ResourceData() { }
+        protected ResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.Core.ResourceType Type { get { throw null; } }
+    }
     public sealed partial class Sku : System.IEquatable<Azure.ResourceManager.Models.Sku>
     {
         public Sku(string name) { }
@@ -478,6 +495,13 @@ namespace Azure.ResourceManager.Models
     {
         protected TrackedResource(Azure.Core.AzureLocation location) { }
         protected TrackedResource(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
+    {
+        protected TrackedResourceData(Azure.Core.AzureLocation location) { }
+        protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
