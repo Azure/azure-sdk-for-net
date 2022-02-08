@@ -12,10 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Origin group properties needed for origin group creation or update. </summary>
-    public partial class OriginGroupUpdateOptions
+    public partial class CdnOriginGroupUpdateOptions
     {
-        /// <summary> Initializes a new instance of OriginGroupUpdateOptions. </summary>
-        public OriginGroupUpdateOptions()
+        /// <summary> Initializes a new instance of CdnOriginGroupUpdateOptions. </summary>
+        public CdnOriginGroupUpdateOptions()
         {
             Origins = new ChangeTrackingList<WritableSubResource>();
         }

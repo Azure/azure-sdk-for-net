@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, AfdRuleUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ruleUpdateProperties);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -430,10 +430,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(ruleName));
             }
-            if (ruleUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName, ruleName, ruleUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName, ruleName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,10 +478,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile. </param>
         /// <param name="ruleName"> Name of the delivery rule which is unique within the endpoint. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="ruleSetName"/>, <paramref name="ruleName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -503,12 +503,12 @@ namespace Azure.ResourceManager.Cdn
             {
                 throw new ArgumentNullException(nameof(ruleName));
             }
-            if (ruleUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName, ruleName, ruleUpdateProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, ruleSetName, ruleName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

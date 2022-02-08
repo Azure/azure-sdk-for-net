@@ -223,22 +223,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
+        /// <param name="options"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public async virtual Task<ProfileUpdateOperation> UpdateAsync(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ProfileUpdateOperation> UpdateAsync(bool waitForCompletion, ProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (profileUpdateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(profileUpdateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
             scope.Start();
             try
             {
-                var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -252,22 +252,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing CDN profile with the specified profile name under the specified subscription and resource group. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
+        /// <param name="options"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public virtual ProfileUpdateOperation Update(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ProfileUpdateOperation Update(bool waitForCompletion, ProfileUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (profileUpdateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(profileUpdateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Update");
             scope.Start();
             try
             {
-                var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

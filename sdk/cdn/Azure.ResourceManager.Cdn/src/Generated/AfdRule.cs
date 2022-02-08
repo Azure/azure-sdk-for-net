@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing delivery rule within a rule set. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdRuleUpdateOperation> UpdateAsync(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<AfdRuleUpdateOperation> UpdateAsync(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (ruleUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();
             try
             {
-                var response = await _afdRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties).Request, response);
+                var response = await _afdRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -198,22 +198,22 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Updates an existing delivery rule within a rule set. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleUpdateProperties"> Delivery rule properties. </param>
+        /// <param name="options"> Delivery rule properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleUpdateProperties"/> is null. </exception>
-        public virtual AfdRuleUpdateOperation Update(bool waitForCompletion, RuleUpdateOptions ruleUpdateProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual AfdRuleUpdateOperation Update(bool waitForCompletion, AfdRuleUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (ruleUpdateProperties == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(ruleUpdateProperties));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _afdRuleClientDiagnostics.CreateScope("AfdRule.Update");
             scope.Start();
             try
             {
-                var response = _afdRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties, cancellationToken);
-                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleUpdateProperties).Request, response);
+                var response = _afdRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new AfdRuleUpdateOperation(Client, _afdRuleClientDiagnostics, Pipeline, _afdRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

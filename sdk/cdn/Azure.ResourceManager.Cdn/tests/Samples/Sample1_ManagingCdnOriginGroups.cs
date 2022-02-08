@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Now we can get the origin group with GetAsync()
             CdnOriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
             // With UpdateAsync(), we can update the origin group
-            OriginGroupUpdateOptions input = new OriginGroupUpdateOptions()
+            CdnOriginGroupUpdateOptions input = new CdnOriginGroupUpdateOptions()
             {
                 HealthProbeSettings = new HealthProbeParameters
                 {
