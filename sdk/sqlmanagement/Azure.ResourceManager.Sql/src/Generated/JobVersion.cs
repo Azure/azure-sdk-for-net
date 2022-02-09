@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,21 +37,21 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "JobVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobVersion(ArmClient armClient, JobVersionData data) : this(armClient, data.Id)
+        internal JobVersion(ArmClient client, JobVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="JobVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobVersion(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal JobVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _jobVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string jobVersionApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string jobVersionApiVersion);
             _jobVersionRestClient = new JobVersionsRestOperations(_jobVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,6 +82,13 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ServerJobAgentJobVersionSteps in the ServerJobAgentJobVersionStep. </summary>
+        /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a ServerJobAgentJobVersionStep. </returns>
+        public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
+        {
+            return new ServerJobAgentJobVersionStepCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}
         /// OperationId: JobVersions_Get
@@ -97,7 +103,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _jobVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _jobVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +126,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _jobVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw _jobVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,51 +134,5 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region ServerJobAgentJobVersionStep
-
-        /// <summary> Gets a collection of ServerJobAgentJobVersionSteps in the JobVersion. </summary>
-        /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a JobVersion. </returns>
-        public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
-        {
-            return new ServerJobAgentJobVersionStepCollection(this);
-        }
-        #endregion
     }
 }

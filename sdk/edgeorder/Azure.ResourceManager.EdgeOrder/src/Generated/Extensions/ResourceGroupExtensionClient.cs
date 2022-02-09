@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -40,8 +40,29 @@ namespace Azure.ResourceManager.EdgeOrder
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of AddressResources in the AddressResource. </summary>
+        /// <returns> An object representing collection of AddressResources and their operations over a AddressResource. </returns>
+        public virtual AddressResourceCollection GetAddressResources()
+        {
+            return new AddressResourceCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
+        /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
+        public virtual OrderResourceCollection GetOrderResources()
+        {
+            return new OrderResourceCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
+        /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
+        public virtual OrderItemResourceCollection GetOrderItemResources()
+        {
+            return new OrderItemResourceCollection(Client, Id);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
@@ -60,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await DefaultRestClient.ListOrderAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -75,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = await DefaultRestClient.ListOrderAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -102,7 +123,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = DefaultRestClient.ListOrderAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -117,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 try
                 {
                     var response = DefaultRestClient.ListOrderAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

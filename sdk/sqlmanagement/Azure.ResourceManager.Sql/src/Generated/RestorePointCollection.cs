@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RestorePointCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal RestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePoint.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
+            Client.TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
             _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,36 +48,6 @@ namespace Azure.ResourceManager.Sql
         {
             if (id.ResourceType != SqlDatabase.ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: RestorePoints_Get
-        /// <summary> Gets a restore point. </summary>
-        /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken);
-                if (response.Value == null)
-                    throw _restorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
@@ -97,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _restorePointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +78,26 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: RestorePoints_Get
+        /// <summary> Gets a restore point. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
+                    throw _restorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +106,92 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: RestorePoints_ListByDatabase
+        /// <summary> Gets a list of database restore points. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public async virtual Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorePoint> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<RestorePoint>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _restorePointRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<RestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _restorePointRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: RestorePoints_ListByDatabase
+        /// <summary> Gets a list of database restore points. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorePoint> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
-            scope.Start();
-            try
+            Page<RestorePoint> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(restorePointName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _restorePointRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<RestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _restorePointRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: RestorePoints_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
@@ -202,86 +214,86 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: RestorePoints_ListByDatabase
-        /// <summary> Gets a list of database restore points. </summary>
+        /// OperationId: RestorePoints_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorePoint> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            Page<RestorePoint> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restorePointRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(restorePointName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<RestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restorePointRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: RestorePoints_ListByDatabase
-        /// <summary> Gets a list of database restore points. </summary>
+        /// OperationId: RestorePoints_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorePoint> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public async virtual Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestorePoint>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restorePointRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<RestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restorePointRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// OperationId: RestorePoints_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<RestorePoint> IEnumerable<RestorePoint>.GetEnumerator()

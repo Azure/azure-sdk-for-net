@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualHub"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualHub(ArmClient armClient, VirtualHubData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal VirtualHub(ArmClient client, VirtualHubData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualHub"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualHub(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal VirtualHub(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
             _virtualHubRestClient = new VirtualHubsRestOperations(_virtualHubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +83,41 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of HubVirtualNetworkConnections in the HubVirtualNetworkConnection. </summary>
+        /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a HubVirtualNetworkConnection. </returns>
+        public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
+        {
+            return new HubVirtualNetworkConnectionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of VirtualHubRouteTableV2s in the VirtualHubRouteTableV2. </summary>
+        /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHubRouteTableV2. </returns>
+        public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
+        {
+            return new VirtualHubRouteTableV2Collection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of BgpConnections in the BgpConnection. </summary>
+        /// <returns> An object representing collection of BgpConnections and their operations over a BgpConnection. </returns>
+        public virtual BgpConnectionCollection GetBgpConnections()
+        {
+            return new BgpConnectionCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of HubIpConfigurations in the HubIpConfiguration. </summary>
+        /// <returns> An object representing collection of HubIpConfigurations and their operations over a HubIpConfiguration. </returns>
+        public virtual HubIpConfigurationCollection GetHubIpConfigurations()
+        {
+            return new HubIpConfigurationCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of HubRouteTables in the HubRouteTable. </summary>
+        /// <returns> An object representing collection of HubRouteTables and their operations over a HubRouteTable. </returns>
+        public virtual HubRouteTableCollection GetHubRouteTables()
+        {
+            return new HubRouteTableCollection(Client, Id);
+        }
+
         /// <summary> Retrieves the details of a VirtualHub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualHub>> GetAsync(CancellationToken cancellationToken = default)
@@ -95,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _virtualHubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHub(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,43 +149,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _virtualHubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualHub(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,7 +218,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHub(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +243,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
-                return Response.FromValue(new VirtualHub(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualHub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,55 +297,5 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
-
-        #region HubVirtualNetworkConnection
-
-        /// <summary> Gets a collection of HubVirtualNetworkConnections in the VirtualHub. </summary>
-        /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a VirtualHub. </returns>
-        public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
-        {
-            return new HubVirtualNetworkConnectionCollection(this);
-        }
-        #endregion
-
-        #region VirtualHubRouteTableV2
-
-        /// <summary> Gets a collection of VirtualHubRouteTableV2s in the VirtualHub. </summary>
-        /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHub. </returns>
-        public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
-        {
-            return new VirtualHubRouteTableV2Collection(this);
-        }
-        #endregion
-
-        #region BgpConnection
-
-        /// <summary> Gets a collection of BgpConnections in the VirtualHub. </summary>
-        /// <returns> An object representing collection of BgpConnections and their operations over a VirtualHub. </returns>
-        public virtual BgpConnectionCollection GetBgpConnections()
-        {
-            return new BgpConnectionCollection(this);
-        }
-        #endregion
-
-        #region HubIpConfiguration
-
-        /// <summary> Gets a collection of HubIpConfigurations in the VirtualHub. </summary>
-        /// <returns> An object representing collection of HubIpConfigurations and their operations over a VirtualHub. </returns>
-        public virtual HubIpConfigurationCollection GetHubIpConfigurations()
-        {
-            return new HubIpConfigurationCollection(this);
-        }
-        #endregion
-
-        #region HubRouteTable
-
-        /// <summary> Gets a collection of HubRouteTables in the VirtualHub. </summary>
-        /// <returns> An object representing collection of HubRouteTables and their operations over a VirtualHub. </returns>
-        public virtual HubRouteTableCollection GetHubRouteTables()
-        {
-            return new HubRouteTableCollection(this);
-        }
-        #endregion
     }
 }

@@ -7,8 +7,10 @@
 - Added the `Languages` property to the `AnalyzeResult` class. This property is populated when using the `prebuilt-read` model and holds information about the languages in which the document is written.
 - Added the `Tags` property to the `BuildModelOptions` class. This property can be used to specify custom key-value attributes associated with the model to be built.
 - Added the `Tags` property to the `DocumentModelInfo` and to the `ModelOperationInfo` classes.
+- Added the `BuildMode` property to `DocTypeInfo` to indicate the technique used when building the correspoding model.
 
 ### Breaking Changes
+- Added the required parameter `buildMode` to `StartBuildModel` methods. Users must now choose the technique (`Template` or `Neural`) used to build models. For more information about the available build modes and their differences, see [here](https://aka.ms/azsdk/formrecognizer/buildmode).
 - Added the `tags` parameter to the `GetCopyAuthorization` methods.
 - Added the `tags` parameter to the `StartCreateComposedModel` methods.
 

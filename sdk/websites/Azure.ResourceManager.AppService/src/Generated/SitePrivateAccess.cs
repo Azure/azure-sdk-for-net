@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,21 +38,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SitePrivateAccess"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SitePrivateAccess(ArmClient armClient, PrivateAccessData data) : this(armClient, data.Id)
+        internal SitePrivateAccess(ArmClient client, PrivateAccessData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SitePrivateAccess"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SitePrivateAccess(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SitePrivateAccess(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sitePrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string sitePrivateAccessWebAppsApiVersion);
             _sitePrivateAccessWebAppsRestClient = new WebAppsRestOperations(_sitePrivateAccessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sitePrivateAccessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _sitePrivateAccessWebAppsRestClient.GetPrivateAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _sitePrivateAccessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SitePrivateAccess(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SitePrivateAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,43 +120,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _sitePrivateAccessWebAppsRestClient.GetPrivateAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _sitePrivateAccessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SitePrivateAccess(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccess.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sitePrivateAccessWebAppsClientDiagnostics.CreateScope("SitePrivateAccess.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new SitePrivateAccess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _sitePrivateAccessWebAppsRestClient.PutPrivateAccessVnetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, access, cancellationToken).ConfigureAwait(false);
-                var operation = new SitePrivateAccessCreateOrUpdateOperation(ArmClient, response);
+                var operation = new SitePrivateAccessCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _sitePrivateAccessWebAppsRestClient.PutPrivateAccessVnet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, access, cancellationToken);
-                var operation = new SitePrivateAccessCreateOrUpdateOperation(ArmClient, response);
+                var operation = new SitePrivateAccessCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

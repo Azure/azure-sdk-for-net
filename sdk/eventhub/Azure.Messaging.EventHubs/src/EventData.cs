@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public override string ContentType
+        public new string ContentType
         {
             get
             {
@@ -94,6 +94,19 @@ namespace Azure.Messaging.EventHubs
                         : null;
                 }
             }
+        }
+
+        /// <summary>
+        ///    This member is intended to allow the string-based <see cref="ContentType" /> in this class to be
+        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="MessageWithMetadata" />
+        ///    base class.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ContentType? ContentTypeCore
+        {
+            get => new ContentType(ContentType);
+            set => ContentType = value.ToString();
         }
 
         /// <summary>

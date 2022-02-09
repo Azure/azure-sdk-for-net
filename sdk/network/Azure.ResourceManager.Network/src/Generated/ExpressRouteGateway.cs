@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,21 +38,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteGateway"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmClient armClient, ExpressRouteGatewayData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal ExpressRouteGateway(ArmClient client, ExpressRouteGatewayData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGateway"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRouteGateway(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ExpressRouteGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string expressRouteGatewayApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string expressRouteGatewayApiVersion);
             _expressRouteGatewayRestClient = new ExpressRouteGatewaysRestOperations(_expressRouteGatewayClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,6 +83,13 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ExpressRouteConnections in the ExpressRouteConnection. </summary>
+        /// <returns> An object representing collection of ExpressRouteConnections and their operations over a ExpressRouteConnection. </returns>
+        public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
+        {
+            return new ExpressRouteConnectionCollection(Client, Id);
+        }
+
         /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteGateway>> GetAsync(CancellationToken cancellationToken = default)
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _expressRouteGatewayClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteGateway(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,43 +121,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _expressRouteGatewayClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGateway(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGateway.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new ExpressRouteGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +191,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteGatewayRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayUpdateOperation(ArmClient, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var operation = new ExpressRouteGatewayUpdateOperation(Client, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -250,7 +220,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteGatewayRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
-                var operation = new ExpressRouteGatewayUpdateOperation(ArmClient, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
+                var operation = new ExpressRouteGatewayUpdateOperation(Client, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -261,15 +231,5 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
-
-        #region ExpressRouteConnection
-
-        /// <summary> Gets a collection of ExpressRouteConnections in the ExpressRouteGateway. </summary>
-        /// <returns> An object representing collection of ExpressRouteConnections and their operations over a ExpressRouteGateway. </returns>
-        public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
-        {
-            return new ExpressRouteConnectionCollection(this);
-        }
-        #endregion
     }
 }

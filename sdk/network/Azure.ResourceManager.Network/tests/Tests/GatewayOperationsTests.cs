@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests
             string subnetName = "GatewaySubnet";
 
             await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
-            Response<Subnet> getSubnetResponse = await resourceGroup.GetVirtualNetworks().Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
+            Response<Subnet> getSubnetResponse = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(subnetName);
             Assert.IsNotNull(getSubnetResponse.Value.Data);
 
             // Create PublicIpAddress
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Tests
             string subnetName = "GatewaySubnet";
 
             await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
-            Response<Subnet> getSubnetResponse = await resourceGroup.GetVirtualNetworks().Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
+            Response<Subnet> getSubnetResponse = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(subnetName);
             Assert.IsNotNull(getSubnetResponse.Value.Data);
 
             // Create LocalNetworkGateway
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
             var virtualNetworkCollection = resourceGroup1.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName1, vnetData1);
-            Response<Subnet> getSubnetResponse1 = await resourceGroup1.GetVirtualNetworks().Get(vnetName1).Value.GetSubnets().GetAsync(subnetName1);
+            Response<Subnet> getSubnetResponse1 = await (await resourceGroup1.GetVirtualNetworks().GetAsync(vnetName1)).Value.GetSubnets().GetAsync(subnetName1);
 
             // Create PublicIpAddress
             string publicIpName1 = Recording.GenerateAssetName("azsmnet");
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
             var virtualNetworkCollection2 = resourceGroup2.GetVirtualNetworks();
             var putVnetResponseOperation2 = await virtualNetworkCollection2.CreateOrUpdateAsync(true, vnetName2, vnetData2);
-            Response<Subnet> getSubnetResponse2 = await resourceGroup2.GetVirtualNetworks().Get(vnetName2).Value.GetSubnets().GetAsync(subnetName2);
+            Response<Subnet> getSubnetResponse2 = await (await resourceGroup2.GetVirtualNetworks().GetAsync(vnetName2)).Value.GetSubnets().GetAsync(subnetName2);
 
             // Create PublicIpAddress
             string publicIpName2 = Recording.GenerateAssetName("azsmnet");
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Network.Tests
             string subnetName = "GatewaySubnet";
 
             await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
-            Response<Subnet> getSubnetResponse = await resourceGroup.GetVirtualNetworks().Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
+            Response<Subnet> getSubnetResponse = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(subnetName);
             Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Id);
 
             //c. CreateVirtualNetworkGateway API (Also, Set Default local network site)

@@ -15,97 +15,129 @@ namespace Azure.ResourceManager.Resources
     {
         #region Deployment
         /// <summary> Gets an object representing a Deployment along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Deployment" /> object. </returns>
-        public static Deployment GetDeployment(this ArmClient armClient, ResourceIdentifier id)
+        public static Deployment GetDeployment(this ArmClient client, ResourceIdentifier id)
         {
-            Deployment.ValidateResourceId(id);
-            return new Deployment(armClient, id);
+            return client.GetClient(() =>
+            {
+                Deployment.ValidateResourceId(id);
+                return new Deployment(client, id);
+            }
+            );
         }
         #endregion
 
         #region Application
         /// <summary> Gets an object representing a Application along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Application" /> object. </returns>
-        public static Application GetApplication(this ArmClient armClient, ResourceIdentifier id)
+        public static Application GetApplication(this ArmClient client, ResourceIdentifier id)
         {
-            Application.ValidateResourceId(id);
-            return new Application(armClient, id);
+            return client.GetClient(() =>
+            {
+                Application.ValidateResourceId(id);
+                return new Application(client, id);
+            }
+            );
         }
         #endregion
 
         #region ApplicationDefinition
         /// <summary> Gets an object representing a ApplicationDefinition along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationDefinition" /> object. </returns>
-        public static ApplicationDefinition GetApplicationDefinition(this ArmClient armClient, ResourceIdentifier id)
+        public static ApplicationDefinition GetApplicationDefinition(this ArmClient client, ResourceIdentifier id)
         {
-            ApplicationDefinition.ValidateResourceId(id);
-            return new ApplicationDefinition(armClient, id);
+            return client.GetClient(() =>
+            {
+                ApplicationDefinition.ValidateResourceId(id);
+                return new ApplicationDefinition(client, id);
+            }
+            );
         }
         #endregion
 
         #region JitRequest
         /// <summary> Gets an object representing a JitRequest along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JitRequest" /> object. </returns>
-        public static JitRequest GetJitRequest(this ArmClient armClient, ResourceIdentifier id)
+        public static JitRequest GetJitRequest(this ArmClient client, ResourceIdentifier id)
         {
-            JitRequest.ValidateResourceId(id);
-            return new JitRequest(armClient, id);
+            return client.GetClient(() =>
+            {
+                JitRequest.ValidateResourceId(id);
+                return new JitRequest(client, id);
+            }
+            );
         }
         #endregion
 
         #region DeploymentScript
         /// <summary> Gets an object representing a DeploymentScript along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeploymentScript" /> object. </returns>
-        public static DeploymentScript GetDeploymentScript(this ArmClient armClient, ResourceIdentifier id)
+        public static DeploymentScript GetDeploymentScript(this ArmClient client, ResourceIdentifier id)
         {
-            DeploymentScript.ValidateResourceId(id);
-            return new DeploymentScript(armClient, id);
+            return client.GetClient(() =>
+            {
+                DeploymentScript.ValidateResourceId(id);
+                return new DeploymentScript(client, id);
+            }
+            );
         }
         #endregion
 
         #region ScriptLog
         /// <summary> Gets an object representing a ScriptLog along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
-        public static ScriptLog GetScriptLog(this ArmClient armClient, ResourceIdentifier id)
+        public static ScriptLog GetScriptLog(this ArmClient client, ResourceIdentifier id)
         {
-            ScriptLog.ValidateResourceId(id);
-            return new ScriptLog(armClient, id);
+            return client.GetClient(() =>
+            {
+                ScriptLog.ValidateResourceId(id);
+                return new ScriptLog(client, id);
+            }
+            );
         }
         #endregion
 
         #region TemplateSpec
         /// <summary> Gets an object representing a TemplateSpec along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TemplateSpec" /> object. </returns>
-        public static TemplateSpec GetTemplateSpec(this ArmClient armClient, ResourceIdentifier id)
+        public static TemplateSpec GetTemplateSpec(this ArmClient client, ResourceIdentifier id)
         {
-            TemplateSpec.ValidateResourceId(id);
-            return new TemplateSpec(armClient, id);
+            return client.GetClient(() =>
+            {
+                TemplateSpec.ValidateResourceId(id);
+                return new TemplateSpec(client, id);
+            }
+            );
         }
         #endregion
 
         #region TemplateSpecVersion
         /// <summary> Gets an object representing a TemplateSpecVersion along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TemplateSpecVersion" /> object. </returns>
-        public static TemplateSpecVersion GetTemplateSpecVersion(this ArmClient armClient, ResourceIdentifier id)
+        public static TemplateSpecVersion GetTemplateSpecVersion(this ArmClient client, ResourceIdentifier id)
         {
-            TemplateSpecVersion.ValidateResourceId(id);
-            return new TemplateSpecVersion(armClient, id);
+            return client.GetClient(() =>
+            {
+                TemplateSpecVersion.ValidateResourceId(id);
+                return new TemplateSpecVersion(client, id);
+            }
+            );
         }
         #endregion
     }
