@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     public static class TablePlanEnum
     {
         /// <summary>
-        /// Basic - logs that are adjusted to support high volume / low value
-        /// verbose logs.
+        /// Logs  that are adjusted to support high volume low value verbose
+        /// logs.
         /// </summary>
         public const string Basic = "Basic";
         /// <summary>
-        /// Analytics - logs that allow monitoring and analytics.
+        /// Logs  that allow monitoring and analytics.
         /// </summary>
         public const string Analytics = "Analytics";
     }

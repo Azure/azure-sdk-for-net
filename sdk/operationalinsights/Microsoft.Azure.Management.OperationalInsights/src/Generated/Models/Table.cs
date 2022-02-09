@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="retentionInDays">The data table data retention in
-        /// days, between 4 and 730. Setting this property to null will default
-        /// to the workspace retention.</param>
-        /// <param name="totalRetentionInDays">The table data total retention
-        /// in days, between 4 and 2555. Setting this property to null will
-        /// default to table retention.</param>
+        /// <param name="retentionInDays">The table retention in days, between
+        /// 4 and 730. Setting this property to -1 will default to the
+        /// workspace retention.</param>
+        /// <param name="totalRetentionInDays">The table total retention in
+        /// days, between 4 and 2555. Setting this property to -1 will default
+        /// to table retention.</param>
         /// <param name="archiveRetentionInDays">The table data archive
         /// retention in days. Calculated as
         /// (totalRetentionInDays-retentionInDays)</param>
@@ -53,8 +53,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// initiated this table.</param>
         /// <param name="resultStatistics">Search job execution
         /// statistics.</param>
-        /// <param name="plan">The table plan. Possible values include:
-        /// 'Basic', 'Analytics'</param>
+        /// <param name="plan">Instruct the system how to handle and charge the
+        /// logs ingested to this table. Possible values include: 'Basic',
+        /// 'Analytics'</param>
         /// <param name="lastPlanModifiedDate">The timestamp that table plan
         /// was last modified (UTC).</param>
         /// <param name="schema">Table schema.</param>
@@ -86,17 +87,16 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the data table data retention in days, between 4 and
-        /// 730. Setting this property to null will default to the workspace
+        /// Gets or sets the table retention in days, between 4 and 730.
+        /// Setting this property to -1 will default to the workspace
         /// retention.
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
 
         /// <summary>
-        /// Gets or sets the table data total retention in days, between 4 and
-        /// 2555. Setting this property to null will default to table
-        /// retention.
+        /// Gets or sets the table total retention in days, between 4 and 2555.
+        /// Setting this property to -1 will default to table retention.
         /// </summary>
         [JsonProperty(PropertyName = "properties.totalRetentionInDays")]
         public int? TotalRetentionInDays { get; set; }
@@ -129,7 +129,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public ResultStatistics ResultStatistics { get; set; }
 
         /// <summary>
-        /// Gets or sets the table plan. Possible values include: 'Basic',
+        /// Gets or sets instruct the system how to handle and charge the logs
+        /// ingested to this table. Possible values include: 'Basic',
         /// 'Analytics'
         /// </summary>
         [JsonProperty(PropertyName = "properties.plan")]

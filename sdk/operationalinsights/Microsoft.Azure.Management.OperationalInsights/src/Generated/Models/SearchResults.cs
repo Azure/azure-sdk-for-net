@@ -30,15 +30,14 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Initializes a new instance of the SearchResults class.
         /// </summary>
         /// <param name="query">Search job query.</param>
-        /// <param name="description">Search results table's
-        /// Description.</param>
+        /// <param name="description">Search job Description.</param>
         /// <param name="limit">Limit the search job to return up to specified
         /// number of rows.</param>
         /// <param name="startSearchTime">The timestamp to start the search
         /// from (UTC)</param>
         /// <param name="endSearchTime">The timestamp to end the search by
         /// (UTC)</param>
-        /// <param name="sourceTable">The table to search data from.</param>
+        /// <param name="sourceTable">The table used in the search job.</param>
         public SearchResults(string query = default(string), string description = default(string), int? limit = default(int?), System.DateTime? startSearchTime = default(System.DateTime?), System.DateTime? endSearchTime = default(System.DateTime?), string sourceTable = default(string))
         {
             Query = query;
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string Query { get; set; }
 
         /// <summary>
-        /// Gets or sets search results table's Description.
+        /// Gets or sets search job Description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -87,7 +86,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public System.DateTime? EndSearchTime { get; set; }
 
         /// <summary>
-        /// Gets the table to search data from.
+        /// Gets the table used in the search job.
         /// </summary>
         [JsonProperty(PropertyName = "sourceTable")]
         public string SourceTable { get; private set; }

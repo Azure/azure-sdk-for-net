@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public System.DateTime? EndRestoreTime { get; set; }
 
         /// <summary>
-        /// Gets the table to restore data from.
+        /// Gets or sets the table to restore data from.
         /// </summary>
         [JsonProperty(PropertyName = "sourceTable")]
-        public string SourceTable { get; private set; }
+        public string SourceTable { get; set; }
 
     }
 }

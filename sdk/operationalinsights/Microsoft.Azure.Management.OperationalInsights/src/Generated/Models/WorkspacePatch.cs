@@ -97,12 +97,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provisioning state of the workspace. Possible
-        /// values include: 'Creating', 'Succeeded', 'Failed', 'Canceled',
-        /// 'Deleting', 'ProvisioningAccount', 'Updating'
+        /// Gets the provisioning state of the workspace. Possible values
+        /// include: 'Creating', 'Succeeded', 'Failed', 'Canceled', 'Deleting',
+        /// 'ProvisioningAccount', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets this is a read-only property. Represents the ID associated

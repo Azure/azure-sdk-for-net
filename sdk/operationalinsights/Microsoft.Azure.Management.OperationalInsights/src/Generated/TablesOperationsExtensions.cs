@@ -257,6 +257,53 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
+            /// Migrate a Log Analytics table from support of the Data Collector API and
+            /// Custom Fields features to support of Data Collection Rule-based Custom
+            /// Logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            public static void Migrate(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName)
+            {
+                operations.MigrateAsync(resourceGroupName, workspaceName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate a Log Analytics table from support of the Data Collector API and
+            /// Custom Fields features to support of Data Collection Rule-based Custom
+            /// Logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task MigrateAsync(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.MigrateWithHttpMessagesAsync(resourceGroupName, workspaceName, tableName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Update or Create a Log Analytics workspace table.
             /// </summary>
             /// <param name='operations'>
