@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.StackHCI
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HCICluster.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HCICluster.ResourceType), nameof(id));
+            if (id.ResourceType != HciCluster.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciCluster.ResourceType), nameof(id));
         }
 
         /// <summary> Create ArcSetting for HCI cluster. </summary>

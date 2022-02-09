@@ -13,16 +13,16 @@ using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    /// <summary> A class representing the HCICluster data model. </summary>
-    public partial class HCIClusterData : TrackedResource
+    /// <summary> A class representing the HciCluster data model. </summary>
+    public partial class HciClusterData : TrackedResource
     {
-        /// <summary> Initializes a new instance of HCIClusterData. </summary>
+        /// <summary> Initializes a new instance of HciClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public HCIClusterData(AzureLocation location) : base(location)
+        public HciClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HCIClusterData. </summary>
+        /// <summary> Initializes a new instance of HciClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal HCIClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Status? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <summary> Provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the cluster agent. </summary>
-        public Status? Status { get; }
+        public HciClusterStatus? Status { get; }
         /// <summary> Unique, immutable resource id. </summary>
         public string CloudId { get; }
         /// <summary> Endpoint configured for management from the Azure portal. </summary>

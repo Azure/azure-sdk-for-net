@@ -14,7 +14,7 @@ using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
-    public partial class HCIClusterData : IUtf8JsonSerializable
+    public partial class HciClusterData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StackHCI
             writer.WriteEndObject();
         }
 
-        internal static HCIClusterData DeserializeHCIClusterData(JsonElement element)
+        internal static HciClusterData DeserializeHciClusterData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StackHCI
             ResourceType type = default;
             SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<Status> status = default;
+            Optional<HciClusterStatus> status = default;
             Optional<string> cloudId = default;
             Optional<string> cloudManagementEndpoint = default;
             Optional<string> aadClientId = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.StackHCI
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new HciClusterStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("cloudId"))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.StackHCI
                     continue;
                 }
             }
-            return new HCIClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), cloudId.Value, cloudManagementEndpoint.Value, aadClientId.Value, aadTenantId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), cloudId.Value, cloudManagementEndpoint.Value, aadClientId.Value, aadTenantId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }
