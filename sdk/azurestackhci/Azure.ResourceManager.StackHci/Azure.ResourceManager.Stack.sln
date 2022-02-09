@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StackHCI", "src\Azure.ResourceManager.StackHCI.csproj", "{099E6611-7B2D-4BF1-BB28-9CB48CBE0F63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StackHci", "src\Azure.ResourceManager.StackHci.csproj", "{099E6611-7B2D-4BF1-BB28-9CB48CBE0F63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StackHCI.Tests", "tests\Azure.ResourceManager.StackHCI.Tests.csproj", "{82DEA4AB-FC7C-493D-A304-229831D9F24E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StackHci.Tests", "tests\Azure.ResourceManager.StackHci.Tests.csproj", "{82DEA4AB-FC7C-493D-A304-229831D9F24E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
