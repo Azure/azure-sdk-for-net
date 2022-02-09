@@ -1,6 +1,6 @@
 # Release History
 
-## 5.7.0-beta.3 (Unreleased)
+## 5.7.0-beta.3 (2022-02-09)
 
 ### Features Added
 
