@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // TODO: Fallback to default location if location provided via options does not work.
             if (options.StorageDirectory == null)
             {
-                options.StorageDirectory = PersistentStorageExtensions.GetDefaultStorageDirectory();
+                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
             }
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
