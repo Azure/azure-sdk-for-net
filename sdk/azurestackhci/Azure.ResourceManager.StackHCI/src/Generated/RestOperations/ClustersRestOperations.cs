@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<HCIClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HCIClusterData)null, message.Response);
+                    return Response.FromValue((HciClusterData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="clusterName"/> is null. </exception>
-        public Response<HCIClusterData> Get(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<HciClusterData> Get(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -281,19 +281,19 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HCIClusterData)null, message.Response);
+                    return Response.FromValue((HciClusterData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, HCIClusterData cluster)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, HciClusterData cluster)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cluster"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="cluster"/> is null. </exception>
-        public async Task<Response<HCIClusterData>> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterData>> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cluster"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="cluster"/> is null. </exception>
-        public Response<HCIClusterData> Create(string subscriptionId, string resourceGroupName, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
+        public Response<HciClusterData> Create(string subscriptionId, string resourceGroupName, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -391,9 +391,9 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
-        public async Task<Response<HCIClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
-        public Response<HCIClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public Response<HciClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.StackHCI
             {
                 case 200:
                     {
-                        HCIClusterData value = default;
+                        HciClusterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HCIClusterData.DeserializeHCIClusterData(document.RootElement);
+                        value = HciClusterData.DeserializeHciClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
