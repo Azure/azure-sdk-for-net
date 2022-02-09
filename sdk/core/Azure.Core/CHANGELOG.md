@@ -3,7 +3,7 @@
 ## 1.23.0-beta.1 (Unreleased)
 
 ### Features Added
-- Made `RequestContext` a subclass of `RequestOptions`.
+- Added type `RequestOptions` to the `Azure` namespace and made `RequestContext` a subclass of `RequestOptions`.
 
 ### Breaking Changes
 
@@ -25,6 +25,7 @@
 - Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
 - Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
 - Added `RequestFailedException` constructor that takes a `Response`.
+- Added `AzureLocation`. This class gives static references to known Azure regions.
 - Added `ResourceIdentifier`. This class allows users to load an Azure resource identifier string and parse out the pieces of that string such as which `SubscriptionId` does the resource belong to.
 - Added `ResourceType`. This class represents the ARM provider information for a given resource and is used by the `ResourceIdentifier` class.
 - Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called to validate the server side TLS certificate.
