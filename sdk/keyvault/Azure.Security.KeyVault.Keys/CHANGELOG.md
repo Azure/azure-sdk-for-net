@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.7 (Unreleased)
+## 4.3.0-beta.7 (2022-02-08)
 
 ### Features Added
 
@@ -10,8 +10,6 @@
 
 - `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
 - `KeyRotationLifetimeAction.TimeAfterCreate` and `TimeBeforeExpiry` were changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
-
-### Bugs Fixed
 
 ### Other Changes
 
