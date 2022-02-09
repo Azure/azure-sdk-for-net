@@ -28,7 +28,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ILogger<ServiceBusScaleMonitor> _logger;
 
         private DateTime _nextWarningTime;
-        private long lastSequenceNumber;
 
         public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
@@ -63,16 +62,34 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             try
             {
-                var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: lastSequenceNumber).ConfigureAwait(false);
-                foreach (var receivedMessage in receivedMessages)
+                // Do a first attempt to peek one message from the head of the queue
+                var onePeekMessage = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
+                if (onePeekMessage == null)
                 {
-                    if (MessageWasNotScheduledOrDeferred(receivedMessage))
+                    // ignore it. The Get[Queue|Topic]MetricsAsync methods deal with activeMessage being null
+                }
+                else if (MessageWasNotScheduledOrDeferred(onePeekMessage))
+                {
+                    activeMessage = onePeekMessage;
+                }
+                else
+                {
+                    // Do another attempt to peek ten message from last peek sequence number
+                    var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: onePeekMessage.SequenceNumber).ConfigureAwait(false);
+                    foreach (var receivedMessage in receivedMessages)
                     {
-                        activeMessage = receivedMessage;
-                        break;
+                        if (MessageWasNotScheduledOrDeferred(receivedMessage))
+                        {
+                            activeMessage = receivedMessage;
+                            break;
+                        }
                     }
 
-                    lastSequenceNumber = receivedMessage.SequenceNumber;
+                    // There were messages but no active ones so let's log this.
+                    if (receivedMessages.Count > 0 && activeMessage == null)
+                    {
+                        _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but no active ones.");
+                    }
                 }
 
                 if (_serviceBusEntityType == ServiceBusEntityType.Queue)
