@@ -54,18 +54,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                using var message = async ? await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                using var httpMessage = async ? await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                if (message != null)
+                if (httpMessage != null)
                 {
-                    if (storage == null && message.HasResponse && message.Response.Status == ResponseStatusCodes.Success)
+                    if (storage == null && httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
                     {
                         result = 1;
                     }
                     else
                     {
-                        ApplyPolicies(message);
+                        HandlePossibleFailures(httpMessage);
                         result = 1;
                     }
                 }
@@ -78,24 +78,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        private void ApplyPolicies(HttpMessage message)
+        private void HandlePossibleFailures(HttpMessage httpMessage)
         {
-            if (message.HasResponse)
+            if (httpMessage.HasResponse)
             {
-                HandleFailureResponseCodes(message);
+                HandleFailureResponseCodes(httpMessage);
             }
             else
             {
-                var content = HttpPipelineHelper.GetRequestContent(message.Request.Content);
+                // HttpRequestException
+                var content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                 storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
         }
 
-        private void HandleFailureResponseCodes(HttpMessage message)
+        private void HandleFailureResponseCodes(HttpMessage httpMessage)
         {
             byte[] content;
             int retryInterval;
-            switch (message.Response.Status)
+            switch (httpMessage.Response.Status)
             {
                 case ResponseStatusCodes.Success:
                     // log successful message
@@ -103,11 +104,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.PartialSuccess:
                     // Parse retry-after header
                     // Send Failed Messages To Storage
-                    TrackResponse response = HttpPipelineHelper.GetTrackResponse(message);
-                    content = HttpPipelineHelper.GetPartialContentForRetry(response, message);
+                    TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                    content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
                     if (content != null)
                     {
-                        retryInterval = HttpPipelineHelper.GetRetryInterval(message);
+                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         storage.SaveTelemetry(content, retryInterval);
                     }
                     break;
@@ -116,8 +117,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
                     // Parse retry-after header
                     // Send Messages To Storage
-                    content = HttpPipelineHelper.GetRequestContent(message.Request.Content);
-                    retryInterval = HttpPipelineHelper.GetRetryInterval(message);
+                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                    retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                     storage.SaveTelemetry(content, retryInterval);
                     break;
                 case ResponseStatusCodes.InternalServerError:
@@ -125,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 case ResponseStatusCodes.ServiceUnavailable:
                 case ResponseStatusCodes.GatewayTimeout:
                     // Send Messages To Storage
-                    content = HttpPipelineHelper.GetRequestContent(message.Request.Content);
+                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                     storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
                     break;
                 default:

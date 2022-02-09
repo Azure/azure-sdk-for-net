@@ -32,9 +32,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        internal static int GetRetryInterval(HttpMessage message)
+        internal static int GetRetryInterval(Response httpResponse)
         {
-            if (message.Response.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
+            if (httpResponse != null && httpResponse.Headers.TryGetValue(RetryAfterHeaderName, out var retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {
@@ -58,11 +58,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return st.ToArray();
         }
 
-        internal static byte[] GetPartialContentForRetry(TrackResponse response, HttpMessage message)
+        internal static byte[] GetPartialContentForRetry(TrackResponse trackResponse, RequestContent content)
         {
             string partialContent = null;
-            var fullContent = Encoding.UTF8.GetString(GetRequestContent(message.Request.Content))?.Split('\n');
-            foreach (var error in response.Errors)
+            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content))?.Split('\n');
+            foreach (var error in trackResponse.Errors)
             {
                 if (error != null)
                 {
