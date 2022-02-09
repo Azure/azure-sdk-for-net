@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentLine
     {
         /// <summary>
-        /// Initializes a new instance of DocumentLine. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentLine. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal DocumentLine(string content, BoundingBox boundingBox, IReadOnlyList<DocumentSpan> spans)
         {

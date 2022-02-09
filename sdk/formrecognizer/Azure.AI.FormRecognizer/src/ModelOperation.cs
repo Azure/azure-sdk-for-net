@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private readonly ResponseError _mockError;
 
         /// <summary>
-        /// Initializes a new instance of ModelOperation. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of ModelOperation. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
         {

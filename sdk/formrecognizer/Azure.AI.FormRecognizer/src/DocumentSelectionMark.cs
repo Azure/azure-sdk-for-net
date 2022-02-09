@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentSelectionMark
     {
         /// <summary>
-        /// Initializes a new instance of DocumentSelectionMark. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentSelectionMark. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal DocumentSelectionMark(SelectionMarkState state, BoundingBox boundingBox, DocumentSpan span, float confidence)
         {

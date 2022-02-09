@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentPage
     {
         /// <summary>
-        /// Initializes a new instance of DocumentPage. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentPage. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal DocumentPage(int pageNumber, float angle, float width, float height, LengthUnit unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines)
         {

@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class CopyAuthorization
     {
         /// <summary>
-        /// Initializes a new instance of CopyAuthorization. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of CopyAuthorization. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
         internal CopyAuthorization(string targetResourceRegion, string targetModelId, string targetModelLocation, DateTimeOffset expirationDateTime)
         {
