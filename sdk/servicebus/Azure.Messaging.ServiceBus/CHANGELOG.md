@@ -7,6 +7,10 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Max Hamulyak _([GitHub](https://github.com/kaylumah))_
 
+### Bugs Fixed
+
+- Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+
 ### Features Added
 
 - The `State` property has been added to `ServiceBusReceivedMessage` which indicates whether a message is `Active`, `Scheduled`, or `Deferred`.
