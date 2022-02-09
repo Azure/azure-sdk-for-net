@@ -118,10 +118,11 @@ namespace Azure.Core.TestFramework
                     case EntryRecordModel.Record:
                         break;
                     case EntryRecordModel.RecordWithoutRequestBody:
-                        message.Request.Content = null;
+                        message.Request.Headers.Add("x-recording-skip", "request-body");
                         break;
                     case EntryRecordModel.DoNotRecord:
-                        return;
+                        message.Request.Headers.Add("x-recording-skip", "request-response");
+                        break;
                 }
             }
             else if (_recording.Mode == RecordedTestMode.Playback)
