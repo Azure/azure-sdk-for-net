@@ -21,7 +21,7 @@ namespace Azure.AI.Personalizer
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly bool _isLocalInference;
-        private readonly RankProcessor _rankProcessor;
+        private readonly RlNetProcessor _rlNetProcessor;
         internal RankRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of RankClient for mocking. </summary>
@@ -65,7 +65,7 @@ namespace Azure.AI.Personalizer
             {
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rankProcessor = new RankProcessor(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModel);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.AI.Personalizer
             {
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rankProcessor = new RankProcessor(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModel);
             }
 
         }
@@ -131,7 +131,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    return _rankProcessor.Rank(rankRequest);
+                    return _rlNetProcessor.Rank(rankRequest);
                 }
                 else
                 {

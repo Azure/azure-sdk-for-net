@@ -11,14 +11,14 @@ using Rl.Net;
 
 namespace Azure.AI.Personalizer
 {
-    /// <summary> The Rank Processor. </summary>
-    internal class RankProcessor
+    /// <summary> The Rl.Net Processor. </summary>
+    internal class RlNetProcessor
     {
         private readonly LiveModel _liveModel;
         internal PolicyRestClient RestClient { get; }
 
-        /// <summary> Initializes a new instance of RankProcessor. </summary>
-        public RankProcessor(LiveModel liveModel)
+        /// <summary> Initializes a new instance of RlNetProcessor. </summary>
+        public RlNetProcessor(LiveModel liveModel)
         {
             this._liveModel = liveModel;
         }
@@ -99,6 +99,44 @@ namespace Azure.AI.Personalizer
             var value = RlObjectConverter.GenerateMultiSlotRankResponse(options.Actions, multiSlotResponse, eventId);
 
             return Response.FromValue(value, default);
+        }
+
+        /// <summary> Submit a Personalizer reward request. </summary>
+        /// <param name="eventId"> The event id this reward applies to. </param>
+        /// <param name="reward"> The reward should be a floating point number, typically between 0 and 1. </param>
+        public Response Reward(string eventId, float reward)
+        {
+            // Call QueueOutcomeEvent of local RL.Net
+            _liveModel.QueueOutcomeEvent(eventId, reward);
+
+            // Use 204 as there is no return value
+            return new EventResponse(204);
+        }
+
+        /// <summary> Submit a Personalizer reward multi-slot request. </summary>
+        /// <param name="eventId"> The event id this reward applies to. </param>
+        /// <param name="slotRewards"> List of slot id and reward values. </param>
+        public Response RewardMultiSlot(string eventId, IList<PersonalizerSlotReward> slotRewards)
+        {
+            foreach (PersonalizerSlotReward slotReward in slotRewards)
+            {
+                // Call QueueOutcomeEvent of local RL.Net
+                _liveModel.QueueOutcomeEvent(eventId, slotReward.SlotId, slotReward.Value);
+            }
+
+            // Use 204 as there is no return value
+            return new EventResponse(204);
+        }
+
+        /// <summary> Activate Event. </summary>
+        /// <param name="eventId"> The event ID to be activated. </param>
+        public Response Activate(string eventId)
+        {
+            // Call ReportActionTaken of local RL.Net
+            _liveModel.QueueActionTakenEvent(eventId);
+
+            // Use 204 as there is no return value
+            return new EventResponse(204);
         }
     }
 }

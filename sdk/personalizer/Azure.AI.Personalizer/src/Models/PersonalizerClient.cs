@@ -23,7 +23,7 @@ namespace Azure.AI.Personalizer
         private string apiKey;
         private float subsampleRate = 1.0f;
 
-        private readonly RankProcessor _rankProcessor;
+        private readonly RlNetProcessor _rlNetProcessor;
 
         internal RankRestClient RankRestClient { get; set; }
         internal EventsRestClient EventsRestClient { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.AI.Personalizer
                 Configuration configuration = GetConfigurationForLiveModel("Token", "token");
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rankProcessor = new RankProcessor(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModel);
             }
         }
 
@@ -133,12 +133,13 @@ namespace Azure.AI.Personalizer
             _isLocalInference = isLocalInference;
             if (isLocalInference)
             {
+                //Intialize liveModel and RlNetprocessor
                 validateAndAssignSampleRate(subsampleRate);
                 //Intialize liveModel and Rankprocessor
                 Configuration configuration = GetConfigurationForLiveModel("apiKey", apiKey);
                 LiveModel liveModel = new LiveModel(configuration);
                 liveModel.Init();
-                _rankProcessor = new RankProcessor(liveModel);
+                _rlNetProcessor = new RlNetProcessor(liveModel);
             }
         }
 
@@ -173,7 +174,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    return _rankProcessor.Rank(options);
+                    return _rlNetProcessor.Rank(options);
                 }
                 else
                 {
@@ -223,7 +224,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    return _rankProcessor.Rank(options);
+                    return _rlNetProcessor.Rank(options);
                 }
                 else
                 {
@@ -273,7 +274,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    return _rankProcessor.Rank(options);
+                    return _rlNetProcessor.Rank(options);
                 }
                 else
                 {
@@ -330,7 +331,7 @@ namespace Azure.AI.Personalizer
             {
                 if (_isLocalInference)
                 {
-                    return _rankProcessor.Rank(options);
+                    return _rlNetProcessor.Rank(options);
                 }
                 else
                 {
@@ -387,7 +388,14 @@ namespace Azure.AI.Personalizer
             try
             {
                 PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
-                return await EventsRestClient.RewardAsync(eventId, rewardOptions, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Reward(eventId, reward);
+                }
+                else
+                {
+                    return await EventsRestClient.RewardAsync(eventId, rewardOptions, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -406,8 +414,15 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
-                return EventsRestClient.Reward(eventId, rewardOptions, cancellationToken);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Reward(eventId, reward);
+                }
+                else
+                {
+                    PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
+                    return EventsRestClient.Reward(eventId, rewardOptions, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -426,7 +441,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await MultiSlotEventsRestClient.RewardAsync(eventId, options, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.RewardMultiSlot(eventId, options.Reward);
+                }
+                else
+                {
+                    return await MultiSlotEventsRestClient.RewardAsync(eventId, options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -456,7 +478,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return MultiSlotEventsRestClient.Reward(eventId, options, cancellationToken);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.RewardMultiSlot(eventId, options.Reward);
+                }
+                else
+                {
+                    return MultiSlotEventsRestClient.Reward(eventId, options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -485,7 +514,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await EventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Activate(eventId);
+                }
+                else
+                {
+                    return await EventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -503,7 +539,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return EventsRestClient.Activate(eventId, cancellationToken);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Activate(eventId);
+                }
+                else
+                {
+                    return EventsRestClient.Activate(eventId, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -521,7 +564,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return await MultiSlotEventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Activate(eventId);
+                }
+                else
+                {
+                    return await MultiSlotEventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -539,7 +589,14 @@ namespace Azure.AI.Personalizer
             scope.Start();
             try
             {
-                return MultiSlotEventsRestClient.Activate(eventId, cancellationToken);
+                if (_isLocalInference)
+                {
+                    return _rlNetProcessor.Activate(eventId);
+                }
+                else
+                {
+                    return MultiSlotEventsRestClient.Activate(eventId, cancellationToken);
+                }
             }
             catch (Exception e)
             {
