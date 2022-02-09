@@ -210,12 +210,10 @@ namespace Azure.Core.TestFramework
 #if NET6_0_OR_GREATER
                             var liveSeed = RandomNumberGenerator.GetInt32(int.MaxValue);
 #else
-#pragma warning disable SYSLIB0023
                             var csp = new RNGCryptoServiceProvider();
                             var bytes = new byte[4];
                             csp.GetBytes(bytes);
                             var liveSeed = BitConverter.ToInt32(bytes, 0);
-#pragma warning restore SYSLIB0023
 #endif
                             _random = new TestRandom(Mode, liveSeed);
                             break;
