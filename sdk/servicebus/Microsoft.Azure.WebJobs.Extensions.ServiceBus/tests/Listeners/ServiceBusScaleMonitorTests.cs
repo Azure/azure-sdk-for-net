@@ -160,12 +160,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
             scheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
 
-            var allMessages = new Queue<List<ServiceBusReceivedMessage>>();
-            allMessages.Enqueue(new List<ServiceBusReceivedMessage> { scheduledMessage });
-            allMessages.Enqueue(new List<ServiceBusReceivedMessage>());
+            var anotherScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            anotherScheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(scheduledMessage);
 
             _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => allMessages.Dequeue());
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { anotherScheduledMessage });
 
             ServiceBusListener listener = CreateListener();
 
@@ -183,11 +185,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 0);
             deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
 
-            var allMessages = new Queue<List<ServiceBusReceivedMessage>>();
-            allMessages.Enqueue(new List<ServiceBusReceivedMessage> { deferredMessage });
+            var anotherDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            anotherDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(deferredMessage);
 
             _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => allMessages.Dequeue());
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { anotherDeferredMessage });
 
             ServiceBusListener listener = CreateListener();
 
@@ -200,26 +205,115 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
+        public async Task GetMetrics_DoesNotPeekBatchesWhenFirstAttemptReturnsActive()
+        {
+            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
+            activeMessage.SetMessageState();
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(activeMessage);
+
+            _mockMessageReceiver.Verify(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Never);
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_DoesNotPeekBatchesWhenFirstAttemptReturnsNull()
+        {
+            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
+            activeMessage.SetMessageState();
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => null);
+
+            _mockMessageReceiver.Verify(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Never);
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_IgnoresEmptyBatch()
+        {
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(deferredMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<ServiceBusReceivedMessage>());
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_UseSequenceNumberToRetrieveBatches()
+        {
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 12);
+            deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+
+            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
+            activeMessage.SetMessageState();
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(deferredMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), 12, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { activeMessage });
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
         public async Task GetMetrics_IgnoresDeferredOrScheduledMessagesUntilItFindsAndActive()
         {
-            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 0);
+            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
             firstDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
 
-            var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 1);
+            var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
             secondScheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
 
             var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
             activeMessage.SetMessageState();
 
-            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), 0, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => new List<ServiceBusReceivedMessage> { firstDeferredMessage, secondScheduledMessage });
-            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), 1, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => new List<ServiceBusReceivedMessage> { activeMessage });
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(firstDeferredMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { secondScheduledMessage, activeMessage });
 
             ServiceBusListener listener = CreateListener();
 
             var serviceBusScaleMonitor = (ServiceBusScaleMonitor)listener.GetMonitor();
-            _ = await serviceBusScaleMonitor.GetMetricsAsync();
             var metrics = await serviceBusScaleMonitor.GetMetricsAsync();
 
             Assert.AreEqual(0, metrics.PartitionCount);
@@ -229,13 +323,41 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
+        public async Task GetMetrics_GiveUpAfterFirstAndBatchPeekDoesntReturnActive()
+        {
+            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+            firstDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(firstDeferredMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((int batchSize, long _, CancellationToken __) => Enumerable.Range(1, batchSize).Select(i =>
+                {
+                    var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
+                    scheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
+                    return scheduledMessage;
+                }).ToList());
+
+            ServiceBusListener listener = CreateListener();
+
+            var serviceBusScaleMonitor = (ServiceBusScaleMonitor)listener.GetMonitor();
+            var metrics = await serviceBusScaleMonitor.GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
         public async Task GetMetrics_CalculatesMetrics()
         {
             var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)));
             message.SetMessageState();
 
-            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<ServiceBusReceivedMessage> { message });
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(message);
 
             ServiceBusListener listener = CreateListener();
 
