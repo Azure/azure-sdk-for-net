@@ -1,73 +1,5 @@
 namespace Azure.AI.Personalizer
 {
-    public partial class DecisionContext
-    {
-        public DecisionContext() { }
-        public DecisionContext(Azure.AI.Personalizer.PersonalizerRankMultiSlotOptions rankRequest, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IList<object>> slotIdToFeatures) { }
-        public DecisionContext(System.Collections.Generic.IEnumerable<object> contextFeatures, System.Collections.Generic.List<Azure.AI.Personalizer.PersonalizerRankableAction> rankableActions) { }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("FromUrl")]
-        public System.Collections.Generic.List<string> ContextFeatures { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_multi")]
-        public Azure.AI.Personalizer.DecisionContextDocument[] Documents { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_slots")]
-        public Azure.AI.Personalizer.DecisionContextDocument[] Slots { get { throw null; } set { } }
-    }
-    public partial class DecisionContextDocument
-    {
-        public DecisionContextDocument(string id, System.Collections.Generic.List<string> json, string slotId, System.Collections.Generic.List<string> slotJson) { }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("f")]
-        public System.Collections.Generic.Dictionary<string, float[]> FloatFeatures { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_tag")]
-        public string ID { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("j")]
-        public System.Collections.Generic.List<string> JSON { get { throw null; } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("i")]
-        public Azure.AI.Personalizer.DecisionContextDocumentId Marginal { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("_id")]
-        public string SlotId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sj")]
-        public System.Collections.Generic.List<string> SlotJson { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("s")]
-        public Azure.AI.Personalizer.DecisionContextDocumentSource Source { get { throw null; } set { } }
-    }
-    public partial class DecisionContextDocumentId
-    {
-        public DecisionContextDocumentId() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("constant")]
-        public int Constant { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
-        public string ID { get { throw null; } set { } }
-    }
-    public partial class DecisionContextDocumentSource
-    {
-        public DecisionContextDocumentSource() { }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        public string Parameter { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonIgnoreAttribute(Condition=System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-        public string Set { get { throw null; } set { } }
-    }
-    public partial class EventResponse : Azure.Response
-    {
-        public EventResponse(int status, string reasonPhrase = null) { }
-        public override string ClientRequestId { get { throw null; } set { } }
-        public override System.IO.Stream ContentStream { get { throw null; } set { } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
-        public override void Dispose() { }
-        protected override System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders() { throw null; }
-        protected override bool TryGetHeader(string name, out string value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string> values) { throw null; }
-    }
     public partial class PersonalizerAdministrationClient
     {
         protected PersonalizerAdministrationClient() { }
@@ -87,16 +19,14 @@ namespace Azure.AI.Personalizer
         public virtual Azure.AsyncPageable<Azure.AI.Personalizer.PersonalizerEvaluation> GetPersonalizerEvaluationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.PersonalizerLogProperties> GetPersonalizerLogProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.PersonalizerLogProperties>> GetPersonalizerLogPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.IO.Stream> GetPersonalizerModel(bool isSigned = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetPersonalizerModelAsync(bool isSigned = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.IO.Stream> GetPersonalizerModel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetPersonalizerModelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.PersonalizerModelProperties> GetPersonalizerModelProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.PersonalizerModelProperties>> GetPersonalizerModelPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.PersonalizerPolicy> GetPersonalizerPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.PersonalizerPolicy>> GetPersonalizerPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.PersonalizerServiceProperties> GetPersonalizerProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.PersonalizerServiceProperties>> GetPersonalizerPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ImportPersonalizerModel(System.IO.Stream modelStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ImportPersonalizerModelAsync(System.IO.Stream modelStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetPersonalizerModel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetPersonalizerModelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.PersonalizerPolicy> ResetPersonalizerPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -111,10 +41,8 @@ namespace Azure.AI.Personalizer
         protected PersonalizerClient() { }
         public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, bool isLocalInference, float subsampleRate = 1f, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, bool isLocalInference, float subsampleRate = 1f, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ActivateMultiSlot(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -329,13 +257,12 @@ namespace Azure.AI.Personalizer
         public PersonalizerRankableAction(string id, System.Collections.Generic.IEnumerable<object> features) { }
         public System.Collections.Generic.IList<object> Features { get { throw null; } }
         public string Id { get { throw null; } }
-        public int Index { get { throw null; } set { } }
     }
     public partial class PersonalizerRankedAction
     {
         internal PersonalizerRankedAction() { }
-        public string Id { get { throw null; } set { } }
-        public float? Probability { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public float? Probability { get { throw null; } }
     }
     public partial class PersonalizerRankMultiSlotOptions
     {
@@ -362,9 +289,9 @@ namespace Azure.AI.Personalizer
     public partial class PersonalizerRankResult
     {
         internal PersonalizerRankResult() { }
-        public string EventId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.PersonalizerRankedAction> Ranking { get { throw null; } set { } }
-        public string RewardActionId { get { throw null; } set { } }
+        public string EventId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.PersonalizerRankedAction> Ranking { get { throw null; } }
+        public string RewardActionId { get { throw null; } }
     }
     public partial class PersonalizerRewardMultiSlotOptions
     {
@@ -400,7 +327,7 @@ namespace Azure.AI.Personalizer
         public PersonalizerSlotOptions(string id, string baselineAction, System.Collections.Generic.IList<object> features = null, System.Collections.Generic.IList<string> excludedActions = null) { }
         public string BaselineAction { get { throw null; } }
         public System.Collections.Generic.IList<string> ExcludedActions { get { throw null; } }
-        public System.Collections.Generic.IList<object> Features { get { throw null; } set { } }
+        public System.Collections.Generic.IList<object> Features { get { throw null; } }
         public string Id { get { throw null; } }
     }
     public partial class PersonalizerSlotResult
