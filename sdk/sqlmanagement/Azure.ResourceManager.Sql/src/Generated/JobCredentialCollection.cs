@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobCredentialCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<JobCredential>> CreateOrUpdateAsync(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _jobCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new JobCredentialCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<JobCredential>(Response.FromValue(new JobCredential(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobCredentialCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<JobCredential> CreateOrUpdate(bool waitForCompletion, string credentialName, JobCredentialData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _jobCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, parameters, cancellationToken);
-                var operation = new JobCredentialCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<JobCredential>(Response.FromValue(new JobCredential(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

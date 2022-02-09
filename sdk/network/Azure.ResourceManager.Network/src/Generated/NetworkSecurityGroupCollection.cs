@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkSecurityGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NetworkSecurityGroup>> CreateOrUpdateAsync(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkSecurityGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(Client, _networkSecurityGroupClientDiagnostics, Pipeline, _networkSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkArmOperation<NetworkSecurityGroup>(new NetworkSecurityGroupOperationSource(Client), _networkSecurityGroupClientDiagnostics, Pipeline, _networkSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkSecurityGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkSecurityGroup> CreateOrUpdate(bool waitForCompletion, string networkSecurityGroupName, NetworkSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkSecurityGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters, cancellationToken);
-                var operation = new NetworkSecurityGroupCreateOrUpdateOperation(Client, _networkSecurityGroupClientDiagnostics, Pipeline, _networkSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response);
+                var operation = new NetworkArmOperation<NetworkSecurityGroup>(new NetworkSecurityGroupOperationSource(Client), _networkSecurityGroupClientDiagnostics, Pipeline, _networkSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

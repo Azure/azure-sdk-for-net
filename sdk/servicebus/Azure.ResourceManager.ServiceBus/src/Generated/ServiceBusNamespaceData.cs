@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusNamespace data model. </summary>
-    public partial class ServiceBusNamespaceData : TrackedResource
+    public partial class ServiceBusNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
         /// <param name="location"> The location. </param>

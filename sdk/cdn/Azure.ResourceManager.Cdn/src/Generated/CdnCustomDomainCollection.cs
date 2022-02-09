@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public async virtual Task<CdnCustomDomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CdnCustomDomain>> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomainProperties == null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnCustomDomainCreateOrUpdateOperation(Client, _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
-        public virtual CdnCustomDomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnCustomDomain> CreateOrUpdate(bool waitForCompletion, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomainProperties == null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties, cancellationToken);
-                var operation = new CdnCustomDomainCreateOrUpdateOperation(Client, _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response);
+                var operation = new CdnArmOperation<CdnCustomDomain>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, customDomainProperties).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedHsmCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ManagedHsm>> CreateOrUpdateAsync(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (parameters == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _managedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedHsmCreateOrUpdateOperation(Client, _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
+                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmOperationSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedHsmCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedHsm> CreateOrUpdate(bool waitForCompletion, string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (parameters == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _managedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, parameters, cancellationToken);
-                var operation = new ManagedHsmCreateOrUpdateOperation(Client, _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response);
+                var operation = new KeyVaultArmOperation<ManagedHsm>(new ManagedHsmOperationSource(Client), _managedHsmClientDiagnostics, Pipeline, _managedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

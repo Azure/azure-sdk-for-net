@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ProfileDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Delete");
             scope.Start();
             try
             {
                 var response = await _profileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileDeleteOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ProfileDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _profileClientDiagnostics.CreateScope("Profile.Delete");
             scope.Start();
             try
             {
                 var response = _profileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ProfileDeleteOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public async virtual Task<ProfileUpdateOperation> UpdateAsync(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Profile>> UpdateAsync(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (profileUpdateParameters == null)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileUpdateParameters"> Profile properties needed to update an existing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileUpdateParameters"/> is null. </exception>
-        public virtual ProfileUpdateOperation Update(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Profile> Update(bool waitForCompletion, ProfileUpdateOptions profileUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (profileUpdateParameters == null)
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters, cancellationToken);
-                var operation = new ProfileUpdateOperation(Client, _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response);
+                var operation = new CdnArmOperation<Profile>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileUpdateParameters).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

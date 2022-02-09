@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Table. </summary>
-    public partial class TableCreateUpdateOptions : TrackedResource
+    public partial class TableCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of TableCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

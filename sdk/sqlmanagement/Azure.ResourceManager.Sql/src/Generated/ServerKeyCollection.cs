@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServerKey>> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerKeyCreateOrUpdateOperation(Client, _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerKey>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServerKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerKey> CreateOrUpdate(bool waitForCompletion, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new ServerKeyCreateOrUpdateOperation(Client, _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerKey>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

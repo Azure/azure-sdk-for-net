@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the OSVersion data model. </summary>
-    public partial class OSVersionData : Resource
+    public partial class OSVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of OSVersionData. </summary>
         internal OSVersionData()

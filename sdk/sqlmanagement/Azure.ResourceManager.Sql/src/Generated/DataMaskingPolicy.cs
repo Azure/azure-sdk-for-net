@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DataMaskingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DataMaskingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _dataMaskingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMaskingPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<DataMaskingPolicy>(Response.FromValue(new DataMaskingPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DataMaskingPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataMaskingPolicy> CreateOrUpdate(bool waitForCompletion, DataMaskingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _dataMaskingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new DataMaskingPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<DataMaskingPolicy>(Response.FromValue(new DataMaskingPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

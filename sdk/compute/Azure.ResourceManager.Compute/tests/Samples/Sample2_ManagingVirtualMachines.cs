@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
+            ArmOperation<VirtualMachine> lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
             VirtualMachine vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }

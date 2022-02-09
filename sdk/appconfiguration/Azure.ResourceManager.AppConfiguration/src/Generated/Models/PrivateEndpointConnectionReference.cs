@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> A reference to a related private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionReference : Resource
+    public partial class PrivateEndpointConnectionReference : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionReference. </summary>
         internal PrivateEndpointConnectionReference()

@@ -27,7 +27,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with a specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -39,7 +39,7 @@ Now that we have the resource group created, we can manage the cdn origin group 
 // Create a new cdn profile
 string profileName = "myProfile";
 var input1 = new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = SkuName.StandardMicrosoft });
-ProfileCreateOrUpdateOperation lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
+ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(true, profileName, input1);
 Profile profile = lro1.Value;
 // Get the cdn endpoint collection from the specific profile and create an endpoint
 string endpointName = "myEndpoint";
@@ -56,7 +56,7 @@ DeepCreatedOrigin deepCreatedOrigin = new DeepCreatedOrigin("myOrigin")
     Weight = 100
 };
 input2.Origins.Add(deepCreatedOrigin);
-CdnEndpointCreateOrUpdateOperation lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
+ArmOperation<CdnEndpoint> lro2 = await profile.GetCdnEndpoints().CreateOrUpdateAsync(true, endpointName, input2);
 CdnEndpoint endpoint = lro2.Value;
 // Get the cdn origin group collection from the specific endpoint and create an origin group
 string originGroupName = "myOriginGroup";
@@ -65,7 +65,7 @@ input3.Origins.Add(new WritableSubResource
 {
     Id = new ResourceIdentifier($"{endpoint.Id}/origins/myOrigin")
 });
-CdnOriginGroupCreateOrUpdateOperation lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
+ArmOperation<CdnOriginGroup> lro3 = await endpoint.GetCdnOriginGroups().CreateOrUpdateAsync(true, originGroupName, input3);
 CdnOriginGroup originGroup = lro3.Value;
 ```
 
@@ -104,7 +104,7 @@ OriginGroupUpdateOptions input = new OriginGroupUpdateOptions()
         ProbeIntervalInSeconds = 60
     }
 };
-CdnOriginGroupUpdateOperation lro = await originGroup.UpdateAsync(true, input);
+ArmOperation<CdnOriginGroup> lro = await originGroup.UpdateAsync(true, input);
 originGroup = lro.Value;
 ```
 

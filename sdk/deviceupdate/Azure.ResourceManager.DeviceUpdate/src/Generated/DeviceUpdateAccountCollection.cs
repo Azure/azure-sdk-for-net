@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
-        public async virtual Task<DeviceUpdateAccountCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DeviceUpdateAccount>> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             if (account == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _deviceUpdateAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, account, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateAccountCreateOrUpdateOperation(Client, _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
-        public virtual DeviceUpdateAccountCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceUpdateAccount> CreateOrUpdate(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             if (account == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _deviceUpdateAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, account, cancellationToken);
-                var operation = new DeviceUpdateAccountCreateOrUpdateOperation(Client, _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

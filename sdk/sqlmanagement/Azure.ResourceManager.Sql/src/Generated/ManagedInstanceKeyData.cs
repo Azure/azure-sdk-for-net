@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstanceKey data model. </summary>
-    public partial class ManagedInstanceKeyData : Resource
+    public partial class ManagedInstanceKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
         public ManagedInstanceKeyData()

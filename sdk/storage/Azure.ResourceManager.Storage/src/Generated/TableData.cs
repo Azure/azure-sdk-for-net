@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the Table data model. </summary>
-    public partial class TableData : Resource
+    public partial class TableData : ResourceData
     {
         /// <summary> Initializes a new instance of TableData. </summary>
         public TableData()

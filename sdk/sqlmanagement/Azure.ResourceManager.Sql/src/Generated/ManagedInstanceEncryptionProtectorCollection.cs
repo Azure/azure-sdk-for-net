@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceEncryptionProtectorCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, ManagedInstanceEncryptionProtectorData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ManagedInstanceEncryptionProtector>> CreateOrUpdateAsync(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, ManagedInstanceEncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceEncryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(Client, _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedInstanceEncryptionProtector>(new ManagedInstanceEncryptionProtectorOperationSource(Client), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceEncryptionProtectorCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, ManagedInstanceEncryptionProtectorData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedInstanceEncryptionProtector> CreateOrUpdate(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, ManagedInstanceEncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceEncryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
-                var operation = new ManagedInstanceEncryptionProtectorCreateOrUpdateOperation(Client, _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedInstanceEncryptionProtector>(new ManagedInstanceEncryptionProtectorOperationSource(Client), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

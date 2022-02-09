@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ScriptLog data model. </summary>
-    public partial class ScriptLogData : Resource
+    public partial class ScriptLogData : ResourceData
     {
         /// <summary> Initializes a new instance of ScriptLogData. </summary>
         public ScriptLogData()

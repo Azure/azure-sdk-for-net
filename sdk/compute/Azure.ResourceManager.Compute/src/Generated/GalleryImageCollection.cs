@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="galleryImage"/> is null. </exception>
-        public async virtual Task<GalleryImageCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GalleryImage>> CreateOrUpdateAsync(bool waitForCompletion, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             if (galleryImage == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryImageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryImageCreateOrUpdateOperation(Client, _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage).Request, response);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="galleryImage"/> is null. </exception>
-        public virtual GalleryImageCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GalleryImage> CreateOrUpdate(bool waitForCompletion, string galleryImageName, GalleryImageData galleryImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             if (galleryImage == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryImageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage, cancellationToken);
-                var operation = new GalleryImageCreateOrUpdateOperation(Client, _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage).Request, response);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, galleryImage).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

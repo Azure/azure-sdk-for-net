@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotVirtualNetworkConnection>> CreateOrUpdateAsync(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             if (connectionEnvelope == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnection>(Response.FromValue(new SiteSlotVirtualNetworkConnection(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotVirtualNetworkConnection> CreateOrUpdate(bool waitForCompletion, string vnetName, VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
             if (connectionEnvelope == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, connectionEnvelope, cancellationToken);
-                var operation = new SiteSlotVirtualNetworkConnectionCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnection>(Response.FromValue(new SiteSlotVirtualNetworkConnection(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

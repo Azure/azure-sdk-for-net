@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NetworkWatcher>> CreateOrUpdateAsync(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<NetworkWatcher>(Response.FromValue(new NetworkWatcher(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkWatcher> CreateOrUpdate(bool waitForCompletion, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken);
-                var operation = new NetworkWatcherCreateOrUpdateOperation(Client, response);
+                var operation = new NetworkArmOperation<NetworkWatcher>(Response.FromValue(new NetworkWatcher(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkloadClassifierCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WorkloadClassifier>> CreateOrUpdateAsync(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _workloadClassifierRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadClassifierCreateOrUpdateOperation(Client, _workloadClassifierClientDiagnostics, Pipeline, _workloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
+                var operation = new SqlArmOperation<WorkloadClassifier>(new WorkloadClassifierOperationSource(Client), _workloadClassifierClientDiagnostics, Pipeline, _workloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkloadClassifierCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkloadClassifier> CreateOrUpdate(bool waitForCompletion, string workloadClassifierName, WorkloadClassifierData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _workloadClassifierRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters, cancellationToken);
-                var operation = new WorkloadClassifierCreateOrUpdateOperation(Client, _workloadClassifierClientDiagnostics, Pipeline, _workloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response);
+                var operation = new SqlArmOperation<WorkloadClassifier>(new WorkloadClassifierOperationSource(Client), _workloadClassifierClientDiagnostics, Pipeline, _workloadClassifierRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

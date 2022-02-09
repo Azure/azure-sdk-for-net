@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DisasterRecoveryCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DisasterRecovery>> CreateOrUpdateAsync(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DisasterRecoveryCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DisasterRecovery> CreateOrUpdate(bool waitForCompletion, string @alias, DisasterRecoveryData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alias, nameof(alias));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, parameters, cancellationToken);
-                var operation = new DisasterRecoveryCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<DisasterRecovery>(Response.FromValue(new DisasterRecovery(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

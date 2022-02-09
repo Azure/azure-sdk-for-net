@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DatabaseBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseBlobAuditingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseBlobAuditingPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual DatabaseBlobAuditingPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseBlobAuditingPolicy> CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
-                var operation = new DatabaseBlobAuditingPolicyCreateOrUpdateOperation(Client, response);
+                var operation = new SqlArmOperation<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

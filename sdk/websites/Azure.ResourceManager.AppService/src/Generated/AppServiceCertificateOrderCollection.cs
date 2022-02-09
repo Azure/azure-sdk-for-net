@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public async virtual Task<AppServiceCertificateOrderCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AppServiceCertificateOrder>> CreateOrUpdateAsync(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
             if (certificateDistinguishedName == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateOrderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(Client, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceCertificateOrder>(new AppServiceCertificateOrderOperationSource(Client), _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> or <paramref name="certificateDistinguishedName"/> is null. </exception>
-        public virtual AppServiceCertificateOrderCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceCertificateOrder> CreateOrUpdate(bool waitForCompletion, string certificateOrderName, AppServiceCertificateOrderData certificateDistinguishedName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
             if (certificateDistinguishedName == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceCertificateOrderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName, cancellationToken);
-                var operation = new AppServiceCertificateOrderCreateOrUpdateOperation(Client, _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceCertificateOrder>(new AppServiceCertificateOrderOperationSource(Client), _appServiceCertificateOrderClientDiagnostics, Pipeline, _appServiceCertificateOrderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, certificateDistinguishedName).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

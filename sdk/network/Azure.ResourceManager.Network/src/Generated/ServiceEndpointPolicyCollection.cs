@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServiceEndpointPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServiceEndpointPolicy>> CreateOrUpdateAsync(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _serviceEndpointPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Client, _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var operation = new NetworkArmOperation<ServiceEndpointPolicy>(new ServiceEndpointPolicyOperationSource(Client), _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServiceEndpointPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceEndpointPolicy> CreateOrUpdate(bool waitForCompletion, string serviceEndpointPolicyName, ServiceEndpointPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _serviceEndpointPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters, cancellationToken);
-                var operation = new ServiceEndpointPolicyCreateOrUpdateOperation(Client, _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response);
+                var operation = new NetworkArmOperation<ServiceEndpointPolicy>(new ServiceEndpointPolicyOperationSource(Client), _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

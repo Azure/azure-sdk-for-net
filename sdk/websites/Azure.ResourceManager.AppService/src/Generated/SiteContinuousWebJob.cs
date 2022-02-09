@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SiteContinuousWebJobDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
             scope.Start();
             try
             {
                 var response = await _siteContinuousWebJobWebAppsRestClient.DeleteContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteContinuousWebJobDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,14 +159,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SiteContinuousWebJobDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
             scope.Start();
             try
             {
                 var response = _siteContinuousWebJobWebAppsRestClient.DeleteContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SiteContinuousWebJobDeleteOperation(response);
+                var operation = new AppServiceArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

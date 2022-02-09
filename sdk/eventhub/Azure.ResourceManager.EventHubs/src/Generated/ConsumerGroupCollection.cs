@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ConsumerGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConsumerGroup>> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
             if (parameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _consumerGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumerGroupCreateOrUpdateOperation(Client, response);
+                var operation = new EventHubsArmOperation<ConsumerGroup>(Response.FromValue(new ConsumerGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ConsumerGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConsumerGroup> CreateOrUpdate(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
             if (parameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _consumerGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken);
-                var operation = new ConsumerGroupCreateOrUpdateOperation(Client, response);
+                var operation = new EventHubsArmOperation<ConsumerGroup>(Response.FromValue(new ConsumerGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineRunCommand data model. </summary>
-    public partial class VirtualMachineRunCommandData : TrackedResource
+    public partial class VirtualMachineRunCommandData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>
         /// <param name="location"> The location. </param>

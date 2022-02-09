@@ -189,14 +189,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AppServiceEnvironmentDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = await _appServiceEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceEnvironmentDeleteOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDelete"> Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App Service Environment contains resources. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AppServiceEnvironmentDeleteOperation Delete(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironment.Delete");
             scope.Start();
             try
             {
                 var response = _appServiceEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
-                var operation = new AppServiceEnvironmentDeleteOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response);
+                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public async virtual Task<TemplateSpecVersionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<TemplateSpecVersion>> CreateOrUpdateAsync(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
             if (templateSpecVersionModel == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, templateSpecVersionModel, cancellationToken).ConfigureAwait(false);
-                var operation = new TemplateSpecVersionCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<TemplateSpecVersion>(Response.FromValue(new TemplateSpecVersion(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="templateSpecVersionModel"/> is null. </exception>
-        public virtual TemplateSpecVersionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TemplateSpecVersion> CreateOrUpdate(bool waitForCompletion, string templateSpecVersion, TemplateSpecVersionData templateSpecVersionModel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
             if (templateSpecVersionModel == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, templateSpecVersionModel, cancellationToken);
-                var operation = new TemplateSpecVersionCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<TemplateSpecVersion>(Response.FromValue(new TemplateSpecVersion(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

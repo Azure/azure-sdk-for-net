@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<EventHubClusterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<EventHubCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             if (parameters == null)
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubClusterCreateOrUpdateOperation(Client, _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var operation = new EventHubsArmOperation<EventHubCluster>(new EventHubClusterOperationSource(Client), _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual EventHubClusterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters, cancellationToken);
-                var operation = new EventHubClusterCreateOrUpdateOperation(Client, _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var operation = new EventHubsArmOperation<EventHubCluster>(new EventHubClusterOperationSource(Client), _eventHubClusterClientDiagnostics, Pipeline, _eventHubClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
