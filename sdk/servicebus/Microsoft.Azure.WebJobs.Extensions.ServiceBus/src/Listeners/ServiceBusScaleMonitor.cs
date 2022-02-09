@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
 
                     // There were messages but no active ones so let's log this.
-                    if (peekedMessages .Count > 0 && activeMessage == null)
+                    if (peekedMessages.Count > 0 && activeMessage == null)
                     {
                         _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but no active ones.");
                     }
