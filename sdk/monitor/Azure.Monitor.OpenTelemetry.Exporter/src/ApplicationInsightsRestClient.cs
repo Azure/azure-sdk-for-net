@@ -27,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new ArgumentNullException(nameof(body));
             }
 
+            bool unknownException = false;
             var message = CreateTrackRequest(body);
 
             try
@@ -36,15 +37,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                if (ex.InnerException?.Source == "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http")
                 {
-                    return message;
+                    unknownException = true;
                 }
-
-                return null;
             }
 
-            return message;
+            return unknownException ? null : message;
         }
 
         /// <summary>
@@ -56,6 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, CancellationToken cancellationToken = default)
         {
             var message = CreateTrackRequest(body);
+            bool unknownException = false;
 
             try
             {
@@ -64,15 +64,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
-                if (ex.InnerException?.Source == "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http")
                 {
-                    return message;
+                    unknownException = true;
                 }
-
-                return null;
             }
 
-            return message;
+            return unknownException ? null : message;
         }
 
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)

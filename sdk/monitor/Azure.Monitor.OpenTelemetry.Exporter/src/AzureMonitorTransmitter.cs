@@ -66,12 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (message != null)
                 {
-                    if (storage == null)
+                    if (storage == null && message.HasResponse && message.Response.Status == ResponseStatusCodes.Success)
                     {
-                        if (message.HasResponse && message.Response.Status == ResponseStatusCodes.Success)
-                        {
-                            result = 1;
-                        }
+                        result = 1;
                     }
                     else
                     {
