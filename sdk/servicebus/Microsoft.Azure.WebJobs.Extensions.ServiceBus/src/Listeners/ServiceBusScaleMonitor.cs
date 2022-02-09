@@ -63,20 +63,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             try
             {
                 // Do a first attempt to peek one message from the head of the queue
-                var onePeekMessage = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
-                if (onePeekMessage == null)
+                var peekedMessage = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
+                if (peekedMessage == null)
                 {
                     // ignore it. The Get[Queue|Topic]MetricsAsync methods deal with activeMessage being null
                 }
-                else if (MessageWasNotScheduledOrDeferred(onePeekMessage))
+                else if (MessageWasNotScheduledOrDeferred(peekedMessage))
                 {
-                    activeMessage = onePeekMessage;
+                    activeMessage = peekedMessage;
                 }
                 else
                 {
                     // Do another attempt to peek ten message from last peek sequence number
-                    var receivedMessages = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: onePeekMessage.SequenceNumber).ConfigureAwait(false);
-                    foreach (var receivedMessage in receivedMessages)
+                    var peekedMessages  = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: peekedMessage.SequenceNumber).ConfigureAwait(false);
+                    foreach (var receivedMessage in peekedMessages )
                     {
                         if (MessageWasNotScheduledOrDeferred(receivedMessage))
                         {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
 
                     // There were messages but no active ones so let's log this.
-                    if (receivedMessages.Count > 0 && activeMessage == null)
+                    if (peekedMessages .Count > 0 && activeMessage == null)
                     {
                         _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but no active ones.");
                     }
