@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.StackHci.Models
     public partial class ClusterReportedProperties
     {
         internal ClusterReportedProperties() { }
-        public string ClusterId { get { throw null; } }
+        public System.Guid? ClusterId { get { throw null; } }
         public string ClusterName { get { throw null; } }
         public string ClusterVersion { get { throw null; } }
         public Azure.ResourceManager.StackHci.Models.DiagnosticLevel? DiagnosticLevel { get { throw null; } }
