@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnOriginGroup data model. </summary>
-    public partial class CdnOriginGroupData : Resource
+    public partial class CdnOriginGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnOriginGroupData. </summary>
         public CdnOriginGroupData()

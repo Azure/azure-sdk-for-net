@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the RoleInstance data model. </summary>
-    public partial class RoleInstanceData : Resource
+    public partial class RoleInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleInstanceData. </summary>
         internal RoleInstanceData()

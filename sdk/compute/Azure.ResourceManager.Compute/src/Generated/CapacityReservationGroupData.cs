@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the CapacityReservationGroup data model. </summary>
-    public partial class CapacityReservationGroupData : TrackedResource
+    public partial class CapacityReservationGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
         /// <param name="location"> The location. </param>

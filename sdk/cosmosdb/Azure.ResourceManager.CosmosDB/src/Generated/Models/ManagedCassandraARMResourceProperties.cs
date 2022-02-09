@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The core properties of ARM resources. </summary>
-    public partial class ManagedCassandraARMResourceProperties : TrackedResource
+    public partial class ManagedCassandraARMResourceProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedCassandraARMResourceProperties. </summary>
         /// <param name="location"> The location. </param>

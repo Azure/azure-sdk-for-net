@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the RestorableDatabaseAccount data model. </summary>
-    public partial class RestorableDatabaseAccountData : Resource
+    public partial class RestorableDatabaseAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorableDatabaseAccountData. </summary>
         internal RestorableDatabaseAccountData()

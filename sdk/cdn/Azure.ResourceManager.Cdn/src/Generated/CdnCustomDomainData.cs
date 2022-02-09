@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnCustomDomain data model. </summary>
-    public partial class CdnCustomDomainData : Resource
+    public partial class CdnCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnCustomDomainData. </summary>
         public CdnCustomDomainData()

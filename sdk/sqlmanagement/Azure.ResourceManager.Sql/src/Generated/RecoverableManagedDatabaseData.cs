@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecoverableManagedDatabase data model. </summary>
-    public partial class RecoverableManagedDatabaseData : Resource
+    public partial class RecoverableManagedDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
         public RecoverableManagedDatabaseData()

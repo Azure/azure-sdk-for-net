@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Disk data model. </summary>
-    public partial class DiskData : TrackedResource
+    public partial class DiskData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskData. </summary>
         /// <param name="location"> The location. </param>

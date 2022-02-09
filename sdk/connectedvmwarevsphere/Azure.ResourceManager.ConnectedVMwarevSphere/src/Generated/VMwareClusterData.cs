@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VMwareCluster data model. </summary>
-    public partial class VMwareClusterData : TrackedResource
+    public partial class VMwareClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VMwareClusterData. </summary>
         /// <param name="location"> The location. </param>
