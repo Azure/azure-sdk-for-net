@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Deployment> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Deployment>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DeploymentData : Azure.ResourceManager.Models.Resource
+    public partial class DeploymentData : Azure.ResourceManager.Models.ResourceData
     {
         internal DeploymentData() { }
         public string Location { get { throw null; } }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.DeploymentScript> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DeploymentScriptData : Azure.ResourceManager.Models.Resource
+    public partial class DeploymentScriptData : Azure.ResourceManager.Models.ResourceData
     {
         public DeploymentScriptData(string location) { }
         public Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentity Identity { get { throw null; } set { } }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.JitRequest> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequest>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JitRequestData : Azure.ResourceManager.Models.TrackedResource
+    public partial class JitRequestData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public JitRequestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ApplicationResourceId { get { throw null; } set { } }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.ScriptLog> Get(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ScriptLog>> GetAsync(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ScriptLogData : Azure.ResourceManager.Models.Resource
+    public partial class ScriptLogData : Azure.ResourceManager.Models.ResourceData
     {
         public ScriptLogData() { }
         public string Log { get { throw null; } }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpec> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecData : Azure.ResourceManager.Models.Resource
+    public partial class TemplateSpecData : Azure.ResourceManager.Models.ResourceData
     {
         public TemplateSpecData(string location) { }
         public string Description { get { throw null; } set { } }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.Resource
+    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData
     {
         public TemplateSpecVersionData(string location) { }
         public string Description { get { throw null; } set { } }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Parameters { get { throw null; } set { } }
         public string PolicyDefinitionId { get { throw null; } set { } }
     }
-    public partial class ApplicationResource : Azure.ResourceManager.Models.TrackedResource
+    public partial class ApplicationResource : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ApplicationResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType left, Azure.ResourceManager.Resources.Models.DeploymentScriptManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeploymentScriptUpdateParameter : Azure.ResourceManager.Models.Resource
+    public partial class DeploymentScriptUpdateParameter : Azure.ResourceManager.Models.ResourceData
     {
         public DeploymentScriptUpdateParameter() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TemplateSpecUpdateModel : Azure.ResourceManager.Models.Resource
+    public partial class TemplateSpecUpdateModel : Azure.ResourceManager.Models.ResourceData
     {
         public TemplateSpecUpdateModel() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.DateTimeOffset? TimeModified { get { throw null; } }
     }
-    public partial class TemplateSpecVersionUpdateModel : Azure.ResourceManager.Models.Resource
+    public partial class TemplateSpecVersionUpdateModel : Azure.ResourceManager.Models.ResourceData
     {
         public TemplateSpecVersionUpdateModel() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

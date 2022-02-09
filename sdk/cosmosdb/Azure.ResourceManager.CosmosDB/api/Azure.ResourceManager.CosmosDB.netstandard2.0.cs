@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CassandraKeyspace> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CassandraKeyspace>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CassandraKeyspaceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CassandraKeyspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraKeyspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CassandraKeyspacePropertiesOptions Options { get { throw null; } set { } }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CassandraTable> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CassandraTable>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CassandraTableData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CassandraTableData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraTableData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CassandraTablePropertiesOptions Options { get { throw null; } set { } }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosDBLocation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosDBLocation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CosmosDBLocationData : Azure.ResourceManager.Models.Resource
+    public partial class CosmosDBLocationData : Azure.ResourceManager.Models.ResourceData
     {
         public CosmosDBLocationData() { }
         public Azure.ResourceManager.CosmosDB.Models.LocationProperties Properties { get { throw null; } set { } }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.CosmosTable> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.CosmosTable>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CosmosTableData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CosmosTableData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CosmosTableData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CosmosTablePropertiesOptions Options { get { throw null; } set { } }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.DatabaseAccount> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.DatabaseAccount>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatabaseAccountData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DatabaseAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DatabaseAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get { throw null; } set { } }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.DataCenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.DataCenterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataCenterResourceData : Azure.ResourceManager.Models.Resource
+    public partial class DataCenterResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public DataCenterResourceData() { }
         public Azure.ResourceManager.CosmosDB.Models.DataCenterResourceProperties Properties { get { throw null; } set { } }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.GremlinDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.GremlinDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GremlinDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GremlinDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GremlinDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.GremlinDatabasePropertiesOptions Options { get { throw null; } set { } }
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.GremlinGraph> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.GremlinGraph>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GremlinGraphData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GremlinGraphData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GremlinGraphData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.GremlinGraphPropertiesOptions Options { get { throw null; } set { } }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.MongoDBCollection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.MongoDBCollection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MongoDBCollectionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class MongoDBCollectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MongoDBCollectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionPropertiesOptions Options { get { throw null; } set { } }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.MongoDBDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.MongoDBDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MongoDBDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class MongoDBDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MongoDBDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.MongoDBDatabasePropertiesOptions Options { get { throw null; } set { } }
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public string GroupId { get { throw null; } set { } }
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.PrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.RestorableDatabaseAccount> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.RestorableDatabaseAccount>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorableDatabaseAccountData : Azure.ResourceManager.Models.Resource
+    public partial class RestorableDatabaseAccountData : Azure.ResourceManager.Models.ResourceData
     {
         internal RestorableDatabaseAccountData() { }
         public string AccountName { get { throw null; } }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.SqlContainer> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.SqlContainer>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlContainerData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlContainerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlContainerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.SqlContainerPropertiesOptions Options { get { throw null; } set { } }
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.SqlDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.SqlDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.SqlDatabasePropertiesOptions Options { get { throw null; } set { } }
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.SqlStoredProcedure> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.SqlStoredProcedure>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlStoredProcedureData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlStoredProcedureData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlStoredProcedureData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedurePropertiesResource Resource { get { throw null; } set { } }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.SqlTrigger> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.SqlTrigger>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlTriggerData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlTriggerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlTriggerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.SqlTriggerPropertiesResource Resource { get { throw null; } set { } }
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.CosmosDB
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CosmosDB.SqlUserDefinedFunction> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.SqlUserDefinedFunction>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlUserDefinedFunctionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlUserDefinedFunctionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlUserDefinedFunctionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionPropertiesResource Resource { get { throw null; } set { } }
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.CosmosDB
         public static Azure.Response<bool> CheckNameExistsDatabaseAccount(this Azure.ResourceManager.Resources.Tenant tenant, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<bool>> CheckNameExistsDatabaseAccountAsync(this Azure.ResourceManager.Resources.Tenant tenant, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ThroughputSettingsData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ThroughputSettingsData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ThroughputSettingsData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsPropertiesResource Resource { get { throw null; } set { } }
@@ -1340,7 +1340,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Name { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
-    public partial class CassandraKeyspaceCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class CassandraKeyspaceCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraKeyspaceCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraColumn> Columns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CassandraPartitionKey> PartitionKeys { get { throw null; } }
     }
-    public partial class CassandraTableCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class CassandraTableCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CassandraTableCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.CassandraTableResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal DatabaseAccountConnectionStringList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountConnectionString> ConnectionStrings { get { throw null; } }
     }
-    public partial class DatabaseAccountCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class DatabaseAccountCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DatabaseAccountCreateUpdateOptions(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountLocation> locations) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get { throw null; } set { } }
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Id { get { throw null; } }
         public string LocationName { get { throw null; } set { } }
     }
-    public partial class GremlinDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class GremlinDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GremlinDatabaseCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -1879,7 +1879,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public GremlinDatabaseResource(string id) { }
         public string Id { get { throw null; } set { } }
     }
-    public partial class GremlinGraphCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class GremlinGraphCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GremlinGraphCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.GremlinGraphResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsResidencyRestricted { get { throw null; } }
         public bool? SupportsAvailabilityZone { get { throw null; } }
     }
-    public partial class ManagedCassandraARMResourceProperties : Azure.ResourceManager.Models.TrackedResource
+    public partial class ManagedCassandraARMResourceProperties : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedCassandraARMResourceProperties(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public double? Total { get { throw null; } }
     }
-    public partial class MongoDBCollectionCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class MongoDBCollectionCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MongoDBCollectionCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2100,7 +2100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.MongoIndex> Indexes { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ShardKey { get { throw null; } }
     }
-    public partial class MongoDBDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class MongoDBDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MongoDBDatabaseCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2334,7 +2334,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string LocationName { get { throw null; } }
         public string RegionalDatabaseAccountInstanceId { get { throw null; } }
     }
-    public partial class RestorableMongodbCollection : Azure.ResourceManager.Models.Resource
+    public partial class RestorableMongodbCollection : Azure.ResourceManager.Models.ResourceData
     {
         internal RestorableMongodbCollection() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableMongodbCollectionPropertiesResource Resource { get { throw null; } }
@@ -2348,7 +2348,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
-    public partial class RestorableMongodbDatabase : Azure.ResourceManager.Models.Resource
+    public partial class RestorableMongodbDatabase : Azure.ResourceManager.Models.ResourceData
     {
         internal RestorableMongodbDatabase() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableMongodbDatabasePropertiesResource Resource { get { throw null; } }
@@ -2362,7 +2362,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string OwnerResourceId { get { throw null; } }
         public string Rid { get { throw null; } }
     }
-    public partial class RestorableSqlContainer : Azure.ResourceManager.Models.Resource
+    public partial class RestorableSqlContainer : Azure.ResourceManager.Models.ResourceData
     {
         internal RestorableSqlContainer() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainerPropertiesResource Resource { get { throw null; } }
@@ -2385,7 +2385,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Self { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
-    public partial class RestorableSqlDatabase : Azure.ResourceManager.Models.Resource
+    public partial class RestorableSqlDatabase : Azure.ResourceManager.Models.ResourceData
     {
         internal RestorableSqlDatabase() { }
         public Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabasePropertiesResource Resource { get { throw null; } }
@@ -2485,7 +2485,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.SpatialType left, Azure.ResourceManager.CosmosDB.Models.SpatialType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SqlContainerCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlContainerCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlContainerCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.SqlContainerResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2513,7 +2513,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.ContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.UniqueKeyPolicy UniqueKeyPolicy { get { throw null; } set { } }
     }
-    public partial class SqlDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlDatabaseCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlDatabaseCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.SqlDatabaseResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2537,7 +2537,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public SqlDatabaseResource(string id) { }
         public string Id { get { throw null; } set { } }
     }
-    public partial class SqlStoredProcedureCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlStoredProcedureCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlStoredProcedureCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedureResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2556,7 +2556,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Body { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }
-    public partial class SqlTriggerCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlTriggerCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlTriggerCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.SqlTriggerResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2577,7 +2577,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.TriggerOperation? TriggerOperation { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.TriggerType? TriggerType { get { throw null; } set { } }
     }
-    public partial class SqlUserDefinedFunctionCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlUserDefinedFunctionCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlUserDefinedFunctionCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2596,7 +2596,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Body { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }
-    public partial class TableCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class TableCreateUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public TableCreateUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.TableResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.CreateUpdateOptions Options { get { throw null; } set { } }
@@ -2628,7 +2628,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string OfferReplacePending { get { throw null; } }
         public int? Throughput { get { throw null; } set { } }
     }
-    public partial class ThroughputSettingsUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class ThroughputSettingsUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ThroughputSettingsUpdateOptions(Azure.Core.AzureLocation location, Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResource resource) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResource Resource { get { throw null; } set { } }

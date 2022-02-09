@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StoragePool
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StoragePool.DiskPool> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPool>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.ProvisioningStates provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.OperationalStatus status, string subnetId) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StoragePool
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StoragePool.IscsiTarget> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.IscsiTarget>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class IscsiTargetData : Azure.ResourceManager.Models.Resource
+    public partial class IscsiTargetData : Azure.ResourceManager.Models.ResourceData
     {
         public IscsiTargetData(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode, string targetIqn, Azure.ResourceManager.StoragePool.Models.ProvisioningStates provisioningState, Azure.ResourceManager.StoragePool.Models.OperationalStatus status) { }
         public Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode AclMode { get { throw null; } set { } }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.CreatedByType left, Azure.ResourceManager.StoragePool.Models.CreatedByType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskPoolCreate : Azure.ResourceManager.Models.Resource
+    public partial class DiskPoolCreate : Azure.ResourceManager.Models.ResourceData
     {
         public DiskPoolCreate(Azure.ResourceManager.StoragePool.Models.Sku sku, string location, string subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode left, Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IscsiTargetCreate : Azure.ResourceManager.Models.Resource
+    public partial class IscsiTargetCreate : Azure.ResourceManager.Models.ResourceData
     {
         public IscsiTargetCreate(Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode aclMode) { }
         public Azure.ResourceManager.StoragePool.Models.IscsiTargetAclMode AclMode { get { throw null; } set { } }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.Acl> StaticAcls { get { throw null; } }
         public string TargetIqn { get { throw null; } set { } }
     }
-    public partial class IscsiTargetUpdate : Azure.ResourceManager.Models.Resource
+    public partial class IscsiTargetUpdate : Azure.ResourceManager.Models.ResourceData
     {
         public IscsiTargetUpdate() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.IscsiLun> Luns { get { throw null; } }

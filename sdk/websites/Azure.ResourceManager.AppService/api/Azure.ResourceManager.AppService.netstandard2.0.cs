@@ -4611,7 +4611,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> States { get { throw null; } }
     }
-    public partial class AppServiceResource : Azure.ResourceManager.Models.TrackedResource
+    public partial class AppServiceResource : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AppServiceResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Kind { get { throw null; } set { } }
@@ -6356,7 +6356,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateLinkResource() { }
         public Azure.ResourceManager.AppService.Models.PrivateLinkResourceProperties Properties { get { throw null; } }
@@ -6437,7 +6437,7 @@ namespace Azure.ResourceManager.AppService.Models
         InProgress = 3,
         Deleting = 4,
     }
-    public partial class ProxyOnlyResource : Azure.ResourceManager.Models.Resource
+    public partial class ProxyOnlyResource : Azure.ResourceManager.Models.ResourceData
     {
         public ProxyOnlyResource() { }
         public string Kind { get { throw null; } set { } }
@@ -6626,7 +6626,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator !=(Azure.ResourceManager.AppService.Models.ResourceScopeType left, Azure.ResourceManager.AppService.Models.ResourceScopeType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Azure.ResourceManager.Models.Resource
+    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData
     {
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection() { }
         public Azure.ResourceManager.AppService.Models.ErrorEntity Error { get { throw null; } }

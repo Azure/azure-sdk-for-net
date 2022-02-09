@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppConfiguration.ConfigurationStore> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.ConfigurationStore>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppConfiguration.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppConfiguration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppConfiguration.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.PrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
     }
-    public partial class PrivateEndpointConnectionReference : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionReference : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateEndpointConnectionReference() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } }

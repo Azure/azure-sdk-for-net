@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccount>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DeviceUpdateAccountData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DeviceUpdateAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DeviceUpdateAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string HostName { get { throw null; } }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstance> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstance>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DeviceUpdateInstanceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DeviceUpdateInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DeviceUpdateInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AccountName { get { throw null; } }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionProxyData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionProxyData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionProxyData() { }
         public string ETag { get { throw null; } }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceUpdate.PrivateLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.PrivateLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLinkData() { }
         public string GroupId { get { throw null; } }

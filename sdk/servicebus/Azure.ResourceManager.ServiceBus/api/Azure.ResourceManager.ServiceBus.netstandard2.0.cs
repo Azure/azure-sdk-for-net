@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.DisasterRecovery> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.DisasterRecovery>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DisasterRecoveryData : Azure.ResourceManager.Models.Resource
+    public partial class DisasterRecoveryData : Azure.ResourceManager.Models.ResourceData
     {
         public DisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.MigrationConfigProperties> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.MigrationConfigProperties>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MigrationConfigPropertiesData : Azure.ResourceManager.Models.Resource
+    public partial class MigrationConfigPropertiesData : Azure.ResourceManager.Models.ResourceData
     {
         public MigrationConfigPropertiesData() { }
         public string MigrationState { get { throw null; } }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSet> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.NetworkRuleSet>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkRuleSetData : Azure.ResourceManager.Models.Resource
+    public partial class NetworkRuleSetData : Azure.ResourceManager.Models.ResourceData
     {
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.ServiceBus.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceCollection GetServiceBusNamespaces(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
     }
-    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusAuthorizationRuleData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRights> Rights { get { throw null; } }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusNamespace> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusNamespace>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusQueue> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueue>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusQueueData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceBusQueueData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusQueueData() { }
         public System.DateTimeOffset? AccessedAt { get { throw null; } }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusRuleData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceBusRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusRuleData() { }
         public Azure.ResourceManager.ServiceBus.Models.FilterAction Action { get { throw null; } set { } }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusSubscription> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusSubscription>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusSubscriptionData() { }
         public System.DateTimeOffset? AccessedAt { get { throw null; } }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusTopic> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusTopic>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusTopicData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceBusTopicData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusTopicData() { }
         public System.DateTimeOffset? AccessedAt { get { throw null; } }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
     }
-    public partial class ServiceBusNamespaceUpdateOptions : Azure.ResourceManager.Models.TrackedResource
+    public partial class ServiceBusNamespaceUpdateOptions : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ServiceBusNamespaceUpdateOptions(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }

@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.AzureWebCategory> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.AzureWebCategory>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AzureWebCategoryData : Azure.ResourceManager.Models.Resource
+    public partial class AzureWebCategoryData : Azure.ResourceManager.Models.ResourceData
     {
         internal AzureWebCategoryData() { }
         public string Etag { get { throw null; } }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.ConnectionMonitor> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ConnectionMonitor>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConnectionMonitorData : Azure.ResourceManager.Models.Resource
+    public partial class ConnectionMonitorData : Azure.ResourceManager.Models.ResourceData
     {
         internal ConnectionMonitorData() { }
         public bool? AutoStart { get { throw null; } }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.DdosProtectionPlan> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.DdosProtectionPlan>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DdosProtectionPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Etag { get { throw null; } }
@@ -5167,13 +5167,13 @@ namespace Azure.ResourceManager.Network.Models
         internal AutoApprovedPrivateLinkService() { }
         public string PrivateLinkService { get { throw null; } }
     }
-    public partial class AvailableDelegation : Azure.ResourceManager.Models.Resource
+    public partial class AvailableDelegation : Azure.ResourceManager.Models.ResourceData
     {
         internal AvailableDelegation() { }
         public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
         public string ServiceName { get { throw null; } }
     }
-    public partial class AvailablePrivateEndpointType : Azure.ResourceManager.Models.Resource
+    public partial class AvailablePrivateEndpointType : Azure.ResourceManager.Models.ResourceData
     {
         internal AvailablePrivateEndpointType() { }
         public string DisplayName { get { throw null; } }
@@ -5212,7 +5212,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<string> Providers { get { throw null; } }
         public string StateName { get { throw null; } }
     }
-    public partial class AvailableServiceAlias : Azure.ResourceManager.Models.Resource
+    public partial class AvailableServiceAlias : Azure.ResourceManager.Models.ResourceData
     {
         internal AvailableServiceAlias() { }
         public string ResourceName { get { throw null; } }
@@ -8901,7 +8901,7 @@ namespace Azure.ResourceManager.Network.Models
         public string State { get { throw null; } }
         public string SystemService { get { throw null; } }
     }
-    public partial class ServiceTagsListResult : Azure.ResourceManager.Models.Resource
+    public partial class ServiceTagsListResult : Azure.ResourceManager.Models.ResourceData
     {
         internal ServiceTagsListResult() { }
         public string ChangeNumber { get { throw null; } }

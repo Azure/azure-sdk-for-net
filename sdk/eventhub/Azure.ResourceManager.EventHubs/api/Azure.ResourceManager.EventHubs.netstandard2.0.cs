@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubCluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubCluster>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubClusterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class EventHubClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public EventHubClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CreatedAt { get { throw null; } }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubNamespace> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubNamespace>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubNamespaceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class EventHubNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public EventHubNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AlternateName { get { throw null; } set { } }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         Succeeded = 1,
         Failed = 2,
     }
-    public partial class ProxyResource : Azure.ResourceManager.Models.Resource
+    public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
     {
         public ProxyResource() { }
         public string Location { get { throw null; } }

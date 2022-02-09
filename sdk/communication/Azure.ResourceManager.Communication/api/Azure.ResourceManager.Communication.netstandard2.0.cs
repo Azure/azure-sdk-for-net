@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Communication.CommunicationService> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.CommunicationService>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CommunicationServiceData : Azure.ResourceManager.Models.Resource
+    public partial class CommunicationServiceData : Azure.ResourceManager.Models.ResourceData
     {
         public CommunicationServiceData() { }
         public string DataLocation { get { throw null; } set { } }
