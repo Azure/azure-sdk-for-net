@@ -1,5 +1,15 @@
 # Release History
 
+## 0.1.0-preview.21 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 0.1.0-preview.20 (2022-02-07)
 
 ### Features Added
@@ -10,10 +20,6 @@
 
 - `MessageWithMetadata` is now in the `Azure` namespace rather than `Azure.Messaging`.
 - Changed `ContentType` property of `MessageWithMetadata` from a `string` to a `ContentType`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.19 (2022-01-11)
 

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async virtual Task<AddressResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AddressResource>> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             if (addressResource == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _addressResourceRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
-                var operation = new AddressResourceCreateOrUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public virtual AddressResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AddressResource> CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             if (addressResource == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _addressResourceRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken);
-                var operation = new AddressResourceCreateOrUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AfdEndpointDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Delete");
             scope.Start();
             try
             {
                 var response = await _afdEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdEndpointDeleteOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AfdEndpointDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpoint.Delete");
             scope.Start();
             try
             {
                 var response = _afdEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdEndpointDeleteOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CdnArmOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public async virtual Task<AfdEndpointUpdateOperation> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdEndpoint>> UpdateAsync(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (endpointUpdateProperties == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdEndpointUpdateOperation(Client, _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointUpdateProperties"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointUpdateProperties"/> is null. </exception>
-        public virtual AfdEndpointUpdateOperation Update(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdEndpoint> Update(bool waitForCompletion, AfdEndpointUpdateOptions endpointUpdateProperties, CancellationToken cancellationToken = default)
         {
             if (endpointUpdateProperties == null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties, cancellationToken);
-                var operation = new AfdEndpointUpdateOperation(Client, _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response);
+                var operation = new CdnArmOperation<AfdEndpoint>(new AfdEndpointOperationSource(Client), _afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, endpointUpdateProperties).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
-        public async virtual Task<AfdEndpointPurgeContentOperation> PurgeContentAsync(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> PurgeContentAsync(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
         {
             if (contents == null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdEndpointRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdEndpointPurgeContentOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents).Request, response);
+                var operation = new CdnArmOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="contents"> The list of paths to the content and the list of linked domains to be purged. Path can be a full URL, e.g. &apos;/pictures/city.png&apos; which removes a single file, or a directory with a wildcard, e.g. &apos;/pictures/*&apos; which removes all folders and files in the directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
-        public virtual AfdEndpointPurgeContentOperation PurgeContent(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PurgeContent(bool waitForCompletion, AfdPurgeOptions contents, CancellationToken cancellationToken = default)
         {
             if (contents == null)
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdEndpointRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents, cancellationToken);
-                var operation = new AfdEndpointPurgeContentOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents).Request, response);
+                var operation = new CdnArmOperation(_afdEndpointClientDiagnostics, Pipeline, _afdEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, contents).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

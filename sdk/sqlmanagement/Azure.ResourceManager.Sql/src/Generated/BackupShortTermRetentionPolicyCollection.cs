@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<BackupShortTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<BackupShortTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _backupShortTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BackupShortTermRetentionPolicyCreateOrUpdateOperation(Client, _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual BackupShortTermRetentionPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupShortTermRetentionPolicy> CreateOrUpdate(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _backupShortTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new BackupShortTermRetentionPolicyCreateOrUpdateOperation(Client, _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

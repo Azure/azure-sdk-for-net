@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="routeTableParameters"/> is null. </exception>
-        public async virtual Task<HubRouteTableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<HubRouteTable>> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             if (routeTableParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _hubRouteTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new HubRouteTableCreateOrUpdateOperation(Client, _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
+                var operation = new NetworkArmOperation<HubRouteTable>(new HubRouteTableOperationSource(Client), _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="routeTableParameters"/> is null. </exception>
-        public virtual HubRouteTableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HubRouteTable> CreateOrUpdate(bool waitForCompletion, string routeTableName, HubRouteTableData routeTableParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             if (routeTableParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _hubRouteTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters, cancellationToken);
-                var operation = new HubRouteTableCreateOrUpdateOperation(Client, _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response);
+                var operation = new NetworkArmOperation<HubRouteTable>(new HubRouteTableOperationSource(Client), _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, routeTableParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

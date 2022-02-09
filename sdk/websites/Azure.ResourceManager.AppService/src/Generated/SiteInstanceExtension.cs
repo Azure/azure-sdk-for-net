@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public async virtual Task<SiteInstanceExtensionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteInstanceExtension>> CreateOrUpdateAsync(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (msDeploy == null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteInstanceExtensionCreateOrUpdateOperation(Client, _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                var operation = new AppServiceArmOperation<SiteInstanceExtension>(new SiteInstanceExtensionOperationSource(Client), _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public virtual SiteInstanceExtensionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteInstanceExtension> CreateOrUpdate(bool waitForCompletion, MsDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             if (msDeploy == null)
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new SiteInstanceExtensionCreateOrUpdateOperation(Client, _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response);
+                var operation = new AppServiceArmOperation<SiteInstanceExtension>(new SiteInstanceExtensionOperationSource(Client), _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

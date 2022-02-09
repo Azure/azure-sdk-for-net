@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation> MigrateCassandraTableToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> MigrateCassandraTableToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
             scope.Start();
             try
             {
                 var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,14 +207,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation MigrateCassandraTableToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting> MigrateCassandraTableToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToAutoscale");
             scope.Start();
             try
             {
                 var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToAutoscaleOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation> MigrateCassandraTableToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>> MigrateCassandraTableToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
             scope.Start();
             try
             {
                 var response = await _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation MigrateCassandraTableToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting> MigrateCassandraTableToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics.CreateScope("DatabaseAccountCassandraKeyspaceTableThroughputSetting.MigrateCassandraTableToManualThroughput");
             scope.Start();
             try
             {
                 var response = _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountCassandraKeyspaceTableThroughputSettingMigrateCassandraTableToManualThroughputOperation(_databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountCassandraKeyspaceTableThroughputSetting>(new DatabaseAccountCassandraKeyspaceTableThroughputSettingOperationSource(Client), _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _databaseAccountCassandraKeyspaceTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

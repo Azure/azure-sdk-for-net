@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async virtual Task<SqlTriggerCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlTrigger>> CreateOrUpdateAsync(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             if (createUpdateSqlTriggerParameters == null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlTriggerCreateOrUpdateOperation(Client, _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public virtual SqlTriggerCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlTrigger> CreateOrUpdate(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             if (createUpdateSqlTriggerParameters == null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken);
-                var operation = new SqlTriggerCreateOrUpdateOperation(Client, _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

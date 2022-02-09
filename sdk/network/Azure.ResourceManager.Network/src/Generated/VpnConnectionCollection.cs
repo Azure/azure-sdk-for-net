@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public async virtual Task<VpnConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnConnection>> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (vpnConnectionParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _vpnConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnConnectionCreateOrUpdateOperation(Client, _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response);
+                var operation = new NetworkArmOperation<VpnConnection>(new VpnConnectionOperationSource(Client), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public virtual VpnConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnConnection> CreateOrUpdate(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (vpnConnectionParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _vpnConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters, cancellationToken);
-                var operation = new VpnConnectionCreateOrUpdateOperation(Client, _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response);
+                var operation = new NetworkArmOperation<VpnConnection>(new VpnConnectionOperationSource(Client), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

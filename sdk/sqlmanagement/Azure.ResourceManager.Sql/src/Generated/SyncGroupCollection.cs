@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SyncGroup>> CreateOrUpdateAsync(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _syncGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncGroupCreateOrUpdateOperation(Client, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<SyncGroup>(new SyncGroupOperationSource(Client), _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SyncGroup> CreateOrUpdate(bool waitForCompletion, string syncGroupName, SyncGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _syncGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken);
-                var operation = new SyncGroupCreateOrUpdateOperation(Client, _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<SyncGroup>(new SyncGroupOperationSource(Client), _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

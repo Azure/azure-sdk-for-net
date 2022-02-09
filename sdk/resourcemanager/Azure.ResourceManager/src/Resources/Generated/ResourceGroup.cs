@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ResourceGroupDeleteOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
             try
             {
                 var response = await _resourceGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupDeleteOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDeletionTypes"> The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceGroupDeleteOperation Delete(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, string forceDeletionTypes = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.Delete");
             scope.Start();
             try
             {
                 var response = _resourceGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes, cancellationToken);
-                var operation = new ResourceGroupDeleteOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, forceDeletionTypes).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceGroupExportTemplateOperation> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.ExportTemplateAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupExportTemplateOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<ResourceGroupExportResult>(new ResourceGroupExportResultOperationSource(), _resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceGroupExportTemplateOperation ExportTemplate(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroupExportResult> ExportTemplate(bool waitForCompletion, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.ExportTemplate(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupExportTemplateOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<ResourceGroupExportResult>(new ResourceGroupExportResultOperationSource(), _resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateExportTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceGroupMoveResourcesOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> MoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceGroupMoveResourcesOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ResourceGroupValidateMoveResourcesOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ValidateMoveResourcesAsync(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupValidateMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceGroupValidateMoveResourcesOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ValidateMoveResources(bool waitForCompletion, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupValidateMoveResourcesOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response);
+                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

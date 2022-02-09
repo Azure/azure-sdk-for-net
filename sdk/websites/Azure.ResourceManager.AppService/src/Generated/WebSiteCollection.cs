@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<WebSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WebSite>> CreateOrUpdateAsync(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (siteEnvelope == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteCreateOrUpdateOperation(Client, _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<WebSite>(new WebSiteOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual WebSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebSite> CreateOrUpdate(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (siteEnvelope == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope, cancellationToken);
-                var operation = new WebSiteCreateOrUpdateOperation(Client, _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<WebSite>(new WebSiteOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

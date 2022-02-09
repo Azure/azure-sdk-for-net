@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="peeringParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, ExpressRouteCircuitPeeringData peeringParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ExpressRouteCircuitPeering>> CreateOrUpdateAsync(bool waitForCompletion, string peeringName, ExpressRouteCircuitPeeringData peeringParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (peeringParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteCircuitPeeringRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitPeeringCreateOrUpdateOperation(Client, _expressRouteCircuitPeeringClientDiagnostics, Pipeline, _expressRouteCircuitPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
+                var operation = new NetworkArmOperation<ExpressRouteCircuitPeering>(new ExpressRouteCircuitPeeringOperationSource(Client), _expressRouteCircuitPeeringClientDiagnostics, Pipeline, _expressRouteCircuitPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="peeringParameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitPeeringCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string peeringName, ExpressRouteCircuitPeeringData peeringParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitPeering> CreateOrUpdate(bool waitForCompletion, string peeringName, ExpressRouteCircuitPeeringData peeringParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
             if (peeringParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteCircuitPeeringRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters, cancellationToken);
-                var operation = new ExpressRouteCircuitPeeringCreateOrUpdateOperation(Client, _expressRouteCircuitPeeringClientDiagnostics, Pipeline, _expressRouteCircuitPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response);
+                var operation = new NetworkArmOperation<ExpressRouteCircuitPeering>(new ExpressRouteCircuitPeeringOperationSource(Client), _expressRouteCircuitPeeringClientDiagnostics, Pipeline, _expressRouteCircuitPeeringRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peeringName, peeringParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

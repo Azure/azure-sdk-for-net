@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of extended blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExtendedServerBlobAuditingPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ExtendedServerBlobAuditingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExtendedServerBlobAuditingPolicyCreateOrUpdateOperation(Client, _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicy>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of extended blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ExtendedServerBlobAuditingPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExtendedServerBlobAuditingPolicy> CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
-                var operation = new ExtendedServerBlobAuditingPolicyCreateOrUpdateOperation(Client, _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicy>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

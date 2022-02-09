@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<VMwareClusterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VMwareCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vMwareClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new VMwareClusterCreateOrUpdateOperation(Client, _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareCluster>(new VMwareClusterOperationSource(Client), _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual VMwareClusterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VMwareCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vMwareClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken);
-                var operation = new VMwareClusterCreateOrUpdateOperation(Client, _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareCluster>(new VMwareClusterOperationSource(Client), _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

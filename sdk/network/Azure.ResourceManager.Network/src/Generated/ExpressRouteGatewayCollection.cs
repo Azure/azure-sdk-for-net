@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ExpressRouteGateway>> CreateOrUpdateAsync(bool waitForCompletion, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
             if (putExpressRouteGatewayParameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _expressRouteGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Client, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                var operation = new NetworkArmOperation<ExpressRouteGateway>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public virtual ExpressRouteGatewayCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteGateway> CreateOrUpdate(bool waitForCompletion, string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
             if (putExpressRouteGatewayParameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _expressRouteGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken);
-                var operation = new ExpressRouteGatewayCreateOrUpdateOperation(Client, _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                var operation = new NetworkArmOperation<ExpressRouteGateway>(new ExpressRouteGatewayOperationSource(Client), _expressRouteGatewayClientDiagnostics, Pipeline, _expressRouteGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

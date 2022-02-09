@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualHubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubDeleteOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.Delete");
             scope.Start();
             try
             {
                 var response = _virtualHubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualHubDeleteOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubGetEffectiveVirtualHubRoutesOperation> GetEffectiveVirtualHubRoutesAsync(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualHubRestClient.GetEffectiveVirtualHubRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -279,14 +279,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubGetEffectiveVirtualHubRoutesOperation GetEffectiveVirtualHubRoutes(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation GetEffectiveVirtualHubRoutes(bool waitForCompletion, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHub.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
                 var response = _virtualHubRestClient.GetEffectiveVirtualHubRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken);
-                var operation = new VirtualHubGetEffectiveVirtualHubRoutesOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

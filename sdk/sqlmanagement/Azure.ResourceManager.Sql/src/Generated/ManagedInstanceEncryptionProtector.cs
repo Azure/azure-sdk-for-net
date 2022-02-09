@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Revalidates an existing encryption protector. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagedInstanceEncryptionProtectorRevalidateOperation> RevalidateAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RevalidateAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtector.Revalidate");
             scope.Start();
             try
             {
                 var response = await _managedInstanceEncryptionProtectorRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceEncryptionProtectorRevalidateOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Revalidates an existing encryption protector. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagedInstanceEncryptionProtectorRevalidateOperation Revalidate(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Revalidate(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtector.Revalidate");
             scope.Start();
             try
             {
                 var response = _managedInstanceEncryptionProtectorRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ManagedInstanceEncryptionProtectorRevalidateOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BlobContainerDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.Delete");
             scope.Start();
             try
             {
                 var response = await _blobContainerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BlobContainerDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BlobContainerDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.Delete");
             scope.Start();
             try
             {
                 var response = _blobContainerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BlobContainerDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -365,14 +365,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> This operation migrates a blob container from container level WORM to object level immutability enabled container. Prerequisites require a container level immutability policy either in locked or unlocked state, Account level versioning must be enabled and there should be no Legal hold on the container. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<BlobContainerObjectLevelWormOperation> ObjectLevelWormAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ObjectLevelWormAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.ObjectLevelWorm");
             scope.Start();
             try
             {
                 var response = await _blobContainerRestClient.ObjectLevelWormAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BlobContainerObjectLevelWormOperation(_blobContainerClientDiagnostics, Pipeline, _blobContainerRestClient.CreateObjectLevelWormRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response);
+                var operation = new StorageArmOperation(_blobContainerClientDiagnostics, Pipeline, _blobContainerRestClient.CreateObjectLevelWormRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -387,14 +387,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> This operation migrates a blob container from container level WORM to object level immutability enabled container. Prerequisites require a container level immutability policy either in locked or unlocked state, Account level versioning must be enabled and there should be no Legal hold on the container. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual BlobContainerObjectLevelWormOperation ObjectLevelWorm(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ObjectLevelWorm(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainer.ObjectLevelWorm");
             scope.Start();
             try
             {
                 var response = _blobContainerRestClient.ObjectLevelWorm(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BlobContainerObjectLevelWormOperation(_blobContainerClientDiagnostics, Pipeline, _blobContainerRestClient.CreateObjectLevelWormRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response);
+                var operation = new StorageArmOperation(_blobContainerClientDiagnostics, Pipeline, _blobContainerRestClient.CreateObjectLevelWormRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

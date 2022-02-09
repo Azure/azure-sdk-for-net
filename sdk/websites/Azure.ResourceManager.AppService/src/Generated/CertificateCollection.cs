@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public async virtual Task<CertificateCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Certificate>> CreateOrUpdateAsync(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (certificateEnvelope == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _certificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, certificateEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new CertificateCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<Certificate>(Response.FromValue(new Certificate(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual CertificateCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Certificate> CreateOrUpdate(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (certificateEnvelope == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _certificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, certificateEnvelope, cancellationToken);
-                var operation = new CertificateCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<Certificate>(Response.FromValue(new Certificate(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

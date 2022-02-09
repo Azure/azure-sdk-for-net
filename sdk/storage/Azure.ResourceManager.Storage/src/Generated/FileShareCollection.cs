@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="shareName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="fileShare"/> is null. </exception>
-        public async virtual Task<FileShareCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<FileShare>> CreateOrUpdateAsync(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
             if (fileShare == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _fileShareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new FileShareCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<FileShare>(Response.FromValue(new FileShare(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="shareName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="fileShare"/> is null. </exception>
-        public virtual FileShareCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FileShare> CreateOrUpdate(bool waitForCompletion, string shareName, FileShareData fileShare, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
             if (fileShare == null)
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _fileShareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, fileShare, expand, cancellationToken);
-                var operation = new FileShareCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<FileShare>(Response.FromValue(new FileShare(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebPubSubHubCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WebPubSubHub>> CreateOrUpdateAsync(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
             if (parameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _webPubSubHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(Client, _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
+                var operation = new WebPubSubArmOperation<WebPubSubHub>(new WebPubSubHubOperationSource(Client), _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hubName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebPubSubHubCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubHub> CreateOrUpdate(bool waitForCompletion, string hubName, WebPubSubHubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
             if (parameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters, cancellationToken);
-                var operation = new WebPubSubHubCreateOrUpdateOperation(Client, _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response);
+                var operation = new WebPubSubArmOperation<WebPubSubHub>(new WebPubSubHubOperationSource(Client), _webPubSubHubClientDiagnostics, Pipeline, _webPubSubHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

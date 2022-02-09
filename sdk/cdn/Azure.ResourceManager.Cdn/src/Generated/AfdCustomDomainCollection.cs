@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public async virtual Task<AfdCustomDomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdCustomDomain>> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomain == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public virtual AfdCustomDomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdCustomDomain> CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomain == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

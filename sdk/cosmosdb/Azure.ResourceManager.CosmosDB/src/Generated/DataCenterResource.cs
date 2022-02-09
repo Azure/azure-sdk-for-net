@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -126,14 +125,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Delete a managed Cassandra data center. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DataCenterResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Delete");
             scope.Start();
             try
             {
                 var response = await _dataCenterResourceCassandraDataCentersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCenterResourceDeleteOperation(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -148,14 +147,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Delete a managed Cassandra data center. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DataCenterResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResource.Delete");
             scope.Start();
             try
             {
                 var response = _dataCenterResourceCassandraDataCentersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataCenterResourceDeleteOperation(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="body"> Parameters to provide for specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<DataCenterResourceUpdateOperation> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DataCenterResource>> UpdateAsync(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataCenterResourceCassandraDataCentersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCenterResourceUpdateOperation(Client, _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="body"> Parameters to provide for specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual DataCenterResourceUpdateOperation Update(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataCenterResource> Update(bool waitForCompletion, DataCenterResourceData body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataCenterResourceCassandraDataCentersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new DataCenterResourceUpdateOperation(Client, _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

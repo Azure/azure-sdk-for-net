@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public async virtual Task<AppServiceCertificateResourceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AppServiceCertificateResource>> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (keyVaultCertificate == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceCertificateResourceCreateOrUpdateOperation(Client, _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keyVaultCertificate"/> is null. </exception>
-        public virtual AppServiceCertificateResourceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceCertificateResource> CreateOrUpdate(bool waitForCompletion, string name, AppServiceCertificateResourceData keyVaultCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (keyVaultCertificate == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateOrUpdateCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate, cancellationToken);
-                var operation = new AppServiceCertificateResourceCreateOrUpdateOperation(Client, _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceCertificateResource>(new AppServiceCertificateResourceOperationSource(Client), _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics, Pipeline, _appServiceCertificateResourceAppServiceCertificateOrdersRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, keyVaultCertificate).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
