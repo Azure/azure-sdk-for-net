@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     }
                     else
                     {
-                        HandlePossibleFailures(httpMessage);
+                        HandleFailures(httpMessage);
                         result = 1;
                     }
                 }
@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        private void HandlePossibleFailures(HttpMessage httpMessage)
+        private void HandleFailures(HttpMessage httpMessage)
         {
             if (httpMessage.HasResponse)
             {
