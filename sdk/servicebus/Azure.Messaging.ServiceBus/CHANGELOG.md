@@ -10,6 +10,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Bugs Fixed
 
 - Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+- Remove array allocation when creating linked token sources from the ServiceBusProcessor
 
 ### Features Added
 
