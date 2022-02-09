@@ -54,7 +54,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                using var httpMessage = async ? await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                using var httpMessage = async ? 
+                    await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                 if (httpMessage != null)
