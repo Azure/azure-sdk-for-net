@@ -25,12 +25,16 @@ namespace Azure.Storage.Test.Shared
         {
             UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(SignatureQueryName, SanitizeValue));
 
-            // Uri uses different escaping for some special characters between .NET Framework and Core, so we normalize to the .NET Core escaping
-            // when matching and storing the recordings.
+#if NETFRAMEWORK
+            // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
+            // Core, we need to normalize to the .NET Core escaping when matching and storing the recordings when running tests on NetFramework.
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\(", "%28"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\)", "%29"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*", "%2A"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^\\\\]", "%3A") {GroupForReplace = "group"});
+#endif
 
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
