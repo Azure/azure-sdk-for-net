@@ -99,49 +99,49 @@ namespace Azure.ResourceManager.StackHCI
     {
         public static Azure.ResourceManager.StackHCI.ArcExtension GetArcExtension(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StackHCI.ArcSetting GetArcSetting(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.StackHCI.HCICluster GetHCICluster(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.StackHCI.HciCluster GetHciCluster(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HCICluster : Azure.ResourceManager.Core.ArmResource
+    public partial class HciCluster : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected HCICluster() { }
-        public virtual Azure.ResourceManager.StackHCI.HCIClusterData Data { get { throw null; } }
+        protected HciCluster() { }
+        public virtual Azure.ResourceManager.StackHCI.HciClusterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StackHCI.ArcSettingCollection GetArcSettings() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> Update(Azure.ResourceManager.StackHCI.Models.ClusterPatch cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> UpdateAsync(Azure.ResourceManager.StackHCI.Models.ClusterPatch cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> Update(Azure.ResourceManager.StackHCI.Models.ClusterPatch cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> UpdateAsync(Azure.ResourceManager.StackHCI.Models.ClusterPatch cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HCIClusterCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StackHCI.HCICluster>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HCICluster>, System.Collections.IEnumerable
+    public partial class HciClusterCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StackHCI.HciCluster>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HciCluster>, System.Collections.IEnumerable
     {
-        protected HCIClusterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StackHCI.HCICluster> CreateOrUpdate(bool waitForCompletion, string clusterName, Azure.ResourceManager.StackHCI.HCIClusterData cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StackHCI.HCICluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, Azure.ResourceManager.StackHCI.HCIClusterData cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected HciClusterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StackHCI.HciCluster> CreateOrUpdate(bool waitForCompletion, string clusterName, Azure.ResourceManager.StackHCI.HciClusterData cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StackHCI.HciCluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, Azure.ResourceManager.StackHCI.HciClusterData cluster, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.StackHCI.HCICluster> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.StackHCI.HCICluster> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HCICluster> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HCICluster>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StackHCI.HCICluster> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StackHCI.HCICluster>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StackHCI.HCICluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HCICluster>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StackHCI.HciCluster> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StackHCI.HciCluster> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StackHCI.HciCluster> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StackHCI.HciCluster>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StackHCI.HciCluster> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StackHCI.HciCluster>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.StackHCI.HciCluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HciCluster>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HCIClusterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResource
     {
-        public HCIClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HciClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AadClientId { get { throw null; } set { } }
         public string AadTenantId { get { throw null; } set { } }
         public string BillingModel { get { throw null; } }
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.StackHCI
         public Azure.ResourceManager.StackHCI.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RegistrationTimestamp { get { throw null; } }
         public Azure.ResourceManager.StackHCI.Models.ClusterReportedProperties ReportedProperties { get { throw null; } }
-        public Azure.ResourceManager.StackHCI.Models.Status? Status { get { throw null; } }
+        public Azure.ResourceManager.StackHCI.Models.HciClusterStatus? Status { get { throw null; } }
         public float? TrialDaysRemaining { get { throw null; } }
     }
     public static partial class ResourceGroupExtensions
     {
-        public static Azure.ResourceManager.StackHCI.HCIClusterCollection GetHCIClusters(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.ResourceManager.StackHCI.HciClusterCollection GetHciClusters(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
     }
     public static partial class SubscriptionExtensions
     {
-        public static Azure.Pageable<Azure.ResourceManager.StackHCI.HCICluster> GetHCIClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.StackHCI.HCICluster> GetHCIClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.StackHCI.HciCluster> GetHciClusters(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.StackHCI.HciCluster> GetHciClustersAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.StackHCI.Models
@@ -316,6 +316,27 @@ namespace Azure.ResourceManager.StackHCI.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HciClusterStatus : System.IEquatable<Azure.ResourceManager.StackHCI.Models.HciClusterStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HciClusterStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StackHCI.Models.HciClusterStatus ConnectedRecently { get { throw null; } }
+        public static Azure.ResourceManager.StackHCI.Models.HciClusterStatus Disconnected { get { throw null; } }
+        public static Azure.ResourceManager.StackHCI.Models.HciClusterStatus Error { get { throw null; } }
+        public static Azure.ResourceManager.StackHCI.Models.HciClusterStatus NotConnectedRecently { get { throw null; } }
+        public static Azure.ResourceManager.StackHCI.Models.HciClusterStatus NotYetRegistered { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StackHCI.Models.HciClusterStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StackHCI.Models.HciClusterStatus left, Azure.ResourceManager.StackHCI.Models.HciClusterStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StackHCI.Models.HciClusterStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StackHCI.Models.HciClusterStatus left, Azure.ResourceManager.StackHCI.Models.HciClusterStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImdsAttestation : System.IEquatable<Azure.ResourceManager.StackHCI.Models.ImdsAttestation>
     {
         private readonly object _dummy;
@@ -422,27 +443,6 @@ namespace Azure.ResourceManager.StackHCI.Models
         public static bool operator ==(Azure.ResourceManager.StackHCI.Models.ProvisioningState left, Azure.ResourceManager.StackHCI.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StackHCI.Models.ProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StackHCI.Models.ProvisioningState left, Azure.ResourceManager.StackHCI.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.StackHCI.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.StackHCI.Models.Status ConnectedRecently { get { throw null; } }
-        public static Azure.ResourceManager.StackHCI.Models.Status Disconnected { get { throw null; } }
-        public static Azure.ResourceManager.StackHCI.Models.Status Error { get { throw null; } }
-        public static Azure.ResourceManager.StackHCI.Models.Status NotConnectedRecently { get { throw null; } }
-        public static Azure.ResourceManager.StackHCI.Models.Status NotYetRegistered { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StackHCI.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StackHCI.Models.Status left, Azure.ResourceManager.StackHCI.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StackHCI.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StackHCI.Models.Status left, Azure.ResourceManager.StackHCI.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
