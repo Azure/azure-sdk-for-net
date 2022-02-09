@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
         /// <param name="lastModifiedTime"> Last modified time. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
-        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, type)
+        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, type, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;

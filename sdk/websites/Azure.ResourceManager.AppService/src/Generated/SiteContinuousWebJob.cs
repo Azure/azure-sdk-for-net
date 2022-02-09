@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+
+        private readonly ClientDiagnostics _siteContinuousWebJobWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteContinuousWebJobWebAppsRestClient;
         private readonly ContinuousWebJobData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteContinuousWebJob"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteContinuousWebJob"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteContinuousWebJob(ArmResource options, ContinuousWebJobData data) : base(options, data.Id)
+        internal SiteContinuousWebJob(ArmClient client, ContinuousWebJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteContinuousWebJob"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteContinuousWebJob(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SiteContinuousWebJob(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SiteContinuousWebJob"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteContinuousWebJob(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
+            _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(_siteContinuousWebJobWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteContinuousWebJob>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.Get");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
+                    throw await _siteContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +113,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteContinuousWebJob> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.Get");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteContinuousWebJobWebAppsRestClient.GetContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteContinuousWebJob(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _siteContinuousWebJobWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteContinuousWebJob(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,11 +137,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SiteContinuousWebJobDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.DeleteContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteContinuousWebJobWebAppsRestClient.DeleteContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SiteContinuousWebJobDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -220,11 +162,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SiteContinuousWebJobDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.Delete");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.DeleteContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteContinuousWebJobWebAppsRestClient.DeleteContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SiteContinuousWebJobDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -244,11 +186,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StartContinuousWebJobAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.StartContinuousWebJob");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.StartContinuousWebJob");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StartContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteContinuousWebJobWebAppsRestClient.StartContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -265,11 +207,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartContinuousWebJob(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.StartContinuousWebJob");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.StartContinuousWebJob");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StartContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteContinuousWebJobWebAppsRestClient.StartContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -286,11 +228,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> StopContinuousWebJobAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.StopContinuousWebJob");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.StopContinuousWebJob");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.StopContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteContinuousWebJobWebAppsRestClient.StopContinuousWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -307,11 +249,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StopContinuousWebJob(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SiteContinuousWebJob.StopContinuousWebJob");
+            using var scope = _siteContinuousWebJobWebAppsClientDiagnostics.CreateScope("SiteContinuousWebJob.StopContinuousWebJob");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.StopContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteContinuousWebJobWebAppsRestClient.StopContinuousWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

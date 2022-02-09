@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.KeyVault
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SecretsRestOperations _secretsRestClient;
+
+        private readonly ClientDiagnostics _secretClientDiagnostics;
+        private readonly SecretsRestOperations _secretRestClient;
         private readonly SecretData _data;
 
         /// <summary> Initializes a new instance of the <see cref="Secret"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Secret"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Secret(ArmResource options, SecretData data) : base(options, data.Id)
+        internal Secret(ArmClient client, SecretData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _secretsRestClient = new SecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="Secret"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Secret(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal Secret(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _secretsRestClient = new SecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="Secret"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Secret(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _secretsRestClient = new SecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string secretApiVersion);
+            _secretRestClient = new SecretsRestOperations(_secretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Secret>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Secret.Get");
+            using var scope = _secretClientDiagnostics.CreateScope("Secret.Get");
             scope.Start();
             try
             {
-                var response = await _secretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                    throw await _secretClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +113,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Secret> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Secret.Get");
+            using var scope = _secretClientDiagnostics.CreateScope("Secret.Get");
             scope.Start();
             try
             {
-                var response = _secretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Secret.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Secret.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _secretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,12 +143,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Secret.Update");
+            using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = await _secretsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                var response = await _secretRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,12 +171,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Secret.Update");
+            using var scope = _secretClientDiagnostics.CreateScope("Secret.Update");
             scope.Start();
             try
             {
-                var response = _secretsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new Secret(this, response.Value), response.GetRawResponse());
+                var response = _secretRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new Secret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

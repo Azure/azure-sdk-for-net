@@ -588,12 +588,14 @@
         },
         "compareBodies": {
           "type": "boolean"
+        },
+        "ignoredHeaders": {
+          "type": "string"
+        },
+        "ignoredQueryParameters": {
+          "type": "string"
         }
-      },
-      "required": [
-        "excludedHeaders",
-        "compareBodies"
-      ]
+      }
     },
     "HeaderTransform": {
       "type": "object",

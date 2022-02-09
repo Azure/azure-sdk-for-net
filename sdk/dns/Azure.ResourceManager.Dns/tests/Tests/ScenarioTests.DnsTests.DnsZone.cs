@@ -10,6 +10,7 @@ using Azure.ResourceManager.Dns.Tests;
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
+    [Ignore("These tests will work once the conversion to new track 2 is complete")]
     public class ScenarioTestsZones : DnsManagementClientBase
     {
         private string location;

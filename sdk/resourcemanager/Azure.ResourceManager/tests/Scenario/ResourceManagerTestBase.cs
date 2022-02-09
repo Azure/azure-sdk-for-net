@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<ManagementLockObject> CreateManagementLockObject(ArmResource armResource, string lockName)
+        protected async Task<ManagementLock> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
-            ManagementLockObjectData input = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
-            ManagementLockObjectCreateOrUpdateOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(true, lockName, input);
+            ManagementLockData input = new ManagementLockData(new LockLevel("CanNotDelete"));
+            ManagementLockCreateOrUpdateOperation lro = await armResource.GetManagementLocks().CreateOrUpdateAsync(true, lockName, input);
             return lro.Value;
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Properties = properties
             };
-            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(true, resourceLinkId, data);
+            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(true, data);
             return lro.Value;
         }
     }

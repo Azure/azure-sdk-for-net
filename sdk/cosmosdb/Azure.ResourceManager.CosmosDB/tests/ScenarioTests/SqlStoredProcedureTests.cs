@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
 
-            SqlStoredProcedureCreateUpdateOptions updateOptions = new SqlStoredProcedureCreateUpdateOptions(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type,
+            SqlStoredProcedureCreateUpdateOptions updateOptions = new SqlStoredProcedureCreateUpdateOptions(storedProcedure.Id, _storedProcedureName, storedProcedure.Data.Type, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, storedProcedure.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 

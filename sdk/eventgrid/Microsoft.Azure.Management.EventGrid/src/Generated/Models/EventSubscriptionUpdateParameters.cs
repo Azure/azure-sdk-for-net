@@ -34,9 +34,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// class.
         /// </summary>
         /// <param name="destination">Information about the destination where
-        /// events have to be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.</param>
+        /// events have to be delivered for the event subscription.</param>
         /// <param name="deliveryWithResourceIdentity">Information about the
         /// destination where events have to be delivered for the event
         /// subscription.
@@ -54,11 +52,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="retryPolicy">The retry policy for events. This can be
         /// used to configure maximum number of delivery attempts and time to
         /// live for events.</param>
-        /// <param name="deadLetterDestination">The dead letter destination of
-        /// the event subscription. Any event that cannot be delivered to its'
-        /// destination is sent to the dead letter destination.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.</param>
+        /// <param name="deadLetterDestination">The DeadLetter destination of
+        /// the event subscription.</param>
         /// <param name="deadLetterWithResourceIdentity">The dead letter
         /// destination of the event subscription. Any event that cannot be
         /// delivered to its' destination is sent to the dead letter
@@ -88,8 +83,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets or sets information about the destination where events have to
         /// be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.
         /// </summary>
         [JsonProperty(PropertyName = "destination")]
         public EventSubscriptionDestination Destination { get; set; }
@@ -141,11 +134,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public RetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the dead letter destination of the event subscription.
-        /// Any event that cannot be delivered to its' destination is sent to
-        /// the dead letter destination.
-        /// Uses Azure Event Grid's identity to acquire the authentication
-        /// tokens being used during delivery / dead-lettering.
+        /// Gets or sets the DeadLetter destination of the event subscription.
         /// </summary>
         [JsonProperty(PropertyName = "deadLetterDestination")]
         public DeadLetterDestination DeadLetterDestination { get; set; }

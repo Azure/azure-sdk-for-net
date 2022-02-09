@@ -6,7 +6,7 @@ parameters:
   Recursive: $false
   CheckLinkGuidance: $true
   Urls: '(Get-ChildItem -Path ./ -Recurse -Include *.md)'
-  BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}.*/(?:blob|tree)/)$(DefaultBranch)(/.*)$"
+  BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}/(?:blob|tree)/)$(DefaultBranch)(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
   Condition: succeeded() # If you want to run on failure for the link checker, set it to `Condition: succeededOrFailed()`.
 

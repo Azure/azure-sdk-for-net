@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LongTermRetentionBackupsRestOperations _longTermRetentionBackupsRestClient;
+
+        private readonly ClientDiagnostics _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics;
+        private readonly LongTermRetentionBackupsRestOperations _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient;
         private readonly LongTermRetentionBackupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionBackup"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ResourceGroupLongTermRetentionBackup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupLongTermRetentionBackup(ArmResource options, LongTermRetentionBackupData data) : base(options, data.Id)
+        internal ResourceGroupLongTermRetentionBackup(ArmClient client, LongTermRetentionBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionBackup"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupLongTermRetentionBackup(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ResourceGroupLongTermRetentionBackup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupLongTermRetentionBackup"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupLongTermRetentionBackup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ResourceGroupLongTermRetentionBackup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Get");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Get");
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroupLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
+                    throw await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceGroupLongTermRetentionBackup> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Get");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Get");
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionBackup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionBackup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,12 +137,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ResourceGroupLongTermRetentionBackupDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Delete");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Delete");
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.DeleteByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupLongTermRetentionBackupDeleteOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateDeleteByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.DeleteByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupLongTermRetentionBackupDeleteOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,12 +162,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ResourceGroupLongTermRetentionBackupDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Delete");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.Delete");
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.DeleteByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ResourceGroupLongTermRetentionBackupDeleteOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateDeleteByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.DeleteByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ResourceGroupLongTermRetentionBackupDeleteOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -252,12 +194,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.CopyByResourceGroup");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.CopyByResourceGroup");
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.CopyByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupLongTermRetentionBackupCopyByResourceGroupOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateCopyByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CopyByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupLongTermRetentionBackupCopyByResourceGroupOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,12 +226,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.CopyByResourceGroup");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.CopyByResourceGroup");
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.CopyByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ResourceGroupLongTermRetentionBackupCopyByResourceGroupOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateCopyByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CopyByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new ResourceGroupLongTermRetentionBackupCopyByResourceGroupOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -316,12 +258,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.UpdateByResourceGroup");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.UpdateByResourceGroup");
             scope.Start();
             try
             {
-                var response = await _longTermRetentionBackupsRestClient.UpdateByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupLongTermRetentionBackupUpdateByResourceGroupOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateUpdateByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.UpdateByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupLongTermRetentionBackupUpdateByResourceGroupOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -348,12 +290,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.UpdateByResourceGroup");
+            using var scope = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionBackup.UpdateByResourceGroup");
             scope.Start();
             try
             {
-                var response = _longTermRetentionBackupsRestClient.UpdateByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ResourceGroupLongTermRetentionBackupUpdateByResourceGroupOperation(_clientDiagnostics, Pipeline, _longTermRetentionBackupsRestClient.CreateUpdateByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.UpdateByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new ResourceGroupLongTermRetentionBackupUpdateByResourceGroupOperation(_resourceGroupLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

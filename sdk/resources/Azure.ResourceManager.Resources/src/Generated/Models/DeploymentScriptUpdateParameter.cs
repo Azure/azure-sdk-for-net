@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Resource tags to be updated. </param>
-        internal DeploymentScriptUpdateParameter(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags) : base(id, name, type)
+        internal DeploymentScriptUpdateParameter(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags) : base(id, name, type, systemData)
         {
             Tags = tags;
         }

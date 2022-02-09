@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> storageAccountUrl = default;
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
@@ -124,6 +126,11 @@ namespace Azure.ResourceManager.AppService.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RestoreRequest(id, name, type, kind.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value);
+            return new RestoreRequest(id, name, type, systemData, kind.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value);
         }
     }
 }

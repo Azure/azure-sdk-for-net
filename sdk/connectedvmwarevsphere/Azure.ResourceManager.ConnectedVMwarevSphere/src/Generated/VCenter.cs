@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VCentersRestOperations _vCentersRestClient;
+
+        private readonly ClientDiagnostics _vCenterClientDiagnostics;
+        private readonly VCentersRestOperations _vCenterRestClient;
         private readonly VCenterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VCenter"/> class for mocking. </summary>
@@ -38,44 +39,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VCenter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VCenter(ArmResource options, VCenterData data) : base(options, data.Id)
+        internal VCenter(ArmClient client, VCenterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="VCenter"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VCenter(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal VCenter(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VCenter"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VCenter(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _vCentersRestClient = new VCentersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string vCenterApiVersion);
+            _vCenterRestClient = new VCentersRestOperations(_vCenterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vCenterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,6 +84,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of InventoryItems in the InventoryItem. </summary>
+        /// <returns> An object representing collection of InventoryItems and their operations over a InventoryItem. </returns>
+        public virtual InventoryItemCollection GetInventoryItems()
+        {
+            return new InventoryItemCollection(Client, Id);
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
         /// OperationId: VCenters_Get
@@ -112,14 +98,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VCenter>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Get");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                    throw await _vCenterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +121,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VCenter> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Get");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Get");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _vCenterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VCenter(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,12 +146,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<VCenterDeleteOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Delete");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Delete");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new VCenterDeleteOperation(_clientDiagnostics, Pipeline, _vCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
+                var response = await _vCenterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
+                var operation = new VCenterDeleteOperation(_vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,187 +172,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual VCenterDeleteOperation Delete(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Delete");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Delete");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new VCenterDeleteOperation(_clientDiagnostics, Pipeline, _vCentersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
+                var response = _vCenterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
+                var operation = new VCenterDeleteOperation(_vCenterClientDiagnostics, Pipeline, _vCenterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<VCenter>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public virtual Response<VCenter> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<VCenter>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.SetTags");
-            scope.Start();
-            try
-            {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public virtual Response<VCenter> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.SetTags");
-            scope.Start();
-            try
-            {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<VCenter>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public virtual Response<VCenter> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key), $"{nameof(key)} provided cannot be null or a whitespace.");
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VCenter.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new VCenter(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -419,12 +197,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VCenter>> UpdateAsync(ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Update");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Update");
             scope.Start();
             try
             {
-                var response = await _vCentersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                var response = await _vCenterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -441,12 +219,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VCenter> Update(ResourcePatch body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VCenter.Update");
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.Update");
             scope.Start();
             try
             {
-                var response = _vCentersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                return Response.FromValue(new VCenter(this, response.Value), response.GetRawResponse());
+                var response = _vCenterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                return Response.FromValue(new VCenter(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -455,14 +233,202 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        #region InventoryItem
-
-        /// <summary> Gets a collection of InventoryItems in the VCenter. </summary>
-        /// <returns> An object representing collection of InventoryItems and their operations over a VCenter. </returns>
-        public virtual InventoryItemCollection GetInventoryItems()
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<VCenter>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new InventoryItemCollection(this);
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<VCenter> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public async virtual Task<Response<VCenter>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.SetTags");
+            scope.Start();
+            try
+            {
+                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<VCenter> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.SetTags");
+            scope.Start();
+            try
+            {
+                TagResource.Delete(true, cancellationToken: cancellationToken);
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public async virtual Task<Response<VCenter>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
+        /// OperationId: VCenters_Get
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<VCenter> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenter.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagResource.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new VCenter(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

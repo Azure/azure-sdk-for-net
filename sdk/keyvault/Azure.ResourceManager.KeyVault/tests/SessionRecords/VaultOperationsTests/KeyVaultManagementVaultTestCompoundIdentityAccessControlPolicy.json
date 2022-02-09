@@ -99,7 +99,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "688",
+        "Content-Length": "708",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20220119.1",
@@ -142,7 +142,7 @@
               }
             }
           ],
-          "vaultUri": "",
+          "vaultUri": "http://vaulturi.com/",
           "enabledForDeployment": true,
           "enabledForDiskEncryption": true,
           "enabledForTemplateDeployment": true,

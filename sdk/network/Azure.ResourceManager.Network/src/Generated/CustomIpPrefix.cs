@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CustomIPPrefixesRestOperations _customIPPrefixesRestClient;
+
+        private readonly ClientDiagnostics _customIpPrefixCustomIPPrefixesClientDiagnostics;
+        private readonly CustomIPPrefixesRestOperations _customIpPrefixCustomIPPrefixesRestClient;
         private readonly CustomIpPrefixData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CustomIpPrefix"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "CustomIpPrefix"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomIpPrefix(ArmResource options, CustomIpPrefixData data) : base(options, new ResourceIdentifier(data.Id))
+        internal CustomIpPrefix(ArmClient client, CustomIpPrefixData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _customIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="CustomIpPrefix"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomIpPrefix(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal CustomIpPrefix(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _customIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="CustomIpPrefix"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomIpPrefix(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _customIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _customIpPrefixCustomIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string customIpPrefixCustomIPPrefixesApiVersion);
+            _customIpPrefixCustomIPPrefixesRestClient = new CustomIPPrefixesRestOperations(_customIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customIpPrefixCustomIPPrefixesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,14 +88,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CustomIpPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Get");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Get");
             scope.Start();
             try
             {
-                var response = await _customIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _customIpPrefixCustomIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
+                    throw await _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new CustomIpPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,50 +109,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CustomIpPrefix> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Get");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Get");
             scope.Start();
             try
             {
-                var response = _customIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _customIpPrefixCustomIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CustomIpPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,12 +130,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<CustomIpPrefixDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Delete");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Delete");
             scope.Start();
             try
             {
-                var response = await _customIPPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomIpPrefixDeleteOperation(_clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _customIpPrefixCustomIPPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomIpPrefixDeleteOperation(_customIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, _customIpPrefixCustomIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,12 +152,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual CustomIpPrefixDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Delete");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Delete");
             scope.Start();
             try
             {
-                var response = _customIPPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CustomIpPrefixDeleteOperation(_clientDiagnostics, Pipeline, _customIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _customIpPrefixCustomIPPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CustomIpPrefixDeleteOperation(_customIpPrefixCustomIPPrefixesClientDiagnostics, Pipeline, _customIpPrefixCustomIPPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,12 +180,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Update");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Update");
             scope.Start();
             try
             {
-                var response = await _customIPPrefixesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
+                var response = await _customIpPrefixCustomIPPrefixesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CustomIpPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,12 +205,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomIpPrefix.Update");
+            using var scope = _customIpPrefixCustomIPPrefixesClientDiagnostics.CreateScope("CustomIpPrefix.Update");
             scope.Start();
             try
             {
-                var response = _customIPPrefixesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new CustomIpPrefix(this, response.Value), response.GetRawResponse());
+                var response = _customIpPrefixCustomIPPrefixesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new CustomIpPrefix(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

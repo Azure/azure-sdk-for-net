@@ -24,12 +24,25 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing collection of ResourceGroup and their operations over its parent. </summary>
     public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ResourceGroupsRestOperations _resourceGroupsRestClient;
+        private readonly ClientDiagnostics _resourceGroupClientDiagnostics;
+        private readonly ResourceGroupsRestOperations _resourceGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupCollection"/> class for mocking. </summary>
         protected ResourceGroupCollection()
         {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ResourceGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceGroup.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceGroup.ResourceType, out string resourceGroupApiVersion);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(_resourceGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -38,8 +51,6 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: ResourceGroups_CreateOrUpdate
@@ -48,61 +59,22 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourceGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _resourceGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken);
-                var operation = new ResourceGroupCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceGroups_CreateOrUpdate
-        /// <summary> Creates or updates a resource group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceGroupCreateOrUpdateOperation(this, response);
+                var response = await _resourceGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceGroupCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,26 +88,31 @@ namespace Azure.ResourceManager.Resources
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceGroups_Get
-        /// <summary> Gets a resource group. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// OperationId: ResourceGroups_CreateOrUpdate
+        /// <summary> Creates or updates a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="resourceGroupName"> The name of the resource group to create or update. Can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </param>
+        /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ResourceGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _resourceGroupsRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                var response = _resourceGroupRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken);
+                var operation = new ResourceGroupCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -150,22 +127,20 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async virtual Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Get");
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
+                    throw await _resourceGroupClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,151 +149,32 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _resourceGroupsRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async virtual Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _resourceGroupsRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<bool> Exists(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(resourceGroupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceGroups_List
-        /// <summary> Gets all the resource groups for a subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
-        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
+        /// OperationId: ResourceGroups_Get
+        /// <summary> Gets a resource group. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroup> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupsRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken);
+                if (response.Value == null)
+                    throw _resourceGroupClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
             }
-            Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups
@@ -333,12 +189,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupsRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _resourceGroupRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -348,12 +204,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _resourceGroupsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(this, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _resourceGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,6 +218,157 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourceGroups_List
+        /// <summary> Gets all the resource groups for a subscription. </summary>
+        /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
+        /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGroup" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroup> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourceGroups_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await GetIfExistsAsync(resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourceGroups_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual Response<bool> Exists(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = GetIfExists(resourceGroupName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourceGroups_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public async virtual Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: ResourceGroups_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ResourceGroup> IEnumerable<ResourceGroup>.GetEnumerator()
@@ -378,8 +385,5 @@ namespace Azure.ResourceManager.Resources
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ResourceGroup, ResourceGroupData> Construct() { }
     }
 }

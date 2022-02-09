@@ -1,0 +1,40 @@
+parameters:
+  SuppressionFilePath: 'eng/CredScanSuppression.json'
+  BaselineFilePath: ''
+  SourceDirectory: $(Build.SourcesDirectory)
+  ServiceDirectory: ''
+
+steps:
+- pwsh: |
+    if ("$(Build.Reason)" -eq 'PullRequest') {
+      (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
+      | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
+    }
+    else {
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
+    }
+    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+  displayName: CredScan setup
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
+  displayName: CredScan running
+  inputs:
+    toolMajorVersion: V2
+    toolVersion: latest
+    scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
+    suppressionsFile: ${{ parameters.SuppressionFilePath }}
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+  displayName: CredScan result analysis
+  inputs:
+    GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
+    GdnBreakAllTools: false
+    GdnBreakGdnToolCredScan: true
+    GdnBreakGdnToolCredScanSeverity: Error
+    GdnBreakBaselines: baseline
+    # Used for generating baseline file.
+    # GdnBreakOutputBaselineFile: dotnet
+    # GdnBreakOutputBaseline: baseline
+  condition: succeededOrFailed()
+- pwsh: |
+    Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
+  displayName: CredScan troubleshooting guide
+  condition: failed()

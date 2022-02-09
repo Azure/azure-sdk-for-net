@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Management
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType type, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, type)
+        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, type, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;

@@ -1,6 +1,13 @@
 # Instructions for CODEOWNERS file format and automatic build failure notifications:
 # https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
 
+################
+# Automation
+################
+
+# Git Hub integration and bot rules
+/.github/                                       @AlexGhiondea @jsquire
+
 #########
 # SDK
 #########
@@ -138,6 +145,11 @@
 # PRLabel: %Cognitive - Metrics Advisor
 /sdk/metricsadvisor/                            @kinelski
 
+# PRLabel: %Cognitive - Anomaly Detector
+/sdk/anomalydetector/                           @conhua @mengaims @juaduan @moreOver0
+
+# ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
+/sdk/anomalydetector/Azure.AI.AnomalyDetector     @conhua @mengaims @juaduan @moreOver0
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
@@ -182,7 +194,7 @@
 
 # PRLabel: %Communication
 /sdk/communication/                                     @acsdevx-msft
-/sdk/communication/Azure.Communication.PhoneNumbers/    @RoyHerrod @danielav7 @whisper6284 @AlonsoMondal
+/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
 /sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
 /sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk
 
@@ -274,9 +286,12 @@
 # ServiceLabel: %Device Provisioning Service %Service Attention
 /sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/            @nberdy
 
+# ServiceLabel: %Device Update for IoT Hub %Service Attention
+/sdk/deviceupdate/                              @dpokluda @sedols
+
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai
+/sdk/digitaltwins/                              @johngallardo @efriesner @abhinav-ghai @Aashish93-stack
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention

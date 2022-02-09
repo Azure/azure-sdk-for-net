@@ -1,14 +1,19 @@
 # Release History
 
-## 4.3.0-beta.7 (Unreleased)
+## 4.3.0-beta.7 (2022-02-08)
 
 ### Features Added
 
+- Added `KeyReleasePolicy.Immutable` property.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+- `KeyRotationLifetimeAction.TimeAfterCreate` and `TimeBeforeExpiry` were changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
 
 ### Other Changes
+
+- `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
 
 ## 4.3.0-beta.6 (2022-01-12)
 

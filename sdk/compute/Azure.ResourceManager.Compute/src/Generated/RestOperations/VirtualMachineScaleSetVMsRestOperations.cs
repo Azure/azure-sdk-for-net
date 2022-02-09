@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -29,20 +28,20 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="options"> The client options used to construct the current client. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public VirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions options, Uri endpoint = null, string apiVersion = default)
+        public VirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             this.apiVersion = apiVersion ?? "2021-07-01";
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
-        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput)
+        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Compute
                 content.JsonWriter.WriteObjectValue(vmScaleSetVMReimageInput);
                 request.Content = content;
             }
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimageall", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -367,7 +366,7 @@ namespace Azure.ResourceManager.Compute
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -478,7 +477,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -584,7 +583,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -697,7 +696,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -708,7 +707,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<VirtualMachineScaleSetVMInstanceView>> GetInstanceViewAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetVmInstanceView>> GetInstanceViewAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -733,9 +732,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VirtualMachineScaleSetVMInstanceView value = default;
+                        VirtualMachineScaleSetVmInstanceView value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
+                        value = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -750,7 +749,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public Response<VirtualMachineScaleSetVMInstanceView> GetInstanceView(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetVmInstanceView> GetInstanceView(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -775,9 +774,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VirtualMachineScaleSetVMInstanceView value = default;
+                        VirtualMachineScaleSetVmInstanceView value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineScaleSetVMInstanceView.DeserializeVirtualMachineScaleSetVMInstanceView(document.RootElement);
+                        value = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -814,7 +813,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -920,7 +919,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1020,7 +1019,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/restart", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1118,7 +1117,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1216,7 +1215,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1319,7 +1318,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1427,7 +1426,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/performMaintenance", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1525,7 +1524,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/simulateEviction", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1626,7 +1625,7 @@ namespace Azure.ResourceManager.Compute
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -1726,7 +1725,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -28,8 +26,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DatabaseBlobAuditingPoliciesRestOperations _databaseBlobAuditingPoliciesRestClient;
+
+        private readonly ClientDiagnostics _databaseBlobAuditingPolicyClientDiagnostics;
+        private readonly DatabaseBlobAuditingPoliciesRestOperations _databaseBlobAuditingPolicyRestClient;
         private readonly DatabaseBlobAuditingPolicyData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseBlobAuditingPolicy"/> class for mocking. </summary>
@@ -38,44 +37,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DatabaseBlobAuditingPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseBlobAuditingPolicy(ArmResource options, DatabaseBlobAuditingPolicyData data) : base(options, data.Id)
+        internal DatabaseBlobAuditingPolicy(ArmClient client, DatabaseBlobAuditingPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databaseBlobAuditingPoliciesRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DatabaseBlobAuditingPolicy"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseBlobAuditingPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DatabaseBlobAuditingPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databaseBlobAuditingPoliciesRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DatabaseBlobAuditingPolicy"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseBlobAuditingPolicy(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _databaseBlobAuditingPoliciesRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _databaseBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string databaseBlobAuditingPolicyApiVersion);
+            _databaseBlobAuditingPolicyRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_databaseBlobAuditingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +89,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseBlobAuditingPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.Get");
+            using var scope = _databaseBlobAuditingPolicyClientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.Get");
             scope.Start();
             try
             {
-                var response = await _databaseBlobAuditingPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DatabaseBlobAuditingPolicy(this, response.Value), response.GetRawResponse());
+                    throw await _databaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +112,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseBlobAuditingPolicy> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.Get");
+            using var scope = _databaseBlobAuditingPolicyClientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.Get");
             scope.Start();
             try
             {
-                var response = _databaseBlobAuditingPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _databaseBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseBlobAuditingPolicy(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DatabaseBlobAuditingPolicy.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _databaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

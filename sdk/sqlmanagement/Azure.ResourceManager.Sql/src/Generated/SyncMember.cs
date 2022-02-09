@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Sql
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SyncMembersRestOperations _syncMembersRestClient;
+
+        private readonly ClientDiagnostics _syncMemberClientDiagnostics;
+        private readonly SyncMembersRestOperations _syncMemberRestClient;
         private readonly SyncMemberData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SyncMember"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SyncMember"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SyncMember(ArmResource options, SyncMemberData data) : base(options, data.Id)
+        internal SyncMember(ArmClient client, SyncMemberData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _syncMembersRestClient = new SyncMembersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SyncMember"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SyncMember(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SyncMember(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _syncMembersRestClient = new SyncMembersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SyncMember"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SyncMember(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _syncMembersRestClient = new SyncMembersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _syncMemberClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string syncMemberApiVersion);
+            _syncMemberRestClient = new SyncMembersRestOperations(_syncMemberClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncMemberApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,14 +90,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SyncMember>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Get");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Get");
             scope.Start();
             try
             {
-                var response = await _syncMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _syncMemberRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
+                    throw await _syncMemberClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new SyncMember(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,50 +113,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SyncMember> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Get");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Get");
             scope.Start();
             try
             {
-                var response = _syncMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _syncMemberRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncMember(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _syncMemberClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SyncMember(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,12 +137,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SyncMemberDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Delete");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Delete");
             scope.Start();
             try
             {
-                var response = await _syncMembersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncMemberDeleteOperation(_clientDiagnostics, Pipeline, _syncMembersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _syncMemberRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SyncMemberDeleteOperation(_syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,12 +162,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SyncMemberDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Delete");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Delete");
             scope.Start();
             try
             {
-                var response = _syncMembersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SyncMemberDeleteOperation(_clientDiagnostics, Pipeline, _syncMembersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _syncMemberRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SyncMemberDeleteOperation(_syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -252,12 +194,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Update");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Update");
             scope.Start();
             try
             {
-                var response = await _syncMembersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncMemberUpdateOperation(this, _clientDiagnostics, Pipeline, _syncMembersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = await _syncMemberRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new SyncMemberUpdateOperation(Client, _syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,12 +226,12 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.Update");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.Update");
             scope.Start();
             try
             {
-                var response = _syncMembersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SyncMemberUpdateOperation(this, _clientDiagnostics, Pipeline, _syncMembersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var response = _syncMemberRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var operation = new SyncMemberUpdateOperation(Client, _syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -311,11 +253,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SyncFullSchemaProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
+                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
                 scope.Start();
                 try
                 {
-                    var response = await _syncMembersRestClient.ListMemberSchemasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _syncMemberRestClient.ListMemberSchemasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -326,11 +268,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SyncFullSchemaProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
+                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
                 scope.Start();
                 try
                 {
-                    var response = await _syncMembersRestClient.ListMemberSchemasNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _syncMemberRestClient.ListMemberSchemasNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -352,11 +294,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SyncFullSchemaProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
+                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
                 scope.Start();
                 try
                 {
-                    var response = _syncMembersRestClient.ListMemberSchemas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _syncMemberRestClient.ListMemberSchemas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -367,11 +309,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SyncFullSchemaProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
+                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.GetMemberSchemas");
                 scope.Start();
                 try
                 {
-                    var response = _syncMembersRestClient.ListMemberSchemasNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _syncMemberRestClient.ListMemberSchemasNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -391,12 +333,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<SyncMemberRefreshMemberSchemaOperation> RefreshMemberSchemaAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.RefreshMemberSchema");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.RefreshMemberSchema");
             scope.Start();
             try
             {
-                var response = await _syncMembersRestClient.RefreshMemberSchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncMemberRefreshMemberSchemaOperation(_clientDiagnostics, Pipeline, _syncMembersRestClient.CreateRefreshMemberSchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _syncMemberRestClient.RefreshMemberSchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SyncMemberRefreshMemberSchemaOperation(_syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateRefreshMemberSchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -416,12 +358,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual SyncMemberRefreshMemberSchemaOperation RefreshMemberSchema(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SyncMember.RefreshMemberSchema");
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMember.RefreshMemberSchema");
             scope.Start();
             try
             {
-                var response = _syncMembersRestClient.RefreshMemberSchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SyncMemberRefreshMemberSchemaOperation(_clientDiagnostics, Pipeline, _syncMembersRestClient.CreateRefreshMemberSchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _syncMemberRestClient.RefreshMemberSchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SyncMemberRefreshMemberSchemaOperation(_syncMemberClientDiagnostics, Pipeline, _syncMemberRestClient.CreateRefreshMemberSchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

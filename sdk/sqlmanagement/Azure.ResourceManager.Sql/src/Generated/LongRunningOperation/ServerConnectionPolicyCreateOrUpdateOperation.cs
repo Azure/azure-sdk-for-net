@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ServerConnectionPolicy> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ServerConnectionPolicyCreateOrUpdateOperation for mocking. </summary>
         protected ServerConnectionPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal ServerConnectionPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServerConnectionPolicyCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServerConnectionPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerConnectionPolicyCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Sql.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
-            return new ServerConnectionPolicy(_operationBase, data);
+            return new ServerConnectionPolicy(_armClient, data);
         }
 
         async ValueTask<ServerConnectionPolicy> IOperationSource<ServerConnectionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
-            return new ServerConnectionPolicy(_operationBase, data);
+            return new ServerConnectionPolicy(_armClient, data);
         }
     }
 }

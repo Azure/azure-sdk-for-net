@@ -93,7 +93,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/checkNameAvailability?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/checkNameAvailability?api-version=2021-08-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -130,7 +130,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229?api-version=2021-08-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -160,7 +160,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Tue, 18 Jan 2022 05:09:05 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-04-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-08-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -175,7 +175,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -191,7 +191,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Tue, 18 Jan 2022 05:09:06 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-04-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-08-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -206,7 +206,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus2/asyncoperations/afc4f7ac-7db1-4931-9524-7db77cf92c62?monitor=true\u0026api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -291,7 +291,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -331,7 +331,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -368,7 +368,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -406,7 +406,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -444,7 +444,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable28581?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable28581?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -479,7 +479,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -508,7 +508,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -543,7 +543,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229/tableServices/default/tables/testtable2858?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -578,7 +578,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts?api-version=2021-08-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -667,7 +667,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/teststorageRG-1250/providers/Microsoft.Storage/storageAccounts/teststoragemgmt8229?api-version=2021-08-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",

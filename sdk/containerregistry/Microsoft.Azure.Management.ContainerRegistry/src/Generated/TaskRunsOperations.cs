@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The run request name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -121,6 +121,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (taskRunName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskRunName");
+            }
+            if (taskRunName != null)
+            {
+                if (taskRunName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "taskRunName", 50);
+                }
+                if (taskRunName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "taskRunName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(taskRunName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "taskRunName", "^[a-zA-Z0-9-]*$");
+                }
             }
             string apiVersion = "2019-06-01-preview";
             // Tracing
@@ -279,7 +294,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The name of task run.
+        /// The name of the task run.
         /// </param>
         /// <param name='taskRun'>
         /// The parameters of a run that needs to scheduled.
@@ -307,7 +322,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -332,7 +347,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='updateParameters'>
         /// The parameters for updating a task run.
@@ -361,7 +376,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The run request name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -423,6 +438,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (taskRunName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskRunName");
+            }
+            if (taskRunName != null)
+            {
+                if (taskRunName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "taskRunName", 50);
+                }
+                if (taskRunName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "taskRunName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(taskRunName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "taskRunName", "^[a-zA-Z0-9-]*$");
+                }
             }
             string apiVersion = "2019-06-01-preview";
             // Tracing
@@ -792,7 +822,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The name of task run.
+        /// The name of the task run.
         /// </param>
         /// <param name='taskRun'>
         /// The parameters of a run that needs to scheduled.
@@ -857,6 +887,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (taskRunName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskRunName");
+            }
+            if (taskRunName != null)
+            {
+                if (taskRunName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "taskRunName", 50);
+                }
+                if (taskRunName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "taskRunName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(taskRunName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "taskRunName", "^[a-zA-Z0-9-]*$");
+                }
             }
             if (taskRun == null)
             {
@@ -1048,7 +1093,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1107,6 +1152,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (taskRunName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskRunName");
+            }
+            if (taskRunName != null)
+            {
+                if (taskRunName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "taskRunName", 50);
+                }
+                if (taskRunName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "taskRunName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(taskRunName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "taskRunName", "^[a-zA-Z0-9-]*$");
+                }
             }
             string apiVersion = "2019-06-01-preview";
             // Tracing
@@ -1247,7 +1307,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='updateParameters'>
         /// The parameters for updating a task run.
@@ -1312,6 +1372,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (taskRunName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskRunName");
+            }
+            if (taskRunName != null)
+            {
+                if (taskRunName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "taskRunName", 50);
+                }
+                if (taskRunName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "taskRunName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(taskRunName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "taskRunName", "^[a-zA-Z0-9-]*$");
+                }
             }
             if (updateParameters == null)
             {

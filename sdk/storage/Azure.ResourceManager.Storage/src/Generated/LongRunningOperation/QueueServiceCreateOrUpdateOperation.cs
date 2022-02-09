@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal QueueServiceCreateOrUpdateOperation(ArmResource operationsBase, Response<QueueServiceData> response)
+        internal QueueServiceCreateOrUpdateOperation(ArmClient armClient, Response<QueueServiceData> response)
         {
-            _operation = new OperationOrResponseInternals<QueueService>(Response.FromValue(new QueueService(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<QueueService>(Response.FromValue(new QueueService(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

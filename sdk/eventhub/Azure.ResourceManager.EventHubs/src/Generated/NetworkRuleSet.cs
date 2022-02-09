@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.EventHubs
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NamespacesRestOperations _namespacesRestClient;
+
+        private readonly ClientDiagnostics _networkRuleSetNamespacesClientDiagnostics;
+        private readonly NamespacesRestOperations _networkRuleSetNamespacesRestClient;
         private readonly NetworkRuleSetData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class for mocking. </summary>
@@ -38,46 +38,22 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of the <see cref = "NetworkRuleSet"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkRuleSet(ArmResource options, NetworkRuleSetData data) : base(options, data.Id)
+        internal NetworkRuleSet(ArmClient client, NetworkRuleSetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkRuleSet(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal NetworkRuleSet(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="NetworkRuleSet"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkRuleSet(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
+            _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(_networkRuleSetNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,21 +83,18 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
         /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkRuleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.Get");
+            using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.Get");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkRuleSetNamespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkRuleSet(this, response.Value), response.GetRawResponse());
+                    throw await _networkRuleSetNamespacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,50 +107,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkRuleSet> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.Get");
+            using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.Get");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _networkRuleSetNamespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkRuleSet(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _networkRuleSetNamespacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkRuleSet(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,12 +135,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
+            using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkRuleSetCreateOrUpdateOperation(this, response);
+                var response = await _networkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkRuleSetCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,12 +164,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
+            using var scope = _networkRuleSetNamespacesClientDiagnostics.CreateScope("NetworkRuleSet.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new NetworkRuleSetCreateOrUpdateOperation(this, response);
+                var response = _networkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
+                var operation = new NetworkRuleSetCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

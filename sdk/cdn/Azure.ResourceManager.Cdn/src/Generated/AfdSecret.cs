@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,9 @@ namespace Azure.ResourceManager.Cdn
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AfdSecretsRestOperations _afdSecretsRestClient;
+
+        private readonly ClientDiagnostics _afdSecretClientDiagnostics;
+        private readonly AfdSecretsRestOperations _afdSecretRestClient;
         private readonly AfdSecretData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AfdSecret"/> class for mocking. </summary>
@@ -38,44 +38,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref = "AfdSecret"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AfdSecret(ArmResource options, AfdSecretData data) : base(options, data.Id)
+        internal AfdSecret(ArmClient client, AfdSecretData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecretsRestClient = new AfdSecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AfdSecret"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AfdSecret(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal AfdSecret(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecretsRestClient = new AfdSecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="AfdSecret"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AfdSecret(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ResourceType, out string apiVersion);
-            _afdSecretsRestClient = new AfdSecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _afdSecretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ResourceType, out string afdSecretApiVersion);
+            _afdSecretRestClient = new AfdSecretsRestOperations(_afdSecretClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, afdSecretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -109,14 +87,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AfdSecret>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.Get");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecret.Get");
             scope.Start();
             try
             {
-                var response = await _afdSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _afdSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
+                    throw await _afdSecretClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,50 +107,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AfdSecret> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.Get");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecret.Get");
             scope.Start();
             try
             {
-                var response = _afdSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _afdSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AfdSecret(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                    throw _afdSecretClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AfdSecret(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,12 +128,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<AfdSecretDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.Delete");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecret.Delete");
             scope.Start();
             try
             {
-                var response = await _afdSecretsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdSecretDeleteOperation(_clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _afdSecretRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AfdSecretDeleteOperation(_afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,12 +150,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AfdSecretDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AfdSecret.Delete");
+            using var scope = _afdSecretClientDiagnostics.CreateScope("AfdSecret.Delete");
             scope.Start();
             try
             {
-                var response = _afdSecretsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AfdSecretDeleteOperation(_clientDiagnostics, Pipeline, _afdSecretsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _afdSecretRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AfdSecretDeleteOperation(_afdSecretClientDiagnostics, Pipeline, _afdSecretRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
