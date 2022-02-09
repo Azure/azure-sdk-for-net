@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <summary>
         /// Copy method to choose between StartCopyFromUri or SyncCopyFromUri for Single Copy or Directory Copy Transfers
         /// </summary>
-        public BlobServiceCopyMethod CopyMethod { get; internal set; }
+        public BlobCopyMethod CopyMethod { get; internal set; }
 
         /// <summary>
         /// Gets the <see cref="BlobDownloadOptions"/> for Single Download Transfers.

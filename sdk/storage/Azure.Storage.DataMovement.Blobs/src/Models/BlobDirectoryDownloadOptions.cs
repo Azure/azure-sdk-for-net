@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
 
 namespace Azure.Storage.DataMovement.Blobs.Models
@@ -11,11 +10,19 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     public class BlobDirectoryDownloadOptions
     {
         /// <summary>
-        /// Optional <see cref="IProgress{StorageTransferStatus}"/> to provide
+        /// Optional <see cref="BlobDownloadDirectoryEventHandler"/>.
+        ///
+        /// Can subscribe to blobs succeeding on transfer, failing transfer or being skipped.
+        /// For those looking for fine grained details on each blob event that occurs should use this.
+        /// </summary>
+        public BlobDownloadDirectoryEventHandler EventHandler { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="IProgress{BlobDownloadDirectoryProgress}"/> to provide
         /// progress updates about data transfers.
         /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
         /// </summary>
-        public TransferProgressHandler ProgressHandler { get; set; }
+        public IProgress<BlobCopyDirectoryProgress> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="StorageTransferOptions"/> to configure

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -50,5 +51,15 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         /// <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public HttpAuthorization SourceAuthentication { get; set; }
+
+        /// <summary>
+        /// Optional. Indicates progress handling for specific
+        /// </summary>
+        public IProgress<BlobCopyDirectoryProgress> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Event Handler
+        /// </summary>
+        public BlobCopyDirectoryEventHandler EventHandler { get; set; }
     }
 }

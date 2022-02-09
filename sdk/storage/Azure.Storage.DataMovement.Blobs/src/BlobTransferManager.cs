@@ -135,7 +135,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="sourceLocalPath"></param>
         /// <param name="destinationClient"></param>
-        /// <param name="overwrite"></param>
+        /// <param name="overwrite">
+        /// Defines whether to overwrite the blobs within the Blob Virtual Directory if they already exist.
+        /// If set to false, blobs will not be overwritten if they already exists. Blobs that are already exist,
+        /// will be skipped. This will not end in a failure. If set to true, the blob will be overwritten if
+        /// it already exists.
+        ///
+        /// Defaults to false.
+        /// </param>
         /// <param name="options"></param>
         /// <returns></returns>
         /// TODO: remove suppression
@@ -279,7 +286,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public string ScheduleCopy(
             Uri sourceUri,
             BlobClient destinationClient,
-            BlobServiceCopyMethod copyMethod,
+            BlobCopyMethod copyMethod,
             BlobCopyFromUriOptions copyOptions = default)
         {
             //TODO: if check the local path exists and not a directory
@@ -320,7 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public string ScheduleCopyDirectory(
             Uri sourceUri,
             BlobVirtualDirectoryClient destinationClient,
-            BlobServiceCopyMethod copyMethod,
+            BlobCopyMethod copyMethod,
             BlobDirectoryCopyFromUriOptions copyOptions = default)
         {
             //TODO: if check the local path exists and not a directory
@@ -416,7 +423,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else
             {
-                throw Errors.InvalidJobId(nameof(PauseJob), jobId);
+                throw Errors.InvalidJobId(nameof(GetJobProperties), jobId);
             }
         }
 
@@ -424,7 +431,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public override async Task PauseJob(string jobId)
+        public override async Task PauseJobAsync(string jobId)
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {
@@ -440,7 +447,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else
             {
-                throw Errors.InvalidJobId(nameof(PauseJob), jobId);
+                throw Errors.InvalidJobId(nameof(PauseJobAsync), jobId);
             }
         }
 
@@ -448,7 +455,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public override async Task ResumeJob(string jobId)
+        public override async Task ResumeJobAsync(string jobId)
         {
             if (!_totalTransferJobs.ContainsKey(jobId))
             {
@@ -465,7 +472,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else
             {
-                throw Errors.InvalidJobId(nameof(ResumeJob), jobId);
+                throw Errors.InvalidJobId(nameof(ResumeJobAsync), jobId);
             }
         }
 
@@ -475,7 +482,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public override void PauseTransfers()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async Task PauseTransfersAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             _managerTransferStatus = StorageManagerTransferStatus.Pausing;
 
@@ -501,7 +510,9 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// In order to rerun the job, the customer must readd the job back in.
         /// </summary>
-        public override void CancelTransfers()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async Task CancelTransfersAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
@@ -520,7 +531,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Removes all plan files/ DataTransferState Transfer files.
         /// Removes all logs
         /// </summary>
-        public override void Clean()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async Task CleanAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (_managerTransferStatus == StorageManagerTransferStatus.InProgress)
             {

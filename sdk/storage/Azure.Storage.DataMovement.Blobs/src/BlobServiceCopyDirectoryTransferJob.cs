@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Copy method to choose between StartCopyFromUri or SyncCopyFromUri
         /// </summary>
-        internal readonly BlobServiceCopyMethod CopyMethod;
+        internal readonly BlobCopyMethod CopyMethod;
 
         /// <summary>
         /// The <see cref="BlobDirectoryCopyFromUriOptions"/>.
@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string jobId,
             Uri sourceDirectoryUri,
             BlobVirtualDirectoryClient destinationClient,
-            BlobServiceCopyMethod copyMethod,
+            BlobCopyMethod copyMethod,
             BlobDirectoryCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs
                         SourceAuthentication = CopyFromUriOptions.SourceAuthentication,
                     };
 
-                    if (CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
+                    if (CopyMethod == BlobCopyMethod.ServiceSideAsyncCopy)
                     {
                         CopyFromUriOperation copyOperation = destinationBlobClient.StartCopyFromUri(sourceBlobUri, blobCopyFromUriOptions);
                         // TODO: Might want to figure out an appropriate delay to poll the wait for completion

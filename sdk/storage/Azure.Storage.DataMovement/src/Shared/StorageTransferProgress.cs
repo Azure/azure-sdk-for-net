@@ -1,0 +1,27 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Azure.Storage.DataMovement
+{
+    /// <summary>
+    /// Progress Handler to track how many files and bytes were transferred, along with files that failed or were skipped in transfer
+    /// </summary>
+    public class StorageTransferProgress
+    {
+        /// <summary>
+        /// Number of Blobs that succeeded in transfer
+        /// </summary>
+        public int FilesSuccesfullyTransferred { get; internal set; }
+        /// <summary>
+        /// Number of blobs that were skipped in transfer due to overwrite being set to not overwrite files, but the files exists already
+        /// </summary>
+        public int FilesSkippedTransfering { get; internal set; }
+        /// <summary>
+        /// Number of blobs that failed transferred.
+        /// </summary>
+        public int FilesFailedTransferred { get; internal set; }
+    }
+}

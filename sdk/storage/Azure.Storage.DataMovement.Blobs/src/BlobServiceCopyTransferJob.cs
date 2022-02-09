@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Type of Copy to occur
         /// </summary>
-        public readonly BlobServiceCopyMethod CopyMethod;
+        public readonly BlobCopyMethod CopyMethod;
 
         internal BlobCopyFromUriOptions _copyFromUriOptions;
 
@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string jobId,
             Uri sourceUri,
             BlobBaseClient destinationClient,
-            BlobServiceCopyMethod copyMethod,
+            BlobCopyMethod copyMethod,
             BlobCopyFromUriOptions copyFromUriOptions)
             : base(jobId)
         {
@@ -95,7 +95,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Do only blockblob upload for now for now
                 try
                 {
-                    if (CopyMethod == BlobServiceCopyMethod.ServiceSideAsyncCopy)
+                    if (CopyMethod == BlobCopyMethod.ServiceSideAsyncCopy)
                     {
                         CopyFromUriOperation copyOperation = DestinationBlobClient.StartCopyFromUri(SourceUri, CopyFromUriOptions);
                         // TODO: Might want to figure out an appropriate delay to poll the wait for completion

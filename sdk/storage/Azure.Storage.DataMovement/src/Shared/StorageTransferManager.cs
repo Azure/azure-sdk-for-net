@@ -60,13 +60,13 @@ namespace Azure.Storage.DataMovement
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task PauseJob(string jobId);
+        public abstract Task PauseJobAsync(string jobId);
 
         /// <summary>
         /// Returns storage job information if provided jobId.
         /// </summary>
         /// <param name="jobId"></param>
-        public abstract Task ResumeJob(string jobId);
+        public abstract Task ResumeJobAsync(string jobId);
 
         /// <summary>
         /// Pauses transfers that are currently being processed.
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public abstract void PauseTransfers();
+        public abstract Task PauseTransfersAsync();
 
         /// <summary>
         /// Cancel Transfers that are currently being processed.
@@ -86,12 +86,12 @@ namespace Azure.Storage.DataMovement
         ///
         /// In order to rerun the job, the customer must readd the job back in.
         /// </summary>
-        public abstract void CancelTransfers();
+        public abstract Task CancelTransfersAsync();
 
         /// <summary>
         /// Removes all plan files/ DataTransferState Transfer files.
         /// Removes all logs
         /// </summary>
-        public abstract void Clean();
+        public abstract Task CleanAsync();
     }
 }

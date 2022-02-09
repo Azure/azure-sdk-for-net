@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
 using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -25,9 +24,14 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Progress handler
+        /// Event Handler
         /// </summary>
-        public IProgress<TransferProgressHandler> ProgressHandler { get; set; }
+        public BlobUploadDirectoryEventHandler EventHandler { get; set; }
+
+        /// <summary>
+        /// Progress Handler
+        /// </summary>
+        public IProgress<BlobUploadDirectoryProgress> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
