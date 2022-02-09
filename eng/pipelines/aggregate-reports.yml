@@ -171,3 +171,5 @@ stages:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
+
+            
