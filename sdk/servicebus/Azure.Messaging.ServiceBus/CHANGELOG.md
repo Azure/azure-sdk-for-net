@@ -8,6 +8,11 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Max Hamulyak _([GitHub](https://github.com/kaylumah))_
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
+### Bugs Fixed
+
+- Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+- Remove array allocation when creating linked token sources from the ServiceBusProcessor
+
 ### Features Added
 
 - The `State` property has been added to `ServiceBusReceivedMessage` which indicates whether a message is `Active`, `Scheduled`, or `Deferred`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
