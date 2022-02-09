@@ -38,5 +38,9 @@ directive:
     transform: >
       $.osName["x-ms-client-name"] = "OSName";
       $.osVersion["x-ms-client-name"] = "OSVersion";
+  - from: clusters.json
+    where: $.definitions.ClusterReportedProperties.properties.clusterId
+    transform: >
+      $.format = "uuid"
 
 ```

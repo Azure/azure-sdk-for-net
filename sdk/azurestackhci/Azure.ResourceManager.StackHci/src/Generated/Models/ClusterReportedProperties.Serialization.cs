@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StackHci.Models
         internal static ClusterReportedProperties DeserializeClusterReportedProperties(JsonElement element)
         {
             Optional<string> clusterName = default;
-            Optional<string> clusterId = default;
+            Optional<Guid> clusterId = default;
             Optional<string> clusterVersion = default;
             Optional<IReadOnlyList<ClusterNode>> nodes = default;
             Optional<DateTimeOffset> lastUpdated = default;
@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.StackHci.Models
                 }
                 if (property.NameEquals("clusterId"))
                 {
-                    clusterId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clusterId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("clusterVersion"))
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.StackHci.Models
                     continue;
                 }
             }
-            return new ClusterReportedProperties(clusterName.Value, clusterId.Value, clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
+            return new ClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
         }
     }
 }
