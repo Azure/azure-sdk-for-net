@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
