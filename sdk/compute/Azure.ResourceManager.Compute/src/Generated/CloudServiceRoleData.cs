@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the CloudServiceRole data model. </summary>
-    public partial class CloudServiceRoleData : Resource
+    public partial class CloudServiceRoleData : ResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
         internal CloudServiceRoleData()

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DedicatedHostGroup data model. </summary>
-    public partial class DedicatedHostGroupData : TrackedResource
+    public partial class DedicatedHostGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>
         /// <param name="location"> The location. </param>

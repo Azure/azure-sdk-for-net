@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the DeviceUpdateAccount data model. </summary>
-    public partial class DeviceUpdateAccountData : TrackedResource
+    public partial class DeviceUpdateAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="location"> The location. </param>

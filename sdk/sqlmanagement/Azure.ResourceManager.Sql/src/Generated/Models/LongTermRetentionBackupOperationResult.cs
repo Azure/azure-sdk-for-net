@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
-    public partial class LongTermRetentionBackupOperationResult : Resource
+    public partial class LongTermRetentionBackupOperationResult : ResourceData
     {
         /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
         public LongTermRetentionBackupOperationResult()

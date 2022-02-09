@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
-    public partial class ProxyResource : Resource
+    public partial class ProxyResource : ResourceData
     {
         /// <summary> Initializes a new instance of ProxyResource. </summary>
         public ProxyResource()

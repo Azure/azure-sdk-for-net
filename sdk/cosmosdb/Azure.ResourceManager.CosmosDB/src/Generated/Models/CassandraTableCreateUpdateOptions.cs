@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Cassandra table. </summary>
-    public partial class CassandraTableCreateUpdateOptions : TrackedResource
+    public partial class CassandraTableCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraTableCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

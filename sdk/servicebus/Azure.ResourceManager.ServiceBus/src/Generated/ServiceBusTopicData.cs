@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusTopic data model. </summary>
-    public partial class ServiceBusTopicData : Resource
+    public partial class ServiceBusTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusTopicData. </summary>
         public ServiceBusTopicData()

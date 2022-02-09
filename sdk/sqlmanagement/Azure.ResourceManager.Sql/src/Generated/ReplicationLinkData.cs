@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ReplicationLink data model. </summary>
-    public partial class ReplicationLinkData : Resource
+    public partial class ReplicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationLinkData. </summary>
         public ReplicationLinkData()

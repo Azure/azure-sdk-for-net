@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RestorePoint data model. </summary>
-    public partial class RestorePointData : Resource
+    public partial class RestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         public RestorePointData()

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobCredential data model. </summary>
-    public partial class JobCredentialData : Resource
+    public partial class JobCredentialData : ResourceData
     {
         /// <summary> Initializes a new instance of JobCredentialData. </summary>
         public JobCredentialData()

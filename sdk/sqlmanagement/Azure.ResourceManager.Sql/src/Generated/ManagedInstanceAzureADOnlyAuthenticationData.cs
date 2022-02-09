@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstanceAzureADOnlyAuthentication data model. </summary>
-    public partial class ManagedInstanceAzureADOnlyAuthenticationData : Resource
+    public partial class ManagedInstanceAzureADOnlyAuthenticationData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationData. </summary>
         public ManagedInstanceAzureADOnlyAuthenticationData()

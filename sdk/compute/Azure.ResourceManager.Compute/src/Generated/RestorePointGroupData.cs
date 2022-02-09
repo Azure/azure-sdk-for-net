@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the RestorePointGroup data model. </summary>
-    public partial class RestorePointGroupData : TrackedResource
+    public partial class RestorePointGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
         /// <param name="location"> The location. </param>
