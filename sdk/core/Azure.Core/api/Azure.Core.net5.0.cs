@@ -194,7 +194,8 @@ namespace Azure
         public RequestContext() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
-        public void AddClassifier(int[] statusCodes, bool isError) { }
+        public void AddClassifier(int statusCode, bool isError) { }
+        public void AddClassifier(int statusCode, System.Func<Azure.Core.HttpMessage, bool> classify) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
@@ -442,6 +443,11 @@ namespace Azure.Core
         PerCall = 0,
         PerRetry = 1,
         BeforeTransport = 2,
+    }
+    public abstract partial class MessageClassifier
+    {
+        protected MessageClassifier() { }
+        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -890,6 +896,7 @@ namespace Azure.Core.Pipeline
     public static partial class HttpPipelineBuilder
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.MessageClassifier messageClassifier) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
     }
