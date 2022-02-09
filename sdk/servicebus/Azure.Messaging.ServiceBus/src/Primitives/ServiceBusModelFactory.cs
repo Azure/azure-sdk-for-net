@@ -504,7 +504,7 @@ namespace Azure.Messaging.ServiceBus
             ///
             /// <returns>The set of events as an enumerable of the requested type.</returns>
             ///
-            public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)_backingStore;
+            public override IReadOnlyCollection<T> AsReadOnly<T>() => new List<T>((IEnumerable<T>)_backingStore);
 
             /// <summary>
             ///   Performs the task needed to clean up resources used by the <see cref="TransportMessageBatch" />.

@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsEnumerable<ServiceBusMessage>(),
+                messageBatch.AsReadOnly<ServiceBusMessage>(),
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 

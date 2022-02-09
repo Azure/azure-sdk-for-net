@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsEnumerable<ServiceBusMessage>()),
+                (this, messageBatch.AsReadOnly<ServiceBusMessage>()),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -231,11 +231,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            IEnumerable<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = ValueStopwatch.StartNew();
             var link = default(SendingAmqpLink);
 
             try

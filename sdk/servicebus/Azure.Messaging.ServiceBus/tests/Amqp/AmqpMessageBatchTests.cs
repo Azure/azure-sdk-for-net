@@ -166,26 +166,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsReadOnly{T}" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableValidatesTheTypeParameter()
+        public void AsReadOnlyValidatesTheTypeParameter()
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnly<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsReadOnly{T}" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableReturnsTheMessages()
+        public void AsReadOnlyReturnsTheMessages()
         {
             var maximumSize = 5000;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
@@ -199,15 +199,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 batch.TryAddMessage(batchMessages[index]);
             }
 
-            IEnumerable<ServiceBusMessage> batchEnumerable = batch.AsEnumerable<ServiceBusMessage>();
-            Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
-
-            var batchEnumerableList = batchEnumerable.ToList();
-            Assert.That(batchEnumerableList.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
+            var batchReadOnly = batch.AsReadOnly<ServiceBusMessage>();
+            Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
+            Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
             for (var index = 0; index < batchMessages.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(batchMessages[index]), $"The message at index: { index } was not in the enumerable.");
+                Assert.That(batchReadOnly.Contains(batchMessages[index]), $"The message at index: { index } was not in the enumerable.");
             }
         }
 
