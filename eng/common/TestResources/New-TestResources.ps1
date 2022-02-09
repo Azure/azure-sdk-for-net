@@ -83,7 +83,14 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID)
+    [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID),
+
+    # Captures any arguments not declared here (no parameter errors)
+    # This enables backwards compatibility with old script versions in
+    # hotfix branches if and when the dynamic subscription configuration
+    # secrets get updated to add new parameters.
+    [Parameter(ValueFromRemainingArguments = $true)]
+    $NewTestResourcesRemainingArguments
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
