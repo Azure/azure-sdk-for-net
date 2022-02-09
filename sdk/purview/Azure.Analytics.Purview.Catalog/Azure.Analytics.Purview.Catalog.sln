@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Cat
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Analytics.Purview.Shared.Tests", "..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.shproj", "{283CB4FE-A207-4D92-8431-6147F1ECBAB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{B48EFD57-7500-4A8E-870B-46E3C511B9DF}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems*{002a0f15-402b-473d-8842-5507462920bf}*SharedItemsImports = 5

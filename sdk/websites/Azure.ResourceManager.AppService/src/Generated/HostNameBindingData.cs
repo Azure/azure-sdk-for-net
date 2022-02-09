@@ -5,8 +5,9 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="siteName"> App Service app name. </param>
         /// <param name="domainId"> Fully qualified ARM domain resource URI. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sslState"> SSL type. </param>
         /// <param name="thumbprint"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType type, string kind, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP) : base(id, name, type, kind)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP) : base(id, name, type, systemData, kind)
         {
             SiteName = siteName;
             DomainId = domainId;

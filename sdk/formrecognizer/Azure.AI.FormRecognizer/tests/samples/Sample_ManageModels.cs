@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = client.StartBuildModel(trainingFileUri);
+            BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel model = operationResponse.Value;
 

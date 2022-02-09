@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +20,6 @@ namespace Azure.AI.AnomalyDetector.Models
             Optional<int> effectiveCount = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"))
@@ -69,23 +67,8 @@ namespace Azure.AI.AnomalyDetector.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
-                    }
-                    errors = array;
-                    continue;
-                }
             }
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(errors));
+            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

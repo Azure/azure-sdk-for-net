@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdHostName = "customdomain4afd-1.azuretest.net";
             AfdCustomDomain afdCustomDomain = await CreateAfdCustomDomain(afdProfile, afdCustomDomainName, afdHostName);
             Assert.AreEqual(afdCustomDomainName, afdCustomDomain.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdCustomDomains().CreateOrUpdateAsync(null, afdCustomDomain.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdCustomDomains().CreateOrUpdateAsync(afdCustomDomainName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdCustomDomains().CreateOrUpdateAsync(true, null, afdCustomDomain.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdCustomDomains().CreateOrUpdateAsync(true, afdCustomDomainName, null));
         }
 
         [TestCase]

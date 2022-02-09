@@ -66,8 +66,15 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public enum ManagedIdentityIdType
+        {
+            None,
+            ClientId,
+            ResourceId
+        }
+
         [Test]
-        public void ValidateCtorOptionsPassedToCredentials()
+        public void ValidateCtorOptionsPassedToCredentials([Values(ManagedIdentityIdType.None, ManagedIdentityIdType.ClientId, ManagedIdentityIdType.ResourceId)] ManagedIdentityIdType managedIdentityIdType)
         {
             string expClientId = Guid.NewGuid().ToString();
             string expUsername = Guid.NewGuid().ToString();
@@ -75,7 +82,9 @@ namespace Azure.Identity.Tests
             string expBrowserTenantId = Guid.NewGuid().ToString();
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
+            string expResourceId =  $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
             string actClientId_ManagedIdentity = null;
+            string actResiurceId_ManagedIdentity = null;
             string actClientId_InteractiveBrowser = null;
             string actUsername = null;
             string actCacheTenantId = null;
@@ -85,7 +94,11 @@ namespace Azure.Identity.Tests
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
-            credFactory.OnCreateManagedIdentityCredential = (clientId, _) => actClientId_ManagedIdentity = clientId;
+            credFactory.OnCreateManagedIdentityCredential = (options, _) =>
+            {
+                actClientId_ManagedIdentity = options.ManagedIdentityClientId;
+                actResiurceId_ManagedIdentity = options.ManagedIdentityResourceId?.ToString();
+            };
             credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) => { actCacheTenantId = tenantId; actUsername = username; };
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, clientId,  _) => { actBrowserTenantId = tenantId; actClientId_InteractiveBrowser = clientId; };
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => { actVsTenantId = tenantId; };
@@ -95,7 +108,6 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions
             {
                 InteractiveBrowserCredentialClientId = expClientId,
-                ManagedIdentityClientId = expClientId,
                 SharedTokenCacheUsername = expUsername,
                 ExcludeSharedTokenCacheCredential = false,
                 SharedTokenCacheTenantId = expCacheTenantId,
@@ -105,15 +117,37 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = false,
             };
 
+            switch (managedIdentityIdType)
+            {
+                case ManagedIdentityIdType.ClientId:
+                    options.ManagedIdentityClientId = expClientId;
+                    break;
+                case ManagedIdentityIdType.ResourceId:
+                    options.ManagedIdentityResourceId = new ResourceIdentifier(expResourceId);
+                    break;
+            }
+
             new DefaultAzureCredential(credFactory, options);
 
-            Assert.AreEqual(expClientId, actClientId_ManagedIdentity);
             Assert.AreEqual(expClientId, actClientId_InteractiveBrowser);
             Assert.AreEqual(expUsername, actUsername);
             Assert.AreEqual(expCacheTenantId, actCacheTenantId);
             Assert.AreEqual(expBrowserTenantId, actBrowserTenantId);
             Assert.AreEqual(expVsTenantId, actVsTenantId);
             Assert.AreEqual(expCodeTenantId, actCodeTenantId);
+            switch (managedIdentityIdType)
+            {
+                case ManagedIdentityIdType.ClientId:
+                    Assert.AreEqual(expClientId, actClientId_ManagedIdentity);
+                    break;
+                case ManagedIdentityIdType.ResourceId:
+                    Assert.AreEqual(expResourceId, actResiurceId_ManagedIdentity);
+                    break;
+                case ManagedIdentityIdType.None:
+                    Assert.IsNull(actClientId_ManagedIdentity);
+                    Assert.IsNull(actResiurceId_ManagedIdentity);
+                    break;
+            }
         }
 
         [Test]
@@ -138,10 +172,10 @@ namespace Azure.Identity.Tests
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
-                credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
+                credFactory.OnCreateManagedIdentityCredential = (options, _) =>
                 {
                     onCreatedManagedCalled = true;
-                    Assert.AreEqual(expClientId, clientId);
+                    Assert.AreEqual(expClientId, options.ManagedIdentityClientId);
                 };
 
                 credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) =>
@@ -211,10 +245,10 @@ namespace Azure.Identity.Tests
             {
                 var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
-                credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
+                credFactory.OnCreateManagedIdentityCredential = (options, _) =>
                 {
                     onCreatedManagedCalled = true;
-                    Assert.IsNull(clientId);
+                    Assert.IsNull(options.ManagedIdentityClientId);
                 };
 
                 credFactory.OnCreateSharedTokenCacheCredential = (tenantId, username, _) =>

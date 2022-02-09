@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             ActivitySource.AddActivityListener(listener);
         }
+
         [Fact]
         public void TagObjects_NoItem()
         {

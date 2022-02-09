@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static DeviceUpdateAccountData CreateAccountData() => new DeviceUpdateAccountData(Location.WestUS2);
+        public static DeviceUpdateAccountData CreateAccountData() => new DeviceUpdateAccountData(AzureLocation.WestUS2);
 
-        public static DeviceUpdateInstanceData CreateInstanceData() => new DeviceUpdateInstanceData(Location.WestUS2);
+        public static DeviceUpdateInstanceData CreateInstanceData() => new DeviceUpdateInstanceData(AzureLocation.WestUS2);
 
         public static void AssertValidAccount(DeviceUpdateAccount model, DeviceUpdateAccount getResult)
         {
@@ -65,16 +66,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        //public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, DeviceUpdateAccountUpdateOptions updateParameters)
-        //{
-        //    Assert.AreEqual(updatedAccount.Data.Location, updateParameters.Location);
-        //    if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
-        //    {
-        //        Assert.NotNull(updatedAccount.Data.Identity);
-        //        Assert.NotNull(updateParameters.Identity);
-        //        Assert.AreEqual(updatedAccount.Data.Identity.Type, updateParameters.Identity.Type);
-        //    }
-        //}
+        public static void AssertAccountUpdate(DeviceUpdateAccount updatedAccount, DeviceUpdateAccountUpdateOptions updateParameters)
+        {
+            Assert.AreEqual(updatedAccount.Data.Location.ToString(), updateParameters.Location);
+            if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
+            {
+                Assert.NotNull(updatedAccount.Data.Identity);
+                Assert.NotNull(updateParameters.Identity);
+                Assert.AreEqual(updatedAccount.Data.Identity.Type, updateParameters.Identity.Type);
+            }
+        }
 
         public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, TagUpdateOptions updateParameters)
         {

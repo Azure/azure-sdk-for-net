@@ -9,12 +9,13 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
     public class ServiceBusTestBase: ManagementRecordedTestBase<ServiceBusManagementTestEnvironment>
     {
-        public static Location DefaultLocation => Location.EastUS2;
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testservicebusRG-");
-            ResourceGroupCreateOrUpdateOperation operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                true,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNameAvailabilityNamespaceAsync(new CheckNameAvailability(namespaceName));
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNameAvailabilityAsync(new CheckNameAvailability(namespaceName));
                 if (res.NameAvailable == true)
                 {
                     return namespaceName;

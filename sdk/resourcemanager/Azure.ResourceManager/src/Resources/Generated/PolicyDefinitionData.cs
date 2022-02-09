@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicyDefinition data model. </summary>
-    public partial class PolicyDefinitionData : Resource
+    public partial class PolicyDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
         public PolicyDefinitionData()
@@ -26,6 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
         /// <param name="displayName"> The display name of the policy definition. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type)
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type, systemData)
         {
             PolicyType = policyType;
             Mode = mode;

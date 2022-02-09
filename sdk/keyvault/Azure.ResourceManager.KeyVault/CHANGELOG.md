@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2022-01-29)
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added Resource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Couple of renamings.
 
 ## 1.0.0-beta.5 (2021-12-28)
 
@@ -94,14 +103,15 @@ using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System;
+using Azure.Core;
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard)));
 
-VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
+ArmOperation<Vault> lro = await vaultCollection.CreateOrUpdateAsync(true, "myVaultName", parameters);
 Vault vault = lro.Value;
 ```
 
@@ -118,5 +128,5 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 After upgrade:
 ```C# Snippet:Changelog_CreateModel
 VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Models.Sku(SkuFamily.A, SkuName.Standard));
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, properties);
 ```

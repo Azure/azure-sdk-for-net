@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the certificate resource
         /// payload.</param>
-        public CertificateResource(string id = default(string), string name = default(string), string type = default(string), CertificateProperties properties = default(CertificateProperties))
-            : base(id, name, type)
+        public CertificateResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), CertificateProperties properties = default(CertificateProperties))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();
@@ -53,18 +53,5 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         [JsonProperty(PropertyName = "properties")]
         public CertificateProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
-        }
     }
 }

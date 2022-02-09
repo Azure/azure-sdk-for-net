@@ -1,14 +1,22 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 4.8.2 (2022-02-08)
 
 ### Bugs Fixed
+- Fixed deserialization bugs in `StorageDirectoryDeletedEventData` and `EventHubCaptureFileCreatedEventData` system events.
 
 ### Other Changes
+
+## 4.8.1 (2022-01-12)
+
+### Bugs Fixed
+- Fix package icon
+
+## 4.8.0 (2022-01-11)
+
+### Features Added
+- Added new properties to Communication events
+- Added strongly typed models for Resource events
 
 ## 4.7.0 (2021-10-05)
 

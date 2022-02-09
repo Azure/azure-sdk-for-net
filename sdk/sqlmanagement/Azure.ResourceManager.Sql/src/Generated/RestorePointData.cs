@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RestorePoint data model. </summary>
-    public partial class RestorePointData : Resource
+    public partial class RestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         public RestorePointData()
@@ -24,12 +24,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="restorePointType"> The type of restore point. </param>
         /// <param name="earliestRestoreDate"> The earliest time to which this database can be restored. </param>
         /// <param name="restorePointCreationDate"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, string location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreDate, DateTimeOffset? restorePointCreationDate, string restorePointLabel) : base(id, name, type)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreDate, DateTimeOffset? restorePointCreationDate, string restorePointLabel) : base(id, name, type, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;

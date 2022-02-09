@@ -4,6 +4,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 #if !SNIPPET
 using NUnit.Framework;
 
@@ -57,12 +58,12 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         [Ignore("Only verifying that the sample builds")]
         public async Task CheckIfResourceGroupExists()
         {
-            #region Snippet:Readme_CheckIfExistssRG
+            #region Snippet:Readme_ExistsRG
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
 
-            bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+            bool exists = await subscription.GetResourceGroups().ExistsAsync(rgName);
 
             if (exists)
             {
@@ -76,7 +77,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             {
                 Console.WriteLine($"Resource Group {rgName} does not exist.");
             }
-            #endregion Snippet:Readme_CheckIfExistssRG
+            #endregion Snippet:Readme_ExistsRG
         }
 
         [Test]
@@ -105,7 +106,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         [Ignore("Only verifying that the sample builds")]
         public async Task TryGetResourceGroupOld()
         {
-            #region Snippet:Readme_OldCheckIfExistsRG
+            #region Snippet:Readme_OldExistsRG
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
@@ -119,7 +120,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             {
                 Console.WriteLine($"Resource Group {rgName} does not exist.");
             }
-            #endregion Snippet:Readme_OldCheckIfExistsRG
+            #endregion Snippet:Readme_OldExistsRG
         }
     }
 }

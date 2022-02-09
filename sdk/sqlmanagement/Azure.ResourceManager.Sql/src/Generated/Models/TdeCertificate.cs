@@ -5,13 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A TDE certificate that can be uploaded into a server. </summary>
-    public partial class TdeCertificate : Resource
+    public partial class TdeCertificate : ResourceData
     {
         /// <summary> Initializes a new instance of TdeCertificate. </summary>
         public TdeCertificate()
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <param name="certPassword"> The certificate password. </param>
-        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType type, string privateBlob, string certPassword) : base(id, name, type)
+        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string privateBlob, string certPassword) : base(id, name, type, systemData)
         {
             PrivateBlob = privateBlob;
             CertPassword = certPassword;
