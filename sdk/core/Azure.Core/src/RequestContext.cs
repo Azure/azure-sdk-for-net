@@ -10,11 +10,15 @@ using Azure.Core.Pipeline;
 namespace Azure
 {
     /// <summary>
-    /// Options which can be used to control the behavior of a request sent by a client.
+    /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
     public class RequestContext
     {
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
+
+        internal MessageClassifier? Classifier { get; private set; }
+
+        private List<MessageClassifier> _classifiers = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
@@ -54,34 +58,108 @@ namespace Azure
         }
 
         /// <summary>
+        /// TODO: Update this.
         /// Adds a custom classifier to the <see cref="ResponseClassifier"/> used in this call to the service method.
         /// The custom classifier is applied before the default classifier.
         /// This is useful in cases where you'd like to prevent specific response status codes from appearing as errors in
         /// logging and distributed tracing.  It will also prevent the call from throwing an exception when a response with
         /// this status code is received.
         /// </summary>
-        /// <param name="statusCodes">The status codes to classify differently in this call.</param>
+        /// <param name="statusCode">The status codes to classify differently in this call.</param>
         /// <param name="isError">Whether or not the passed-in status codes will be considered errors.</param>
-        public void AddClassifier(int[] statusCodes, bool isError)
+        public void AddClassifier(int statusCode, bool isError)
         {
-            CopyOrMerge(statusCodes, ref isError ? ref ErrorCodes : ref NonErrorCodes);
+            _classifiers.Add(new StatusCodeClassifier(statusCode, isError));
         }
 
-        internal int[]? ErrorCodes;
-        internal int[]? NonErrorCodes;
-
-        private static void CopyOrMerge(int[] source, ref int[]? target)
+        /// <summary>
+        /// </summary>
+        /// <param name="statusCode"></param>
+        /// <param name="classify"></param>
+        public void AddClassifier(int statusCode, Func<HttpMessage, bool> classify)
         {
-            if (target == null)
+            _classifiers.Add(new FuncClassifier(statusCode, classify));
+        }
+
+        private class StatusCodeClassifier : MessageClassifier
+        {
+            private readonly int _statusCode;
+            private readonly bool _isError;
+
+            public StatusCodeClassifier(int statusCode, bool isError)
             {
-                target = new int[source.Length];
-                Array.Copy(source, target, source.Length);
+                _statusCode = statusCode;
+                _isError = isError;
             }
-            else // merge arrays
+
+            public override bool TryClassify(HttpMessage message, out bool isError)
             {
-                var origLength = target.Length;
-                Array.Resize(ref target, source.Length + target.Length);
-                Array.Copy(source, 0, target, origLength, source.Length);
+                if (message.Response.Status == _statusCode)
+                {
+                    isError = _isError;
+                    return true;
+                }
+
+                isError = false;
+                return false;
+            }
+        }
+
+        private class FuncClassifier : MessageClassifier
+        {
+            private readonly int _statusCode;
+            private readonly Func<HttpMessage, bool> _classify;
+
+            internal FuncClassifier(int statusCode, Func<HttpMessage, bool> classify)
+            {
+                _statusCode = statusCode;
+                _classify = classify;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="message"></param>
+            /// <param name="isError"></param>
+            /// <returns></returns>
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                if (message.Response.Status == _statusCode)
+                {
+                    isError = _classify(message);
+                    return true;
+                }
+
+                isError = false;
+                return false;
+            }
+        }
+
+        private class AggregateClassifier : MessageClassifier
+        {
+            // TODO: I'll come back and implement this as an array to optimize a bit
+            private readonly List<MessageClassifier> _classifiers;
+
+            /// <summary>
+            /// MessageClassifier composted of multiple classifiers
+            /// </summary>
+            /// <param name="classifiers"></param>
+            public AggregateClassifier(List<MessageClassifier> classifiers)
+            {
+                _classifiers = classifiers;
+            }
+
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                for (int i = _classifiers.Count - 1; i >= 0; i--)
+                {
+                    if (_classifiers[i].TryClassify(message, out isError))
+                    {
+                        return true;
+                    }
+                }
+
+                isError = false;
+                return false;
             }
         }
     }

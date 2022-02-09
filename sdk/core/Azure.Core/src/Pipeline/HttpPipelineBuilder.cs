@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
@@ -45,6 +44,27 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="perCallPolicies"></param>
+        /// <param name="perRetryPolicies"></param>
+        /// <param name="messageClassifier">Classifier to be applied during classification for every operation on the client.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
+        public static HttpPipeline Build(
+            ClientOptions options,
+            HttpPipelinePolicy[] perCallPolicies,
+            HttpPipelinePolicy[] perRetryPolicies,
+            MessageClassifier messageClassifier)
+        {
+            Argument.AssertNotNull(messageClassifier, nameof(messageClassifier));
+
+            ResponseClassifier.Shared.ClientClassifier = messageClassifier;
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, ResponseClassifier.Shared);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+        }
+
+        /// <summary>
         /// Creates an instance of <see cref="DisposableHttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/>, client provided per call policies, and the supplied <see cref="HttpPipelineTransportOptions"/>.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
@@ -53,6 +73,7 @@ namespace Azure.Core.Pipeline
         /// <param name="transportOptions">The customer provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="transportOptions"/> is null.</exception>
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));

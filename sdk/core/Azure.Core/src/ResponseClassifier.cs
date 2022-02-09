@@ -14,6 +14,20 @@ namespace Azure.Core
         internal static ResponseClassifier Shared { get; } = new();
 
         /// <summary>
+        /// User-provided customizations to the classifier for this invocation
+        /// of an operation. This classifier has try-classifier semantics and may
+        /// not provide classifications for every possible status code.
+        /// </summary>
+        internal MessageClassifier? InvocationClassifier { get; set;}
+
+        /// <summary>
+        /// User-provided customizations to the classifier to be applied to every
+        /// service method on the client. This classifier has try-classifier semantics
+        /// and may not provide classifications for every possible status code.
+        /// </summary>
+        internal MessageClassifier? ClientClassifier { get; set; }
+
+        /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
@@ -53,7 +67,14 @@ namespace Azure.Core
 
         internal bool IsError(HttpMessage message)
         {
-            if (message.TryClassify(message.Response.Status, out bool isError))
+            bool isError;
+
+            if (InvocationClassifier?.TryClassify(message, out isError) ?? false)
+            {
+                return isError;
+            }
+
+            if (ClientClassifier?.TryClassify(message, out isError) ?? false)
             {
                 return isError;
             }
@@ -66,6 +87,7 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
+            // Final default classification of all error codes.
             var statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
         }

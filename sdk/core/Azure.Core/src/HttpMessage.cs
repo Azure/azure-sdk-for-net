@@ -94,8 +94,10 @@ namespace Azure.Core
                 Policies.AddRange(context.Policies);
             }
 
-            _errorCodes = context.ErrorCodes;
-            _nonErrorCodes = context.NonErrorCodes;
+            if (context.Classifier != null)
+            {
+                // You are here
+            }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
