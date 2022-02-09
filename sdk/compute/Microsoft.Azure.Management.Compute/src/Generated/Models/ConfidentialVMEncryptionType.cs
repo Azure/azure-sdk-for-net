@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ConfidentialVMEncryptionType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ConfidentialVMEncryptionType
+    public static class ConfidentialVMEncryptionType
     {
-        [EnumMember(Value = "EncryptedVMGuestStateOnlyWithPmk")]
-        EncryptedVMGuestStateOnlyWithPmk,
-        [EnumMember(Value = "EncryptedWithPmk")]
-        EncryptedWithPmk,
-        [EnumMember(Value = "EncryptedWithCmk")]
-        EncryptedWithCmk
-    }
-    internal static class ConfidentialVMEncryptionTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ConfidentialVMEncryptionType? value)
-        {
-            return value == null ? null : ((ConfidentialVMEncryptionType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ConfidentialVMEncryptionType value)
-        {
-            switch( value )
-            {
-                case ConfidentialVMEncryptionType.EncryptedVMGuestStateOnlyWithPmk:
-                    return "EncryptedVMGuestStateOnlyWithPmk";
-                case ConfidentialVMEncryptionType.EncryptedWithPmk:
-                    return "EncryptedWithPmk";
-                case ConfidentialVMEncryptionType.EncryptedWithCmk:
-                    return "EncryptedWithCmk";
-            }
-            return null;
-        }
-
-        internal static ConfidentialVMEncryptionType? ParseConfidentialVMEncryptionType(this string value)
-        {
-            switch( value )
-            {
-                case "EncryptedVMGuestStateOnlyWithPmk":
-                    return ConfidentialVMEncryptionType.EncryptedVMGuestStateOnlyWithPmk;
-                case "EncryptedWithPmk":
-                    return ConfidentialVMEncryptionType.EncryptedWithPmk;
-                case "EncryptedWithCmk":
-                    return ConfidentialVMEncryptionType.EncryptedWithCmk;
-            }
-            return null;
-        }
+        public const string EncryptedVMGuestStateOnlyWithPmk = "EncryptedVMGuestStateOnlyWithPmk";
+        public const string EncryptedWithPmk = "EncryptedWithPmk";
+        public const string EncryptedWithCmk = "EncryptedWithCmk";
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'EncryptedWithCmk'</param>
         /// <param name="secureVMDiskEncryptionSetId">secure VM disk encryption
         /// set id</param>
-        public OSDiskImageSecurityProfile(ConfidentialVMEncryptionType? confidentialVMEncryptionType = default(ConfidentialVMEncryptionType?), string secureVMDiskEncryptionSetId = default(string))
+        public OSDiskImageSecurityProfile(string confidentialVMEncryptionType = default(string), string secureVMDiskEncryptionSetId = default(string))
         {
             ConfidentialVMEncryptionType = confidentialVMEncryptionType;
             SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'EncryptedWithCmk'
         /// </summary>
         [JsonProperty(PropertyName = "confidentialVMEncryptionType")]
-        public ConfidentialVMEncryptionType? ConfidentialVMEncryptionType { get; set; }
+        public string ConfidentialVMEncryptionType { get; set; }
 
         /// <summary>
         /// Gets or sets secure VM disk encryption set id
