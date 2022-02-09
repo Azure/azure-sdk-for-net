@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.StackHCI.Models
             if (Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId");
-                writer.WriteStringValue(AadClientId);
+                writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId");
-                writer.WriteStringValue(AadTenantId);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(DesiredProperties))
             {

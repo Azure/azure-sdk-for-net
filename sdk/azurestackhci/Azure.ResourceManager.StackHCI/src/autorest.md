@@ -22,5 +22,21 @@ directive:
   - from: clusters.json
     where: $.definitions.ClusterProperties.properties.status["x-ms-enum"]
     transform: $.name = "HciClusterStatus"
+  - from: clusters.json
+    where: $.definitions.ClusterProperties.properties
+    transform: >
+      $.aadClientId.format = "uuid";
+      $.aadTenantId.format = "uuid";
+      $.cloudId.format = "uuid";
+  - from: clusters.json
+    where: $.definitions.ClusterPatchProperties.properties
+    transform: >
+      $.aadClientId.format = "uuid";
+      $.aadTenantId.format = "uuid";
+  - from: clusters.json
+    where: $.definitions.ClusterNode.properties
+    transform: >
+      $.osName["x-ms-client-name"] = "OSName";
+      $.osVersion["x-ms-client-name"] = "OSVersion";
 
 ```

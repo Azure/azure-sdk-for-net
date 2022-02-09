@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.StackHCI.Models
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
         /// <param name="manufacturer"> Manufacturer of the cluster node hardware. </param>
         /// <param name="model"> Model name of the cluster node hardware. </param>
-        /// <param name="osName"> Operating system running on the cluster node. </param>
-        /// <param name="osVersion"> Version of the operating system running on the cluster node. </param>
+        /// <param name="oSName"> Operating system running on the cluster node. </param>
+        /// <param name="oSVersion"> Version of the operating system running on the cluster node. </param>
         /// <param name="serialNumber"> Immutable id of the cluster node. </param>
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        internal ClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, string manufacturer, string model, string osName, string osVersion, string serialNumber, float? coreCount, float? memoryInGiB)
+        internal ClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, string manufacturer, string model, string oSName, string oSVersion, string serialNumber, float? coreCount, float? memoryInGiB)
         {
             Name = name;
             Id = id;
             WindowsServerSubscription = windowsServerSubscription;
             Manufacturer = manufacturer;
             Model = model;
-            OsName = osName;
-            OsVersion = osVersion;
+            OSName = oSName;
+            OSVersion = oSVersion;
             SerialNumber = serialNumber;
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.StackHCI.Models
         /// <summary> Model name of the cluster node hardware. </summary>
         public string Model { get; }
         /// <summary> Operating system running on the cluster node. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
         /// <summary> Version of the operating system running on the cluster node. </summary>
-        public string OsVersion { get; }
+        public string OSVersion { get; }
         /// <summary> Immutable id of the cluster node. </summary>
         public string SerialNumber { get; }
         /// <summary> Number of physical cores on the cluster node. </summary>

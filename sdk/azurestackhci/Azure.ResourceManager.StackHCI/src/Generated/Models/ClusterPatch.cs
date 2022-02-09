@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.StackHCI.Models
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
         public string CloudManagementEndpoint { get; set; }
         /// <summary> App id of cluster AAD identity. </summary>
-        public string AadClientId { get; set; }
+        public Guid? AadClientId { get; set; }
         /// <summary> Tenant id of cluster AAD identity. </summary>
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public ClusterDesiredProperties DesiredProperties { get; set; }
     }

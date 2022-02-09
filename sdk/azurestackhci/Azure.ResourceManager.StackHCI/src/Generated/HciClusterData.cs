@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, string cloudId, string cloudManagementEndpoint, string aadClientId, string aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, type, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.StackHCI
         /// <summary> Status of the cluster agent. </summary>
         public HciClusterStatus? Status { get; }
         /// <summary> Unique, immutable resource id. </summary>
-        public string CloudId { get; }
+        public Guid? CloudId { get; }
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
         public string CloudManagementEndpoint { get; set; }
         /// <summary> App id of cluster AAD identity. </summary>
-        public string AadClientId { get; set; }
+        public Guid? AadClientId { get; set; }
         /// <summary> Tenant id of cluster AAD identity. </summary>
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public ClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
