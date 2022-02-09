@@ -22,10 +22,6 @@ namespace Azure.ResourceManager
     /// </summary>
     public partial class ArmClient
     {
-        /// <summary>
-        /// The base URI of the service.
-        /// </summary>
-        private static readonly Uri _defaultUri = new Uri("https://management.azure.com");
         private Tenant _tenant;
         private Subscription _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
@@ -48,7 +44,7 @@ namespace Azure.ResourceManager
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, _defaultUri, options)
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, options)
         {
         }
 
@@ -59,33 +55,21 @@ namespace Azure.ResourceManager
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default) : this(credential, defaultSubscriptionId, _defaultUri, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClient"/> class.
-        /// </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId, Uri baseUri, ArmClientOptions options = default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(baseUri, nameof(baseUri));
 
-            BaseUri = baseUri;
             options ??= new ArmClientOptions();
+
+            BaseUri = options.Environment.BaseUri;
 
             if (options.Diagnostics.IsTelemetryEnabled)
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Audience.DefaultScope), new MgmtTelemetryPolicy(this, options));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope), new MgmtTelemetryPolicy(this, options));
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Audience.DefaultScope));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
             }
 
             DiagnosticOptions = options.Diagnostics;

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,10 +16,21 @@ namespace Azure.ResourceManager
     {
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
+        private ArmEnvironment _environment = ArmEnvironment.AzureCloud;
+
         /// <summary>
-        /// Azure cloud audience.
+        /// Azure cloud environment.
         /// </summary>
-        public ArmAudience Audience { get; set; } = ArmAudience.AzureCloud;
+        public ArmEnvironment Environment
+        {
+            get => _environment;
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                _environment = value;
+            }
+        }
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
