@@ -98,7 +98,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// values include: 'IPv4', 'DualStack'</param>
         /// <param name="virtualClusterGraduationProperties">Virtual Cluster
         /// graduation properties</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string publicIPType = default(string), string virtualClusterGraduationProperties = default(string))
+        /// <param name="privateEndpointConnections">A list of private endpoint
+        /// connections.</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string publicIPType = default(string), string virtualClusterGraduationProperties = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
             : base(id, name, type)
         {
             Tags = tags;
@@ -128,6 +130,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             AllowedFqdnList = allowedFqdnList;
             PublicIPType = publicIPType;
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -317,6 +320,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string VirtualClusterGraduationProperties { get; set; }
 
         /// <summary>
+        /// Gets a list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -339,6 +348,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (VirtualNetworkConfiguration != null)
             {
                 VirtualNetworkConfiguration.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

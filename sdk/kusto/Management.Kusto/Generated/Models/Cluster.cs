@@ -100,9 +100,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// values include: 'IPv4', 'DualStack'</param>
         /// <param name="virtualClusterGraduationProperties">Virtual Cluster
         /// graduation properties</param>
+        /// <param name="privateEndpointConnections">A list of private endpoint
+        /// connections.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string publicIPType = default(string), string virtualClusterGraduationProperties = default(string), string etag = default(string))
+        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string publicNetworkAccess = default(string), IList<string> allowedIpRangeList = default(IList<string>), string engineType = default(string), IList<AcceptedAudiences> acceptedAudiences = default(IList<AcceptedAudiences>), bool? enableAutoStop = default(bool?), string restrictOutboundNetworkAccess = default(string), IList<string> allowedFqdnList = default(IList<string>), string publicIPType = default(string), string virtualClusterGraduationProperties = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -132,6 +134,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             AllowedFqdnList = allowedFqdnList;
             PublicIPType = publicIPType;
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
+            PrivateEndpointConnections = privateEndpointConnections;
             Etag = etag;
             CustomInit();
         }
@@ -321,6 +324,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string VirtualClusterGraduationProperties { get; set; }
 
         /// <summary>
+        /// Gets a list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -355,6 +364,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (VirtualNetworkConfiguration != null)
             {
                 VirtualNetworkConfiguration.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
