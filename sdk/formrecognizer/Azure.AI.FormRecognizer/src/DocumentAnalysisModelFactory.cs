@@ -81,6 +81,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new BoundingRegion(pageNumber, boundingBox);
         }
 
+        /// <summary> Initializes a new instance of CopyAuthorization. </summary>
+        /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>
+        /// <param name="targetModelId"> Identifier of the target model. </param>
+        /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
+        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.CopyAuthorization"/> instance for mocking. </returns>
+        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expirationDateTime = default)
+        {
+            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expirationDateTime);
+        }
+
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="symbol"> Currency symbol label, if any. </param>
