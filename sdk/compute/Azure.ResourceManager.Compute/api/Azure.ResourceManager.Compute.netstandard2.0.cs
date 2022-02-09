@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.AvailabilitySet> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.AvailabilitySet>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AvailabilitySetData : Azure.ResourceManager.Models.TrackedResource
+    public partial class AvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AvailabilitySetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.CapacityReservation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CapacityReservationData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CapacityReservationData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.CapacityReservationGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservationGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CapacityReservationGroupData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CapacityReservationGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CapacityReservationGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.CloudService> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudService>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CloudServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CloudServiceProperties Properties { get { throw null; } set { } }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.CloudServiceRole> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceRole>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CloudServiceRoleData : Azure.ResourceManager.Models.Resource
+    public partial class CloudServiceRoleData : Azure.ResourceManager.Models.ResourceData
     {
         internal CloudServiceRoleData() { }
         public string Location { get { throw null; } }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.DedicatedHost> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHost>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DedicatedHostData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DedicatedHostData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.Sku sku) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoReplaceOnFailure { get { throw null; } set { } }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.DedicatedHostGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DedicatedHostGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DedicatedHostGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.DiskAccess> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskAccess>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskAccessData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DiskAccessData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DiskAccessData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Disk> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Disk>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DiskData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DiskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? BurstingEnabled { get { throw null; } set { } }
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.DiskEncryptionSet> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskEncryptionSet>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskEncryptionSetData : Azure.ResourceManager.Models.TrackedResource
+    public partial class DiskEncryptionSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DiskEncryptionSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.DiskRestorePoint> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.DiskRestorePoint>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskRestorePointData : Azure.ResourceManager.Models.Resource
+    public partial class DiskRestorePointData : Azure.ResourceManager.Models.ResourceData
     {
         internal DiskRestorePointData() { }
         public float? CompletionPercent { get { throw null; } }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.GalleryApplication> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplication>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GalleryApplicationData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GalleryApplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GalleryApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.GalleryApplicationVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryApplicationVersion>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GalleryApplicationVersionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GalleryApplicationVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GalleryApplicationVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Gallery> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Gallery>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GalleryData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GalleryData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GalleryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.GalleryImage> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImage>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GalleryImageData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GalleryImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.GalleryImageVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.GalleryImageVersion>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GalleryImageVersionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class GalleryImageVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public GalleryImageVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Image> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Image>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ImageData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.OSFamily> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.OSFamily>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OSFamilyData : Azure.ResourceManager.Models.Resource
+    public partial class OSFamilyData : Azure.ResourceManager.Models.ResourceData
     {
         internal OSFamilyData() { }
         public string Location { get { throw null; } }
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.OSVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.OSVersion>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OSVersionData : Azure.ResourceManager.Models.Resource
+    public partial class OSVersionData : Azure.ResourceManager.Models.ResourceData
     {
         internal OSVersionData() { }
         public string Location { get { throw null; } }
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } }
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.ProximityPlacementGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.ProximityPlacementGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ProximityPlacementGroupData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ProximityPlacementGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ProximityPlacementGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> AvailabilitySets { get { throw null; } }
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Azure.Response<Azure.ResourceManager.Compute.RestorePoint> GetIfExists(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePoint>> GetIfExistsAsync(string restorePointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RestorePointData : Azure.ResourceManager.Models.Resource
+    public partial class RestorePointData : Azure.ResourceManager.Models.ResourceData
     {
         public RestorePointData() { }
         public Azure.ResourceManager.Compute.Models.ConsistencyModeTypes? ConsistencyMode { get { throw null; } }
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.RestorePointGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.RestorePointGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorePointGroupData : Azure.ResourceManager.Models.TrackedResource
+    public partial class RestorePointGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public RestorePointGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ProvisioningState { get { throw null; } }
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.RoleInstance> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.RoleInstance>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RoleInstanceData : Azure.ResourceManager.Models.Resource
+    public partial class RoleInstanceData : Azure.ResourceManager.Models.ResourceData
     {
         internal RoleInstanceData() { }
         public string Location { get { throw null; } }
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Snapshot> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Snapshot>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SnapshotData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SnapshotData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SnapshotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public float? CompletionPercent { get { throw null; } set { } }
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.SshPublicKey> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.SshPublicKey>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SshPublicKeyData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SshPublicKeyData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SshPublicKeyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string PublicKey { get { throw null; } set { } }
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachine> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachine>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineExtension> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtension>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineExtensionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineExtensionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
@@ -1670,7 +1670,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineExtensionImage> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionImage>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineExtensionImageData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineExtensionImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineExtensionImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ComputeRole { get { throw null; } set { } }
@@ -1716,7 +1716,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineRunCommand> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineRunCommand>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineRunCommandData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineRunCommandData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineRunCommandData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AsyncExecution { get { throw null; } set { } }
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSet> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSet>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineScaleSetData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineScaleSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineScaleSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
@@ -1898,7 +1898,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgrade>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
@@ -2004,7 +2004,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSetVm> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVm>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineScaleSetVmData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineScaleSetVmData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineScaleSetVmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
@@ -4016,7 +4016,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.PrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Compute.Models.PrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
@@ -4859,7 +4859,7 @@ namespace Azure.ResourceManager.Compute.Models
         public UpdateResource() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class UpdateResourceDefinition : Azure.ResourceManager.Models.Resource
+    public partial class UpdateResourceDefinition : Azure.ResourceManager.Models.ResourceData
     {
         public UpdateResourceDefinition() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

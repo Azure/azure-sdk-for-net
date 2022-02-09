@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment script parameters to be updated. </summary>
-    public partial class DeploymentScriptUpdateParameter : Resource
+    public partial class DeploymentScriptUpdateParameter : ResourceData
     {
         /// <summary> Initializes a new instance of DeploymentScriptUpdateParameter. </summary>
         public DeploymentScriptUpdateParameter()

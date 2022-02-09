@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> A class representing the CommunicationService data model. </summary>
-    public partial class CommunicationServiceData : Resource
+    public partial class CommunicationServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
         public CommunicationServiceData()

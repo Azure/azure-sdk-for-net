@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A security event. </summary>
-    public partial class SecurityEvent : Resource
+    public partial class SecurityEvent : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityEvent. </summary>
         public SecurityEvent()

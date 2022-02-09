@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StackHCI
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StackHCI.ArcExtension> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.ArcExtension>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArcExtensionData : Azure.ResourceManager.Models.Resource
+    public partial class ArcExtensionData : Azure.ResourceManager.Models.ResourceData
     {
         public ArcExtensionData() { }
         public Azure.ResourceManager.StackHCI.Models.ExtensionAggregateState? AggregateState { get { throw null; } }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StackHCI
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StackHCI.ArcSetting> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.ArcSetting>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArcSettingData : Azure.ResourceManager.Models.Resource
+    public partial class ArcSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ArcSettingData() { }
         public Azure.ResourceManager.StackHCI.Models.ArcSettingAggregateState? AggregateState { get { throw null; } }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StackHCI
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StackHCI.HciCluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StackHCI.HciCluster>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public HciClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AadClientId { get { throw null; } set { } }

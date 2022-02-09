@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the JitRequest data model. </summary>
-    public partial class JitRequestData : TrackedResource
+    public partial class JitRequestData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of JitRequestData. </summary>
         /// <param name="location"> The location. </param>

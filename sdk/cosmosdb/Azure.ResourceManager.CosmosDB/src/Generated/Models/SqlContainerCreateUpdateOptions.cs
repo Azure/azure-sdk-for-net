@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB container. </summary>
-    public partial class SqlContainerCreateUpdateOptions : TrackedResource
+    public partial class SqlContainerCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlContainerCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

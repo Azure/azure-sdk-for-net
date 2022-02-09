@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EdgeOrder.AddressResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.AddressResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AddressResourceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class AddressResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AddressResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.EdgeOrder.Models.ContactDetails contactDetails) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.EdgeOrder.Models.AddressValidationStatus? AddressValidationStatus { get { throw null; } }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EdgeOrder.OrderItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.OrderItemResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OrderItemResourceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class OrderItemResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public OrderItemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.EdgeOrder.Models.OrderItemDetails orderItemDetails, Azure.ResourceManager.EdgeOrder.Models.AddressDetails addressDetails, string orderId) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.EdgeOrder.Models.AddressDetails AddressDetails { get { throw null; } set { } }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource> GetIfExists(string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource>> GetIfExistsAsync(string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OrderResourceData : Azure.ResourceManager.Models.Resource
+    public partial class OrderResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public OrderResourceData() { }
         public Azure.ResourceManager.EdgeOrder.Models.StageDetails CurrentStage { get { throw null; } }

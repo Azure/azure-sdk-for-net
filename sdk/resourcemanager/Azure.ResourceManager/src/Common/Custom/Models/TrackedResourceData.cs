@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
     [ReferenceType(new string[]{"SystemData"})]
-    public abstract partial class TrackedResource : Resource
+    public abstract partial class TrackedResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         [InitializationConstructor]
-        protected TrackedResource(AzureLocation location)
+        protected TrackedResourceData(AzureLocation location)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         [SerializationConstructor]
-        protected TrackedResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location) : base(id, name, type, systemData)
+        protected TrackedResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location) : base(id, name, type, systemData)
         {
             Tags = tags;
             Location = location;

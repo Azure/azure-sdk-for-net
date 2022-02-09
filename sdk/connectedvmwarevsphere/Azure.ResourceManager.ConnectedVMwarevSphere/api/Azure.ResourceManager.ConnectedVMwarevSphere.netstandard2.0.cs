@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.GuestAgent> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.GuestAgent>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GuestAgentData : Azure.ResourceManager.Models.Resource
+    public partial class GuestAgentData : Azure.ResourceManager.Models.ResourceData
     {
         public GuestAgentData() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.GuestCredential Credentials { get { throw null; } set { } }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.HybridIdentityMetadata> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.HybridIdentityMetadata>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HybridIdentityMetadataData : Azure.ResourceManager.Models.Resource
+    public partial class HybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData
     {
         public HybridIdentityMetadataData() { }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.InventoryItem> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.InventoryItem>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class InventoryItemData : Azure.ResourceManager.Models.Resource
+    public partial class InventoryItemData : Azure.ResourceManager.Models.ResourceData
     {
         public InventoryItemData(Azure.ResourceManager.ConnectedVMwarevSphere.Models.InventoryType inventoryType) { }
         public string Kind { get { throw null; } set { } }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtension>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MachineExtensionData : Azure.ResourceManager.Models.TrackedResource
+    public partial class MachineExtensionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public MachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePool> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePool>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourcePoolData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ResourcePoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ResourcePoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public long? CpuLimitMHz { get { throw null; } }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VCenter> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenter>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VCenterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VCenterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VCenterData(Azure.Core.AzureLocation location, string fqdn) : base (default(Azure.Core.AzureLocation)) { }
         public string ConnectionStatus { get { throw null; } }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachine>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplate> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplate>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetwork> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetwork>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareCluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareCluster>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareClusterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VMwareClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VMwareClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastore> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastore>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareDatastoreData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VMwareDatastoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VMwareDatastoreData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHost> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHost>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareHostData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VMwareHostData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VMwareHostData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string CustomResourceName { get { throw null; } }

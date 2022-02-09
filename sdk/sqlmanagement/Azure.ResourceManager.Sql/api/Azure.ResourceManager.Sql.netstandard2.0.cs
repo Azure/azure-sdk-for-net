@@ -1,6 +1,6 @@
 namespace Azure.ResourceManager.Sql
 {
-    public partial class AdvisorData : Azure.ResourceManager.Models.Resource
+    public partial class AdvisorData : Azure.ResourceManager.Models.ResourceData
     {
         public AdvisorData() { }
         public Azure.ResourceManager.Sql.Models.AdvisorStatus? AdvisorStatus { get { throw null; } }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BackupShortTermRetentionPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class BackupShortTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public BackupShortTermRetentionPolicyData() { }
         public Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours? DiffBackupIntervalInHours { get { throw null; } set { } }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuning> Update(Azure.ResourceManager.Sql.DatabaseAutomaticTuningData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseAutomaticTuning>> UpdateAsync(Azure.ResourceManager.Sql.DatabaseAutomaticTuningData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatabaseAutomaticTuningData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseAutomaticTuningData() { }
         public Azure.ResourceManager.Sql.Models.AutomaticTuningMode? ActualState { get { throw null; } }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql
         public System.Guid? StorageAccountSubscriptionId { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
     }
-    public partial class DatabaseColumnData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseColumnData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseColumnData() { }
         public Azure.ResourceManager.Sql.Models.ColumnDataType? ColumnType { get { throw null; } set { } }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql
         public bool? MemoryOptimized { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.TableTemporalType? TemporalType { get { throw null; } set { } }
     }
-    public partial class DatabaseSchemaData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseSchemaData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseSchemaData() { }
     }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DatabaseSecurityAlertPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
@@ -264,13 +264,13 @@ namespace Azure.ResourceManager.Sql
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
     }
-    public partial class DatabaseTableData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseTableData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseTableData() { }
         public bool? MemoryOptimized { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.TableTemporalType? TemporalType { get { throw null; } set { } }
     }
-    public partial class DatabaseVulnerabilityAssessmentData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Sql
         public string StorageContainerPath { get { throw null; } set { } }
         public string StorageContainerSasKey { get { throw null; } set { } }
     }
-    public partial class DatabaseVulnerabilityAssessmentRuleBaselineData : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseVulnerabilityAssessmentRuleBaselineData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseVulnerabilityAssessmentRuleBaselineData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.DatabaseVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DataMaskingRule> GetDataMaskingRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.DataMaskingRule> GetDataMaskingRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataMaskingPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class DataMaskingPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public DataMaskingPolicyData() { }
         public string ApplicationPrincipals { get { throw null; } }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DataWarehouseUserActivities> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DataWarehouseUserActivities>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataWarehouseUserActivitiesData : Azure.ResourceManager.Models.Resource
+    public partial class DataWarehouseUserActivitiesData : Azure.ResourceManager.Models.ResourceData
     {
         public DataWarehouseUserActivitiesData() { }
         public int? ActiveQueriesCount { get { throw null; } }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.DeletedServer> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.DeletedServer>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DeletedServerData : Azure.ResourceManager.Models.Resource
+    public partial class DeletedServerData : Azure.ResourceManager.Models.ResourceData
     {
         public DeletedServerData() { }
         public System.DateTimeOffset? DeletionTime { get { throw null; } }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ElasticPool> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ElasticPool>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ElasticPoolData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ElasticPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ElasticPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.EncryptionProtector> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.EncryptionProtector>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EncryptionProtectorData : Azure.ResourceManager.Models.Resource
+    public partial class EncryptionProtectorData : Azure.ResourceManager.Models.ResourceData
     {
         public EncryptionProtectorData() { }
         public bool? AutoRotationEnabled { get { throw null; } set { } }
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ExtendedDatabaseBlobAuditingPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ExtendedDatabaseBlobAuditingPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExtendedDatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ExtendedDatabaseBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ExtendedDatabaseBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ExtendedServerBlobAuditingPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ExtendedServerBlobAuditingPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExtendedServerBlobAuditingPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ExtendedServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ExtendedServerBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.FailoverGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.FailoverGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FailoverGroupData : Azure.ResourceManager.Models.Resource
+    public partial class FailoverGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public FailoverGroupData() { }
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.GeoBackupPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.GeoBackupPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GeoBackupPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class GeoBackupPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public GeoBackupPolicyData(Azure.ResourceManager.Sql.Models.GeoBackupPolicyState state) { }
         public string Kind { get { throw null; } }
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.InstanceFailoverGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.InstanceFailoverGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class InstanceFailoverGroupData : Azure.ResourceManager.Models.Resource
+    public partial class InstanceFailoverGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public InstanceFailoverGroupData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ManagedInstancePairInfo> ManagedInstancePairs { get { throw null; } }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.InstancePool> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.InstancePool>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class InstancePoolData : Azure.ResourceManager.Models.TrackedResource
+    public partial class InstancePoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public InstancePoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Sql.Models.InstancePoolLicenseType? LicenseType { get { throw null; } set { } }
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobAgent> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobAgent>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobAgentData : Azure.ResourceManager.Models.TrackedResource
+    public partial class JobAgentData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public JobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DatabaseId { get { throw null; } set { } }
@@ -851,13 +851,13 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobCredential> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobCredential>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobCredentialData : Azure.ResourceManager.Models.Resource
+    public partial class JobCredentialData : Azure.ResourceManager.Models.ResourceData
     {
         public JobCredentialData() { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
-    public partial class JobExecutionData : Azure.ResourceManager.Models.Resource
+    public partial class JobExecutionData : Azure.ResourceManager.Models.ResourceData
     {
         public JobExecutionData() { }
         public System.DateTimeOffset? CreateTime { get { throw null; } }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Sql
         public string StepName { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.JobExecutionTarget Target { get { throw null; } }
     }
-    public partial class JobStepData : Azure.ResourceManager.Models.Resource
+    public partial class JobStepData : Azure.ResourceManager.Models.ResourceData
     {
         public JobStepData() { }
         public Azure.ResourceManager.Sql.Models.JobStepAction Action { get { throw null; } set { } }
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobTargetGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobTargetGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobTargetGroupData : Azure.ResourceManager.Models.Resource
+    public partial class JobTargetGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public JobTargetGroupData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.JobTarget> Members { get { throw null; } }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.JobVersion> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.JobVersion>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobVersionData : Azure.ResourceManager.Models.Resource
+    public partial class JobVersionData : Azure.ResourceManager.Models.ResourceData
     {
         public JobVersionData() { }
     }
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.LedgerDigestUploads> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LedgerDigestUploads>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LedgerDigestUploadsData : Azure.ResourceManager.Models.Resource
+    public partial class LedgerDigestUploadsData : Azure.ResourceManager.Models.ResourceData
     {
         public LedgerDigestUploadsData() { }
         public string DigestStorageEndpoint { get { throw null; } set { } }
@@ -1010,12 +1010,12 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryption> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryption>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LogicalDatabaseTransparentDataEncryptionData : Azure.ResourceManager.Models.Resource
+    public partial class LogicalDatabaseTransparentDataEncryptionData : Azure.ResourceManager.Models.ResourceData
     {
         public LogicalDatabaseTransparentDataEncryptionData() { }
         public Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState? State { get { throw null; } set { } }
     }
-    public partial class LongTermRetentionBackupData : Azure.ResourceManager.Models.Resource
+    public partial class LongTermRetentionBackupData : Azure.ResourceManager.Models.ResourceData
     {
         public LongTermRetentionBackupData() { }
         public System.DateTimeOffset? BackupExpirationTime { get { throw null; } }
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.LongTermRetentionPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.LongTermRetentionPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LongTermRetentionPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class LongTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public LongTermRetentionPolicyData() { }
         public string MonthlyRetention { get { throw null; } set { } }
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowOptions> Get(string maintenanceWindowOptionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowOptions>> GetAsync(string maintenanceWindowOptionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaintenanceWindowOptionsData : Azure.ResourceManager.Models.Resource
+    public partial class MaintenanceWindowOptionsData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceWindowOptionsData() { }
         public bool? AllowMultipleMaintenanceWindowsPerCycle { get { throw null; } set { } }
@@ -1095,12 +1095,12 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindows> Get(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindows>> GetAsync(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaintenanceWindowsData : Azure.ResourceManager.Models.Resource
+    public partial class MaintenanceWindowsData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceWindowsData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> TimeRanges { get { throw null; } }
     }
-    public partial class ManagedBackupShortTermRetentionPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedBackupShortTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedBackupShortTermRetentionPolicyData() { }
         public int? RetentionDays { get { throw null; } set { } }
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ManagedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AutoCompleteRestore { get { throw null; } set { } }
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResult> GetIfExists(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResult>> GetIfExistsAsync(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagedDatabaseRestoreDetailsResultData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedDatabaseRestoreDetailsResultData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedDatabaseRestoreDetailsResultData() { }
         public string BlockReason { get { throw null; } }
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedDatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedDatabaseSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedDatabaseSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceAdministrator> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceAdministrator>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceAdministratorData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceAdministratorData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceAdministratorData() { }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType? AdministratorType { get { throw null; } set { } }
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceAzureADOnlyAuthentication> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceAzureADOnlyAuthentication>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceAzureADOnlyAuthenticationData() { }
         public bool? AzureADOnlyAuthentication { get { throw null; } set { } }
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstance> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstance>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ManagedInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AdministratorLogin { get { throw null; } set { } }
@@ -1663,7 +1663,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtector> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceEncryptionProtector>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceEncryptionProtectorData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceEncryptionProtectorData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceEncryptionProtectorData() { }
         public bool? AutoRotationEnabled { get { throw null; } set { } }
@@ -1702,7 +1702,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceKey> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceKey>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceKeyData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceKeyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceKeyData() { }
         public bool? AutoRotationEnabled { get { throw null; } }
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.Sql
         public string Thumbprint { get { throw null; } }
         public string Uri { get { throw null; } set { } }
     }
-    public partial class ManagedInstanceLongTermRetentionBackupData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceLongTermRetentionBackupData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceLongTermRetentionBackupData() { }
         public System.DateTimeOffset? BackupExpirationTime { get { throw null; } }
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceLongTermRetentionPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceLongTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceLongTermRetentionPolicyData() { }
         public string MonthlyRetention { get { throw null; } set { } }
@@ -1785,7 +1785,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceOperation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceOperation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceOperationData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceOperationData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceOperationData() { }
         public string Description { get { throw null; } }
@@ -1833,7 +1833,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstancePrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstancePrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstancePrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstancePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstancePrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
@@ -1865,7 +1865,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstancePrivateLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstancePrivateLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstancePrivateLinkData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstancePrivateLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstancePrivateLinkData() { }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties Properties { get { throw null; } }
@@ -1899,7 +1899,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessment> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedInstanceVulnerabilityAssessment>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedInstanceVulnerabilityAssessmentData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
@@ -1963,7 +1963,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedServerSecurityAlertPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedServerSecurityAlertPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedServerSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ManagedTransparentDataEncryption> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedTransparentDataEncryption>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedTransparentDataEncryptionData : Azure.ResourceManager.Models.Resource
+    public partial class ManagedTransparentDataEncryptionData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedTransparentDataEncryptionData() { }
         public Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState? State { get { throw null; } set { } }
@@ -2036,7 +2036,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.OutboundFirewallRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.OutboundFirewallRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OutboundFirewallRuleData : Azure.ResourceManager.Models.Resource
+    public partial class OutboundFirewallRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public OutboundFirewallRuleData() { }
         public string ProvisioningState { get { throw null; } }
@@ -2070,7 +2070,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Resources.Models.WritableSubResource PrivateEndpoint { get { throw null; } set { } }
@@ -2102,7 +2102,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.PrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLinkResourceData() { }
         public Azure.ResourceManager.Sql.Models.PrivateLinkResourceProperties Properties { get { throw null; } }
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RecommendedAction> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecommendedAction>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RecommendedActionData : Azure.ResourceManager.Models.Resource
+    public partial class RecommendedActionData : Azure.ResourceManager.Models.ResourceData
     {
         public RecommendedActionData() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Details { get { throw null; } }
@@ -2188,7 +2188,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RecoverableDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecoverableDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RecoverableDatabaseData : Azure.ResourceManager.Models.Resource
+    public partial class RecoverableDatabaseData : Azure.ResourceManager.Models.ResourceData
     {
         public RecoverableDatabaseData() { }
         public string Edition { get { throw null; } }
@@ -2221,7 +2221,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RecoverableManagedDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RecoverableManagedDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RecoverableManagedDatabaseData : Azure.ResourceManager.Models.Resource
+    public partial class RecoverableManagedDatabaseData : Azure.ResourceManager.Models.ResourceData
     {
         public RecoverableManagedDatabaseData() { }
         public string LastAvailableBackupDate { get { throw null; } }
@@ -2259,7 +2259,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ReplicationLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ReplicationLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ReplicationLinkData : Azure.ResourceManager.Models.Resource
+    public partial class ReplicationLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public ReplicationLinkData() { }
         public bool? IsTerminationAllowed { get { throw null; } }
@@ -2376,7 +2376,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RestorableDroppedDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RestorableDroppedDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.Resource
+    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.ResourceData
     {
         public RestorableDroppedDatabaseData() { }
         public Azure.ResourceManager.Sql.Models.RestorableDroppedDatabasePropertiesBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
@@ -2422,7 +2422,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RestorableDroppedManagedDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RestorableDroppedManagedDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorableDroppedManagedDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class RestorableDroppedManagedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public RestorableDroppedManagedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? CreationDate { get { throw null; } }
@@ -2457,7 +2457,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RestorePoint> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RestorePoint>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorePointData : Azure.ResourceManager.Models.Resource
+    public partial class RestorePointData : Azure.ResourceManager.Models.ResourceData
     {
         public RestorePointData() { }
         public System.DateTimeOffset? EarliestRestoreDate { get { throw null; } }
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.Sql
         public string RestorePointLabel { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RestorePointType? RestorePointType { get { throw null; } }
     }
-    public partial class SensitivityLabelData : Azure.ResourceManager.Models.Resource
+    public partial class SensitivityLabelData : Azure.ResourceManager.Models.ResourceData
     {
         public SensitivityLabelData() { }
         public string ColumnName { get { throw null; } }
@@ -2519,7 +2519,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuning> Update(Azure.ResourceManager.Sql.ServerAutomaticTuningData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerAutomaticTuning>> UpdateAsync(Azure.ResourceManager.Sql.ServerAutomaticTuningData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServerAutomaticTuningData : Azure.ResourceManager.Models.Resource
+    public partial class ServerAutomaticTuningData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerAutomaticTuningData() { }
         public Azure.ResourceManager.Sql.Models.AutomaticTuningServerMode? ActualState { get { throw null; } }
@@ -2555,7 +2555,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerAzureADAdministrator> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADAdministrator>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerAzureADAdministratorData : Azure.ResourceManager.Models.Resource
+    public partial class ServerAzureADAdministratorData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerAzureADAdministratorData() { }
         public Azure.ResourceManager.Sql.Models.AdministratorType? AdministratorType { get { throw null; } set { } }
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthentication> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerAzureADOnlyAuthentication>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.Resource
+    public partial class ServerAzureADOnlyAuthenticationData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerAzureADOnlyAuthenticationData() { }
         public bool? AzureADOnlyAuthentication { get { throw null; } set { } }
@@ -2625,7 +2625,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerBlobAuditingPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerBlobAuditingPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerBlobAuditingPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ServerBlobAuditingPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerBlobAuditingPolicyData() { }
         public System.Collections.Generic.IList<string> AuditActionsAndGroups { get { throw null; } }
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerCommunicationLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerCommunicationLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerCommunicationLinkData : Azure.ResourceManager.Models.Resource
+    public partial class ServerCommunicationLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerCommunicationLinkData() { }
         public string Kind { get { throw null; } }
@@ -2703,7 +2703,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerConnectionPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerConnectionPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerConnectionPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ServerConnectionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerConnectionPolicyData() { }
         public Azure.ResourceManager.Sql.Models.ServerConnectionType? ConnectionType { get { throw null; } set { } }
@@ -2945,7 +2945,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettings> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDevOpsAuditingSettings>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerDevOpsAuditingSettingsData : Azure.ResourceManager.Models.Resource
+    public partial class ServerDevOpsAuditingSettingsData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerDevOpsAuditingSettingsData() { }
         public bool? IsAzureMonitorTargetEnabled { get { throw null; } set { } }
@@ -2985,7 +2985,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerDnsAlias> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerDnsAlias>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerDnsAliasData : Azure.ResourceManager.Models.Resource
+    public partial class ServerDnsAliasData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerDnsAliasData() { }
         public string AzureDnsRecord { get { throw null; } }
@@ -3156,7 +3156,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerKey> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerKey>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerKeyData : Azure.ResourceManager.Models.Resource
+    public partial class ServerKeyData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerKeyData() { }
         public bool? AutoRotationEnabled { get { throw null; } }
@@ -3195,7 +3195,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerSecurityAlertPolicy> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerSecurityAlertPolicy>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerSecurityAlertPolicyData : Azure.ResourceManager.Models.Resource
+    public partial class ServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerSecurityAlertPolicyData() { }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
@@ -3236,7 +3236,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerTrustGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerTrustGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerTrustGroupData : Azure.ResourceManager.Models.Resource
+    public partial class ServerTrustGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerTrustGroupData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.ServerInfo> GroupMembers { get { throw null; } }
@@ -3271,7 +3271,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerVulnerabilityAssessment> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerVulnerabilityAssessment>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.Resource
+    public partial class ServerVulnerabilityAssessmentData : Azure.ResourceManager.Models.ResourceData
     {
         public ServerVulnerabilityAssessmentData() { }
         public Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentRecurringScansProperties RecurringScans { get { throw null; } set { } }
@@ -3304,7 +3304,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServiceObjective> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServiceObjective>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceObjectiveData : Azure.ResourceManager.Models.Resource
+    public partial class ServiceObjectiveData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceObjectiveData() { }
         public string Description { get { throw null; } }
@@ -3325,7 +3325,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlAgentConfiguration> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlAgentConfiguration>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SqlAgentConfigurationData : Azure.ResourceManager.Models.Resource
+    public partial class SqlAgentConfigurationData : Azure.ResourceManager.Models.ResourceData
     {
         public SqlAgentConfigurationData() { }
         public Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState? State { get { throw null; } set { } }
@@ -3427,7 +3427,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlDatabase> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlDatabase>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? AutoPauseDelay { get { throw null; } set { } }
@@ -3505,7 +3505,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlJob> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlJob>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlJobData : Azure.ResourceManager.Models.Resource
+    public partial class SqlJobData : Azure.ResourceManager.Models.ResourceData
     {
         public SqlJobData() { }
         public string Description { get { throw null; } set { } }
@@ -3590,7 +3590,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServer> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServer>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResource
+    public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SqlServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string AdministratorLogin { get { throw null; } set { } }
@@ -3635,7 +3635,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlTimeZone> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlTimeZone>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SqlTimeZoneData : Azure.ResourceManager.Models.Resource
+    public partial class SqlTimeZoneData : Azure.ResourceManager.Models.ResourceData
     {
         public SqlTimeZoneData() { }
         public string DisplayName { get { throw null; } }
@@ -3758,7 +3758,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SubscriptionUsage> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SubscriptionUsage>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionUsageData : Azure.ResourceManager.Models.Resource
+    public partial class SubscriptionUsageData : Azure.ResourceManager.Models.ResourceData
     {
         public SubscriptionUsageData() { }
         public double? CurrentValue { get { throw null; } }
@@ -3799,7 +3799,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SyncAgent> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SyncAgent>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SyncAgentData : Azure.ResourceManager.Models.Resource
+    public partial class SyncAgentData : Azure.ResourceManager.Models.ResourceData
     {
         public SyncAgentData() { }
         public System.DateTimeOffset? ExpiryTime { get { throw null; } }
@@ -3852,7 +3852,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SyncGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SyncGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SyncGroupData : Azure.ResourceManager.Models.Resource
+    public partial class SyncGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public SyncGroupData() { }
         public int? ConflictLoggingRetentionInDays { get { throw null; } set { } }
@@ -3904,7 +3904,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SyncMember> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SyncMember>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SyncMemberData : Azure.ResourceManager.Models.Resource
+    public partial class SyncMemberData : Azure.ResourceManager.Models.ResourceData
     {
         public SyncMemberData() { }
         public string DatabaseName { get { throw null; } set { } }
@@ -3957,7 +3957,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.VirtualCluster> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.VirtualCluster>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualClusterData : Azure.ResourceManager.Models.TrackedResource
+    public partial class VirtualClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<string> ChildResources { get { throw null; } }
@@ -3994,14 +3994,14 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.VirtualNetworkRule> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.VirtualNetworkRule>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualNetworkRuleData : Azure.ResourceManager.Models.Resource
+    public partial class VirtualNetworkRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public VirtualNetworkRuleData() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.VirtualNetworkRuleState? State { get { throw null; } }
         public string VirtualNetworkSubnetId { get { throw null; } set { } }
     }
-    public partial class VulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.Resource
+    public partial class VulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.ResourceData
     {
         public VulnerabilityAssessmentScanRecordData() { }
         public System.DateTimeOffset? EndTime { get { throw null; } }
@@ -4042,7 +4042,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.WorkloadClassifier> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.WorkloadClassifier>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkloadClassifierData : Azure.ResourceManager.Models.Resource
+    public partial class WorkloadClassifierData : Azure.ResourceManager.Models.ResourceData
     {
         public WorkloadClassifierData() { }
         public string Context { get { throw null; } set { } }
@@ -4082,7 +4082,7 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.WorkloadGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.WorkloadGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkloadGroupData : Azure.ResourceManager.Models.Resource
+    public partial class WorkloadGroupData : Azure.ResourceManager.Models.ResourceData
     {
         public WorkloadGroupData() { }
         public string Importance { get { throw null; } set { } }
@@ -4512,7 +4512,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.CurrentBackupStorageRedundancy left, Azure.ResourceManager.Sql.Models.CurrentBackupStorageRedundancy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DatabaseExtensions : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseExtensions : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseExtensions() { }
         public Azure.ResourceManager.Sql.Models.OperationMode? OperationMode { get { throw null; } set { } }
@@ -4538,7 +4538,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.DatabaseLicenseType left, Azure.ResourceManager.Sql.Models.DatabaseLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DatabaseOperation : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseOperation : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseOperation() { }
         public string DatabaseName { get { throw null; } }
@@ -4673,7 +4673,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
-    public partial class DatabaseUsage : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseUsage : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseUsage() { }
         public double? CurrentValue { get { throw null; } }
@@ -4686,7 +4686,7 @@ namespace Azure.ResourceManager.Sql.Models
         public DatabaseVulnerabilityAssessmentRuleBaselineItem(System.Collections.Generic.IEnumerable<string> result) { }
         public System.Collections.Generic.IList<string> Result { get { throw null; } }
     }
-    public partial class DatabaseVulnerabilityAssessmentScansExport : Azure.ResourceManager.Models.Resource
+    public partial class DatabaseVulnerabilityAssessmentScansExport : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseVulnerabilityAssessmentScansExport() { }
         public string ExportedReportLocation { get { throw null; } }
@@ -4700,7 +4700,7 @@ namespace Azure.ResourceManager.Sql.Models
         SSN = 4,
         Text = 5,
     }
-    public partial class DataMaskingRule : Azure.ResourceManager.Models.Resource
+    public partial class DataMaskingRule : Azure.ResourceManager.Models.ResourceData
     {
         public DataMaskingRule() { }
         public string AliasName { get { throw null; } set { } }
@@ -4791,7 +4791,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.StorageCapability> SupportedStorageCapabilities { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } }
     }
-    public partial class ElasticPoolActivity : Azure.ResourceManager.Models.Resource
+    public partial class ElasticPoolActivity : Azure.ResourceManager.Models.ResourceData
     {
         public ElasticPoolActivity() { }
         public string ElasticPoolName { get { throw null; } }
@@ -4816,7 +4816,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string State { get { throw null; } }
     }
-    public partial class ElasticPoolDatabaseActivity : Azure.ResourceManager.Models.Resource
+    public partial class ElasticPoolDatabaseActivity : Azure.ResourceManager.Models.ResourceData
     {
         public ElasticPoolDatabaseActivity() { }
         public string CurrentElasticPoolName { get { throw null; } }
@@ -4863,7 +4863,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType left, Azure.ResourceManager.Sql.Models.ElasticPoolLicenseType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ElasticPoolOperation : Azure.ResourceManager.Models.Resource
+    public partial class ElasticPoolOperation : Azure.ResourceManager.Models.ResourceData
     {
         public ElasticPoolOperation() { }
         public string Description { get { throw null; } }
@@ -5078,7 +5078,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.StorageKeyType StorageKeyType { get { throw null; } }
         public System.Uri StorageUri { get { throw null; } }
     }
-    public partial class ImportExportExtensionsOperationResult : Azure.ResourceManager.Models.Resource
+    public partial class ImportExportExtensionsOperationResult : Azure.ResourceManager.Models.ResourceData
     {
         public ImportExportExtensionsOperationResult() { }
         public string DatabaseName { get { throw null; } }
@@ -5089,7 +5089,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string ServerName { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class ImportExportOperationResult : Azure.ResourceManager.Models.Resource
+    public partial class ImportExportOperationResult : Azure.ResourceManager.Models.ResourceData
     {
         public ImportExportOperationResult() { }
         public System.Uri BlobUri { get { throw null; } }
@@ -5466,7 +5466,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.LogSizeUnit left, Azure.ResourceManager.Sql.Models.LogSizeUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LongTermRetentionBackupOperationResult : Azure.ResourceManager.Models.Resource
+    public partial class LongTermRetentionBackupOperationResult : Azure.ResourceManager.Models.ResourceData
     {
         public LongTermRetentionBackupOperationResult() { }
         public string FromBackupResourceId { get { throw null; } }
@@ -5750,7 +5750,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride left, Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedInstanceQuery : Azure.ResourceManager.Models.Resource
+    public partial class ManagedInstanceQuery : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedInstanceQuery() { }
         public string QueryText { get { throw null; } set { } }
@@ -5986,7 +5986,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.OperationMode left, Azure.ResourceManager.Sql.Models.OperationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OperationsHealth : Azure.ResourceManager.Models.Resource
+    public partial class OperationsHealth : Azure.ResourceManager.Models.ResourceData
     {
         public OperationsHealth() { }
         public string Description { get { throw null; } }
@@ -6240,7 +6240,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.QueryMetricUnitType left, Azure.ResourceManager.Sql.Models.QueryMetricUnitType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueryStatistics : Azure.ResourceManager.Models.Resource
+    public partial class QueryStatistics : Azure.ResourceManager.Models.ResourceData
     {
         public QueryStatistics() { }
         public string DatabaseName { get { throw null; } }
@@ -6391,7 +6391,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.RecommendedActionCurrentState CurrentValue { get { throw null; } set { } }
         public System.DateTimeOffset? LastModified { get { throw null; } }
     }
-    public partial class RecommendedSensitivityLabelUpdate : Azure.ResourceManager.Models.Resource
+    public partial class RecommendedSensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData
     {
         public RecommendedSensitivityLabelUpdate() { }
         public string Column { get { throw null; } set { } }
@@ -6610,7 +6610,7 @@ namespace Azure.ResourceManager.Sql.Models
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class SecurityEvent : Azure.ResourceManager.Models.Resource
+    public partial class SecurityEvent : Azure.ResourceManager.Models.ResourceData
     {
         public SecurityEvent() { }
         public string ApplicationName { get { throw null; } }
@@ -6653,7 +6653,7 @@ namespace Azure.ResourceManager.Sql.Models
         Current = 0,
         Recommended = 1,
     }
-    public partial class SensitivityLabelUpdate : Azure.ResourceManager.Models.Resource
+    public partial class SensitivityLabelUpdate : Azure.ResourceManager.Models.ResourceData
     {
         public SensitivityLabelUpdate() { }
         public string Column { get { throw null; } set { } }
@@ -6747,7 +6747,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag left, Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServerOperation : Azure.ResourceManager.Models.Resource
+    public partial class ServerOperation : Azure.ResourceManager.Models.ResourceData
     {
         public ServerOperation() { }
         public string Description { get { throw null; } }
@@ -7009,7 +7009,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal SyncAgentKeyProperties() { }
         public string SyncAgentKey { get { throw null; } }
     }
-    public partial class SyncAgentLinkedDatabase : Azure.ResourceManager.Models.Resource
+    public partial class SyncAgentLinkedDatabase : Azure.ResourceManager.Models.ResourceData
     {
         public SyncAgentLinkedDatabase() { }
         public string DatabaseId { get { throw null; } }
@@ -7261,7 +7261,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.TargetBackupStorageRedundancy left, Azure.ResourceManager.Sql.Models.TargetBackupStorageRedundancy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TdeCertificate : Azure.ResourceManager.Models.Resource
+    public partial class TdeCertificate : Azure.ResourceManager.Models.ResourceData
     {
         public TdeCertificate() { }
         public string CertPassword { get { throw null; } set { } }
@@ -7354,7 +7354,7 @@ namespace Azure.ResourceManager.Sql.Models
         public UpdateLongTermRetentionBackupOptions() { }
         public Azure.ResourceManager.Sql.Models.RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
     }
-    public partial class UpdateManagedInstanceDnsServersOperation : Azure.ResourceManager.Models.Resource
+    public partial class UpdateManagedInstanceDnsServersOperation : Azure.ResourceManager.Models.ResourceData
     {
         public UpdateManagedInstanceDnsServersOperation() { }
         public Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus? Status { get { throw null; } }

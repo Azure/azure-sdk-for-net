@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     [ReferenceType(new string[]{"SystemData"})]
-    public abstract partial class Resource
+    public abstract partial class ResourceData
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         [InitializationConstructor]
-        protected Resource()
+        protected ResourceData()
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         [SerializationConstructor]
-        protected Resource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData)
+        protected ResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData)
         {
             Id = id;
             Name = name;

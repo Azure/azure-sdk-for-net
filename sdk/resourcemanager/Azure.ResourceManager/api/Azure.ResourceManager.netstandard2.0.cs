@@ -55,10 +55,18 @@ namespace Azure.ResourceManager
 }
 namespace Azure.ResourceManager.Core
 {
-    public abstract partial class ArmCollection : Azure.ResourceManager.Core.ArmResource
+    public abstract partial class ArmCollection
     {
         protected ArmCollection() { }
         protected ArmCollection(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
+        protected internal System.Uri BaseUri { get { throw null; } }
+        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
+        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
+        public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> func) where T : class { throw null; }
+        protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
     public abstract partial class ArmResource
     {
@@ -123,7 +131,7 @@ namespace Azure.ResourceManager.Management
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Management.ManagementGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Management.ManagementGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagementGroupData : Azure.ResourceManager.Models.Resource
+    public partial class ManagementGroupData : Azure.ResourceManager.Models.ResourceData
     {
         internal ManagementGroupData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildInfo> Children { get { throw null; } }
@@ -166,7 +174,7 @@ namespace Azure.ResourceManager.Management.Models
         public string TenantId { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class DescendantInfo : Azure.ResourceManager.Models.Resource
+    public partial class DescendantInfo : Azure.ResourceManager.Models.ResourceData
     {
         internal DescendantInfo() { }
         public string DisplayName { get { throw null; } }
@@ -391,10 +399,10 @@ namespace Azure.ResourceManager.Models
         public static bool operator ==(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Models.Plan left, Azure.ResourceManager.Models.Plan right) { throw null; }
     }
-    public abstract partial class Resource
+    public abstract partial class ResourceData
     {
-        protected Resource() { }
-        protected Resource(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
+        protected ResourceData() { }
+        protected ResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
@@ -458,10 +466,10 @@ namespace Azure.ResourceManager.Models
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? LastModifiedByType { get { throw null; } }
     }
-    public abstract partial class TrackedResource : Azure.ResourceManager.Models.Resource
+    public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        protected TrackedResource(Azure.Core.AzureLocation location) { }
-        protected TrackedResource(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
+        protected TrackedResourceData(Azure.Core.AzureLocation location) { }
+        protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType type, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -499,7 +507,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.DataPolicyManifest> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DataPolicyManifest>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataPolicyManifestData : Azure.ResourceManager.Models.Resource
+    public partial class DataPolicyManifestData : Azure.ResourceManager.Models.ResourceData
     {
         internal DataPolicyManifestData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> Custom { get { throw null; } }
@@ -540,7 +548,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Feature> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Feature>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FeatureData : Azure.ResourceManager.Models.Resource
+    public partial class FeatureData : Azure.ResourceManager.Models.ResourceData
     {
         internal FeatureData() { }
         public Azure.ResourceManager.Resources.Models.FeatureProperties Properties { get { throw null; } }
@@ -675,7 +683,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementLock> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementLock>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagementLockData : Azure.ResourceManager.Models.Resource
+    public partial class ManagementLockData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagementLockData(Azure.ResourceManager.Resources.Models.LockLevel level) { }
         public Azure.ResourceManager.Resources.Models.LockLevel Level { get { throw null; } set { } }
@@ -711,7 +719,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.PolicyAssignment> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.PolicyAssignment>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PolicyAssignmentData : Azure.ResourceManager.Models.Resource
+    public partial class PolicyAssignmentData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicyAssignmentData() { }
         public string Description { get { throw null; } set { } }
@@ -726,7 +734,7 @@ namespace Azure.ResourceManager.Resources
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } }
     }
-    public partial class PolicyDefinitionData : Azure.ResourceManager.Models.Resource
+    public partial class PolicyDefinitionData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
@@ -766,7 +774,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.PolicyExemption> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.PolicyExemption>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PolicyExemptionData : Azure.ResourceManager.Models.Resource
+    public partial class PolicyExemptionData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicyExemptionData(string policyAssignmentId, Azure.ResourceManager.Resources.Models.ExemptionCategory exemptionCategory) { }
         public string Description { get { throw null; } set { } }
@@ -777,7 +785,7 @@ namespace Azure.ResourceManager.Resources
         public string PolicyAssignmentId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PolicyDefinitionReferenceIds { get { throw null; } }
     }
-    public partial class PolicySetDefinitionData : Azure.ResourceManager.Models.Resource
+    public partial class PolicySetDefinitionData : Azure.ResourceManager.Models.ResourceData
     {
         public PolicySetDefinitionData() { }
         public string Description { get { throw null; } set { } }
@@ -877,7 +885,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceGroup> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroup>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResource
+    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ResourceGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
@@ -1061,7 +1069,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.TagResource> Update(Azure.ResourceManager.Resources.Models.TagPatchResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TagResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TagPatchResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TagResourceData : Azure.ResourceManager.Models.Resource
+    public partial class TagResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public TagResourceData(Azure.ResourceManager.Resources.Models.Tag properties) { }
         public Azure.ResourceManager.Resources.Models.Tag Properties { get { throw null; } set { } }
@@ -1759,7 +1767,7 @@ namespace Azure.ResourceManager.Resources.Models
         ProjectedBy = 1,
         ManagedBy = 2,
     }
-    public partial class TrackedResourceExtended : Azure.ResourceManager.Models.TrackedResource
+    public partial class TrackedResourceExtended : Azure.ResourceManager.Models.TrackedResourceData
     {
         public TrackedResourceExtended(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the DataCenterResource data model. </summary>
-    public partial class DataCenterResourceData : Resource
+    public partial class DataCenterResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DataCenterResourceData. </summary>
         public DataCenterResourceData()

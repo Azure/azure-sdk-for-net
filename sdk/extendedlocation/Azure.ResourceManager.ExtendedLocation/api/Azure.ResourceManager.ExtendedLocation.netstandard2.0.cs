@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ExtendedLocation.CustomLocation> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CustomLocationData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CustomLocationData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public CustomLocationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.ExtendedLocation.Models.CustomLocationPropertiesAuthentication Authentication { get { throw null; } set { } }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         public string Type { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class EnabledResourceType : Azure.ResourceManager.Models.Resource
+    public partial class EnabledResourceType : Azure.ResourceManager.Models.ResourceData
     {
         public EnabledResourceType() { }
         public string ClusterExtensionId { get { throw null; } set { } }

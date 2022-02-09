@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> A class representing the ConfigurationStore data model. </summary>
-    public partial class ConfigurationStoreData : TrackedResource
+    public partial class ConfigurationStoreData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ConfigurationStoreData. </summary>
         /// <param name="location"> The location. </param>

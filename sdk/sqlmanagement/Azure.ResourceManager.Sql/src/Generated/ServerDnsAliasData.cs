@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerDnsAlias data model. </summary>
-    public partial class ServerDnsAliasData : Resource
+    public partial class ServerDnsAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerDnsAliasData. </summary>
         public ServerDnsAliasData()

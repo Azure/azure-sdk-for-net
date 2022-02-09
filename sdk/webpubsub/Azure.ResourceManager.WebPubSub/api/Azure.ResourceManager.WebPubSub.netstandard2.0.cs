@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.SharedPrivateLink> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SharedPrivateLinkData : Azure.ResourceManager.Models.Resource
+    public partial class SharedPrivateLinkData : Azure.ResourceManager.Models.ResourceData
     {
         public SharedPrivateLinkData() { }
         public string GroupId { get { throw null; } set { } }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSub> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSub>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResource
+    public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public WebPubSubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? DisableAadAuth { get { throw null; } set { } }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSubHub> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHub>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubHubData : Azure.ResourceManager.Models.Resource
+    public partial class WebPubSubHubData : Azure.ResourceManager.Models.ResourceData
     {
         public WebPubSubHubData(Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties properties) { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties Properties { get { throw null; } set { } }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public PrivateEndpointAcl(string name) { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class PrivateLink : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLink : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLink() { }
         public string GroupId { get { throw null; } set { } }

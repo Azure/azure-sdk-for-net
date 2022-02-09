@@ -14,7 +14,7 @@ using Azure.ResourceManager.StackHCI.Models;
 namespace Azure.ResourceManager.StackHCI
 {
     /// <summary> A class representing the HciCluster data model. </summary>
-    public partial class HciClusterData : TrackedResource
+    public partial class HciClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HciClusterData. </summary>
         /// <param name="location"> The location. </param>
