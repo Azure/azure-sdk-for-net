@@ -19,6 +19,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
+        public bool SkipUpdateCapabilitiesLiveTest
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_UPDATE_CAPABILITIES_LIVE_TESTS") == "TRUE";
+
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
@@ -85,7 +88,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             return TestEnvironment.Mode == RecordedTestMode.Playback
                 ? RecordedTestSanitizer.SanitizeValue
-                : TestEnvironment.CommunicationTestPhoneNumber;
+                : SelectTestPhoneNumberFromAvailablePool();
         }
 
         protected void SleepIfNotInPlaybackMode()
@@ -99,6 +102,24 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
             phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(phoneNumbersClientOptions);
+        }
+
+        private string SelectTestPhoneNumberFromAvailablePool()
+        {
+            if (TestEnvironment.CommunicationPhoneNumberId == null)
+            {
+                return TestEnvironment.CommunicationTestPhoneNumber;
+            }
+
+            string selectedPhoneNumber = (TestEnvironment.CommunicationPhoneNumberId) switch
+            {
+                "1" => TestEnvironment.CommunicationTestPhoneNumber1,
+                "2" => TestEnvironment.CommunicationTestPhoneNumber2,
+                "3" => TestEnvironment.CommunicationTestPhoneNumber3,
+                _ => TestEnvironment.CommunicationTestPhoneNumber,
+            };
+
+            return selectedPhoneNumber ?? TestEnvironment.CommunicationTestPhoneNumber;
         }
     }
 }
