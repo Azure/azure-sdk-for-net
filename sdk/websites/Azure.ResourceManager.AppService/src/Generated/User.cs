@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async virtual Task<UserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<User>> CreateOrUpdateAsync(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
             if (userDetails == null)
             {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _userRestClient.UpdatePublishingUserAsync(userDetails, cancellationToken).ConfigureAwait(false);
-                var operation = new UserCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<User>(Response.FromValue(new User(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public virtual UserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<User> CreateOrUpdate(bool waitForCompletion, UserData userDetails, CancellationToken cancellationToken = default)
         {
             if (userDetails == null)
             {
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _userRestClient.UpdatePublishingUser(userDetails, cancellationToken);
-                var operation = new UserCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<User>(Response.FromValue(new User(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

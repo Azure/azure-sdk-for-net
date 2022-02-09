@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<LocalUserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LocalUser>> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
             if (properties == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _localUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<LocalUser>(Response.FromValue(new LocalUser(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public virtual LocalUserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LocalUser> CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
             if (properties == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _localUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<LocalUser>(Response.FromValue(new LocalUser(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
