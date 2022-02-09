@@ -14,11 +14,28 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
+        private List<MessageClassifier> _classifiers = new();
+
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
-        internal MessageClassifier? Classifier { get; private set; }
+        private MessageClassifier? _classifier;
 
-        private List<MessageClassifier> _classifiers = new();
+        internal MessageClassifier? Classifier
+        {
+            get
+            {
+                if (_classifier == null)
+                {
+                    _classifier = new AggregateClassifier(_classifiers);
+                }
+
+                return _classifier;
+            }
+            private set
+            {
+                _classifier = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.

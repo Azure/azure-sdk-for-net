@@ -14,16 +14,6 @@ namespace Azure.Core
         internal static ResponseClassifier Shared { get; } = new();
 
         /// <summary>
-        /// User-provided customizations to the classifier for this invocation
-        /// of an operation. This classifier has try-classifier semantics and may
-        /// not provide classifications for every possible status code.
-        /// </summary>
-        internal MessageClassifier? InvocationClassifier { get; set;}
-
-        /// <summary>
-        /// User-provided customizations to the classifier to be applied to every
-        /// service method on the client. This classifier has try-classifier semantics
-        /// and may not provide classifications for every possible status code.
         /// </summary>
         internal MessageClassifier? ClientClassifier { get; set; }
 
@@ -65,16 +55,9 @@ namespace Azure.Core
                    (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
         }
 
-        internal bool IsError(HttpMessage message)
+        internal virtual bool IsError(HttpMessage message)
         {
-            bool isError;
-
-            if (InvocationClassifier?.TryClassify(message, out isError) ?? false)
-            {
-                return isError;
-            }
-
-            if (ClientClassifier?.TryClassify(message, out isError) ?? false)
+            if (ClientClassifier?.TryClassify(message, out bool isError) ?? false)
             {
                 return isError;
             }

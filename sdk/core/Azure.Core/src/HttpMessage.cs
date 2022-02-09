@@ -96,32 +96,11 @@ namespace Azure.Core
 
             if (context.Classifier != null)
             {
-                // You are here
+                ResponseClassifier = new PerInvocationClassifier(context.Classifier, ResponseClassifier);
             }
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
-
-        private int[]? _errorCodes { get; set; }
-        private int[]? _nonErrorCodes { get; set; }
-
-        internal bool TryClassify(int status, out bool isError)
-        {
-            if (_errorCodes?.Contains(status) ?? false)
-            {
-                isError = true;
-                return true;
-            }
-
-            if (_nonErrorCodes?.Contains(status) ?? false)
-            {
-                isError = false;
-                return true;
-            }
-
-            isError = false;
-            return false;
-        }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
