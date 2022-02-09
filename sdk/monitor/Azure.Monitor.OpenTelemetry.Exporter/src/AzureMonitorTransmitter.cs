@@ -38,6 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // Change needed on persistent storage side to throw if not able to create storage directory.
             }
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
+            options.Retry.MaxRetries = 0;
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
