@@ -167,12 +167,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Optionally describes the payload of the message, with a descriptor following the format of
         ///   RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType
-        {
-            get => AmqpMessage.Properties.ContentType;
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            set => throw new NotImplementedException("Content type cannot be set on a ServiceBusReceivedMessage");
-        }
+        public string ContentType => AmqpMessage.Properties.ContentType;
 
         /// <summary>Gets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>

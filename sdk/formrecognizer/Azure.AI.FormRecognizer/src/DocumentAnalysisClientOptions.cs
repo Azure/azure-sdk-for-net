@@ -28,6 +28,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             };
 
             AddLoggedHeadersAndQueryParameters();
+
+            //Default Audience to Azure Public Cloud
+            Audience ??= DocumentAnalysisAudience.AzurePublicCloud;
         }
 
         /// <summary>
@@ -44,6 +47,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 #pragma warning restore AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="DocumentAnalysisAudience.AzurePublicCloud" /> will be assumed.</value>
+        public DocumentAnalysisAudience? Audience { get; set; }
 
         /// <summary>
         /// The service version.
