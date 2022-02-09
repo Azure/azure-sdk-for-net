@@ -25,6 +25,13 @@ namespace Azure.Storage.Test.Shared
         {
             UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(SignatureQueryName, SanitizeValue));
 
+            // Uri uses different escaping for some special characters between .NET Framework and Core, so we normalize to the .NET Core escaping
+            // when matching and storing the recordings.
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\(", "%28"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)", "%29"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
+
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
             HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(CopySourceName, SignatureQueryName, SanitizeValue));
