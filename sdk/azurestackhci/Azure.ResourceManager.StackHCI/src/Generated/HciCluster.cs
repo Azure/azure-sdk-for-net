@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StackHci
         /// <summary> Generate the resource identifier of a <see cref="HciCluster"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StackHci
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHci/clusters";
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

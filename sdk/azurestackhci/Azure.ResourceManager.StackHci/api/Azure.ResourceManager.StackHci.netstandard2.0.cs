@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.StackHci
     public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResource
     {
         public HciClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AadClientId { get { throw null; } set { } }
-        public string AadTenantId { get { throw null; } set { } }
+        public System.Guid? AadClientId { get { throw null; } set { } }
+        public System.Guid? AadTenantId { get { throw null; } set { } }
         public string BillingModel { get { throw null; } }
-        public string CloudId { get { throw null; } }
+        public System.Guid? CloudId { get { throw null; } }
         public string CloudManagementEndpoint { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
@@ -281,16 +281,16 @@ namespace Azure.ResourceManager.StackHci.Models
         public float? MemoryInGiB { get { throw null; } }
         public string Model { get { throw null; } }
         public string Name { get { throw null; } }
-        public string OsName { get { throw null; } }
-        public string OsVersion { get { throw null; } }
+        public string OSName { get { throw null; } }
+        public string OSVersion { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.StackHci.Models.WindowsServerSubscription? WindowsServerSubscription { get { throw null; } }
     }
     public partial class ClusterPatch
     {
         public ClusterPatch() { }
-        public string AadClientId { get { throw null; } set { } }
-        public string AadTenantId { get { throw null; } set { } }
+        public System.Guid? AadClientId { get { throw null; } set { } }
+        public System.Guid? AadTenantId { get { throw null; } set { } }
         public string CloudManagementEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.StackHci.Models.ClusterDesiredProperties DesiredProperties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

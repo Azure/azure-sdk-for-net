@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);

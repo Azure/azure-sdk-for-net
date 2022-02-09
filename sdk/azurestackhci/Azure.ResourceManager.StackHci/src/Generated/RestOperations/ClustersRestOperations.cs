@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StackHci
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.StackHci
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureStackHci/clusters/", false);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
