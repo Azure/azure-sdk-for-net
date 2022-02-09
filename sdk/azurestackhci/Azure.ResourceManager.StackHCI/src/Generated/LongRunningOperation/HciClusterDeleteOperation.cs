@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.StackHCI.Models
 {
     /// <summary> Delete an HCI cluster. </summary>
-    public partial class HCIClusterDeleteOperation : Operation
+    public partial class HciClusterDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of HCIClusterDeleteOperation for mocking. </summary>
-        protected HCIClusterDeleteOperation()
+        /// <summary> Initializes a new instance of HciClusterDeleteOperation for mocking. </summary>
+        protected HciClusterDeleteOperation()
         {
         }
 
-        internal HCIClusterDeleteOperation(Response response)
+        internal HciClusterDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }
