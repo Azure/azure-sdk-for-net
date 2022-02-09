@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the PrivateEndpointConnectionProxy data model. </summary>
-    public partial class PrivateEndpointConnectionProxyData : Resource
+    public partial class PrivateEndpointConnectionProxyData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
         public PrivateEndpointConnectionProxyData()

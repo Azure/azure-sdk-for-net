@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdCustomDomain data model. </summary>
-    public partial class AfdCustomDomainData : Resource
+    public partial class AfdCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdCustomDomainData. </summary>
         public AfdCustomDomainData()

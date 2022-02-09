@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the InstanceFailoverGroup data model. </summary>
-    public partial class InstanceFailoverGroupData : Resource
+    public partial class InstanceFailoverGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
         public InstanceFailoverGroupData()

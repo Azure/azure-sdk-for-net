@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StackHCI.Models
     {
         internal static ClusterList DeserializeClusterList(JsonElement element)
         {
-            Optional<IReadOnlyList<HCIClusterData>> value = default;
+            Optional<IReadOnlyList<HciClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StackHCI.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HCIClusterData> array = new List<HCIClusterData>();
+                    List<HciClusterData> array = new List<HciClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HCIClusterData.DeserializeHCIClusterData(item));
+                        array.Add(HciClusterData.DeserializeHciClusterData(item));
                     }
                     value = array;
                     continue;

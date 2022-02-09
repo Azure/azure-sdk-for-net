@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> EnabledResourceType definition. </summary>
-    public partial class EnabledResourceType : Resource
+    public partial class EnabledResourceType : ResourceData
     {
         /// <summary> Initializes a new instance of EnabledResourceType. </summary>
         public EnabledResourceType()

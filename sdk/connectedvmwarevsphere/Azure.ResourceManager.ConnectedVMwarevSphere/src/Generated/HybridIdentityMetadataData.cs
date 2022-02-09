@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the HybridIdentityMetadata data model. </summary>
-    public partial class HybridIdentityMetadataData : Resource
+    public partial class HybridIdentityMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
         public HybridIdentityMetadataData()

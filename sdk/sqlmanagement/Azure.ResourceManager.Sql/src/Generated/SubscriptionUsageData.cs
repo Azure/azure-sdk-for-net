@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SubscriptionUsage data model. </summary>
-    public partial class SubscriptionUsageData : Resource
+    public partial class SubscriptionUsageData : ResourceData
     {
         /// <summary> Initializes a new instance of SubscriptionUsageData. </summary>
         public SubscriptionUsageData()
