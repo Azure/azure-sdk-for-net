@@ -52,17 +52,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return result;
             }
 
-            HttpMessage message = null;
             try
             {
-                if (async)
-                {
-                    message = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    message = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
-                }
+                using var message = async ? await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                 if (message != null)
                 {
@@ -80,10 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
-            }
-            finally
-            {
-                message?.Dispose();
             }
 
             return result;
