@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AccessRights"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessRights"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessRights(string value)
         {

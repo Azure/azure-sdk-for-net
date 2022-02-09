@@ -7,6 +7,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_Networks_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -27,8 +28,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the virtual networks inside this resource group.
@@ -55,7 +56,7 @@ VirtualNetworkData input = new VirtualNetworkData()
     Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
 };
 
-VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(true, vnetName, input).WaitForCompletionAsync();
 ```
 
 ***List all virtual networks***
@@ -90,7 +91,7 @@ if (virtualNetwork != null)
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
+if (await virtualNetworkCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("Virtual network 'bar' exists.");
 }
@@ -102,7 +103,7 @@ if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
 VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
 VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync();
+await virtualNetwork.DeleteAsync(true);
 ```
 
 ## Next steps

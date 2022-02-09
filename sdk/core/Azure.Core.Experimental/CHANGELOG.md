@@ -1,8 +1,31 @@
 # Release History
 
-## 0.1.0-preview.19 (Unreleased)
+## 0.1.0-preview.21 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 0.1.0-preview.20 (2022-02-07)
+
+### Features Added
+
+- `MessageWithMetadata` is now a concrete rather than abstract class.
+
+### Breaking Changes
+
+- `MessageWithMetadata` is now in the `Azure` namespace rather than `Azure.Messaging`.
+- Changed `ContentType` property of `MessageWithMetadata` from a `string` to a `ContentType`
+
+## 0.1.0-preview.19 (2022-01-11)
+
+### Features Added
+
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
 
 ### Breaking Changes
 
@@ -11,10 +34,6 @@
     - `ExceptionFormattingResponseClassifier`
     - `ResponseExtensions`
     - `ResponsePropertiesPolicy`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.18 (2021-11-03)
 

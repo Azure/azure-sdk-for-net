@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the PrivateEndpointConnectionProxy data model. </summary>
-    public partial class PrivateEndpointConnectionProxyData : ProxyResource
+    public partial class PrivateEndpointConnectionProxyData : Resource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
         public PrivateEndpointConnectionProxyData()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>

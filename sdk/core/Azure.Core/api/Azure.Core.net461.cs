@@ -271,6 +271,66 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureLocation(string location) { throw null; }
+        public AzureLocation(string name, string displayName) { throw null; }
+        public static Azure.Core.AzureLocation AustraliaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaCentral2 { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation AustraliaSoutheast { get { throw null; } }
+        public static Azure.Core.AzureLocation BrazilSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation BrazilSoutheast { get { throw null; } }
+        public static Azure.Core.AzureLocation CanadaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation CanadaEast { get { throw null; } }
+        public static Azure.Core.AzureLocation CentralIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
+        public string? DisplayName { get { throw null; } }
+        public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
+        public static Azure.Core.AzureLocation EastUS { get { throw null; } }
+        public static Azure.Core.AzureLocation EastUS2 { get { throw null; } }
+        public static Azure.Core.AzureLocation FranceCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation FranceSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
+        public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
+        public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation KoreaSouth { get { throw null; } }
+        public string Name { get { throw null; } }
+        public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
+        public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
+        public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
+        public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
+        public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
+        public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation UKWest { get { throw null; } }
+        public static Azure.Core.AzureLocation WestCentralUS { get { throw null; } }
+        public static Azure.Core.AzureLocation WestEurope { get { throw null; } }
+        public static Azure.Core.AzureLocation WestIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation WestUS { get { throw null; } }
+        public static Azure.Core.AzureLocation WestUS2 { get { throw null; } }
+        public bool Equals(Azure.Core.AzureLocation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
+        public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (string location) { throw null; }
+        public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
@@ -475,6 +535,57 @@ namespace Azure.Core
         public void Reset(System.Uri value) { }
         public override string ToString() { throw null; }
         public System.Uri ToUri() { throw null; }
+    }
+    public sealed partial class ResourceIdentifier : System.IComparable<Azure.Core.ResourceIdentifier>, System.IEquatable<Azure.Core.ResourceIdentifier>
+    {
+        public static readonly Azure.Core.ResourceIdentifier Root;
+        public ResourceIdentifier(string resourceId) { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceIdentifier? Parent { get { throw null; } }
+        public string? Provider { get { throw null; } }
+        public string? ResourceGroupName { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        public string? SubscriptionId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ResourceIdentifier AppendChildResource(string childResourceType, string childResourceName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ResourceIdentifier AppendProviderResource(string providerNamespace, string resourceType, string resourceName) { throw null; }
+        public int CompareTo(Azure.Core.ResourceIdentifier? other) { throw null; }
+        public bool Equals(Azure.Core.ResourceIdentifier? other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator >(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator >=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceIdentifier id) { throw null; }
+        public static bool operator !=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator <(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceType(string resourceType) { throw null; }
+        public string Namespace { get { throw null; } }
+        public string Type { get { throw null; } }
+        public bool Equals(Azure.Core.ResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string GetLastType() { throw null; }
+        public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
+        public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
+        public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ResponseClassifier
     {
@@ -761,6 +872,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
+        public void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
@@ -781,8 +893,8 @@ namespace Azure.Core.Pipeline
     public static partial class HttpPipelineBuilder
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
+        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier, Azure.Core.Pipeline.HttpPipelineTransportOptions? defaultTransportOptions) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {
@@ -804,7 +916,6 @@ namespace Azure.Core.Pipeline
     {
         protected HttpPipelineTransport() { }
         public abstract Azure.Core.Request CreateRequest();
-        public void Dispose() { }
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
     }
@@ -815,10 +926,10 @@ namespace Azure.Core.Pipeline
     }
     public partial class ServerCertificateCustomValidationArgs
     {
-        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? certificateAuthorityChain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
         public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Chain? CertificateAuthorityChain { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
-        public System.Security.Cryptography.X509Certificates.X509Chain? X509Chain { get { throw null; } }
     }
 }
 namespace Azure.Core.Serialization

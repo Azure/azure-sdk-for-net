@@ -12,6 +12,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public void AnalyzeConversationWithLanguage()
         {
             ConversationAnalysisClient client = Client;
@@ -49,6 +50,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public async Task AnalyzeConversationWithLanguageAsync()
         {
             ConversationAnalysisClient client = Client;

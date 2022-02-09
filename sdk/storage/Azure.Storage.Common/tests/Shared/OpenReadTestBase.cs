@@ -563,7 +563,7 @@ namespace Azure.Storage.Test.Shared
         [RecordedTest]
         // lower position within _buffer
         [TestCase(-50)]
-        // higher positiuon within _buffer
+        // higher position within _buffer
         [TestCase(50)]
         // lower position below _buffer
         [TestCase(-100)]

@@ -14,12 +14,5 @@ namespace Azure.Communication.Sms.Tests
             AddJsonPathSanitizer("$..repeatabilityRequestId");
             AddJsonPathSanitizer("$..repeatabilityFirstSent");
         }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-            => variableName switch
-            {
-                SmsClientTestEnvironment.AzurePhoneNumber => "+14255550123",
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
     }
 }

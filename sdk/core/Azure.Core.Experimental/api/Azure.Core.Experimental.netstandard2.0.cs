@@ -1,3 +1,21 @@
+namespace Azure
+{
+    public partial class MessageWithMetadata
+    {
+        public MessageWithMetadata() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+    }
+}
 namespace Azure.Core
 {
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
@@ -86,13 +104,10 @@ namespace Azure.Core
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
-namespace Azure.Messaging
+namespace Azure.Core.Pipeline
 {
-    public abstract partial class MessageWithMetadata
+    public static partial class HttpPipelineExtensions
     {
-        protected MessageWithMetadata() { }
-        public abstract string ContentType { get; set; }
-        public abstract System.BinaryData Data { get; set; }
-        public abstract bool IsReadOnly { get; }
+        public static Azure.Core.HttpMessage CreateMessage(this Azure.Core.Pipeline.HttpPipeline pipeline, Azure.RequestOptions? options) { throw null; }
     }
 }

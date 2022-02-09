@@ -236,6 +236,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
         [TestCase("BinaryDataEvents", "0 1 2 3 4")]
+        [TestCase("ByteArrayEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -353,6 +354,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
         [TestCase("BinaryDataEvents", "0 1 2 3 4")]
+        [TestCase("ByteArrayEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputCloudEventBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -697,6 +699,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
+            public void ByteArrayEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out byte[][] data)
+            {
+                data = new byte[5][];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""eventType"" : ""custom"",
+                        ""subject"" : ""custom"",
+                        ""dataVersion"" : ""1""
+                    }}").ToArray();
+                }
+            }
+
             public void JObjectEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject[] jobjects)
             {
                 jobjects = new JObject[5];
@@ -825,6 +843,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         ""type"" : ""custom"",
                         ""specversion"" : ""1.0""
                     }}");
+                }
+            }
+
+            public void ByteArrayEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out byte[][] data)
+            {
+                data = new byte[5][];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""source"" : ""custom"",
+                        ""type"" : ""custom"",
+                        ""specversion"" : ""1.0""
+                    }}").ToArray();
                 }
             }
 

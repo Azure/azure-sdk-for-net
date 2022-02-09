@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -24,12 +25,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server. </summary>
         public Kind? Kind { get; set; }
         /// <summary> Custom domain assigned to the storage account by the user. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         public CustomDomain CustomDomain { get; set; }
-        /// <summary> Provides the encryption settings on the account. The default setting is unencrypted. </summary>
+        /// <summary> Not applicable. Azure Storage encryption at rest is enabled by default for all storage accounts and cannot be disabled. </summary>
         public Encryption Encryption { get; set; }
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public SasPolicy SasPolicy { get; set; }
@@ -41,6 +42,10 @@ namespace Azure.ResourceManager.Storage.Models
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
         /// <summary> Allows https traffic only to storage service if sets to true. </summary>
         public bool? EnableHttpsTrafficOnly { get; set; }
+        /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
+        public bool? IsSftpEnabled { get; set; }
+        /// <summary> Enables local users feature, if set to true. </summary>
+        public bool? IsLocalUserEnabled { get; set; }
         /// <summary> Network rule set. </summary>
         public NetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
@@ -55,5 +60,13 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? AllowSharedKeyAccess { get; set; }
         /// <summary> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </summary>
         public bool? AllowCrossTenantReplication { get; set; }
+        /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
+        public bool? DefaultToOAuthAuthentication { get; set; }
+        /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+        /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
+        public AllowedCopyScope? AllowedCopyScope { get; set; }
     }
 }

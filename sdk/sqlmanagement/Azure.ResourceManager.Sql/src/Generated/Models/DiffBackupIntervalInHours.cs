@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly int _value;
 
-        /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffBackupIntervalInHours"/>. </summary>
         public DiffBackupIntervalInHours(int value)
         {
             _value = value;

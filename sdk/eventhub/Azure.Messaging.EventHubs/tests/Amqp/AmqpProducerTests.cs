@@ -166,6 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<TransportProducerFeatures>(),
                     It.Is<PartitionPublishingOptionsInternal>(options => options.StartingSequenceNumber == expectedOptions.StartingSequenceNumber),
                     It.IsAny<TimeSpan>(),
+                    It.IsAny<TimeSpan>(),
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings { MaxMessageSize = 512 })))
