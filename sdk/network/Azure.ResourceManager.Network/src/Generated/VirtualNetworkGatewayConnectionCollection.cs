@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualNetworkGatewayConnection>> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworkGatewayConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayConnectionCreateOrUpdateOperation(Client, _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayConnection>(new VirtualNetworkGatewayConnectionOperationSource(Client), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualNetworkGatewayConnection> CreateOrUpdate(bool waitForCompletion, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkGatewayConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayConnectionCreateOrUpdateOperation(Client, _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayConnection>(new VirtualNetworkGatewayConnectionOperationSource(Client), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, _virtualNetworkGatewayConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkGatewayConnectionName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

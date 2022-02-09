@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public async virtual Task<AfdOriginCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdOrigin>> CreateOrUpdateAsync(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             if (origin == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdOriginRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdOriginCreateOrUpdateOperation(Client, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
+                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> or <paramref name="origin"/> is null. </exception>
-        public virtual AfdOriginCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdOrigin> CreateOrUpdate(bool waitForCompletion, string originName, AfdOriginData origin, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originName, nameof(originName));
             if (origin == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdOriginRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin, cancellationToken);
-                var operation = new AfdOriginCreateOrUpdateOperation(Client, _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response);
+                var operation = new CdnArmOperation<AfdOrigin>(new AfdOriginOperationSource(Client), _afdOriginClientDiagnostics, Pipeline, _afdOriginRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, origin).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

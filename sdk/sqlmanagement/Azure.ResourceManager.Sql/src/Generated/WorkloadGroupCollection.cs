@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkloadGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WorkloadGroup>> CreateOrUpdateAsync(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _workloadGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadGroupCreateOrUpdateOperation(Client, _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<WorkloadGroup>(new WorkloadGroupOperationSource(Client), _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkloadGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkloadGroup> CreateOrUpdate(bool waitForCompletion, string workloadGroupName, WorkloadGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _workloadGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters, cancellationToken);
-                var operation = new WorkloadGroupCreateOrUpdateOperation(Client, _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<WorkloadGroup>(new WorkloadGroupOperationSource(Client), _workloadGroupClientDiagnostics, Pipeline, _workloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<QueueServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<QueueService>> CreateOrUpdateAsync(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _queueServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new QueueServiceCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<QueueService>(Response.FromValue(new QueueService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="parameters"> The properties of a storage account’s Queue service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual QueueServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<QueueService> CreateOrUpdate(bool waitForCompletion, QueueServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _queueServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new QueueServiceCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<QueueService>(Response.FromValue(new QueueService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

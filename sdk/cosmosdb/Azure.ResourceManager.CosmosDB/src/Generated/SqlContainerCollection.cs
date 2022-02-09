@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public async virtual Task<SqlContainerCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlContainer>> CreateOrUpdateAsync(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             if (createUpdateSqlContainerParameters == null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlContainerCreateOrUpdateOperation(Client, _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlContainer>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual SqlContainerCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlContainer> CreateOrUpdate(bool waitForCompletion, string containerName, SqlContainerCreateUpdateOptions createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             if (createUpdateSqlContainerParameters == null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
-                var operation = new SqlContainerCreateOrUpdateOperation(Client, _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlContainer>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

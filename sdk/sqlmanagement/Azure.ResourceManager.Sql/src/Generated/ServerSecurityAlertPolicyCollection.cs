@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The server security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerSecurityAlertPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServerSecurityAlertPolicy>> CreateOrUpdateAsync(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverSecurityAlertPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerSecurityAlertPolicyCreateOrUpdateOperation(Client, _serverSecurityAlertPolicyClientDiagnostics, Pipeline, _serverSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerSecurityAlertPolicy>(new ServerSecurityAlertPolicyOperationSource(Client), _serverSecurityAlertPolicyClientDiagnostics, Pipeline, _serverSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The server security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ServerSecurityAlertPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerSecurityAlertPolicy> CreateOrUpdate(bool waitForCompletion, SecurityAlertPolicyName securityAlertPolicyName, ServerSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverSecurityAlertPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters, cancellationToken);
-                var operation = new ServerSecurityAlertPolicyCreateOrUpdateOperation(Client, _serverSecurityAlertPolicyClientDiagnostics, Pipeline, _serverSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerSecurityAlertPolicy>(new ServerSecurityAlertPolicyOperationSource(Client), _serverSecurityAlertPolicyClientDiagnostics, Pipeline, _serverSecurityAlertPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

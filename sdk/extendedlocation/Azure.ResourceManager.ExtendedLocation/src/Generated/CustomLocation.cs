@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <summary> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CustomLocationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.Delete");
             scope.Start();
             try
             {
                 var response = await _customLocationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomLocationDeleteOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ExtendedLocationArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <summary> Deletes the Custom Location with the specified Resource Name, Resource Group, and Subscription Id. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CustomLocationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocation.Delete");
             scope.Start();
             try
             {
                 var response = _customLocationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CustomLocationDeleteOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ExtendedLocationArmOperation(_customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

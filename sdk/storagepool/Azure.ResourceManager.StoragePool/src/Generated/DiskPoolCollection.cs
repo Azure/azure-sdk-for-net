@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public async virtual Task<DiskPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DiskPool>> CreateOrUpdateAsync(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             if (diskPoolCreatePayload == null)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DiskPoolCreateOrUpdateOperation(Client, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
-        public virtual DiskPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskPool> CreateOrUpdate(bool waitForCompletion, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             if (diskPoolCreatePayload == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload, cancellationToken);
-                var operation = new DiskPoolCreateOrUpdateOperation(Client, _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response);
+                var operation = new StoragePoolArmOperation<DiskPool>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, diskPoolCreatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

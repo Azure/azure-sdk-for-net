@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The LedgerDigestUploads to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LedgerDigestUploadsCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LedgerDigestUploads>> CreateOrUpdateAsync(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LedgerDigestUploadsCreateOrUpdateOperation(Client, _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters).Request, response);
+                var operation = new SqlArmOperation<LedgerDigestUploads>(new LedgerDigestUploadsOperationSource(Client), _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The LedgerDigestUploads to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual LedgerDigestUploadsCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LedgerDigestUploads> CreateOrUpdate(bool waitForCompletion, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadsData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters, cancellationToken);
-                var operation = new LedgerDigestUploadsCreateOrUpdateOperation(Client, _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters).Request, response);
+                var operation = new SqlArmOperation<LedgerDigestUploads>(new LedgerDigestUploadsOperationSource(Client), _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Deployment>> CreateOrUpdateAsync(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             if (parameters == null)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _deploymentRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentCreateOrUpdateOperation(Client, _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<Deployment>(new DeploymentOperationSource(Client), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DeploymentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Deployment> CreateOrUpdate(bool waitForCompletion, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             if (parameters == null)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _deploymentRestClient.CreateOrUpdateAtScope(Id, deploymentName, parameters, cancellationToken);
-                var operation = new DeploymentCreateOrUpdateOperation(Client, _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<Deployment>(new DeploymentOperationSource(Client), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

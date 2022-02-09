@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RestorePointGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<RestorePointGroup>> CreateOrUpdateAsync(bool waitForCompletion, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             if (parameters == null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restorePointGroupRestorePointCollectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointGroupCreateOrUpdateOperation(Client, response);
+                var operation = new ComputeArmOperation<RestorePointGroup>(Response.FromValue(new RestorePointGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RestorePointGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RestorePointGroup> CreateOrUpdate(bool waitForCompletion, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             if (parameters == null)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restorePointGroupRestorePointCollectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, parameters, cancellationToken);
-                var operation = new RestorePointGroupCreateOrUpdateOperation(Client, response);
+                var operation = new ComputeArmOperation<RestorePointGroup>(Response.FromValue(new RestorePointGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

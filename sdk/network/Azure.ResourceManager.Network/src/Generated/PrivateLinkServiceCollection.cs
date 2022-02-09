@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateLinkServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PrivateLinkService>> CreateOrUpdateAsync(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _privateLinkServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateLinkServiceCreateOrUpdateOperation(Client, _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
+                var operation = new NetworkArmOperation<PrivateLinkService>(new PrivateLinkServiceOperationSource(Client), _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateLinkServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkService> CreateOrUpdate(bool waitForCompletion, string serviceName, PrivateLinkServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _privateLinkServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters, cancellationToken);
-                var operation = new PrivateLinkServiceCreateOrUpdateOperation(Client, _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response);
+                var operation = new NetworkArmOperation<PrivateLinkService>(new PrivateLinkServiceOperationSource(Client), _privateLinkServiceClientDiagnostics, Pipeline, _privateLinkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public async virtual Task<AppServiceDomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AppServiceDomain>> CreateOrUpdateAsync(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             if (domain == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceDomainDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceDomainCreateOrUpdateOperation(Client, _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceDomain>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public virtual AppServiceDomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceDomain> CreateOrUpdate(bool waitForCompletion, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             if (domain == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceDomainDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain, cancellationToken);
-                var operation = new AppServiceDomainCreateOrUpdateOperation(Client, _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response);
+                var operation = new AppServiceArmOperation<AppServiceDomain>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

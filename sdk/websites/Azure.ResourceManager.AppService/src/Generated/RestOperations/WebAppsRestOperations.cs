@@ -12986,7 +12986,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<object>> GetNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -13010,17 +13010,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -13031,7 +13020,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -13045,7 +13034,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
-        public Response<object> GetNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -13069,17 +13058,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -13090,7 +13068,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -13547,7 +13525,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<object>> GetNetworkTraceOperationV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -13571,17 +13549,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -13592,7 +13559,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -13606,7 +13573,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="operationId"/> is null. </exception>
-        public Response<object> GetNetworkTraceOperationV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -13630,17 +13597,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -13651,7 +13607,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -31358,7 +31314,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<object>> GetNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -31386,17 +31342,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -31407,7 +31352,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -31422,7 +31367,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
-        public Response<object> GetNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -31450,17 +31395,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -31471,7 +31405,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -31979,7 +31913,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<object>> GetNetworkTraceOperationSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -32007,17 +31941,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -32028,7 +31951,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -32043,7 +31966,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> GUID of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, or <paramref name="operationId"/> is null. </exception>
-        public Response<object> GetNetworkTraceOperationSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -32071,17 +31994,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        IReadOnlyList<NetworkTrace> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
-                        }
-                        value = array;
-                        return Response.FromValue<object>(value, message.Response);
-                    }
                 case 202:
                     {
                         IReadOnlyList<NetworkTrace> value = default;
@@ -32092,7 +32004,7 @@ namespace Azure.ResourceManager.AppService
                             array.Add(NetworkTrace.DeserializeNetworkTrace(item));
                         }
                         value = array;
-                        return Response.FromValue<object>(value, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

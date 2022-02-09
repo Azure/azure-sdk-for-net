@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public async virtual Task<InboundNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<InboundNatRule>> CreateOrUpdateAsync(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
             if (inboundNatRuleParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _inboundNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Client, _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<InboundNatRule>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public virtual InboundNatRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InboundNatRule> CreateOrUpdate(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
             if (inboundNatRuleParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _inboundNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Client, _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<InboundNatRule>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

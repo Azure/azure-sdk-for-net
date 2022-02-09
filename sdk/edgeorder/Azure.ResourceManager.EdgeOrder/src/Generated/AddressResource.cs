@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Deletes an address. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AddressResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResource.Delete");
             scope.Start();
             try
             {
                 var response = await _addressResourceRestClient.DeleteAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AddressResourceDeleteOperation(_addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new EdgeOrderArmOperation(_addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Deletes an address. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AddressResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResource.Delete");
             scope.Start();
             try
             {
                 var response = _addressResourceRestClient.DeleteAddressByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AddressResourceDeleteOperation(_addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new EdgeOrderArmOperation(_addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateDeleteAddressByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressUpdateParameter"/> is null. </exception>
-        public async virtual Task<AddressResourceUpdateOperation> UpdateAsync(bool waitForCompletion, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AddressResource>> UpdateAsync(bool waitForCompletion, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (addressUpdateParameter == null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _addressResourceRestClient.UpdateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new AddressResourceUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressUpdateParameter"/> is null. </exception>
-        public virtual AddressResourceUpdateOperation Update(bool waitForCompletion, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AddressResource> Update(bool waitForCompletion, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (addressUpdateParameter == null)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _addressResourceRestClient.UpdateAddress(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch, cancellationToken);
-                var operation = new AddressResourceUpdateOperation(Client, _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response);
+                var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateUpdateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

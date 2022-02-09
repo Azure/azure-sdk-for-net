@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RouteTableCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<RouteTable>> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteTableCreateOrUpdateOperation(Client, _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var operation = new NetworkArmOperation<RouteTable>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RouteTableCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RouteTable> CreateOrUpdate(bool waitForCompletion, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
-                var operation = new RouteTableCreateOrUpdateOperation(Client, _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var operation = new NetworkArmOperation<RouteTable>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

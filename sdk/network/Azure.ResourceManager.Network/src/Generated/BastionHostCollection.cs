@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<BastionHostCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<BastionHost>> CreateOrUpdateAsync(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _bastionHostRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BastionHostCreateOrUpdateOperation(Client, _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response);
+                var operation = new NetworkArmOperation<BastionHost>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual BastionHostCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BastionHost> CreateOrUpdate(bool waitForCompletion, string bastionHostName, BastionHostData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _bastionHostRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters, cancellationToken);
-                var operation = new BastionHostCreateOrUpdateOperation(Client, _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response);
+                var operation = new NetworkArmOperation<BastionHost>(new BastionHostOperationSource(Client), _bastionHostClientDiagnostics, Pipeline, _bastionHostRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

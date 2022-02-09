@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified network watcher resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkWatcherDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.Delete");
             scope.Start();
             try
             {
                 var response = await _networkWatcherRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherDeleteOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deletes the specified network watcher resource. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkWatcherDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcher.Delete");
             scope.Start();
             try
             {
                 var response = _networkWatcherRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkWatcherDeleteOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the IP flow to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherVerifyIPFlowOperation> VerifyIPFlowAsync(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VerificationIPFlowResult>> VerifyIPFlowAsync(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.VerifyIPFlowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherVerifyIPFlowOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<VerificationIPFlowResult>(new VerificationIPFlowResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the IP flow to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherVerifyIPFlowOperation VerifyIPFlow(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VerificationIPFlowResult> VerifyIPFlow(bool waitForCompletion, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.VerifyIPFlow(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherVerifyIPFlowOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<VerificationIPFlowResult>(new VerificationIPFlowResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateVerifyIPFlowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the source and destination endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetNextHopOperation> GetNextHopAsync(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NextHopResult>> GetNextHopAsync(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetNextHopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetNextHopOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNextHopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<NextHopResult>(new NextHopResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNextHopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the source and destination endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetNextHopOperation GetNextHop(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NextHopResult> GetNextHop(bool waitForCompletion, NextHopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetNextHop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetNextHopOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNextHopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<NextHopResult>(new NextHopResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNextHopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetVMSecurityRulesOperation> GetVMSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SecurityGroupViewResult>> GetVMSecurityRulesAsync(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetVMSecurityRulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetVMSecurityRulesOperation GetVMSecurityRules(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityGroupViewResult> GetVMSecurityRules(bool waitForCompletion, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetVMSecurityRules(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetVMSecurityRulesOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<SecurityGroupViewResult>(new SecurityGroupViewResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetVMSecurityRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to troubleshoot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetTroubleshootingOperation> GetTroubleshootingAsync(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingAsync(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetTroubleshootingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetTroubleshootingOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<TroubleshootingResult>(new TroubleshootingResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to troubleshoot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetTroubleshootingOperation GetTroubleshooting(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TroubleshootingResult> GetTroubleshooting(bool waitForCompletion, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetTroubleshooting(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetTroubleshootingOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<TroubleshootingResult>(new TroubleshootingResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetTroubleshootingResultOperation> GetTroubleshootingResultAsync(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<TroubleshootingResult>> GetTroubleshootingResultAsync(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetTroubleshootingResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<TroubleshootingResult>(new TroubleshootingResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetTroubleshootingResultOperation GetTroubleshootingResult(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TroubleshootingResult> GetTroubleshootingResult(bool waitForCompletion, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetTroubleshootingResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetTroubleshootingResultOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<TroubleshootingResult>(new TroubleshootingResultOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetTroubleshootingResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the configuration of flow log. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherSetFlowLogConfigurationOperation> SetFlowLogConfigurationAsync(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<FlowLogInformation>> SetFlowLogConfigurationAsync(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.SetFlowLogConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateSetFlowLogConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<FlowLogInformation>(new FlowLogInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateSetFlowLogConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the configuration of flow log. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherSetFlowLogConfigurationOperation SetFlowLogConfiguration(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FlowLogInformation> SetFlowLogConfiguration(bool waitForCompletion, FlowLogInformation parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.SetFlowLogConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherSetFlowLogConfigurationOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateSetFlowLogConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<FlowLogInformation>(new FlowLogInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateSetFlowLogConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetFlowLogStatusOperation> GetFlowLogStatusAsync(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<FlowLogInformation>> GetFlowLogStatusAsync(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetFlowLogStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetFlowLogStatusOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetFlowLogStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<FlowLogInformation>(new FlowLogInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetFlowLogStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetFlowLogStatusOperation GetFlowLogStatus(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FlowLogInformation> GetFlowLogStatus(bool waitForCompletion, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetFlowLogStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetFlowLogStatusOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetFlowLogStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<FlowLogInformation>(new FlowLogInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetFlowLogStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine how the connectivity check will be performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherCheckConnectivityOperation> CheckConnectivityAsync(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConnectivityInformation>> CheckConnectivityAsync(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.CheckConnectivityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherCheckConnectivityOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateCheckConnectivityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<ConnectivityInformation>(new ConnectivityInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateCheckConnectivityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine how the connectivity check will be performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherCheckConnectivityOperation CheckConnectivity(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectivityInformation> CheckConnectivity(bool waitForCompletion, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.CheckConnectivity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherCheckConnectivityOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateCheckConnectivityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<ConnectivityInformation>(new ConnectivityInformationOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateCheckConnectivityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine Azure reachability report configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetAzureReachabilityReportOperation> GetAzureReachabilityReportAsync(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AzureReachabilityReport>> GetAzureReachabilityReportAsync(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetAzureReachabilityReportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetAzureReachabilityReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<AzureReachabilityReport>(new AzureReachabilityReportOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetAzureReachabilityReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine Azure reachability report configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetAzureReachabilityReportOperation GetAzureReachabilityReport(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AzureReachabilityReport> GetAzureReachabilityReport(bool waitForCompletion, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetAzureReachabilityReport(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetAzureReachabilityReportOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetAzureReachabilityReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<AzureReachabilityReport>(new AzureReachabilityReportOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetAzureReachabilityReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetAvailableProvidersOperation> GetAvailableProvidersAsync(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AvailableProvidersList>> GetAvailableProvidersAsync(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.ListAvailableProvidersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetAvailableProvidersOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateListAvailableProvidersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<AvailableProvidersList>(new AvailableProvidersListOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateListAvailableProvidersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetAvailableProvidersOperation GetAvailableProviders(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvailableProvidersList> GetAvailableProviders(bool waitForCompletion, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.ListAvailableProviders(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetAvailableProvidersOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateListAvailableProvidersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<AvailableProvidersList>(new AvailableProvidersListOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateListAvailableProvidersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters to get network configuration diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherGetNetworkConfigurationDiagnosticOperation> GetNetworkConfigurationDiagnosticAsync(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<NetworkConfigurationDiagnosticResponse>> GetNetworkConfigurationDiagnosticAsync(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.GetNetworkConfigurationDiagnosticAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<NetworkConfigurationDiagnosticResponse>(new NetworkConfigurationDiagnosticResponseOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters to get network configuration diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherGetNetworkConfigurationDiagnosticOperation GetNetworkConfigurationDiagnostic(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkConfigurationDiagnosticResponse> GetNetworkConfigurationDiagnostic(bool waitForCompletion, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.GetNetworkConfigurationDiagnostic(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new NetworkWatcherGetNetworkConfigurationDiagnosticOperation(_networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new NetworkArmOperation<NetworkConfigurationDiagnosticResponse>(new NetworkConfigurationDiagnosticResponseOperationSource(), _networkWatcherClientDiagnostics, Pipeline, _networkWatcherRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

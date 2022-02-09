@@ -18,7 +18,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StackHCI.Models;
 
 namespace Azure.ResourceManager.StackHCI
 {
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
-        public async virtual Task<HCIClusterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<HCICluster>> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             if (cluster == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.StackHCI
             try
             {
                 var response = await _hCIClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cluster, cancellationToken).ConfigureAwait(false);
-                var operation = new HCIClusterCreateOrUpdateOperation(Client, response);
+                var operation = new StackHCIArmOperation<HCICluster>(Response.FromValue(new HCICluster(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
-        public virtual HCIClusterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HCICluster> CreateOrUpdate(bool waitForCompletion, string clusterName, HCIClusterData cluster, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             if (cluster == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.StackHCI
             try
             {
                 var response = _hCIClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cluster, cancellationToken);
-                var operation = new HCIClusterCreateOrUpdateOperation(Client, response);
+                var operation = new StackHCIArmOperation<HCICluster>(Response.FromValue(new HCICluster(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

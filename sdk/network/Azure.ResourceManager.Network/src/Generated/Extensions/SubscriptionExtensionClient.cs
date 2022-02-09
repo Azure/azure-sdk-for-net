@@ -1952,14 +1952,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SwapPublicIpAddressesLoadBalancerOperation> SwapPublicIpAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> SwapPublicIpAddressesLoadBalancerAsync(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
             scope.Start();
             try
             {
                 var response = await LoadBalancerRestClient.SwapPublicIpAddressesAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SwapPublicIpAddressesLoadBalancerOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1976,14 +1976,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The region where load balancers are located at. </param>
         /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SwapPublicIpAddressesLoadBalancerOperation SwapPublicIpAddressesLoadBalancer(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIpAddressesLoadBalancer(bool waitForCompletion, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = LoadBalancerClientDiagnostics.CreateScope("SubscriptionExtensionClient.SwapPublicIpAddressesLoadBalancer");
             scope.Start();
             try
             {
                 var response = LoadBalancerRestClient.SwapPublicIpAddresses(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new SwapPublicIpAddressesLoadBalancerOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIpAddressesRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -2656,14 +2656,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
                 var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2680,14 +2680,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation CheckPrivateLinkServiceVisibilityPrivateLinkService(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
             try
             {
                 var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, parameters, cancellationToken);
-                var operation = new CheckPrivateLinkServiceVisibilityPrivateLinkServiceOperation(PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

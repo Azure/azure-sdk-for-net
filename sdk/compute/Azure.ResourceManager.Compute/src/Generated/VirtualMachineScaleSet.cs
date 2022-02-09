@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetDeleteOperation> DeleteAsync(bool waitForCompletion, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Delete");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeleteOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetDeleteOperation Delete(bool waitForCompletion, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Delete");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeleteOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetUpdateOperation> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualMachineScaleSet>> UpdateAsync(bool waitForCompletion, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetUpdateOperation(Client, _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualMachineScaleSetUpdateOperation Update(bool waitForCompletion, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineScaleSet> Update(bool waitForCompletion, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualMachineScaleSetUpdateOperation(Client, _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSet>(new VirtualMachineScaleSetOperationSource(Client), _virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetDeallocateOperation> DeallocateAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeallocateAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Deallocate");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeallocateOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,14 +283,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetDeallocateOperation Deallocate(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Deallocate(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Deallocate");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeallocateOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetDeleteInstancesOperation> DeleteInstancesAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteInstancesAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.DeleteInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual VirtualMachineScaleSetDeleteInstancesOperation DeleteInstances(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteInstances(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.DeleteInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken);
-                var operation = new VirtualMachineScaleSetDeleteInstancesOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -555,14 +555,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetPowerOffOperation> PowerOffAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> PowerOffAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOff");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPowerOffOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -579,14 +579,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetPowerOffOperation PowerOff(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PowerOff(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOff");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown, cancellationToken);
-                var operation = new VirtualMachineScaleSetPowerOffOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, skipShutdown).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -602,14 +602,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetRestartOperation> RestartAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RestartAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Restart");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetRestartOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -625,14 +625,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetRestartOperation Restart(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Restart(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Restart");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetRestartOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -648,14 +648,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetPowerOnOperation> PowerOnAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> PowerOnAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOn");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPowerOnOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -671,14 +671,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetPowerOnOperation PowerOn(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PowerOn(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PowerOn");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetPowerOnOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -694,14 +694,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetRedeployOperation> RedeployAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RedeployAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Redeploy");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.RedeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetRedeployOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -717,14 +717,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetRedeployOperation Redeploy(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Redeploy(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Redeploy");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Redeploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetRedeployOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -740,14 +740,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetPerformMaintenanceOperation> PerformMaintenanceAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> PerformMaintenanceAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PerformMaintenance");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.PerformMaintenanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -763,14 +763,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetPerformMaintenanceOperation PerformMaintenance(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PerformMaintenance(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.PerformMaintenance");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.PerformMaintenance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetPerformMaintenanceOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetUpdateInstancesOperation> UpdateInstancesAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> UpdateInstancesAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.UpdateInstancesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual VirtualMachineScaleSetUpdateInstancesOperation UpdateInstances(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateInstances(bool waitForCompletion, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.UpdateInstances(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetUpdateInstancesOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -844,14 +844,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetReimageOperation> ReimageAsync(bool waitForCompletion, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ReimageAsync(bool waitForCompletion, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Reimage");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetReimageOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -867,14 +867,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetReimageOperation Reimage(bool waitForCompletion, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(bool waitForCompletion, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.Reimage");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken);
-                var operation = new VirtualMachineScaleSetReimageOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -890,14 +890,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetReimageAllOperation> ReimageAllAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> ReimageAllAsync(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.ReimageAll");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.ReimageAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetReimageAllOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -913,14 +913,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetReimageAllOperation ReimageAll(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ReimageAll(bool waitForCompletion, VirtualMachineScaleSetVmInstanceIds vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSet.ReimageAll");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRestClient.ReimageAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                var operation = new VirtualMachineScaleSetReimageAllOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetSetOrchestrationServiceStateOperation> SetOrchestrationServiceStateAsync(bool waitForCompletion, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> SetOrchestrationServiceStateAsync(bool waitForCompletion, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetRestClient.SetOrchestrationServiceStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualMachineScaleSetSetOrchestrationServiceStateOperation SetOrchestrationServiceState(bool waitForCompletion, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SetOrchestrationServiceState(bool waitForCompletion, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetRestClient.SetOrchestrationServiceState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetClientDiagnostics, Pipeline, _virtualMachineScaleSetRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1081,14 +1081,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Cancels the current virtual machine scale set rolling upgrade. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetCancelVirtualMachineScaleSetRollingUpgradeOperation> CancelVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> CancelVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgrade");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetCancelVirtualMachineScaleSetRollingUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1103,14 +1103,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Cancels the current virtual machine scale set rolling upgrade. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetCancelVirtualMachineScaleSetRollingUpgradeOperation CancelVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CancelVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.CancelVirtualMachineScaleSetRollingUpgrade");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualMachineScaleSetCancelVirtualMachineScaleSetRollingUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1125,14 +1125,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetStartOSUpgradeOperation> StartOSUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> StartOSUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.StartOSUpgrade");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.StartOSUpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetStartOSUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1147,14 +1147,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version. Instances which are already running the latest available OS version are not affected. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetStartOSUpgradeOperation StartOSUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartOSUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.StartOSUpgrade");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.StartOSUpgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualMachineScaleSetStartOSUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1169,14 +1169,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeOperation> StartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> StartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade");
             scope.Start();
             try
             {
                 var response = await _virtualMachineScaleSetRollingUpgradeRestClient.StartExtensionUpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1191,14 +1191,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to the latest available extension version. Instances which are already running the latest extension versions are not affected. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeOperation StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetRollingUpgradeClientDiagnostics.CreateScope("VirtualMachineScaleSet.StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade");
             scope.Start();
             try
             {
                 var response = _virtualMachineScaleSetRollingUpgradeRestClient.StartExtensionUpgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new VirtualMachineScaleSetStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetRollingUpgradeClientDiagnostics, Pipeline, _virtualMachineScaleSetRollingUpgradeRestClient.CreateStartExtensionUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ProximityPlacementGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ProximityPlacementGroup>> CreateOrUpdateAsync(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
             if (parameters == null)
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _proximityPlacementGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(Client, response);
+                var operation = new ComputeArmOperation<ProximityPlacementGroup>(Response.FromValue(new ProximityPlacementGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ProximityPlacementGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProximityPlacementGroup> CreateOrUpdate(bool waitForCompletion, string proximityPlacementGroupName, ProximityPlacementGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
             if (parameters == null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _proximityPlacementGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, parameters, cancellationToken);
-                var operation = new ProximityPlacementGroupCreateOrUpdateOperation(Client, response);
+                var operation = new ComputeArmOperation<ProximityPlacementGroup>(Response.FromValue(new ProximityPlacementGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServiceBusTopicCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServiceBusTopic>> CreateOrUpdateAsync(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             if (parameters == null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusTopicTopicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusTopicCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<ServiceBusTopic>(Response.FromValue(new ServiceBusTopic(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServiceBusTopicCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceBusTopic> CreateOrUpdate(bool waitForCompletion, string topicName, ServiceBusTopicData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             if (parameters == null)
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusTopicTopicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, parameters, cancellationToken);
-                var operation = new ServiceBusTopicCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<ServiceBusTopic>(Response.FromValue(new ServiceBusTopic(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

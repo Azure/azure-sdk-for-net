@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ApplicationDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ApplicationDefinition>> CreateOrUpdateAsync(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             if (parameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _applicationDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Client, _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<ApplicationDefinition>(new ApplicationDefinitionOperationSource(Client), _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ApplicationDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplicationDefinition> CreateOrUpdate(bool waitForCompletion, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             if (parameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _applicationDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters, cancellationToken);
-                var operation = new ApplicationDefinitionCreateOrUpdateOperation(Client, _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response);
+                var operation = new ResourcesArmOperation<ApplicationDefinition>(new ApplicationDefinitionOperationSource(Client), _applicationDefinitionClientDiagnostics, Pipeline, _applicationDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

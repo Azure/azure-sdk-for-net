@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
-        public async virtual Task<SourceControlCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SourceControl>> CreateOrUpdateAsync(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
             if (requestMessage == null)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _sourceControlRestClient.UpdateSourceControlAsync(sourceControlType, requestMessage, cancellationToken).ConfigureAwait(false);
-                var operation = new SourceControlCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SourceControl>(Response.FromValue(new SourceControl(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
-        public virtual SourceControlCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SourceControl> CreateOrUpdate(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
             if (requestMessage == null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _sourceControlRestClient.UpdateSourceControl(sourceControlType, requestMessage, cancellationToken);
-                var operation = new SourceControlCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SourceControl>(Response.FromValue(new SourceControl(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

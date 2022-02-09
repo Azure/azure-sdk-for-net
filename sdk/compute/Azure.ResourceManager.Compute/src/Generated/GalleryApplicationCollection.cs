@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GalleryApplication>> CreateOrUpdateAsync(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
             if (galleryApplication == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryApplicationCreateOrUpdateOperation(Client, _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GalleryApplication> CreateOrUpdate(bool waitForCompletion, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
             if (galleryApplication == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
-                var operation = new GalleryApplicationCreateOrUpdateOperation(Client, _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var operation = new ComputeArmOperation<GalleryApplication>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

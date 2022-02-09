@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="originGroup"/> is null. </exception>
-        public async virtual Task<CdnOriginGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CdnOriginGroup>> CreateOrUpdateAsync(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             if (originGroup == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnOriginGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnOriginGroupCreateOrUpdateOperation(Client, _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
+                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="originGroup"/> is null. </exception>
-        public virtual CdnOriginGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnOriginGroup> CreateOrUpdate(bool waitForCompletion, string originGroupName, CdnOriginGroupData originGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             if (originGroup == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnOriginGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup, cancellationToken);
-                var operation = new CdnOriginGroupCreateOrUpdateOperation(Client, _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response);
+                var operation = new CdnArmOperation<CdnOriginGroup>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, originGroup).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

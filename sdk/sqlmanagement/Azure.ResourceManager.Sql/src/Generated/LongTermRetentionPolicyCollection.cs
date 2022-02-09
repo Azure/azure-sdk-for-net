@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LongTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LongTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _longTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LongTermRetentionPolicyCreateOrUpdateOperation(Client, _longTermRetentionPolicyClientDiagnostics, Pipeline, _longTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new SqlArmOperation<LongTermRetentionPolicy>(new LongTermRetentionPolicyOperationSource(Client), _longTermRetentionPolicyClientDiagnostics, Pipeline, _longTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual LongTermRetentionPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LongTermRetentionPolicy> CreateOrUpdate(bool waitForCompletion, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _longTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new LongTermRetentionPolicyCreateOrUpdateOperation(Client, _longTermRetentionPolicyClientDiagnostics, Pipeline, _longTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
+                var operation = new SqlArmOperation<LongTermRetentionPolicy>(new LongTermRetentionPolicyOperationSource(Client), _longTermRetentionPolicyClientDiagnostics, Pipeline, _longTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

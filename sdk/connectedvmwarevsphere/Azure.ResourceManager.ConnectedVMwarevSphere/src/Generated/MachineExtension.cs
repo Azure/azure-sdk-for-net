@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> The operation to delete the extension. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<MachineExtensionDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtension.Delete");
             scope.Start();
             try
             {
                 var response = await _machineExtensionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineExtensionDeleteOperation(_machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation(_machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> The operation to delete the extension. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual MachineExtensionDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _machineExtensionClientDiagnostics.CreateScope("MachineExtension.Delete");
             scope.Start();
             try
             {
                 var response = _machineExtensionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineExtensionDeleteOperation(_machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation(_machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<MachineExtensionUpdateOperation> UpdateAsync(bool waitForCompletion, MachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<MachineExtension>> UpdateAsync(bool waitForCompletion, MachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _machineExtensionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineExtensionUpdateOperation(Client, _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<MachineExtension>(new MachineExtensionOperationSource(Client), _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="extensionParameters"> Parameters supplied to the Create Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public virtual MachineExtensionUpdateOperation Update(bool waitForCompletion, MachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineExtension> Update(bool waitForCompletion, MachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _machineExtensionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken);
-                var operation = new MachineExtensionUpdateOperation(Client, _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
+                var operation = new ConnectedVMwarevSphereArmOperation<MachineExtension>(new MachineExtensionOperationSource(Client), _machineExtensionClientDiagnostics, Pipeline, _machineExtensionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

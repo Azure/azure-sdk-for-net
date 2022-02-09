@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkGatewayNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualNetworkGatewayNatRule>> CreateOrUpdateAsync(bool waitForCompletion, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
             if (natRuleParameters == null)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkGatewayNatRuleCreateOrUpdateOperation(Client, _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRule>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
-        public virtual VirtualNetworkGatewayNatRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualNetworkGatewayNatRule> CreateOrUpdate(bool waitForCompletion, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
             if (natRuleParameters == null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken);
-                var operation = new VirtualNetworkGatewayNatRuleCreateOrUpdateOperation(Client, _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRule>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
