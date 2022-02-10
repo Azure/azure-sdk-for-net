@@ -48,6 +48,8 @@ namespace Azure.DigitalTwins.Core
         public DigitalTwinPropertyMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastUpdateTime")]
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sourceTime")]
+        public System.DateTimeOffset? SourceTime { get { throw null; } set { } }
     }
     public partial class DigitalTwinsClient
     {
@@ -105,12 +107,13 @@ namespace Azure.DigitalTwins.Core
     }
     public partial class DigitalTwinsClientOptions : Azure.Core.ClientOptions
     {
-        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2020_10_31) { }
+        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2021_06_30_Preview) { }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2020_10_31 = 1,
+            V2021_06_30_Preview = 2,
         }
     }
     public partial class DigitalTwinsEventRoute
@@ -127,6 +130,7 @@ namespace Azure.DigitalTwins.Core
         public const string DigitalTwinMetadata = "$metadata";
         public const string MetadataModel = "$model";
         public const string MetadataPropertyLastUpdateTime = "lastUpdateTime";
+        public const string MetadataPropertySourceTime = "sourceTime";
         public const string RelationshipId = "$relationshipId";
         public const string RelationshipName = "$relationshipName";
         public const string RelationshipSourceId = "$sourceId";
