@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DnsResolver
+namespace undefined
 {
   using System;
   using System.Collections.Generic;
@@ -19,8 +19,12 @@ namespace Microsoft.Azure.Management.DnsResolver
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Network", "DnsForwardingRulesets", "2020-04-01-preview"),
                 new Tuple<string, string, string>("Network", "DnsResolvers", "2020-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ForwardingRules", "2020-04-01-preview"),
                 new Tuple<string, string, string>("Network", "InboundEndpoints", "2020-04-01-preview"),
+                new Tuple<string, string, string>("Network", "OutboundEndpoints", "2020-04-01-preview"),
+                new Tuple<string, string, string>("Network", "VirtualNetworkLinks", "2020-04-01-preview"),
               }.AsEnumerable();
           }
       }

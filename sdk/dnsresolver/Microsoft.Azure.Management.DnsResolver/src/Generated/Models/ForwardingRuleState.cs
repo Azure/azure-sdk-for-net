@@ -8,11 +8,11 @@ namespace Dnsresolver.Models
 {
 
     /// <summary>
-    /// Defines values for IpAllocationMethod.
+    /// Defines values for ForwardingRuleState.
     /// </summary>
-    public static class IpAllocationMethod
+    public static class ForwardingRuleState
     {
-        public const string Static = "Static";
-        public const string Dynamic = "Dynamic";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

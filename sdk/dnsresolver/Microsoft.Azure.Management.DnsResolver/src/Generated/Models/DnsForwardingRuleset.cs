@@ -14,21 +14,21 @@ namespace Dnsresolver.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an inbound endpoint for a DNS resolver.
+    /// Describes a DNS forwarding ruleset.
     /// </summary>
     [JsonTransformation]
-    public partial class InboundEndpoint : TrackedResource
+    public partial class DnsForwardingRuleset : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the InboundEndpoint class.
+        /// Initializes a new instance of the DnsForwardingRuleset class.
         /// </summary>
-        public InboundEndpoint()
+        public DnsForwardingRuleset()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InboundEndpoint class.
+        /// Initializes a new instance of the DnsForwardingRuleset class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -39,23 +39,25 @@ namespace Dnsresolver.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="etag">ETag of the inbound endpoint.</param>
-        /// <param name="ipConfigurations">IP configurations for the inbound
-        /// endpoint.</param>
+        /// <param name="etag">ETag of the DNS forwarding ruleset.</param>
+        /// <param name="dnsResolverOutboundEndpoints">The reference to the DNS
+        /// resolver outbound endpoints that are used to route DNS queries
+        /// matching the forwarding rules in the ruleset to the target DNS
+        /// servers.</param>
         /// <param name="provisioningState">The current provisioning state of
-        /// the inbound endpoint. This is a read-only property and any attempt
-        /// to set this value will be ignored. Possible values include:
+        /// the DNS forwarding ruleset. This is a read-only property and any
+        /// attempt to set this value will be ignored. Possible values include:
         /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Canceled'</param>
-        /// <param name="resourceGuid">The resourceGuid property of the inbound
-        /// endpoint resource.</param>
+        /// <param name="resourceGuid">The resourceGuid for the DNS forwarding
+        /// ruleset.</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource.</param>
-        public InboundEndpoint(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<IpConfiguration> ipConfigurations = default(IList<IpConfiguration>), string provisioningState = default(string), string resourceGuid = default(string), SystemData systemData = default(SystemData))
+        public DnsForwardingRuleset(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<SubResource> dnsResolverOutboundEndpoints = default(IList<SubResource>), string provisioningState = default(string), string resourceGuid = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
-            IpConfigurations = ipConfigurations;
+            DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             SystemData = systemData;
@@ -68,28 +70,30 @@ namespace Dnsresolver.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets eTag of the inbound endpoint.
+        /// Gets eTag of the DNS forwarding ruleset.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets IP configurations for the inbound endpoint.
+        /// Gets or sets the reference to the DNS resolver outbound endpoints
+        /// that are used to route DNS queries matching the forwarding rules in
+        /// the ruleset to the target DNS servers.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<IpConfiguration> IpConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.dnsResolverOutboundEndpoints")]
+        public IList<SubResource> DnsResolverOutboundEndpoints { get; set; }
 
         /// <summary>
-        /// Gets the current provisioning state of the inbound endpoint. This
-        /// is a read-only property and any attempt to set this value will be
-        /// ignored. Possible values include: 'Creating', 'Updating',
+        /// Gets the current provisioning state of the DNS forwarding ruleset.
+        /// This is a read-only property and any attempt to set this value will
+        /// be ignored. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the resourceGuid property of the inbound endpoint resource.
+        /// Gets the resourceGuid for the DNS forwarding ruleset.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }

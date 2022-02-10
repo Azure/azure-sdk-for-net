@@ -12,23 +12,23 @@ namespace Dnsresolver.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an inbound endpoint for a DNS resolver for PATCH operation.
+    /// Describes a DNS forwarding ruleset PATCH operation.
     /// </summary>
-    public partial class InboundEndpointPatch
+    public partial class DnsForwardingRulesetPatch
     {
         /// <summary>
-        /// Initializes a new instance of the InboundEndpointPatch class.
+        /// Initializes a new instance of the DnsForwardingRulesetPatch class.
         /// </summary>
-        public InboundEndpointPatch()
+        public DnsForwardingRulesetPatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InboundEndpointPatch class.
+        /// Initializes a new instance of the DnsForwardingRulesetPatch class.
         /// </summary>
-        /// <param name="tags">Tags for inbound endpoint.</param>
-        public InboundEndpointPatch(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="tags">Tags for DNS Resolver.</param>
+        public DnsForwardingRulesetPatch(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
             CustomInit();
@@ -40,7 +40,7 @@ namespace Dnsresolver.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags for inbound endpoint.
+        /// Gets or sets tags for DNS Resolver.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

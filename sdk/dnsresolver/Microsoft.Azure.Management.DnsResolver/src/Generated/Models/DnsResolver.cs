@@ -14,24 +14,26 @@ namespace Dnsresolver.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an inbound endpoint for a DNS resolver.
+    /// Describes a DNS resolver.
     /// </summary>
     [JsonTransformation]
-    public partial class InboundEndpoint : TrackedResource
+    public partial class DnsResolver : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the InboundEndpoint class.
+        /// Initializes a new instance of the DnsResolver class.
         /// </summary>
-        public InboundEndpoint()
+        public DnsResolver()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InboundEndpoint class.
+        /// Initializes a new instance of the DnsResolver class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
+        /// <param name="virtualNetwork">The reference to the virtual network.
+        /// This cannot be changed after creation.</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -39,23 +41,26 @@ namespace Dnsresolver.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="etag">ETag of the inbound endpoint.</param>
-        /// <param name="ipConfigurations">IP configurations for the inbound
-        /// endpoint.</param>
+        /// <param name="etag">ETag of the DNS resolver.</param>
+        /// <param name="dnsResolverState">The current status of the DNS
+        /// resolver. This is a read-only property and any attempt to set this
+        /// value will be ignored. Possible values include: 'Connected',
+        /// 'Disconnected'</param>
         /// <param name="provisioningState">The current provisioning state of
-        /// the inbound endpoint. This is a read-only property and any attempt
-        /// to set this value will be ignored. Possible values include:
+        /// the DNS resolver. This is a read-only property and any attempt to
+        /// set this value will be ignored. Possible values include:
         /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Canceled'</param>
-        /// <param name="resourceGuid">The resourceGuid property of the inbound
-        /// endpoint resource.</param>
+        /// <param name="resourceGuid">The resourceGuid property of the DNS
+        /// resolver resource.</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource.</param>
-        public InboundEndpoint(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<IpConfiguration> ipConfigurations = default(IList<IpConfiguration>), string provisioningState = default(string), string resourceGuid = default(string), SystemData systemData = default(SystemData))
+        public DnsResolver(string location, SubResource virtualNetwork, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string dnsResolverState = default(string), string provisioningState = default(string), string resourceGuid = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
-            IpConfigurations = ipConfigurations;
+            VirtualNetwork = virtualNetwork;
+            DnsResolverState = dnsResolverState;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             SystemData = systemData;
@@ -68,20 +73,29 @@ namespace Dnsresolver.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets eTag of the inbound endpoint.
+        /// Gets eTag of the DNS resolver.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets IP configurations for the inbound endpoint.
+        /// Gets or sets the reference to the virtual network. This cannot be
+        /// changed after creation.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<IpConfiguration> IpConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.virtualNetwork")]
+        public SubResource VirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets the current provisioning state of the inbound endpoint. This
-        /// is a read-only property and any attempt to set this value will be
+        /// Gets the current status of the DNS resolver. This is a read-only
+        /// property and any attempt to set this value will be ignored.
+        /// Possible values include: 'Connected', 'Disconnected'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsResolverState")]
+        public string DnsResolverState { get; private set; }
+
+        /// <summary>
+        /// Gets the current provisioning state of the DNS resolver. This is a
+        /// read-only property and any attempt to set this value will be
         /// ignored. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Canceled'
         /// </summary>
@@ -89,7 +103,7 @@ namespace Dnsresolver.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the resourceGuid property of the inbound endpoint resource.
+        /// Gets the resourceGuid property of the DNS resolver resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }
@@ -110,6 +124,10 @@ namespace Dnsresolver.Models
         public override void Validate()
         {
             base.Validate();
+            if (VirtualNetwork == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VirtualNetwork");
+            }
         }
     }
 }
