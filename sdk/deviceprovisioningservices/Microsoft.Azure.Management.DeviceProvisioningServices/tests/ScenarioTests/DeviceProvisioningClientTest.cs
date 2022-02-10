@@ -164,7 +164,6 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public async Task CreateAndDeleteDataResidency()
         {
-            // CRUD with Data Residency
             using var context = MockContext.Start(GetType());
 
             Initialize(context);
