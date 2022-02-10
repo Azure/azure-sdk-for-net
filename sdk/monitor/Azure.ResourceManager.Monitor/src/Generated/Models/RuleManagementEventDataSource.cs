@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of RuleManagementEventDataSource. </summary>
         /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
-        /// <param name="resourceUri"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
+        /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> The status of the operation that should be checked for. If no status is provided, any status will match. </param>
         /// <param name="subStatus"> the substatus. </param>
         /// <param name="claims"> the claims. </param>
-        internal RuleManagementEventDataSource(string odataType, string resourceUri, string legacyResourceId, string resourceLocation, string metricNamespace, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceUri, legacyResourceId, resourceLocation, metricNamespace)
+        internal RuleManagementEventDataSource(string odataType, string resourceId, string legacyResourceId, string resourceLocation, string metricNamespace, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
         {
             EventName = eventName;
             EventSource = eventSource;

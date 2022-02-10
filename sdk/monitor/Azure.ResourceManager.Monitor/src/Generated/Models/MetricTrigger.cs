@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceUri"/> is null. </exception>
-        public MetricTrigger(string metricName, string metricResourceUri, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold)
+        public MetricTrigger(string metricName, Uri metricResourceUri, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold)
         {
             if (metricName == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{&quot;DimensionName&quot;:&quot;AppName&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;App1&quot;]},{&quot;DimensionName&quot;:&quot;Deployment&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;default&quot;]}]. </param>
         /// <param name="dividePerInstance"> a value indicating whether metric should divide per instance. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, string metricResourceUri, string metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold, IList<ScaleRuleMetricDimension> dimensions, bool? dividePerInstance)
+        internal MetricTrigger(string metricName, string metricNamespace, Uri metricResourceUri, string metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType @operator, double threshold, IList<ScaleRuleMetricDimension> dimensions, bool? dividePerInstance)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the namespace of the metric that defines what the rule monitors. </summary>
         public string MetricNamespace { get; set; }
         /// <summary> the resource identifier of the resource the rule monitors. </summary>
-        public string MetricResourceUri { get; set; }
+        public Uri MetricResourceUri { get; set; }
         /// <summary> the location of the resource the rule monitors. </summary>
         public string MetricResourceLocation { get; set; }
         /// <summary> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </summary>

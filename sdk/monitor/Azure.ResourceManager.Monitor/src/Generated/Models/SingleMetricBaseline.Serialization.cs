@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             string timespan = default;
             TimeSpan interval = default;
             Optional<string> @namespace = default;
@@ -38,6 +40,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new SingleMetricBaseline(id, name, type, timespan, interval, @namespace.Value, baselines);
+            return new SingleMetricBaseline(id, name, type, systemData, timespan, interval, @namespace.Value, baselines);
         }
     }
 }

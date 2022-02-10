@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,169 +17,117 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region AutoscaleSetting
-        /// <summary> Gets an object representing a AutoscaleSettingCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingCollection" /> object. </returns>
-        public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroup resourceGroup)
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return new AutoscaleSettingCollection(resourceGroup);
-        }
-        #endregion
-
-        #region AlertRule
-        /// <summary> Gets an object representing a AlertRuleCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AlertRuleCollection" /> object. </returns>
-        public static AlertRuleCollection GetAlertRules(this ResourceGroup resourceGroup)
-        {
-            return new AlertRuleCollection(resourceGroup);
-        }
-        #endregion
-
-        #region ActionGroup
-        /// <summary> Gets an object representing a ActionGroupCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ActionGroupCollection" /> object. </returns>
-        public static ActionGroupCollection GetActionGroups(this ResourceGroup resourceGroup)
-        {
-            return new ActionGroupCollection(resourceGroup);
-        }
-        #endregion
-
-        #region MetricAlert
-        /// <summary> Gets an object representing a MetricAlertCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="MetricAlertCollection" /> object. </returns>
-        public static MetricAlertCollection GetMetricAlerts(this ResourceGroup resourceGroup)
-        {
-            return new MetricAlertCollection(resourceGroup);
-        }
-        #endregion
-
-        #region LogSearchRule
-        /// <summary> Gets an object representing a LogSearchRuleCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="LogSearchRuleCollection" /> object. </returns>
-        public static LogSearchRuleCollection GetLogSearchRules(this ResourceGroup resourceGroup)
-        {
-            return new LogSearchRuleCollection(resourceGroup);
-        }
-        #endregion
-
-        #region PrivateLinkScope
-        /// <summary> Gets an object representing a PrivateLinkScopeCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="PrivateLinkScopeCollection" /> object. </returns>
-        public static PrivateLinkScopeCollection GetPrivateLinkScopes(this ResourceGroup resourceGroup)
-        {
-            return new PrivateLinkScopeCollection(resourceGroup);
-        }
-        #endregion
-
-        #region ActivityLogAlert
-        /// <summary> Gets an object representing a ActivityLogAlertCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertCollection" /> object. </returns>
-        public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroup resourceGroup)
-        {
-            return new ActivityLogAlertCollection(resourceGroup);
-        }
-        #endregion
-
-        #region DataCollectionEndpoint
-        /// <summary> Gets an object representing a DataCollectionEndpointCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionEndpointCollection" /> object. </returns>
-        public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroup resourceGroup)
-        {
-            return new DataCollectionEndpointCollection(resourceGroup);
-        }
-        #endregion
-
-        #region DataCollectionRule
-        /// <summary> Gets an object representing a DataCollectionRuleCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleCollection" /> object. </returns>
-        public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroup resourceGroup)
-        {
-            return new DataCollectionRuleCollection(resourceGroup);
-        }
-        #endregion
-
-        private static PrivateLinkScopeOperationStatusRestOperations GetPrivateLinkScopeOperationStatusRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ArmClientOptions clientOptions, Uri endpoint = null, string apiVersion = default)
-        {
-            return new PrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, clientOptions, endpoint, apiVersion);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            if (asyncOperationId == null)
+            return resourceGroup.GetCachedClient((client) =>
             {
-                throw new ArgumentNullException(nameof(asyncOperationId));
-            }
-
-            return await resourceGroup.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetPrivateLinkScopeOperationStatu");
-                scope.Start();
-                try
-                {
-                    PrivateLinkScopeOperationStatusRestOperations restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = await restOperations.GetAsync(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, asyncOperationId, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            ).ConfigureAwait(false);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: PrivateLinkScopeOperationStatus_Get
-        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static Response<OperationStatus> GetPrivateLinkScopeOperationStatu(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            if (asyncOperationId == null)
-            {
-                throw new ArgumentNullException(nameof(asyncOperationId));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetPrivateLinkScopeOperationStatu");
-                scope.Start();
-                try
-                {
-                    PrivateLinkScopeOperationStatusRestOperations restOperations = GetPrivateLinkScopeOperationStatusRestOperations(clientDiagnostics, pipeline, options, baseUri);
-                    var response = restOperations.Get(resourceGroup.Id.SubscriptionId, resourceGroup.Id.ResourceGroupName, asyncOperationId, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of AutoscaleSettings in the AutoscaleSetting. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AutoscaleSettings and their operations over a AutoscaleSetting. </returns>
+        public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAutoscaleSettings();
+        }
+
+        /// <summary> Gets a collection of AlertRules in the AlertRule. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AlertRules and their operations over a AlertRule. </returns>
+        public static AlertRuleCollection GetAlertRules(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetAlertRules();
+        }
+
+        /// <summary> Gets a collection of ActionGroups in the ActionGroup. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ActionGroups and their operations over a ActionGroup. </returns>
+        public static ActionGroupCollection GetActionGroups(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetActionGroups();
+        }
+
+        /// <summary> Gets a collection of MetricAlerts in the MetricAlert. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MetricAlerts and their operations over a MetricAlert. </returns>
+        public static MetricAlertCollection GetMetricAlerts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetMetricAlerts();
+        }
+
+        /// <summary> Gets a collection of LogSearchRules in the LogSearchRule. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of LogSearchRules and their operations over a LogSearchRule. </returns>
+        public static LogSearchRuleCollection GetLogSearchRules(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetLogSearchRules();
+        }
+
+        /// <summary> Gets a collection of PrivateLinkScopes in the PrivateLinkScope. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PrivateLinkScopes and their operations over a PrivateLinkScope. </returns>
+        public static PrivateLinkScopeCollection GetPrivateLinkScopes(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetPrivateLinkScopes();
+        }
+
+        /// <summary> Gets a collection of ActivityLogAlerts in the ActivityLogAlert. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ActivityLogAlerts and their operations over a ActivityLogAlert. </returns>
+        public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetActivityLogAlerts();
+        }
+
+        /// <summary> Gets a collection of DataCollectionEndpoints in the DataCollectionEndpoint. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DataCollectionEndpoints and their operations over a DataCollectionEndpoint. </returns>
+        public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDataCollectionEndpoints();
+        }
+
+        /// <summary> Gets a collection of DataCollectionRules in the DataCollectionRule. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DataCollectionRules and their operations over a DataCollectionRule. </returns>
+        public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDataCollectionRules();
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkScopeOperationStatus_Get
+        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentException"> <paramref name="asyncOperationId"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        public async static Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            return await GetExtensionClient(resourceGroup).GetPrivateLinkScopeOperationStatuAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: PrivateLinkScopeOperationStatus_Get
+        /// <summary> Get the status of an azure asynchronous operation associated with a private link scope operation. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentException"> <paramref name="asyncOperationId"/> is empty. </exception>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        public static Response<OperationStatus> GetPrivateLinkScopeOperationStatu(this ResourceGroup resourceGroup, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            return GetExtensionClient(resourceGroup).GetPrivateLinkScopeOperationStatu(asyncOperationId, cancellationToken);
         }
     }
 }

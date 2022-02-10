@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="namePropertiesName"> the name of the alert rule. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="action"> action that is performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedTime"> Last time the rule was updated in ISO8601 format. </param>
-        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedTime) : base(id, name, type, tags, location)
+        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedTime) : base(id, name, type, systemData, tags, location)
         {
             NamePropertiesName = namePropertiesName;
             Description = description;

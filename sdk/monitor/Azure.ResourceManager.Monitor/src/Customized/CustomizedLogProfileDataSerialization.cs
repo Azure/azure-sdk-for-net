@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> storageAccountId = default;
             Optional<string> serviceBusRuleId = default;
             IList<string> locations = default;
@@ -63,6 +65,11 @@ namespace Azure.ResourceManager.Monitor
                     {
                         type = property.Value.GetString();
                     }
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogProfileData(id, name, type, tags, location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
+            return new LogProfileData(id, name, type, systemData, tags, location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
         }
     }
 }

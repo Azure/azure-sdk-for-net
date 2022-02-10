@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of LogSearchRule and their operations over its parent. </summary>
     public partial class LogSearchRuleCollection : ArmCollection, IEnumerable<LogSearchRule>, IAsyncEnumerable<LogSearchRule>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ScheduledQueryRulesRestOperations _scheduledQueryRulesRestClient;
+        private readonly ClientDiagnostics _logSearchRuleScheduledQueryRulesClientDiagnostics;
+        private readonly ScheduledQueryRulesRestOperations _logSearchRuleScheduledQueryRulesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LogSearchRuleCollection"/> class for mocking. </summary>
         protected LogSearchRuleCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="LogSearchRuleCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal LogSearchRuleCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal LogSearchRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(LogSearchRule.ResourceType, out string apiVersion);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _logSearchRuleScheduledQueryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", LogSearchRule.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(LogSearchRule.ResourceType, out string logSearchRuleScheduledQueryRulesApiVersion);
+            _logSearchRuleScheduledQueryRulesRestClient = new ScheduledQueryRulesRestOperations(_logSearchRuleScheduledQueryRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logSearchRuleScheduledQueryRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ScheduledQueryRules_CreateOrUpdate
@@ -61,61 +60,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LogSearchRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _scheduledQueryRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
-                var operation = new LogSearchRuleCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ScheduledQueryRules_CreateOrUpdate
-        /// <summary> Creates or updates an log search rule. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<LogSearchRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.CreateOrUpdate");
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scheduledQueryRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LogSearchRuleCreateOrUpdateOperation(this, response);
+                var response = await _logSearchRuleScheduledQueryRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new LogSearchRuleCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,26 +89,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ScheduledQueryRules_Get
-        /// <summary> Gets an Log Search rule. </summary>
+        /// OperationId: ScheduledQueryRules_CreateOrUpdate
+        /// <summary> Creates or updates an log search rule. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<LogSearchRule> Get(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual LogSearchRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, LogSearchRuleData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.Get");
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scheduledQueryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
+                var response = _logSearchRuleScheduledQueryRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
+                var operation = new LogSearchRuleCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -163,22 +128,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets an Log Search rule. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<LogSearchRule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.Get");
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _scheduledQueryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
+                var response = await _logSearchRuleScheduledQueryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
+                    throw await _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LogSearchRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,135 +150,32 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<LogSearchRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _scheduledQueryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LogSearchRule>(null, response.GetRawResponse());
-                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<Response<LogSearchRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _scheduledQueryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LogSearchRule>(null, response.GetRawResponse());
-                return Response.FromValue(new LogSearchRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ScheduledQueryRules_ListByResourceGroup
-        /// <summary> List the Log Search rules within a resource group. </summary>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
+        /// OperationId: ScheduledQueryRules_Get
+        /// <summary> Gets an Log Search rule. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogSearchRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogSearchRule> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<LogSearchRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            Page<LogSearchRule> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.Get");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _scheduledQueryRulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _logSearchRuleScheduledQueryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
+                if (response.Value == null)
+                    throw _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogSearchRule(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules
@@ -329,12 +189,12 @@ namespace Azure.ResourceManager.Monitor
         {
             async Task<Page<LogSearchRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetAll");
+                using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _scheduledQueryRulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(this, value)), null, response.GetRawResponse());
+                    var response = await _logSearchRuleScheduledQueryRulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -345,21 +205,51 @@ namespace Azure.ResourceManager.Monitor
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Filters the list of <see cref="LogSearchRule" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ScheduledQueryRules_ListByResourceGroup
+        /// <summary> List the Log Search rules within a resource group. </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LogSearchRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogSearchRule> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetAllAsGenericResources");
+            Page<LogSearchRule> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _logSearchRuleScheduledQueryRulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRule(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ScheduledQueryRules_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(LogSearchRule.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await GetIfExistsAsync(ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,21 +258,80 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="LogSearchRule" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ScheduledQueryRules_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LogSearchRuleCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(LogSearchRule.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ScheduledQueryRules_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public async virtual Task<Response<LogSearchRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logSearchRuleScheduledQueryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<LogSearchRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LogSearchRule(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ScheduledQueryRules_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<LogSearchRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _logSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("LogSearchRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logSearchRuleScheduledQueryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<LogSearchRule>(null, response.GetRawResponse());
+                return Response.FromValue(new LogSearchRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -405,8 +354,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, LogSearchRule, LogSearchRuleData> Construct() { }
     }
 }

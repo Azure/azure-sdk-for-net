@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal DiagnosticSettingsCreateOrUpdateOperation(ArmResource operationsBase, Response<DiagnosticSettingsData> response)
+        internal DiagnosticSettingsCreateOrUpdateOperation(ArmClient armClient, Response<DiagnosticSettingsData> response)
         {
-            _operation = new OperationOrResponseInternals<DiagnosticSettings>(Azure.Response.FromValue(new DiagnosticSettings(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DiagnosticSettings>(Azure.Response.FromValue(new DiagnosticSettings(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

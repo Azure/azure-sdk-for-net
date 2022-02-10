@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var ruleWebhookAction = new RuleWebhookAction()
             {
-                ServiceUri = "https://www.contoso.com/alerts?type=HighCPU",
+                ServiceUri = new Uri("https://www.contoso.com/alerts?type=HighCPU"),
                 Properties = { new KeyValuePair<string, string>("key1", "value1") }
             };
             //RuleMetricDataSource ruleDataSource = new RuleMetricDataSource(
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 MetricName = "testrulemetric",
                 MetricNamespace = "Microsoft.Compute/virtualMachines",
                 ResourceLocation = location,
-                ResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01"
+                ResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01"
             };
             //var ruleCondition = new ThresholdRuleCondition(
             //    "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
+            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
             IList<ScaleRule> rules = new List<ScaleRule>()
             {
                 new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 Enabled = true,
                 TargetResourceLocation = location,
-                TargetResourceUri = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                TargetResourceUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"),
                 /*Notifications =
                 {
                     new AutoscaleNotification()
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var data = new DiagnosticSettingsData()
             {
-                StorageAccountId = "subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Storage/storageAccounts/testlogaccount0129",
+                StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/lockformonitor/providers/Microsoft.Storage/storageAccounts/testaccountforlog2",
                 //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",
                 //EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280/eventhubs/testfordiagnosticsetting/authorizationRules/testfordiagonst",
                 //EventHubName = "myeventhub",

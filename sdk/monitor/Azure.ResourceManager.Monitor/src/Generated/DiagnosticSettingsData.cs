@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
         /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
         /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logs"> The list of logs settings. </param>
         /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
-        internal DiagnosticSettingsData(ResourceIdentifier id, string name, ResourceType type, string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, string logAnalyticsDestinationType) : base(id, name, type)
+        internal DiagnosticSettingsData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, string logAnalyticsDestinationType) : base(id, name, type, systemData)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;

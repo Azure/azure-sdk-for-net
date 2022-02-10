@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal LogSearchRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<LogSearchRuleData> response)
+        internal LogSearchRuleCreateOrUpdateOperation(ArmClient armClient, Response<LogSearchRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<LogSearchRule>(Azure.Response.FromValue(new LogSearchRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<LogSearchRule>(Azure.Response.FromValue(new LogSearchRule(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

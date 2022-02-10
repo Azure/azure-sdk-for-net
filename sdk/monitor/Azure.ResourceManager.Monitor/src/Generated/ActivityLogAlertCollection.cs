@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of ActivityLogAlert and their operations over its parent. </summary>
     public partial class ActivityLogAlertCollection : ArmCollection, IEnumerable<ActivityLogAlert>, IAsyncEnumerable<ActivityLogAlert>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ActivityLogAlertsRestOperations _activityLogAlertsRestClient;
+        private readonly ClientDiagnostics _activityLogAlertClientDiagnostics;
+        private readonly ActivityLogAlertsRestOperations _activityLogAlertRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ActivityLogAlertCollection"/> class for mocking. </summary>
         protected ActivityLogAlertCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="ActivityLogAlertCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ActivityLogAlertCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ActivityLogAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ActivityLogAlert.ResourceType, out string apiVersion);
-            _activityLogAlertsRestClient = new ActivityLogAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _activityLogAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlert.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ActivityLogAlert.ResourceType, out string activityLogAlertApiVersion);
+            _activityLogAlertRestClient = new ActivityLogAlertsRestOperations(_activityLogAlertClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, activityLogAlertApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: ActivityLogAlerts_CreateOrUpdate
@@ -61,61 +60,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
-        public virtual ActivityLogAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
-        {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlert == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlert));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _activityLogAlertsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_CreateOrUpdate
-        /// <summary> Create a new activity log alert or update an existing one. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
-        /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
         public async virtual Task<ActivityLogAlertCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
             if (activityLogAlert == null)
             {
                 throw new ArgumentNullException(nameof(activityLogAlert));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken).ConfigureAwait(false);
-                var operation = new ActivityLogAlertCreateOrUpdateOperation(this, response);
+                var response = await _activityLogAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken).ConfigureAwait(false);
+                var operation = new ActivityLogAlertCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,26 +89,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_Get
-        /// <summary> Get an activity log alert. </summary>
+        /// OperationId: ActivityLogAlerts_CreateOrUpdate
+        /// <summary> Create a new activity log alert or update an existing one. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="activityLogAlert"> The activity log alert to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public virtual Response<ActivityLogAlert> Get(string activityLogAlertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="activityLogAlert"/> is null. </exception>
+        public virtual ActivityLogAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string activityLogAlertName, ActivityLogAlertData activityLogAlert, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+            if (activityLogAlert == null)
             {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
+                throw new ArgumentNullException(nameof(activityLogAlert));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _activityLogAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
+                var response = _activityLogAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, activityLogAlert, cancellationToken);
+                var operation = new ActivityLogAlertCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -163,22 +128,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Get an activity log alert. </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public async virtual Task<Response<ActivityLogAlert>> GetAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken).ConfigureAwait(false);
+                var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
+                    throw await _activityLogAlertClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,25 +150,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_Get
+        /// <summary> Get an activity log alert. </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public virtual Response<ActivityLogAlert> GetIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
+        public virtual Response<ActivityLogAlert> Get(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _activityLogAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken);
+                var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ActivityLogAlert>(null, response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
+                    throw _activityLogAlertClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,70 +178,71 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_ListByResourceGroup
+        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public async virtual Task<Response<ActivityLogAlert>> GetIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActivityLogAlert> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
+            async Task<Page<ActivityLogAlert>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
+                using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _activityLogAlertRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _activityLogAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ActivityLogAlert>(null, response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlert(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_ListByResourceGroup
+        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
-        public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActivityLogAlert> GetAll(CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
+            Page<ActivityLogAlert> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
+                using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _activityLogAlertRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(activityLogAlertName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -291,73 +256,24 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_ListByResourceGroup
-        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
+        /// OperationId: ActivityLogAlerts_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActivityLogAlert> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            Page<ActivityLogAlert> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _activityLogAlertsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ActivityLogAlerts_ListByResourceGroup
-        /// <summary> Get a list of all activity log alerts in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActivityLogAlert" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActivityLogAlert> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ActivityLogAlert>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _activityLogAlertsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlert(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Filters the list of <see cref="ActivityLogAlert" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAllAsGenericResources");
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(ActivityLogAlert.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(activityLogAlertName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,21 +282,54 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="ActivityLogAlert" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        public async virtual Task<Response<ActivityLogAlert>> GetIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ActivityLogAlertCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(ActivityLogAlert.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ActivityLogAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: ActivityLogAlerts_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        public virtual Response<ActivityLogAlert> GetIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+
+            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ActivityLogAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -403,8 +352,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ActivityLogAlert, ActivityLogAlertData> Construct() { }
     }
 }

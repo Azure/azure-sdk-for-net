@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal AutoscaleSettingCreateOrUpdateOperation(ArmResource operationsBase, Response<AutoscaleSettingData> response)
+        internal AutoscaleSettingCreateOrUpdateOperation(ArmClient armClient, Response<AutoscaleSettingData> response)
         {
-            _operation = new OperationOrResponseInternals<AutoscaleSetting>(Azure.Response.FromValue(new AutoscaleSetting(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<AutoscaleSetting>(Azure.Response.FromValue(new AutoscaleSetting(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

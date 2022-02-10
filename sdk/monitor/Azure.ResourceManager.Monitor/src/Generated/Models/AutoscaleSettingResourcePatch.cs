@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the name of the autoscale setting. </summary>
         public string Name { get; set; }
         /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>
-        public string TargetResourceUri { get; set; }
+        public Uri TargetResourceUri { get; set; }
         /// <summary> the location of the resource that the autoscale setting should be added to. </summary>
         public string TargetResourceLocation { get; set; }
     }

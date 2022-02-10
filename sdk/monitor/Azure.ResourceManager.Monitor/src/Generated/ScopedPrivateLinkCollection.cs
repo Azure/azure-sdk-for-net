@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Monitor.Models;
 
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of ScopedPrivateLink and their operations over its parent. </summary>
     public partial class ScopedPrivateLinkCollection : ArmCollection, IEnumerable<ScopedPrivateLink>, IAsyncEnumerable<ScopedPrivateLink>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateLinkScopedResourcesRestOperations _privateLinkScopedResourcesRestClient;
+        private readonly ClientDiagnostics _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics;
+        private readonly PrivateLinkScopedResourcesRestOperations _scopedPrivateLinkPrivateLinkScopedResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ScopedPrivateLinkCollection"/> class for mocking. </summary>
         protected ScopedPrivateLinkCollection()
@@ -32,12 +33,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="ScopedPrivateLinkCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ScopedPrivateLinkCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ScopedPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(ScopedPrivateLink.ResourceType, out string apiVersion);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ScopedPrivateLink.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(ScopedPrivateLink.ResourceType, out string scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
+            _scopedPrivateLinkPrivateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(_scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scopedPrivateLinkPrivateLinkScopedResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +51,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkScope.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
         /// OperationId: PrivateLinkScopedResources_CreateOrUpdate
@@ -59,61 +59,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ScopedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _privateLinkScopedResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken);
-                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_CreateOrUpdate
-        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="name"> The name of the scoped resource object. </param>
-        /// <param name="parameters"> The ScopedPrivateLink to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<ScopedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopedResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
+                var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(Client, _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,26 +88,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_Get
-        /// <summary> Gets a scoped resource in a private link scope. </summary>
+        /// OperationId: PrivateLinkScopedResources_CreateOrUpdate
+        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> The name of the scoped resource object. </param>
+        /// <param name="parameters"> The ScopedPrivateLink to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ScopedPrivateLink> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ScopedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, ScopedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Get");
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScopedPrivateLink(this, response.Value), response.GetRawResponse());
+                var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters, cancellationToken);
+                var operation = new ScopedPrivateLinkCreateOrUpdateOperation(Client, _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics, Pipeline, _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -161,22 +127,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets a scoped resource in a private link scope. </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<ScopedPrivateLink>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Get");
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ScopedPrivateLink(this, response.Value), response.GetRawResponse());
+                    throw await _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ScopedPrivateLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,25 +149,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// OperationId: PrivateLinkScopedResources_Get
+        /// <summary> Gets a scoped resource in a private link scope. </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ScopedPrivateLink> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ScopedPrivateLink> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetIfExists");
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ScopedPrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ScopedPrivateLink(this, response.Value), response.GetRawResponse());
+                    throw _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScopedPrivateLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,70 +177,101 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> The name of the scoped resource object. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
+        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<ScopedPrivateLink>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScopedPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            async Task<Page<ScopedPrivateLink>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ScopedPrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _privateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ScopedPrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ScopedPrivateLink(this, response.Value), response.GetRawResponse());
+                using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.ListByPrivateLinkScopeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> The name of the scoped resource object. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
+        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScopedPrivateLink> GetAll(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            Page<ScopedPrivateLink> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Exists");
-            scope.Start();
-            try
+            Page<ScopedPrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.ListByPrivateLinkScopeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// OperationId: PrivateLinkScopedResources_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Exists");
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -289,86 +285,86 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
-        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
+        /// OperationId: PrivateLinkScopedResources_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScopedPrivateLink> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Page<ScopedPrivateLink> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkScopedResourcesRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ScopedPrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkScopedResourcesRestClient.ListByPrivateLinkScopeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
-        /// OperationId: PrivateLinkScopedResources_ListByPrivateLinkScope
-        /// <summary> Gets all private endpoint connections on a private link scope. </summary>
+        /// OperationId: PrivateLinkScopedResources_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the scoped resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScopedPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<ScopedPrivateLink>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScopedPrivateLink>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkScopedResourcesRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ScopedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ScopedPrivateLink(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ScopedPrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkScopedResourcesRestClient.ListByPrivateLinkScopeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopedPrivateLink(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}
+        /// OperationId: PrivateLinkScopedResources_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the scoped resource object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<ScopedPrivateLink> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _scopedPrivateLinkPrivateLinkScopedResourcesClientDiagnostics.CreateScope("ScopedPrivateLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scopedPrivateLinkPrivateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ScopedPrivateLink>(null, response.GetRawResponse());
+                return Response.FromValue(new ScopedPrivateLink(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ScopedPrivateLink> IEnumerable<ScopedPrivateLink>.GetEnumerator()
@@ -385,8 +381,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ScopedPrivateLink, ScopedPrivateLinkData> Construct() { }
     }
 }

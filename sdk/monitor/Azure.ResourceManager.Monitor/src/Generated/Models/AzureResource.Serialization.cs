@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -80,8 +82,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new AzureResource(id, name, type, tags, location, kind.Value, identity.Value);
+            return new AzureResource(id, name, type, systemData, tags, location, kind.Value, identity.Value);
         }
     }
 }

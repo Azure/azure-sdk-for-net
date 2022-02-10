@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri");
-            writer.WriteStringValue(MetricResourceUri);
+            writer.WriteStringValue(MetricResourceUri.AbsoluteUri);
             if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             string metricName = default;
             Optional<string> metricNamespace = default;
-            string metricResourceUri = default;
+            Uri metricResourceUri = default;
             Optional<string> metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("metricResourceUri"))
                 {
-                    metricResourceUri = property.Value.GetString();
+                    metricResourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricResourceLocation"))

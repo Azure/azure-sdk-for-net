@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal ActionGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ActionGroupData> response)
+        internal ActionGroupCreateOrUpdateOperation(ArmClient armClient, Response<ActionGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<ActionGroup>(Azure.Response.FromValue(new ActionGroup(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ActionGroup>(Azure.Response.FromValue(new ActionGroup(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

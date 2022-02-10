@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
         /// <param name="serviceUri"> the service uri to Post the notification when the alert activates or resolves. </param>
         /// <param name="properties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
-        internal RuleWebhookAction(string odataType, string serviceUri, IDictionary<string, string> properties) : base(odataType)
+        internal RuleWebhookAction(string odataType, Uri serviceUri, IDictionary<string, string> properties) : base(odataType)
         {
             ServiceUri = serviceUri;
             Properties = properties;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the service uri to Post the notification when the alert activates or resolves. </summary>
-        public string ServiceUri { get; set; }
+        public Uri ServiceUri { get; set; }
         /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
         public IDictionary<string, string> Properties { get; }
     }

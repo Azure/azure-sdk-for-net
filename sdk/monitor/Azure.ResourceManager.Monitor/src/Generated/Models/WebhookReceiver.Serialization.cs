@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri");
-            writer.WriteStringValue(ServiceUri);
+            writer.WriteStringValue(ServiceUri.AbsoluteUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema");
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(IdentifierUri))
             {
                 writer.WritePropertyName("identifierUri");
-                writer.WriteStringValue(IdentifierUri);
+                writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static WebhookReceiver DeserializeWebhookReceiver(JsonElement element)
         {
             string name = default;
-            string serviceUri = default;
+            Uri serviceUri = default;
             Optional<bool> useCommonAlertSchema = default;
             Optional<bool> useAadAuth = default;
             Optional<string> objectId = default;
-            Optional<string> identifierUri = default;
+            Optional<Uri> identifierUri = default;
             Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("serviceUri"))
                 {
-                    serviceUri = property.Value.GetString();
+                    serviceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("useCommonAlertSchema"))
@@ -95,7 +96,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("identifierUri"))
                 {
-                    identifierUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identifierUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"))

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("odata.type");
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceUri");
-                writer.WriteStringValue(ResourceUri);
+                writer.WritePropertyName("resourceId");
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Optional<string> metricName = default;
             string odataType = default;
-            Optional<string> resourceUri = default;
+            Optional<string> resourceId = default;
             Optional<string> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Monitor.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceId"))
                 {
-                    resourceUri = property.Value.GetString();
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("legacyResourceId"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new RuleMetricDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, metricName.Value);
+            return new RuleMetricDataSource(odataType, resourceId.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, metricName.Value);
         }
     }
 }

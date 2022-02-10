@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Indicates name of the webhook. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook, string name, string serviceUri, bool? useCommonAlertSchema)
+        internal AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema)
         {
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Indicates name of the webhook. </summary>
         public string Name { get; set; }
         /// <summary> The URI where webhooks should be sent. </summary>
-        public string ServiceUri { get; set; }
+        public Uri ServiceUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }

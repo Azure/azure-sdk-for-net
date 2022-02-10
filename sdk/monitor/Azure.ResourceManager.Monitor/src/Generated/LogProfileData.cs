@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="storageAccountId"> the resource id of the storage account to which you would like to send the Activity Log. </param>
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the &apos;global&apos; location. </param>
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
-        internal LogProfileData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string storageAccountId, string serviceBusRuleId, IList<string> locations, IList<string> categories, RetentionPolicy retentionPolicy) : base(id, name, type, tags, location)
+        internal LogProfileData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string storageAccountId, string serviceBusRuleId, IList<string> locations, IList<string> categories, RetentionPolicy retentionPolicy) : base(id, name, type, systemData, tags, location)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;

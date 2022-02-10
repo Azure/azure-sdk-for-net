@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal ScopedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, string linkedResourceId, string provisioningState) : base(id, name, type)
+        internal ScopedPrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string linkedResourceId, string provisioningState) : base(id, name, type, systemData)
         {
             LinkedResourceId = linkedResourceId;
             ProvisioningState = provisioningState;

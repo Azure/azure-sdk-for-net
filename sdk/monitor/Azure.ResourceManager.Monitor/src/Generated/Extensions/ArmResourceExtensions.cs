@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Monitor
@@ -13,44 +12,48 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to ArmResource. </summary>
     public static partial class ArmResourceExtensions
     {
-        #region DiagnosticSettings
-        /// <summary> Gets an object representing a DiagnosticSettingsCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of DiagnosticSettings in the DiagnosticSettings. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCollection" /> object. </returns>
+        /// <returns> An object representing collection of DiagnosticSettings and their operations over a DiagnosticSettings. </returns>
         public static DiagnosticSettingsCollection GetDiagnosticSettings(this ArmResource armResource)
         {
-            return new DiagnosticSettingsCollection(armResource);
+            return armResource.GetCachedClient((client) =>
+            {
+                return new DiagnosticSettingsCollection(client, armResource.Id);
+            }
+            );
         }
-        #endregion
 
-        #region DiagnosticSettingsCategory
-        /// <summary> Gets an object representing a DiagnosticSettingsCategoryCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of DiagnosticSettingsCategories in the DiagnosticSettingsCategory. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryCollection" /> object. </returns>
+        /// <returns> An object representing collection of DiagnosticSettingsCategories and their operations over a DiagnosticSettingsCategory. </returns>
         public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmResource armResource)
         {
-            return new DiagnosticSettingsCategoryCollection(armResource);
+            return armResource.GetCachedClient((client) =>
+            {
+                return new DiagnosticSettingsCategoryCollection(client, armResource.Id);
+            }
+            );
         }
-        #endregion
 
-        #region VmInsightsOnboardingStatus
-        /// <summary> Gets an object representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VmInsightsOnboardingStatus along with the instance operations that can be performed on it in the ArmResourceExtensions. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatus" /> object. </returns>
         public static VmInsightsOnboardingStatus GetVmInsightsOnboardingStatus(this ArmResource armResource)
         {
-            return new VmInsightsOnboardingStatus(armResource, new ResourceIdentifier(armResource.Id + "/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default"));
+            return GetExtensionClient(armResource).GetVmInsightsOnboardingStatus();
         }
-        #endregion
 
-        #region DataCollectionRuleAssociation
-        /// <summary> Gets an object representing a DataCollectionRuleAssociationCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of DataCollectionRuleAssociations in the DataCollectionRuleAssociation. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationCollection" /> object. </returns>
+        /// <returns> An object representing collection of DataCollectionRuleAssociations and their operations over a DataCollectionRuleAssociation. </returns>
         public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmResource armResource)
         {
-            return new DataCollectionRuleAssociationCollection(armResource);
+            return armResource.GetCachedClient((client) =>
+            {
+                return new DataCollectionRuleAssociationCollection(client, armResource.Id);
+            }
+            );
         }
-        #endregion
     }
 }

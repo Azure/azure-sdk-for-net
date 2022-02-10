@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedTime"> Last time the rule was updated in ISO8601 format. </param>
         /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedTime, bool? isMigrated) : base(id, name, type, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedTime, bool? isMigrated) : base(id, name, type, systemData, tags, location)
         {
             Description = description;
             Severity = severity;

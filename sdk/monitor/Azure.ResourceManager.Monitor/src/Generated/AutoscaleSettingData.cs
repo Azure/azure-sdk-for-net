@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="namePropertiesName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceUri"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceUri, string targetResourceLocation) : base(id, name, type, tags, location)
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, Uri targetResourceUri, string targetResourceLocation) : base(id, name, type, systemData, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> the name of the autoscale setting. </summary>
         public string NamePropertiesName { get; set; }
         /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>
-        public string TargetResourceUri { get; set; }
+        public Uri TargetResourceUri { get; set; }
         /// <summary> the location of the resource that the autoscale setting should be added to. </summary>
         public string TargetResourceLocation { get; set; }
     }

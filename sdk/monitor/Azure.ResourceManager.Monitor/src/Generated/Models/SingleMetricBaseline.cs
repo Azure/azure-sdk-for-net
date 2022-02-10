@@ -41,11 +41,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
-        internal SingleMetricBaseline(ResourceIdentifier id, string name, ResourceType type, string timespan, TimeSpan interval, string @namespace, IReadOnlyList<TimeSeriesBaseline> baselines) : base(id, name, type)
+        internal SingleMetricBaseline(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string timespan, TimeSpan interval, string @namespace, IReadOnlyList<TimeSeriesBaseline> baselines) : base(id, name, type, systemData)
         {
             Timespan = timespan;
             Interval = interval;

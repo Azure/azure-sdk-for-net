@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         private readonly OperationInternals<ScopedPrivateLink> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ScopedPrivateLinkCreateOrUpdateOperation for mocking. </summary>
         protected ScopedPrivateLinkCreateOrUpdateOperation()
         {
         }
 
-        internal ScopedPrivateLinkCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
+        internal ScopedPrivateLinkCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Azure.Response response)
         {
             _operation = new OperationInternals<ScopedPrivateLink>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ScopedPrivateLinkCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
-            return new ScopedPrivateLink(_operationBase, data);
+            return new ScopedPrivateLink(_armClient, data);
         }
 
         async ValueTask<ScopedPrivateLink> IOperationSource<ScopedPrivateLink>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(document.RootElement);
-            return new ScopedPrivateLink(_operationBase, data);
+            return new ScopedPrivateLink(_armClient, data);
         }
     }
 }

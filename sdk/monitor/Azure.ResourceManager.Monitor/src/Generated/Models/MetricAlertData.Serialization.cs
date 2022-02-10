@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> description = default;
             int severity = default;
             bool enabled = default;
@@ -138,6 +140,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -253,7 +260,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new MetricAlertData(id, name, type, tags, location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, targetResourceType.Value, targetResourceRegion.Value, criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
+            return new MetricAlertData(id, name, type, systemData, tags, location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, targetResourceType.Value, targetResourceRegion.Value, criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
         }
     }
 }

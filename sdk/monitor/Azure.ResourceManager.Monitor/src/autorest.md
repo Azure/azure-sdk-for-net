@@ -166,4 +166,29 @@ directive:
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
+  - from: swagger-document
+    where: $.definitions.RuleDataSource.properties
+    transform:  >
+        $ = {
+          "odata.type": {
+            "type": "string",
+            "description": "specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource"
+          },
+          "resourceId": {
+            "type": "string",
+            "description": "the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
+          },
+          "legacyResourceId": {
+            "type": "string",
+            "description": "the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
+          },
+          "resourceLocation": {
+            "type": "string",
+            "description": "the location of the resource."
+          },
+          "metricNamespace": {
+            "type": "string",
+            "description": "the namespace of the metric."
+          }
+        }  
 ```

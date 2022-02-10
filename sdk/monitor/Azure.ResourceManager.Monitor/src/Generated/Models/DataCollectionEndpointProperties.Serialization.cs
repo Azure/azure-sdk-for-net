@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DataCollectionEndpointProperties> properties = default;
             Optional<KnownDataCollectionEndpointResourceKind> kind = default;
             Optional<string> etag = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -76,16 +76,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -118,8 +108,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new DataCollectionEndpointProperties(id, name, type, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value, systemData);
+            return new DataCollectionEndpointProperties(id, name, type, systemData, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value);
         }
     }
 }

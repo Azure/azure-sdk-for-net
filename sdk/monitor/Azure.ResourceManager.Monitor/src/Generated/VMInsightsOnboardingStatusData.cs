@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
         /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
         /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
         /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
-        internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType type, string resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IList<DataContainer> data) : base(id, name, type)
+        internal VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IList<DataContainer> data) : base(id, name, type, systemData)
         {
             ResourceId = resourceId;
             OnboardingStatus = onboardingStatus;

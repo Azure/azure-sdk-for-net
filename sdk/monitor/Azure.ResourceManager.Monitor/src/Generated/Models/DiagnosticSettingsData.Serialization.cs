@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> storageAccountId = default;
             Optional<string> serviceBusRuleId = default;
             Optional<string> eventHubAuthorizationRuleId = default;
@@ -101,6 +103,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DiagnosticSettingsData(id, name, type, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, logAnalyticsDestinationType.Value);
+            return new DiagnosticSettingsData(id, name, type, systemData, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, logAnalyticsDestinationType.Value);
         }
     }
 }

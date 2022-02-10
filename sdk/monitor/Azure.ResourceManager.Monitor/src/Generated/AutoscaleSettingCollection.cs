@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of AutoscaleSetting and their operations over its parent. </summary>
     public partial class AutoscaleSettingCollection : ArmCollection, IEnumerable<AutoscaleSetting>, IAsyncEnumerable<AutoscaleSetting>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AutoscaleSettingsRestOperations _autoscaleSettingsRestClient;
+        private readonly ClientDiagnostics _autoscaleSettingClientDiagnostics;
+        private readonly AutoscaleSettingsRestOperations _autoscaleSettingRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingCollection"/> class for mocking. </summary>
         protected AutoscaleSettingCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AutoscaleSettingCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal AutoscaleSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(AutoscaleSetting.ResourceType, out string apiVersion);
-            _autoscaleSettingsRestClient = new AutoscaleSettingsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _autoscaleSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSetting.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(AutoscaleSetting.ResourceType, out string autoscaleSettingApiVersion);
+            _autoscaleSettingRestClient = new AutoscaleSettingsRestOperations(_autoscaleSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, autoscaleSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: AutoscaleSettings_CreateOrUpdate
@@ -61,61 +60,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
-        {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _autoscaleSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_CreateOrUpdate
-        /// <summary> Creates or updates an autoscale setting. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
-        /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<AutoscaleSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _autoscaleSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AutoscaleSettingCreateOrUpdateOperation(this, response);
+                var response = await _autoscaleSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new AutoscaleSettingCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,26 +89,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_Get
-        /// <summary> Gets an autoscale setting. </summary>
+        /// OperationId: AutoscaleSettings_CreateOrUpdate
+        /// <summary> Creates or updates an autoscale setting. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public virtual Response<AutoscaleSetting> Get(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual AutoscaleSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string autoscaleSettingName, AutoscaleSettingData parameters, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _autoscaleSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                var response = _autoscaleSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, parameters, cancellationToken);
+                var operation = new AutoscaleSettingCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -163,22 +128,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets an autoscale setting. </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public async virtual Task<Response<AutoscaleSetting>> GetAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _autoscaleSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken).ConfigureAwait(false);
+                var response = await _autoscaleSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                    throw await _autoscaleSettingClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new AutoscaleSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,25 +150,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_Get
+        /// <summary> Gets an autoscale setting. </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public virtual Response<AutoscaleSetting> GetIfExists(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public virtual Response<AutoscaleSetting> Get(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _autoscaleSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken);
+                var response = _autoscaleSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                    throw _autoscaleSettingClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,70 +178,101 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_ListByResourceGroup
+        /// <summary> Lists the autoscale settings for a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public async virtual Task<Response<AutoscaleSetting>> GetIfExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutoscaleSetting> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
+            async Task<Page<AutoscaleSetting>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
+                using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _autoscaleSettingRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<AutoscaleSetting>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _autoscaleSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSetting(this, response.Value), response.GetRawResponse());
+                using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _autoscaleSettingRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_ListByResourceGroup
+        /// <summary> Lists the autoscale settings for a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
-        public virtual Response<bool> Exists(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutoscaleSetting> GetAll(CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
+            Page<AutoscaleSetting> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
+                using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _autoscaleSettingRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
-            scope.Start();
-            try
+            Page<AutoscaleSetting> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(autoscaleSettingName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _autoscaleSettingRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
             try
             {
@@ -291,103 +286,24 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_ListByResourceGroup
-        /// <summary> Lists the autoscale settings for a resource group. </summary>
+        /// OperationId: AutoscaleSettings_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoscaleSetting> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        public virtual Response<bool> Exists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            Page<AutoscaleSetting> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _autoscaleSettingsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutoscaleSetting> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _autoscaleSettingsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AutoscaleSettings_ListByResourceGroup
-        /// <summary> Lists the autoscale settings for a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoscaleSetting" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoscaleSetting> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AutoscaleSetting>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _autoscaleSettingsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutoscaleSetting>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _autoscaleSettingsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoscaleSetting(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="AutoscaleSetting" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAllAsGenericResources");
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(AutoscaleSetting.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(autoscaleSettingName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -396,21 +312,54 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="AutoscaleSetting" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        public async virtual Task<Response<AutoscaleSetting>> GetIfExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AutoscaleSettingCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(AutoscaleSetting.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _autoscaleSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: AutoscaleSettings_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        public virtual Response<AutoscaleSetting> GetIfExists(string autoscaleSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+
+            using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _autoscaleSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<AutoscaleSetting>(null, response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -433,8 +382,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, AutoscaleSetting, AutoscaleSettingData> Construct() { }
     }
 }

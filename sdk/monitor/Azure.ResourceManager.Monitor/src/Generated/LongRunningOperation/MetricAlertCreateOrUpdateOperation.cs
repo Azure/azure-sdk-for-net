@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal MetricAlertCreateOrUpdateOperation(ArmResource operationsBase, Response<MetricAlertData> response)
+        internal MetricAlertCreateOrUpdateOperation(ArmClient armClient, Response<MetricAlertData> response)
         {
-            _operation = new OperationOrResponseInternals<MetricAlert>(Azure.Response.FromValue(new MetricAlert(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<MetricAlert>(Azure.Response.FromValue(new MetricAlert(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

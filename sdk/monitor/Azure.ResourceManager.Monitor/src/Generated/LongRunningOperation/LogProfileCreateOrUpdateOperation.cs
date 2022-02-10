@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal LogProfileCreateOrUpdateOperation(ArmResource operationsBase, Response<LogProfileData> response)
+        internal LogProfileCreateOrUpdateOperation(ArmClient armClient, Response<LogProfileData> response)
         {
-            _operation = new OperationOrResponseInternals<LogProfile>(Azure.Response.FromValue(new LogProfile(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<LogProfile>(Azure.Response.FromValue(new LogProfile(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> resourceId = default;
             Optional<OnboardingStatus> onboardingStatus = default;
             Optional<DataStatus> dataStatus = default;
@@ -72,6 +74,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -127,7 +134,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new VmInsightsOnboardingStatusData(id, name, type, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data));
+            return new VmInsightsOnboardingStatusData(id, name, type, systemData, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data));
         }
     }
 }

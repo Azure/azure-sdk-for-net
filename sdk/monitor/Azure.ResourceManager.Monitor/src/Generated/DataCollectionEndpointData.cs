@@ -25,18 +25,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, string etag, SystemData systemData) : base(id, name, type, tags, location)
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, string etag) : base(id, name, type, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
             Etag = etag;
-            SystemData = systemData;
         }
 
         /// <summary> Resource properties. </summary>
@@ -45,7 +44,5 @@ namespace Azure.ResourceManager.Monitor
         public KnownDataCollectionEndpointResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
         public string Etag { get; }
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
     }
 }

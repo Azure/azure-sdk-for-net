@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of DataCollectionEndpoint and their operations over its parent. </summary>
     public partial class DataCollectionEndpointCollection : ArmCollection, IEnumerable<DataCollectionEndpoint>, IAsyncEnumerable<DataCollectionEndpoint>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DataCollectionEndpointsRestOperations _dataCollectionEndpointsRestClient;
+        private readonly ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
+        private readonly DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointCollection"/> class for mocking. </summary>
         protected DataCollectionEndpointCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DataCollectionEndpointCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DataCollectionEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DataCollectionEndpoint.ResourceType, out string apiVersion);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _dataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpoint.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(DataCollectionEndpoint.ResourceType, out string dataCollectionEndpointApiVersion);
+            _dataCollectionEndpointRestClient = new DataCollectionEndpointsRestOperations(_dataCollectionEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCollectionEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: DataCollectionEndpoints_Create
@@ -61,53 +60,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual DataCollectionEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
-        {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _dataCollectionEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken);
-                var operation = new DataCollectionEndpointCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DataCollectionEndpoints_Create
-        /// <summary> Creates or updates a data collection endpoint. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
-        /// <param name="body"> The payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public async virtual Task<DataCollectionEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataCollectionEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DataCollectionEndpointCreateOrUpdateOperation(this, response);
+                var response = await _dataCollectionEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken).ConfigureAwait(false);
+                var operation = new DataCollectionEndpointCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,26 +85,27 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DataCollectionEndpoints_Get
-        /// <summary> Returns the specified data collection endpoint. </summary>
+        /// OperationId: DataCollectionEndpoints_Create
+        /// <summary> Creates or updates a data collection endpoint. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="body"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual Response<DataCollectionEndpoint> Get(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public virtual DataCollectionEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string dataCollectionEndpointName, DataCollectionEndpointData body = null, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataCollectionEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
+                var response = _dataCollectionEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, body, cancellationToken);
+                var operation = new DataCollectionEndpointCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -155,22 +120,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Returns the specified data collection endpoint. </summary>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public async virtual Task<Response<DataCollectionEndpoint>> GetAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataCollectionEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
+                    throw await _dataCollectionEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DataCollectionEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,25 +142,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_Get
+        /// <summary> Returns the specified data collection endpoint. </summary>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual Response<DataCollectionEndpoint> GetIfExists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<DataCollectionEndpoint> Get(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataCollectionEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken);
+                var response = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DataCollectionEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
+                    throw _dataCollectionEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,70 +170,101 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_ListByResourceGroup
+        /// <summary> Lists all data collection endpoints in the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public async virtual Task<Response<DataCollectionEndpoint>> GetIfExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionEndpoint> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
+            async Task<Page<DataCollectionEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+                using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionEndpointRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DataCollectionEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await _dataCollectionEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DataCollectionEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new DataCollectionEndpoint(this, response.Value), response.GetRawResponse());
+                using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionEndpointRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_ListByResourceGroup
+        /// <summary> Lists all data collection endpoints in the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
-        public virtual Response<bool> Exists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionEndpoint> GetAll(CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
+            Page<DataCollectionEndpoint> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+                using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionEndpointRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
-            scope.Start();
-            try
+            Page<DataCollectionEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetIfExists(dataCollectionEndpointName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionEndpointRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -283,103 +278,24 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DataCollectionEndpoints_ListByResourceGroup
-        /// <summary> Lists all data collection endpoints in the specified resource group. </summary>
+        /// OperationId: DataCollectionEndpoints_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionEndpoint> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        public virtual Response<bool> Exists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            Page<DataCollectionEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionEndpointsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataCollectionEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionEndpointsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DataCollectionEndpoints_ListByResourceGroup
-        /// <summary> Lists all data collection endpoints in the specified resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionEndpoint> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DataCollectionEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionEndpointsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataCollectionEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionEndpointsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionEndpoint(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="DataCollectionEndpoint" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAllAsGenericResources");
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DataCollectionEndpoint.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(dataCollectionEndpointName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -388,21 +304,54 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="DataCollectionEndpoint" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        public async virtual Task<Response<DataCollectionEndpoint>> GetIfExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DataCollectionEndpoint.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DataCollectionEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpoint(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: DataCollectionEndpoints_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        public virtual Response<DataCollectionEndpoint> GetIfExists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+
+            using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DataCollectionEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new DataCollectionEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -425,8 +374,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DataCollectionEndpoint, DataCollectionEndpointData> Construct() { }
     }
 }

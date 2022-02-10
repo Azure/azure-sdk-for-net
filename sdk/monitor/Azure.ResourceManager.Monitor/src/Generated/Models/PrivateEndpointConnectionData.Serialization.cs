@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
@@ -56,6 +58,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionData(id, name, type, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new PrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value);
         }
     }
 }

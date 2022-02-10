@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        public MonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, true)
         {
         }
 

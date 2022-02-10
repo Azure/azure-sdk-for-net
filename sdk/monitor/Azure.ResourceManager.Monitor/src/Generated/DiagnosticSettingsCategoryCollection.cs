@@ -14,15 +14,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing collection of DiagnosticSettingsCategory and their operations over its parent. </summary>
     public partial class DiagnosticSettingsCategoryCollection : ArmCollection, IEnumerable<DiagnosticSettingsCategory>, IAsyncEnumerable<DiagnosticSettingsCategory>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _diagnosticSettingsCategoryClientDiagnostics;
         private readonly DiagnosticSettingsCategoryRestOperations _diagnosticSettingsCategoryRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryCollection"/> class for mocking. </summary>
@@ -31,44 +31,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiagnosticSettingsCategoryCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DiagnosticSettingsCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(DiagnosticSettingsCategory.ResourceType, out string apiVersion);
-            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
-        }
-
-        // Collection level operations.
-
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_Get
-        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DiagnosticSettingsCategory> Get(string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DiagnosticSettingsCategory.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(DiagnosticSettingsCategory.ResourceType, out string diagnosticSettingsCategoryApiVersion);
+            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategoryRestOperations(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diagnosticSettingsCategoryApiVersion);
         }
 
         /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
@@ -77,22 +46,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<DiagnosticSettingsCategory>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
+                    throw await _diagnosticSettingsCategoryClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new DiagnosticSettingsCategory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -101,25 +68,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// ContextualPath: /{resourceUri}
+        /// OperationId: DiagnosticSettingsCategory_Get
+        /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DiagnosticSettingsCategory> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticSettingsCategory> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken: cancellationToken);
+                var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
+                    throw _diagnosticSettingsCategoryClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,70 +96,71 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// ContextualPath: /{resourceUri}
+        /// OperationId: DiagnosticSettingsCategory_List
+        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<DiagnosticSettingsCategory>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiagnosticSettingsCategory> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            async Task<Page<DiagnosticSettingsCategory>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingsCategory(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// ContextualPath: /{resourceUri}
+        /// OperationId: DiagnosticSettingsCategory_List
+        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiagnosticSettingsCategory> GetAll(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            Page<DiagnosticSettingsCategory> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
+                using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// ContextualPath: /{resourceUri}
+        /// OperationId: DiagnosticSettingsCategory_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -205,56 +174,86 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
         /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_List
-        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
+        /// OperationId: DiagnosticSettingsCategory_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiagnosticSettingsCategory> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Page<DiagnosticSettingsCategory> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
         /// ContextualPath: /{resourceUri}
-        /// OperationId: DiagnosticSettingsCategory_List
-        /// <summary> Lists the diagnostic settings categories for the specified resource. </summary>
+        /// OperationId: DiagnosticSettingsCategory_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiagnosticSettingsCategory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiagnosticSettingsCategory> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<DiagnosticSettingsCategory>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiagnosticSettingsCategory>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategory(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _diagnosticSettingsCategoryRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
+        /// ContextualPath: /{resourceUri}
+        /// OperationId: DiagnosticSettingsCategory_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<DiagnosticSettingsCategory> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diagnosticSettingsCategoryRestClient.Get(Id, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<DiagnosticSettingsCategory>(null, response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingsCategory(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<DiagnosticSettingsCategory> IEnumerable<DiagnosticSettingsCategory>.GetEnumerator()
@@ -271,8 +270,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, DiagnosticSettingsCategory, DiagnosticSettingsCategoryData> Construct() { }
     }
 }

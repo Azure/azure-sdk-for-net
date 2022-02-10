@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal PrivateLinkScopeCreateOrUpdateOperation(ArmResource operationsBase, Response<PrivateLinkScopeData> response)
+        internal PrivateLinkScopeCreateOrUpdateOperation(ArmClient armClient, Response<PrivateLinkScopeData> response)
         {
-            _operation = new OperationOrResponseInternals<PrivateLinkScope>(Azure.Response.FromValue(new PrivateLinkScope(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<PrivateLinkScope>(Azure.Response.FromValue(new PrivateLinkScope(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             string name0 = default;
             Optional<string> description = default;
             Optional<string> provisioningState = default;
@@ -110,6 +112,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -185,7 +192,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new AlertRuleData(id, name, type, tags, location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime));
+            return new AlertRuleData(id, name, type, systemData, tags, location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime));
         }
     }
 }

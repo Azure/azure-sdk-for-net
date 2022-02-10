@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="scopes"> A list of resourceIds that will be used as prefixes. The alert will only apply to activityLogs with resourceIds that fall under one of these prefixes. This list must include at least one item. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="condition"> The condition that will cause this alert to activate. </param>
         /// <param name="actions"> The actions that will activate when the condition is met. </param>
         /// <param name="description"> A description of this activity log alert. </param>
-        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, type, tags, location)
+        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, type, systemData, tags, location)
         {
             Scopes = scopes;
             Enabled = enabled;

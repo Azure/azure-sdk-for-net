@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of MetricAlert and their operations over its parent. </summary>
     public partial class MetricAlertCollection : ArmCollection, IEnumerable<MetricAlert>, IAsyncEnumerable<MetricAlert>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly MetricAlertsRestOperations _metricAlertsRestClient;
+        private readonly ClientDiagnostics _metricAlertClientDiagnostics;
+        private readonly MetricAlertsRestOperations _metricAlertRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MetricAlertCollection"/> class for mocking. </summary>
         protected MetricAlertCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="MetricAlertCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal MetricAlertCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal MetricAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(MetricAlert.ResourceType, out string apiVersion);
-            _metricAlertsRestClient = new MetricAlertsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _metricAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlert.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(MetricAlert.ResourceType, out string metricAlertApiVersion);
+            _metricAlertRestClient = new MetricAlertsRestOperations(_metricAlertClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, metricAlertApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
         /// OperationId: MetricAlerts_CreateOrUpdate
@@ -61,61 +60,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual MetricAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, MetricAlertData parameters, CancellationToken cancellationToken = default)
-        {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _metricAlertsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
-                var operation = new MetricAlertCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: MetricAlerts_CreateOrUpdate
-        /// <summary> Create or update an metric alert definition. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="parameters"> The parameters of the rule to create or update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<MetricAlertCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, MetricAlertData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _metricAlertsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MetricAlertCreateOrUpdateOperation(this, response);
+                var response = await _metricAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new MetricAlertCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,26 +89,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: MetricAlerts_Get
-        /// <summary> Retrieve an alert rule definition. </summary>
+        /// OperationId: MetricAlerts_CreateOrUpdate
+        /// <summary> Create or update an metric alert definition. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="parameters"> The parameters of the rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<MetricAlert> Get(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual MetricAlertCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, MetricAlertData parameters, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.Get");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _metricAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
+                var response = _metricAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, parameters, cancellationToken);
+                var operation = new MetricAlertCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -163,22 +128,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Retrieve an alert rule definition. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<MetricAlert>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.Get");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _metricAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
+                var response = await _metricAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
+                    throw await _metricAlertClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new MetricAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,25 +150,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_Get
+        /// <summary> Retrieve an alert rule definition. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<MetricAlert> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<MetricAlert> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _metricAlertsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
+                var response = _metricAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
-                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
+                    throw _metricAlertClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MetricAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,70 +178,71 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_ListByResourceGroup
+        /// <summary> Retrieve alert rule definitions in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<Response<MetricAlert>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlert> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            async Task<Page<MetricAlert>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _metricAlertRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _metricAlertsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
-                return Response.FromValue(new MetricAlert(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_ListByResourceGroup
+        /// <summary> Retrieve alert rule definitions in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlert> GetAll(CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
+            Page<MetricAlert> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(ruleName));
+                using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _metricAlertRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.Exists");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -291,73 +256,24 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: MetricAlerts_ListByResourceGroup
-        /// <summary> Retrieve alert rule definitions in a resource group. </summary>
+        /// OperationId: MetricAlerts_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricAlert> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Page<MetricAlert> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _metricAlertsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: MetricAlerts_ListByResourceGroup
-        /// <summary> Retrieve alert rule definitions in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricAlert" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricAlert> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<MetricAlert>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _metricAlertsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlert(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Filters the list of <see cref="MetricAlert" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetAllAsGenericResources");
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(MetricAlert.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,21 +282,54 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="MetricAlert" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public async virtual Task<Response<MetricAlert>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MetricAlertCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(MetricAlert.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _metricAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new MetricAlert(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}
+        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
+        /// OperationId: MetricAlerts_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<MetricAlert> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _metricAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<MetricAlert>(null, response.GetRawResponse());
+                return Response.FromValue(new MetricAlert(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -403,8 +352,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, MetricAlert, MetricAlertData> Construct() { }
     }
 }

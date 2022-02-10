@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing collection of LogProfile and their operations over its parent. </summary>
     public partial class LogProfileCollection : ArmCollection, IEnumerable<LogProfile>, IAsyncEnumerable<LogProfile>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LogProfilesRestOperations _logProfilesRestClient;
+        private readonly ClientDiagnostics _logProfileClientDiagnostics;
+        private readonly LogProfilesRestOperations _logProfileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="LogProfileCollection"/> class for mocking. </summary>
         protected LogProfileCollection()
@@ -34,12 +34,13 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of the <see cref="LogProfileCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal LogProfileCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal LogProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(LogProfile.ResourceType, out string apiVersion);
-            _logProfilesRestClient = new LogProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
+            _logProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", LogProfile.ResourceType.Namespace, DiagnosticOptions);
+            Client.TryGetApiVersion(LogProfile.ResourceType, out string logProfileApiVersion);
+            _logProfileRestClient = new LogProfilesRestOperations(_logProfileClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
         /// ContextualPath: /subscriptions/{subscriptionId}
         /// OperationId: LogProfiles_CreateOrUpdate
@@ -61,61 +60,22 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LogProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
-        {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _logProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, logProfileName, parameters, cancellationToken);
-                var operation = new LogProfileCreateOrUpdateOperation(this, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LogProfiles_CreateOrUpdate
-        /// <summary> Create or update a log profile in Azure Monitoring REST API. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="logProfileName"> The name of the log profile. </param>
-        /// <param name="parameters"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<LogProfileCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _logProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, logProfileName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new LogProfileCreateOrUpdateOperation(this, response);
+                var response = await _logProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, logProfileName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new LogProfileCreateOrUpdateOperation(Client, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,26 +89,31 @@ namespace Azure.ResourceManager.Monitor
 
         /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LogProfiles_Get
-        /// <summary> Gets the log profile. </summary>
+        /// OperationId: LogProfiles_CreateOrUpdate
+        /// <summary> Create or update a log profile in Azure Monitoring REST API. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="parameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public virtual Response<LogProfile> Get(string logProfileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual LogProfileCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string logProfileName, LogProfileData parameters, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(logProfileName));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Get");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _logProfilesRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken);
-                if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
+                var response = _logProfileRestClient.CreateOrUpdate(Id.SubscriptionId, logProfileName, parameters, cancellationToken);
+                var operation = new LogProfileCreateOrUpdateOperation(Client, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -163,22 +128,20 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Gets the log profile. </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public async virtual Task<Response<LogProfile>> GetAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Get");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _logProfilesRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken).ConfigureAwait(false);
+                var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
+                    throw await _logProfileClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,25 +150,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_Get
+        /// <summary> Gets the log profile. </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public virtual Response<LogProfile> GetIfExists(string logProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<LogProfile> Get(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _logProfilesRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
+                var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
-                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
+                    throw _logProfileClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,70 +178,71 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_List
+        /// <summary> List the log profiles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public async virtual Task<Response<LogProfile>> GetIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogProfile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogProfile> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
+            async Task<Page<LogProfile>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(logProfileName));
+                using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _logProfileRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _logProfilesRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
-                return Response.FromValue(new LogProfile(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_List
+        /// <summary> List the log profiles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
-        public virtual Response<bool> Exists(string logProfileName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogProfile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogProfile> GetAll(CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
+            Page<LogProfile> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(logProfileName));
+                using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _logProfileRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(logProfileName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public async virtual Task<Response<bool>> ExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.Exists");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -291,73 +256,24 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
         /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LogProfiles_List
-        /// <summary> List the log profiles. </summary>
+        /// OperationId: LogProfiles_Get
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogProfile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogProfile> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual Response<bool> Exists(string logProfileName, CancellationToken cancellationToken = default)
         {
-            Page<LogProfile> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logProfilesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LogProfiles_List
-        /// <summary> List the log profiles. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogProfile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogProfile> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<LogProfile>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logProfilesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfile(this, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Filters the list of <see cref="LogProfile" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetAllAsGenericResources");
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(LogProfile.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = GetIfExists(logProfileName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,21 +282,54 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Filters the list of <see cref="LogProfile" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public async virtual Task<Response<LogProfile>> GetIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LogProfileCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(LogProfile.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}
+        /// ContextualPath: /subscriptions/{subscriptionId}
+        /// OperationId: LogProfiles_Get
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual Response<LogProfile> GetIfExists(string logProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<LogProfile>(null, response.GetRawResponse());
+                return Response.FromValue(new LogProfile(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -403,8 +352,5 @@ namespace Azure.ResourceManager.Monitor
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, LogProfile, LogProfileData> Construct() { }
     }
 }

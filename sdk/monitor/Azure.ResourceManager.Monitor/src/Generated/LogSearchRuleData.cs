@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="source"> Data Source against which rule will Query Data. </param>
         /// <param name="schedule"> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </param>
         /// <param name="action"> Action needs to be taken on rule execution. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedTime, ProvisioningState? provisioningState, Source source, Schedule schedule, Models.Action action) : base(id, name, type, tags, location, kind, etag)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedTime, ProvisioningState? provisioningState, Source source, Schedule schedule, Models.Action action) : base(id, name, type, systemData, tags, location, kind, etag)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;

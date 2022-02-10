@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> createdWithApiVersion = default;
             Optional<bool> isLegacyLogAnalyticsRule = default;
             Optional<string> description = default;
@@ -123,6 +125,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -223,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, tags, location, kind.Value, etag.Value, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
+            return new LogSearchRuleData(id, name, type, systemData, tags, location, kind.Value, etag.Value, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceUri))
             {
                 writer.WritePropertyName("targetResourceUri");
-                writer.WriteStringValue(TargetResourceUri);
+                writer.WriteStringValue(TargetResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TargetResourceLocation))
             {

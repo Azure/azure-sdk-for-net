@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(TargetResourceUri))
             {
                 writer.WritePropertyName("targetResourceUri");
-                writer.WriteStringValue(TargetResourceUri);
+                writer.WriteStringValue(TargetResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TargetResourceLocation))
             {
@@ -84,11 +86,12 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             IList<AutoscaleProfile> profiles = default;
             Optional<IList<AutoscaleNotification>> notifications = default;
             Optional<bool> enabled = default;
             Optional<string> name0 = default;
-            Optional<string> targetResourceUri = default;
+            Optional<Uri> targetResourceUri = default;
             Optional<string> targetResourceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -120,6 +123,11 @@ namespace Azure.ResourceManager.Monitor
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -173,7 +181,12 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("targetResourceUri"))
                         {
-                            targetResourceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetResourceLocation"))
@@ -185,7 +198,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new AutoscaleSettingData(id, name, type, tags, location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, targetResourceLocation.Value);
+            return new AutoscaleSettingData(id, name, type, systemData, tags, location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, targetResourceLocation.Value);
         }
     }
 }

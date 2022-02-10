@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        internal DataCollectionRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<DataCollectionRuleData> response)
+        internal DataCollectionRuleCreateOrUpdateOperation(ArmClient armClient, Response<DataCollectionRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<DataCollectionRule>(Azure.Response.FromValue(new DataCollectionRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<DataCollectionRule>(Azure.Response.FromValue(new DataCollectionRule(armClient, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />

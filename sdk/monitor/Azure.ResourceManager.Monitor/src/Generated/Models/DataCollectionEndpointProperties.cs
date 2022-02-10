@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal DataCollectionEndpointProperties(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, string etag, SystemData systemData) : base(id, name, type, tags, location, properties, kind, etag, systemData)
+        internal DataCollectionEndpointProperties(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, string etag) : base(id, name, type, systemData, tags, location, properties, kind, etag)
         {
         }
     }
