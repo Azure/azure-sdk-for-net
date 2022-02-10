@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of Key and their operations over its parent. </summary>
+    /// <summary> A class representing collection of VaultKeyVersion and their operations over its parent. </summary>
     public partial class VaultKeyVersionCollection : ArmCollection, IEnumerable<VaultKeyVersion>, IAsyncEnumerable<VaultKeyVersion>
     {
         private readonly ClientDiagnostics _vaultKeyVersionKeysClientDiagnostics;

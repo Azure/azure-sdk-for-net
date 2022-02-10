@@ -21,7 +21,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of Key and their operations over its parent. </summary>
+    /// <summary> A class representing collection of VaultKey and their operations over its parent. </summary>
     public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKey>, IAsyncEnumerable<VaultKey>
     {
         private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;
