@@ -39,9 +39,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="status">The status of the incident. Possible values
         /// include: 'New', 'Active', 'Closed'</param>
         /// <param name="title">The title of the incident</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="additionalData">Additional data on the
         /// incident</param>
@@ -64,6 +69,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="incidentNumber">A sequential number</param>
         /// <param name="labels">List of labels relevant to this
         /// incident</param>
+        /// <param name="providerName">The name of the source provider that
+        /// generated the incident</param>
+        /// <param name="providerIncidentId">The incident ID assigned by the
+        /// incident provider</param>
         /// <param name="lastActivityTimeUtc">The time of the last activity in
         /// the incident</param>
         /// <param name="lastModifiedTimeUtc">The last time the incident was
@@ -72,8 +81,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// to</param>
         /// <param name="relatedAnalyticRuleIds">List of resource ids of
         /// Analytic rules related to the incident</param>
-        public Incident(string severity, string status, string title, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IncidentAdditionalData additionalData = default(IncidentAdditionalData), string classification = default(string), string classificationComment = default(string), string classificationReason = default(string), System.DateTime? createdTimeUtc = default(System.DateTime?), string description = default(string), System.DateTime? firstActivityTimeUtc = default(System.DateTime?), string incidentUrl = default(string), int? incidentNumber = default(int?), IList<IncidentLabel> labels = default(IList<IncidentLabel>), System.DateTime? lastActivityTimeUtc = default(System.DateTime?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), IncidentOwnerInfo owner = default(IncidentOwnerInfo), IList<string> relatedAnalyticRuleIds = default(IList<string>))
-            : base(id, name, type, etag)
+        /// <param name="teamInformation">Describes a team for the
+        /// incident</param>
+        public Incident(string severity, string status, string title, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), IncidentAdditionalData additionalData = default(IncidentAdditionalData), string classification = default(string), string classificationComment = default(string), string classificationReason = default(string), System.DateTime? createdTimeUtc = default(System.DateTime?), string description = default(string), System.DateTime? firstActivityTimeUtc = default(System.DateTime?), string incidentUrl = default(string), int? incidentNumber = default(int?), IList<IncidentLabel> labels = default(IList<IncidentLabel>), string providerName = default(string), string providerIncidentId = default(string), System.DateTime? lastActivityTimeUtc = default(System.DateTime?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), IncidentOwnerInfo owner = default(IncidentOwnerInfo), IList<string> relatedAnalyticRuleIds = default(IList<string>), TeamInformation teamInformation = default(TeamInformation))
+            : base(id, name, type, systemData, etag)
         {
             AdditionalData = additionalData;
             Classification = classification;
@@ -85,12 +96,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             IncidentUrl = incidentUrl;
             IncidentNumber = incidentNumber;
             Labels = labels;
+            ProviderName = providerName;
+            ProviderIncidentId = providerIncidentId;
             LastActivityTimeUtc = lastActivityTimeUtc;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             Owner = owner;
             RelatedAnalyticRuleIds = relatedAnalyticRuleIds;
             Severity = severity;
             Status = status;
+            TeamInformation = teamInformation;
             Title = title;
             CustomInit();
         }
@@ -165,6 +179,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IList<IncidentLabel> Labels { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the source provider that generated the
+        /// incident
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerName")]
+        public string ProviderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the incident ID assigned by the incident provider
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerIncidentId")]
+        public string ProviderIncidentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the time of the last activity in the incident
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastActivityTimeUtc")]
@@ -201,6 +228,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes a team for the incident
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.teamInformation")]
+        public TeamInformation TeamInformation { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the incident

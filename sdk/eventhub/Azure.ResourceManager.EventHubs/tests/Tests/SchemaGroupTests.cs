@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
             _schemaGroupCollection = eHNamespace.GetSchemaGroups();
         }
         [TearDown]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
-                    await eventHubNamespace.DeleteAsync();
+                    await eventHubNamespace.DeleteAsync(true);
                 }
                 _resourceGroup = null;
             }
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = SchemaType.Avro
             };
-            SchemaGroup schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(schemaGroupName, parameters)).Value;
+            SchemaGroup schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(true, schemaGroupName, parameters)).Value;
             Assert.NotNull(schemaGroup);
             Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
 
             //validate if created successfully
             schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
             Assert.NotNull(schemaGroup);
-            Assert.IsTrue(await _schemaGroupCollection.CheckIfExistsAsync(schemaGroupName));
+            Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
 
             //delete eventhub
-            await schemaGroup.DeleteAsync();
+            await schemaGroup.DeleteAsync(true);
 
             //validate
             schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
             Assert.Null(schemaGroup);
-            Assert.IsFalse(await _schemaGroupCollection.CheckIfExistsAsync(schemaGroupName));
+            Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = SchemaType.Avro
             };
-            _ = (await _schemaGroupCollection.CreateOrUpdateAsync(schemaGroupName1, parameters)).Value;
+            _ = (await _schemaGroupCollection.CreateOrUpdateAsync(true, schemaGroupName1, parameters)).Value;
 
             //validate
             int count = 0;

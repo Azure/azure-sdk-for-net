@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="azureADOnlyAuthentication"> Azure Active Directory only Authentication enabled. </param>
-        internal ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType type, bool? azureADOnlyAuthentication) : base(id, name, type)
+        internal ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? azureADOnlyAuthentication) : base(id, name, type, systemData)
         {
             AzureADOnlyAuthentication = azureADOnlyAuthentication;
         }

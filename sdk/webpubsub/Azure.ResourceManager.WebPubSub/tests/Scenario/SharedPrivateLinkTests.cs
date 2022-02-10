@@ -13,6 +13,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 using NUnit.Framework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(Location.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeTearDown]
         public async Task GlobleTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(true);
         }
 
         [SetUp]
@@ -59,10 +60,10 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubs().CheckIfExists(_webPubSubName))
+            if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
-                await webPubSub.Value.DeleteAsync();
+                await webPubSub.Value.DeleteAsync(true);
             }
         }
 
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
-            WebPubSubData data = new WebPubSubData(Location.WestUS2)
+            WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
                 Sku = new WebPubSubSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, _webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 },
             };
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnet = await vnetContainer.CreateOrUpdateAsync(true, _vnetName, vnetData);
 
             //2.1 Create AppServicePlan
             //string appServicePlanName = "appServicePlan5952";
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
-            var link = await container.CreateOrUpdateAsync(LinkName, data);
+            var link = await container.CreateOrUpdateAsync(true, LinkName, data);
             return link.Value;
         }
 

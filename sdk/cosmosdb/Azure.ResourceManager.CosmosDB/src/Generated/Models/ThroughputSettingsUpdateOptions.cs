@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ThroughputSettingsUpdateOptions(Location location, ThroughputSettingsResource resource) : base(location)
+        public ThroughputSettingsUpdateOptions(AzureLocation location, ThroughputSettingsResource resource) : base(location)
         {
             if (resource == null)
             {
@@ -34,10 +33,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
-        internal ThroughputSettingsUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ThroughputSettingsResource resource) : base(id, name, type, tags, location)
+        internal ThroughputSettingsUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResource resource) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
         }

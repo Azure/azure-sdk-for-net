@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
-        internal ManagedTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType type, TransparentDataEncryptionState? state) : base(id, name, type)
+        internal ManagedTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, TransparentDataEncryptionState? state) : base(id, name, type, systemData)
         {
             State = state;
         }

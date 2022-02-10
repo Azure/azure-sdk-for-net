@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Managing_Namespaces_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
@@ -24,8 +25,8 @@ This is a scoped operations object, and any operations you perform will be done 
 
 ```C# Snippet:Managing_EventHubs_CreateResourceGroup
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -34,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_EventHubs_CreateNamespace
 string namespaceName = "myNamespace";
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
 EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
 ```
 
@@ -44,7 +45,7 @@ Now that we have the namespace, we can manage the event hubs inside this namespa
 
 ```C# Snippet:Managing_EventHubs_CreateEventHub
 string eventhubName = "myEventhub";
-EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(true, eventhubName, new EventHubData())).Value;
 ```
 
 ***List all eventhubs***
@@ -70,7 +71,7 @@ if (eventHub != null)
 {
     Console.WriteLine("eventHub 'foo' exists");
 }
-if (await eventHubCollection.CheckIfExistsAsync("bar"))
+if (await eventHubCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("eventHub 'bar' exists");
 }
@@ -80,6 +81,6 @@ if (await eventHubCollection.CheckIfExistsAsync("bar"))
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub
 EventHub eventHub = await eventHubCollection.GetAsync("myEventhub");
-await eventHub.DeleteAsync();
+await eventHub.DeleteAsync(true);
 ```
 

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="packageUri"> Package URI. </param>
         /// <param name="connectionString"> SQL Connection String. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType type, string kind, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, type, kind)
+        internal MsDeploy(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, type, systemData, kind)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;

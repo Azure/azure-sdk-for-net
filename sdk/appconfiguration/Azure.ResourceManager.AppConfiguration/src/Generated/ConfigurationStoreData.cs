@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ConfigurationStoreData(Location location, Models.Sku sku) : base(location)
+        public ConfigurationStoreData(AzureLocation location, Models.Sku sku) : base(location)
         {
             if (sku == null)
             {
@@ -37,6 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The managed identity information, if configured. </param>
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ResourceIdentity identity, Models.Sku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, tags, location)
+        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Models.Sku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The managed identity information, if configured. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku of the configuration store. </summary>
         public Models.Sku Sku { get; set; }
         /// <summary> The provisioning state of the configuration store. </summary>

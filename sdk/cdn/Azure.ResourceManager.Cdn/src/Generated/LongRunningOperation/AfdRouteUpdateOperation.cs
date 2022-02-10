@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<AfdRoute> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdRouteUpdateOperation for mocking. </summary>
         protected AfdRouteUpdateOperation()
         {
         }
 
-        internal AfdRouteUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdRouteUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AfdRoute>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdRouteUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdRoute IOperationSource<AfdRoute>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdRoute(_operationBase, AfdRouteData.DeserializeAfdRouteData(document.RootElement));
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_armClient, data);
         }
 
         async ValueTask<AfdRoute> IOperationSource<AfdRoute>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdRoute(_operationBase, AfdRouteData.DeserializeAfdRouteData(document.RootElement));
+            var data = AfdRouteData.DeserializeAfdRouteData(document.RootElement);
+            return new AfdRoute(_armClient, data);
         }
     }
 }

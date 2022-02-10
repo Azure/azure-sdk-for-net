@@ -6,9 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
-        public KubeEnvironmentData(Location location) : base(location)
+        public KubeEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         /// supported
         /// </param>
         /// <param name="aksResourceID"></param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, tags, location, kind)
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, systemData, tags, location, kind)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;

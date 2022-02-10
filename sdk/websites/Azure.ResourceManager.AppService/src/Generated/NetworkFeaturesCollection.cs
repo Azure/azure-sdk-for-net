@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -18,24 +19,31 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing collection of NetworkFeatures and their operations over its parent. </summary>
     public partial class NetworkFeaturesCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _networkFeaturesWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _networkFeaturesWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkFeaturesCollection"/> class for mocking. </summary>
         protected NetworkFeaturesCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFeaturesCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFeaturesCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkFeaturesCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", NetworkFeatures.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkFeatures.ResourceType, out string networkFeaturesWebAppsApiVersion);
+            _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(_networkFeaturesWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkFeaturesWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SiteSlot.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SiteSlot.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
@@ -45,22 +53,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatures> Get(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.Get");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken);
+                var response = _networkFeaturesWebAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkFeatures(Parent, response.Value), response.GetRawResponse());
+                    throw _networkFeaturesWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -75,22 +81,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeatures>> GetAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.Get");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken).ConfigureAwait(false);
+                var response = await _networkFeaturesWebAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkFeatures(Parent, response.Value), response.GetRawResponse());
+                    throw await _networkFeaturesWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkFeatures(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -102,22 +106,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatures> GetIfExists(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExists");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                var response = _networkFeaturesWebAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,22 +131,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public async virtual Task<Response<NetworkFeatures>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExistsAsync");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkFeatures>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkFeatures(this, response.Value), response.GetRawResponse());
+                var response = await _networkFeaturesWebAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkFeatures>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatures(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,15 +156,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string view, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.CheckIfExists");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.Exists");
             scope.Start();
             try
             {
@@ -181,15 +179,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string view, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkFeaturesCollection.CheckIfExistsAsync");
+            using var scope = _networkFeaturesWebAppsClientDiagnostics.CreateScope("NetworkFeaturesCollection.Exists");
             scope.Start();
             try
             {
@@ -202,8 +198,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkFeatures, NetworkFeaturesData> Construct() { }
     }
 }

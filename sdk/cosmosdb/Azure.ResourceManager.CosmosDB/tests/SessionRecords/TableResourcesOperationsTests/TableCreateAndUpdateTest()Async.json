@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -45,7 +45,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-8169?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/Default-CosmosDB-8169?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5502,7 +5502,7 @@
           "resource": {
             "id": "tableName2527",
             "_rid": "Jdc3AIZp8pM=",
-            "_etag": "\u002200000000-0000-0000-9e4e-cdbd900701d7\u0022",
+            "_etag": "\"00000000-0000-0000-9e4e-cdbd900701d7\"",
             "_ts": 1630403932
           }
         }
@@ -5590,7 +5590,7 @@
           "resource": {
             "id": "tableName2527",
             "_rid": "Jdc3AIZp8pM=",
-            "_etag": "\u002200000000-0000-0000-9e4e-cdbd900701d7\u0022",
+            "_etag": "\"00000000-0000-0000-9e4e-cdbd900701d7\"",
             "_ts": 1630403932
           }
         }
@@ -5979,7 +5979,7 @@
           "resource": {
             "id": "tableName2527",
             "_rid": "Jdc3AIZp8pM=",
-            "_etag": "\u002200000000-0000-0000-9e4e-cdbd900701d7\u0022",
+            "_etag": "\"00000000-0000-0000-9e4e-cdbd900701d7\"",
             "_ts": 1630403932
           }
         }
@@ -6067,7 +6067,7 @@
           "resource": {
             "id": "tableName2527",
             "_rid": "Jdc3AIZp8pM=",
-            "_etag": "\u002200000000-0000-0000-9e4e-cdbd900701d7\u0022",
+            "_etag": "\"00000000-0000-0000-9e4e-cdbd900701d7\"",
             "_ts": 1630403932
           }
         }

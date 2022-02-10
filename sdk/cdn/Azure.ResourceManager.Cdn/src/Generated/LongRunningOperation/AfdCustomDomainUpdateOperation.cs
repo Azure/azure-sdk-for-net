@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly OperationInternals<AfdCustomDomain> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of AfdCustomDomainUpdateOperation for mocking. </summary>
         protected AfdCustomDomainUpdateOperation()
         {
         }
 
-        internal AfdCustomDomainUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AfdCustomDomainUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AfdCustomDomain>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.OriginalUri, "AfdCustomDomainUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Cdn.Models
         AfdCustomDomain IOperationSource<AfdCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new AfdCustomDomain(_operationBase, AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement));
+            var data = AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement);
+            return new AfdCustomDomain(_armClient, data);
         }
 
         async ValueTask<AfdCustomDomain> IOperationSource<AfdCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new AfdCustomDomain(_operationBase, AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement));
+            var data = AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement);
+            return new AfdCustomDomain(_armClient, data);
         }
     }
 }

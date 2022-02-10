@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly OperationInternals<DatabaseAccount> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of DatabaseAccountCreateOrUpdateOperation for mocking. </summary>
         protected DatabaseAccountCreateOrUpdateOperation()
         {
         }
 
-        internal DatabaseAccountCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DatabaseAccountCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DatabaseAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseAccountCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         DatabaseAccount IOperationSource<DatabaseAccount>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DatabaseAccount(_operationBase, DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement));
+            var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
+            return new DatabaseAccount(_armClient, data);
         }
 
         async ValueTask<DatabaseAccount> IOperationSource<DatabaseAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DatabaseAccount(_operationBase, DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement));
+            var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
+            return new DatabaseAccount(_armClient, data);
         }
     }
 }

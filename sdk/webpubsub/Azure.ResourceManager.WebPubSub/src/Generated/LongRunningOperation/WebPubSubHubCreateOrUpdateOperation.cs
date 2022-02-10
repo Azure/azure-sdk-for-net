@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         private readonly OperationInternals<WebPubSubHub> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of WebPubSubHubCreateOrUpdateOperation for mocking. </summary>
         protected WebPubSubHubCreateOrUpdateOperation()
         {
         }
 
-        internal WebPubSubHubCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WebPubSubHubCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<WebPubSubHub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebPubSubHubCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         WebPubSubHub IOperationSource<WebPubSubHub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new WebPubSubHub(_operationBase, WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement));
+            var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
+            return new WebPubSubHub(_armClient, data);
         }
 
         async ValueTask<WebPubSubHub> IOperationSource<WebPubSubHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new WebPubSubHub(_operationBase, WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement));
+            var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
+            return new WebPubSubHub(_armClient, data);
         }
     }
 }

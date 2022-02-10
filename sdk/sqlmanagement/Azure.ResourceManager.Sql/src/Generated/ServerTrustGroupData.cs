@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -27,9 +26,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
-        internal ServerTrustGroupData(ResourceIdentifier id, string name, ResourceType type, IList<ServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, type)
+        internal ServerTrustGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<ServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, type, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;

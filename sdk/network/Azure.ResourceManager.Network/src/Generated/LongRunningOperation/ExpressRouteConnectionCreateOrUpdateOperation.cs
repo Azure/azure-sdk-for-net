@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteConnection> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ExpressRouteConnectionCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteConnectionCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteConnectionCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Network.Models
         ExpressRouteConnection IOperationSource<ExpressRouteConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ExpressRouteConnection(_operationBase, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement));
+            var data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement);
+            return new ExpressRouteConnection(_armClient, data);
         }
 
         async ValueTask<ExpressRouteConnection> IOperationSource<ExpressRouteConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ExpressRouteConnection(_operationBase, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement));
+            var data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement);
+            return new ExpressRouteConnection(_armClient, data);
         }
     }
 }

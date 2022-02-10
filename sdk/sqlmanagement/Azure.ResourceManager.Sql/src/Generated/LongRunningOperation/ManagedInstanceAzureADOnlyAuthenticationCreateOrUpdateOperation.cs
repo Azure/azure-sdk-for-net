@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly OperationInternals<ManagedInstanceAzureADOnlyAuthentication> _operation;
 
-        private readonly ArmResource _operationBase;
+        private readonly ArmClient _armClient;
 
         /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation for mocking. </summary>
         protected ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation(ArmClient armClient, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ManagedInstanceAzureADOnlyAuthentication>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation");
-            _operationBase = operationsBase;
+            _armClient = armClient;
         }
 
         /// <inheritdoc />
@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.Sql.Models
         ManagedInstanceAzureADOnlyAuthentication IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
+            return new ManagedInstanceAzureADOnlyAuthentication(_armClient, data);
         }
 
         async ValueTask<ManagedInstanceAzureADOnlyAuthentication> IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ManagedInstanceAzureADOnlyAuthentication(_operationBase, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement));
+            var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
+            return new ManagedInstanceAzureADOnlyAuthentication(_armClient, data);
         }
     }
 }

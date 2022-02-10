@@ -201,7 +201,7 @@ function Get-GitHubIssues {
     $AuthToken
   )
 
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues?labels=$Labels"
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues?labels=$Labels&per_page=100"
 
   if ($CreatedBy) {
     $uri += "&creator=$CreatedBy"

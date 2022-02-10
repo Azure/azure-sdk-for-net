@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Azure.ResourceManager.ServiceBus management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.ServiceBus -Version 1.0.0-beta.1 
+Install-Package Azure.ResourceManager.ServiceBus -Version 1.0.0-beta.2 
 ```
 
 ### Prerequisites
@@ -61,8 +61,8 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -71,8 +71,8 @@ Then we can create a namespace inside this resource group.
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-Location location = Location.EastUS2;
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+AzureLocation location = AzureLocation.EastUS2;
+ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
@@ -103,7 +103,7 @@ if (serviceBusNamespace != null)
 {
     Console.WriteLine("namespace 'foo' exists");
 }
-if (await namespaceCollection.CheckIfExistsAsync("bar"))
+if (await namespaceCollection.ExistsAsync("bar"))
 {
     Console.WriteLine("namespace 'bar' exists");
 }
@@ -113,7 +113,7 @@ if (await namespaceCollection.CheckIfExistsAsync("bar"))
 ```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
 ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
-await serviceBusNamespace.DeleteAsync();
+await serviceBusNamespace.DeleteAsync(true);
 ```
 
 

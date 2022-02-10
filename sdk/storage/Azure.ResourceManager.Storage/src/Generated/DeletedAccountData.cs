@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
         /// <param name="location"> Location of the deleted account. </param>
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
         /// <param name="creationTime"> Creation time of the deleted account. </param>
         /// <param name="deletionTime"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType type, string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime) : base(id, name, type)
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime) : base(id, name, type, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;

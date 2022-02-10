@@ -82,6 +82,36 @@ namespace Microsoft.Azure.Management.AppPlatform
         IConfigServersOperations ConfigServers { get; }
 
         /// <summary>
+        /// Gets the IConfigurationServicesOperations.
+        /// </summary>
+        IConfigurationServicesOperations ConfigurationServices { get; }
+
+        /// <summary>
+        /// Gets the IServiceRegistriesOperations.
+        /// </summary>
+        IServiceRegistriesOperations ServiceRegistries { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceOperations.
+        /// </summary>
+        IBuildServiceOperations BuildService { get; }
+
+        /// <summary>
+        /// Gets the IBuildpackBindingOperations.
+        /// </summary>
+        IBuildpackBindingOperations BuildpackBinding { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceBuilderOperations.
+        /// </summary>
+        IBuildServiceBuilderOperations BuildServiceBuilder { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceAgentPoolOperations.
+        /// </summary>
+        IBuildServiceAgentPoolOperations BuildServiceAgentPool { get; }
+
+        /// <summary>
         /// Gets the IMonitoringSettingsOperations.
         /// </summary>
         IMonitoringSettingsOperations MonitoringSettings { get; }
@@ -95,6 +125,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IBindingsOperations.
         /// </summary>
         IBindingsOperations Bindings { get; }
+
+        /// <summary>
+        /// Gets the IStoragesOperations.
+        /// </summary>
+        IStoragesOperations Storages { get; }
 
         /// <summary>
         /// Gets the ICertificatesOperations.
@@ -125,6 +160,31 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the ISkusOperations.
         /// </summary>
         ISkusOperations Skus { get; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        IGatewaysOperations Gateways { get; }
+
+        /// <summary>
+        /// Gets the IGatewayRouteConfigsOperations.
+        /// </summary>
+        IGatewayRouteConfigsOperations GatewayRouteConfigs { get; }
+
+        /// <summary>
+        /// Gets the IGatewayCustomDomainsOperations.
+        /// </summary>
+        IGatewayCustomDomainsOperations GatewayCustomDomains { get; }
+
+        /// <summary>
+        /// Gets the IApiPortalsOperations.
+        /// </summary>
+        IApiPortalsOperations ApiPortals { get; }
+
+        /// <summary>
+        /// Gets the IApiPortalCustomDomainsOperations.
+        /// </summary>
+        IApiPortalCustomDomainsOperations ApiPortalCustomDomains { get; }
 
     }
 }

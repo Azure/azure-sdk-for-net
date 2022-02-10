@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -22,48 +22,52 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkVirtualApplianceSku and their operations over its parent. </summary>
     public partial class NetworkVirtualApplianceSkuCollection : ArmCollection, IEnumerable<NetworkVirtualApplianceSku>, IAsyncEnumerable<NetworkVirtualApplianceSku>
-
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualApplianceSkusRestOperations _virtualApplianceSkusRestClient;
+        private readonly ClientDiagnostics _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics;
+        private readonly VirtualApplianceSkusRestOperations _networkVirtualApplianceSkuVirtualApplianceSkusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSkuCollection"/> class for mocking. </summary>
         protected NetworkVirtualApplianceSkuCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuCollection class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSkuCollection"/> class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         internal NetworkVirtualApplianceSkuCollection(ArmResource parent) : base(parent)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSku.ResourceType.Namespace, DiagnosticOptions);
+            ArmClient.TryGetApiVersion(NetworkVirtualApplianceSku.ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+            _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(_networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != Subscription.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+        }
 
         // Collection level operations.
 
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> Get(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken);
+                var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceSku(Parent, response.Value), response.GetRawResponse());
+                    throw _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -75,22 +79,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new NetworkVirtualApplianceSku(Parent, response.Value), response.GetRawResponse());
+                    throw await _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new NetworkVirtualApplianceSku(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -102,22 +104,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSku> GetIfExists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, skuName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,22 +129,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExistsAsync");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse())
-                    : Response.FromValue(new NetworkVirtualApplianceSku(this, response.Value), response.GetRawResponse());
+                var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, skuName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<NetworkVirtualApplianceSku>(null, response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSku(ArmClient, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,15 +154,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public virtual Response<bool> CheckIfExists(string skuName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.CheckIfExists");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
             try
             {
@@ -181,15 +177,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="skuName"> Name of the Sku. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.CheckIfExistsAsync");
+            using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
             try
             {
@@ -210,12 +204,12 @@ namespace Azure.ResourceManager.Network
         {
             Page<NetworkVirtualApplianceSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
+                using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,12 +219,12 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkVirtualApplianceSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
+                using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualApplianceSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,12 +242,12 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<NetworkVirtualApplianceSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
+                using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -263,12 +257,12 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkVirtualApplianceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
+                using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _virtualApplianceSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualApplianceSku(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -277,52 +271,6 @@ namespace Azure.ResourceManager.Network
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="NetworkVirtualApplianceSku" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(NetworkVirtualApplianceSku.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="NetworkVirtualApplianceSku" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetAllAsGenericResources");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(NetworkVirtualApplianceSku.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         IEnumerator<NetworkVirtualApplianceSku> IEnumerable<NetworkVirtualApplianceSku>.GetEnumerator()
@@ -339,8 +287,5 @@ namespace Azure.ResourceManager.Network
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, NetworkVirtualApplianceSku, NetworkVirtualApplianceSkuData> Construct() { }
     }
 }

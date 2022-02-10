@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,9 +24,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="serviceName"> The name of the service and resource. </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
-        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType type, string serviceName, IReadOnlyList<string> actions) : base(id, name, type)
+        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string serviceName, IReadOnlyList<string> actions) : base(id, name, type, systemData)
         {
             ServiceName = serviceName;
             Actions = actions;

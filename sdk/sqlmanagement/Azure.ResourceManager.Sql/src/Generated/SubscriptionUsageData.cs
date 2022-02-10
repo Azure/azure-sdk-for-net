@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> User-readable name of the metric. </param>
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
-        internal SubscriptionUsageData(ResourceIdentifier id, string name, ResourceType type, string displayName, double? currentValue, double? limit, string unit) : base(id, name, type)
+        internal SubscriptionUsageData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string displayName, double? currentValue, double? limit, string unit) : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;
