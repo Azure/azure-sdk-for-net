@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource group information. </summary>
-    public partial class ResourceGroupPatchable
+    public partial class ResourceGroupUpdateOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupPatchable. </summary>
-        public ResourceGroupPatchable()
+        /// <summary> Initializes a new instance of ResourceGroupUpdateOptions. </summary>
+        public ResourceGroupUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

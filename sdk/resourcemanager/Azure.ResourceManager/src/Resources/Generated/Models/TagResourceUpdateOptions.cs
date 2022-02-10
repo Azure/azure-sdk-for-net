@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Wrapper resource for tags patch API request only. </summary>
-    public partial class TagPatchResource
+    public partial class TagResourceUpdateOptions
     {
-        /// <summary> Initializes a new instance of TagPatchResource. </summary>
-        public TagPatchResource()
+        /// <summary> Initializes a new instance of TagResourceUpdateOptions. </summary>
+        public TagResourceUpdateOptions()
         {
         }
 
