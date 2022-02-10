@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using Azure.Core.Pipeline;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
