@@ -9,6 +9,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("CopyAuthorization")]
     public partial class CopyAuthorization
     {
+        /// <summary>
+        /// Initializes a new instance of CopyAuthorization. Used by the <see cref="DocumentAnalysisModelFactory"/>.
+        /// </summary>
+        internal CopyAuthorization(string targetResourceRegion, string targetModelId, string targetModelLocation, DateTimeOffset expirationDateTime)
+        {
+            TargetResourceRegion = targetResourceRegion;
+            TargetModelId = targetModelId;
+            TargetModelLocation = targetModelLocation;
+            ExpirationDateTime = expirationDateTime;
+        }
+
         /// <summary> Initializes a new instance of CopyAuthorization. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the model should be copied to. </param>
         /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>

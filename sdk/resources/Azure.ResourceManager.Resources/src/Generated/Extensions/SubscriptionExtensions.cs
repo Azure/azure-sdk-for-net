@@ -31,7 +31,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetDeployments();
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
@@ -40,7 +44,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetApplicationsAsync(cancellationToken);
         }
 
-        /// <summary> Gets all the applications within a subscription. </summary>
+        /// <summary>
+        /// Gets all the applications within a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
+        /// Operation Id: Applications_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Application" /> that may take multiple service requests to iterate over. </returns>
@@ -49,7 +57,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetApplications(cancellationToken);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
@@ -58,7 +70,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetJitRequestDefinitionsAsync(cancellationToken);
         }
 
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
+        /// <summary>
+        /// Retrieves all JIT requests within the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
+        /// Operation Id: JitRequests_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitRequest" /> that may take multiple service requests to iterate over. </returns>
@@ -67,7 +83,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetJitRequestDefinitions(cancellationToken);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
@@ -76,7 +96,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetDeploymentScriptsAsync(cancellationToken);
         }
 
-        /// <summary> Lists all deployment scripts for a given subscription. </summary>
+        /// <summary>
+        /// Lists all deployment scripts for a given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
+        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
@@ -85,7 +109,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetDeploymentScripts(cancellationToken);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,7 +123,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(subscription).GetTemplateSpecsAsync(expand, cancellationToken);
         }
 
-        /// <summary> Lists all the Template Specs within the specified subscriptions. </summary>
+        /// <summary>
+        /// Lists all the Template Specs within the specified subscriptions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
+        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

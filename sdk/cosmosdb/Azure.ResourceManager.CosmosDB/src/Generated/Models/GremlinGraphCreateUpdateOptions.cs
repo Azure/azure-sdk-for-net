@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Gremlin graph. </summary>
-    public partial class GremlinGraphCreateUpdateOptions : TrackedResource
+    public partial class GremlinGraphCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinGraphCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

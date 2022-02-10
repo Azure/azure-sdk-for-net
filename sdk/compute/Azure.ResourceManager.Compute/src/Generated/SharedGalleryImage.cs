@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryImageVersionCollection(Client, Id);
         }
 
-        /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}
+        /// Operation Id: SharedGalleryImages_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SharedGalleryImage>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Get a shared gallery image by subscription id or tenant id. </summary>
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}
+        /// Operation Id: SharedGalleryImages_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SharedGalleryImage> Get(CancellationToken cancellationToken = default)
         {

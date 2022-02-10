@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the MongoDBDatabase data model. </summary>
-    public partial class MongoDBDatabaseData : TrackedResource
+    public partial class MongoDBDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MongoDBDatabaseData. </summary>
         /// <param name="location"> The location. </param>

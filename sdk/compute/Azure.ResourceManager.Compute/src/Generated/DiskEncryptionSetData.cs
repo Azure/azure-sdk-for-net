@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskEncryptionSet data model. </summary>
-    public partial class DiskEncryptionSetData : TrackedResource
+    public partial class DiskEncryptionSetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
         /// <param name="location"> The location. </param>

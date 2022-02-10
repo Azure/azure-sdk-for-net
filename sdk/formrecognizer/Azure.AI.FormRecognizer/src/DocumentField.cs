@@ -11,6 +11,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentField
     {
         /// <summary>
+        /// Initializes a new instance of DocumentField. Used by the <see cref="DocumentAnalysisModelFactory"/>.
+        /// </summary>
+        internal DocumentField(SelectionMarkState? value, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        {
+            ValueType = DocumentFieldType.SelectionMark;
+            ValueSelectionMark = value;
+            ValueArray = new List<DocumentField>();
+            ValueObject = new Dictionary<string, DocumentField>();
+            Content = content;
+            BoundingRegions = boundingRegions;
+            Spans = spans;
+            Confidence = confidence;
+        }
+
+        /// <summary>
         /// The data type of the field value.
         /// </summary>
         [CodeGenMember("Type")]

@@ -273,7 +273,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+ArmOperation<ResourceGroup> operation = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
 ResourceGroup resourceGroup = operation.Value;
 ```
 

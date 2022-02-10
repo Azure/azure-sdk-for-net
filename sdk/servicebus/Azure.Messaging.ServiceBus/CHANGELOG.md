@@ -1,15 +1,31 @@
 # Release History
 
+## 7.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.6.0 (2022-02-08)
 
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Max Hamulyak _([GitHub](https://github.com/kaylumah))_
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+- Remove array allocation when creating linked token sources from the ServiceBusProcessor
 
 ### Features Added
 
-- The `State` property has been added to `ServiceBusReceivedMessage` which indicates whether a message is `Active`, `Scheduled`, or `Deferred`.
+- The `State` property has been added to `ServiceBusReceivedMessage` which indicates whether a message is `Active`, `Scheduled`, or `Deferred`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - Extension methods have been added for registering the `ServiceBusAdministrationClient` via dependency injection for use in ASP.NET Core applications. _(A community contribution, courtesy of [kaylumah](https://github.com/kaylumah))_
 

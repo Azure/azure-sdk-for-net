@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseColumn data model. </summary>
-    public partial class DatabaseColumnData : Resource
+    public partial class DatabaseColumnData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
         public DatabaseColumnData()

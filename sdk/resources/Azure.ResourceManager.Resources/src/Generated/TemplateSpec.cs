@@ -91,7 +91,11 @@ namespace Azure.ResourceManager.Resources
             return new TemplateSpecVersionCollection(Client, Id);
         }
 
-        /// <summary> Gets a Template Spec with a given name. </summary>
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpec>> GetAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
@@ -112,7 +116,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a Template Spec with a given name. </summary>
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Get
+        /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpec> Get(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
@@ -133,17 +141,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a Template Spec by name. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a Template Spec by name. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<TemplateSpecDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
                 var response = await _templateSpecRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new TemplateSpecDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -155,17 +167,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a Template Spec by name. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a Template Spec by name. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual TemplateSpecDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpec.Delete");
             scope.Start();
             try
             {
                 var response = _templateSpecRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new TemplateSpecDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -177,7 +193,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec tags with specified values. </summary>
+        /// <summary>
+        /// Updates Template Spec tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Update
+        /// </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpec>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -196,7 +216,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec tags with specified values. </summary>
+        /// <summary>
+        /// Updates Template Spec tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
+        /// Operation Id: TemplateSpecs_Update
+        /// </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpec> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecommendedAction data model. </summary>
-    public partial class RecommendedActionData : Resource
+    public partial class RecommendedActionData : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendedActionData. </summary>
         public RecommendedActionData()

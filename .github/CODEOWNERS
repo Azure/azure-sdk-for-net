@@ -567,10 +567,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/           @QingChenmsft @vaishnavk @juhacket
 
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/            @jsquire @AlexGhiondea @JoshLove-msft
+/sdk/schemaregistry/            @jsquire @JoshLove-msft
 
 # ServiceLabel: %Schema Registry %Service Attention
-/sdk/schemaregistry/            @arerlend
+#/sdk/schemaregistry/            @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
 /sdk/signalr/Microsoft.Azure.Management.SignalR/            @sffamily @chenkennt

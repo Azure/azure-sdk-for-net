@@ -7,8 +7,9 @@ parameters:
 steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      (git diff "origin/$(System.PullRequest.TargetBranch)" HEAD --name-only)
-      | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
+      $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "/refs/heads/"
+      $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
+      $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
       Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"

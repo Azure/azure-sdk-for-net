@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.StackHCI
             );
         }
 
-        /// <summary> Gets a collection of HCIClusters in the HCICluster. </summary>
+        /// <summary> Gets a collection of HciClusters in the HciCluster. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HCIClusters and their operations over a HCICluster. </returns>
-        public static HCIClusterCollection GetHCIClusters(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of HciClusters and their operations over a HciCluster. </returns>
+        public static HciClusterCollection GetHciClusters(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetHCIClusters();
+            return GetExtensionClient(resourceGroup).GetHciClusters();
         }
     }
 }

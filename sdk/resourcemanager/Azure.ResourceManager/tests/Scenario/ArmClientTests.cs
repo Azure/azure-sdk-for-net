@@ -212,7 +212,6 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(default(TokenCredential)); });
             Assert.DoesNotThrow(() => { new ArmClient(TestEnvironment.Credential, default(string)); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClient(TestEnvironment.Credential, TestEnvironment.SubscriptionId, default(Uri)); });
         }
 
         [RecordedTest]

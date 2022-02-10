@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified Security Partner Provider. </summary>
+        /// <summary>
+        /// Gets the specified Security Partner Provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SecurityPartnerProvider>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Security Partner Provider. </summary>
+        /// <summary>
+        /// Gets the specified Security Partner Provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityPartnerProvider> Get(CancellationToken cancellationToken = default)
         {
@@ -123,17 +131,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Security Partner Provider. </summary>
+        /// <summary>
+        /// Deletes the specified Security Partner Provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SecurityPartnerProviderDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProvider.Delete");
             scope.Start();
             try
             {
                 var response = await _securityPartnerProviderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityPartnerProviderDeleteOperation(_securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,17 +157,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Security Partner Provider. </summary>
+        /// <summary>
+        /// Deletes the specified Security Partner Provider.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SecurityPartnerProviderDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _securityPartnerProviderClientDiagnostics.CreateScope("SecurityPartnerProvider.Delete");
             scope.Start();
             try
             {
                 var response = _securityPartnerProviderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SecurityPartnerProviderDeleteOperation(_securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_securityPartnerProviderClientDiagnostics, Pipeline, _securityPartnerProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a Security Partner Provider resource. </summary>
+        /// <summary>
+        /// Updates tags of a Security Partner Provider resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -192,7 +212,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a Security Partner Provider resource. </summary>
+        /// <summary>
+        /// Updates tags of a Security Partner Provider resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
+        /// Operation Id: SecurityPartnerProviders_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

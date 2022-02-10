@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SqlAgentConfiguration data model. </summary>
-    public partial class SqlAgentConfigurationData : Resource
+    public partial class SqlAgentConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlAgentConfigurationData. </summary>
         public SqlAgentConfigurationData()

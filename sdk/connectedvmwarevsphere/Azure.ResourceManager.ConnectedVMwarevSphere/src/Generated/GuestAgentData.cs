@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the GuestAgent data model. </summary>
-    public partial class GuestAgentData : Resource
+    public partial class GuestAgentData : ResourceData
     {
         /// <summary> Initializes a new instance of GuestAgentData. </summary>
         public GuestAgentData()

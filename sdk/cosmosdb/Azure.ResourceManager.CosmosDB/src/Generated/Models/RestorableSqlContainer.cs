@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB SQL container event. </summary>
-    public partial class RestorableSqlContainer : Resource
+    public partial class RestorableSqlContainer : ResourceData
     {
         /// <summary> Initializes a new instance of RestorableSqlContainer. </summary>
         internal RestorableSqlContainer()

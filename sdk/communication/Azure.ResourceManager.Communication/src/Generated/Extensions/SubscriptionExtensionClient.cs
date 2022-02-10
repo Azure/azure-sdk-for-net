@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.Communication
             return apiVersion;
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
+        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// </summary>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
@@ -64,7 +68,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
+        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// </summary>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NameAvailability> CheckCommunicationNameAvailability(NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
@@ -83,7 +91,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunicationService> GetCommunicationServicesAsync(CancellationToken cancellationToken = default)
@@ -121,7 +133,11 @@ namespace Azure.ResourceManager.Communication
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunicationService> GetCommunicationServices(CancellationToken cancellationToken = default)

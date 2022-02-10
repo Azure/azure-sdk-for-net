@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB MongoDB database event. </summary>
-    public partial class RestorableMongodbDatabase : Resource
+    public partial class RestorableMongodbDatabase : ResourceData
     {
         /// <summary> Initializes a new instance of RestorableMongodbDatabase. </summary>
         internal RestorableMongodbDatabase()

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to update Cosmos DB resource throughput. </summary>
-    public partial class ThroughputSettingsUpdateOptions : TrackedResource
+    public partial class ThroughputSettingsUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ThroughputSettingsUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

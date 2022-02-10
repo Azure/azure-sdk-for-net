@@ -71,10 +71,11 @@ namespace Azure.ResourceManager.KeyVault
             return new DeletedManagedHsmCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListBySubscription
-        /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the vaults associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
+        /// Operation Id: Vaults_ListBySubscription
+        /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Vault" /> that may take multiple service requests to iterate over. </returns>
@@ -113,10 +114,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListBySubscription
-        /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the vaults associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
+        /// Operation Id: Vaults_ListBySubscription
+        /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Vault" /> that may take multiple service requests to iterate over. </returns>
@@ -155,10 +157,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListDeleted
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
+        /// Operation Id: Vaults_ListDeleted
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedVault> GetDeletedVaultsAsync(CancellationToken cancellationToken = default)
@@ -196,10 +199,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListDeleted
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
+        /// Operation Id: Vaults_ListDeleted
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedVault> GetDeletedVaults(CancellationToken cancellationToken = default)
@@ -237,10 +241,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
+        /// Operation Id: Vaults_CheckNameAvailability
+        /// </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
@@ -259,10 +264,11 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
+        /// Operation Id: Vaults_CheckNameAvailability
+        /// </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
@@ -281,10 +287,11 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the managed HSM Pools associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
+        /// Operation Id: ManagedHsms_ListBySubscription
+        /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedHsm" /> that may take multiple service requests to iterate over. </returns>
@@ -323,10 +330,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the managed HSM Pools associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
+        /// Operation Id: ManagedHsms_ListBySubscription
+        /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsm" /> that may take multiple service requests to iterate over. </returns>
@@ -365,10 +373,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
+        /// Operation Id: ManagedHsms_ListDeleted
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedManagedHsm" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedManagedHsm> GetDeletedManagedHsmsAsync(CancellationToken cancellationToken = default)
@@ -406,10 +415,11 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
+        /// Operation Id: ManagedHsms_ListDeleted
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedManagedHsm" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedManagedHsm> GetDeletedManagedHsms(CancellationToken cancellationToken = default)

@@ -1,17 +1,21 @@
 # Release History
 
-## 1.0.0 (2022-02-08)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Removing GetRelayConfigurationOptions to call GetRelayConfiguration and GetRelayConfigurationAsync passing 
-  RouteType and CommunicationUserIdentifier explicitly.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-02-09)
+
+### Breaking Changes
+
+- Removing GetRelayConfigurationOptions to call GetRelayConfiguration and GetRelayConfigurationAsync passing 
+  RouteType and CommunicationUserIdentifier explicitly.
 
 ## 1.0.0-beta.3 (2021-11-18)
 
