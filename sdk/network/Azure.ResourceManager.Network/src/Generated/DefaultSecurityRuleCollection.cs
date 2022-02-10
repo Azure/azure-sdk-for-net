@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of SecurityRule and their operations over its parent. </summary>
+    /// <summary> A class representing collection of DefaultSecurityRule and their operations over its parent. </summary>
     public partial class DefaultSecurityRuleCollection : ArmCollection, IEnumerable<DefaultSecurityRule>, IAsyncEnumerable<DefaultSecurityRule>
     {
         private readonly ClientDiagnostics _defaultSecurityRuleClientDiagnostics;
