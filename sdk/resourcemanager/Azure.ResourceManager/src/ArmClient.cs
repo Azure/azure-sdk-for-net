@@ -73,7 +73,6 @@ namespace Azure.ResourceManager
             options ??= new ArmClientOptions();
 
             Argument.AssertNotNull(options.Environment.BaseUri, nameof(options.Environment.BaseUri));
-            Argument.AssertNotNullOrWhiteSpace(options.Environment.Audience, nameof(options.Environment.Audience));
 
             BaseUri = options.Environment.BaseUri;
 
