@@ -420,6 +420,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobCopyFromUriOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
         public bool? LegalHold { get { throw null; } set { } }
@@ -440,7 +441,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string VersionId { get { throw null; } }
     }
-    public enum BlobCopySourceTags
+    public enum BlobCopySourceTagsMode
     {
         Replace = 0,
         Copy = 1,
@@ -1096,6 +1097,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public byte[] ContentHash { get { throw null; } set { } }
         public bool? CopySourceBlobProperties { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
