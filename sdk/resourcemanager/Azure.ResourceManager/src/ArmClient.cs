@@ -42,10 +42,31 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public ArmClient(TokenCredential credential) : this(credential, default, default)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId): this(credential, defaultSubscriptionId, default)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId = default, ArmClientOptions options = default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
