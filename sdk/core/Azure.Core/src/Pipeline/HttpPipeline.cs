@@ -66,7 +66,8 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier)
+            ResponseClassifier responseClassifier,
+            MessageClassifier? messageClassifier = default)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
@@ -77,6 +78,7 @@ namespace Azure.Core.Pipeline
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
+            _messageClassifier = messageClassifier;
             _internallyConstructed = true;
         }
 
@@ -93,7 +95,9 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
         {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
+            HttpMessage message = new HttpMessage(CreateRequest(), ResponseClassifier);
+            message.PerClientClassifier = _messageClassifier;
+            return message;
         }
 
         /// <summary>
@@ -105,6 +109,7 @@ namespace Azure.Core.Pipeline
         {
             var message = CreateMessage();
             message.ApplyRequestContext(context);
+            message.PerClientClassifier = _messageClassifier;
             return message;
         }
 
@@ -112,6 +117,11 @@ namespace Azure.Core.Pipeline
         /// The <see cref="ResponseClassifier"/> instance used in this pipeline invocations.
         /// </summary>
         public ResponseClassifier ResponseClassifier { get; }
+
+        /// <summary>
+        /// The <see cref="MessageClassifier"/> instance used in this pipeline invocations.
+        /// </summary>
+        private MessageClassifier? _messageClassifier { get; }
 
         /// <summary>
         /// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.

@@ -40,10 +40,9 @@ namespace Azure.Core.Tests
         {
             HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
             RequestContext context = new RequestContext();
-            context.AddClassifier(new int[] { 204 }, isError: true);
+            context.AddClassifier(204, isError: true);
             message.ApplyRequestContext(context);
-            Assert.IsTrue(message.TryClassify(204, out bool isError));
-            Assert.IsTrue(isError);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
@@ -51,10 +50,10 @@ namespace Azure.Core.Tests
         {
             HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
             RequestContext context = new RequestContext();
-            context.AddClassifier(new int[] { 404 }, isError: false);
+            context.AddClassifier(404, isError: false);
             message.ApplyRequestContext(context);
-            Assert.IsTrue(message.TryClassify(404, out bool isError));
-            Assert.IsFalse(isError);
+            message.Response = new MockResponse(404);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
         }
 
         [Test]
@@ -62,28 +61,19 @@ namespace Azure.Core.Tests
         {
             HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
             RequestContext context = new RequestContext();
-            context.AddClassifier(new int[] { 404 }, isError: false);
-            context.AddClassifier(new int[] { 301, 304 }, isError: true);
+            context.AddClassifier(404, isError: false);
+            context.AddClassifier(301, isError: true);
+            context.AddClassifier(304, isError: true);
             message.ApplyRequestContext(context);
 
-            Assert.IsTrue(message.TryClassify(404, out bool isError));
-            Assert.IsFalse(isError);
+            message.Response = new MockResponse(404);
+            Assert.IsFalse(message.ResponseClassifier.IsError(message));
 
-            Assert.IsTrue(message.TryClassify(301, out isError));
-            Assert.IsTrue(isError);
+            message.Response = new MockResponse(301);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
 
-            Assert.IsTrue(message.TryClassify(304, out isError));
-            Assert.IsTrue(isError);
-        }
-
-        [Test]
-        public void DoesNotClassify()
-        {
-            HttpMessage message = new HttpMessage(new MockRequest(), responseClassifier: null);
-            RequestContext context = new RequestContext();
-            context.AddClassifier(new int[] { 404 }, isError: false);
-            message.ApplyRequestContext(context);
-            Assert.IsFalse(message.TryClassify(202, out bool isError));
+            message.Response = new MockResponse(304);
+            Assert.IsTrue(message.ResponseClassifier.IsError(message));
         }
     }
 }

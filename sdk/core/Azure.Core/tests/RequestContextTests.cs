@@ -214,42 +214,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanAddErrorCodes()
-        {
-            var context = new RequestContext();
-            context.AddClassifier(new int[] { 204, 304 }, isError: true);
-            Assert.Contains(204, context.ErrorCodes);
-            Assert.Contains(304, context.ErrorCodes);
-        }
-
-        [Test]
-        public void CanAddNonErrorCodes()
-        {
-            var context = new RequestContext();
-            context.AddClassifier(new int[] { 404, 409 }, isError: false);
-            Assert.Contains(404, context.NonErrorCodes);
-            Assert.Contains(409, context.NonErrorCodes);
-        }
-
-        [Test]
-        public void CanAddCustomCodesMultipleTimes()
-        {
-            var context = new RequestContext();
-            context.AddClassifier(new int[] { 204, 304 }, isError: true);
-            context.AddClassifier(new int[] { 205, 300, 301 }, isError: true);
-            context.AddClassifier(new int[] { 404, 409 }, isError: false);
-            context.AddClassifier(new int[] { 412 }, isError: false);
-            Assert.Contains(204, context.ErrorCodes);
-            Assert.Contains(304, context.ErrorCodes);
-            Assert.Contains(205, context.ErrorCodes);
-            Assert.Contains(300, context.ErrorCodes);
-            Assert.Contains(301, context.ErrorCodes);
-            Assert.Contains(404, context.NonErrorCodes);
-            Assert.Contains(409, context.NonErrorCodes);
-            Assert.Contains(412, context.NonErrorCodes);
-        }
-
-        [Test]
         [NonParallelizable]
         public async Task CanSuppressLoggingAsError()
         {
@@ -263,7 +227,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
             var context = new RequestContext();
-            context.AddClassifier(new int[] { 404 }, isError: false);
+            context.AddClassifier(404, isError: false);
             var message = pipeline.CreateMessage(context);
 
             await pipeline.SendAsync(message, context.CancellationToken);
@@ -295,7 +259,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new[] { new RequestActivityPolicy(true, "Azure.Core.Tests", HttpMessageSanitizer.Default) });
             var context = new RequestContext();
-            context.AddClassifier(new int[] { 409 }, isError: false);
+            context.AddClassifier(409, isError: false);
             var message = pipeline.CreateMessage(context);
 
             await pipeline.SendAsync(message, context.CancellationToken);

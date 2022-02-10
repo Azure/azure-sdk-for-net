@@ -290,7 +290,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport);
             var context = new RequestContext();
-            context.AddClassifier(new int[] { 404 }, isError: false);
+            context.AddClassifier(404, isError: false);
 
             HttpMessage message = pipeline.CreateMessage(context);
             Request request = message.Request;

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using Azure.Core.Pipeline;
 
@@ -27,8 +26,8 @@ namespace Azure.Core
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
-            ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            _classifier = responseClassifier;
         }
 
         /// <summary>
@@ -65,10 +64,24 @@ namespace Azure.Core
         /// </summary>
         public CancellationToken CancellationToken { get; internal set; }
 
+        private ResponseClassifier _classifier;
+        private MessageClassifier? _perCallClassifier;
+        internal MessageClassifier? PerClientClassifier { get; set; }
+
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public ResponseClassifier ResponseClassifier
+        {
+            get
+            {
+                return _classifier;
+            }
+            set
+            {
+                _classifier = ComposeClassifier(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -94,10 +107,22 @@ namespace Azure.Core
                 Policies.AddRange(context.Policies);
             }
 
-            if (context.Classifier != null)
+            _perCallClassifier = context.Classifier;
+        }
+
+        private ResponseClassifier ComposeClassifier(ResponseClassifier classifier)
+        {
+            if (_perCallClassifier != null || PerClientClassifier != null)
             {
-                ResponseClassifier = new PerInvocationClassifier(context.Classifier, ResponseClassifier);
+                CompositeClassifier composite = new CompositeClassifier(classifier)
+                {
+                    PerCallClassifier = _perCallClassifier,
+                    PerClientClassifier = PerClientClassifier
+                };
+                return composite;
             }
+
+            return classifier;
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }

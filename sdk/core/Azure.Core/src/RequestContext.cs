@@ -14,26 +14,17 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
-        private List<MessageClassifier> _classifiers = new();
+        private List<MessageClassifier>? _classifiers;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         private MessageClassifier? _classifier;
-
         internal MessageClassifier? Classifier
         {
             get
             {
-                if (_classifier == null)
-                {
-                    _classifier = new AggregateClassifier(_classifiers);
-                }
-
-                return _classifier;
-            }
-            private set
-            {
-                _classifier = value;
+                return _classifiers == null ?
+                    null : _classifier ??= new AggregateClassifier(_classifiers);
             }
         }
 
@@ -86,6 +77,7 @@ namespace Azure
         /// <param name="isError">Whether or not the passed-in status codes will be considered errors.</param>
         public void AddClassifier(int statusCode, bool isError)
         {
+            _classifiers ??= new();
             _classifiers.Add(new StatusCodeClassifier(statusCode, isError));
         }
 
@@ -95,6 +87,7 @@ namespace Azure
         /// <param name="classify"></param>
         public void AddClassifier(int statusCode, Func<HttpMessage, bool> classify)
         {
+            _classifiers ??= new();
             _classifiers.Add(new FuncClassifier(statusCode, classify));
         }
 

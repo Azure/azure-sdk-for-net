@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
         /// <param name="messageClassifier">Classifier to be applied during classification for every operation on the client.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="messageClassifier"/> is null.</exception>
-        public static HttpPipeline Build(
+        public static HttpPipeline Build1( // TODO: address ambiguous method resolution
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
@@ -59,9 +59,8 @@ namespace Azure.Core.Pipeline
         {
             Argument.AssertNotNull(messageClassifier, nameof(messageClassifier));
 
-            ResponseClassifier.Shared.ClientClassifier = messageClassifier;
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, ResponseClassifier.Shared);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, messageClassifier);
         }
 
         /// <summary>
