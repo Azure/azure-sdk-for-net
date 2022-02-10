@@ -17,7 +17,7 @@ namespace Azure.ResourceManager
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
-        /// Azure cloud environment.
+        /// Gets or sets Azure cloud environment.
         /// </summary>
         public ArmEnvironment Environment { get; set; } = ArmEnvironment.AzureCloud;
 

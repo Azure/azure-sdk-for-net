@@ -13,12 +13,9 @@ namespace Azure.ResourceManager
     /// </summary>
     public readonly struct ArmEnvironment : IEquatable<ArmEnvironment>
     {
-        private static readonly Uri _defaultBaseUri = new Uri("https://management.azure.com");
-        private const string _defaultAudience = "https://management.azure.com/";
-
         // name after the `name` property of returned audience from https://management.azure.com/metadata/endpoints?api-version=2019-11-01
         /// <summary> Azure Public Cloud. </summary>
-        public static readonly ArmEnvironment AzureCloud = new(_defaultBaseUri, _defaultAudience);
+        public static readonly ArmEnvironment AzureCloud = new(new Uri("https://management.azure.com"), "https://management.azure.com/");
 
         /// <summary> Azure China Cloud. </summary>
         public static readonly ArmEnvironment AzureChinaCloud = new(new Uri("https://management.chinacloudapi.cn"), "https://management.chinacloudapi.cn");
@@ -30,20 +27,19 @@ namespace Azure.ResourceManager
         public static readonly ArmEnvironment AzureGermanCloud = new(new Uri("https://management.microsoftazure.de"), "https://management.microsoftazure.de");
 
         /// <summary>
-        /// Base URI of the management API endpoint.
+        /// Gets base URI of the management API endpoint.
         /// </summary>
-        public readonly Uri BaseUri { get => _baseUri ?? _defaultBaseUri; }
+        public readonly Uri BaseUri { get; }
+
         /// <summary>
-        /// Authentication audience.
+        /// Gets authentication audience.
         /// </summary>
-        public readonly string Audience { get => _audience ?? _defaultAudience; }
+        public readonly string Audience { get; }
+
         /// <summary>
-        /// Default authentication scope.
+        /// Gets default authentication scope.
         /// </summary>
         public string DefaultScope => GetScope(".default");
-
-        private readonly Uri _baseUri;
-        private readonly string _audience;
 
         /// <summary>
         /// Construct an <see cref="ArmEnvironment"/> using the given value.
@@ -55,8 +51,8 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(baseUri, nameof(baseUri));
             Argument.AssertNotNullOrWhiteSpace(audience, nameof(audience));
 
-            _baseUri = baseUri;
-            _audience = audience;
+            BaseUri = baseUri;
+            Audience = audience;
         }
 
         private string GetScope(string permission)

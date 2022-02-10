@@ -25,9 +25,11 @@ namespace Azure.ResourceManager.Tests
         }
 
         [TestCase]
-        public void DefaultValue()
+        public void DefaultValueIsNull()
         {
-            Assert.AreEqual(ArmEnvironment.AzureCloud, default(ArmEnvironment));
+            var defaultValue = default(ArmEnvironment);
+            Assert.IsNull(defaultValue.BaseUri);
+            Assert.IsNull(defaultValue.Audience);
         }
 
         [TestCase]
