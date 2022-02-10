@@ -2215,7 +2215,7 @@ namespace Azure.Storage.Files.Shares.Tests
             using Stream stream = new MemoryStream(data);
             ShareFileUploadRangeOptions options = new ShareFileUploadRangeOptions
             {
-                FileLastWrittenOnMode = fileLastWrittenMode
+                FileLastWrittenMode = fileLastWrittenMode
             };
 
             // Act
