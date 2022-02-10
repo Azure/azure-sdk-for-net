@@ -19,9 +19,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal partial class DocumentAnalysisRestClient
     {
-        private string endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of DocumentAnalysisRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -30,8 +32,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -41,7 +43,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -93,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -121,7 +123,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -131,7 +133,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -184,7 +186,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -211,7 +213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -221,7 +223,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -261,7 +263,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -293,7 +295,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -303,7 +305,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -335,7 +337,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -358,7 +360,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -368,7 +370,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -400,7 +402,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -423,7 +425,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -433,7 +435,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -469,7 +471,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -496,7 +498,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -506,7 +508,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -545,7 +547,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -573,7 +575,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -583,7 +585,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -608,7 +610,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -628,7 +630,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -638,7 +640,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
@@ -671,7 +673,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -698,7 +700,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -708,7 +710,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -733,7 +735,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -753,7 +755,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -763,7 +765,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -796,7 +798,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -823,7 +825,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -833,7 +835,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -861,7 +863,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -883,7 +885,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -893,7 +895,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
             uri.AppendQuery("api-version", "2022-01-30-preview", true);
@@ -918,7 +920,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -938,7 +940,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -948,7 +950,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -979,7 +981,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1006,7 +1008,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1016,7 +1018,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1047,7 +1049,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1074,7 +1076,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

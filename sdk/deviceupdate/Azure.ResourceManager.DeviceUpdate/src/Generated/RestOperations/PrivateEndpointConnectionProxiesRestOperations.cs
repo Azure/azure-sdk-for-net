@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     internal partial class PrivateEndpointConnectionProxiesRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxiesRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public PrivateEndpointConnectionProxiesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-03-01-preview";
-            _clientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2020-03-01-preview";
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/privateEndpointConnectionProxies", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -142,7 +144,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             uri.AppendPath("/privateEndpointConnectionProxies/", false);
             uri.AppendPath(privateEndpointConnectionProxyId, true);
             uri.AppendPath("/validate", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -201,7 +203,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -262,7 +264,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             uri.AppendPath(accountName, true);
             uri.AppendPath("/privateEndpointConnectionProxies/", false);
             uri.AppendPath(privateEndpointConnectionProxyId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -309,7 +311,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 404:
                     return Response.FromValue((PrivateEndpointConnectionProxyData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -353,7 +355,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 404:
                     return Response.FromValue((PrivateEndpointConnectionProxyData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -363,7 +365,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -372,7 +374,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             uri.AppendPath(accountName, true);
             uri.AppendPath("/privateEndpointConnectionProxies/", false);
             uri.AppendPath(privateEndpointConnectionProxyId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -421,7 +423,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 201:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -463,7 +465,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 201:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -473,7 +475,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -482,7 +484,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             uri.AppendPath(accountName, true);
             uri.AppendPath("/privateEndpointConnectionProxies/", false);
             uri.AppendPath(privateEndpointConnectionProxyId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -524,7 +526,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -563,7 +565,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }
