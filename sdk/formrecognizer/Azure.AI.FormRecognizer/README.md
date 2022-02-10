@@ -4,7 +4,8 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 
 - Layout - Extract text, selection marks, and table structures, along with their bounding region coordinates, from documents.
 - Document - Analyze key-value pairs and entities in addition to general layout from documents.
-- Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, or identity documents) using prebuilt models.
+- Read - Read information about textual elements, such as page words and lines in addition to text language information.
+- Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, identity documents, or US W2 tax forms) using prebuilt models.
 - Custom - Build custom models to analyze text, field values, selection marks, and tabular data from documents. Custom models are trained with your own data, so they're tailored to your documents.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
@@ -18,21 +19,21 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ``` 
 
-> Note: This version of the client library defaults to the `2021-09-30-preview` version of the service.
+> Note: This version of the client library defaults to the `2022-01-30-preview` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.X | 2.0, 2.1, 2021-09-30-preview
+|4.0.0-beta.3 | 2.0, 2.1, 2022-01-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
-> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
+> Note: Starting with version `4.0.0-beta.1`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
-|2021-09-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
+|2022-01-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient
 
@@ -141,10 +142,12 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 |-|-
 |`prebuilt-layout`| Text extraction, selection marks, tables
 |`prebuilt-document`| Text extraction, selection marks, tables, key-value pairs and entities
+|`prebuilt-read`| Text extraction, text languages and styles
 |`prebuilt-invoices`| Text extraction, selection marks, tables, and pre-trained fields and values pertaining to invoices
 |`prebuilt-businessCard`| Text extraction and pre-trained fields and values pertaining to business cards
 |`prebuilt-idDocument`| Text extraction and pre-trained fields and values pertaining to driver licenses and international passports
 |`prebuilt-receipt`| Text extraction and pre-trained fields and values pertaining to sales receipts
+|`prebuilt-tax.us.w2`| Text extraction and pre-trained fields and values pertaining to US W2 tax forms
 |`{custom-model-id}`| Text extraction, selection marks, tables, labeled fields and values from your custom documents
 
 Sample code snippets are provided to illustrate using a DocumentAnalysisClient [here](#examples).
@@ -190,6 +193,7 @@ The following section provides several code snippets illustrating common pattern
 ### Async examples
 * [Extract Layout](#extract-layout)
 * [Use the General Prebuilt Document Model](#use-the-general-prebuilt-document-model)
+* [Use the Prebuilt Read Model](#use-the-prebuilt-read-model)
 * [Use Prebuilt Models](#use-prebuilt-models)
 * [Build a Custom Model](#build-a-custom-model)
 * [Analyze Custom Documents](#analyze-custom-documents)
@@ -380,7 +384,13 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 For more information and samples see [here][analyze_prebuilt_document].
 
+### Use the Prebuilt Read Model
+Analyze textual elements, such as page words and lines, styles, and text language information from documents using the prebuilt read model.
 
+```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
+```
+
+For more information and samples see [here][analyze_prebuilt_read].
 
 ### Use Prebuilt Models
 Analyze data from certain types of common documents using pre-trained models provided by the Form Recognizer service.
@@ -496,6 +506,7 @@ You are not limited to invoices! There are a few prebuilt models to choose from,
 - Analyze driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
 - Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
 - Analyze receipts using the `prebuilt-receipt` model. [Supported fields][receipt_fields].
+- Analyze US W2 tax forms using the `prebuilt-tax.us.w2` model. [Supported fields][w2_fields].
 
 For more samples and information about which types of documents are supported, see [here][analyze_prebuilt].
 
@@ -537,7 +548,7 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 For more information and samples see [here][build_a_custom_model].
 
 ### Analyze Custom Documents
-Analyze text, field values, selection marks, and table data from custom documents, using models you build with your own document types.
+Analyze text, field values, selection marks, and table data from custom documents, using models you built with your own document types.
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
@@ -721,6 +732,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 
 - [Extract the layout of a document][extract_layout]
 - [Analyze with the prebuilt document model][analyze_prebuilt_document]
+- [Analyze with the prebuilt read model][analyze_prebuilt_read]
 - [Analyze a document with a custom model][analyze_custom]
 - [Analyze a document with a prebuilt model][analyze_prebuilt]
 - [Build a custom model][build_a_custom_model]
@@ -776,12 +788,14 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
 [invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
+[w2_fields]: https://aka.ms/azsdk/formrecognizer/taxusw2fieldschema
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [extract_layout]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ExtractLayout.md
 [analyze_prebuilt_document]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltDocument.md
+[analyze_prebuilt_read]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltRead.md
 [analyze_custom]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithCustomModel.md
 [analyze_prebuilt]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzeWithPrebuiltModel.md
 [build_a_custom_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_BuildCustomModel.md

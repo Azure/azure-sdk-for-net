@@ -25,6 +25,7 @@ The model to use for the analyze operation depends on the type of document to be
 - prebuilt-idDocument: extracts text and key information from driver licenses and international passports. [Supported fields][idDocument_fields].
 - prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
 - prebuilt-receipt: extracts text and key information from receipts. [Supported fields][receipt_fields].
+- prebuilt-tax.us.w2: extracts text and key information from US W2 tax forms. [Supported fields][w2_fields].
 
 For more information about prebuilt models and which types of documents are supported, see the [service documentation][formreco_models].
 
@@ -255,6 +256,7 @@ To see the full example source files, see:
 [idDocument_fields]: https://aka.ms/azsdk/formrecognizer/iddocumentfieldschema
 [invoice_fields]: https://aka.ms/azsdk/formrecognizer/invoicefieldschema
 [receipt_fields]: https://aka.ms/azsdk/formrecognizer/receiptfieldschema
+[w2_fields]: https://aka.ms/azsdk/formrecognizer/taxusw2fieldschema
 
 [formreco_models]: https://aka.ms/azsdk/formrecognizer/models
 
