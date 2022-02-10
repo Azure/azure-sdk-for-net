@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SourceControl>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceControl> Get(CancellationToken cancellationToken = default)
         {
@@ -121,42 +122,6 @@ namespace Azure.ResourceManager.AppService
                 if (response.Value == null)
                     throw _sourceControlClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControl.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControl.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

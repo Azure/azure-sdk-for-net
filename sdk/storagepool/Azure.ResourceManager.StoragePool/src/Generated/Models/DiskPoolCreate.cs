@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.StoragePool.Models
 {
     /// <summary> Request payload for create or update Disk Pool request. </summary>
-    public partial class DiskPoolCreate : Resource
+    public partial class DiskPoolCreate : ResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolCreate. </summary>
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>

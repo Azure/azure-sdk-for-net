@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,7 +82,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Returns the properties for the specified encryption scope. </summary>
+        /// <summary>
+        /// Returns the properties for the specified encryption scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}
+        /// Operation Id: EncryptionScopes_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<EncryptionScope>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +106,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Returns the properties for the specified encryption scope. </summary>
+        /// <summary>
+        /// Returns the properties for the specified encryption scope.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}
+        /// Operation Id: EncryptionScopes_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EncryptionScope> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +130,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
+        /// <summary>
+        /// Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}
+        /// Operation Id: EncryptionScopes_Patch
+        /// </summary>
         /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
@@ -148,7 +159,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist. </summary>
+        /// <summary>
+        /// Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}
+        /// Operation Id: EncryptionScopes_Patch
+        /// </summary>
         /// <param name="encryptionScope"> Encryption scope properties to be used for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScope"/> is null. </exception>
@@ -165,42 +180,6 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _encryptionScopeRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionScope, cancellationToken);
                 return Response.FromValue(new EncryptionScope(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScope.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

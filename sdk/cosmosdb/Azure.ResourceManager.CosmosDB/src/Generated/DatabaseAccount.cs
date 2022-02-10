@@ -177,7 +177,11 @@ namespace Azure.ResourceManager.CosmosDB
             return new PrivateLinkResourceCollection(Client, Id);
         }
 
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -197,7 +201,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccount> Get(CancellationToken cancellationToken = default)
         {
@@ -217,17 +225,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Deletes an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Delete");
             scope.Start();
             try
             {
                 var response = await _databaseAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountDeleteOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,17 +251,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Deletes an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Deletes an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Delete");
             scope.Start();
             try
             {
                 var response = _databaseAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DatabaseAccountDeleteOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,12 +277,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Updates the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountUpdateOperation> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
             if (updateParameters == null)
             {
@@ -278,7 +298,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountUpdateOperation(Client, _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,12 +310,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Updates the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public virtual DatabaseAccountUpdateOperation Update(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccount> Update(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
         {
             if (updateParameters == null)
             {
@@ -307,7 +331,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
-                var operation = new DatabaseAccountUpdateOperation(Client, _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -319,12 +343,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        /// <summary>
+        /// Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/failoverPriorityChange
+        /// Operation Id: DatabaseAccounts_FailoverPriorityChange
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountFailoverPriorityChangeOperation> FailoverPriorityChangeAsync(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> FailoverPriorityChangeAsync(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             if (failoverParameters == null)
             {
@@ -336,7 +364,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountRestClient.FailoverPriorityChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -348,12 +376,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </summary>
+        /// <summary>
+        /// Changes the failover priority for the Azure Cosmos DB database account. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/failoverPriorityChange
+        /// Operation Id: DatabaseAccounts_FailoverPriorityChange
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverParameters"> The new failover policies for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
-        public virtual DatabaseAccountFailoverPriorityChangeOperation FailoverPriorityChange(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation FailoverPriorityChange(bool waitForCompletion, FailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
             if (failoverParameters == null)
             {
@@ -365,7 +397,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountRestClient.FailoverPriorityChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters, cancellationToken);
-                var operation = new DatabaseAccountFailoverPriorityChangeOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateFailoverPriorityChangeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -377,7 +409,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the access keys for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listKeys
+        /// Operation Id: DatabaseAccounts_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountKeyList>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
@@ -395,7 +431,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the access keys for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listKeys
+        /// Operation Id: DatabaseAccounts_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountKeyList> GetKeys(CancellationToken cancellationToken = default)
         {
@@ -413,7 +453,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the connection strings for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings
+        /// Operation Id: DatabaseAccounts_ListConnectionStrings
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountConnectionStringList>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
@@ -431,7 +475,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the connection strings for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the connection strings for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings
+        /// Operation Id: DatabaseAccounts_ListConnectionStrings
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountConnectionStringList> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
@@ -449,12 +497,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Offline the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Offline the specified region for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/offlineRegion
+        /// Operation Id: DatabaseAccounts_OfflineRegion
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="regionParameterForOffline"> Cosmos DB region to offline for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
-        public async virtual Task<DatabaseAccountOfflineRegionOperation> OfflineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> OfflineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOffline == null)
             {
@@ -466,7 +518,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountRestClient.OfflineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOfflineRegionOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -478,12 +530,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Offline the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Offline the specified region for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/offlineRegion
+        /// Operation Id: DatabaseAccounts_OfflineRegion
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="regionParameterForOffline"> Cosmos DB region to offline for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
-        public virtual DatabaseAccountOfflineRegionOperation OfflineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
+        public virtual ArmOperation OfflineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOffline == null)
             {
@@ -495,7 +551,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountRestClient.OfflineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline, cancellationToken);
-                var operation = new DatabaseAccountOfflineRegionOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOfflineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOffline).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -507,12 +563,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Online the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Online the specified region for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/onlineRegion
+        /// Operation Id: DatabaseAccounts_OnlineRegion
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="regionParameterForOnline"> Cosmos DB region to online for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
-        public async virtual Task<DatabaseAccountOnlineRegionOperation> OnlineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> OnlineRegionAsync(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOnline == null)
             {
@@ -524,7 +584,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountRestClient.OnlineRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountOnlineRegionOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -536,12 +596,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Online the specified region for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Online the specified region for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/onlineRegion
+        /// Operation Id: DatabaseAccounts_OnlineRegion
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="regionParameterForOnline"> Cosmos DB region to online for the database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
-        public virtual DatabaseAccountOnlineRegionOperation OnlineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
+        public virtual ArmOperation OnlineRegion(bool waitForCompletion, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
             if (regionParameterForOnline == null)
             {
@@ -553,7 +617,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountRestClient.OnlineRegion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline, cancellationToken);
-                var operation = new DatabaseAccountOnlineRegionOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateOnlineRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regionParameterForOnline).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -565,7 +629,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the read-only access keys for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/readonlykeys
+        /// Operation Id: DatabaseAccounts_ListReadOnlyKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountReadOnlyKeyList>> GetReadOnlyKeysAsync(CancellationToken cancellationToken = default)
         {
@@ -583,7 +651,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the read-only access keys for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the read-only access keys for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/readonlykeys
+        /// Operation Id: DatabaseAccounts_ListReadOnlyKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountReadOnlyKeyList> GetReadOnlyKeys(CancellationToken cancellationToken = default)
         {
@@ -601,12 +673,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Regenerates an access key for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Regenerates an access key for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/regenerateKey
+        /// Operation Id: DatabaseAccounts_RegenerateKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public async virtual Task<DatabaseAccountRegenerateKeyOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RegenerateKeyAsync(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
             if (keyToRegenerate == null)
             {
@@ -618,7 +694,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -630,12 +706,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Regenerates an access key for the specified Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Regenerates an access key for the specified Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/regenerateKey
+        /// Operation Id: DatabaseAccounts_RegenerateKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="keyToRegenerate"> The name of the key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyToRegenerate"/> is null. </exception>
-        public virtual DatabaseAccountRegenerateKeyOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RegenerateKey(bool waitForCompletion, DatabaseAccountRegenerateKeyOptions keyToRegenerate, CancellationToken cancellationToken = default)
         {
             if (keyToRegenerate == null)
             {
@@ -647,7 +727,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate, cancellationToken);
-                var operation = new DatabaseAccountRegenerateKeyOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response);
+                var operation = new CosmosDBArmOperation(_databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyToRegenerate).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -659,7 +739,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/metrics
+        /// Operation Id: DatabaseAccounts_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -689,7 +773,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/metrics
+        /// Operation Id: DatabaseAccounts_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -719,7 +807,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent data) for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/usages
+        /// Operation Id: DatabaseAccounts_ListUsages
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -743,7 +835,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent data) for the given database account. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent data) for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/usages
+        /// Operation Id: DatabaseAccounts_ListUsages
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BaseUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -767,7 +863,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/metricDefinitions
+        /// Operation Id: DatabaseAccounts_ListMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
@@ -790,7 +890,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given database account. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/metricDefinitions
+        /// Operation Id: DatabaseAccounts_ListMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
@@ -813,7 +917,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and database. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/metrics
+        /// Operation Id: Database_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -846,7 +954,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and database. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/metrics
+        /// Operation Id: Database_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -879,7 +991,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent data) for the given database. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent data) for the given database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/usages
+        /// Operation Id: Database_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -908,7 +1024,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent data) for the given database. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent data) for the given database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/usages
+        /// Operation Id: Database_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -937,7 +1057,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given database. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/metricDefinitions
+        /// Operation Id: Database_ListMetricDefinitions
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
@@ -965,7 +1089,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given database. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/metricDefinitions
+        /// Operation Id: Database_ListMetricDefinitions
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseRid"/> is empty. </exception>
@@ -993,7 +1121,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and collection. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/metrics
+        /// Operation Id: Collection_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1028,7 +1160,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and collection. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/metrics
+        /// Operation Id: Collection_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1063,7 +1199,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent storage data) for the given collection. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent storage data) for the given collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/usages
+        /// Operation Id: Collection_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
@@ -1094,7 +1234,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent storage data) for the given collection. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent storage data) for the given collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/usages
+        /// Operation Id: Collection_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
@@ -1125,7 +1269,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given collection. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/metricDefinitions
+        /// Operation Id: Collection_ListMetricDefinitions
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1155,7 +1303,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves metric definitions for the given collection. </summary>
+        /// <summary>
+        /// Retrieves metric definitions for the given collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/metricDefinitions
+        /// Operation Id: Collection_ListMetricDefinitions
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1185,7 +1337,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account, collection and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account, collection and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/metrics
+        /// Operation Id: CollectionRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1222,7 +1378,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account, collection and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account, collection and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/metrics
+        /// Operation Id: CollectionRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1259,7 +1419,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/metrics
+        /// Operation Id: DatabaseAccountRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1292,7 +1456,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/metrics
+        /// Operation Id: DatabaseAccountRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1325,7 +1493,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sourceRegion/{sourceRegion}/targetRegion/{targetRegion}/percentile/metrics
+        /// Operation Id: PercentileSourceTarget_ListMetrics
+        /// </summary>
         /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1360,7 +1532,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sourceRegion/{sourceRegion}/targetRegion/{targetRegion}/percentile/metrics
+        /// Operation Id: PercentileSourceTarget_ListMetrics
+        /// </summary>
         /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1395,7 +1571,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/targetRegion/{targetRegion}/percentile/metrics
+        /// Operation Id: PercentileTarget_ListMetrics
+        /// </summary>
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1428,7 +1608,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given account target region. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/targetRegion/{targetRegion}/percentile/metrics
+        /// Operation Id: PercentileTarget_ListMetrics
+        /// </summary>
         /// <param name="targetRegion"> Target region to which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1461,7 +1645,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/percentile/metrics
+        /// Operation Id: Percentile_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -1491,7 +1679,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given database account. This url is only for PBS and Replication Latency data
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/percentile/metrics
+        /// Operation Id: Percentile_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -1521,7 +1713,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given collection and region, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given collection and region, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/partitions/metrics
+        /// Operation Id: CollectionPartitionRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1558,7 +1754,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given collection and region, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given collection and region, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/partitions/metrics
+        /// Operation Id: CollectionPartitionRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1595,7 +1795,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given collection, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given collection, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitions/metrics
+        /// Operation Id: CollectionPartition_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1630,7 +1834,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given collection, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given collection, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitions/metrics
+        /// Operation Id: CollectionPartition_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1665,7 +1873,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent storage data) for the given collection, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent storage data) for the given collection, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitions/usages
+        /// Operation Id: CollectionPartition_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
@@ -1696,7 +1908,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the usages (most recent storage data) for the given collection, split by partition. </summary>
+        /// <summary>
+        /// Retrieves the usages (most recent storage data) for the given collection, split by partition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitions/usages
+        /// Operation Id: CollectionPartition_ListUsages
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
@@ -1727,7 +1943,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given partition key range id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitionKeyRangeId/{partitionKeyRangeId}/metrics
+        /// Operation Id: PartitionKeyRangeId_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
@@ -1764,7 +1984,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given partition key range id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/databases/{databaseRid}/collections/{collectionRid}/partitionKeyRangeId/{partitionKeyRangeId}/metrics
+        /// Operation Id: PartitionKeyRangeId_ListMetrics
+        /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
         /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
@@ -1801,7 +2025,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given partition key range id and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/partitionKeyRangeId/{partitionKeyRangeId}/metrics
+        /// Operation Id: PartitionKeyRangeIdRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1840,7 +2068,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
+        /// <summary>
+        /// Retrieves the metrics determined by the given filter for the given partition key range id and region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/region/{region}/databases/{databaseRid}/collections/{collectionRid}/partitionKeyRangeId/{partitionKeyRangeId}/metrics
+        /// Operation Id: PartitionKeyRangeIdRegion_ListMetrics
+        /// </summary>
         /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
         /// <param name="collectionRid"> Cosmos DB collection rid. </param>
@@ -1879,7 +2111,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1912,7 +2148,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1945,7 +2185,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -1974,7 +2218,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -2003,7 +2251,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2031,7 +2283,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2051,42 +2307,6 @@ namespace Azure.ResourceManager.CosmosDB
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccount(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

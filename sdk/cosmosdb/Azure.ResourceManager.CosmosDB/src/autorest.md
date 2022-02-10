@@ -18,7 +18,38 @@ flatten-payloads: false
 model-namespae: true
 modelerfour:
   lenient-model-deduplication: true
-
+operation-id-mappings:
+  DatabaseAccountCassandraKeyspaceThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
+  DatabaseAccountCassandraKeyspaceTableThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
+      tableName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables
+  DatabaseAccountTableThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      tableName: Microsoft.DocumentDB/databaseAccounts/tables
+  DatabaseAccountGremlinDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
+  DatabaseAccountGremlinDatabaseGraphThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
+      graphName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs
+  DatabaseAccountMongodbDatabaseCollectionThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
+      collectionName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections
+  DatabaseAccountMongodbDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
+  DatabaseAccountSqlDatabaseContainerThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
+      containerName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers
+  DatabaseAccountSqlDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 directive:
 - from: cosmos-db.json

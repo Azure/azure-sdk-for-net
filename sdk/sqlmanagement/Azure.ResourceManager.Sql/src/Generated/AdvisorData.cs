@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the Advisor data model. </summary>
-    public partial class AdvisorData : Resource
+    public partial class AdvisorData : ResourceData
     {
         /// <summary> Initializes a new instance of AdvisorData. </summary>
         public AdvisorData()

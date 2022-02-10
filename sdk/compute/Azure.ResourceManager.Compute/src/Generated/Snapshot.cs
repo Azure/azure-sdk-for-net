@@ -84,7 +84,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets information about a snapshot. </summary>
+        /// <summary>
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Snapshot>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +108,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a snapshot. </summary>
+        /// <summary>
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Snapshot> Get(CancellationToken cancellationToken = default)
         {
@@ -124,17 +132,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Deletes a snapshot. </summary>
+        /// <summary>
+        /// Deletes a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Delete");
             scope.Start();
             try
             {
                 var response = await _snapshotRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotDeleteOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,17 +158,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Deletes a snapshot. </summary>
+        /// <summary>
+        /// Deletes a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Delete");
             scope.Start();
             try
             {
                 var response = _snapshotRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SnapshotDeleteOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -168,12 +184,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <summary>
+        /// Updates (patches) a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<SnapshotUpdateOperation> UpdateAsync(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Snapshot>> UpdateAsync(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
@@ -185,7 +205,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotUpdateOperation(Client, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -197,12 +217,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <summary>
+        /// Updates (patches) a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public virtual SnapshotUpdateOperation Update(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Snapshot> Update(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
@@ -214,7 +238,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
-                var operation = new SnapshotUpdateOperation(Client, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,12 +250,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Grants access to a snapshot. </summary>
+        /// <summary>
+        /// Grants access to a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}/beginGetAccess
+        /// Operation Id: Snapshots_GrantAccess
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<SnapshotGrantAccessOperation> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AccessUri>> GrantAccessAsync(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -243,7 +271,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _snapshotRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotGrantAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -255,12 +283,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Grants access to a snapshot. </summary>
+        /// <summary>
+        /// Grants access to a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}/beginGetAccess
+        /// Operation Id: Snapshots_GrantAccess
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual SnapshotGrantAccessOperation GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AccessUri> GrantAccess(bool waitForCompletion, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -272,7 +304,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _snapshotRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                var operation = new SnapshotGrantAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, grantAccessData).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -284,17 +316,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Revokes access to a snapshot. </summary>
+        /// <summary>
+        /// Revokes access to a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}/endGetAccess
+        /// Operation Id: Snapshots_RevokeAccess
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> RevokeAccessAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RevokeAccess");
             scope.Start();
             try
             {
                 var response = await _snapshotRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotRevokeAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,17 +342,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Revokes access to a snapshot. </summary>
+        /// <summary>
+        /// Revokes access to a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}/endGetAccess
+        /// Operation Id: Snapshots_RevokeAccess
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotRevokeAccessOperation RevokeAccess(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RevokeAccess(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.RevokeAccess");
             scope.Start();
             try
             {
                 var response = _snapshotRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SnapshotRevokeAccessOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -328,7 +368,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -361,7 +405,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -394,7 +442,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -423,7 +475,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -452,7 +508,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -480,7 +540,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -500,42 +564,6 @@ namespace Azure.ResourceManager.Compute
                 TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Snapshot(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

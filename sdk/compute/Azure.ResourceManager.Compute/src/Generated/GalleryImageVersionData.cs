@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the GalleryImageVersion data model. </summary>
-    public partial class GalleryImageVersionData : TrackedResource
+    public partial class GalleryImageVersionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
         /// <param name="location"> The location. </param>

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebPubSub.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update a shared private link resource. </summary>
+        /// <summary>
+        /// Create or update a shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="parameters"> The shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SharedPrivateLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SharedPrivateLink>> CreateOrUpdateAsync(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
             if (parameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _sharedPrivateLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SharedPrivateLinkCreateOrUpdateOperation(Client, _sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters).Request, response);
+                var operation = new WebPubSubArmOperation<SharedPrivateLink>(new SharedPrivateLinkOperationSource(Client), _sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Create or update a shared private link resource. </summary>
+        /// <summary>
+        /// Create or update a shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="parameters"> The shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SharedPrivateLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharedPrivateLink> CreateOrUpdate(bool waitForCompletion, string sharedPrivateLinkName, SharedPrivateLinkData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkName, nameof(sharedPrivateLinkName));
             if (parameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _sharedPrivateLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters, cancellationToken);
-                var operation = new SharedPrivateLinkCreateOrUpdateOperation(Client, _sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters).Request, response);
+                var operation = new WebPubSubArmOperation<SharedPrivateLink>(new SharedPrivateLinkOperationSource(Client), _sharedPrivateLinkClientDiagnostics, Pipeline, _sharedPrivateLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the specified shared private link resource. </summary>
+        /// <summary>
+        /// Get the specified shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the specified shared private link resource. </summary>
+        /// <summary>
+        /// Get the specified shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary>
+        /// List shared private link resources
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources
+        /// Operation Id: SharedPrivateLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SharedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +222,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List shared private link resources. </summary>
+        /// <summary>
+        /// List shared private link resources
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources
+        /// Operation Id: SharedPrivateLinks_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedPrivateLink> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
@@ -264,7 +291,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
@@ -287,7 +318,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>
@@ -312,7 +347,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}
+        /// Operation Id: SharedPrivateLinks_Get
+        /// </summary>
         /// <param name="sharedPrivateLinkName"> The name of the shared private link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkName"/> is empty. </exception>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the DdosProtectionPlan data model. </summary>
-    public partial class DdosProtectionPlanData : TrackedResource
+    public partial class DdosProtectionPlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
         /// <param name="location"> The location. </param>

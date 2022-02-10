@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the WorkloadGroup data model. </summary>
-    public partial class WorkloadGroupData : Resource
+    public partial class WorkloadGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadGroupData. </summary>
         public WorkloadGroupData()

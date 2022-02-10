@@ -25,7 +25,11 @@ namespace Azure.ResourceManager.Communication
             );
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
+        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -34,7 +38,11 @@ namespace Azure.ResourceManager.Communication
             return await GetExtensionClient(subscription).CheckCommunicationNameAvailabilityAsync(nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the CommunicationService name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
+        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,7 +51,11 @@ namespace Azure.ResourceManager.Communication
             return GetExtensionClient(subscription).CheckCommunicationNameAvailability(nameAvailabilityParameters, cancellationToken);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
@@ -52,7 +64,11 @@ namespace Azure.ResourceManager.Communication
             return GetExtensionClient(subscription).GetCommunicationServicesAsync(cancellationToken);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>

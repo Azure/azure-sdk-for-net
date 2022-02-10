@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHub.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates an Event Hubs consumer group as a nested resource within a Namespace. </summary>
+        /// <summary>
+        /// Creates or updates an Event Hubs consumer group as a nested resource within a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a consumer group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ConsumerGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConsumerGroup>> CreateOrUpdateAsync(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
             if (parameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _consumerGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumerGroupCreateOrUpdateOperation(Client, response);
+                var operation = new EventHubsArmOperation<ConsumerGroup>(Response.FromValue(new ConsumerGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Creates or updates an Event Hubs consumer group as a nested resource within a Namespace. </summary>
+        /// <summary>
+        /// Creates or updates an Event Hubs consumer group as a nested resource within a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a consumer group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ConsumerGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConsumerGroup> CreateOrUpdate(bool waitForCompletion, string consumerGroupName, ConsumerGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroupName, nameof(consumerGroupName));
             if (parameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _consumerGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken);
-                var operation = new ConsumerGroupCreateOrUpdateOperation(Client, response);
+                var operation = new EventHubsArmOperation<ConsumerGroup>(Response.FromValue(new ConsumerGroup(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a description for the specified consumer group. </summary>
+        /// <summary>
+        /// Gets a description for the specified consumer group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a description for the specified consumer group. </summary>
+        /// <summary>
+        /// Gets a description for the specified consumer group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets all the consumer groups in a Namespace. An empty feed is returned if no consumer group exists in the Namespace. </summary>
+        /// <summary>
+        /// Gets all the consumer groups in a Namespace. An empty feed is returned if no consumer group exists in the Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups
+        /// Operation Id: ConsumerGroups_ListByEventHub
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,7 +224,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the consumer groups in a Namespace. An empty feed is returned if no consumer group exists in the Namespace. </summary>
+        /// <summary>
+        /// Gets all the consumer groups in a Namespace. An empty feed is returned if no consumer group exists in the Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups
+        /// Operation Id: ConsumerGroups_ListByEventHub
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,7 +268,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
@@ -268,7 +295,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
@@ -291,7 +322,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>
@@ -316,7 +351,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}
+        /// Operation Id: ConsumerGroups_Get
+        /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is empty. </exception>

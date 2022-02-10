@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,7 +83,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LocalUser>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +107,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LocalUser> Get(CancellationToken cancellationToken = default)
         {
@@ -124,17 +131,21 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the local user associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the local user associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LocalUserDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.Delete");
             scope.Start();
             try
             {
                 var response = await _localUserRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalUserDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -146,17 +157,21 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the local user associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the local user associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LocalUserDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.Delete");
             scope.Start();
             try
             {
                 var response = _localUserRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LocalUserDeleteOperation(response);
+                var operation = new StorageArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -168,7 +183,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> List SSH authorized keys and shared key of the local user. </summary>
+        /// <summary>
+        /// List SSH authorized keys and shared key of the local user.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys
+        /// Operation Id: LocalUsers_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LocalUserKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
@@ -186,7 +205,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> List SSH authorized keys and shared key of the local user. </summary>
+        /// <summary>
+        /// List SSH authorized keys and shared key of the local user.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/listKeys
+        /// Operation Id: LocalUsers_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LocalUserKeys> GetKeys(CancellationToken cancellationToken = default)
         {
@@ -204,7 +227,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Regenerate the local user SSH password. </summary>
+        /// <summary>
+        /// Regenerate the local user SSH password.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword
+        /// Operation Id: LocalUsers_RegeneratePassword
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LocalUserRegeneratePasswordResult>> RegeneratePasswordAsync(CancellationToken cancellationToken = default)
         {
@@ -222,7 +249,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Regenerate the local user SSH password. </summary>
+        /// <summary>
+        /// Regenerate the local user SSH password.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}/regeneratePassword
+        /// Operation Id: LocalUsers_RegeneratePassword
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LocalUserRegeneratePasswordResult> RegeneratePassword(CancellationToken cancellationToken = default)
         {
@@ -232,42 +263,6 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _localUserRestClient.RegeneratePassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUser.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

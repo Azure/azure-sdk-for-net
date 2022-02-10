@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// OperationId: DataPolicyManifests_GetByPolicyMode
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// ContextualPath: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// OperationId: DataPolicyManifests_GetByPolicyMode
-        /// <summary> This operation retrieves the data policy manifest with the given policy mode. </summary>
+        /// <summary>
+        /// This operation retrieves the data policy manifest with the given policy mode.
+        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
+        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataPolicyManifest> Get(CancellationToken cancellationToken = default)
         {
@@ -121,42 +122,6 @@ namespace Azure.ResourceManager.Resources
                 if (response.Value == null)
                     throw _dataPolicyManifestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifest.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifest.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
             }
             catch (Exception e)
             {

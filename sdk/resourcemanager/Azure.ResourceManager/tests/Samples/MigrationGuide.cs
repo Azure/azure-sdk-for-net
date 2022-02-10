@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
+            ArmOperation<ResourceGroup> rgCreateLro = await rgCollection.CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 
             #region Snippet:Create_AvailabilitySet
             string vmName = "quickstartvm";
             AvailabilitySetData aSetData = new AvailabilitySetData(location);
-            AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
+            ArmOperation<AvailabilitySet> asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, vmName + "_aSet", aSetData);
             AvailabilitySet aset = asetCreateLro.Value;
             string asetId = aset.Id;
             #endregion
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Tests.Samples
                     }
                 }
             };
-            VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+            ArmOperation<VirtualNetwork> vnetCreateLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
             VirtualNetwork vnet = vnetCreateLro.Value;
             #endregion
 
             #region Snippet:Create_NetworkSecurityGroup
             string nsgName = vmName + "_nsg";
             NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
-            NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
+            ArmOperation<NetworkSecurityGroup> nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, nsgName, nsgData);
             NetworkSecurityGroup nsg = nsgCreateLro.Value;
             #endregion
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Tests.Samples
             NetworkInterfaceData nicData = new NetworkInterfaceData();
             nicData.Location = location;
             nicData.IpConfigurations.Add(nicIPConfig);
-            NetworkInterfaceCreateOrUpdateOperation nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
+            ArmOperation<NetworkInterface> nicCreateLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, nicName, nicData);
             NetworkInterface nic = nicCreateLro.Value;
             #endregion
 

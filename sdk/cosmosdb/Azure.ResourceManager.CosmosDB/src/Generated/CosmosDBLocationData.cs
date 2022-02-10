@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the CosmosDBLocation data model. </summary>
-    public partial class CosmosDBLocationData : Resource
+    public partial class CosmosDBLocationData : ResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBLocationData. </summary>
         public CosmosDBLocationData()

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,10 +83,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeletedSite>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -107,10 +107,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeletedSite> Get(CancellationToken cancellationToken = default)
         {
@@ -130,10 +131,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// OperationId: Global_GetDeletedWebAppSnapshots
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
+        /// Operation Id: Global_GetDeletedWebAppSnapshots
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Snapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
@@ -156,10 +158,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// OperationId: Global_GetDeletedWebAppSnapshots
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
+        /// Operation Id: Global_GetDeletedWebAppSnapshots
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Snapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
@@ -180,42 +183,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSite.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSite.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

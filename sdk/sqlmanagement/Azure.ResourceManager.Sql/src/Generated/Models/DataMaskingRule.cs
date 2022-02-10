@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database data masking rule. </summary>
-    public partial class DataMaskingRule : Resource
+    public partial class DataMaskingRule : ResourceData
     {
         /// <summary> Initializes a new instance of DataMaskingRule. </summary>
         public DataMaskingRule()

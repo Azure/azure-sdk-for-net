@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -97,7 +96,11 @@ namespace Azure.ResourceManager.Resources
             return new ScriptLog(Client, new ResourceIdentifier(Id.ToString() + "/logs/default"));
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeploymentScript>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -117,7 +120,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentScript> Get(CancellationToken cancellationToken = default)
         {
@@ -137,17 +144,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeploymentScriptDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Delete");
             scope.Start();
             try
             {
                 var response = await _deploymentScriptRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentScriptDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,17 +170,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeploymentScriptDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Delete");
             scope.Start();
             try
             {
                 var response = _deploymentScriptRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DeploymentScriptDeleteOperation(response);
+                var operation = new ResourcesArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -181,7 +196,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeploymentScript>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -200,7 +219,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentScript> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -219,7 +242,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptLog> GetLogsAsync(CancellationToken cancellationToken = default)
@@ -242,7 +269,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptLog> GetLogs(CancellationToken cancellationToken = default)
@@ -263,42 +294,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

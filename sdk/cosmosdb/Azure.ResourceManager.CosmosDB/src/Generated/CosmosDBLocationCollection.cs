@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
@@ -76,7 +80,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Get the properties of an existing Cosmos DB location. </summary>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
@@ -101,7 +109,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> List Cosmos DB locations and their properties. </summary>
+        /// <summary>
+        /// List Cosmos DB locations and their properties
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations
+        /// Operation Id: Locations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CosmosDBLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBLocation> GetAllAsync(CancellationToken cancellationToken = default)
@@ -124,7 +136,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List Cosmos DB locations and their properties. </summary>
+        /// <summary>
+        /// List Cosmos DB locations and their properties
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations
+        /// Operation Id: Locations_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CosmosDBLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBLocation> GetAll(CancellationToken cancellationToken = default)
@@ -147,7 +163,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
@@ -170,7 +190,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
@@ -193,7 +217,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>
@@ -218,7 +246,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is empty. </exception>

@@ -33,7 +33,11 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(tenant).GetDeployments();
         }
 
-        /// <summary> Calculate the hash of the given template. </summary>
+        /// <summary>
+        /// Calculate the hash of the given template.
+        /// Request Path: /providers/Microsoft.Resources/calculateTemplateHash
+        /// Operation Id: Deployments_CalculateTemplateHash
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -48,7 +52,11 @@ namespace Azure.ResourceManager.Resources
             return await GetExtensionClient(tenant).CalculateTemplateHashDeploymentAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Calculate the hash of the given template. </summary>
+        /// <summary>
+        /// Calculate the hash of the given template.
+        /// Request Path: /providers/Microsoft.Resources/calculateTemplateHash
+        /// Operation Id: Deployments_CalculateTemplateHash
+        /// </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

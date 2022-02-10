@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
             Sku sku = new Sku(SkuName.StandardGRS);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
+            ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_FileShares_GetFileService
             FileService fileService = await storageAccount.GetFileService().GetAsync();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             FileShareCollection fileShareCollection = fileService.GetFileShares();
             string fileShareName = "myFileShare";
             FileShareData fileShareData = new FileShareData();
-            FileShareCreateOrUpdateOperation fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
+            ArmOperation<FileShare> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
             FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
             #endregion
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -121,10 +120,11 @@ namespace Azure.ResourceManager.Resources
             return new SubscriptionCollection(Client, Id);
         }
 
-        /// RequestPath: /providers
-        /// ContextualPath: /
-        /// OperationId: Providers_ListAtTenantScope
-        /// <summary> Gets all resource providers for the tenant. </summary>
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// Request Path: /providers
+        /// Operation Id: Providers_ListAtTenantScope
+        /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,10 +164,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers
-        /// ContextualPath: /
-        /// OperationId: Providers_ListAtTenantScope
-        /// <summary> Gets all resource providers for the tenant. </summary>
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// Request Path: /providers
+        /// Operation Id: Providers_ListAtTenantScope
+        /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,10 +208,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/{resourceProviderNamespace}
-        /// ContextualPath: /
-        /// OperationId: Providers_GetAtTenantScope
-        /// <summary> Gets the specified resource provider at the tenant level. </summary>
+        /// <summary>
+        /// Gets the specified resource provider at the tenant level.
+        /// Request Path: /providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_GetAtTenantScope
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,10 +236,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/{resourceProviderNamespace}
-        /// ContextualPath: /
-        /// OperationId: Providers_GetAtTenantScope
-        /// <summary> Gets the specified resource provider at the tenant level. </summary>
+        /// <summary>
+        /// Gets the specified resource provider at the tenant level.
+        /// Request Path: /providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_GetAtTenantScope
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

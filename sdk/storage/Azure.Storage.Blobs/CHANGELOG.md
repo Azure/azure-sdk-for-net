@@ -1,5 +1,17 @@
 # Release History
 
+## 12.11.0-beta.4 (Unreleased)
+
+### Features Added
+- Added support for progress reporting with DownloadToAsync().
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
+
+### Other Changes
+
 ## 12.11.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.
 - Added support for BlobContainerClient.FilterBlobsByTag().

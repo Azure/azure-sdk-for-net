@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerAutomaticTuning data model. </summary>
-    public partial class ServerAutomaticTuningData : Resource
+    public partial class ServerAutomaticTuningData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerAutomaticTuningData. </summary>
         public ServerAutomaticTuningData()
