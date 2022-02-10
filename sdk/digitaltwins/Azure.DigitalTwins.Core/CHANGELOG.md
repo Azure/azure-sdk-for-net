@@ -6,14 +6,6 @@
 
 - Added support for `SourceTime` to `DigitalTwinPropertyMetadata`.
 
-### Breaking changes
-
-- None
-
-### Fixes and improvements
-
-- None
-
 ## 1.2.2 (2021-04-12)
 
 ### Fixes and improvements
