@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -45,28 +43,18 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static OrderItemResourceData DeserializeOrderItemResourceData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             OrderItemDetails orderItemDetails = default;
             AddressDetails addressDetails = default;
             Optional<DateTimeOffset> startTime = default;
             string orderId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -95,6 +83,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -135,7 +128,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     continue;
                 }
             }
-            return new OrderItemResourceData(id, name, type, tags, location, systemData, orderItemDetails, addressDetails, Optional.ToNullable(startTime), orderId);
+            return new OrderItemResourceData(id, name, type, systemData, tags, location, orderItemDetails, addressDetails, Optional.ToNullable(startTime), orderId);
         }
     }
 }

@@ -24,14 +24,15 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly ManagedIdentityClient _client;
-        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot";
+
+        private const string Troubleshooting =
+            "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot";
 
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
         protected ManagedIdentityCredential()
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
@@ -43,18 +44,32 @@ namespace Azure.Identity
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(clientId, CredentialPipeline.GetInstance(options))
-        {
-        }
+        { }
+
+        /// <summary>
+        /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
+        /// </summary>
+        /// <param name="resourceId">
+        /// The resource id to authenticate for a user assigned managed identity.  More information on user assigned managed identities can be found here:
+        /// https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
+        /// </param>
+        /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
+            : this(
+                new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options) }))
+        { }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
             : this(new ManagedIdentityClient(pipeline, clientId))
-        {
-        }
+        { }
+
+        internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, bool preserveTransport = false)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions{Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport}))
+        { }
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)
         {
             _pipeline = client.Pipeline;
-
             _client = client;
         }
 
@@ -91,7 +106,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e, Troubleshooting);
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
             }
         }
     }

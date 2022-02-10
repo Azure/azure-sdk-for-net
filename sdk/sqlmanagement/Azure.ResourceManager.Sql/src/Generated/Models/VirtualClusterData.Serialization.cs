@@ -8,8 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -47,10 +46,11 @@ namespace Azure.ResourceManager.Sql
         internal static VirtualClusterData DeserializeVirtualClusterData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> subnetId = default;
             Optional<string> family = default;
             Optional<IReadOnlyList<string>> childResources = default;
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -130,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new VirtualClusterData(id, name, type, tags, location, subnetId.Value, family.Value, Optional.ToList(childResources), maintenanceConfigurationId.Value);
+            return new VirtualClusterData(id, name, type, systemData, tags, location, subnetId.Value, family.Value, Optional.ToList(childResources), maintenanceConfigurationId.Value);
         }
     }
 }

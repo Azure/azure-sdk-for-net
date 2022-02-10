@@ -6,19 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the CosmosTable data model. </summary>
-    public partial class CosmosTableData : TrackedResource
+    public partial class CosmosTableData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CosmosTableData. </summary>
         /// <param name="location"> The location. </param>
-        public CosmosTableData(Location location) : base(location)
+        public CosmosTableData(AzureLocation location) : base(location)
         {
         }
 
@@ -26,11 +25,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CosmosTableData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CosmosTablePropertiesResource resource, CosmosTablePropertiesOptions options) : base(id, name, type, tags, location)
+        internal CosmosTableData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosTablePropertiesResource resource, CosmosTablePropertiesOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

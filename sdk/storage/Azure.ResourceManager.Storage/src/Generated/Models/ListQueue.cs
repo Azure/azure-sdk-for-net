@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListQueue. </summary>
-    public partial class ListQueue : Resource
+    public partial class ListQueue : ResourceData
     {
         /// <summary> Initializes a new instance of ListQueue. </summary>
         public ListQueue()
@@ -25,8 +24,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
-        internal ListQueue(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> metadata) : base(id, name, type)
+        internal ListQueue(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> metadata) : base(id, name, type, systemData)
         {
             Metadata = metadata;
         }

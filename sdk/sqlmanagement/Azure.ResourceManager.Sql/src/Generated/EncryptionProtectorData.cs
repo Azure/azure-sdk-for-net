@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the EncryptionProtector data model. </summary>
-    public partial class EncryptionProtectorData : Resource
+    public partial class EncryptionProtectorData : ResourceData
     {
         /// <summary> Initializes a new instance of EncryptionProtectorData. </summary>
         public EncryptionProtectorData()
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the encryption protector. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType type, string kind, string location, string subregion, string serverKeyName, ServerKeyType? serverKeyType, string uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, type)
+        internal EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string subregion, string serverKeyName, ServerKeyType? serverKeyType, string uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, type, systemData)
         {
             Kind = kind;
             Location = location;

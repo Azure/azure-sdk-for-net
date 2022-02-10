@@ -7,8 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="enabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
-        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType type, string kind, bool? enabled, IList<PrivateAccessVirtualNetwork> virtualNetworks) : base(id, name, type, kind)
+        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, bool? enabled, IList<PrivateAccessVirtualNetwork> virtualNetworks) : base(id, name, type, systemData, kind)
         {
             Enabled = enabled;
             VirtualNetworks = virtualNetworks;

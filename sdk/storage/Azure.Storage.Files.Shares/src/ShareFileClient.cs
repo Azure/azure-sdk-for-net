@@ -5971,18 +5971,24 @@ namespace Azure.Storage.Files.Shares
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
 
+                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
+                    {
+                        FileContentType = options?.ContentType
+                    };
+
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5992,12 +5998,13 @@ namespace Azure.Storage.Files.Shares
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 

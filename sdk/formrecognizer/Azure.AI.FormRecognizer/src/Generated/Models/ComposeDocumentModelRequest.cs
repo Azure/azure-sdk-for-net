@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -31,6 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ModelId = modelId;
             ComponentModels = componentModels.ToList();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Unique model name. </summary>
@@ -39,5 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Description { get; set; }
         /// <summary> List of component models to compose. </summary>
         public IList<ComponentModelInfo> ComponentModels { get; }
+        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

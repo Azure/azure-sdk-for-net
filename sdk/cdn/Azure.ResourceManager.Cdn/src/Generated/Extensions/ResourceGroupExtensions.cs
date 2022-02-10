@@ -12,24 +12,29 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Profile
-        /// <summary> Gets an object representing a ProfileCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of Profiles in the Profile. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ProfileCollection" /> object. </returns>
+        /// <returns> An object representing collection of Profiles and their operations over a Profile. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroup resourceGroup)
         {
-            return new ProfileCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetProfiles();
         }
-        #endregion
 
-        #region CdnWebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicyCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the CdnWebApplicationFirewallPolicy. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyCollection" /> object. </returns>
+        /// <returns> An object representing collection of CdnWebApplicationFirewallPolicies and their operations over a CdnWebApplicationFirewallPolicy. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
         {
-            return new CdnWebApplicationFirewallPolicyCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetCdnWebApplicationFirewallPolicies();
         }
-        #endregion
     }
 }
