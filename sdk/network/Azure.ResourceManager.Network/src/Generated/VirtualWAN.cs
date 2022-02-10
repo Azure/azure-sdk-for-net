@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves the details of a VirtualWAN. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualWAN>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -115,7 +119,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualWAN. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWAN> Get(CancellationToken cancellationToken = default)
         {
@@ -135,7 +143,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualWAN. </summary>
+        /// <summary>
+        /// Deletes a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -157,7 +169,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualWAN. </summary>
+        /// <summary>
+        /// Deletes a VirtualWAN.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -179,7 +195,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a VirtualWAN tags. </summary>
+        /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
         /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a VirtualWAN tags. </summary>
+        /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
         /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
@@ -229,7 +253,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Operation Id: SupportedSecurityProviders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(CancellationToken cancellationToken = default)
         {
@@ -247,7 +275,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the supported security providers for the virtual wan. </summary>
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders
+        /// Operation Id: SupportedSecurityProviders
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWanSecurityProviders> SupportedSecurityProviders(CancellationToken cancellationToken = default)
         {
@@ -265,7 +297,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,7 +330,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
+        /// <summary>
+        /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
+        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -323,7 +363,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
+        /// <summary>
+        /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Operation Id: VpnSitesConfiguration_Download
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -352,7 +396,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
+        /// <summary>
+        /// Gives the sas-url to download the configurations for vpn-sites in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
+        /// Operation Id: VpnSitesConfiguration_Download
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -381,7 +429,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
+        /// <summary>
+        /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<VpnServerConfigurationsResponse>> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -403,7 +455,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
+        /// <summary>
+        /// Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
+        /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<VpnServerConfigurationsResponse> GetVpnServerConfigurationsAssociatedWithVirtualWan(bool waitForCompletion, CancellationToken cancellationToken = default)

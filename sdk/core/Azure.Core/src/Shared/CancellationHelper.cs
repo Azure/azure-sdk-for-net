@@ -3,6 +3,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #pragma warning restore SA1636
 
+#nullable enable
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;

@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Get
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Get
-        /// <summary> Gets a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceLink> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Delete
-        /// <summary> Deletes a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Deletes a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -153,10 +156,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{linkId}
-        /// ContextualPath: /{linkId}
-        /// OperationId: ResourceLinks_Delete
-        /// <summary> Deletes a resource link with the specified ID. </summary>
+        /// <summary>
+        /// Deletes a resource link with the specified ID.
+        /// Request Path: /{linkId}
+        /// Operation Id: ResourceLinks_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)

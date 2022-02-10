@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpecVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
+        /// <summary>
+        /// Gets a Template Spec version from a specific Template Spec.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpecVersion> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -145,7 +157,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec Version tags with specified values. </summary>
+        /// <summary>
+        /// Updates Template Spec Version tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Update
+        /// </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TemplateSpecVersion>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -186,7 +206,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates Template Spec Version tags with specified values. </summary>
+        /// <summary>
+        /// Updates Template Spec Version tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}
+        /// Operation Id: TemplateSpecVersions_Update
+        /// </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateSpecVersion> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)

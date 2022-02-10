@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets Ssl predefined policy with the specified policy name. </summary>
+        /// <summary>
+        /// Gets Ssl predefined policy with the specified policy name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+        /// Operation Id: ApplicationGateways_GetSslPredefinedPolicy
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> Get(CancellationToken cancellationToken = default)
         {

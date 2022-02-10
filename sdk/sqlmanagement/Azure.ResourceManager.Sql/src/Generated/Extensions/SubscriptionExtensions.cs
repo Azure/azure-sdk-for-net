@@ -101,10 +101,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetSqlTimeZones(locationName);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedServers_List
-        /// <summary> Gets a list of all deleted servers in a subscription. </summary>
+        /// <summary>
+        /// Gets a list of all deleted servers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
+        /// Operation Id: DeletedServers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
@@ -113,10 +114,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetDeletedServersAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedServers_List
-        /// <summary> Gets a list of all deleted servers in a subscription. </summary>
+        /// <summary>
+        /// Gets a list of all deleted servers in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
+        /// Operation Id: DeletedServers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
@@ -125,10 +127,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetDeletedServers(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: InstancePools_List
-        /// <summary> Gets a list of all instance pools in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all instance pools in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
+        /// Operation Id: InstancePools_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
@@ -137,10 +140,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetInstancePoolsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: InstancePools_List
-        /// <summary> Gets a list of all instance pools in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all instance pools in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
+        /// Operation Id: InstancePools_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
@@ -149,10 +153,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetInstancePools(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Capabilities_ListByLocation
-        /// <summary> Gets the subscription capabilities available for the specified location. </summary>
+        /// <summary>
+        /// Gets the subscription capabilities available for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
+        /// Operation Id: Capabilities_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
@@ -166,10 +171,11 @@ namespace Azure.ResourceManager.Sql
             return await GetExtensionClient(subscription).GetByLocationCapabilityAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Capabilities_ListByLocation
-        /// <summary> Gets the subscription capabilities available for the specified location. </summary>
+        /// <summary>
+        /// Gets the subscription capabilities available for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
+        /// Operation Id: Capabilities_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
@@ -183,10 +189,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetByLocationCapability(locationName, include, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionBackups_ListByLocation
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
+        /// Operation Id: LongTermRetentionBackups_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -202,10 +209,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionBackups_ListByLocation
-        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
+        /// Operation Id: LongTermRetentionBackups_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -221,10 +229,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionBackups_ListByServer
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
+        /// Operation Id: LongTermRetentionBackups_ListByServer
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -242,10 +251,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionBackupsByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionBackups_ListByServer
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
+        /// Operation Id: LongTermRetentionBackups_ListByServer
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -263,10 +273,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionBackupsByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionManagedInstanceBackups_ListByInstance
-        /// <summary> Lists the long term retention backups for a given managed instance. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -284,10 +295,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionManagedInstanceBackups_ListByInstance
-        /// <summary> Lists the long term retention backups for a given managed instance. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -305,10 +317,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionManagedInstanceBackups_ListByLocation
-        /// <summary> Lists the long term retention backups for managed databases in a given location. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -324,10 +337,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: LongTermRetentionManagedInstanceBackups_ListByLocation
-        /// <summary> Lists the long term retention backups for managed databases in a given location. </summary>
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -343,10 +357,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedInstances_List
-        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all managed instances in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
+        /// Operation Id: ManagedInstances_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,10 +371,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetManagedInstancesAsync(expand, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedInstances_List
-        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all managed instances in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
+        /// Operation Id: ManagedInstances_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -369,10 +385,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetManagedInstances(expand, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: OperationsHealth_ListByLocation
-        /// <summary> Gets a service operation health status. </summary>
+        /// <summary>
+        /// Gets a service operation health status.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
+        /// Operation Id: OperationsHealth_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -386,10 +403,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetOperationsHealthsByLocationAsync(locationName, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: OperationsHealth_ListByLocation
-        /// <summary> Gets a service operation health status. </summary>
+        /// <summary>
+        /// Gets a service operation health status.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
+        /// Operation Id: OperationsHealth_ListByLocation
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -403,10 +421,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetOperationsHealthsByLocation(locationName, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SyncGroups_ListSyncDatabaseIds
-        /// <summary> Gets a collection of sync database ids. </summary>
+        /// <summary>
+        /// Gets a collection of sync database ids.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
+        /// Operation Id: SyncGroups_ListSyncDatabaseIds
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -420,10 +439,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: SyncGroups_ListSyncDatabaseIds
-        /// <summary> Gets a collection of sync database ids. </summary>
+        /// <summary>
+        /// Gets a collection of sync database ids.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
+        /// Operation Id: SyncGroups_ListSyncDatabaseIds
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -437,10 +457,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualClusters_List
-        /// <summary> Gets a list of all virtualClusters in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
+        /// Operation Id: VirtualClusters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -449,10 +470,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetVirtualClustersAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VirtualClusters_List
-        /// <summary> Gets a list of all virtualClusters in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
+        /// Operation Id: VirtualClusters_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -461,10 +483,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetVirtualClusters(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Servers_List
-        /// <summary> Gets a list of all servers in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all servers in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
+        /// Operation Id: Servers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -474,10 +497,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetSqlServersAsync(expand, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Servers_List
-        /// <summary> Gets a list of all servers in the subscription. </summary>
+        /// <summary>
+        /// Gets a list of all servers in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
+        /// Operation Id: Servers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -487,10 +511,11 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(subscription).GetSqlServers(expand, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Servers_CheckNameAvailability
-        /// <summary> Determines whether a resource can be created with the specified name. </summary>
+        /// <summary>
+        /// Determines whether a resource can be created with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
+        /// Operation Id: Servers_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -505,10 +530,11 @@ namespace Azure.ResourceManager.Sql
             return await GetExtensionClient(subscription).CheckNameAvailabilityServerAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Servers_CheckNameAvailability
-        /// <summary> Determines whether a resource can be created with the specified name. </summary>
+        /// <summary>
+        /// Determines whether a resource can be created with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
+        /// Operation Id: Servers_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

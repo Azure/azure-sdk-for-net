@@ -26,7 +26,11 @@ namespace Azure.ResourceManager.Cdn
             );
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary>
+        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
@@ -35,7 +39,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).GetProfilesAsync(cancellationToken);
         }
 
-        /// <summary> Lists all of the CDN profiles within an Azure subscription. </summary>
+        /// <summary>
+        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
+        /// Operation Id: Profiles_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
@@ -44,7 +52,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).GetProfiles(cancellationToken);
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -59,7 +71,11 @@ namespace Azure.ResourceManager.Cdn
             return await GetExtensionClient(subscription).CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,7 +90,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).CheckCdnNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
         }
 
-        /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="validateProbeInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +109,11 @@ namespace Azure.ResourceManager.Cdn
             return await GetExtensionClient(subscription).ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration. </summary>
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="validateProbeInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,7 +128,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).ValidateProbe(validateProbeInput, cancellationToken);
         }
 
-        /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
+        /// Operation Id: ResourceUsage_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -113,7 +141,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).GetResourceUsagesAsync(cancellationToken);
         }
 
-        /// <summary> Check the quota and actual usage of the CDN profiles under the given subscription. </summary>
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
+        /// Operation Id: ResourceUsage_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
@@ -122,7 +154,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).GetResourceUsages(cancellationToken);
         }
 
-        /// <summary> Lists all available managed rule sets. </summary>
+        /// <summary>
+        /// Lists all available managed rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Operation Id: ManagedRuleSets_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -131,7 +167,11 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscription).GetManagedRuleSetsAsync(cancellationToken);
         }
 
-        /// <summary> Lists all available managed rule sets. </summary>
+        /// <summary>
+        /// Lists all available managed rule sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Operation Id: ManagedRuleSets_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>

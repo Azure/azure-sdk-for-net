@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.StackHCI
             return apiVersion;
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciCluster> GetHciClustersAsync(CancellationToken cancellationToken = default)
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciCluster> GetHciClusters(CancellationToken cancellationToken = default)

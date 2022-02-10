@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Gets details about a specified subscription. </summary>
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
@@ -78,10 +79,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Gets details about a specified subscription. </summary>
+        /// <summary>
+        /// Gets details about a specified subscription.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
@@ -106,10 +108,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_List
-        /// <summary> Gets all subscriptions for a tenant. </summary>
+        /// <summary>
+        /// Gets all subscriptions for a tenant.
+        /// Request Path: /subscriptions
+        /// Operation Id: Subscriptions_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Subscription> GetAllAsync(CancellationToken cancellationToken = default)
@@ -147,10 +150,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_List
-        /// <summary> Gets all subscriptions for a tenant. </summary>
+        /// <summary>
+        /// Gets all subscriptions for a tenant.
+        /// Request Path: /subscriptions
+        /// Operation Id: Subscriptions_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Subscription> GetAll(CancellationToken cancellationToken = default)
@@ -188,10 +192,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
@@ -214,10 +219,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
@@ -240,10 +246,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>
@@ -268,10 +275,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}
-        /// ContextualPath: /
-        /// OperationId: Subscriptions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}
+        /// Operation Id: Subscriptions_Get
+        /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is empty. </exception>

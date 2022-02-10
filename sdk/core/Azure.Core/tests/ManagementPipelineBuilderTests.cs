@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Management
             var options = InstrumentClientOptions(new ArmClientOptions());
             var dummyPolicy = new DummyPolicy();
             options.AddPolicy(dummyPolicy, HttpPipelinePosition.PerCall);
-            var client = InstrumentClient(new ArmClient(TestEnvironment.Credential, options));
+            var client = InstrumentClient(new ArmClient(TestEnvironment.Credential, null, options));
 
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
             var pipeline = pipelineProperty.GetValue(client) as HttpPipeline;

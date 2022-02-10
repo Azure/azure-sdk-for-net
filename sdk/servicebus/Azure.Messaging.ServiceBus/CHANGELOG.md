@@ -1,5 +1,15 @@
 # Release History
 
+## 7.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.6.0 (2022-02-08)
 
 ### Acknowledgments
@@ -7,6 +17,11 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Max Hamulyak _([GitHub](https://github.com/kaylumah))_
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fix unnecessary task scheduling in ServiceBusProcessor and ServiceBusSessionProcessor
+- Remove array allocation when creating linked token sources from the ServiceBusProcessor
 
 ### Features Added
 

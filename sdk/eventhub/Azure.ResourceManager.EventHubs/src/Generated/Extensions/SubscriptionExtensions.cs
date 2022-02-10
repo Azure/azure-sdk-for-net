@@ -26,7 +26,11 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -35,7 +39,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetAvailableClusterRegionClustersAsync(cancellationToken);
         }
 
-        /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
+        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -44,7 +52,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetAvailableClusterRegionClusters(cancellationToken);
         }
 
-        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <summary>
+        /// Lists the available Event Hubs Clusters within an ARM resource group
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -53,7 +65,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetEventHubClustersAsync(cancellationToken);
         }
 
-        /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
+        /// <summary>
+        /// Lists the available Event Hubs Clusters within an ARM resource group
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -62,7 +78,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetEventHubClusters(cancellationToken);
         }
 
-        /// <summary> Lists all the available Namespaces within a subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
@@ -71,7 +91,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetEventHubNamespacesAsync(cancellationToken);
         }
 
-        /// <summary> Lists all the available Namespaces within a subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventHubNamespace" /> that may take multiple service requests to iterate over. </returns>
@@ -80,7 +104,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetExtensionClient(subscription).GetEventHubNamespaces(cancellationToken);
         }
 
-        /// <summary> Check the give Namespace name availability. </summary>
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,7 +123,11 @@ namespace Azure.ResourceManager.EventHubs
             return await GetExtensionClient(subscription).CheckNameAvailabilityNamespaceAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Check the give Namespace name availability. </summary>
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_GetAtScope
-        /// <summary> Gets the entire set of tags on a resource or subscription. </summary>
+        /// <summary>
+        /// Gets the entire set of tags on a resource or subscription.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_GetAtScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_GetAtScope
-        /// <summary> Gets the entire set of tags on a resource or subscription. </summary>
+        /// <summary>
+        /// Gets the entire set of tags on a resource or subscription.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_GetAtScope
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TagResource> Get(CancellationToken cancellationToken = default)
         {
@@ -129,10 +131,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_DeleteAtScope
-        /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
+        /// <summary>
+        /// Deletes the entire set of tags on a resource or subscription.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_DeleteAtScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -154,10 +157,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_DeleteAtScope
-        /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
+        /// <summary>
+        /// Deletes the entire set of tags on a resource or subscription.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_DeleteAtScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -179,11 +183,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_UpdateAtScope
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
+        /// <summary>
+        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_UpdateAtScope
+        /// </summary>
+        /// <param name="options"> The TagPatchResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public async virtual Task<Response<TagResource>> UpdateAsync(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
@@ -207,11 +212,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_UpdateAtScope
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
+        /// <summary>
+        /// This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_UpdateAtScope
+        /// </summary>
+        /// <param name="options"> The TagPatchResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<TagResource> Update(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
@@ -235,10 +241,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_CreateOrUpdateAtScope
-        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <summary>
+        /// This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_CreateOrUpdateAtScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,10 +274,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// ContextualPath: /{scope}/providers/Microsoft.Resources/tags/default
-        /// OperationId: Tags_CreateOrUpdateAtScope
-        /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
+        /// <summary>
+        /// This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
+        /// Operation Id: Tags_CreateOrUpdateAtScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

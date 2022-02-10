@@ -23,7 +23,11 @@ namespace Azure.ResourceManager.StackHCI
             );
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
@@ -32,7 +36,11 @@ namespace Azure.ResourceManager.StackHCI
             return GetExtensionClient(subscription).GetHciClustersAsync(cancellationToken);
         }
 
-        /// <summary> List all HCI clusters in a subscription. </summary>
+        /// <summary>
+        /// List all HCI clusters in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>

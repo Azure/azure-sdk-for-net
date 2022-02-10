@@ -49,10 +49,11 @@ namespace Azure.ResourceManager.ServiceBus
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
-        /// <summary> Gets all the available namespaces within the subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusNamespace> GetServiceBusNamespacesAsync(CancellationToken cancellationToken = default)
@@ -90,10 +91,11 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
-        /// <summary> Gets all the available namespaces within the subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusNamespace> GetServiceBusNamespaces(CancellationToken cancellationToken = default)
@@ -131,10 +133,11 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
-        /// <summary> Check the give namespace name availability. </summary>
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
@@ -153,10 +156,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
-        /// <summary> Check the give namespace name availability. </summary>
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(CheckNameAvailability parameters, CancellationToken cancellationToken = default)

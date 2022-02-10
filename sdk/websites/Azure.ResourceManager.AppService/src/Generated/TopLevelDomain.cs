@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TopLevelDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_Get
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
+        /// Operation Id: TopLevelDomains_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TopLevelDomain> Get(CancellationToken cancellationToken = default)
         {
@@ -129,10 +131,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_ListAgreements
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary>
+        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
+        /// Operation Id: TopLevelDomains_ListAgreements
+        /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
@@ -177,10 +180,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// OperationId: TopLevelDomains_ListAgreements
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary>
+        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
+        /// Operation Id: TopLevelDomains_ListAgreements
+        /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
