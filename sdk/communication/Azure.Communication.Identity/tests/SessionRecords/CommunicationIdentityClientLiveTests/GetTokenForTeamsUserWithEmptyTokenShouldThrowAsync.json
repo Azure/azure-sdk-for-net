@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/teamsUser/:exchangeAccessToken?api-version=2021-10-31-preview",
+      "RequestUri": "https://sanitized.communication.azure.net/teamsUser/:getToken?api-version=2022-06-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "12",
         "Content-Type": "application/json",
-        "traceparent": "00-545ef5aa4572df58b9aea2210509fe00-8259276d29becf0c-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211206.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "71977195ca7bc375087f0ee115bfc7ed",
+        "traceparent": "00-a1e7a856a17cd40fe5089c6bdaec6593-f635639ada2372b4-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220210.1 (.NET 6.0.1; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "555f95707d23d244cca1e1610badbf7c",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 07 Dec 2021 03:48:38 GMT",
+        "x-ms-date": "Thu, 10 Feb 2022 14:47:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,15 +21,15 @@
       "StatusCode": 401,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 07 Dec 2021 03:48:37 GMT",
-        "MS-CV": "jQFhG1SL7ky0W2NMXfubTA.0",
+        "Date": "Thu, 10 Feb 2022 14:47:27 GMT",
+        "MS-CV": "llci5GHzY06PDinw57KE9Q.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0ltmuYQAAAADz/n3wMsusTZkmy91J3TA6V1NURURHRTA4MjAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0fyUFYgAAAADiQp7c3r0/R7KrH8mP1VgaUFJHMDFFREdFMDcxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "71977195ca7bc375087f0ee115bfc7ed",
-        "X-Processing-Time": "17ms"
+        "x-ms-client-request-id": "555f95707d23d244cca1e1610badbf7c",
+        "X-Processing-Time": "106ms"
       },
       "ResponseBody": {
         "error": {
@@ -40,7 +40,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://jolovcommunication-communication.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1069111752"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "28534700"
   }
 }
