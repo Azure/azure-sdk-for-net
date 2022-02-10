@@ -7,7 +7,7 @@ parameters:
 steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {
-      $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "/refs/heads/"
+      $targetBranch = "origin/$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
       $changedFiles = git diff $targetBranch HEAD --name-only --diff-filter=d
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
