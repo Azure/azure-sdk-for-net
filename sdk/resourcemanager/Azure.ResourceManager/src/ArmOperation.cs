@@ -6,10 +6,106 @@
 #nullable disable
 
 
+using System;
+using System.Net.NetworkInformation;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager.Internal;
+
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public abstract class ArmOperation : Operation
     {
+        private readonly ExponentialPollingStrategy pollingStrategy = new();
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// If backend service doesn't return a recommended polling interval, an exponential strategy will be adopted. The polling
+        /// interval will starts from 1 seconds, then doubles itself in the subsequent calls until the maximum 32 seconds is reached.
+        /// </remarks>
+        public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                if (HasCompleted)
+                {
+                    return GetRawResponse();
+                }
+                TimeSpan delay = GetServerDelay(response, pollingStrategy.PollingInterval);
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// If backend service doesn't return a recommended polling interval, an exponential strategy will be adopted. The polling
+        /// interval will starts from 1 seconds, then doubles itself in the subsequent calls until the maximum 32 seconds is reached.
+        /// </remarks>
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                Response response = UpdateStatus(cancellationToken);
+
+                if (HasCompleted)
+                {
+                    return GetRawResponse();
+                }
+                TimeSpan delay = GetServerDelay(response, pollingStrategy.PollingInterval);
+                Thread.Sleep(delay);
+            }
+        }
+
+        // the following are copied from Operation.cs
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
+        /// <summary>
+        /// Calculates the delay to be used for calls to WaitForCompletion.
+        /// </summary>
+        /// <param name="response">The <see cref="Response"/>.</param>
+        /// <param name="pollingInterval">The polling interval specified by the call to WaitForCompletion.</param>
+        /// <returns></returns>
+        internal static TimeSpan GetServerDelay(Response response, TimeSpan pollingInterval)
+        {
+            if (pollingInterval == TimeSpan.Zero)
+            {
+                // Respect when zero is explicitly used (recorded tests use this, for example)
+                return pollingInterval;
+            }
+            TimeSpan serverDelay = pollingInterval;
+#pragma warning disable CS8669 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.
+            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
+#pragma warning restore CS8669 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.
+                response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
+                {
+                    serverDelay = TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                }
+            }
+            else if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
+                {
+                    serverDelay = TimeSpan.FromSeconds(serverDelayInSeconds);
+                }
+            }
+
+            return serverDelay > pollingInterval
+                ? serverDelay
+                : pollingInterval;
+        }
     }
 }

@@ -6,10 +6,63 @@
 #nullable disable
 
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager.Internal;
+
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public abstract class ArmOperation<T> : Operation<T>
     {
+        private readonly ExponentialPollingStrategy pollingStrategy = new();
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// If backend service doesn't return a recommended polling interval, an exponential strategy will be adopted. The polling
+        /// interval will starts from 1 seconds, then doubles itself in the subsequent calls until the maximum 32 seconds is reached.
+        /// </remarks>
+        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                Response response = UpdateStatus(cancellationToken);
+
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, GetRawResponse());
+                }
+                TimeSpan delay = ArmOperation.GetServerDelay(response, pollingStrategy.PollingInterval);
+                Thread.Sleep(delay);
+            }
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// If backend service doesn't return a recommended polling interval, an exponential strategy will be adopted. The polling
+        /// interval will starts from 1 seconds, then doubles itself in the subsequent calls until the maximum 32 seconds is reached.
+        /// </remarks>
+        public override async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, GetRawResponse());
+                }
+                TimeSpan delay = ArmOperation.GetServerDelay(response, pollingStrategy.PollingInterval);
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+            }
+        }
     }
 }
