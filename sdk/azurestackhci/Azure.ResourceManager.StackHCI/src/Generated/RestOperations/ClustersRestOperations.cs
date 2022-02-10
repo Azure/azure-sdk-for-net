@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
-        public async Task<Response<HciClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="options"/> is null. </exception>
-        public Response<HciClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public Response<HciClusterData> Update(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {

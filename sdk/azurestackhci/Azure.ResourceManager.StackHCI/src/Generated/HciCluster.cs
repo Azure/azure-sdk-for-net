@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<HciCluster>> UpdateAsync(ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<HciCluster>> UpdateAsync(HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StackHCI
         /// <param name="options"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<HciCluster> Update(ClusterUpdateOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<HciCluster> Update(HciClusterUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
