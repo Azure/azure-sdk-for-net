@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DiskAccess.ResourceType), nameof(id));
         }
 
-        /// <summary> Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_UpdateAPrivateEndpointConnection
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="privateEndpointConnection"> private endpoint connection object supplied in the body of the Put private endpoint connection operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_UpdateAPrivateEndpointConnection
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="privateEndpointConnection"> private endpoint connection object supplied in the body of the Put private endpoint connection operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a private endpoint connection under a disk access resource. </summary>
+        /// <summary>
+        /// Gets information about a private endpoint connection under a disk access resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a private endpoint connection under a disk access resource. </summary>
+        /// <summary>
+        /// Gets information about a private endpoint connection under a disk access resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List information about private endpoint connections under a disk access resource. </summary>
+        /// <summary>
+        /// List information about private endpoint connections under a disk access resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections
+        /// Operation Id: DiskAccesses_ListPrivateEndpointConnections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List information about private endpoint connections under a disk access resource. </summary>
+        /// <summary>
+        /// List information about private endpoint connections under a disk access resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections
+        /// Operation Id: DiskAccesses_ListPrivateEndpointConnections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: DiskAccesses_GetAPrivateEndpointConnection
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>

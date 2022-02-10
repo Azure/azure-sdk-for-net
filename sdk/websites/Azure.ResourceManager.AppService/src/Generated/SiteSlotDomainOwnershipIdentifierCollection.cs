@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary>
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary>
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
@@ -120,10 +122,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary>
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>
@@ -148,10 +151,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary>
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>
@@ -176,10 +180,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListDomainOwnershipIdentifiersSlot
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary>
+        /// Description for Lists ownership identifiers for domain associated with web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
+        /// Operation Id: WebApps_ListDomainOwnershipIdentifiersSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteSlotDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotDomainOwnershipIdentifier> GetAllAsync(CancellationToken cancellationToken = default)
@@ -217,10 +222,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListDomainOwnershipIdentifiersSlot
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary>
+        /// Description for Lists ownership identifiers for domain associated with web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers
+        /// Operation Id: WebApps_ListDomainOwnershipIdentifiersSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteSlotDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotDomainOwnershipIdentifier> GetAll(CancellationToken cancellationToken = default)
@@ -258,10 +264,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>
@@ -284,10 +291,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>
@@ -310,10 +318,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>
@@ -338,10 +347,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDomainOwnershipIdentifierSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
+        /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is empty. </exception>

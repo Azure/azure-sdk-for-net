@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Network
             return new PrivateEndpointConnectionCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified private link service by resource group. </summary>
+        /// <summary>
+        /// Gets the specified private link service by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateLinkService>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified private link service by resource group. </summary>
+        /// <summary>
+        /// Gets the specified private link service by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateLinkService> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -131,7 +139,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified private link service. </summary>
+        /// <summary>
+        /// Deletes the specified private link service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -153,7 +165,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified private link service. </summary>
+        /// <summary>
+        /// Deletes the specified private link service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
+        /// Operation Id: PrivateLinkServices_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)

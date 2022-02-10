@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_GetSourceControl
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Gets the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSourceControl>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_GetSourceControl
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Gets the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_GetSourceControl
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSourceControl> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_DeleteSourceControl
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Deletes the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_DeleteSourceControl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,10 +157,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_DeleteSourceControl
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Deletes the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_DeleteSourceControl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,10 +184,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_UpdateSourceControl
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_UpdateSourceControl
+        /// </summary>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
@@ -208,10 +213,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_UpdateSourceControl
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_UpdateSourceControl
+        /// </summary>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
@@ -236,10 +242,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_CreateOrUpdateSourceControl
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_CreateOrUpdateSourceControl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,10 +275,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
-        /// OperationId: WebApps_CreateOrUpdateSourceControl
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_CreateOrUpdateSourceControl
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

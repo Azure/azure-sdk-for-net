@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Storage
             return new FileShareCollection(Client, Id);
         }
 
-        /// <summary> Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
+        /// Operation Id: FileServices_GetServiceProperties
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FileService>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -109,7 +113,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
+        /// Operation Id: FileServices_GetServiceProperties
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FileService> Get(CancellationToken cancellationToken = default)
         {
@@ -129,7 +137,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. 
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
+        /// Operation Id: FileServices_SetServiceProperties
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,7 +170,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. 
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
+        /// Operation Id: FileServices_SetServiceProperties
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_GetInstanceMsDeployStatusSlot
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetInstanceMsDeployStatusSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotInstanceExtension>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_GetInstanceMsDeployStatusSlot
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
+        /// Operation Id: WebApps_GetInstanceMsDeployStatusSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotInstanceExtension> Get(CancellationToken cancellationToken = default)
         {
@@ -129,10 +131,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_CreateInstanceMSDeployOperationSlot
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateInstanceMSDeployOperationSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,10 +164,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_CreateInstanceMSDeployOperationSlot
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary>
+        /// Description for Invoke the MSDeploy web app extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
+        /// Operation Id: WebApps_CreateInstanceMSDeployOperationSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,10 +197,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy/log
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_GetInstanceMSDeployLogSlot
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetInstanceMSDeployLogSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<MsDeployLog>> GetInstanceMSDeployLogSlotAsync(CancellationToken cancellationToken = default)
         {
@@ -214,10 +219,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy/log
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy
-        /// OperationId: WebApps_GetInstanceMSDeployLogSlot
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary>
+        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy/log
+        /// Operation Id: WebApps_GetInstanceMSDeployLogSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MsDeployLog> GetInstanceMSDeployLogSlot(CancellationToken cancellationToken = default)
         {

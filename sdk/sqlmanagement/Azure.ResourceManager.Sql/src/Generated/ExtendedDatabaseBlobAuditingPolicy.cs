@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_Get
-        /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
+        /// <summary>
+        /// Gets an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExtendedDatabaseBlobAuditingPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// OperationId: ExtendedDatabaseBlobAuditingPolicies_Get
-        /// <summary> Gets an extended database&apos;s blob auditing policy. </summary>
+        /// <summary>
+        /// Gets an extended database&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedDatabaseBlobAuditingPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtendedDatabaseBlobAuditingPolicy> Get(CancellationToken cancellationToken = default)
         {

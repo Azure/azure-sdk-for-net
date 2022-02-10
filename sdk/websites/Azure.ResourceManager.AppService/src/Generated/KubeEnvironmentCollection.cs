@@ -51,10 +51,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_CreateOrUpdate
-        /// <summary> Description for Creates or updates a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Creates or updates a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
@@ -86,10 +87,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_CreateOrUpdate
-        /// <summary> Description for Creates or updates a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Creates or updates a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
@@ -121,10 +123,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Description for Get the properties of a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -149,10 +152,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Description for Get the properties of a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -177,10 +181,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_ListByResourceGroup
-        /// <summary> Description for Get all the Kubernetes Environments in a resource group. </summary>
+        /// <summary>
+        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubeEnvironment> GetAllAsync(CancellationToken cancellationToken = default)
@@ -218,10 +223,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_ListByResourceGroup
-        /// <summary> Description for Get all the Kubernetes Environments in a resource group. </summary>
+        /// <summary>
+        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubeEnvironment> GetAll(CancellationToken cancellationToken = default)
@@ -259,10 +265,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -285,10 +292,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -311,10 +319,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -339,10 +348,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>

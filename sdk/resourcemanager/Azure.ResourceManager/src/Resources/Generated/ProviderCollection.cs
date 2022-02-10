@@ -37,10 +37,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Gets the specified resource provider. </summary>
+        /// <summary>
+        /// Gets the specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -66,10 +67,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Gets the specified resource provider. </summary>
+        /// <summary>
+        /// Gets the specified resource provider.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,10 +97,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_List
-        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers
+        /// Operation Id: Providers_List
+        /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,10 +141,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_List
-        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers
+        /// Operation Id: Providers_List
+        /// </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,10 +185,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,10 +213,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,10 +241,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,10 +271,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Providers_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+        /// Operation Id: Providers_Get
+        /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

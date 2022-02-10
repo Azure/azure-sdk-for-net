@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,7 +182,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InboundNatRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InboundNatRule> GetAll(CancellationToken cancellationToken = default)
@@ -242,7 +266,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,7 +294,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,7 +322,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,7 +352,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

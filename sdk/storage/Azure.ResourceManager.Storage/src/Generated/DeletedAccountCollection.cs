@@ -48,7 +48,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary> Get properties of specified deleted account resource. </summary>
+        /// <summary>
+        /// Get properties of specified deleted account resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,7 +79,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get properties of specified deleted account resource. </summary>
+        /// <summary>
+        /// Get properties of specified deleted account resource.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +110,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,7 +139,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,7 +168,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,7 +199,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

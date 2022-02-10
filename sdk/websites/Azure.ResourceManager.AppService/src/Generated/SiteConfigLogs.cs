@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// OperationId: WebApps_GetDiagnosticLogsConfiguration
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary>
+        /// Description for Gets the logging configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// Operation Id: WebApps_GetDiagnosticLogsConfiguration
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteConfigLogs>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// OperationId: WebApps_GetDiagnosticLogsConfiguration
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary>
+        /// Description for Gets the logging configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// Operation Id: WebApps_GetDiagnosticLogsConfiguration
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteConfigLogs> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// OperationId: WebApps_UpdateDiagnosticLogsConfig
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the logging configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// Operation Id: WebApps_UpdateDiagnosticLogsConfig
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
-        /// OperationId: WebApps_UpdateDiagnosticLogsConfig
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the logging configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs
+        /// Operation Id: WebApps_UpdateDiagnosticLogsConfig
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

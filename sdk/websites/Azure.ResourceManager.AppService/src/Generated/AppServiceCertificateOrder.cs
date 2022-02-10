@@ -98,10 +98,11 @@ namespace Azure.ResourceManager.AppService
             return new CertificateOrderDetectorCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Description for Get a certificate order. </summary>
+        /// <summary>
+        /// Description for Get a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AppServiceCertificateOrder>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -121,10 +122,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Description for Get a certificate order. </summary>
+        /// <summary>
+        /// Description for Get a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceCertificateOrder> Get(CancellationToken cancellationToken = default)
         {
@@ -144,10 +146,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Delete
-        /// <summary> Description for Delete an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Delete an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -169,10 +172,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Delete
-        /// <summary> Description for Delete an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Delete an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -194,10 +198,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Update
-        /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <summary>
+        /// Description for Create or update a certificate purchase order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Update
+        /// </summary>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
@@ -222,10 +227,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Update
-        /// <summary> Description for Create or update a certificate purchase order. </summary>
+        /// <summary>
+        /// Description for Create or update a certificate purchase order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Update
+        /// </summary>
         /// <param name="certificateDistinguishedName"> Distinguished name to use for the certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateDistinguishedName"/> is null. </exception>
@@ -250,10 +256,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Reissue
-        /// <summary> Description for Reissue an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Reissue an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
+        /// Operation Id: AppServiceCertificateOrders_Reissue
+        /// </summary>
         /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
@@ -278,10 +285,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Reissue
-        /// <summary> Description for Reissue an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Reissue an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/reissue
+        /// Operation Id: AppServiceCertificateOrders_Reissue
+        /// </summary>
         /// <param name="reissueCertificateOrderRequest"> Parameters for the reissue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reissueCertificateOrderRequest"/> is null. </exception>
@@ -306,10 +314,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Renew
-        /// <summary> Description for Renew an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Renew an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
+        /// Operation Id: AppServiceCertificateOrders_Renew
+        /// </summary>
         /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renewCertificateOrderRequest"/> is null. </exception>
@@ -334,10 +343,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Renew
-        /// <summary> Description for Renew an existing certificate order. </summary>
+        /// <summary>
+        /// Description for Renew an existing certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/renew
+        /// Operation Id: AppServiceCertificateOrders_Renew
+        /// </summary>
         /// <param name="renewCertificateOrderRequest"> Renew parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renewCertificateOrderRequest"/> is null. </exception>
@@ -362,10 +372,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendEmail
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_ResendEmail
-        /// <summary> Description for Resend certificate email. </summary>
+        /// <summary>
+        /// Description for Resend certificate email.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendEmail
+        /// Operation Id: AppServiceCertificateOrders_ResendEmail
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ResendEmailAsync(CancellationToken cancellationToken = default)
         {
@@ -383,10 +394,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendEmail
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_ResendEmail
-        /// <summary> Description for Resend certificate email. </summary>
+        /// <summary>
+        /// Description for Resend certificate email.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendEmail
+        /// Operation Id: AppServiceCertificateOrders_ResendEmail
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ResendEmail(CancellationToken cancellationToken = default)
         {
@@ -404,10 +416,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendRequestEmails
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_ResendRequestEmails
-        /// <summary> Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order. </summary>
+        /// <summary>
+        /// Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendRequestEmails
+        /// Operation Id: AppServiceCertificateOrders_ResendRequestEmails
+        /// </summary>
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
@@ -432,10 +445,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendRequestEmails
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_ResendRequestEmails
-        /// <summary> Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order. </summary>
+        /// <summary>
+        /// Resend domain verification ownership email containing steps on how to verify a domain for a given certificate order
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/resendRequestEmails
+        /// Operation Id: AppServiceCertificateOrders_ResendRequestEmails
+        /// </summary>
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
@@ -460,10 +474,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveSiteSeal
-        /// <summary> This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times. </summary>
+        /// <summary>
+        /// This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
+        /// Operation Id: AppServiceCertificateOrders_RetrieveSiteSeal
+        /// </summary>
         /// <param name="siteSealRequest"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSealRequest"/> is null. </exception>
@@ -488,10 +503,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveSiteSeal
-        /// <summary> This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times. </summary>
+        /// <summary>
+        /// This method is used to obtain the site seal information for an issued certificate. A site seal is a graphic that the certificate purchaser can embed on their web site to show their visitors information about their SSL certificate. If a web site visitor clicks on the site seal image, a pop-up page is displayed that contains detailed information about the SSL certificate. The site seal token is used to link the site seal graphic image to the appropriate certificate details pop-up page display when a user clicks on the site seal. The site seal images are expected to be static images and hosted by the reseller, to minimize delays for customer page load times.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/retrieveSiteSeal
+        /// Operation Id: AppServiceCertificateOrders_RetrieveSiteSeal
+        /// </summary>
         /// <param name="siteSealRequest"> Site seal request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSealRequest"/> is null. </exception>
@@ -516,10 +532,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/verifyDomainOwnership
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_VerifyDomainOwnership
-        /// <summary> Description for Verify domain ownership for this certificate order. </summary>
+        /// <summary>
+        /// Description for Verify domain ownership for this certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/verifyDomainOwnership
+        /// Operation Id: AppServiceCertificateOrders_VerifyDomainOwnership
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> VerifyDomainOwnershipAsync(CancellationToken cancellationToken = default)
         {
@@ -537,10 +554,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/verifyDomainOwnership
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_VerifyDomainOwnership
-        /// <summary> Description for Verify domain ownership for this certificate order. </summary>
+        /// <summary>
+        /// Description for Verify domain ownership for this certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/verifyDomainOwnership
+        /// Operation Id: AppServiceCertificateOrders_VerifyDomainOwnership
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response VerifyDomainOwnership(CancellationToken cancellationToken = default)
         {
@@ -558,10 +576,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveCertificateActions
-        /// <summary> Description for Retrieve the list of certificate actions. </summary>
+        /// <summary>
+        /// Description for Retrieve the list of certificate actions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions
+        /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateActions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CertificateOrderAction" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CertificateOrderAction> RetrieveCertificateActionsAsync(CancellationToken cancellationToken = default)
@@ -584,10 +603,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveCertificateActions
-        /// <summary> Description for Retrieve the list of certificate actions. </summary>
+        /// <summary>
+        /// Description for Retrieve the list of certificate actions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveCertificateActions
+        /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateActions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CertificateOrderAction" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CertificateOrderAction> RetrieveCertificateActions(CancellationToken cancellationToken = default)
@@ -610,10 +630,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
-        /// <summary> Description for Retrieve email history. </summary>
+        /// <summary>
+        /// Description for Retrieve email history.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory
+        /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CertificateEmail" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
@@ -636,10 +657,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
-        /// <summary> Description for Retrieve email history. </summary>
+        /// <summary>
+        /// Description for Retrieve email history.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{name}/retrieveEmailHistory
+        /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CertificateEmail" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
@@ -662,10 +684,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -698,10 +721,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -734,10 +758,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -766,10 +791,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -798,10 +824,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -829,10 +856,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: AppServiceCertificateOrders_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
+        /// Operation Id: AppServiceCertificateOrders_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

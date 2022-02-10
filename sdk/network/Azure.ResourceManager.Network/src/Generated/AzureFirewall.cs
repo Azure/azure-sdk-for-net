@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Gets the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AzureFirewall>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Gets the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AzureFirewall> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Deletes the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -145,7 +157,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Azure Firewall. </summary>
+        /// <summary>
+        /// Deletes the specified Azure Firewall.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of an Azure Firewall resource. </summary>
+        /// <summary>
+        /// Updates tags of an Azure Firewall resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_UpdateTags
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,7 +216,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of an Azure Firewall resource. </summary>
+        /// <summary>
+        /// Updates tags of an Azure Firewall resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
+        /// Operation Id: AzureFirewalls_UpdateTags
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

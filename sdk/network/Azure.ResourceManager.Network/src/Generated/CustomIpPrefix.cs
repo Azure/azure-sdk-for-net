@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified custom IP prefix in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CustomIpPrefix>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -104,7 +108,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified custom IP prefix in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified custom IP prefix in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CustomIpPrefix> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -125,7 +133,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified custom IP prefix. </summary>
+        /// <summary>
+        /// Deletes the specified custom IP prefix.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -147,7 +159,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified custom IP prefix. </summary>
+        /// <summary>
+        /// Deletes the specified custom IP prefix.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -169,7 +185,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates custom IP prefix tags. </summary>
+        /// <summary>
+        /// Updates custom IP prefix tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -194,7 +214,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates custom IP prefix tags. </summary>
+        /// <summary>
+        /// Updates custom IP prefix tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
+        /// Operation Id: CustomIPPrefixes_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update custom IP prefix tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

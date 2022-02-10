@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// OperationId: Namespaces_GetNetworkRuleSet
-        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <summary>
+        /// Gets NetworkRuleSet for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
+        /// Operation Id: Namespaces_GetNetworkRuleSet
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkRuleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// OperationId: Namespaces_GetNetworkRuleSet
-        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <summary>
+        /// Gets NetworkRuleSet for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
+        /// Operation Id: Namespaces_GetNetworkRuleSet
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkRuleSet> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// OperationId: Namespaces_CreateOrUpdateNetworkRuleSet
-        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <summary>
+        /// Create or update NetworkRuleSet for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
+        /// Operation Id: Namespaces_CreateOrUpdateNetworkRuleSet
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
-        /// OperationId: Namespaces_CreateOrUpdateNetworkRuleSet
-        /// <summary> Create or update NetworkRuleSet for a Namespace. </summary>
+        /// <summary>
+        /// Create or update NetworkRuleSet for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkRuleSets/default
+        /// Operation Id: Namespaces_CreateOrUpdateNetworkRuleSet
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The Namespace IpFilterRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

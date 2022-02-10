@@ -84,7 +84,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountCassandraKeyspaceThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +108,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountCassandraKeyspaceThroughputSetting> Get(CancellationToken cancellationToken = default)
         {
@@ -124,7 +132,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
+        /// <summary>
+        /// Update RUs per second of an Azure Cosmos DB Cassandra Keyspace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_UpdateCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,7 +165,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
+        /// <summary>
+        /// Update RUs per second of an Azure Cosmos DB Cassandra Keyspace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_UpdateCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,7 +198,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToAutoscale
+        /// Operation Id: CassandraResources_MigrateCassandraKeyspaceToAutoscale
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceThroughputSetting>> MigrateCassandraKeyspaceToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToAutoscale
+        /// Operation Id: CassandraResources_MigrateCassandraKeyspaceToAutoscale
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<DatabaseAccountCassandraKeyspaceThroughputSetting> MigrateCassandraKeyspaceToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -226,7 +250,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToManualThroughput
+        /// Operation Id: CassandraResources_MigrateCassandraKeyspaceToManualThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<DatabaseAccountCassandraKeyspaceThroughputSetting>> MigrateCassandraKeyspaceToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -248,7 +276,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default/migrateToManualThroughput
+        /// Operation Id: CassandraResources_MigrateCassandraKeyspaceToManualThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<DatabaseAccountCassandraKeyspaceThroughputSetting> MigrateCassandraKeyspaceToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -270,7 +302,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,7 +339,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -336,7 +376,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -365,7 +409,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -394,7 +442,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -422,7 +474,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default
+        /// Operation Id: CassandraResources_GetCassandraKeyspaceThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

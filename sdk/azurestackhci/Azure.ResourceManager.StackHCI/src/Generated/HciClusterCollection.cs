@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.StackHCI
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Create an HCI cluster. </summary>
+        /// <summary>
+        /// Create an HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cluster"> Details of the HCI cluster. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Create an HCI cluster. </summary>
+        /// <summary>
+        /// Create an HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cluster"> Details of the HCI cluster. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Get HCI cluster. </summary>
+        /// <summary>
+        /// Get HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Get HCI cluster. </summary>
+        /// <summary>
+        /// Get HCI cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> List all HCI clusters in a resource group. </summary>
+        /// <summary>
+        /// List all HCI clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciCluster> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +223,11 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List all HCI clusters in a resource group. </summary>
+        /// <summary>
+        /// List all HCI clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciCluster> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +265,11 @@ namespace Azure.ResourceManager.StackHCI
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -264,7 +292,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -287,7 +319,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>
@@ -312,7 +348,11 @@ namespace Azure.ResourceManager.StackHCI
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is empty. </exception>

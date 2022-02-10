@@ -51,10 +51,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Create
-        /// <summary> Create Or Update host. </summary>
+        /// <summary>
+        /// Create Or Update host.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="body"> Request payload. </param>
@@ -82,10 +83,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Create
-        /// <summary> Create Or Update host. </summary>
+        /// <summary>
+        /// Create Or Update host.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="body"> Request payload. </param>
@@ -113,10 +115,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Implements host GET method. </summary>
+        /// <summary>
+        /// Implements host GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
@@ -141,10 +144,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Implements host GET method. </summary>
+        /// <summary>
+        /// Implements host GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
@@ -169,10 +173,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_ListByResourceGroup
-        /// <summary> List of hosts in a resource group. </summary>
+        /// <summary>
+        /// List of hosts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareHost> GetAllAsync(CancellationToken cancellationToken = default)
@@ -210,10 +215,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_ListByResourceGroup
-        /// <summary> List of hosts in a resource group. </summary>
+        /// <summary>
+        /// List of hosts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareHost> GetAll(CancellationToken cancellationToken = default)
@@ -251,10 +257,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
@@ -277,10 +284,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
@@ -303,10 +311,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
@@ -331,10 +340,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>

@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
+        /// <summary>
+        /// Retrieve protection policy with specified name within a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
+        /// Operation Id: WebApplicationFirewallPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebApplicationFirewallPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieve protection policy with specified name within a resource group. </summary>
+        /// <summary>
+        /// Retrieve protection policy with specified name within a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
+        /// Operation Id: WebApplicationFirewallPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebApplicationFirewallPolicy> Get(CancellationToken cancellationToken = default)
         {
@@ -122,7 +130,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes Policy. </summary>
+        /// <summary>
+        /// Deletes Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
+        /// Operation Id: WebApplicationFirewallPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes Policy. </summary>
+        /// <summary>
+        /// Deletes Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
+        /// Operation Id: WebApplicationFirewallPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)

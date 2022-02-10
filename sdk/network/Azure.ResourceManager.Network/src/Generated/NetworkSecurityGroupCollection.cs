@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a network security group in the specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates a network security group in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a network security group in the specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates a network security group in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network security group operation. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified network security group. </summary>
+        /// <summary>
+        /// Gets the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +153,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified network security group. </summary>
+        /// <summary>
+        /// Gets the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all network security groups in a resource group. </summary>
+        /// <summary>
+        /// Gets all network security groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups
+        /// Operation Id: NetworkSecurityGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkSecurityGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -205,7 +225,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all network security groups in a resource group. </summary>
+        /// <summary>
+        /// Gets all network security groups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups
+        /// Operation Id: NetworkSecurityGroups_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkSecurityGroup> GetAll(CancellationToken cancellationToken = default)
@@ -243,7 +267,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +295,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +323,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +353,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
+        /// Operation Id: NetworkSecurityGroups_Get
+        /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

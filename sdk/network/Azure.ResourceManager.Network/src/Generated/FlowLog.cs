@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a flow log resource by name. </summary>
+        /// <summary>
+        /// Gets a flow log resource by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FlowLog>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a flow log resource by name. </summary>
+        /// <summary>
+        /// Gets a flow log resource by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FlowLog> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified flow log resource. </summary>
+        /// <summary>
+        /// Deletes the specified flow log resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -145,7 +157,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified flow log resource. </summary>
+        /// <summary>
+        /// Deletes the specified flow log resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Update tags of the specified flow log. </summary>
+        /// <summary>
+        /// Update tags of the specified flow log.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update flow log tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -192,7 +212,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Update tags of the specified flow log. </summary>
+        /// <summary>
+        /// Update tags of the specified flow log.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}
+        /// Operation Id: FlowLogs_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update flow log tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

@@ -76,10 +76,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -99,10 +100,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Get
-        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <summary>
+        /// Gets the preview feature with the specified name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
+        /// Operation Id: Features_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Get(CancellationToken cancellationToken = default)
         {
@@ -122,10 +124,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Register
-        /// <summary> Registers the preview feature for the subscription. </summary>
+        /// <summary>
+        /// Registers the preview feature for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
+        /// Operation Id: Features_Register
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Feature>> RegisterAsync(CancellationToken cancellationToken = default)
         {
@@ -143,10 +146,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Register
-        /// <summary> Registers the preview feature for the subscription. </summary>
+        /// <summary>
+        /// Registers the preview feature for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register
+        /// Operation Id: Features_Register
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Register(CancellationToken cancellationToken = default)
         {
@@ -164,10 +168,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Unregister
-        /// <summary> Unregisters the preview feature for the subscription. </summary>
+        /// <summary>
+        /// Unregisters the preview feature for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
+        /// Operation Id: Features_Unregister
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<Feature>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
@@ -185,10 +190,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
-        /// ContextualPath: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// OperationId: Features_Unregister
-        /// <summary> Unregisters the preview feature for the subscription. </summary>
+        /// <summary>
+        /// Unregisters the preview feature for the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister
+        /// Operation Id: Features_Unregister
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Unregister(CancellationToken cancellationToken = default)
         {

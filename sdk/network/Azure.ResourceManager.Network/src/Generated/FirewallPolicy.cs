@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Network
             return new FirewallPolicyRuleCollectionGroupCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified Firewall Policy. </summary>
+        /// <summary>
+        /// Gets the specified Firewall Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
+        /// Operation Id: FirewallPolicies_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<FirewallPolicy>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Firewall Policy. </summary>
+        /// <summary>
+        /// Gets the specified Firewall Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
+        /// Operation Id: FirewallPolicies_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallPolicy> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -131,7 +139,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Firewall Policy. </summary>
+        /// <summary>
+        /// Deletes the specified Firewall Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
+        /// Operation Id: FirewallPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -153,7 +165,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified Firewall Policy. </summary>
+        /// <summary>
+        /// Deletes the specified Firewall Policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
+        /// Operation Id: FirewallPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)

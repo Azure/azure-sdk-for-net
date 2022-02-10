@@ -56,10 +56,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -84,10 +85,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Description for Get deleted app for a subscription. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -112,10 +114,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_List
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
+        /// Operation Id: DeletedWebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedSite> GetAllAsync(CancellationToken cancellationToken = default)
@@ -153,10 +156,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_List
-        /// <summary> Description for Get all deleted apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites
+        /// Operation Id: DeletedWebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedSite> GetAll(CancellationToken cancellationToken = default)
@@ -194,10 +198,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -220,10 +225,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -246,10 +252,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
@@ -274,10 +281,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetDeletedWebApp
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
+        /// Operation Id: Global_GetDeletedWebApp
+        /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>

@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStore.ResourceType), nameof(id));
         }
 
-        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary>
+        /// Update the state of the specified private endpoint connection associated with the configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="privateEndpointConnection"> The private endpoint connection properties. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Update the state of the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary>
+        /// Update the state of the specified private endpoint connection associated with the configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="privateEndpointConnection"> The private endpoint connection properties. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the specified private endpoint connection associated with the configuration store. </summary>
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Lists all private endpoint connections for a configuration store. </summary>
+        /// <summary>
+        /// Lists all private endpoint connections for a configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections
+        /// Operation Id: PrivateEndpointConnections_ListByConfigurationStore
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all private endpoint connections for a configuration store. </summary>
+        /// <summary>
+        /// Lists all private endpoint connections for a configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections
+        /// Operation Id: PrivateEndpointConnections_ListByConfigurationStore
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is empty. </exception>

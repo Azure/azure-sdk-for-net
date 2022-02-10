@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualRouter.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Creates or updates the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Creates or updates the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Gets the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Virtual Router Peering. </summary>
+        /// <summary>
+        /// Gets the specified Virtual Router Peering.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all Virtual Router Peerings in a Virtual Router resource. </summary>
+        /// <summary>
+        /// Lists all Virtual Router Peerings in a Virtual Router resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings
+        /// Operation Id: VirtualRouterPeerings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouterPeering" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterPeering> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all Virtual Router Peerings in a Virtual Router resource. </summary>
+        /// <summary>
+        /// Lists all Virtual Router Peerings in a Virtual Router resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings
+        /// Operation Id: VirtualRouterPeerings_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouterPeering" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterPeering> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}/peerings/{peeringName}
+        /// Operation Id: VirtualRouterPeerings_Get
+        /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is empty. </exception>

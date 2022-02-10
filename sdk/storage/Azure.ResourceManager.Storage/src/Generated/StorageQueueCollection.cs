@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, QueueService.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <summary>
+        /// Gets a list of all the queues under the specified storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues
+        /// Operation Id: Queue_List
+        /// </summary>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <summary>
+        /// Gets a list of all the queues under the specified storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues
+        /// Operation Id: Queue_List
+        /// </summary>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,7 +268,11 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -267,7 +295,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -290,7 +322,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -315,7 +351,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>

@@ -52,7 +52,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> The operation to create or update the restore point collection. Please refer to https://aka.ms/RestorePoints for more details. When updating a restore point collection, only tags may be modified. </summary>
+        /// <summary>
+        /// The operation to create or update the restore point collection. Please refer to https://aka.ms/RestorePoints for more details. When updating a restore point collection, only tags may be modified.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
@@ -84,7 +88,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update the restore point collection. Please refer to https://aka.ms/RestorePoints for more details. When updating a restore point collection, only tags may be modified. </summary>
+        /// <summary>
+        /// The operation to create or update the restore point collection. Please refer to https://aka.ms/RestorePoints for more details. When updating a restore point collection, only tags may be modified.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
@@ -116,7 +124,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the restore point collection. </summary>
+        /// <summary>
+        /// The operation to get the restore point collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,7 +154,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the restore point collection. </summary>
+        /// <summary>
+        /// The operation to get the restore point collection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,7 +184,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets the list of restore point collections in a resource group. </summary>
+        /// <summary>
+        /// Gets the list of restore point collections in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections
+        /// Operation Id: RestorePointCollections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorePointGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorePointGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -206,7 +226,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of restore point collections in a resource group. </summary>
+        /// <summary>
+        /// Gets the list of restore point collections in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections
+        /// Operation Id: RestorePointCollections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorePointGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorePointGroup> GetAll(CancellationToken cancellationToken = default)
@@ -244,7 +268,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,7 +296,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,7 +324,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,7 +354,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
+        /// Operation Id: RestorePointCollections_Get
+        /// </summary>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

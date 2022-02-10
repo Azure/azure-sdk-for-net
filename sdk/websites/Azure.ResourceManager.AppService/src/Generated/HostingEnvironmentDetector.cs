@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// OperationId: Diagnostics_GetHostingEnvironmentDetectorResponse
-        /// <summary> Description for Get Hosting Environment Detector Response. </summary>
+        /// <summary>
+        /// Description for Get Hosting Environment Detector Response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// </summary>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -108,10 +109,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// OperationId: Diagnostics_GetHostingEnvironmentDetectorResponse
-        /// <summary> Description for Get Hosting Environment Detector Response. </summary>
+        /// <summary>
+        /// Description for Get Hosting Environment Detector Response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// </summary>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>

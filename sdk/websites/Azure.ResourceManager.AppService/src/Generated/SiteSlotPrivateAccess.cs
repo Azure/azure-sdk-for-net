@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_GetPrivateAccessSlot
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_GetPrivateAccessSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotPrivateAccess>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_GetPrivateAccessSlot
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_GetPrivateAccessSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotPrivateAccess> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_PutPrivateAccessVnetSlot
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_PutPrivateAccessVnetSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_PutPrivateAccessVnetSlot
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_PutPrivateAccessVnetSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

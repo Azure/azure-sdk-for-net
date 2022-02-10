@@ -42,10 +42,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetDeletedManagedHsms();
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListBySubscription
-        /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the vaults associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
+        /// Operation Id: Vaults_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -55,10 +56,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetVaultsAsync(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListBySubscription
-        /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the vaults associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
+        /// Operation Id: Vaults_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,10 +70,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetVaults(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListDeleted
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
+        /// Operation Id: Vaults_ListDeleted
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
@@ -80,10 +83,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetDeletedVaultsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_ListDeleted
-        /// <summary> Gets information about the deleted vaults in a subscription. </summary>
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
+        /// Operation Id: Vaults_ListDeleted
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
@@ -92,10 +96,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetDeletedVaults(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
+        /// Operation Id: Vaults_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,10 +115,11 @@ namespace Azure.ResourceManager.KeyVault
             return await GetExtensionClient(subscription).CheckKeyVaultNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Vaults_CheckNameAvailability
-        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
+        /// Operation Id: Vaults_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,10 +134,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).CheckKeyVaultNameAvailability(vaultName, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the managed HSM Pools associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
+        /// Operation Id: ManagedHsms_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,10 +148,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetManagedHsmsAsync(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListBySubscription
-        /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the managed HSM Pools associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/managedHSMs
+        /// Operation Id: ManagedHsms_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,10 +162,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetManagedHsms(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
+        /// Operation Id: ManagedHsms_ListDeleted
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedManagedHsm" /> that may take multiple service requests to iterate over. </returns>
@@ -166,10 +175,11 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscription).GetDeletedManagedHsmsAsync(cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ManagedHsms_ListDeleted
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary>
+        /// The List operation gets information about the deleted managed HSMs associated with the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedManagedHSMs
+        /// Operation Id: ManagedHsms_ListDeleted
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedManagedHsm" /> that may take multiple service requests to iterate over. </returns>

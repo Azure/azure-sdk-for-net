@@ -48,7 +48,11 @@ namespace Azure.ResourceManager.Cdn
             return apiVersion;
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
@@ -67,7 +71,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
@@ -86,7 +94,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
@@ -124,7 +136,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)

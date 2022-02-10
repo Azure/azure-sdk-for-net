@@ -89,10 +89,11 @@ namespace Azure.ResourceManager.AppService
             return new SiteSlotVirtualNetworkConnectionGatewayCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_GetVnetConnectionSlot
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary>
+        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_GetVnetConnectionSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotVirtualNetworkConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -112,10 +113,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_GetVnetConnectionSlot
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary>
+        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_GetVnetConnectionSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotVirtualNetworkConnection> Get(CancellationToken cancellationToken = default)
         {
@@ -135,10 +137,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_DeleteVnetConnectionSlot
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary>
+        /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_DeleteVnetConnectionSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_DeleteVnetConnectionSlot
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary>
+        /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_DeleteVnetConnectionSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -185,10 +189,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_UpdateVnetConnectionSlot
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary>
+        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_UpdateVnetConnectionSlot
+        /// </summary>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
@@ -213,10 +218,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
-        /// OperationId: WebApps_UpdateVnetConnectionSlot
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary>
+        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_UpdateVnetConnectionSlot
+        /// </summary>
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>

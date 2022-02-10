@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnGateway.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules. </summary>
+        /// <summary>
+        /// Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules. </summary>
+        /// <summary>
+        /// Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a nat ruleGet. </summary>
+        /// <summary>
+        /// Retrieves the details of a nat ruleGet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a nat ruleGet. </summary>
+        /// <summary>
+        /// Retrieves the details of a nat ruleGet.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves all nat rules for a particular virtual wan vpn gateway. </summary>
+        /// <summary>
+        /// Retrieves all nat rules for a particular virtual wan vpn gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules
+        /// Operation Id: NatRules_ListByVpnGateway
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnGatewayNatRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all nat rules for a particular virtual wan vpn gateway. </summary>
+        /// <summary>
+        /// Retrieves all nat rules for a particular virtual wan vpn gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules
+        /// Operation Id: NatRules_ListByVpnGateway
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnGatewayNatRule> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
+        /// Operation Id: NatRules_Get
+        /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is empty. </exception>

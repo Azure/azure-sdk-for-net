@@ -372,7 +372,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetWebApplicationFirewallPolicies();
         }
 
-        /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -386,7 +390,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
         }
 
-        /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
+        /// Operation Id: AvailableResourceGroupDelegations_List
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -400,7 +408,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegations(location, cancellationToken);
         }
 
-        /// <summary> Gets all available service aliases for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -414,7 +426,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailableServiceAliasesAsync(location, cancellationToken);
         }
 
-        /// <summary> Gets all available service aliases for this resource group in this region. </summary>
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
+        /// Operation Id: AvailableServiceAliases_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -428,7 +444,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailableServiceAliases(location, cancellationToken);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -442,7 +462,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
         }
 
-        /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
+        /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -456,7 +480,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypes(location, cancellationToken);
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -475,7 +503,11 @@ namespace Azure.ResourceManager.Network
             return await GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitForCompletion, location, parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
+        /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="location"> The location of the domain name. </param>
@@ -494,7 +526,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitForCompletion, location, parameters, cancellationToken);
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -508,7 +544,11 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(resourceGroup).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
         }
 
-        /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
+        /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

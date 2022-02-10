@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CloudService.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a role instance from a cloud service. </summary>
+        /// <summary>
+        /// Gets a role instance from a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,7 +81,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a role instance from a cloud service. </summary>
+        /// <summary>
+        /// Gets a role instance from a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,7 +111,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
+        /// <summary>
+        /// Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances
+        /// Operation Id: CloudServiceRoleInstances_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
@@ -142,7 +154,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
+        /// <summary>
+        /// Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances
+        /// Operation Id: CloudServiceRoleInstances_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
@@ -181,7 +197,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,7 +225,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +253,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,7 +283,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}
+        /// Operation Id: CloudServiceRoleInstances_Get
+        /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

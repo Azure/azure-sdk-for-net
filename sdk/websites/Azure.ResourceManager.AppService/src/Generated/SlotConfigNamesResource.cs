@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_ListSlotConfigurationNames
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_ListSlotConfigurationNames
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SlotConfigNamesResource> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_UpdateSlotConfigurationNames
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_UpdateSlotConfigurationNames
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

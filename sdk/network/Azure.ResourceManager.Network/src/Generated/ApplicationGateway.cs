@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.Network
             return new ApplicationGatewayPrivateEndpointConnectionCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified application gateway. </summary>
+        /// <summary>
+        /// Gets the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -114,7 +118,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified application gateway. </summary>
+        /// <summary>
+        /// Gets the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGateway> Get(CancellationToken cancellationToken = default)
         {
@@ -134,7 +142,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified application gateway. </summary>
+        /// <summary>
+        /// Deletes the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -156,7 +168,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified application gateway. </summary>
+        /// <summary>
+        /// Deletes the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -178,7 +194,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates the specified application gateway tags. </summary>
+        /// <summary>
+        /// Updates the specified application gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -203,7 +223,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates the specified application gateway tags. </summary>
+        /// <summary>
+        /// Updates the specified application gateway tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
+        /// Operation Id: ApplicationGateways_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -228,7 +252,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Starts the specified application gateway. </summary>
+        /// <summary>
+        /// Starts the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start
+        /// Operation Id: ApplicationGateways_Start
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> StartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -250,7 +278,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Starts the specified application gateway. </summary>
+        /// <summary>
+        /// Starts the specified application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start
+        /// Operation Id: ApplicationGateways_Start
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -272,7 +304,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Stops the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop
+        /// Operation Id: ApplicationGateways_Stop
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> StopAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -294,7 +330,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Stops the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Stops the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop
+        /// Operation Id: ApplicationGateways_Stop
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Stop(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -316,7 +356,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the backend health of the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Gets the backend health of the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth
+        /// Operation Id: ApplicationGateways_BackendHealth
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -339,7 +383,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the backend health of the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Gets the backend health of the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth
+        /// Operation Id: ApplicationGateways_BackendHealth
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,7 +410,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand
+        /// Operation Id: ApplicationGateways_BackendHealthOnDemand
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
@@ -392,7 +444,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group. </summary>
+        /// <summary>
+        /// Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand
+        /// Operation Id: ApplicationGateways_BackendHealthOnDemand
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
@@ -422,7 +478,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all private link resources on an application gateway. </summary>
+        /// <summary>
+        /// Lists all private link resources on an application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources
+        /// Operation Id: ApplicationGatewayPrivateLinkResources_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
@@ -460,7 +520,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all private link resources on an application gateway. </summary>
+        /// <summary>
+        /// Lists all private link resources on an application gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources
+        /// Operation Id: ApplicationGatewayPrivateLinkResources_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)

@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a ExpressRoute gateway in a specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates a ExpressRoute gateway in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a ExpressRoute gateway in a specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates a ExpressRoute gateway in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
+        /// <summary>
+        /// Fetches the details of a ExpressRoute gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
+        /// <summary>
+        /// Fetches the details of a ExpressRoute gateway in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
+        /// <summary>
+        /// Lists ExpressRoute gateways in a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways
+        /// Operation Id: ExpressRouteGateways_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteGateway> GetAllAsync(CancellationToken cancellationToken = default)
@@ -188,7 +208,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
+        /// <summary>
+        /// Lists ExpressRoute gateways in a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways
+        /// Operation Id: ExpressRouteGateways_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteGateway" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteGateway> GetAll(CancellationToken cancellationToken = default)
@@ -211,7 +235,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
@@ -234,7 +262,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
@@ -257,7 +289,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>
@@ -282,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
+        /// Operation Id: ExpressRouteGateways_Get
+        /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is empty. </exception>

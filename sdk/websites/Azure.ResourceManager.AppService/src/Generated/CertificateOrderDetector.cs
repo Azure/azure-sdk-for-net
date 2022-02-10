@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// OperationId: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
@@ -108,10 +109,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// OperationId: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>

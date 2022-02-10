@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves the details of a VpnServerConfiguration. </summary>
+        /// <summary>
+        /// Retrieves the details of a VpnServerConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VpnServerConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VpnServerConfiguration. </summary>
+        /// <summary>
+        /// Retrieves the details of a VpnServerConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VpnServerConfiguration> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VpnServerConfiguration. </summary>
+        /// <summary>
+        /// Deletes a VpnServerConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -145,7 +157,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VpnServerConfiguration. </summary>
+        /// <summary>
+        /// Deletes a VpnServerConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates VpnServerConfiguration tags. </summary>
+        /// <summary>
+        /// Updates VpnServerConfiguration tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_UpdateTags
+        /// </summary>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
@@ -192,7 +212,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates VpnServerConfiguration tags. </summary>
+        /// <summary>
+        /// Updates VpnServerConfiguration tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
+        /// Operation Id: VpnServerConfigurations_UpdateTags
+        /// </summary>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to update VpnServerConfiguration tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationParameters"/> is null. </exception>

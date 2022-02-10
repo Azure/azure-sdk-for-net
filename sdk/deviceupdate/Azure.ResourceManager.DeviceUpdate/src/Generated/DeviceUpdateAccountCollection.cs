@@ -51,10 +51,11 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Create
-        /// <summary> Creates or updates Account. </summary>
+        /// <summary>
+        /// Creates or updates Account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
@@ -86,10 +87,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Create
-        /// <summary> Creates or updates Account. </summary>
+        /// <summary>
+        /// Creates or updates Account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
@@ -121,10 +123,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Returns account details for the given account name. </summary>
+        /// <summary>
+        /// Returns account details for the given account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
@@ -149,10 +152,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Returns account details for the given account name. </summary>
+        /// <summary>
+        /// Returns account details for the given account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
@@ -177,10 +181,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_ListByResourceGroup
-        /// <summary> Returns list of Accounts. </summary>
+        /// <summary>
+        /// Returns list of Accounts.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts
+        /// Operation Id: Accounts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateAccount> GetAllAsync(CancellationToken cancellationToken = default)
@@ -218,10 +223,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_ListByResourceGroup
-        /// <summary> Returns list of Accounts. </summary>
+        /// <summary>
+        /// Returns list of Accounts.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts
+        /// Operation Id: Accounts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateAccount> GetAll(CancellationToken cancellationToken = default)
@@ -259,10 +265,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
@@ -285,10 +292,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
@@ -311,10 +319,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>
@@ -339,10 +348,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Accounts_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
+        /// Operation Id: Accounts_Get
+        /// </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is empty. </exception>

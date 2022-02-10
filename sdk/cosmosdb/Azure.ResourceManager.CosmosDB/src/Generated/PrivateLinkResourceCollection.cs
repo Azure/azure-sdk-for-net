@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
@@ -75,7 +79,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
@@ -100,7 +108,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources
+        /// Operation Id: PrivateLinkResources_ListByDatabaseAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -123,7 +135,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets the private link resources that need to be created for a Cosmos DB account. </summary>
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources
+        /// Operation Id: PrivateLinkResources_ListByDatabaseAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
@@ -146,7 +162,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
@@ -169,7 +189,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
@@ -192,7 +216,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>
@@ -217,7 +245,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is empty. </exception>

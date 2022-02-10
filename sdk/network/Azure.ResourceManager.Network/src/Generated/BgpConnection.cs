@@ -88,7 +88,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Bgp Connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Bgp Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<BgpConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -108,7 +112,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Bgp Connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Bgp Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BgpConnection> Get(CancellationToken cancellationToken = default)
         {
@@ -128,7 +136,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHubBgpConnection. </summary>
+        /// <summary>
+        /// Deletes a VirtualHubBgpConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -150,7 +162,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHubBgpConnection. </summary>
+        /// <summary>
+        /// Deletes a VirtualHubBgpConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -172,7 +188,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a list of routes the virtual hub bgp connection has learned. </summary>
+        /// <summary>
+        /// Retrieves a list of routes the virtual hub bgp connection has learned.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/learnedRoutes
+        /// Operation Id: VirtualHubBgpConnections_ListLearnedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -194,7 +214,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a list of routes the virtual hub bgp connection has learned. </summary>
+        /// <summary>
+        /// Retrieves a list of routes the virtual hub bgp connection has learned.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/learnedRoutes
+        /// Operation Id: VirtualHubBgpConnections_ListLearnedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -216,7 +240,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer. </summary>
+        /// <summary>
+        /// Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/advertisedRoutes
+        /// Operation Id: VirtualHubBgpConnections_ListAdvertisedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -238,7 +266,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer. </summary>
+        /// <summary>
+        /// Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/advertisedRoutes
+        /// Operation Id: VirtualHubBgpConnections_ListAdvertisedRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(bool waitForCompletion, CancellationToken cancellationToken = default)

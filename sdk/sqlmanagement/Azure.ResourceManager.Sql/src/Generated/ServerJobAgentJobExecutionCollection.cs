@@ -55,10 +55,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlJob.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_CreateOrUpdate
-        /// <summary> Creates or updates a job execution. </summary>
+        /// <summary>
+        /// Creates or updates a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,10 +82,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_CreateOrUpdate
-        /// <summary> Creates or updates a job execution. </summary>
+        /// <summary>
+        /// Creates or updates a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,10 +109,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Gets a job execution. </summary>
+        /// <summary>
+        /// Gets a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecution>> GetAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
@@ -131,10 +134,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Gets a job execution. </summary>
+        /// <summary>
+        /// Gets a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerJobAgentJobExecution> Get(Guid jobExecutionId, CancellationToken cancellationToken = default)
@@ -155,10 +159,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_ListByJob
-        /// <summary> Lists a job&apos;s executions. </summary>
+        /// <summary>
+        /// Lists a job&apos;s executions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
+        /// Operation Id: JobExecutions_ListByJob
+        /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
         /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
@@ -203,10 +208,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_ListByJob
-        /// <summary> Lists a job&apos;s executions. </summary>
+        /// <summary>
+        /// Lists a job&apos;s executions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
+        /// Operation Id: JobExecutions_ListByJob
+        /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
         /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
@@ -251,10 +257,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobTargetExecutions_ListByJobExecution
-        /// <summary> Lists target executions for all steps of a job execution. </summary>
+        /// <summary>
+        /// Lists target executions for all steps of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
+        /// Operation Id: JobTargetExecutions_ListByJobExecution
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -300,10 +307,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobTargetExecutions_ListByJobExecution
-        /// <summary> Lists target executions for all steps of a job execution. </summary>
+        /// <summary>
+        /// Lists target executions for all steps of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
+        /// Operation Id: JobTargetExecutions_ListByJobExecution
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -349,10 +357,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
@@ -371,10 +380,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid jobExecutionId, CancellationToken cancellationToken = default)
@@ -393,10 +403,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerJobAgentJobExecution>> GetIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
@@ -417,10 +428,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerJobAgentJobExecution> GetIfExists(Guid jobExecutionId, CancellationToken cancellationToken = default)

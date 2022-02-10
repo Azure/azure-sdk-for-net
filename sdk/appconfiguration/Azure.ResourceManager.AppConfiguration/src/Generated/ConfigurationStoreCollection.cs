@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a configuration store with the specified parameters. </summary>
+        /// <summary>
+        /// Creates a configuration store with the specified parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Creates a configuration store with the specified parameters. </summary>
+        /// <summary>
+        /// Creates a configuration store with the specified parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified configuration store. </summary>
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified configuration store. </summary>
+        /// <summary>
+        /// Gets the properties of the specified configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Lists the configuration stores for a given resource group. </summary>
+        /// <summary>
+        /// Lists the configuration stores for a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores
+        /// Operation Id: ConfigurationStores_ListByResourceGroup
+        /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the configuration stores for a given resource group. </summary>
+        /// <summary>
+        /// Lists the configuration stores for a given resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores
+        /// Operation Id: ConfigurationStores_ListByResourceGroup
+        /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
@@ -243,7 +267,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
@@ -266,7 +294,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
@@ -289,7 +321,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>
@@ -314,7 +350,11 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_Get
+        /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is empty. </exception>

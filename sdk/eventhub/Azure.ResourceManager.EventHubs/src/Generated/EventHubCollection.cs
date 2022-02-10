@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHubNamespace.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
+        /// <summary>
+        /// Creates or updates a new Event Hub as a nested resource within a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
+        /// <summary>
+        /// Creates or updates a new Event Hub as a nested resource within a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
+        /// <summary>
+        /// Gets an Event Hubs description for the specified Event Hub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
+        /// <summary>
+        /// Gets an Event Hubs description for the specified Event Hub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <summary>
+        /// Gets all the Event Hubs in a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs
+        /// Operation Id: EventHubs_ListByNamespace
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <summary>
+        /// Gets all the Event Hubs in a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs
+        /// Operation Id: EventHubs_ListByNamespace
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,7 +268,11 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
@@ -267,7 +295,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
@@ -290,7 +322,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>
@@ -315,7 +351,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
+        /// Operation Id: EventHubs_Get
+        /// </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is empty. </exception>

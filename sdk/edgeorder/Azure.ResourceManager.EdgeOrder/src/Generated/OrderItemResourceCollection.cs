@@ -51,10 +51,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CreateOrderItem
-        /// <summary> Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API. </summary>
+        /// <summary>
+        /// Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: CreateOrderItem
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
@@ -86,10 +87,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CreateOrderItem
-        /// <summary> Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API. </summary>
+        /// <summary>
+        /// Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: CreateOrderItem
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
@@ -121,10 +123,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Gets an order item. </summary>
+        /// <summary>
+        /// Gets an order item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,10 +153,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Gets an order item. </summary>
+        /// <summary>
+        /// Gets an order item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,10 +183,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ListOrderItemsAtResourceGroupLevel
-        /// <summary> Lists order item at resource group level. </summary>
+        /// <summary>
+        /// Lists order item at resource group level.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
+        /// Operation Id: ListOrderItemsAtResourceGroupLevel
+        /// </summary>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
@@ -223,10 +228,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ListOrderItemsAtResourceGroupLevel
-        /// <summary> Lists order item at resource group level. </summary>
+        /// <summary>
+        /// Lists order item at resource group level.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
+        /// Operation Id: ListOrderItemsAtResourceGroupLevel
+        /// </summary>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
@@ -267,10 +273,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,10 +301,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -321,10 +329,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -350,10 +359,11 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: GetOrderItemByName
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

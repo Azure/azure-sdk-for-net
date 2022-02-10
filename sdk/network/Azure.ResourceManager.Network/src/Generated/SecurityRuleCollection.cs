@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
+        /// <summary>
+        /// Creates or updates a security rule in the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
+        /// <summary>
+        /// Creates or updates a security rule in the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified network security rule. </summary>
+        /// <summary>
+        /// Get the specified network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified network security rule. </summary>
+        /// <summary>
+        /// Get the specified network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all security rules in a network security group. </summary>
+        /// <summary>
+        /// Gets all security rules in a network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// Operation Id: SecurityRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all security rules in a network security group. </summary>
+        /// <summary>
+        /// Gets all security rules in a network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// Operation Id: SecurityRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityRule> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>

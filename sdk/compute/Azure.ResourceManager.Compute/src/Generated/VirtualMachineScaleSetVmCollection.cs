@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSet.ResourceType), nameof(id));
         }
 
-        /// <summary> Updates a virtual machine of a VM scale set. </summary>
+        /// <summary>
+        /// Updates a virtual machine of a VM scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Updates a virtual machine of a VM scale set. </summary>
+        /// <summary>
+        /// Updates a virtual machine of a VM scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a virtual machine from a VM scale set. </summary>
+        /// <summary>
+        /// Gets a virtual machine from a VM scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +153,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a virtual machine from a VM scale set. </summary>
+        /// <summary>
+        /// Gets a virtual machine from a VM scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all virtual machines in a VM scale sets. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machines in a VM scale sets.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines
+        /// Operation Id: VirtualMachineScaleSetVMs_List
+        /// </summary>
         /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
         /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
@@ -208,7 +228,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all virtual machines in a VM scale sets. </summary>
+        /// <summary>
+        /// Gets a list of all virtual machines in a VM scale sets.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines
+        /// Operation Id: VirtualMachineScaleSetVMs_List
+        /// </summary>
         /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
         /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
@@ -249,7 +273,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,7 +301,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,7 +329,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -323,7 +359,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Operation Id: VirtualMachineScaleSetVMs_Get
+        /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the instance view of the virtual machine. &apos;UserData&apos; will retrieve the UserData of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

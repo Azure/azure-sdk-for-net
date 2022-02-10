@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceUpdateAccount.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Create
-        /// <summary> Creates or updates instance. </summary>
+        /// <summary>
+        /// Creates or updates instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Create
-        /// <summary> Creates or updates instance. </summary>
+        /// <summary>
+        /// Creates or updates instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="instance"> Instance details. </param>
@@ -120,10 +122,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Returns instance details for the given instance and account name. </summary>
+        /// <summary>
+        /// Returns instance details for the given instance and account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
@@ -148,10 +151,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Returns instance details for the given instance and account name. </summary>
+        /// <summary>
+        /// Returns instance details for the given instance and account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
@@ -176,10 +180,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_ListByAccount
-        /// <summary> Returns instances for the given account name. </summary>
+        /// <summary>
+        /// Returns instances for the given account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
+        /// Operation Id: Instances_ListByAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceUpdateInstance" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateInstance> GetAllAsync(CancellationToken cancellationToken = default)
@@ -217,10 +222,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_ListByAccount
-        /// <summary> Returns instances for the given account name. </summary>
+        /// <summary>
+        /// Returns instances for the given account name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances
+        /// Operation Id: Instances_ListByAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceUpdateInstance" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateInstance> GetAll(CancellationToken cancellationToken = default)
@@ -258,10 +264,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
@@ -284,10 +291,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
@@ -310,10 +318,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>
@@ -338,10 +347,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: Instances_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
+        /// Operation Id: Instances_Get
+        /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is empty. </exception>

@@ -87,10 +87,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_Get
-        /// <summary> Gets a database data masking policy. </summary>
+        /// <summary>
+        /// Gets a database data masking policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
+        /// Operation Id: DataMaskingPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataMaskingPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -110,10 +111,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_Get
-        /// <summary> Gets a database data masking policy. </summary>
+        /// <summary>
+        /// Gets a database data masking policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
+        /// Operation Id: DataMaskingPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataMaskingPolicy> Get(CancellationToken cancellationToken = default)
         {
@@ -133,10 +135,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_CreateOrUpdate
-        /// <summary> Creates or updates a database data masking policy. </summary>
+        /// <summary>
+        /// Creates or updates a database data masking policy
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
+        /// Operation Id: DataMaskingPolicies_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,10 +168,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingPolicies_CreateOrUpdate
-        /// <summary> Creates or updates a database data masking policy. </summary>
+        /// <summary>
+        /// Creates or updates a database data masking policy
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default
+        /// Operation Id: DataMaskingPolicies_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters for creating or updating a data masking policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,10 +201,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules/{dataMaskingRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_CreateOrUpdate
-        /// <summary> Creates or updates a database data masking rule. </summary>
+        /// <summary>
+        /// Creates or updates a database data masking rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules/{dataMaskingRuleName}
+        /// Operation Id: DataMaskingRules_CreateOrUpdate
+        /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -228,10 +233,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules/{dataMaskingRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_CreateOrUpdate
-        /// <summary> Creates or updates a database data masking rule. </summary>
+        /// <summary>
+        /// Creates or updates a database data masking rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules/{dataMaskingRuleName}
+        /// Operation Id: DataMaskingRules_CreateOrUpdate
+        /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="parameters"> The required parameters for creating or updating a data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,10 +265,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_List
-        /// <summary> Gets a list of database data masking rules. </summary>
+        /// <summary>
+        /// Gets a list of database data masking rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules
+        /// Operation Id: DataMaskingRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
@@ -285,10 +292,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}
-        /// OperationId: DataMaskingRules_List
-        /// <summary> Gets a list of database data masking rules. </summary>
+        /// <summary>
+        /// Gets a list of database data masking rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/Default/rules
+        /// Operation Id: DataMaskingRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)

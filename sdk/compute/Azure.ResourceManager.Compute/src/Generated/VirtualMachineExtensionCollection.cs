@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
         }
 
-        /// <summary> The operation to create or update the extension. </summary>
+        /// <summary>
+        /// The operation to create or update the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update the extension. </summary>
+        /// <summary>
+        /// The operation to create or update the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the extension. </summary>
+        /// <summary>
+        /// The operation to get the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the extension. </summary>
+        /// <summary>
+        /// The operation to get the extension.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,7 +182,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get all extensions of a Virtual Machine. </summary>
+        /// <summary>
+        /// The operation to get all extensions of a Virtual Machine.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions
+        /// Operation Id: VirtualMachineExtensions_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineExtension" /> that may take multiple service requests to iterate over. </returns>
@@ -190,7 +210,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> The operation to get all extensions of a Virtual Machine. </summary>
+        /// <summary>
+        /// The operation to get all extensions of a Virtual Machine.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions
+        /// Operation Id: VirtualMachineExtensions_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineExtension" /> that may take multiple service requests to iterate over. </returns>
@@ -214,7 +238,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,7 +266,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -262,7 +294,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -288,7 +324,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
+        /// Operation Id: VirtualMachineExtensions_Get
+        /// </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

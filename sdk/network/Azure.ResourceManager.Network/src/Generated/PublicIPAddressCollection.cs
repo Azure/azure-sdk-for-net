@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a static or dynamic public IP address. </summary>
+        /// <summary>
+        /// Creates or updates a static or dynamic public IP address.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a static or dynamic public IP address. </summary>
+        /// <summary>
+        /// Creates or updates a static or dynamic public IP address.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified public IP address in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified public IP address in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +153,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified public IP address in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified public IP address in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all public IP addresses in a resource group. </summary>
+        /// <summary>
+        /// Gets all public IP addresses in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses
+        /// Operation Id: PublicIPAddresses_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddress> GetAllAsync(CancellationToken cancellationToken = default)
@@ -205,7 +225,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all public IP addresses in a resource group. </summary>
+        /// <summary>
+        /// Gets all public IP addresses in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses
+        /// Operation Id: PublicIPAddresses_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddress> GetAll(CancellationToken cancellationToken = default)
@@ -243,7 +267,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +295,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +323,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +353,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
+        /// Operation Id: PublicIPAddresses_Get
+        /// </summary>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

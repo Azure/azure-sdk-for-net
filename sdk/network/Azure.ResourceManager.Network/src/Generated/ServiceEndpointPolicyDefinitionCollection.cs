@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceEndpointPolicy.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a service endpoint policy definition in the specified service endpoint policy. </summary>
+        /// <summary>
+        /// Creates or updates a service endpoint policy definition in the specified service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
@@ -82,7 +86,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a service endpoint policy definition in the specified service endpoint policy. </summary>
+        /// <summary>
+        /// Creates or updates a service endpoint policy definition in the specified service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="serviceEndpointPolicyDefinitions"> Parameters supplied to the create or update service endpoint policy operation. </param>
@@ -114,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified service endpoint policy definitions from service endpoint policy. </summary>
+        /// <summary>
+        /// Get the specified service endpoint policy definitions from service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>
@@ -139,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified service endpoint policy definitions from service endpoint policy. </summary>
+        /// <summary>
+        /// Get the specified service endpoint policy definitions from service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>
@@ -164,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all service endpoint policy definitions in a service end point policy. </summary>
+        /// <summary>
+        /// Gets all service endpoint policy definitions in a service end point policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions
+        /// Operation Id: ServiceEndpointPolicyDefinitions_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyDefinition> GetAllAsync(CancellationToken cancellationToken = default)
@@ -202,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all service endpoint policy definitions in a service end point policy. </summary>
+        /// <summary>
+        /// Gets all service endpoint policy definitions in a service end point policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions
+        /// Operation Id: ServiceEndpointPolicyDefinitions_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceEndpointPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyDefinition> GetAll(CancellationToken cancellationToken = default)
@@ -240,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>
@@ -263,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>
@@ -286,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>
@@ -311,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}
+        /// Operation Id: ServiceEndpointPolicyDefinitions_Get
+        /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is empty. </exception>

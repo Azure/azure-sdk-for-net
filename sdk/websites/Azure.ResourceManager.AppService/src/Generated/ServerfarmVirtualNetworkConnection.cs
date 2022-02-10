@@ -90,10 +90,11 @@ namespace Azure.ResourceManager.AppService
             return new ServerfarmVirtualNetworkConnectionGatewayCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerfarmVirtualNetworkConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -113,10 +114,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerfarmVirtualNetworkConnection> Get(CancellationToken cancellationToken = default)
         {
@@ -136,10 +138,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_ListRoutesForVnet
-        /// <summary> Description for Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get all routes that are associated with a Virtual Network in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes
+        /// Operation Id: AppServicePlans_ListRoutesForVnet
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VnetRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VnetRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
@@ -162,10 +165,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_ListRoutesForVnet
-        /// <summary> Description for Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get all routes that are associated with a Virtual Network in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes
+        /// Operation Id: AppServicePlans_ListRoutesForVnet
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VnetRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VnetRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
@@ -188,10 +192,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_CreateOrUpdateVnetRoute
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Create or update a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_CreateOrUpdateVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,10 +224,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_CreateOrUpdateVnetRoute
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Create or update a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_CreateOrUpdateVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,10 +256,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_DeleteVnetRoute
-        /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Delete a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_DeleteVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -276,10 +283,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_DeleteVnetRoute
-        /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Delete a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_DeleteVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -302,10 +310,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_UpdateVnetRoute
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Create or update a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_UpdateVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -333,10 +342,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// OperationId: AppServicePlans_UpdateVnetRoute
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary>
+        /// Description for Create or update a Virtual Network route in an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName}
+        /// Operation Id: AppServicePlans_UpdateVnetRoute
+        /// </summary>
         /// <param name="routeName"> Name of the Virtual Network route. </param>
         /// <param name="route"> Definition of the Virtual Network route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
