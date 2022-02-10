@@ -79,7 +79,7 @@ foreach (DocumentStyle style in result.Styles)
 To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromFileAsync
-string filePath = "filePath";
+string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);

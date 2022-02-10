@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 #if SNIPPET
-            string filePath = "filePath";
+            string filePath = "<filePath>";
 #else
             string filePath = DocumentAnalysisTestEnvironment.CreatePath("Form_1.jpg");
 #endif
