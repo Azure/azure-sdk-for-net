@@ -102,6 +102,7 @@
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
