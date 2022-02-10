@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetSiteCollectionAsync();
             var name = Recording.GenerateAssetName("testSite");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(true, name, input);
             var site = lro.Value;
             Assert.AreEqual(name, site.Data.Name);
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var container = await GetSiteCollectionAsync();
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(siteName, input);
+            var lro = await container.CreateOrUpdateAsync(true, siteName, input);
             WebSite site1 = lro.Value;
             WebSite site2 = await container.GetAsync(siteName);
             ResourceDataHelper.AssertSite(site1.Data, site2.Data);
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var container = await GetSiteCollectionAsync();
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSite-"), input);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSite-"), input);
+            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testSite-"), input);
+            _ = await container.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testSite-"), input);
             int count = 0;
             await foreach (var site in container.GetAllAsync())
             {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Exists()
         {
             var container = await GetSiteCollectionAsync();
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(siteName, input);
+            var lro = await container.CreateOrUpdateAsync(true, siteName, input);
             WebSite site = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(siteName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(siteName + "1"));
+            Assert.IsTrue(await container.ExistsAsync(siteName));
+            Assert.IsFalse(await container.ExistsAsync(siteName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }
     }
 }

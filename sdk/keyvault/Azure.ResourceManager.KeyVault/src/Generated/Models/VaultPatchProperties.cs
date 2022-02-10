@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnabledForTemplateDeployment { get; set; }
         /// <summary> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this key vault. Once set to true, it cannot be reverted to false. </summary>
         public bool? EnableSoftDelete { get; set; }
-        /// <summary> Property that controls how data actions are authorized. When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be  ignored (warning: this is a preview feature). When false, the key vault will use the access policies specified in vault properties, and any policy stored on Azure Resource Manager will be ignored. If null or not specified, the value of this property will not change. </summary>
+        /// <summary> Property that controls how data actions are authorized. When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be  ignored. When false, the key vault will use the access policies specified in vault properties, and any policy stored on Azure Resource Manager will be ignored. If null or not specified, the value of this property will not change. </summary>
         public bool? EnableRbacAuthorization { get; set; }
         /// <summary> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }
@@ -44,5 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> A collection of rules governing the accessibility of the vault from specific network locations. </summary>
         public NetworkRuleSet NetworkAcls { get; set; }
+        /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
+        public string PublicNetworkAccess { get; set; }
     }
 }

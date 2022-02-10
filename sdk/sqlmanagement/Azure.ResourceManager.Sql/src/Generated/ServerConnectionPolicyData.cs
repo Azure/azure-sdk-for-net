@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerConnectionPolicy data model. </summary>
-    public partial class ServerConnectionPolicyData : Resource
+    public partial class ServerConnectionPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerConnectionPolicyData. </summary>
         public ServerConnectionPolicyData()
@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="connectionType"> The server connection type. </param>
-        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType type, string location, string kind, ServerConnectionType? connectionType) : base(id, name, type)
+        internal ServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, string kind, ServerConnectionType? connectionType) : base(id, name, type, systemData)
         {
             Location = location;
             Kind = kind;

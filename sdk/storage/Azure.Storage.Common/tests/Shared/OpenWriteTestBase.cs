@@ -93,25 +93,43 @@ namespace Azure.Storage.Test.Shared
             TClientOptions options = default);
 
         /// <summary>
-        /// Setup up a resource for an open write call.
+        /// Calls the client's OpenWrite method.
         /// </summary>
-        /// <param name="client">Client to initialize with.</param>
-        /// <param name="data">Optional data to initialize with.</param>
-        protected abstract Task InitializeResourceAsync(
-            TResourceClient client,
-            Stream data = default);
-
-        /// <summary>
-        /// Calls the 1:1 download method for the given resource client.
-        /// </summary>
-        /// <param name="client">Client to call the download on.</param>
+        /// <param name="client">
+        /// Client to call method on.
+        /// </param>
+        /// <param name="overwrite">
+        /// Overwrite parameter of open write method.
+        /// </param>
+        /// <param name="maxDataSize">
+        /// Optional. Sets the total size of the resource on OpenWrite
+        /// if the resource type requires such a parameter.
+        /// </param>
+        /// <param name="bufferSize">
+        /// Optional. Internal buffer size of the write stream.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional. Request conditions.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional. Metadata to set on resource.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional. HTTP headers to set on resource.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional. Progress handler.
+        /// </param>
+        /// <returns>
+        /// Task containing a write stream.
+        /// </returns>
         protected abstract Task<Stream> OpenWriteAsync(
             TResourceClient client,
             bool overwrite,
+            long? maxDataSize,
             int? bufferSize = default,
             TRequestConditions conditions = default,
             Dictionary<string, string> metadata = default,
-            Dictionary<string, string> tags = default,
             HttpHeaderParameters httpHeaders = default,
             IProgress<long> progressHandler = default);
 
@@ -119,7 +137,6 @@ namespace Azure.Storage.Test.Shared
         protected abstract Task ModifyAsync(TResourceClient client, Stream data);
         protected abstract Task<Response> GetPropertiesAsync(TResourceClient client);
         protected abstract Task<IDictionary<string, string>> GetMetadataAsync(TResourceClient client);
-        protected abstract Task<IDictionary<string, string>> GetTagsAsync(TResourceClient client);
 
         protected abstract Task<string> SetupLeaseAsync(TResourceClient client, string leaseId, string garbageLeaseId);
         protected abstract Task<string> GetMatchConditionAsync(TResourceClient client, string match);
@@ -142,10 +159,9 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             byte[] data = GetRandomBuffer(size);
-            using (Stream stream = await OpenWriteAsync(client, overwrite: true, bufferSize: bufferSize))
+            using (Stream stream = await OpenWriteAsync(client, overwrite: true, maxDataSize: size, bufferSize: bufferSize))
             {
                 // Act
                 await stream.WriteAsync(data, 0, 512);
@@ -167,24 +183,27 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_WithIntermediateFlushes()
+        public virtual async Task OpenWriteAsync_WithIntermediateFlushes()
         {
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
 
             // Act
-            using (Stream stream = await OpenWriteAsync(client, overwrite: true))
+            const int a = 100;
+            const int b = 50;
+            const int c = 25;
+            using (Stream stream = await OpenWriteAsync(client, maxDataSize: a + b + c, overwrite: true))
             {
                 using (var writer = new StreamWriter(stream, Encoding.ASCII))
                 {
-                    writer.Write(new string('A', 100));
+                    writer.Write(new string('A', a));
                     writer.Flush();
 
-                    writer.Write(new string('B', 50));
+                    writer.Write(new string('B', b));
                     writer.Flush();
 
-                    writer.Write(new string('C', 25));
+                    writer.Write(new string('C', c));
                     writer.Flush();
                 }
             }
@@ -204,13 +223,13 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 metadata: metadata))
             {
@@ -232,7 +251,6 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
@@ -240,6 +258,7 @@ namespace Azure.Storage.Test.Shared
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 metadata: metadata))
             {
@@ -259,7 +278,6 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             // don't have a service-agnostic type
             HttpHeaderParameters headers = new HttpHeaderParameters
@@ -271,6 +289,7 @@ namespace Azure.Storage.Test.Shared
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 httpHeaders: headers))
             {
@@ -296,7 +315,6 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             HttpHeaderParameters headers = new HttpHeaderParameters
             {
@@ -308,6 +326,7 @@ namespace Azure.Storage.Test.Shared
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 httpHeaders: headers))
             {
@@ -331,7 +350,6 @@ namespace Azure.Storage.Test.Shared
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 
@@ -339,6 +357,7 @@ namespace Azure.Storage.Test.Shared
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: data.Length,
                 bufferSize: bufferSize))
             {
                 await stream.WriteAsync(data, 0, 512);
@@ -368,7 +387,13 @@ namespace Azure.Storage.Test.Shared
             byte[] originalData = GetRandomBuffer(Constants.KB);
             using (Stream originalStream = new MemoryStream(originalData))
             {
-                await InitializeResourceAsync(client, originalStream);
+                using (Stream openWriteStream = await OpenWriteAsync(
+                    client,
+                    overwrite: true,
+                    maxDataSize: originalData.Length))
+                {
+                    await originalStream.CopyToAsync(openWriteStream);
+                }
             }
 
             byte[] newData = GetRandomBuffer(Constants.KB);
@@ -377,7 +402,8 @@ namespace Azure.Storage.Test.Shared
             // Act
             using (Stream openWriteStream = await OpenWriteAsync(
                 client,
-                overwrite: true))
+                overwrite: true,
+                maxDataSize: newData.Length))
             {
                 await newStream.CopyToAsync(openWriteStream);
                 await openWriteStream.FlushAsync();
@@ -411,7 +437,8 @@ namespace Azure.Storage.Test.Shared
             // Act
             using (Stream writeStream = await OpenWriteAsync(
                 client,
-                overwrite: true))
+                overwrite: true,
+                maxDataSize: data0.Length + data1.Length))
             {
                 await dataStream0.CopyToAsync(writeStream);
                 await writeStream.FlushAsync();
@@ -435,24 +462,12 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                OpenWriteAsync(client, overwrite: true),
+                OpenWriteAsync(client, overwrite: true, maxDataSize: Constants.KB),
                 e => Assert.AreEqual(ContainerNotFoundErrorCode, e.ErrorCode));
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_NoOverwrite()
-        {
-            // Arrange
-            TResourceClient client = GetResourceClient(GetUninitializedContainerClient());
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                OpenWriteAsync(client, overwrite: false),
-                e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwriting", e.Message));
-        }
-
-        [RecordedTest]
-        public async Task OpenWriteAsync_ModifiedDuringWrite()
+        public virtual async Task OpenWriteAsync_ModifiedDuringWrite()
         {
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
@@ -462,7 +477,7 @@ namespace Azure.Storage.Test.Shared
             using Stream stream = new MemoryStream(data);
 
             // Act
-            Stream openWriteStream = await OpenWriteAsync(client, overwrite: true);
+            Stream openWriteStream = await OpenWriteAsync(client, overwrite: true, maxDataSize: Constants.KB);
 
             using (Stream update = new MemoryStream(GetRandomBuffer(Constants.KB)))
             {
@@ -486,13 +501,14 @@ namespace Azure.Storage.Test.Shared
         [RecordedTest]
         public virtual async Task OpenWriteAsync_ProgressReporting()
         {
-            const int bufferSize = 256;
+            const int bufferSize = 512;
+            const int dataSize = 2 * Constants.KB;
 
             // Arrange
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TResourceClient client = GetResourceClient(disposingContainer.Container);
 
-            byte[] data = GetRandomBuffer(Constants.KB);
+            byte[] data = GetRandomBuffer(dataSize);
             using Stream stream = new MemoryStream(data);
 
             TestProgress progress = new TestProgress();
@@ -501,6 +517,7 @@ namespace Azure.Storage.Test.Shared
             using (Stream openWriteStream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: data.Length,
                 bufferSize: bufferSize,
                 progressHandler: progress))
             {
@@ -510,7 +527,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
+            Assert.AreEqual(dataSize, progress.List[progress.List.Count - 1]);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
@@ -523,7 +540,16 @@ namespace Azure.Storage.Test.Shared
                 // Arrange
                 await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
                 TResourceClient client = GetResourceClient(disposingContainer.Container);
-                await InitializeResourceAsync(client);
+
+                // initialize client with starter data
+                using (Stream dest = await OpenWriteAsync(
+                    client,
+                    overwrite: true,
+                    maxDataSize: Constants.KB))
+                {
+                    await new MemoryStream(GetRandomBuffer(Constants.KB)).CopyToAsync(dest);
+                    await dest.FlushAsync();
+                }
 
                 var garbageLeaseId = GetGarbageLeaseId();
                 parameters.Match = await GetMatchConditionAsync(client, parameters.Match);
@@ -537,6 +563,7 @@ namespace Azure.Storage.Test.Shared
                 using (Stream openWriteStream = await OpenWriteAsync(
                     client,
                     overwrite: true,
+                    maxDataSize: data.Length,
                     conditions: accessConditions))
                 {
                     await stream.CopyToAsync(openWriteStream);
@@ -553,14 +580,23 @@ namespace Azure.Storage.Test.Shared
         }
 
         [RecordedTest]
-        public async Task OpenWriteAsync_AccessConditionsFail()
+        public virtual async Task OpenWriteAsync_AccessConditionsFail()
         {
             foreach (AccessConditionParameters parameters in Conditions.AccessConditionsFail_Data)
             {
                 // Arrange
                 await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
                 TResourceClient client = GetResourceClient(disposingContainer.Container);
-                await InitializeResourceAsync(client);
+
+                // initialize client with starter data
+                using (Stream dest = await OpenWriteAsync(
+                    client,
+                    overwrite: true,
+                    maxDataSize: Constants.KB))
+                {
+                    await new MemoryStream(GetRandomBuffer(Constants.KB)).CopyToAsync(dest);
+                    await dest.FlushAsync();
+                }
 
                 parameters.NoneMatch = await GetMatchConditionAsync(client, parameters.NoneMatch);
                 TRequestConditions accessConditions = BuildRequestConditions(parameters);
@@ -572,6 +608,7 @@ namespace Azure.Storage.Test.Shared
                     OpenWriteAsync(
                         client,
                         overwrite: true,
+                        maxDataSize: Constants.KB,
                         conditions: accessConditions),
                     e => Assert.AreEqual(ConditionNotMetErrorCode, e.ErrorCode));
             }

@@ -2127,6 +2127,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2160,6 +2162,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2202,6 +2206,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2246,6 +2252,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2288,6 +2296,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2332,6 +2342,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2383,6 +2395,8 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and allowModifications is false.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
         /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInteral(
@@ -5947,17 +5961,24 @@ namespace Azure.Storage.Files.Shares
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
 
+                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
+                    {
+                        FileContentType = options?.ContentType
+                    };
+
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5967,11 +5988,13 @@ namespace Azure.Storage.Files.Shares
                             renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
-                            sourceLeaseId: options?.SourceRequestConditions?.LeaseId,
-                            destinationLeaseId: options?.DestinationRequestConditions?.LeaseId,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
                             cancellationToken: cancellationToken);
                     }
 

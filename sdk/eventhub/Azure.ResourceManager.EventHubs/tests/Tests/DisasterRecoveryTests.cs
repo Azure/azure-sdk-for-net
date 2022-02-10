@@ -11,6 +11,7 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
-                    await eventHubNamespace.DeleteAsync();
+                    await eventHubNamespace.DeleteAsync(true);
                 }
                 _resourceGroup = null;
             }
@@ -44,11 +45,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, new EventHubNamespaceData(Location.EastUS))).Value;
+            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, new EventHubNamespaceData(AzureLocation.EastUS))).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
+            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(true, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 PartnerNamespace = eHNamespace2.Id
             };
-            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
+            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(true, disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
             Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id.ToString());
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;
-            await armDisasterRecovery.DeleteAsync();
+            await armDisasterRecovery.DeleteAsync(true);
         }
     }
 }

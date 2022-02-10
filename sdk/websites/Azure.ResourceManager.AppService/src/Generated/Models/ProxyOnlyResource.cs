@@ -5,13 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
-    public partial class ProxyOnlyResource : Resource
+    public partial class ProxyOnlyResource : ResourceData
     {
         /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
         public ProxyOnlyResource()
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ProxyOnlyResource(ResourceIdentifier id, string name, ResourceType type, string kind) : base(id, name, type)
+        internal ProxyOnlyResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind) : base(id, name, type, systemData)
         {
             Kind = kind;
         }

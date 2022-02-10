@@ -8,9 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -48,10 +47,11 @@ namespace Azure.ResourceManager.CosmosDB
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<SqlDatabasePropertiesResource> resource = default;
             Optional<SqlDatabasePropertiesOptions> options = default;
             foreach (var property in element.EnumerateObject())
@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.CosmosDB
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, tags, location, resource.Value, options.Value);
+            return new SqlDatabaseData(id, name, type, systemData, tags, location, resource.Value, options.Value);
         }
     }
 }

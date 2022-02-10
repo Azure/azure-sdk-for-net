@@ -29,7 +29,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Make sure there is at least one operation, so we are going to build a custom model.
 Uri trainingFileUri = <trainingFileUri>;
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 await operation.WaitForCompletionAsync();
 
 // List the first ten or fewer operations that have been executed in the last 24h.

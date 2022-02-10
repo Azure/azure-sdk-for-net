@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var securityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await securityGroupCollection.CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await securityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
             Response<NetworkSecurityGroup> getNsgResponse = await securityGroupCollection.GetAsync(networkSecurityGroupName);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             //Create network Watcher
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
-            await networkWatcherCollection.CreateOrUpdateAsync(networkWatcherName, properties);
+            await networkWatcherCollection.CreateOrUpdateAsync(true, networkWatcherName, properties);
 
             //Create storage
             string storageName = Recording.GenerateAssetName("azsmnet");

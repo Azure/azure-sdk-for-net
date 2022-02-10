@@ -44,10 +44,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             uri.AppendPath("/accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/blobUploadEndpoint", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {

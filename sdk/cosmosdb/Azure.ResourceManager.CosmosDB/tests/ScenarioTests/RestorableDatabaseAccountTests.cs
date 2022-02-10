@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_restorableDatabaseAccount != null)
             {
-                await _restorableDatabaseAccount.DeleteAsync();
+                await _restorableDatabaseAccount.DeleteAsync(true);
             }
         }
 
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.AccountName == _restorableDatabaseAccount.Data.Name));
+            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
         [Test]
@@ -53,7 +54,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task RestorableDatabaseAccountListByLocation()
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableDatabaseAccounts().GetAllAsync(Resources.Models.Location.WestUS).ToEnumerableAsync();
+            CosmosDBLocation location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestUS);
+            var restorableAccounts = await location.GetRestorableDatabaseAccounts().GetAllAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
@@ -63,10 +65,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<DatabaseAccountLocation>()
             {
-                new DatabaseAccountLocation(id: null, locationName: Resources.Models.Location.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateOptions(Resources.Models.Location.WestUS, locations)
+            var createOptions = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 BackupPolicy = new ContinuousModeBackupPolicy(),
             };
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(_databaseAccountName, createOptions);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createOptions);
             return accountLro.Value;
         }
     }

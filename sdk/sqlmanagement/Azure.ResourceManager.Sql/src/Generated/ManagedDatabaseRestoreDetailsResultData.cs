@@ -8,13 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedDatabaseRestoreDetailsResult data model. </summary>
-    public partial class ManagedDatabaseRestoreDetailsResultData : Resource
+    public partial class ManagedDatabaseRestoreDetailsResultData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultData. </summary>
         public ManagedDatabaseRestoreDetailsResultData()
@@ -26,6 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> Restore status. </param>
         /// <param name="currentRestoringFileName"> Current restoring file name. </param>
         /// <param name="lastRestoredFileName"> Last restored file name. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="lastUploadedFileName"> Last uploaded file name. </param>
         /// <param name="lastUploadedFileTime"> Last uploaded file time. </param>
         /// <param name="blockReason"> The reason why restore is in Blocked state. </param>
-        internal ManagedDatabaseRestoreDetailsResultData(ResourceIdentifier id, string name, ResourceType type, string status, string currentRestoringFileName, string lastRestoredFileName, DateTimeOffset? lastRestoredFileTime, double? percentCompleted, IReadOnlyList<string> unrestorableFiles, long? numberOfFilesDetected, string lastUploadedFileName, DateTimeOffset? lastUploadedFileTime, string blockReason) : base(id, name, type)
+        internal ManagedDatabaseRestoreDetailsResultData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string status, string currentRestoringFileName, string lastRestoredFileName, DateTimeOffset? lastRestoredFileTime, double? percentCompleted, IReadOnlyList<string> unrestorableFiles, long? numberOfFilesDetected, string lastUploadedFileName, DateTimeOffset? lastUploadedFileTime, string blockReason) : base(id, name, type, systemData)
         {
             Status = status;
             CurrentRestoringFileName = currentRestoringFileName;

@@ -3753,6 +3753,33 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_Metadata()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                Metadata = metadata
+            };
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(
+                destinationPath: test.Directory.Name + "/" + destFileName,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task RenameAsync_DifferentDirectory()
         {
             // Arrange
@@ -3878,7 +3905,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 ShareFileRenameOptions options = new ShareFileRenameOptions
                 {
-                    SourceRequestConditions = new ShareFileRequestConditions
+                    SourceConditions = new ShareFileRequestConditions
                     {
                         LeaseId = leaseId
                     }
@@ -3924,7 +3951,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             if (includeLeaseId)
             {
-                options.DestinationRequestConditions = new ShareFileRequestConditions
+                options.DestinationConditions = new ShareFileRequestConditions
                 {
                     LeaseId = leaseId
                 };
@@ -4115,6 +4142,33 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_ContentType()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            string contentType = "contentType";
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ContentType = contentType
+            };
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(
+                destinationPath: test.Directory.Name + "/" + destFileName,
+                options: options);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+            Assert.AreEqual(contentType, response.Value.ContentType);
         }
 
         #region GenerateSasTests

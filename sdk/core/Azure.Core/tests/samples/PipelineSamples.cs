@@ -13,12 +13,14 @@ namespace Azure.Core.Samples
     public class PipelineSamples
     {
         [Test]
-        public void AddingPerCallPolicy()
+        public void AddPolicies()
         {
-            #region Snippet:AddingPerCallPolicy
+            #region Snippet:AddPerCallPolicy
             SecretClientOptions options = new SecretClientOptions();
             options.AddPolicy(new CustomRequestPolicy(), HttpPipelinePosition.PerCall);
+            #endregion
 
+            #region Snippet:AddPerRetryPolicy
             options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
             #endregion
         }

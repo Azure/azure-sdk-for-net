@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the RoleInstance data model. </summary>
-    public partial class RoleInstanceData : Resource
+    public partial class RoleInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleInstanceData. </summary>
         internal RoleInstanceData()
@@ -26,11 +25,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource Location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"></param>
         /// <param name="properties"></param>
-        internal RoleInstanceData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
+        internal RoleInstanceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type, systemData)
         {
             Location = location;
             Tags = tags;

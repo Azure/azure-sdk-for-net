@@ -28,7 +28,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-08-preview")
+        public CommunicationNetworkTraversalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-02-01")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
@@ -43,7 +43,7 @@ namespace Azure.Communication.NetworkTraversal
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/networktraversal/:issueRelayConfiguration", false);
+            uri.AppendPath("/networkTraversal/:issueRelayConfiguration", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -59,9 +59,9 @@ namespace Azure.Communication.NetworkTraversal
             return message;
         }
 
-        /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
-        /// <param name="id"> An existing ACS identity. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
+        /// <summary> Issue a configuration for an STUN/TURN server. </summary>
+        /// <param name="id"> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </param>
+        /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<CommunicationRelayConfiguration>> IssueRelayConfigurationAsync(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
@@ -81,9 +81,9 @@ namespace Azure.Communication.NetworkTraversal
             }
         }
 
-        /// <summary> Issue a configuration for an STUN/TURN server for an existing identity. </summary>
-        /// <param name="id"> An existing ACS identity. </param>
-        /// <param name="routeType"> The routing methodology to where the ICE server will be located from the client. </param>
+        /// <summary> Issue a configuration for an STUN/TURN server. </summary>
+        /// <param name="id"> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </param>
+        /// <param name="routeType"> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CommunicationRelayConfiguration> IssueRelayConfiguration(string id = null, RouteType? routeType = null, CancellationToken cancellationToken = default)
         {
