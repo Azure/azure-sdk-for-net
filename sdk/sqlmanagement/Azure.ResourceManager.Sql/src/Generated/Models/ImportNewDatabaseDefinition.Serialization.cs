@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("storageKey");
             writer.WriteStringValue(StorageKey);
             writer.WritePropertyName("storageUri");
-            writer.WriteStringValue(StorageUri);
+            writer.WriteStringValue(StorageUri.AbsoluteUri);
             writer.WritePropertyName("administratorLogin");
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword");

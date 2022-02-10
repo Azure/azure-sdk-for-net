@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Tenant. </summary>
     internal partial class TenantExtensionClient : ArmResource
     {
         private ClientDiagnostics _defaultClientDiagnostics;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TenantExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -44,21 +44,19 @@ namespace Azure.ResourceManager.Cdn
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public async virtual Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("TenantExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try
@@ -73,17 +71,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint. </summary>
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
-
             using var scope = DefaultClientDiagnostics.CreateScope("TenantExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try
@@ -98,7 +94,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
@@ -136,7 +136,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users. </summary>
+        /// <summary>
+        /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
+        /// Request Path: /providers/Microsoft.Cdn/edgenodes
+        /// Operation Id: EdgeNodes_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)

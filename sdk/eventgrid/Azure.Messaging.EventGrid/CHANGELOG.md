@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 4.8.2 (2022-02-08)
+
+### Bugs Fixed
+- Fixed deserialization bugs in `StorageDirectoryDeletedEventData` and `EventHubCaptureFileCreatedEventData` system events.
+
 ## 4.8.1 (2022-01-12)
 
 ### Bugs Fixed

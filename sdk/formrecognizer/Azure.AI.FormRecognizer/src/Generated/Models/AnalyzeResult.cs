@@ -90,6 +90,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public IReadOnlyList<DocumentEntity> Entities { get; }
         /// <summary> Extracted font styles. </summary>
         public IReadOnlyList<DocumentStyle> Styles { get; }
+        /// <summary> Detected languages. </summary>
+        public IReadOnlyList<DocumentLanguage> Languages { get; }
         /// <summary> Extracted documents. </summary>
         public IReadOnlyList<AnalyzedDocument> Documents { get; }
     }

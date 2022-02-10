@@ -18,7 +18,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _serviceBusNamespaceNamespacesClientDiagnostics;
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -45,14 +45,15 @@ namespace Azure.ResourceManager.ServiceBus
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            Client.TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
-        /// <summary> Gets all the available namespaces within the subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusNamespace> GetServiceBusNamespacesAsync(CancellationToken cancellationToken = default)
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await ServiceBusNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = await ServiceBusNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -90,10 +91,11 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_List
-        /// <summary> Gets all the available namespaces within the subscription, irrespective of the resource groups. </summary>
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
+        /// Operation Id: Namespaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceBusNamespace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusNamespace> GetServiceBusNamespaces(CancellationToken cancellationToken = default)
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = ServiceBusNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
                 try
                 {
                     var response = ServiceBusNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -131,20 +133,15 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
-        /// <summary> Check the give namespace name availability. </summary>
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckServiceBusNameAvailability");
             scope.Start();
             try
@@ -159,20 +156,15 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Namespaces_CheckNameAvailability
-        /// <summary> Check the give namespace name availability. </summary>
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
+        /// Operation Id: Namespaces_CheckNameAvailability
+        /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckServiceBusNameAvailability");
             scope.Start();
             try

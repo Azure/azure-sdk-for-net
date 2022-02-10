@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobStep data model. </summary>
-    public partial class JobStepData : Resource
+    public partial class JobStepData : ResourceData
     {
         /// <summary> Initializes a new instance of JobStepData. </summary>
         public JobStepData()

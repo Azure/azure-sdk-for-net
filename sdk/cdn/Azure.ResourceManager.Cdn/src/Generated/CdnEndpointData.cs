@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnEndpoint data model. </summary>
-    public partial class CdnEndpointData : TrackedResource
+    public partial class CdnEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>
         /// <param name="location"> The location. </param>

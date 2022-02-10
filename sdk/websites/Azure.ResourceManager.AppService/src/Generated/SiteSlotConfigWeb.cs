@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,24 +40,24 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotConfigWeb"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotConfigWeb(ArmClient armClient, SiteConfigData data) : this(armClient, data.Id)
+        internal SiteSlotConfigWeb(ArmClient client, SiteConfigData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotConfigWeb"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotConfigWeb(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SiteSlotConfigWeb(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotConfigWebWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string siteSlotConfigWebWebAppsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string siteSlotConfigWebWebAppsApiVersion);
             _siteSlotConfigWebWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigWebWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigWebWebAppsApiVersion);
             _siteSlotConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteSlotConfigSnapshot.ResourceType, out string siteSlotConfigSnapshotWebAppsApiVersion);
+            Client.TryGetApiVersion(SiteSlotConfigSnapshot.ResourceType, out string siteSlotConfigSnapshotWebAppsApiVersion);
             _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -89,10 +88,18 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_GetConfigurationSlot
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigSnapshots in the SiteSlotConfigSnapshot. </summary>
+        /// <returns> An object representing collection of SiteSlotConfigSnapshots and their operations over a SiteSlotConfigSnapshot. </returns>
+        public virtual SiteSlotConfigSnapshotCollection GetSiteSlotConfigSnapshots()
+        {
+            return new SiteSlotConfigSnapshotCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_GetConfigurationSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotConfigWeb>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotConfigWebWebAppsRestClient.GetConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotConfigWebWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotConfigWeb(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigWeb(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,10 +119,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_GetConfigurationSlot
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary>
+        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_GetConfigurationSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotConfigWeb> Get(CancellationToken cancellationToken = default)
         {
@@ -126,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotConfigWebWebAppsRestClient.GetConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _siteSlotConfigWebWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotConfigWeb(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigWeb(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,110 +143,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_CreateOrUpdateConfigurationSlot
-        /// <summary> Description for Updates the configuration of an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<SiteSlotConfigWebCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
-        {
-            if (siteConfig == null)
-            {
-                throw new ArgumentNullException(nameof(siteConfig));
-            }
-
-            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotConfigWebCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_CreateOrUpdateConfigurationSlot
-        /// <summary> Description for Updates the configuration of an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual SiteSlotConfigWebCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
-        {
-            if (siteConfig == null)
-            {
-                throw new ArgumentNullException(nameof(siteConfig));
-            }
-
-            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken);
-                var operation = new SiteSlotConfigWebCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_UpdateConfigurationSlot
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_UpdateConfigurationSlot
+        /// </summary>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
@@ -254,7 +163,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotConfigWebWebAppsRestClient.UpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotConfigWeb(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigWeb(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,10 +172,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_UpdateConfigurationSlot
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary>
+        /// Description for Updates the configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_UpdateConfigurationSlot
+        /// </summary>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
@@ -282,7 +192,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotConfigWebWebAppsRestClient.UpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken);
-                return Response.FromValue(new SiteSlotConfigWeb(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotConfigWeb(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,10 +201,77 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_ListConfigurationSnapshotInfoSlot
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary>
+        /// Description for Updates the configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
+        public async virtual Task<ArmOperation<SiteSlotConfigWeb>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        {
+            if (siteConfig == null)
+            {
+                throw new ArgumentNullException(nameof(siteConfig));
+            }
+
+            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotConfigWeb>(Response.FromValue(new SiteSlotConfigWeb(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates the configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
+        /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
+        public virtual ArmOperation<SiteSlotConfigWeb> CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        {
+            if (siteConfig == null)
+            {
+                throw new ArgumentNullException(nameof(siteConfig));
+            }
+
+            using var scope = _siteSlotConfigWebWebAppsClientDiagnostics.CreateScope("SiteSlotConfigWeb.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotConfigWebWebAppsRestClient.CreateOrUpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotConfigWeb>(Response.FromValue(new SiteSlotConfigWeb(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
+        /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlotAsync(CancellationToken cancellationToken = default)
@@ -332,10 +309,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// OperationId: WebApps_ListConfigurationSnapshotInfoSlot
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary>
+        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
+        /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlot(CancellationToken cancellationToken = default)
@@ -372,15 +350,5 @@ namespace Azure.ResourceManager.AppService
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
-
-        #region SiteSlotConfigSnapshot
-
-        /// <summary> Gets a collection of SiteSlotConfigSnapshots in the SiteSlotConfigWeb. </summary>
-        /// <returns> An object representing collection of SiteSlotConfigSnapshots and their operations over a SiteSlotConfigWeb. </returns>
-        public virtual SiteSlotConfigSnapshotCollection GetSiteSlotConfigSnapshots()
-        {
-            return new SiteSlotConfigSnapshotCollection(this);
-        }
-        #endregion
     }
 }

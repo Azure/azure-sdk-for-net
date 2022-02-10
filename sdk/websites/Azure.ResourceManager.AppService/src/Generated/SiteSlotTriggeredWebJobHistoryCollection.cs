@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotTriggeredWebJobHistoryCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSlotTriggeredWebJobHistoryCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteSlotTriggeredWebJobHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotTriggeredWebJobHistory.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
+            Client.TryGetApiVersion(SiteSlotTriggeredWebJobHistory.ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
             _siteSlotTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(_siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotTriggeredWebJob.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_GetTriggeredWebJobHistory
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
-        /// <param name="id"> History ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<SiteSlotTriggeredWebJobHistory> Get(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
-                if (response.Value == null)
-                    throw _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_GetTriggeredWebJobHistory
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
@@ -97,7 +70,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +79,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<SiteSlotTriggeredWebJobHistory> GetIfExists(string id, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotTriggeredWebJobHistory> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
+            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
+                var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotTriggeredWebJobHistory>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(ArmClient, response.Value), response.GetRawResponse());
+                    throw _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +108,95 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="id"> History ID. </param>
+        /// <summary>
+        /// Description for List a triggered web job&apos;s history for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history
+        /// Operation Id: WebApps_ListTriggeredWebJobHistory
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotTriggeredWebJobHistory>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotTriggeredWebJobHistory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotTriggeredWebJobHistory> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SiteSlotTriggeredWebJobHistory>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotTriggeredWebJobHistory>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SiteSlotTriggeredWebJobHistory>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="id"> History ID. </param>
+        /// <summary>
+        /// Description for List a triggered web job&apos;s history for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history
+        /// Operation Id: WebApps_ListTriggeredWebJobHistory
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotTriggeredWebJobHistory" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotTriggeredWebJobHistory> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.Exists");
-            scope.Start();
-            try
+            Page<SiteSlotTriggeredWebJobHistory> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(id, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SiteSlotTriggeredWebJobHistory> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
@@ -202,86 +219,89 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_ListTriggeredWebJobHistory
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
+        /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotTriggeredWebJobHistory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotTriggeredWebJobHistory> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotTriggeredWebJobHistory> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(id, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SiteSlotTriggeredWebJobHistory> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
-        /// OperationId: WebApps_ListTriggeredWebJobHistory
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
+        /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotTriggeredWebJobHistory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotTriggeredWebJobHistory> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async virtual Task<Response<SiteSlotTriggeredWebJobHistory>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotTriggeredWebJobHistory>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteSlotTriggeredWebJobHistory>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotTriggeredWebJobHistory(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
+        /// Operation Id: WebApps_GetTriggeredWebJobHistory
+        /// </summary>
+        /// <param name="id"> History ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual Response<SiteSlotTriggeredWebJobHistory> GetIfExists(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotTriggeredWebJobHistory>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SiteSlotTriggeredWebJobHistory> IEnumerable<SiteSlotTriggeredWebJobHistory>.GetEnumerator()

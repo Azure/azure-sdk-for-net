@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -39,21 +37,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "RestorePoint"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RestorePoint(ArmClient armClient, RestorePointData data) : this(armClient, data.Id)
+        internal RestorePoint(ArmClient client, RestorePointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="RestorePoint"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RestorePoint(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal RestorePoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string restorePointApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string restorePointApiVersion);
             _restorePointRestClient = new RestorePointsRestOperations(_restorePointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,7 +82,18 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> The operation to get the restore point. </summary>
+        /// <summary> Gets a collection of DiskRestorePoints in the DiskRestorePoint. </summary>
+        /// <returns> An object representing collection of DiskRestorePoints and their operations over a DiskRestorePoint. </returns>
+        public virtual DiskRestorePointCollection GetDiskRestorePoints()
+        {
+            return new DiskRestorePointCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// The operation to get the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RestorePoint>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -95,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _restorePointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +113,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the restore point. </summary>
+        /// <summary>
+        /// The operation to get the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RestorePoint> Get(CancellationToken cancellationToken = default)
         {
@@ -115,7 +128,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _restorePointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,53 +137,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The operation to delete the restore point. </summary>
+        /// <summary>
+        /// The operation to delete the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<RestorePointDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.Delete");
             scope.Start();
             try
             {
                 var response = await _restorePointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RestorePointDeleteOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,17 +163,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to delete the restore point. </summary>
+        /// <summary>
+        /// The operation to delete the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual RestorePointDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePoint.Delete");
             scope.Start();
             try
             {
                 var response = _restorePointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RestorePointDeleteOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ComputeArmOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -203,15 +188,5 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
-
-        #region DiskRestorePoint
-
-        /// <summary> Gets a collection of DiskRestorePoints in the RestorePoint. </summary>
-        /// <returns> An object representing collection of DiskRestorePoints and their operations over a RestorePoint. </returns>
-        public virtual DiskRestorePointCollection GetDiskRestorePoints()
-        {
-            return new DiskRestorePointCollection(this);
-        }
-        #endregion
     }
 }

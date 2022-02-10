@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -39,21 +37,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpoint"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpoint(ArmClient armClient, PrivateEndpointData data) : this(armClient, new ResourceIdentifier(data.Id))
+        internal PrivateEndpoint(ArmClient client, PrivateEndpointData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpoint"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpoint(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal PrivateEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string privateEndpointApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string privateEndpointApiVersion);
             _privateEndpointRestClient = new PrivateEndpointsRestOperations(_privateEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,7 +82,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified private endpoint by resource group. </summary>
+        /// <summary> Gets a collection of PrivateDnsZoneGroups in the PrivateDnsZoneGroup. </summary>
+        /// <returns> An object representing collection of PrivateDnsZoneGroups and their operations over a PrivateDnsZoneGroup. </returns>
+        public virtual PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
+        {
+            return new PrivateDnsZoneGroupCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<PrivateEndpoint>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _privateEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,7 +114,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified private endpoint by resource group. </summary>
+        /// <summary>
+        /// Gets the specified private endpoint by resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateEndpoint> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -117,7 +130,7 @@ namespace Azure.ResourceManager.Network
                 var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw _privateEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -126,53 +139,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpoint.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpoint.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified private endpoint. </summary>
+        /// <summary>
+        /// Deletes the specified private endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateEndpointDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpoint.Delete");
             scope.Start();
             try
             {
                 var response = await _privateEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointDeleteOperation(_privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -184,17 +165,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified private endpoint. </summary>
+        /// <summary>
+        /// Deletes the specified private endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
+        /// Operation Id: PrivateEndpoints_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateEndpointDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpoint.Delete");
             scope.Start();
             try
             {
                 var response = _privateEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PrivateEndpointDeleteOperation(_privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,15 +190,5 @@ namespace Azure.ResourceManager.Network
                 throw;
             }
         }
-
-        #region PrivateDnsZoneGroup
-
-        /// <summary> Gets a collection of PrivateDnsZoneGroups in the PrivateEndpoint. </summary>
-        /// <returns> An object representing collection of PrivateDnsZoneGroups and their operations over a PrivateEndpoint. </returns>
-        public virtual PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
-        {
-            return new PrivateDnsZoneGroupCollection(this);
-        }
-        #endregion
     }
 }

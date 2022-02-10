@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Feature data model. </summary>
-    public partial class FeatureData : Resource
+    public partial class FeatureData : ResourceData
     {
         /// <summary> Initializes a new instance of FeatureData. </summary>
         internal FeatureData()

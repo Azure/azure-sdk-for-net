@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -33,11 +33,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal WebSiteCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal WebSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _webSiteWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSite.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(WebSite.ResourceType, out string webSiteWebAppsApiVersion);
+            Client.TryGetApiVersion(WebSite.ResourceType, out string webSiteWebAppsApiVersion);
             _webSiteWebAppsRestClient = new WebAppsRestOperations(_webSiteWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,54 +51,18 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_CreateOrUpdate
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary>
+        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual WebSiteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            if (siteEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(siteEnvelope));
-            }
-
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _webSiteWebAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope, cancellationToken);
-                var operation = new WebSiteCreateOrUpdateOperation(ArmClient, _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_CreateOrUpdate
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<WebSiteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<WebSite>> CreateOrUpdateAsync(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (siteEnvelope == null)
@@ -110,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebSiteCreateOrUpdateOperation(ArmClient, _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<WebSite>(new WebSiteOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,26 +87,34 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_Get
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
-        /// <param name="name"> Name of the app. </param>
+        /// <summary>
+        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
+        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<WebSite> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="siteEnvelope"/> is null. </exception>
+        public virtual ArmOperation<WebSite> CreateOrUpdate(bool waitForCompletion, string name, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (siteEnvelope == null)
+            {
+                throw new ArgumentNullException(nameof(siteEnvelope));
+            }
 
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.Get");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
-                if (response.Value == null)
-                    throw _webSiteWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
+                var response = _webSiteWebAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope, cancellationToken);
+                var operation = new AppServiceArmOperation<WebSite>(new WebSiteOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, siteEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -150,10 +123,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_Get
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -169,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _webSiteWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,23 +152,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<WebSite> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<WebSite> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<WebSite>(null, response.GetRawResponse());
-                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
+                    throw _webSiteWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,55 +181,97 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the app. </param>
+        /// <summary>
+        /// Description for Gets all web, mobile, and API apps in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
+        /// Operation Id: WebApps_ListByResourceGroup
+        /// </summary>
+        /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSite> GetAllAsync(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<WebSite>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<WebSite>(null, response.GetRawResponse());
-                return Response.FromValue(new WebSite(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<WebSite>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the app. </param>
+        /// <summary>
+        /// Description for Gets all web, mobile, and API apps in the specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
+        /// Operation Id: WebApps_ListByResourceGroup
+        /// </summary>
+        /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSite> GetAll(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.Exists");
-            scope.Start();
-            try
+            Page<WebSite> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webSiteWebAppsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<WebSite> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _webSiteWebAppsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -274,88 +294,89 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_ListByResourceGroup
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
-        /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSite> GetAll(bool? includeSlots = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Page<WebSite> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteWebAppsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<WebSite> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteWebAppsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: WebApps_ListByResourceGroup
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
-        /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSite> GetAllAsync(bool? includeSlots = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async virtual Task<Response<WebSite>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSite>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<WebSite>(null, response.GetRawResponse());
+                return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<WebSite>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSite(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
+        /// Operation Id: WebApps_Get
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<WebSite> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<WebSite>(null, response.GetRawResponse());
+                return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<WebSite> IEnumerable<WebSite>.GetEnumerator()

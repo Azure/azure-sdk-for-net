@@ -39,30 +39,102 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             ConnectionStringParser.GetValues(options.ConnectionString, out _, out string ingestionEndpoint);
             options.Retry.MaxRetries = 0;
-            options.AddPolicy(new IngestionResponsePolicy(this), HttpPipelinePosition.PerCall);
 
             applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
         }
 
         public async ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
+            // TODO
+            // Change return type of this function to ExportResult
+            int result = 0;
             if (cancellationToken.IsCancellationRequested)
             {
-                return 0;
+                return result;
             }
 
-            int itemsAccepted = 0;
-
-            if (async)
+            try
             {
-                itemsAccepted = await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).ConfigureAwait(false);
+                using var httpMessage = async ?
+                    await this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+
+                if (httpMessage != null)
+                {
+                    if (storage == null && httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        HandleFailures(httpMessage);
+                        result = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
+            }
+
+            return result;
+        }
+
+        private void HandleFailures(HttpMessage httpMessage)
+        {
+            if (httpMessage.HasResponse)
+            {
+                HandleFailureResponseCodes(httpMessage);
             }
             else
             {
-                itemsAccepted = this.applicationInsightsRestClient.InternalTrackAsync(telemetryItems, storage, cancellationToken).Result;
+                // HttpRequestException
+                var content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
+        }
 
-            return itemsAccepted;
+        private void HandleFailureResponseCodes(HttpMessage httpMessage)
+        {
+            byte[] content;
+            int retryInterval;
+            switch (httpMessage.Response.Status)
+            {
+                case ResponseStatusCodes.Success:
+                    // log successful message
+                    break;
+                case ResponseStatusCodes.PartialSuccess:
+                    // Parse retry-after header
+                    // Send Failed Messages To Storage
+                    TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                    content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                    if (content != null)
+                    {
+                        retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                        storage.SaveTelemetry(content, retryInterval);
+                    }
+                    break;
+                case ResponseStatusCodes.RequestTimeout:
+                case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                    // Parse retry-after header
+                    // Send Messages To Storage
+                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                    retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
+                    storage.SaveTelemetry(content, retryInterval);
+                    break;
+                case ResponseStatusCodes.InternalServerError:
+                case ResponseStatusCodes.BadGateway:
+                case ResponseStatusCodes.ServiceUnavailable:
+                case ResponseStatusCodes.GatewayTimeout:
+                    // Send Messages To Storage
+                    content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                    storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                    break;
+                default:
+                    // Log Non-Retriable Status and don't retry or store;
+                    break;
+            }
         }
 
         public async ValueTask TransmitFromStorage(bool async, CancellationToken cancellationToken)

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerAzureADAdministrator data model. </summary>
-    public partial class ServerAzureADAdministratorData : Resource
+    public partial class ServerAzureADAdministratorData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerAzureADAdministratorData. </summary>
         public ServerAzureADAdministratorData()

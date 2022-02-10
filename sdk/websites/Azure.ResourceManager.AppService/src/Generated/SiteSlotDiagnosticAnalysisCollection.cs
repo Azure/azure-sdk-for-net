@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticAnalysisCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSlotDiagnosticAnalysisCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteSlotDiagnosticAnalysisCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticAnalysis.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(SiteSlotDiagnosticAnalysis.ResourceType, out string siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
+            Client.TryGetApiVersion(SiteSlotDiagnosticAnalysis.ResourceType, out string siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
             _siteSlotDiagnosticAnalysisDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotDiagnostic.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteAnalysisSlot
-        /// <summary> Description for Get Site Analysis. </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnosticAnalysis> Get(string analysisName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
-
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken);
-                if (response.Value == null)
-                    throw _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_GetSiteAnalysisSlot
-        /// <summary> Description for Get Site Analysis. </summary>
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
@@ -97,7 +70,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +79,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Description for Get Site Analysis
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnosticAnalysis> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDiagnosticAnalysis> Get(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
+            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
+                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(ArmClient, response.Value), response.GetRawResponse());
+                    throw _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +108,95 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <summary>
+        /// Description for Get Site Analyses
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
+        /// Operation Id: Diagnostics_ListSiteAnalysesSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotDiagnosticAnalysis" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotDiagnosticAnalysis> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
-
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<SiteSlotDiagnosticAnalysis>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticAnalysis(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<SiteSlotDiagnosticAnalysis>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <summary>
+        /// Description for Get Site Analyses
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
+        /// Operation Id: Diagnostics_ListSiteAnalysesSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotDiagnosticAnalysis" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotDiagnosticAnalysis> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
-
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
-            scope.Start();
-            try
+            Page<SiteSlotDiagnosticAnalysis> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(analysisName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<SiteSlotDiagnosticAnalysis> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
@@ -202,86 +219,89 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_ListSiteAnalysesSlot
-        /// <summary> Description for Get Site Analyses. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotDiagnosticAnalysis" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotDiagnosticAnalysis> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotDiagnosticAnalysis> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
+            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(analysisName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<SiteSlotDiagnosticAnalysis> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}
-        /// OperationId: Diagnostics_ListSiteAnalysesSlot
-        /// <summary> Description for Get Site Analyses. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDiagnosticAnalysis" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotDiagnosticAnalysis> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotDiagnosticAnalysis>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
+            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<SiteSlotDiagnosticAnalysis>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ListSiteAnalysesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticAnalysis(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}
+        /// Operation Id: Diagnostics_GetSiteAnalysisSlot
+        /// </summary>
+        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        public virtual Response<SiteSlotDiagnosticAnalysis> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
+            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<SiteSlotDiagnosticAnalysis>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<SiteSlotDiagnosticAnalysis> IEnumerable<SiteSlotDiagnosticAnalysis>.GetEnumerator()

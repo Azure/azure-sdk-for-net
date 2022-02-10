@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class UpdateResourceDefinition : Resource
+    public partial class UpdateResourceDefinition : ResourceData
     {
         /// <summary> Initializes a new instance of UpdateResourceDefinition. </summary>
         public UpdateResourceDefinition()

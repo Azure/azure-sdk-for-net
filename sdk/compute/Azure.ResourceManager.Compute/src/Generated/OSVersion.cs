@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,21 +37,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref = "OSVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OSVersion(ArmClient armClient, OSVersionData data) : this(armClient, data.Id)
+        internal OSVersion(ArmClient client, OSVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="OSVersion"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSVersion(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal OSVersion(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _oSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
             _oSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -83,7 +82,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<OSVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSVersion(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -103,7 +106,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OSVersion> Get(CancellationToken cancellationToken = default)
         {
@@ -114,43 +121,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersion(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersion.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
+                return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

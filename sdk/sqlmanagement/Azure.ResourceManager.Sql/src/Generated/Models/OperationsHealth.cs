@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Operations health status in a location. </summary>
-    public partial class OperationsHealth : Resource
+    public partial class OperationsHealth : ResourceData
     {
         /// <summary> Initializes a new instance of OperationsHealth. </summary>
         public OperationsHealth()

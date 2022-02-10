@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
@@ -31,11 +32,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of the <see cref="RecommendedActionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RecommendedActionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal RecommendedActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedAction.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
+            Client.TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
             _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(_recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -48,40 +50,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseAdvisor.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseRecommendedActions_Get
-        /// <summary> Gets a database recommended action. </summary>
-        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<RecommendedAction> Get(string recommendedActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
-                if (response.Value == null)
-                    throw _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseRecommendedActions_Get
-        /// <summary> Gets a database recommended action. </summary>
+        /// <summary>
+        /// Gets a database recommended action.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
@@ -97,7 +70,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RecommendedAction(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +79,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a database recommended action.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<RecommendedAction> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual Response<RecommendedAction> Get(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.Get");
             scope.Start();
             try
             {
-                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
+                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(ArmClient, response.Value), response.GetRawResponse());
+                    throw _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,55 +108,65 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
+        /// <summary>
+        /// Gets list of Database Recommended Actions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions
+        /// Operation Id: DatabaseRecommendedActions_ListByDatabaseAdvisor
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public async virtual Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecommendedAction> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<RecommendedAction>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
+        /// <summary>
+        /// Gets list of Database Recommended Actions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions
+        /// Operation Id: DatabaseRecommendedActions_ListByDatabaseAdvisor
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string recommendedActionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecommendedAction> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
-            scope.Start();
-            try
+            Page<RecommendedAction> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(recommendedActionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisor(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
@@ -202,56 +189,89 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseRecommendedActions_ListByDatabaseAdvisor
-        /// <summary> Gets list of Database Recommended Actions. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
+        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecommendedAction> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Page<RecommendedAction> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisor(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(recommendedActionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
-        /// OperationId: DatabaseRecommendedActions_ListByDatabaseAdvisor
-        /// <summary> Gets list of Database Recommended Actions. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
+        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecommendedAction> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        public async virtual Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecommendedAction>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(ArmClient, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
+        /// Operation Id: DatabaseRecommendedActions_Get
+        /// </summary>
+        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        public virtual Response<RecommendedAction> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+
+            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<RecommendedAction> IEnumerable<RecommendedAction>.GetEnumerator()

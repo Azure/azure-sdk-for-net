@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -39,21 +37,21 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TableService"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TableService(ArmClient armClient, TableServiceData data) : this(armClient, data.Id)
+        internal TableService(ArmClient client, TableServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="TableService"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TableService(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal TableService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tableServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
+            Client.TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
             _tableServiceRestClient = new TableServicesRestOperations(_tableServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -84,7 +82,18 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Gets a collection of Tables in the Table. </summary>
+        /// <returns> An object representing collection of Tables and their operations over a Table. </returns>
+        public virtual TableCollection GetTables()
+        {
+            return new TableCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default
+        /// Operation Id: TableServices_GetServiceProperties
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TableService>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -95,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _tableServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _tableServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new TableService(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +113,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Gets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default
+        /// Operation Id: TableServices_GetServiceProperties
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableService> Get(CancellationToken cancellationToken = default)
         {
@@ -115,7 +128,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _tableServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw _tableServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TableService(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,48 +137,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _tableServiceClientDiagnostics.CreateScope("TableService.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default
+        /// Operation Id: TableServices_SetServiceProperties
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<TableServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<TableService>> CreateOrUpdateAsync(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -177,7 +158,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _tableServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new TableServiceCreateOrUpdateOperation(ArmClient, response);
+                var operation = new StorageArmOperation<TableService>(Response.FromValue(new TableService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -189,12 +170,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary>
+        /// Sets the properties of a storage account’s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default
+        /// Operation Id: TableServices_SetServiceProperties
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The properties of a storage account’s Table service, only properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules can be specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual TableServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TableService> CreateOrUpdate(bool waitForCompletion, TableServiceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -206,7 +191,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _tableServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
-                var operation = new TableServiceCreateOrUpdateOperation(ArmClient, response);
+                var operation = new StorageArmOperation<TableService>(Response.FromValue(new TableService(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -217,15 +202,5 @@ namespace Azure.ResourceManager.Storage
                 throw;
             }
         }
-
-        #region Table
-
-        /// <summary> Gets a collection of Tables in the TableService. </summary>
-        /// <returns> An object representing collection of Tables and their operations over a TableService. </returns>
-        public virtual TableCollection GetTables()
-        {
-            return new TableCollection(this);
-        }
-        #endregion
     }
 }

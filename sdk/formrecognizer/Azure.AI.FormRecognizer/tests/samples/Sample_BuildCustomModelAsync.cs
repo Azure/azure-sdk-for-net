@@ -31,7 +31,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+            // We are selecting the Template build mode in this sample. For more information about the available
+            // build modes and their differences, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildmode
+
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel model = operationResponse.Value;
 

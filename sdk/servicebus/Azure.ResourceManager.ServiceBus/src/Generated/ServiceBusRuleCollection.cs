@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -32,11 +32,12 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServiceBusRuleCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServiceBusRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _serviceBusRuleRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusRule.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ServiceBusRule.ResourceType, out string serviceBusRuleRulesApiVersion);
+            Client.TryGetApiVersion(ServiceBusRule.ResourceType, out string serviceBusRuleRulesApiVersion);
             _serviceBusRuleRulesRestClient = new RulesRestOperations(_serviceBusRuleRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusRuleRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -49,54 +50,18 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusSubscription.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_CreateOrUpdate
-        /// <summary> Creates a new rule and updates an existing rule. </summary>
+        /// <summary>
+        /// Creates a new rule and updates an existing rule
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServiceBusRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _serviceBusRuleRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken);
-                var operation = new ServiceBusRuleCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_CreateOrUpdate
-        /// <summary> Creates a new rule and updates an existing rule. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="ruleName"> The rule name. </param>
-        /// <param name="parameters"> Parameters supplied to create a rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServiceBusRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServiceBusRule>> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (parameters == null)
@@ -109,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusRuleRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusRuleCreateOrUpdateOperation(ArmClient, response);
+                var operation = new ServiceBusArmOperation<ServiceBusRule>(Response.FromValue(new ServiceBusRule(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,26 +86,34 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_Get
-        /// <summary> Retrieves the description for the specified rule. </summary>
+        /// <summary>
+        /// Creates a new rule and updates an existing rule
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The rule name. </param>
+        /// <param name="parameters"> Parameters supplied to create a rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<ServiceBusRule> Get(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<ServiceBusRule> CreateOrUpdate(bool waitForCompletion, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
+            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceBusRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
-                if (response.Value == null)
-                    throw _serviceBusRuleRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(ArmClient, response.Value), response.GetRawResponse());
+                var response = _serviceBusRuleRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, parameters, cancellationToken);
+                var operation = new ServiceBusArmOperation<ServiceBusRule>(Response.FromValue(new ServiceBusRule(Client, response), response.GetRawResponse()));
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -149,10 +122,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_Get
-        /// <summary> Retrieves the description for the specified rule. </summary>
+        /// <summary>
+        /// Retrieves the description for the specified rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -168,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusRuleRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _serviceBusRuleRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusRule(ArmClient, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,23 +151,27 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Retrieves the description for the specified rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<ServiceBusRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
+            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceBusRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
+                var response = _serviceBusRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(ArmClient, response.Value), response.GetRawResponse());
+                    throw _serviceBusRuleRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,55 +180,99 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The rule name. </param>
+        /// <summary>
+        /// List all the rules within given topic-subscription
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules
+        /// Operation Id: Rules_ListBySubscriptions
+        /// </summary>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusRule> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-
-            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<ServiceBusRule>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _serviceBusRuleRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRule(ArmClient, response.Value), response.GetRawResponse());
+                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serviceBusRuleRulesRestClient.ListBySubscriptionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ServiceBusRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serviceBusRuleRulesRestClient.ListBySubscriptionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ruleName"> The rule name. </param>
+        /// <summary>
+        /// List all the rules within given topic-subscription
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules
+        /// Operation Id: Rules_ListBySubscriptions
+        /// </summary>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusRule> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-
-            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.Exists");
-            scope.Start();
-            try
+            Page<ServiceBusRule> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serviceBusRuleRulesRestClient.ListBySubscriptions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ServiceBusRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serviceBusRuleRulesRestClient.ListBySubscriptionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -273,90 +295,89 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_ListBySubscriptions
-        /// <summary> List all the rules within given topic-subscription. </summary>
-        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
+        /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceBusRule> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Page<ServiceBusRule> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.Exists");
+            scope.Start();
+            try
             {
-                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceBusRuleRulesRestClient.ListBySubscriptions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = GetIfExists(ruleName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
-            Page<ServiceBusRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceBusRuleRulesRestClient.ListBySubscriptionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}
-        /// OperationId: Rules_ListBySubscriptions
-        /// <summary> List all the rules within given topic-subscription. </summary>
-        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
+        /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceBusRule> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public async virtual Task<Response<ServiceBusRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceBusRule>> FirstPageFunc(int? pageSizeHint)
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceBusRuleRulesRestClient.ListBySubscriptionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _serviceBusRuleRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<ServiceBusRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceBusRuleRulesRestClient.ListBySubscriptionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}
+        /// Operation Id: Rules_Get
+        /// </summary>
+        /// <param name="ruleName"> The rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual Response<ServiceBusRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _serviceBusRuleRulesClientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceBusRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<ServiceBusRule>(null, response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ServiceBusRule> IEnumerable<ServiceBusRule>.GetEnumerator()

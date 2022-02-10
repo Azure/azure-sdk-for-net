@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +22,6 @@ namespace Azure.ResourceManager
     /// </summary>
     public partial class ArmClient
     {
-        /// <summary>
-        /// The base URI of the service.
-        /// </summary>
-        private static readonly Uri _defaultUri = new Uri("https://management.azure.com");
         private Tenant _tenant;
         private Subscription _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
@@ -45,9 +42,20 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default) : this(credential, null, _defaultUri, options)
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public ArmClient(TokenCredential credential) : this(credential, default, default)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId): this(credential, defaultSubscriptionId, default)
         {
         }
 
@@ -58,33 +66,23 @@ namespace Azure.ResourceManager
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options = default) : this(credential, defaultSubscriptionId, _defaultUri, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClient"/> class.
-        /// </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId, Uri baseUri, ArmClientOptions options = default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(baseUri, nameof(baseUri));
 
-            BaseUri = baseUri;
             options ??= new ArmClientOptions();
+
+            Argument.AssertNotNull(options.Environment.BaseUri, nameof(options.Environment.BaseUri));
+
+            BaseUri = options.Environment.BaseUri;
 
             if (options.Diagnostics.IsTelemetryEnabled)
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope), new MgmtTelemetryPolicy(this, options));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope), new MgmtTelemetryPolicy(this, options));
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Scope));
+                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
             }
 
             DiagnosticOptions = options.Diagnostics;
@@ -124,17 +122,17 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        protected internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal virtual DiagnosticsOptions DiagnosticOptions { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        protected internal virtual Uri BaseUri { get; private set; }
+        internal virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; private set; }
+        internal virtual HttpPipeline Pipeline { get; private set; }
 
         /// <summary>
         /// Gets the Azure subscriptions.
@@ -264,5 +262,17 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> A collection of the management groups. </returns>
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
+
+        /// <summary>
+        /// Gets a client using this instance of ArmClient to copy the client settings from.
+        /// </summary>
+        /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
+        /// <param name="ctor"> Delegate method that will construct the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetClient<T>(Func<T> ctor)
+            where T : ArmResource
+        {
+            return ctor();
+        }
     }
 }

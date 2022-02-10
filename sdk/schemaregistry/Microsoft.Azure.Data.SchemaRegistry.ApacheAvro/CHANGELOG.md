@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2022-02-10)
 
 ### Features Added
 
+- Added dynamic overload for encoding messages.
+- Added generic overload for decoding messages.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- The generic method signature for encoding has changed.
+- The dynamic method signature for decoding has changed.
 
 ## 1.0.0-beta.5 (2022-01-13)
 

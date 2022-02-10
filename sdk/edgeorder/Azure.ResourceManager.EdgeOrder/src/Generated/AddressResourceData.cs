@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary> A class representing the AddressResource data model. </summary>
-    public partial class AddressResourceData : TrackedResource
+    public partial class AddressResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AddressResourceData. </summary>
         /// <param name="location"> The location. </param>
