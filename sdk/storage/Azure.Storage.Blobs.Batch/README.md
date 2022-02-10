@@ -39,7 +39,7 @@ In order to interact with the Azure Blobs Storage service for batch operations, 
 // Create a BlobServiceClient that will authenticate through Active Directory
 Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
-BlobBatchClient batch = service.GetBlobBatchClient();
+BlobBatchClient batch = client.GetBlobBatchClient();
 ```
 
 ## Key concepts

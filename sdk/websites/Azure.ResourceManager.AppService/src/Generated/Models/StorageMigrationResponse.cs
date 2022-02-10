@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,9 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="operationId"> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </param>
-        internal StorageMigrationResponse(ResourceIdentifier id, string name, ResourceType type, string kind, string operationId) : base(id, name, type, kind)
+        internal StorageMigrationResponse(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string operationId) : base(id, name, type, systemData, kind)
         {
             OperationId = operationId;
         }

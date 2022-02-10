@@ -4,21 +4,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.Core.Tests
 {
     public class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
-
-        protected override ResourceType ValidResourceType => "MyFake.Namespace/testResource";
 
         public virtual Pageable<TestResource> GetAll(int pages = 1, CancellationToken cancellation = default)
         {

@@ -2,27 +2,43 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using Azure.Core;
 
-namespace Azure.Messaging
+namespace Azure
 {
     /// <summary>
-    /// An abstraction for a message containing a content type along with its data.
+    /// A message containing a content type along with its data.
     /// </summary>
-    public abstract class MessageWithMetadata
+    public class MessageWithMetadata
     {
         /// <summary>
         /// Gets or sets the message data.
         /// </summary>
-        public abstract BinaryData Data { get; set; }
+        public virtual BinaryData? Data { get; set; }
 
         /// <summary>
         /// Gets or sets the message content type.
         /// </summary>
-        public abstract string ContentType { get; set; }
+        public virtual ContentType? ContentType
+        {
+            get => ContentTypeCore;
+            set => ContentTypeCore = value;
+        }
 
         /// <summary>
-        /// Gets whether the message is read only or not.
+        /// For inheriting types that have a string ContentType property, this property should be overriden to forward
+        /// the <see cref="ContentType"/> property into the inheriting type's string property, and vice versa.
+        /// For types that have a <see cref="Azure.Core.ContentType"/> ContentType property, it is not necessary to override this member.
         /// </summary>
-        public abstract bool IsReadOnly { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected virtual ContentType? ContentTypeCore { get; set; }
+
+        /// <summary>
+        /// Gets whether the message is read only or not. This
+        /// can be overriden by inheriting classes to specify whether or
+        /// not the message can be modified.
+        /// </summary>
+        public virtual bool IsReadOnly { get; }
     }
 }

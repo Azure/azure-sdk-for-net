@@ -7,8 +7,8 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
         /// <param name="certThumbprint"> The client certificate thumbprint. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
-        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType type, string kind, string vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? resyncRequired, string dnsServers, bool? isSwift) : base(id, name, type, kind)
+        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? resyncRequired, string dnsServers, bool? isSwift) : base(id, name, type, systemData, kind)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;

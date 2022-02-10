@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("protectedSettings");
                 writer.WriteObjectValue(ProtectedSettings);
             }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures");
+                writer.WriteBooleanValue(SuppressFailures.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

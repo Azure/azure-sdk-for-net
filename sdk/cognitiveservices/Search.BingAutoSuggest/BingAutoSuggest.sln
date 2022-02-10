@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest.Tests", "tests\Microsoft.Azure.CognitiveServices.Search.BingAutoSuggest.Tests.csproj", "{0A3F4545-630A-4645-AE6F-D88E69795B65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{A91A976B-9B7C-41F3-BDBF-4D6DF4800B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{B0D9F2A7-4E17-4638-88B5-1DF05EFFE27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{0A3F4545-630A-4645-AE6F-D88E69795B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3F4545-630A-4645-AE6F-D88E69795B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3F4545-630A-4645-AE6F-D88E69795B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A91A976B-9B7C-41F3-BDBF-4D6DF4800B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91A976B-9B7C-41F3-BDBF-4D6DF4800B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91A976B-9B7C-41F3-BDBF-4D6DF4800B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91A976B-9B7C-41F3-BDBF-4D6DF4800B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D9F2A7-4E17-4638-88B5-1DF05EFFE27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D9F2A7-4E17-4638-88B5-1DF05EFFE27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D9F2A7-4E17-4638-88B5-1DF05EFFE27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D9F2A7-4E17-4638-88B5-1DF05EFFE27D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

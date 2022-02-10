@@ -56,7 +56,6 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
             BlobClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
@@ -64,6 +63,7 @@ namespace Azure.Storage.Blobs.Tests
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 metadata: metadata))
             {
@@ -90,13 +90,13 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
             BlobClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
             using (Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 metadata: metadata))
             {
@@ -135,6 +135,7 @@ namespace Azure.Storage.Blobs.Tests
             using (Stream openWriteStream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 progressHandler: progress))
             {

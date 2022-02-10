@@ -8,8 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -42,10 +41,11 @@ namespace Azure.ResourceManager.Compute
         internal static SshPublicKeyData DeserializeSshPublicKeyData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> publicKey = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SshPublicKeyData(id, name, type, tags, location, publicKey.Value);
+            return new SshPublicKeyData(id, name, type, systemData, tags, location, publicKey.Value);
         }
     }
 }

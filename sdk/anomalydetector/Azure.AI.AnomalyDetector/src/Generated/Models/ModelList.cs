@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Response to the list models operation. </summary>
+    /// <summary> Response of listing models. </summary>
     internal partial class ModelList
     {
         /// <summary> Initializes a new instance of ModelList. </summary>
@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="models"> List of models. </param>
         /// <param name="currentCount"> Current count of trained multivariate models. </param>
         /// <param name="maxCount"> Max number of models that can be trained for this subscription. </param>
-        /// <param name="nextLink"> next link to fetch more models. </param>
+        /// <param name="nextLink"> The link to fetch more models. </param>
         internal ModelList(IReadOnlyList<ModelSnapshot> models, int currentCount, int maxCount, string nextLink)
         {
             Models = models;
@@ -50,7 +50,7 @@ namespace Azure.AI.AnomalyDetector.Models
         public int CurrentCount { get; }
         /// <summary> Max number of models that can be trained for this subscription. </summary>
         public int MaxCount { get; }
-        /// <summary> next link to fetch more models. </summary>
+        /// <summary> The link to fetch more models. </summary>
         public string NextLink { get; }
     }
 }

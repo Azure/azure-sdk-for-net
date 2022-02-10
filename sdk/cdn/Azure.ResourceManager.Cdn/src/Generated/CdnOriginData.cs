@@ -5,13 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnOrigin data model. </summary>
-    public partial class CdnOriginData : ProxyResource
+    public partial class CdnOriginData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnOriginData. </summary>
         public CdnOriginData()
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>

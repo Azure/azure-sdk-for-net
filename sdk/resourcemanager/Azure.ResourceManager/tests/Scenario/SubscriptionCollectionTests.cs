@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task CheckIfExists()
+        public async Task Exists()
         {
-            var expectFalse = await Client.GetSubscriptions().CheckIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
+            var expectFalse = await Client.GetSubscriptions().ExistsAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsFalse(expectFalse);
             string subscriptionId = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Id.SubscriptionId;
-            var expectTrue = await Client.GetSubscriptions().CheckIfExistsAsync(subscriptionId).ConfigureAwait(false);
+            var expectTrue = await Client.GetSubscriptions().ExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.IsTrue(expectTrue);
         }
     }

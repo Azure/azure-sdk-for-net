@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DateTimeOffset> eventTime = default;
             Optional<SecurityEventType> securityEventType = default;
             Optional<string> subscription = default;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEvent(id, name, type, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            return new SecurityEvent(id, name, type, systemData, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
         }
     }
 }

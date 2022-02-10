@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
-                TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
+                TestEnvironment.SubscriptionId,
                 options);
         }
 
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.TestFramework
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
                 _cleanupClient ??= new ArmClient(
-                    TestEnvironment.SubscriptionId,
                     TestEnvironment.Credential,
+                    TestEnvironment.SubscriptionId,
                     new ArmClientOptions());
                 var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync();
+                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(true);
                 }
             }
         }

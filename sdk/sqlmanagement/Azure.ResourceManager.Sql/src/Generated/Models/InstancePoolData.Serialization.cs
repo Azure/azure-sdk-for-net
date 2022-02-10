@@ -8,8 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -59,10 +58,11 @@ namespace Azure.ResourceManager.Sql
         {
             Optional<Models.Sku> sku = default;
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> subnetId = default;
             Optional<int> vCores = default;
             Optional<InstancePoolLicenseType> licenseType = default;
@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new InstancePoolData(id, name, type, tags, location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType));
+            return new InstancePoolData(id, name, type, systemData, tags, location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType));
         }
     }
 }

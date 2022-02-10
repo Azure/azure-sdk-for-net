@@ -12,24 +12,29 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Vault
-        /// <summary> Gets an object representing a VaultCollection along with the instance operations that can be performed on it. </summary>
+        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetCachedClient((client) =>
+            {
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of Vaults in the Vault. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VaultCollection" /> object. </returns>
+        /// <returns> An object representing collection of Vaults and their operations over a Vault. </returns>
         public static VaultCollection GetVaults(this ResourceGroup resourceGroup)
         {
-            return new VaultCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetVaults();
         }
-        #endregion
 
-        #region ManagedHsm
-        /// <summary> Gets an object representing a ManagedHsmCollection along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets a collection of ManagedHsms in the ManagedHsm. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ManagedHsmCollection" /> object. </returns>
+        /// <returns> An object representing collection of ManagedHsms and their operations over a ManagedHsm. </returns>
         public static ManagedHsmCollection GetManagedHsms(this ResourceGroup resourceGroup)
         {
-            return new ManagedHsmCollection(resourceGroup);
+            return GetExtensionClient(resourceGroup).GetManagedHsms();
         }
-        #endregion
     }
 }

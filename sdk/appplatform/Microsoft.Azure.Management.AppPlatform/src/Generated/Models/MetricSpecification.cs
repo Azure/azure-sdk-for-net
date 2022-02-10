@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// will be returned for time duration where no metric is
         /// emitted/published.</param>
         /// <param name="dimensions">Dimensions of the metric</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string category = default(string), string aggregationType = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), bool? fillGapWithZero = default(bool?), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        /// <param name="sourceMdmNamespace">Name of the MDM namespace.
+        /// Optional.</param>
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string category = default(string), string aggregationType = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), bool? fillGapWithZero = default(bool?), IList<MetricDimension> dimensions = default(IList<MetricDimension>), string sourceMdmNamespace = default(string))
         {
             Name = name;
             DisplayName = displayName;
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
             FillGapWithZero = fillGapWithZero;
             Dimensions = dimensions;
+            SourceMdmNamespace = sourceMdmNamespace;
             CustomInit();
         }
 
@@ -132,6 +135,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<MetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the MDM namespace. Optional.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceMdmNamespace")]
+        public string SourceMdmNamespace { get; set; }
 
     }
 }

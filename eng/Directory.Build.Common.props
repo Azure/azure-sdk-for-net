@@ -84,6 +84,7 @@
     <InheritDocEnabled Condition="'$(InheritDocEnabled)'=='' and '$(DesignTimeBuild)'!='true' and '$(BuildingForLiveUnitTesting)'!='true' and '$(IsShippingClientLibrary)' == true">true</InheritDocEnabled>
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+    <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -142,7 +143,8 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
-    <PackageIconPath>$(RepoEngPath)/images/pkgicon.png</PackageIconPath>
+    <PackageIcon>pkgicon.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>  
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -206,7 +208,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <PackageIconPath>$(RepoEngPath)/images/azureicon.png</PackageIconPath>
+    <PackageIcon>azureicon.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
     <!-- Use a full key for the new client libraries and disable delay signing -->
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
