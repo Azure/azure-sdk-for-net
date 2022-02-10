@@ -44,10 +44,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
-        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocation> GetCustomLocationsAsync(CancellationToken cancellationToken = default)
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CustomLocations_ListBySubscription
-        /// <summary> Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocation> GetCustomLocations(CancellationToken cancellationToken = default)

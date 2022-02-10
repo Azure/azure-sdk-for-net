@@ -44,10 +44,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return apiVersion;
         }
 
-        /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
-        /// ContextualPath: /
-        /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists all available Custom Locations operations. </summary>
+        /// <summary>
+        /// Lists all available Custom Locations operations.
+        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
+        /// Operation Id: CustomLocations_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(CancellationToken cancellationToken = default)
@@ -85,10 +86,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.ExtendedLocation/operations
-        /// ContextualPath: /
-        /// OperationId: CustomLocations_ListOperations
-        /// <summary> Lists all available Custom Locations operations. </summary>
+        /// <summary>
+        /// Lists all available Custom Locations operations.
+        /// Request Path: /providers/Microsoft.ExtendedLocation/operations
+        /// Operation Id: CustomLocations_ListOperations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocationOperation> GetOperationsCustomLocations(CancellationToken cancellationToken = default)

@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.WebPubSub
             );
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
@@ -45,7 +49,11 @@ namespace Azure.ResourceManager.WebPubSub
             return await GetExtensionClient(subscription).CheckWebPubSubNameAvailabilityAsync(location, parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Checks that the resource name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+        /// Operation Id: WebPubSub_CheckNameAvailability
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
         /// <param name="parameters"> Parameters supplied to the operation. </param>
@@ -63,7 +71,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetExtensionClient(subscription).CheckWebPubSubNameAvailability(location, parameters, cancellationToken);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
@@ -72,7 +84,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetExtensionClient(subscription).GetWebPubSubsAsync(cancellationToken);
         }
 
-        /// <summary> Handles requests to list all resources in a subscription. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub
+        /// Operation Id: WebPubSub_ListBySubscription
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSub" /> that may take multiple service requests to iterate over. </returns>
@@ -81,7 +97,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetExtensionClient(subscription).GetWebPubSubs(cancellationToken);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,7 +115,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetExtensionClient(subscription).GetUsagesAsync(location, cancellationToken);
         }
 
-        /// <summary> List resource usage quotas by location. </summary>
+        /// <summary>
+        /// List resource usage quotas by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+        /// Operation Id: Usages_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

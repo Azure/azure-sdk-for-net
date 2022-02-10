@@ -90,7 +90,11 @@ namespace Azure.ResourceManager.Network
             return new ExpressRouteCrossConnectionPeeringCollection(Client, Id);
         }
 
-        /// <summary> Gets details about the specified ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Gets details about the specified ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteCrossConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -110,7 +114,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets details about the specified ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Gets details about the specified ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteCrossConnection> Get(CancellationToken cancellationToken = default)
         {
@@ -130,7 +138,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates an express route cross connection tags. </summary>
+        /// <summary>
+        /// Updates an express route cross connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
+        /// </summary>
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
@@ -155,7 +167,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates an express route cross connection tags. </summary>
+        /// <summary>
+        /// Updates an express route cross connection tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
+        /// Operation Id: ExpressRouteCrossConnections_UpdateTags
+        /// </summary>
         /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>

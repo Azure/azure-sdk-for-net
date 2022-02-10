@@ -90,7 +90,11 @@ namespace Azure.ResourceManager.Network
             return new ServiceEndpointPolicyDefinitionCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified service Endpoint Policies in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified service Endpoint Policies in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServiceEndpointPolicy>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -111,7 +115,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified service Endpoint Policies in a specified resource group. </summary>
+        /// <summary>
+        /// Gets the specified service Endpoint Policies in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceEndpointPolicy> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -132,7 +140,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified service endpoint policy. </summary>
+        /// <summary>
+        /// Deletes the specified service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -154,7 +166,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified service endpoint policy. </summary>
+        /// <summary>
+        /// Deletes the specified service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -176,7 +192,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a service endpoint policy. </summary>
+        /// <summary>
+        /// Updates tags of a service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -201,7 +221,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a service endpoint policy. </summary>
+        /// <summary>
+        /// Updates tags of a service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update service endpoint policy tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

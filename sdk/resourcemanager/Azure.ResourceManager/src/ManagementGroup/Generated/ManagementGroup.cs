@@ -83,12 +83,11 @@ namespace Azure.ResourceManager.Management
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Get
         /// <summary>
         /// Get the details of the management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -113,12 +112,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Get
         /// <summary>
         /// Get the details of the management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
         /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
@@ -143,13 +141,12 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Delete
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -173,13 +170,12 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Delete
         /// <summary>
         /// Delete management group.
         /// If a management group contains child resources, the request will fail.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Delete
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -203,12 +199,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Update
         /// <summary>
         /// Update a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Update
         /// </summary>
         /// <param name="patchGroupRequest"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -235,12 +230,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_Update
         /// <summary>
         /// Update a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
+        /// Operation Id: ManagementGroups_Update
         /// </summary>
         /// <param name="patchGroupRequest"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
@@ -267,12 +261,11 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_GetDescendants
         /// <summary>
         /// List all entities that descend from a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
+        /// Operation Id: ManagementGroups_GetDescendants
         /// </summary>
         /// <param name="skiptoken">
         /// Page continuation token is only used if a previous operation returned a partial result. 
@@ -317,12 +310,11 @@ namespace Azure.ResourceManager.Management
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{groupId}
-        /// OperationId: ManagementGroups_GetDescendants
         /// <summary>
         /// List all entities that descend from a management group.
         /// 
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}/descendants
+        /// Operation Id: ManagementGroups_GetDescendants
         /// </summary>
         /// <param name="skiptoken">
         /// Page continuation token is only used if a previous operation returned a partial result. 

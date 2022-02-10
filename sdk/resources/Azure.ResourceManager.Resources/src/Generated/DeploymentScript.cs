@@ -96,7 +96,11 @@ namespace Azure.ResourceManager.Resources
             return new ScriptLog(Client, new ResourceIdentifier(Id.ToString() + "/logs/default"));
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeploymentScript>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -116,7 +120,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentScript> Get(CancellationToken cancellationToken = default)
         {
@@ -136,7 +144,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -158,7 +170,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -180,7 +196,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeploymentScript>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -199,7 +219,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
         /// <param name="tags"> Resource tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentScript> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
@@ -218,7 +242,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptLog> GetLogsAsync(CancellationToken cancellationToken = default)
@@ -241,7 +269,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptLog> GetLogs(CancellationToken cancellationToken = default)

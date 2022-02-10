@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListAddressesAtSubscriptionLevel
-        /// <summary> Lists all the addresses available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the addresses available under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
+        /// Operation Id: ListAddressesAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
@@ -39,10 +40,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetAddressResourcesAsync(filter, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListAddressesAtSubscriptionLevel
-        /// <summary> Lists all the addresses available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the addresses available under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
+        /// Operation Id: ListAddressesAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
@@ -53,10 +55,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetAddressResources(filter, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListProductFamilies
-        /// <summary> This method provides the list of product families for the given subscription. </summary>
+        /// <summary>
+        /// This method provides the list of product families for the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
+        /// Operation Id: ListProductFamilies
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
@@ -74,10 +77,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListProductFamilies
-        /// <summary> This method provides the list of product families for the given subscription. </summary>
+        /// <summary>
+        /// This method provides the list of product families for the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
+        /// Operation Id: ListProductFamilies
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
@@ -95,10 +99,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListConfigurations
-        /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
+        /// <summary>
+        /// This method provides the list of configurations for the given product family, product line and product under subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
+        /// Operation Id: ListConfigurations
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
@@ -115,10 +120,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListConfigurations
-        /// <summary> This method provides the list of configurations for the given product family, product line and product under subscription. </summary>
+        /// <summary>
+        /// This method provides the list of configurations for the given product family, product line and product under subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
+        /// Operation Id: ListConfigurations
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
@@ -135,10 +141,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListProductFamiliesMetadata
-        /// <summary> This method provides the list of product families metadata for the given subscription. </summary>
+        /// <summary>
+        /// This method provides the list of product families metadata for the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
+        /// Operation Id: ListProductFamiliesMetadata
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,10 +155,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListProductFamiliesMetadata
-        /// <summary> This method provides the list of product families metadata for the given subscription. </summary>
+        /// <summary>
+        /// This method provides the list of product families metadata for the given subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
+        /// Operation Id: ListProductFamiliesMetadata
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,10 +169,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListOrderAtSubscriptionLevel
-        /// <summary> Lists order at subscription level. </summary>
+        /// <summary>
+        /// Lists order at subscription level.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
+        /// Operation Id: ListOrderAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,10 +183,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetOrderResourcesAsync(skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListOrderAtSubscriptionLevel
-        /// <summary> Lists order at subscription level. </summary>
+        /// <summary>
+        /// Lists order at subscription level.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
+        /// Operation Id: ListOrderAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,10 +197,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetOrderResources(skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListOrderItemsAtSubscriptionLevel
-        /// <summary> Lists order item at subscription level. </summary>
+        /// <summary>
+        /// Lists order item at subscription level.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
+        /// Operation Id: ListOrderItemsAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
@@ -202,10 +213,11 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(subscription).GetOrderItemResourcesAsync(filter, expand, skipToken, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListOrderItemsAtSubscriptionLevel
-        /// <summary> Lists order item at subscription level. </summary>
+        /// <summary>
+        /// Lists order item at subscription level.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
+        /// Operation Id: ListOrderItemsAtSubscriptionLevel
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>

@@ -105,10 +105,11 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
@@ -146,10 +147,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ResourceHealthMetadata_ListByResourceGroup
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
@@ -187,10 +189,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Move
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
+        /// Operation Id: Move
+        /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
@@ -209,10 +212,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Move
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
+        /// Operation Id: Move
+        /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Move(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
@@ -231,10 +235,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Validate
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary>
+        /// Description for Validate if a resource can be created.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
+        /// Operation Id: Validate
+        /// </summary>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
@@ -253,10 +258,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Validate
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary>
+        /// Description for Validate if a resource can be created.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
+        /// Operation Id: Validate
+        /// </summary>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ValidateResponse> Validate(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
@@ -275,10 +281,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ValidateMove
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary>
+        /// Description for Validate whether a resource can be moved.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
+        /// Operation Id: ValidateMove
+        /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
@@ -297,10 +304,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: ValidateMove
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary>
+        /// Description for Validate whether a resource can be moved.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
+        /// Operation Id: ValidateMove
+        /// </summary>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ValidateMove(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)

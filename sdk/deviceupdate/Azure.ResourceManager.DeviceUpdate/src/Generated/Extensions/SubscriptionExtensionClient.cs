@@ -49,10 +49,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
-        /// <summary> Checks ADU resource name availability. </summary>
+        /// <summary>
+        /// Checks ADU resource name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
@@ -71,10 +72,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
-        /// <summary> Checks ADU resource name availability. </summary>
+        /// <summary>
+        /// Checks ADU resource name availability.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="request"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default)
@@ -93,10 +95,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Accounts_ListBySubscription
-        /// <summary> Returns list of Accounts. </summary>
+        /// <summary>
+        /// Returns list of Accounts.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// Operation Id: Accounts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(CancellationToken cancellationToken = default)
@@ -134,10 +137,11 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Accounts_ListBySubscription
-        /// <summary> Returns list of Accounts. </summary>
+        /// <summary>
+        /// Returns list of Accounts.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
+        /// Operation Id: Accounts_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateAccount> GetDeviceUpdateAccounts(CancellationToken cancellationToken = default)

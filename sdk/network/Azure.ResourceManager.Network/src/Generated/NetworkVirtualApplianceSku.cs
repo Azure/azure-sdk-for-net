@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkVirtualApplianceSku>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves a single available sku for network virtual appliance. </summary>
+        /// <summary>
+        /// Retrieves a single available sku for network virtual appliance.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}
+        /// Operation Id: VirtualApplianceSkus_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkVirtualApplianceSku> Get(CancellationToken cancellationToken = default)
         {

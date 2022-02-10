@@ -88,7 +88,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified peering for the ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Gets the specified peering for the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteCrossConnectionPeering>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -108,7 +112,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified peering for the ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Gets the specified peering for the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteCrossConnectionPeering> Get(CancellationToken cancellationToken = default)
         {
@@ -128,7 +136,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified peering from the ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Deletes the specified peering from the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -150,7 +162,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified peering from the ExpressRouteCrossConnection. </summary>
+        /// <summary>
+        /// Deletes the specified peering from the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -172,7 +188,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/arpTables/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListArpTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,7 +219,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/arpTables/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListArpTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,7 +250,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the route table summary associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTablesSummary/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListRoutesTableSummary
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,7 +281,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the route table summary associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTablesSummary/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListRoutesTableSummary
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -280,7 +312,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the currently advertised routes table associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTables/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListRoutesTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -307,7 +343,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <summary>
+        /// Gets the currently advertised routes table associated with the express route cross connection in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTables/{devicePath}
+        /// Operation Id: ExpressRouteCrossConnections_ListRoutesTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
