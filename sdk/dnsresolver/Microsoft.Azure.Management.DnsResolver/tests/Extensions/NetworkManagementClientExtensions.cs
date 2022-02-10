@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace DnsResolver.Tests.Extensions
+namespace Microsoft.Azure.Management.DnsResolver.Tests.Extensions
 {
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;

@@ -4,8 +4,9 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver
+namespace Microsoft.Azure.Management.DnsResolver
 {
+    using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
 
@@ -30,6 +31,11 @@ namespace Dnsresolver
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
+
+        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; set; }
@@ -43,12 +49,12 @@ namespace Dnsresolver
         /// <summary>
         /// Gets the IDnsResolvers.
         /// </summary>
-        IDnsResolvers DnsResolvers { get; }
+        IDnsResolversOperations DnsResolvers { get; }
 
         /// <summary>
         /// Gets the IInboundEndpoints.
         /// </summary>
-        IInboundEndpoints InboundEndpoints { get; }
+        IInboundEndpointsOperations InboundEndpoints { get; }
 
         /// <summary>
         /// Gets the IOutboundEndpoints.

@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver.Models
+namespace Microsoft.Azure.Management.DnsResolver.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;

@@ -4,9 +4,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver
+namespace Microsoft.Azure.Management.DnsResolver
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;

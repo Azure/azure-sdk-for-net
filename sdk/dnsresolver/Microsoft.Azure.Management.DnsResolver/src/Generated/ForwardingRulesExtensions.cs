@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver
+namespace Microsoft.Azure.Management.DnsResolver
 {
     using Models;
     using System.Threading;

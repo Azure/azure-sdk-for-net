@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace DnsResolver.Tests.ScenarioTests
+namespace Microsoft.Azure.Management.DnsResolver.Tests.ScenarioTests
 {
     using DnsResolver.Tests.Extensions;
     using FluentAssertions;
@@ -33,7 +33,6 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations);
 
             createdInboundEndpoint.Should().BeSuccessfullyCreated();
-            createdInboundEndpoint.Metadata.Should().BeNull();
             createdInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurations));
         }
 
@@ -65,8 +64,6 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
 
             createdInboundEndpoint.Should().BeSuccessfullyCreated();
-            createdInboundEndpoint.Metadata.Should().NotBeNull();
-            createdInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
             createdInboundEndpoint.IpConfigurations.Should().NotBeNull();
             createdInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurations));
         }
@@ -83,8 +80,6 @@ namespace DnsResolver.Tests.ScenarioTests
             var createdInboundEndpoint = this.DnsResolverManagementClient.InboundEndpoints.CreateOrUpdate(resourceGroupName: resourceGroupName, dnsResolverName: createdDnsResolver.Name, inboundEndpointName: inboundEndpointName, ipConfigurations: ipConfigurations, metadata: metadata);
 
             createdInboundEndpoint.Should().BeSuccessfullyCreated();
-            createdInboundEndpoint.Metadata.Should().NotBeNull();
-            createdInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
             createdInboundEndpoint.IpConfigurations.Should().NotBeNull();
             createdInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurations));
         }
@@ -105,7 +100,6 @@ namespace DnsResolver.Tests.ScenarioTests
 
             updatedInboundEndpoint.Name.Should().Be(createdInboundEndpoint.Name);
             updatedInboundEndpoint.ProvisioningState.Should().Be(createdDnsResolver.ProvisioningState);
-            updatedInboundEndpoint.Metadata.Should().BeNull();
             updatedInboundEndpoint.Id.Should().Be(createdInboundEndpoint.Id);
             updatedInboundEndpoint.Etag.Should().NotBe(createdInboundEndpoint.Etag);
             updatedInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurationsForUpdate));
@@ -127,7 +121,6 @@ namespace DnsResolver.Tests.ScenarioTests
                 ipConfigurations: ipConfigurations);
 
             createdInboundEndpoint.Should().BeSuccessfullyCreated();
-            createdInboundEndpoint.Metadata.Should().BeNull();
             createdInboundEndpoint.IpConfigurations.All(ipConfiguration => ValidateIpConfigurationIsExpected(ipConfiguration, ipConfigurations));
         }
 
@@ -154,8 +147,6 @@ namespace DnsResolver.Tests.ScenarioTests
 
             updatedInboundEndpoint.Name.Should().Be(inboundEndpointName);
             updatedInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
-            updatedInboundEndpoint.Metadata.Should().NotBeNull();
-            updatedInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
         }
 
         [Fact]
@@ -184,7 +175,6 @@ namespace DnsResolver.Tests.ScenarioTests
             updatedInboundEndpoint.Name.Should().Be(inboundEndpointName);
             updatedInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
             updatedInboundEndpoint.Etag.Should().NotBe(createdInboundEndpoint.Etag);
-            updatedInboundEndpoint.Metadata.Should().BeNull();
         }
 
         [Fact]
@@ -238,7 +228,6 @@ namespace DnsResolver.Tests.ScenarioTests
 
             updatedInboundEndpoint.Name.Should().Be(inboundEndpointName);
             updatedInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
-            updatedInboundEndpoint.Metadata.Should().BeEquivalentTo(metadata);
         }
 
         [Fact]
@@ -267,7 +256,6 @@ namespace DnsResolver.Tests.ScenarioTests
             updatedInboundEndpoint.Name.Should().Be(inboundEndpointName);
             updatedInboundEndpoint.ProvisioningState.Should().Be(Constants.ProvisioningStateSucceeded);
             updatedInboundEndpoint.Etag.Should().NotBe(createdInboundEndpoint.Etag);
-            updatedInboundEndpoint.Metadata.Should().BeEmpty();
         }
 
         [Fact]

@@ -4,9 +4,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver
+namespace Microsoft.Azure.Management.DnsResolver
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace Dnsresolver
     /// <summary>
     /// The DNS Resolver Management Client.
     /// </summary>
-    public partial class DnsResolverManagementClient : ServiceClient<DnsResolverManagementClient>, IDnsResolverManagementClient
+    public partial class DnsResolverManagementClient : ServiceClient<DnsResolverManagementClient>, IDnsResolverManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -36,6 +37,11 @@ namespace Dnsresolver
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; }
+
+        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; set; }
@@ -46,14 +52,31 @@ namespace Dnsresolver
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The preferred language for the response.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
+        public int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
+        /// </summary>
+        public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
         /// Gets the IDnsResolvers.
         /// </summary>
-        public virtual IDnsResolvers DnsResolvers { get; private set; }
+        public virtual IDnsResolversOperations DnsResolvers { get; private set; }
 
         /// <summary>
         /// Gets the IInboundEndpoints.
         /// </summary>
-        public virtual IInboundEndpoints InboundEndpoints { get; private set; }
+        public virtual IInboundEndpointsOperations InboundEndpoints { get; private set; }
 
         /// <summary>
         /// Gets the IOutboundEndpoints.
@@ -159,6 +182,155 @@ namespace Dnsresolver
         }
 
         /// <summary>
+        /// Initializes a new instance of the DnsResolverManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DnsResolverManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DnsResolverManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling DnsResolverManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DnsResolverManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DnsResolverManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DnsResolverManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DnsResolverManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DnsResolverManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DnsResolverManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DnsResolverManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>
         partial void CustomInitialize();
@@ -167,13 +339,17 @@ namespace Dnsresolver
         /// </summary>
         private void Initialize()
         {
-            DnsResolvers = new DnsResolvers(this);
-            InboundEndpoints = new InboundEndpoints(this);
+            DnsResolvers = new DnsResolversOperations(this);
+            InboundEndpoints = new InboundEndpointsOperations(this);
             OutboundEndpoints = new OutboundEndpoints(this);
             DnsForwardingRulesets = new DnsForwardingRulesets(this);
             ForwardingRules = new ForwardingRules(this);
             VirtualNetworkLinks = new VirtualNetworkLinks(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2020-04-01-preview";
+            AcceptLanguage = "en-US";
+            LongRunningOperationRetryTimeout = 30;
+            GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -202,6 +378,7 @@ namespace Dnsresolver
             };
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
 }

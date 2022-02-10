@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace DnsResolver.Tests.Helpers
+namespace Microsoft.Azure.Management.DnsResolver.Tests.Helpers
 {
     using System;
     using System.Net;

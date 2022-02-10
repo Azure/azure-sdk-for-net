@@ -4,9 +4,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Dnsresolver.Models
+namespace Microsoft.Azure.Management.DnsResolver.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Exception thrown for an invalid response with CloudError information.

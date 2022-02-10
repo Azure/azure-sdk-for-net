@@ -728,7 +728,6 @@ namespace Microsoft.Azure.Management.DnsResolver
             if (ipConfigurations != null || metadata != null)
             {
                 parameters.IpConfigurations = ipConfigurations;
-                parameters.Metadata = metadata;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1022,7 +1021,6 @@ namespace Microsoft.Azure.Management.DnsResolver
             if (ipConfigurations != null || metadata != null)
             {
                 parameters.IpConfigurations = ipConfigurations;
-                parameters.Metadata = metadata;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
