@@ -399,7 +399,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public FileSmbProperties() { }
         public Azure.Storage.Files.Shares.Models.NtfsFileAttributes? FileAttributes { get { throw null; } set { } }
-        public System.DateTimeOffset? FileChangedOn { get { throw null; } }
+        public System.DateTimeOffset? FileChangedOn { get { throw null; } set { } }
         public System.DateTimeOffset? FileCreatedOn { get { throw null; } set { } }
         public string FileId { get { throw null; } }
         public System.DateTimeOffset? FileLastWrittenOn { get { throw null; } set { } }

@@ -317,6 +317,31 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_ChangeTime()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+
+            FileSmbProperties fileSmbProperties = new FileSmbProperties
+            {
+                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero)
+            };
+
+            // Act
+            Response<ShareFileInfo> response = await fileClient.CreateAsync(
+                maxSize: Constants.KB,
+                smbProperties: fileSmbProperties);
+
+            // Assert
+            AssertValidStorageFileInfo(response);
+            Assert.AreEqual(fileSmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_Metadata()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
@@ -1051,6 +1076,31 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task SetPropertiesAsync_ChangeTime()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateIfNotExistsAsync();
+
+            ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+            var smbProperties = new FileSmbProperties
+            {
+                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            await fileClient.CreateAsync(maxSize: Constants.KB);
+
+            // Act
+            Response<ShareFileInfo> response = await fileClient.SetHttpHeadersAsync(smbProperties: smbProperties);
+
+            // Assert
+            AssertValidStorageFileInfo(response);
+            Assert.AreEqual(smbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+        }
+
+        [RecordedTest]
         public async Task SetPropertiesAsync_FilePermissionTooLong()
         {
             var constants = TestConstants.Create(this);
@@ -1277,6 +1327,45 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
             Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
             Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task StartCopyAsync_ChangeTime()
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testSource.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                smbProperties: smbProperties,
+                filePermission: filePermission,
+                filePermissionCopyMode: PermissionCopyMode.Override);
+
+            Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(smbProperties.FileChangedOn, propertiesResponse.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]

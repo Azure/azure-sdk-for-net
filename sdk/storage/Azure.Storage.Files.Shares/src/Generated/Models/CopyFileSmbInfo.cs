@@ -25,6 +25,8 @@ namespace Azure.Storage.Files.Shares.Models
         public PermissionCopyMode? FilePermissionCopyMode { get; set; }
         /// <summary> Specifies the option to overwrite the target file if it already exists and has read-only attribute set. </summary>
         public bool? IgnoreReadOnly { get; set; }
+        /// <summary> Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file. </summary>
+        public string FileChangeTime { get; set; }
         /// <summary> Specifies the option to set archive attribute on a target file. True means archive attribute will be set on a target file despite attribute overrides or a source file state. </summary>
         public bool? SetArchiveAttribute { get; set; }
     }
