@@ -12,21 +12,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment script parameters to be updated. </summary>
-    public partial class DeploymentScriptUpdateParameter : ResourceData
+    public partial class DeploymentScriptUpdateOptions : ResourceData
     {
-        /// <summary> Initializes a new instance of DeploymentScriptUpdateParameter. </summary>
-        public DeploymentScriptUpdateParameter()
+        /// <summary> Initializes a new instance of DeploymentScriptUpdateOptions. </summary>
+        public DeploymentScriptUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentScriptUpdateParameter. </summary>
+        /// <summary> Initializes a new instance of DeploymentScriptUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Resource tags to be updated. </param>
-        internal DeploymentScriptUpdateParameter(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags) : base(id, name, type, systemData)
+        internal DeploymentScriptUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags) : base(id, name, type, systemData)
         {
             Tags = tags;
         }

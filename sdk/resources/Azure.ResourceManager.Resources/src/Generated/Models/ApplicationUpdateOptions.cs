@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about managed application. </summary>
-    public partial class ApplicationPatchable : ApplicationResource
+    public partial class ApplicationUpdateOptions : ApplicationResource
     {
-        /// <summary> Initializes a new instance of ApplicationPatchable. </summary>
+        /// <summary> Initializes a new instance of ApplicationUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
-        public ApplicationPatchable(AzureLocation location) : base(location)
+        public ApplicationUpdateOptions(AzureLocation location) : base(location)
         {
             Authorizations = new ChangeTrackingList<ApplicationAuthorization>();
             Artifacts = new ChangeTrackingList<ApplicationArtifact>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationPatchable. </summary>
+        /// <summary> Initializes a new instance of ApplicationUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal ApplicationPatchable(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal ApplicationUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;

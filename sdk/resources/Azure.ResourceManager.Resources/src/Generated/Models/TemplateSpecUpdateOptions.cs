@@ -12,21 +12,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Template Spec properties to be updated (only tags are currently supported). </summary>
-    public partial class TemplateSpecUpdateModel : ResourceData
+    public partial class TemplateSpecUpdateOptions : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecUpdateModel. </summary>
-        public TemplateSpecUpdateModel()
+        /// <summary> Initializes a new instance of TemplateSpecUpdateOptions. </summary>
+        public TemplateSpecUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecUpdateModel. </summary>
+        /// <summary> Initializes a new instance of TemplateSpecUpdateOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal TemplateSpecUpdateModel(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags) : base(id, name, type, systemData)
+        internal TemplateSpecUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags) : base(id, name, type, systemData)
         {
             Tags = tags;
         }

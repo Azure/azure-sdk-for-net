@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TemplateSpecUpdateModel : IUtf8JsonSerializable
+    public partial class TemplateSpecVersionUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static TemplateSpecUpdateModel DeserializeTemplateSpecUpdateModel(JsonElement element)
+        internal static TemplateSpecVersionUpdateOptions DeserializeTemplateSpecVersionUpdateOptions(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TemplateSpecUpdateModel(id, name, type, systemData, Optional.ToDictionary(tags));
+            return new TemplateSpecVersionUpdateOptions(id, name, type, systemData, Optional.ToDictionary(tags));
         }
     }
 }

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about JIT request. </summary>
-    internal partial class JitRequestPatchable
+    internal partial class JitRequestUpdateOptions
     {
-        /// <summary> Initializes a new instance of JitRequestPatchable. </summary>
-        public JitRequestPatchable()
+        /// <summary> Initializes a new instance of JitRequestUpdateOptions. </summary>
+        public JitRequestUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

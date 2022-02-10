@@ -257,15 +257,15 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            JitRequestPatchable jitRequestPatchable = new JitRequestPatchable();
+            JitRequestUpdateOptions jitRequestUpdateOptions = new JitRequestUpdateOptions();
             if (tags != null)
             {
                 foreach (var value in tags)
                 {
-                    jitRequestPatchable.Tags.Add(value);
+                    jitRequestUpdateOptions.Tags.Add(value);
                 }
             }
-            var model = jitRequestPatchable;
+            var model = jitRequestUpdateOptions;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
