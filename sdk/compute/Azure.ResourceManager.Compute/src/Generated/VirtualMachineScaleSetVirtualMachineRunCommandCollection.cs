@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of VirtualMachineRunCommand and their operations over its parent. </summary>
+    /// <summary> A class representing collection of VirtualMachineScaleSetVirtualMachineRunCommand and their operations over its parent. </summary>
     public partial class VirtualMachineScaleSetVirtualMachineRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVirtualMachineRunCommand>, IAsyncEnumerable<VirtualMachineScaleSetVirtualMachineRunCommand>
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics;
