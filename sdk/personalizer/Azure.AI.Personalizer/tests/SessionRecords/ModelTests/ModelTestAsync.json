@@ -133,7 +133,9 @@
       "ResponseBody": null
     }
   ],
-  "Variables": {
-    "RandomSeed": "1431761393"
-  }
+    "Variables": {
+        "PERSONALIZER_API_KEY_SINGLE_SLOT": "Sanitized",
+        "PERSONALIZER_ENDPOINT_SINGLE_SLOT": "https://singleslotrecordsdktests.cognitiveservices.azure.com/",
+        "RandomSeed": "1431761393"
+    }
 }
