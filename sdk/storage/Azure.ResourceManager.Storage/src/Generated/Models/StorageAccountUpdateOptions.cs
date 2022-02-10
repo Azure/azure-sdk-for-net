@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters that can be provided when updating the storage account properties. </summary>
-    public partial class StorageAccountUpdateParameters
+    public partial class StorageAccountUpdateOptions
     {
-        /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
-        public StorageAccountUpdateParameters()
+        /// <summary> Initializes a new instance of StorageAccountUpdateOptions. </summary>
+        public StorageAccountUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
