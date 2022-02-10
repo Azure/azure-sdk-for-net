@@ -12,10 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.StoragePool.Models
 {
     /// <summary> Request payload for Update Disk Pool request. </summary>
-    public partial class DiskPoolUpdate
+    public partial class DiskPoolUpdateOptions
     {
-        /// <summary> Initializes a new instance of DiskPoolUpdate. </summary>
-        public DiskPoolUpdate()
+        /// <summary> Initializes a new instance of DiskPoolUpdateOptions. </summary>
+        public DiskPoolUpdateOptions()
         {
             ManagedByExtended = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();

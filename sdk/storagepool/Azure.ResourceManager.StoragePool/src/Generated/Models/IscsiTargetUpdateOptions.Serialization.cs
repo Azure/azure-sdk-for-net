@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class IscsiTargetUpdate : IUtf8JsonSerializable
+    public partial class IscsiTargetUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteEndObject();
         }
 
-        internal static IscsiTargetUpdate DeserializeIscsiTargetUpdate(JsonElement element)
+        internal static IscsiTargetUpdateOptions DeserializeIscsiTargetUpdateOptions(JsonElement element)
         {
             Optional<string> managedBy = default;
             Optional<IList<string>> managedByExtended = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new IscsiTargetUpdate(id, name, type, systemData, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns));
+            return new IscsiTargetUpdateOptions(id, name, type, systemData, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns));
         }
     }
 }
