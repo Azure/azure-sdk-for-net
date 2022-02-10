@@ -217,22 +217,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobAgents_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The update to the job agent. </param>
+        /// <param name="options"> The update to the job agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<JobAgent>> UpdateAsync(bool waitForCompletion, JobAgentUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<JobAgent>> UpdateAsync(bool waitForCompletion, JobAgentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _jobAgentClientDiagnostics.CreateScope("JobAgent.Update");
             scope.Start();
             try
             {
-                var response = await _jobAgentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _jobAgentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -250,22 +250,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobAgents_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The update to the job agent. </param>
+        /// <param name="options"> The update to the job agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<JobAgent> Update(bool waitForCompletion, JobAgentUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<JobAgent> Update(bool waitForCompletion, JobAgentUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _jobAgentClientDiagnostics.CreateScope("JobAgent.Update");
             scope.Start();
             try
             {
-                var response = _jobAgentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _jobAgentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

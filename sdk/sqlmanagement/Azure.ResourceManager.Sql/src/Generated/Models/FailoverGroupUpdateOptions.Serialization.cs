@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class FailoverGroupUpdate : IUtf8JsonSerializable
+    public partial class FailoverGroupUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

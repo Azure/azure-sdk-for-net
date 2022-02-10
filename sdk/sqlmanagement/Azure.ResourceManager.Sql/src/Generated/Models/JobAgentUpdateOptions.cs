@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update to an Azure SQL job agent. </summary>
-    public partial class JobAgentUpdate
+    public partial class JobAgentUpdateOptions
     {
-        /// <summary> Initializes a new instance of JobAgentUpdate. </summary>
-        public JobAgentUpdate()
+        /// <summary> Initializes a new instance of JobAgentUpdateOptions. </summary>
+        public JobAgentUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseUpdate : IUtf8JsonSerializable
+    public partial class SqlDatabaseUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

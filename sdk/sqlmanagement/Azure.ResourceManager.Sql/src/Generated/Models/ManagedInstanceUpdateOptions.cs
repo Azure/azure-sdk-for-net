@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update request for an Azure SQL Database managed instance. </summary>
-    public partial class ManagedInstanceUpdate
+    public partial class ManagedInstanceUpdateOptions
     {
-        /// <summary> Initializes a new instance of ManagedInstanceUpdate. </summary>
-        public ManagedInstanceUpdate()
+        /// <summary> Initializes a new instance of ManagedInstanceUpdateOptions. </summary>
+        public ManagedInstanceUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A failover group update request. </summary>
-    public partial class FailoverGroupUpdate
+    public partial class FailoverGroupUpdateOptions
     {
-        /// <summary> Initializes a new instance of FailoverGroupUpdate. </summary>
-        public FailoverGroupUpdate()
+        /// <summary> Initializes a new instance of FailoverGroupUpdateOptions. </summary>
+        public FailoverGroupUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Databases = new ChangeTrackingList<string>();

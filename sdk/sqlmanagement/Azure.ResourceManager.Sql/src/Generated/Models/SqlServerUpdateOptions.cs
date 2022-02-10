@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update request for an Azure SQL Database server. </summary>
-    public partial class ServerUpdate
+    public partial class SqlServerUpdateOptions
     {
-        /// <summary> Initializes a new instance of ServerUpdate. </summary>
-        public ServerUpdate()
+        /// <summary> Initializes a new instance of SqlServerUpdateOptions. </summary>
+        public SqlServerUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<ServerPrivateEndpointConnection>();

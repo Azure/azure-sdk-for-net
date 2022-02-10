@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update request for an Azure SQL Database virtual cluster. </summary>
-    public partial class VirtualClusterUpdate
+    public partial class VirtualClusterUpdateOptions
     {
-        /// <summary> Initializes a new instance of VirtualClusterUpdate. </summary>
-        public VirtualClusterUpdate()
+        /// <summary> Initializes a new instance of VirtualClusterUpdateOptions. </summary>
+        public VirtualClusterUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ChildResources = new ChangeTrackingList<string>();

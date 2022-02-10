@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseColumn and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerDatabaseSchemaTableColumn and their operations over its parent. </summary>
     public partial class ServerDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTableColumn>, IAsyncEnumerable<ServerDatabaseSchemaTableColumn>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics;

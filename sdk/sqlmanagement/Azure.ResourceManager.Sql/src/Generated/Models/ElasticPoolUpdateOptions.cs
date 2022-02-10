@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An elastic pool update. </summary>
-    public partial class ElasticPoolUpdate
+    public partial class ElasticPoolUpdateOptions
     {
-        /// <summary> Initializes a new instance of ElasticPoolUpdate. </summary>
-        public ElasticPoolUpdate()
+        /// <summary> Initializes a new instance of ElasticPoolUpdateOptions. </summary>
+        public ElasticPoolUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database resource. </summary>
-    public partial class DatabaseUpdate
+    public partial class SqlDatabaseUpdateOptions
     {
-        /// <summary> Initializes a new instance of DatabaseUpdate. </summary>
-        public DatabaseUpdate()
+        /// <summary> Initializes a new instance of SqlDatabaseUpdateOptions. </summary>
+        public SqlDatabaseUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

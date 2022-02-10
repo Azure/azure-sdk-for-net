@@ -22,7 +22,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceLongTermRetentionBackup and their operations over its parent. </summary>
+    /// <summary> A class representing collection of SubscriptionLongTermRetentionManagedInstanceBackup and their operations over its parent. </summary>
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<SubscriptionLongTermRetentionManagedInstanceBackup>, IAsyncEnumerable<SubscriptionLongTermRetentionManagedInstanceBackup>
     {
         private readonly ClientDiagnostics _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics;

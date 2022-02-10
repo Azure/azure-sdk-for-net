@@ -21,7 +21,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedBackupShortTermRetentionPolicy and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicy and their operations over its parent. </summary>
     public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>, IAsyncEnumerable<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>
     {
         private readonly ClientDiagnostics _managedRestorableDroppedDbBackupShortTermRetentionPolicyManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesClientDiagnostics;

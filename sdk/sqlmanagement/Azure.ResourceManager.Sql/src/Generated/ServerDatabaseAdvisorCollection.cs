@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of Advisor and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerDatabaseAdvisor and their operations over its parent. </summary>
     public partial class ServerDatabaseAdvisorCollection : ArmCollection, IEnumerable<ServerDatabaseAdvisor>, IAsyncEnumerable<ServerDatabaseAdvisor>
     {
         private readonly ClientDiagnostics _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics;

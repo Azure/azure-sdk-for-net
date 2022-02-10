@@ -409,22 +409,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Servers_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested server resource state. </param>
+        /// <param name="options"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlServer>> UpdateAsync(bool waitForCompletion, ServerUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<SqlServer>> UpdateAsync(bool waitForCompletion, SqlServerUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -442,22 +442,22 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Servers_Update
         /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The requested server resource state. </param>
+        /// <param name="options"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<SqlServer> Update(bool waitForCompletion, ServerUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<SqlServer> Update(bool waitForCompletion, SqlServerUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

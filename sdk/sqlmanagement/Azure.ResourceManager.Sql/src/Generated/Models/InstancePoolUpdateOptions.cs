@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update to an Instance pool. </summary>
-    public partial class InstancePoolUpdate
+    public partial class InstancePoolUpdateOptions
     {
-        /// <summary> Initializes a new instance of InstancePoolUpdate. </summary>
-        public InstancePoolUpdate()
+        /// <summary> Initializes a new instance of InstancePoolUpdateOptions. </summary>
+        public InstancePoolUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

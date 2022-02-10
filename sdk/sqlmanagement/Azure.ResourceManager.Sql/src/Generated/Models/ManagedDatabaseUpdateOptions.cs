@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An managed database update. </summary>
-    public partial class ManagedDatabaseUpdate
+    public partial class ManagedDatabaseUpdateOptions
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseUpdate. </summary>
-        public ManagedDatabaseUpdate()
+        /// <summary> Initializes a new instance of ManagedDatabaseUpdateOptions. </summary>
+        public ManagedDatabaseUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

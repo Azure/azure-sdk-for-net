@@ -20,7 +20,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobStep and their operations over its parent. </summary>
+    /// <summary> A class representing collection of ServerJobAgentJobVersionStep and their operations over its parent. </summary>
     public partial class ServerJobAgentJobVersionStepCollection : ArmCollection, IEnumerable<ServerJobAgentJobVersionStep>, IAsyncEnumerable<ServerJobAgentJobVersionStep>
     {
         private readonly ClientDiagnostics _serverJobAgentJobVersionStepJobStepsClientDiagnostics;
