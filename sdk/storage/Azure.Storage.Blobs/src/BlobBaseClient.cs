@@ -3523,7 +3523,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
-                copySourceTags: options?.CopySourceTags,
+                copySourceTags: options?.CopySourceTagsMode,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -3577,7 +3577,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
-                copySourceTags: options?.CopySourceTags,
+                copySourceTags: options?.CopySourceTagsMode,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -3663,7 +3663,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
             HttpAuthorization sourceAuthentication,
-            BlobCopySourceTags? copySourceTags,
+            BlobCopySourceTagsMode? copySourceTags,
             bool async,
             CancellationToken cancellationToken)
         {

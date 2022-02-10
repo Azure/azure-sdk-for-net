@@ -3299,9 +3299,9 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(null)]
-        [TestCase(BlobCopySourceTags.Replace)]
-        [TestCase(BlobCopySourceTags.Copy)]
-        public async Task SyncUploadFromUriAsync_CopySourceTags(BlobCopySourceTags? copySourceTags)
+        [TestCase(BlobCopySourceTagsMode.Replace)]
+        [TestCase(BlobCopySourceTagsMode.Copy)]
+        public async Task SyncUploadFromUriAsync_CopySourceTags(BlobCopySourceTagsMode? copySourceTags)
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3326,7 +3326,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
-                CopySourceTags = copySourceTags
+                CopySourceTagsMode = copySourceTags
             };
 
             Dictionary<string, string> destTags = new Dictionary<string, string>
@@ -3334,7 +3334,7 @@ namespace Azure.Storage.Blobs.Test
                 { "dest", "tag" }
             };
 
-            if (copySourceTags != BlobCopySourceTags.Copy)
+            if (copySourceTags != BlobCopySourceTagsMode.Copy)
             {
                 options.Tags = destTags;
             }
@@ -3349,7 +3349,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<GetBlobTagResult> getTagsResponse = await destBlob.GetTagsAsync();
 
-            if (copySourceTags == BlobCopySourceTags.Copy)
+            if (copySourceTags == BlobCopySourceTagsMode.Copy)
             {
                 AssertDictionaryEquality(sourceTags, getTagsResponse.Value.Tags);
             }

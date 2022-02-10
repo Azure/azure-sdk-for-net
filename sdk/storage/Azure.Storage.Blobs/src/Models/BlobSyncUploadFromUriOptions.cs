@@ -75,6 +75,6 @@ namespace Azure.Storage.Blobs.Models
         /// or replaced on the destination blob with the tags specified by <see cref="Tags"/>.
         /// Default is to replace.
         /// </summary>
-        public BlobCopySourceTags? CopySourceTags { get; set; }
+        public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
     }
 }
