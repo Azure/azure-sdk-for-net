@@ -4,14 +4,11 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1663,8 +1660,222 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetPageRanges
         /// <summary>
-        /// The <see cref="GetPageRanges"/> operation returns the list of
+        /// The <see cref="GetPageRanges(PageBlobGetPageRangesOptions, CancellationToken)"/> operation returns the list of
         /// valid page ranges for a page blob or snapshot of a page blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Page{PageBlobRange}"/> describing the
+        /// valid page ranges for this blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PageBlobRange> GetPageRanges(
+            PageBlobGetPageRangesOptions options = default,
+            CancellationToken cancellationToken = default)
+            => new GetPageRangesAsyncCollection(
+                diff: false,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: null,
+                previousSnapshotUri: null,
+                requestConditions: options?.Conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPageRangesAsync(PageBlobGetPageRangesOptions, CancellationToken)"/> operation returns the list of
+        /// valid page ranges for a page blob or snapshot of a page blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AsyncPageable{PageBlobRange}"/> describing the
+        /// valid page ranges for this blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PageBlobRange> GetPageRangesAsync(
+            PageBlobGetPageRangesOptions options = default,
+            CancellationToken cancellationToken = default)
+            => new GetPageRangesAsyncCollection(
+                diff: false,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: null,
+                previousSnapshotUri: null,
+                requestConditions: options?.Conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}")
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPageRangesPageableInteral"/> operation returns the list
+        /// of valid page ranges for a page blob or snapshot of a page blob.
+        ///
+        /// For more information, see For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
+        /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of blobs to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// if the listing operation did not return all blobs remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
+        /// </param>
+        /// <param name="range">
+        /// Optionally specifies the range of bytes over which to list ranges,
+        /// inclusively. If omitted, then all ranges for the blob are returned.
+        /// </param>
+        /// <param name="snapshot">
+        /// Optionally specifies the blob snapshot to retrieve page ranges
+        /// information from. For more information on working with blob snapshots,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on getting page ranges for the this blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
+        /// valid page ranges for this blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesPageableInteral(
+            string marker,
+            int? pageSizeHint,
+            HttpRange? range,
+            string snapshot,
+            PageBlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(PageBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(marker)}: {marker}\n" +
+                    $"{nameof(pageSizeHint)}: {pageSizeHint}\n" +
+                    $"{nameof(range)}: {range}\n" +
+                    $"{nameof(snapshot)}: {snapshot}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
+                        | BlobRequestConditionProperty.IfSequenceNumberLessThan
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                    operationName: nameof(PageBlobClient.GetPageRanges),
+                    parameterName: nameof(conditions));
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PageBlobRestClient.GetPageRangesAsync(
+                            snapshot: snapshot,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PageBlobRestClient.GetPageRanges(
+                            snapshot: snapshot,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    // Return an exploding Response on 304
+                    if (response.IsUnavailable())
+                    {
+                        return response.GetRawResponse().AsNoBodyResponse<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>>();
+                    }
+
+                    return response;
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    scope.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPageRanges(HttpRange?, string, PageBlobRequestConditions, CancellationToken)"/>
+        /// operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
@@ -1696,11 +1907,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PageRangesInfo> GetPageRanges(
-            HttpRange? range = default,
-            string snapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange? range,
+            string snapshot,
+            PageBlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             GetPageRangesInternal(
                 range,
                 snapshot,
@@ -1710,8 +1924,8 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPageRangesAsync"/> operation returns the list of
-        /// valid page ranges for a page blob or snapshot of a page blob.
+        /// The <see cref="GetPageRangesAsync(HttpRange?, string, PageBlobRequestConditions, CancellationToken)"/>
+        /// operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
@@ -1743,11 +1957,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PageRangesInfo>> GetPageRangesAsync(
-            HttpRange? range = default,
-            string snapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange? range,
+            string snapshot,
+            PageBlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await GetPageRangesInternal(
                 range,
                 snapshot,
@@ -1874,78 +2091,58 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion GetPageRanges
 
-        #region GetPageRangesPageable
+        #region GetPageRangesDiff
         /// <summary>
-        /// The <see cref="GetPageRangesPageable"/> operation returns the list of
-        /// valid page ranges for a page blob or snapshot of a page blob.
+        /// The <see cref="GetPageRangesDiff(PageBlobGetPageRangesDiffOptions, CancellationToken)"/>
+        /// operation returns the list of page ranges that differ between a
+        /// <see cref="PageBlobGetPageRangesDiffOptions.PreviousSnapshot"/> and this page blob. Changed pages
+        /// include both updated and cleared pages.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
         /// Get Page Ranges</see>.
         /// </summary>
-        /// <param name="range">
-        /// Optionally specifies the range of bytes over which to list ranges,
-        /// inclusively. If omitted, then all ranges for the blob are returned.
-        /// </param>
-        /// <param name="snapshot">
-        /// Optionally specifies the blob snapshot to retrieve page ranges
-        /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
-        /// Create a snapshot of a blob</see>.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on getting page ranges for the this blob.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Page{PageBlobRange}"/> describing the
+        /// A <see cref="Pageable{PageBlobRange}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<PageBlobRange> GetPageRangesPageable(
-            HttpRange? range = default,
-            string snapshot = default,
-            PageBlobRequestConditions conditions = default,
+        public virtual Pageable<PageBlobRange> GetPageRangesDiff(
+            PageBlobGetPageRangesDiffOptions options = default,
             CancellationToken cancellationToken = default)
             => new GetPageRangesAsyncCollection(
-                diff: false,
+                diff: true,
                 client: this,
-                range: range,
-                snapshot: snapshot,
-                previousSnapshot: null,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: options?.PreviousSnapshot,
                 previousSnapshotUri: null,
-                requestConditions: conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesPageable)}")
+                requestConditions: options?.Conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}")
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetPageRangesPageableAsync"/> operation returns the list of
-        /// valid page ranges for a page blob or snapshot of a page blob.
+        /// The <see cref="GetPageRangesDiffAsync(PageBlobGetPageRangesDiffOptions, CancellationToken)"/>
+        /// operation returns the list of page ranges that differ between a
+        /// <see cref="PageBlobGetPageRangesDiffOptions.PreviousSnapshot"/> and this page blob. Changed pages
+        /// include both updated and cleared pages.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
         /// Get Page Ranges</see>.
         /// </summary>
-        /// <param name="range">
-        /// Optionally specifies the range of bytes over which to list ranges,
-        /// inclusively. If omitted, then all ranges for the blob are returned.
-        /// </param>
-        /// <param name="snapshot">
-        /// Optionally specifies the blob snapshot to retrieve page ranges
-        /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
-        /// Create a snapshot of a blob</see>.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on getting page ranges for the this blob.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1959,27 +2156,27 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<PageBlobRange> GetPageRangesPageableAsync(
-            HttpRange? range = default,
-            string snapshot = default,
-            PageBlobRequestConditions conditions = default,
+        public virtual AsyncPageable<PageBlobRange> GetPageRangesDiffAsync(
+            PageBlobGetPageRangesDiffOptions options = default,
             CancellationToken cancellationToken = default)
             => new GetPageRangesAsyncCollection(
-                diff: false,
+                diff: true,
                 client: this,
-                range: range,
-                snapshot: snapshot,
-                previousSnapshot: null,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: options?.PreviousSnapshot,
                 previousSnapshotUri: null,
-                requestConditions: conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesPageable)}")
+                requestConditions: options?.Conditions,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}")
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetPageRangesPageableInteral"/> operation returns the list
-        /// of valid page ranges for a page blob or snapshot of a page blob.
+        /// The <see cref="GetPageRangesDiffPageableInternal"/> operation returns the
+        /// list of page ranges that differ between a
+        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
+        /// include both updated and cleared pages.
         ///
-        /// For more information, see For more information, see
+        /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
         /// Get Page Ranges</see>.
         /// </summary>
@@ -2006,6 +2203,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
         /// Create a snapshot of a blob</see>.
         /// </param>
+        /// <param name="previousSnapshot">
+        /// Specifies that the response will contain only pages that were
+        /// changed between target blob and previous snapshot.  Changed pages
+        /// include both updated and cleared pages. The target blob may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshot"/> is the older of the two.
+        /// </param>
+        /// <param name="previousSnapshotUri">
+        /// This parameter only works with managed disk storage accounts.
+        /// Specifies that the response will contain only pages that were
+        /// changed between target blob and previous snapshot.  Changed pages
+        /// include both updated and cleared pages. The target blob may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on getting page ranges for the this blob.
@@ -2013,25 +2225,31 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the operation.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PageRangesInfo}"/> describing the
+        /// A <see cref="ResponseWithHeaders{PageList, PageBlobGetPageRangesDiffHeaders}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesPageableInteral(
+        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffPageableInternal(
             string marker,
             int? pageSizeHint,
             HttpRange? range,
             string snapshot,
+            string previousSnapshot,
+            Uri previousSnapshotUri,
             PageBlobRequestConditions conditions,
             bool async,
+            string operationName,
             CancellationToken cancellationToken)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
@@ -2044,9 +2262,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(pageSizeHint)}: {pageSizeHint}\n" +
                     $"{nameof(range)}: {range}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
+                    $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
+                    $"{nameof(previousSnapshotUri)}: {previousSnapshotUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(GetPageRangesPageable)}");
+                operationName ??= $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions:
@@ -2059,12 +2280,14 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
+                    ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
 
                     if (async)
                     {
-                        response = await PageBlobRestClient.GetPageRangesAsync(
+                        response = await PageBlobRestClient.GetPageRangesDiffAsync(
                             snapshot: snapshot,
+                            prevsnapshot: previousSnapshot,
+                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -2079,8 +2302,10 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = PageBlobRestClient.GetPageRanges(
+                        response = PageBlobRestClient.GetPageRangesDiff(
                             snapshot: snapshot,
+                            prevsnapshot: previousSnapshot,
+                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -2096,7 +2321,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
                     {
-                        return response.GetRawResponse().AsNoBodyResponse<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>>();
+                        return response.GetRawResponse().AsNoBodyResponse<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>>();
                     }
 
                     return response;
@@ -2114,11 +2339,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion GetPageRangesPageable
 
-        #region GetPageRangesDiff
         /// <summary>
-        /// The <see cref="GetPageRangesDiff"/>
+        /// The <see cref="GetPageRangesDiff(HttpRange?, string, string, PageBlobRequestConditions, CancellationToken)"/>
         /// operation returns the list of page ranges that differ between a
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages.
@@ -2160,12 +2383,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PageRangesInfo> GetPageRangesDiff(
-            HttpRange? range = default,
-            string snapshot = default,
-            string previousSnapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange? range,
+            string snapshot,
+            string previousSnapshot,
+            PageBlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             GetPageRangesDiffInternal(
                 range,
                 snapshot,
@@ -2178,7 +2404,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPageRangesDiffAsync"/>
+        /// The <see cref="GetPageRangesDiffAsync(HttpRange?, string, string, PageBlobRequestConditions, CancellationToken)"/>
         /// operation returns the list of page ranges that differ between a
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages.
@@ -2220,12 +2446,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
-            HttpRange? range = default,
-            string snapshot = default,
-            string previousSnapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange? range,
+            string snapshot,
+            string previousSnapshot,
+            PageBlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await GetPageRangesDiffInternal(
                 range,
                 snapshot,
@@ -2384,298 +2613,6 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion GetPageRangesDiff
-
-        #region GetPageRagesDiffPageable
-        /// <summary>
-        /// The <see cref="GetPageRangesDiffPageable"/>
-        /// operation returns the list of page ranges that differ between a
-        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
-        /// Get Page Ranges</see>.
-        /// </summary>
-        /// <param name="range">
-        /// Optionally specifies the range of bytes over which to list ranges,
-        /// inclusively. If omitted, then all ranges for the blob are returned.
-        /// </param>
-        /// <param name="snapshot">
-        /// Optionally specifies the blob snapshot to retrieve page ranges
-        /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
-        /// Create a snapshot of a blob</see>.
-        /// </param>
-        /// <param name="previousSnapshot">
-        /// Specifies that the response will contain only pages that were
-        /// changed between target blob and previous snapshot.  Changed pages
-        /// include both updated and cleared pages. The target blob may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshot"/> is the older of the two.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on getting page ranges for the this blob.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Pageable{PageBlobRange}"/> describing the
-        /// valid page ranges for this blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Pageable<PageBlobRange> GetPageRangesDiffPageable(
-            HttpRange? range = default,
-            string snapshot = default,
-            string previousSnapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
-            => new GetPageRangesAsyncCollection(
-                diff: true,
-                client: this,
-                range: range,
-                snapshot: snapshot,
-                previousSnapshot: previousSnapshot,
-                previousSnapshotUri: null,
-                requestConditions: conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiffPageable)}")
-            .ToSyncCollection(cancellationToken);
-
-        /// <summary>
-        /// The <see cref="GetPageRangesDiffPageableAsync"/>
-        /// operation returns the list of page ranges that differ between a
-        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
-        /// Get Page Ranges</see>.
-        /// </summary>
-        /// <param name="range">
-        /// Optionally specifies the range of bytes over which to list ranges,
-        /// inclusively. If omitted, then all ranges for the blob are returned.
-        /// </param>
-        /// <param name="snapshot">
-        /// Optionally specifies the blob snapshot to retrieve page ranges
-        /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
-        /// Create a snapshot of a blob</see>.
-        /// </param>
-        /// <param name="previousSnapshot">
-        /// Specifies that the response will contain only pages that were
-        /// changed between target blob and previous snapshot.  Changed pages
-        /// include both updated and cleared pages. The target blob may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshot"/> is the older of the two.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on getting page ranges for the this blob.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="AsyncPageable{PageBlobRange}"/> describing the
-        /// valid page ranges for this blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual AsyncPageable<PageBlobRange> GetPageRangesDiffPageableAsync(
-            HttpRange? range = default,
-            string snapshot = default,
-            string previousSnapshot = default,
-            PageBlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
-            => new GetPageRangesAsyncCollection(
-                diff: true,
-                client: this,
-                range: range,
-                snapshot: snapshot,
-                previousSnapshot: previousSnapshot,
-                previousSnapshotUri: null,
-                requestConditions: conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiffPageable)}")
-            .ToAsyncCollection(cancellationToken);
-
-        /// <summary>
-        /// The <see cref="GetPageRangesDiffPageableInternal"/> operation returns the
-        /// list of page ranges that differ between a
-        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
-        /// Get Page Ranges</see>.
-        /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
-        /// if the listing operation did not return all blobs remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="pageSizeHint">
-        /// Gets or sets a value indicating the size of the page that should be
-        /// requested.
-        /// </param>
-        /// <param name="range">
-        /// Optionally specifies the range of bytes over which to list ranges,
-        /// inclusively. If omitted, then all ranges for the blob are returned.
-        /// </param>
-        /// <param name="snapshot">
-        /// Optionally specifies the blob snapshot to retrieve page ranges
-        /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
-        /// Create a snapshot of a blob</see>.
-        /// </param>
-        /// <param name="previousSnapshot">
-        /// Specifies that the response will contain only pages that were
-        /// changed between target blob and previous snapshot.  Changed pages
-        /// include both updated and cleared pages. The target blob may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshot"/> is the older of the two.
-        /// </param>
-        /// <param name="previousSnapshotUri">
-        /// This parameter only works with managed disk storage accounts.
-        /// Specifies that the response will contain only pages that were
-        /// changed between target blob and previous snapshot.  Changed pages
-        /// include both updated and cleared pages. The target blob may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshotUri"/> is the older of the two.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on getting page ranges for the this blob.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="operationName">
-        /// The name of the operation.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="ResponseWithHeaders{PageList, PageBlobGetPageRangesDiffHeaders}"/> describing the
-        /// valid page ranges for this blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffPageableInternal(
-            string marker,
-            int? pageSizeHint,
-            HttpRange? range,
-            string snapshot,
-            string previousSnapshot,
-            Uri previousSnapshotUri,
-            PageBlobRequestConditions conditions,
-            bool async,
-            string operationName,
-            CancellationToken cancellationToken)
-        {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
-            {
-                ClientConfiguration.Pipeline.LogMethodEnter(
-                    nameof(PageBlobClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(marker)}: {marker}\n" +
-                    $"{nameof(pageSizeHint)}: {pageSizeHint}\n" +
-                    $"{nameof(range)}: {range}\n" +
-                    $"{nameof(snapshot)}: {snapshot}\n" +
-                    $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
-                    $"{nameof(previousSnapshotUri)}: {previousSnapshotUri}\n" +
-                    $"{nameof(conditions)}: {conditions}");
-
-                operationName ??= $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiffPageable)}";
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
-
-                conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
-                        | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
-                    operationName: nameof(PageBlobClient.GetPageRanges),
-                    parameterName: nameof(conditions));
-
-                try
-                {
-                    scope.Start();
-                    ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
-
-                    if (async)
-                    {
-                        response = await PageBlobRestClient.GetPageRangesDiffAsync(
-                            snapshot: snapshot,
-                            prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
-                            range: range?.ToString(),
-                            leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifTags: conditions?.TagConditions,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        response = PageBlobRestClient.GetPageRangesDiff(
-                            snapshot: snapshot,
-                            prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
-                            range: range?.ToString(),
-                            leaseId: conditions?.LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifTags: conditions?.TagConditions,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    // Return an exploding Response on 304
-                    if (response.IsUnavailable())
-                    {
-                        return response.GetRawResponse().AsNoBodyResponse< ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>>();
-                    }
-
-                    return response;
-                }
-                catch (Exception ex)
-                {
-                    ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(PageBlobClient));
-                    scope.Dispose();
-                }
-            }
-        }
-        #endregion
 
         #region GetManagedDiskPageRangesDiff
         /// <summary>
@@ -3327,10 +3264,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// from the source.  Each subsequent call to <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
-        /// changes are computed on the server by issuing a <see cref="GetPageRanges"/>
+        /// changes are computed on the server by issuing a <see cref="GetPageRanges(PageBlobGetPageRangesOptions, CancellationToken)"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
-        /// <see cref="GetPageRanges"/> apply to
+        /// <see cref="GetPageRanges(PageBlobGetPageRangesOptions, CancellationToken)"/> apply to
         /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPages(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> or
@@ -3341,7 +3278,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The additional storage space consumed by the copied snapshot is
         /// the size of the differential data transferred during the copy.
         /// This can be determined by performing a
-        /// <see cref="GetPageRangesDiff"/>
+        /// <see cref="GetPageRangesDiff(PageBlobGetPageRangesDiffOptions, CancellationToken)"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
         public virtual CopyFromUriOperation StartCopyIncremental(
@@ -3436,10 +3373,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
-        /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync"/>
+        /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync(PageBlobGetPageRangesOptions, CancellationToken)"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
-        /// <see cref="GetPageRangesAsync"/> apply to
+        /// <see cref="GetPageRangesAsync(PageBlobGetPageRangesOptions, CancellationToken)"/> apply to
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/> or
@@ -3450,7 +3387,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The additional storage space consumed by the copied snapshot is
         /// the size of the differential data transferred during the copy.
         /// This can be determined by performing a
-        /// <see cref="GetPageRangesDiffAsync"/>
+        /// <see cref="GetPageRangesDiffAsync(PageBlobGetPageRangesDiffOptions, CancellationToken)"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
         public virtual async Task<CopyFromUriOperation> StartCopyIncrementalAsync(
@@ -3549,10 +3486,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
-        /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync"/>
+        /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync(PageBlobGetPageRangesOptions, CancellationToken)"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
-        /// <see cref="GetPageRangesAsync"/> apply to
+        /// <see cref="GetPageRangesAsync(PageBlobGetPageRangesOptions, CancellationToken)"/> apply to
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPagesAsync(Stream, long, PageBlobUploadPagesOptions, CancellationToken)"/>
