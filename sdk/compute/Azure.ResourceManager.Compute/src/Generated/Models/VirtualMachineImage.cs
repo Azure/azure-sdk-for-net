@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="plan"> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </param>
-        /// <param name="osDiskImage"> Contains the os disk image information. </param>
+        /// <param name="oSDiskImage"> Contains the os disk image information. </param>
         /// <param name="dataDiskImages"> The list of data disk images information. </param>
         /// <param name="automaticOSUpgradeProperties"> Describes automatic OS upgrade properties on the image. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
-        internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
+        internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage oSDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = oSDiskImage;
             DataDiskImages = dataDiskImages;
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
         public PurchasePlan Plan { get; set; }
         /// <summary> Contains the os disk image information. </summary>
-        public OSDiskImage OsDiskImage { get; set; }
+        public OSDiskImage OSDiskImage { get; set; }
         /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>

@@ -11,6 +11,7 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -26,8 +27,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Ignore("not supported yet in 2021-11-01")]
         public async Task GetAvailableClusterRegions()
         {
-            IReadOnlyList<AvailableCluster> availableClusters = (await DefaultSubscription.GetAvailableClusterRegionClustersAsync()).Value;
-            Assert.NotNull(availableClusters);
+            await foreach (var _ in DefaultSubscription.GetAvailableClusterRegionClustersAsync())
+            {
+                return;
+            }
+
+            Assert.Fail($"{nameof(SubscriptionExtensions)}.{nameof(SubscriptionExtensions.GetAvailableClusterRegionClustersAsync)} has returned an empty collection of AvailableClusters.");
         }
 
         [Test]
@@ -39,8 +44,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string clusterName = Recording.GenerateAssetName("cluster");
             EventHubClusterCollection clusterCollection = _resourceGroup.GetEventHubClusters();
-            EventHubClusterData parameter = new EventHubClusterData(Location.EastUS2);
-            EventHubCluster cluster = (await clusterCollection.CreateOrUpdateAsync(clusterName, parameter)).Value;
+            EventHubClusterData parameter = new EventHubClusterData(AzureLocation.EastUS2);
+            EventHubCluster cluster = (await clusterCollection.CreateOrUpdateAsync(true, clusterName, parameter)).Value;
             Assert.NotNull(cluster);
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
@@ -50,15 +55,22 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
             //get the namespace under cluster
-            IReadOnlyList<SubResource> namspaceIds = (await cluster.GetNamespacesAsync()).Value;
+            SubResource subResource = null;
+            await foreach (var namespaceId in cluster.GetNamespacesAsync())
+            {
+                subResource = namespaceId;
+                break;
+            }
+
+            Assert.NotNull(subResource);
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");
-            cluster = (await cluster.UpdateAsync(cluster.Data)).Value;
+            cluster = (await cluster.UpdateAsync(true, cluster.Data)).Value;
             Assert.AreEqual(cluster.Data.Tags["key"], "value");
 
             //delete the cluster
-            await cluster.DeleteAsync();
+            await cluster.DeleteAsync(true);
             Assert.IsFalse(await clusterCollection.ExistsAsync(clusterName));
         }
     }

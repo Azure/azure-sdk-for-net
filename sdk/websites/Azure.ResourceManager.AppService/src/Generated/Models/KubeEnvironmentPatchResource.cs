@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="aksResourceID"></param>
-        internal KubeEnvironmentPatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, kind)
+        internal KubeEnvironmentPatchResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, systemData, kind)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;

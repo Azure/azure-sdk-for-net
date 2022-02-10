@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> A class representing the CommunicationService data model. </summary>
-    public partial class CommunicationServiceData : Resource
+    public partial class CommunicationServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
         public CommunicationServiceData()
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
         /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
@@ -35,9 +34,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="location"> The Azure location where the CommunicationService is running. </param>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
+        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             HostName = hostName;
             DataLocation = dataLocation;
@@ -48,8 +46,6 @@ namespace Azure.ResourceManager.Communication
             Tags = tags;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> FQDN of the CommunicationService instance. </summary>

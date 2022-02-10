@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Azure.Monitor.Query.Models;
@@ -22,10 +23,51 @@ namespace Azure.Monitor.Query.Models
         /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
-        /// <param name="metrics"> the value of the collection. </param>
+        /// <param name="metrics"> The value of the collection. </param>
         public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
-            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics);
+            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray());
+        }
+
+        /// <summary>
+        /// Enables the user to create an instance of a <see cref="MetricResult"/>.
+        /// </summary>
+        /// <param name="id"> The metric ID. </param>
+        /// <param name="resourceType"> The resource type of the metric resource. </param>
+        /// <param name="name"> The name of the metric. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
+        public static MetricResult MetricResult(string id, string resourceType, string name, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
+        {
+            return new MetricResult(id, resourceType, new LocalizableString(name), unit, timeSeries);
+        }
+
+        /// <summary>
+        /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
+        /// <param name="metadataValues"> A dictionary comprised of metric metadata values. </param>
+        /// <param name="values"> A list of <see cref="Models.MetricValue"/> elements. </param>
+        /// </summary>
+        public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadataValues, IEnumerable<MetricValue> values)
+        {
+            var metadataValueList = new List<MetadataValue>();
+            foreach (var value in metadataValues)
+            {
+                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value);
+                metadataValueList.Add(metadataValue);
+            }
+            return new MetricTimeSeriesElement(metadataValueList, values.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
+        /// <param name="average"> The average value in the time range. </param>
+        /// <param name="minimum"> The least value in the time range. </param>
+        /// <param name="maximum"> The greatest value in the time range. </param>
+        /// <param name="total"> The sum of all of the values in the time range. </param>
+        /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
+        public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
+        {
+            return new MetricValue(timeStamp, average, minimum, maximum, total, count);
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsQueryResult"/>. </summary>
@@ -38,7 +80,7 @@ namespace Azure.Monitor.Query.Models
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
             JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new LogsQueryResult(allTables, statisticsJson, visualizationJson, errorJson);
+            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson);
         }
 
         /// <summary> Enables the user to create an instance of a <see cref="LogsTableRow"/>. </summary>

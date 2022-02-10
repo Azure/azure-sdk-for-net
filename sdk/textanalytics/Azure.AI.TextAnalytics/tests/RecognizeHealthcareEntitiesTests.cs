@@ -355,6 +355,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
@@ -425,7 +426,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             // try async
-            //There most be 1 page
+            //There must be 1 page
             List<AnalyzeHealthcareEntitiesResultCollection> asyncPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(1, asyncPages.Count);
 
@@ -433,7 +434,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, asyncPages[0].Count);
 
             // try sync
-            //There most be 1 page
+            //There must be 1 page
             List<AnalyzeHealthcareEntitiesResultCollection> pages = operation.GetValues().AsEnumerable().ToList();
             Assert.AreEqual(1, pages.Count);
 

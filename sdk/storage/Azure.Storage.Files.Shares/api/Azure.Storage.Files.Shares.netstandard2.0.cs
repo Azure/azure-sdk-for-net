@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_02_12) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_04_10) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -796,13 +796,13 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileRenameOptions
     {
         public ShareFileRenameOptions() { }
-        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationRequestConditions { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public bool? ReplaceIfExists { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceRequestConditions { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
     public partial class ShareFileRequestConditions
     {

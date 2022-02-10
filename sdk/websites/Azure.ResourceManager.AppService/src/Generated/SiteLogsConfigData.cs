@@ -5,8 +5,9 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -22,12 +23,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
         /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType type, string kind, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages) : base(id, name, type, kind)
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages) : base(id, name, type, systemData, kind)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;

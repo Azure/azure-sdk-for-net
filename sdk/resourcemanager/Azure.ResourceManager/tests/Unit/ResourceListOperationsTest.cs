@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Tests
             string location)
         {
             ResourceIdentifier id = new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget");
-            return new GenericResourceData(id, id.Name, id.ResourceType, location, tags, plan, null, kind, managedBy, sku, null, null, null, null);
+            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, plan, null, kind, managedBy, sku, null, null, null, null);
         }
     }
 }

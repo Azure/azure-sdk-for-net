@@ -16,12 +16,10 @@
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 
-  
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
     <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
     <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
   </ItemGroup>
-
 </Project>

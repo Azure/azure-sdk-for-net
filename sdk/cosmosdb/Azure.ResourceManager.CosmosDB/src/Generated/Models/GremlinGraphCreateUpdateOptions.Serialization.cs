@@ -8,8 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -44,10 +43,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static GremlinGraphCreateUpdateOptions DeserializeGremlinGraphCreateUpdateOptions(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            Location location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             GremlinGraphResource resource = default;
             Optional<CreateUpdateOptions> options = default;
             foreach (var property in element.EnumerateObject())
@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GremlinGraphCreateUpdateOptions(id, name, type, tags, location, resource, options.Value);
+            return new GremlinGraphCreateUpdateOptions(id, name, type, systemData, tags, location, resource, options.Value);
         }
     }
 }

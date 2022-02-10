@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs
     /// </remarks>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
@@ -922,7 +923,7 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        context ??= new ProcessorPartitionContext(partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
+                        context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
                         eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(eventData, context, updateToken), cancellationToken);
 
                         await _processEventAsync(eventArgs).ConfigureAwait(false);
@@ -944,7 +945,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (emptyBatch)
                 {
-                    eventArgs = new ProcessEventArgs(new EmptyPartitionContext(partition.PartitionId), null, EmptyEventUpdateCheckpoint, cancellationToken);
+                    eventArgs = new ProcessEventArgs(new EmptyPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId), null, EmptyEventUpdateCheckpoint, cancellationToken);
                     await _processEventAsync(eventArgs).ConfigureAwait(false);
                 }
             }
@@ -1366,11 +1367,17 @@ namespace Azure.Messaging.EventHubs
             ///   Initializes a new instance of the <see cref="EmptyPartitionContext" /> class.
             /// </summary>
             ///
-            /// <param name="partitionId">The identifier of the partition that the context represents.</param>
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+            /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+            /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
+            /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
             /// <param name="readLastEnqueuedEventProperties">A function that can be used to read the last enqueued event properties for the partition.</param>
             ///
-            public ProcessorPartitionContext(string partitionId,
-                                             Func<LastEnqueuedEventProperties> readLastEnqueuedEventProperties) : base(partitionId)
+            public ProcessorPartitionContext(string fullyQualifiedNamespace,
+                                             string eventHubName,
+                                             string consumerGroup,
+                                             string partitionId,
+                                             Func<LastEnqueuedEventProperties> readLastEnqueuedEventProperties) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId)
             {
                 _readLastEnqueuedEventProperties = readLastEnqueuedEventProperties;
             }
@@ -1398,9 +1405,15 @@ namespace Azure.Messaging.EventHubs
             ///   Initializes a new instance of the <see cref="EmptyPartitionContext" /> class.
             /// </summary>
             ///
-            /// <param name="partitionId">The identifier of the partition that the context represents.</param>
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+            /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+            /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
+            /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
             ///
-            public EmptyPartitionContext(string partitionId) : base(partitionId)
+            public EmptyPartitionContext(string fullyQualifiedNamespace,
+                                         string eventHubName,
+                                         string consumerGroup,
+                                         string partitionId) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId)
             {
             }
 

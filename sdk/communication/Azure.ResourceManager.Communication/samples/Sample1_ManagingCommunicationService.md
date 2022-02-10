@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Manage_CommunicationService_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
@@ -26,8 +27,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+AzureLocation location = AzureLocation.WestUS2;
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true,rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -43,7 +44,7 @@ CommunicationServiceData data = new CommunicationServiceData()
     Location = "global",
     DataLocation = "UnitedStates",
 };
-CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(communicationServiceName, data);
+ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
 CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
@@ -65,5 +66,5 @@ await foreach (CommunicationService communicationService  in list)
 CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
 CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-await communicationService.DeleteAsync();
+await communicationService.DeleteAsync(true);
 ```

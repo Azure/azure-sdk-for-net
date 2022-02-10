@@ -53,7 +53,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="sharedGalleryImageId">Specified the shared gallery
         /// image unique id for vm deployment. This can be fetched from shared
         /// gallery image GET call.</param>
-        public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string))
+        /// <param name="communityGalleryImageId">Specified the community
+        /// gallery image unique id for vm deployment. This can be fetched from
+        /// community gallery image GET call.</param>
+        public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string), string communityGalleryImageId = default(string))
             : base(id)
         {
             Publisher = publisher;
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Version = version;
             ExactVersion = exactVersion;
             SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             CustomInit();
         }
 
@@ -116,6 +120,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "sharedGalleryImageId")]
         public string SharedGalleryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specified the community gallery image unique id for vm
+        /// deployment. This can be fetched from community gallery image GET
+        /// call.
+        /// </summary>
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -24,9 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="properties"> Connection strings. </param>
-        internal ConnectionStringDictionary(ResourceIdentifier id, string name, ResourceType type, string kind, IDictionary<string, ConnStringValueTypePair> properties) : base(id, name, type, kind)
+        internal ConnectionStringDictionary(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IDictionary<string, ConnStringValueTypePair> properties) : base(id, name, type, systemData, kind)
         {
             Properties = properties;
         }
