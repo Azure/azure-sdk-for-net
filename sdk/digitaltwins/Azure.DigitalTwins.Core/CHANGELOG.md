@@ -1,7 +1,18 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2022-02-15)
 
+### New Features
+
+- Added support for `SourceTime` to `DigitalTwinPropertyMetadata`.
+
+### Breaking changes
+
+- None
+
+### Fixes and improvements
+
+- None
 
 ## 1.2.2 (2021-04-12)
 
