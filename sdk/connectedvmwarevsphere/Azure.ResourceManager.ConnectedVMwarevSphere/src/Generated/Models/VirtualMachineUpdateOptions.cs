@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the virtualMachineUpdate. </summary>
-    public partial class VirtualMachineUpdate
+    public partial class VirtualMachineUpdateOptions
     {
-        /// <summary> Initializes a new instance of VirtualMachineUpdate. </summary>
-        public VirtualMachineUpdate()
+        /// <summary> Initializes a new instance of VirtualMachineUpdateOptions. </summary>
+        public VirtualMachineUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
