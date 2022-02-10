@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
-    public partial class AvailableDelegation : ResourceManager.Models.Resource
+    public partial class AvailableDelegation : ResourceData
     {
         /// <summary> Initializes a new instance of AvailableDelegation. </summary>
         internal AvailableDelegation()

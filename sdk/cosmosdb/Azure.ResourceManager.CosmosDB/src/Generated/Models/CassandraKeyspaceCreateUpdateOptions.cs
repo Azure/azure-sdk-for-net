@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB Cassandra keyspace. </summary>
-    public partial class CassandraKeyspaceCreateUpdateOptions : TrackedResource
+    public partial class CassandraKeyspaceCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

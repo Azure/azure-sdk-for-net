@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the LedgerDigestUploads data model. </summary>
-    public partial class LedgerDigestUploadsData : Resource
+    public partial class LedgerDigestUploadsData : ResourceData
     {
         /// <summary> Initializes a new instance of LedgerDigestUploadsData. </summary>
         public LedgerDigestUploadsData()

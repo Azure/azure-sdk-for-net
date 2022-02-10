@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB storedProcedure. </summary>
-    public partial class SqlStoredProcedureCreateUpdateOptions : TrackedResource
+    public partial class SqlStoredProcedureCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlStoredProcedureCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>

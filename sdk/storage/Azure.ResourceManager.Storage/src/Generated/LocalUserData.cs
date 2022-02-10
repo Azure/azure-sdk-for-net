@@ -13,7 +13,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the LocalUser data model. </summary>
-    public partial class LocalUserData : Resource
+    public partial class LocalUserData : ResourceData
     {
         /// <summary> Initializes a new instance of LocalUserData. </summary>
         public LocalUserData()

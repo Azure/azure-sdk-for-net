@@ -108,6 +108,13 @@ namespace Azure.Core.Pipeline
 
             private async Task RetryAsync(Exception exception, bool async, CancellationToken cancellationToken)
             {
+                // Depending on the timing, the stream can be closed as a result of cancellation when the transport closes the stream.
+                // If the user requested cancellation, we translate to TaskCanceledException, similar to what we do HttpWebRequestTransport.
+                if (exception is ObjectDisposedException)
+                {
+                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                }
+
                 bool isNonCustomerCancelledException = exception is OperationCanceledException &&
                                                     !cancellationToken.IsCancellationRequested;
 

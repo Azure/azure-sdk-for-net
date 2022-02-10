@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseSchema data model. </summary>
-    public partial class DatabaseSchemaData : Resource
+    public partial class DatabaseSchemaData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
         public DatabaseSchemaData()

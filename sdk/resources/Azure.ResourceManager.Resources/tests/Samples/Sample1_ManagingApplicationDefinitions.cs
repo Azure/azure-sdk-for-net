@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 Description = $"{applicationDefinitionName} description",
                 PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
             };
-            ApplicationDefinitionCreateOrUpdateOperation lro = await applicationDefinitionCollection.CreateOrUpdateAsync(true, applicationDefinitionName, input);
+            ArmOperation<ApplicationDefinition> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(true, applicationDefinitionName, input);
             ApplicationDefinition applicationDefinition = lro.Value;
             #endregion Snippet:Managing_ApplicationDefinitions_CreateAnApplicationDefinition
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
 

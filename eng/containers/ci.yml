@@ -12,10 +12,15 @@ pool:
   vmImage: 'ubuntu-20.04'
 
 variables:
-  dockerfile: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile
-  containerRegistry: 'azsdkengsys'
-  imageRepository: 'dotnet/ubuntu_netcore_keyring'
-  imageTag: $(build.buildid)
+  - template: /eng/pipelines/templates/variables/globals.yml
+  - name: dockerfile
+    value: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile
+  - name: containerRegistry
+    value: 'azsdkengsys'
+  - name: imageRepository
+    value: 'dotnet/ubuntu_netcore_keyring'
+  - name: imageTag
+    value: $(build.buildid)
 
 steps:
 - task: Docker@2

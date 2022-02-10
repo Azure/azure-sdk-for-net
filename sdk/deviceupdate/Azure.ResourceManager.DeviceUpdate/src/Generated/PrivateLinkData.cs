@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the PrivateLink data model. </summary>
-    public partial class PrivateLinkData : Resource
+    public partial class PrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkData. </summary>
         public PrivateLinkData()
