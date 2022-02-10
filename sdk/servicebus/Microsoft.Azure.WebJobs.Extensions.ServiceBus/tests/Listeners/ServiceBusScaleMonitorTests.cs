@@ -157,11 +157,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_IgnoresScheduledMessages()
         {
-            var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            scheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
+            var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled);
 
-            var anotherScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            anotherScheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
+            var anotherScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(scheduledMessage);
@@ -182,11 +180,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_IgnoresDeferredMessages()
         {
-            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 0);
-            deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
-
-            var anotherDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            anotherDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
+            var anotherDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(deferredMessage);
@@ -208,7 +203,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public async Task GetMetrics_DoesNotPeekBatchesWhenFirstAttemptReturnsActive()
         {
             var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
-            activeMessage.SetMessageState();
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(activeMessage);
@@ -228,9 +222,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_DoesNotPeekBatchesWhenFirstAttemptReturnsNull()
         {
-            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
-            activeMessage.SetMessageState();
-
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => null);
 
@@ -249,8 +240,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_IgnoresEmptyBatch()
         {
-            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(deferredMessage);
@@ -271,11 +261,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_UseSequenceNumberToRetrieveBatches()
         {
-            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 12);
-            deferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
-
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(sequenceNumber: 12, serviceBusMessageState: ServiceBusMessageState.Deferred);
             var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
-            activeMessage.SetMessageState();
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(deferredMessage);
@@ -296,14 +283,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_IgnoresDeferredOrScheduledMessagesUntilItFindsAndActive()
         {
-            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            firstDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
-
-            var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            secondScheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
-
+            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
+            var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled);
             var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
-            activeMessage.SetMessageState();
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(firstDeferredMessage);
@@ -325,19 +307,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public async Task GetMetrics_GiveUpAfterFirstAndBatchPeekDoesntReturnActive()
         {
-            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            firstDeferredMessage.SetMessageState(ServiceBusMessageState.Deferred);
+            var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(firstDeferredMessage);
 
             _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(It.IsAny<int>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((int batchSize, long _, CancellationToken __) => Enumerable.Range(1, batchSize).Select(i =>
-                {
-                    var scheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-                    scheduledMessage.SetMessageState(ServiceBusMessageState.Scheduled);
-                    return scheduledMessage;
-                }).ToList());
+                .ReturnsAsync((int batchSize, long _, CancellationToken __) => Enumerable.Range(1, batchSize)
+                    .Select(i => ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled))
+                    .ToList());
 
             ServiceBusListener listener = CreateListener();
 
@@ -354,7 +332,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public async Task GetMetrics_CalculatesMetrics()
         {
             var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)));
-            message.SetMessageState();
 
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(message);

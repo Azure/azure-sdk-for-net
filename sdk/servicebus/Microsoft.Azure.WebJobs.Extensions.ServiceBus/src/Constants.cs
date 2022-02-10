@@ -9,6 +9,5 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public const string DefaultConnectionSettingStringName = "AzureWebJobsServiceBus";
         public const string DynamicSku = "Dynamic";
         public const string AzureWebsiteSku = "WEBSITE_SKU";
-        public const string MessageStateName = "x-opt-message-state";
     }
 }

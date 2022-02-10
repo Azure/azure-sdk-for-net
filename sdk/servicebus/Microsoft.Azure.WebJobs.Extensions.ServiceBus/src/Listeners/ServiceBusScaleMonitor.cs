@@ -190,11 +190,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private static bool MessageWasNotScheduledOrDeferred(ServiceBusReceivedMessage message)
         {
-            if (message.TryGetServiceBusMessageState(out var state))
-            {
-                return state == ServiceBusMessageState.Active;
-            }
-            return true;
+            return message.State == ServiceBusMessageState.Active;
         }
 
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
