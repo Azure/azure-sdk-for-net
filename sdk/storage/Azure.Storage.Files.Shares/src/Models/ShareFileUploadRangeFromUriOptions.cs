@@ -25,6 +25,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional.  Specifies if the file last write time should be set to the current time,
         /// or the last write time currently associated with the file should be preserved.
         /// </summary>
-        public FileLastWrittenOn? FileLastWrittenOn { get; set; }
+        public FileLastWrittenMode? FileLastWrittenMode { get; set; }
     }
 }

@@ -2200,9 +2200,9 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         [TestCase(null)]
-        [TestCase(FileLastWrittenOn.Now)]
-        [TestCase(FileLastWrittenOn.Preserve)]
-        public async Task UploadRangeAsync_PreserveFileLastWrittenOn(FileLastWrittenOn fileLastWrittenOn)
+        [TestCase(FileLastWrittenMode.Now)]
+        [TestCase(FileLastWrittenMode.Preserve)]
+        public async Task UploadRangeAsync_PreserveFileLastWrittenOn(FileLastWrittenMode fileLastWrittenMode)
         {
             // Arrange
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -2215,7 +2215,7 @@ namespace Azure.Storage.Files.Shares.Tests
             using Stream stream = new MemoryStream(data);
             ShareFileUploadRangeOptions options = new ShareFileUploadRangeOptions
             {
-                FileLastWrittenOn = fileLastWrittenOn
+                FileLastWrittenOnMode = fileLastWrittenMode
             };
 
             // Act
@@ -2227,7 +2227,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareFileProperties> propertiesResponse = await fileClient.GetPropertiesAsync();
 
-            if (fileLastWrittenOn == FileLastWrittenOn.Preserve)
+            if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
             {
                 Assert.AreEqual(
                     initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
@@ -3024,9 +3024,9 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         [TestCase(null)]
-        [TestCase(FileLastWrittenOn.Now)]
-        [TestCase(FileLastWrittenOn.Preserve)]
-        public async Task UploadRangeFromUriAsync_PreserveFileLastWrittenOn(FileLastWrittenOn fileLastWrittenOn)
+        [TestCase(FileLastWrittenMode.Now)]
+        [TestCase(FileLastWrittenMode.Preserve)]
+        public async Task UploadRangeFromUriAsync_PreserveFileLastWrittenOn(FileLastWrittenMode fileLastWrittenMode)
         {
             // Arrange
             await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
@@ -3042,7 +3042,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
             {
-                FileLastWrittenOn = fileLastWrittenOn
+                FileLastWrittenMode = fileLastWrittenMode
             };
 
             // Act
@@ -3055,7 +3055,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareFileProperties> propertiesResponse = await testDestination.File.GetPropertiesAsync();
 
-            if (fileLastWrittenOn == FileLastWrittenOn.Preserve)
+            if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
             {
                 Assert.AreEqual(
                     initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
