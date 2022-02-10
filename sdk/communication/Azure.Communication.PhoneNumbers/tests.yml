@@ -7,7 +7,7 @@ extends:
     Project: Azure.Communication.PhoneNumbers
     MatrixConfigs:
       - Name: PhoneNumbers_NET_matrix
-        Path: /sdk/communication/Azure.Communication.PhoneNumbers/phone-numbers-livetest-matrix.json
+        Path: sdk/communication/Azure.Communication.PhoneNumbers/phone-numbers-livetest-matrix.json
         Selection: sparse
         GenerateVMJobs: true
     CloudConfig:
