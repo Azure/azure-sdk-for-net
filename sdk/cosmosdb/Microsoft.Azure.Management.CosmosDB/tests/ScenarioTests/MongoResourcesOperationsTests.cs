@@ -125,7 +125,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                fixture.Location = "eastus";
+                fixture.Location = "west us 2";
                 fixture.Init(context);
                 string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36);
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
@@ -154,7 +154,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     Resource = new MongoDBDatabaseResource { Id = databaseName },
                     Options = new CreateUpdateOptions(),
-                    Location = "eastus"
+                    Location = "west us 2"
                 };
 
                 MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;

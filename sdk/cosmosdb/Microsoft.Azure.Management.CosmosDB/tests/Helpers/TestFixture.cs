@@ -23,7 +23,7 @@ namespace CosmosDB.Tests
         public CosmosDBManagementClient CosmosDBManagementClient;
         public ResourceManagementClient ResourceManagementClient;
         public string ResourceGroupName;
-        public string Location = "central us euap";
+        public string Location = "west us 2";
 
         public Dictionary<AccountType, string> accounts;
 
@@ -98,7 +98,7 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.6",
-                        enablePitr: false,
+                        enablePitr: true,
                         capabilities: new List<Capability> { new Capability("EnableMongo"), new Capability("EnableMongoRoleBasedAccessControl") }
                     );
                 }

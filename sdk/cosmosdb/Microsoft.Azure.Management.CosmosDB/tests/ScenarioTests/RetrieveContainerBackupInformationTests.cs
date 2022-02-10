@@ -21,7 +21,7 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
-        public void RetrieveSqlContainerContinuousBackupInfoTest()
+        internal void RetrieveSqlContainerContinuousBackupInfoTest()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
