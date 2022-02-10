@@ -244,6 +244,7 @@ for (int i = 0; i < result.Documents.Count; i++)
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
+}
 ```
 
 To see the full example source files, see:

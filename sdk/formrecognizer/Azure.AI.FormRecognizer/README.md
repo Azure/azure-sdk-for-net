@@ -548,6 +548,7 @@ for (int i = 0; i < result.Documents.Count; i++)
             Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
+}
 ```
 
 You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
