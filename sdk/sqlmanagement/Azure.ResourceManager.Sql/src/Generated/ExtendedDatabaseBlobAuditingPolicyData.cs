@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ExtendedDatabaseBlobAuditingPolicy data model. </summary>
-    public partial class ExtendedDatabaseBlobAuditingPolicyData : Resource
+    public partial class ExtendedDatabaseBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyData. </summary>
         public ExtendedDatabaseBlobAuditingPolicyData()
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType type, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type)
+        internal ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type, systemData)
         {
             PredicateExpression = predicateExpression;
             RetentionDays = retentionDays;

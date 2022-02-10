@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #region Snippet:Managing_ServiceBusNamespaces_Namespaces
 using System;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
@@ -10,6 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 #endregion
 using NUnit.Framework;
 using System.Threading.Tasks;
+
 namespace Azure.ResourceManager.ServiceBus.Tests.Samples
 {
     public class Readme_ManagingNamespaces
@@ -25,8 +27,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #endregion
             #region Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
             string rgName = "myRgName";
-            Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            AzureLocation location = AzureLocation.WestUS2;
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
 
@@ -40,8 +42,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusNamespaces_CreateNamespace
             string namespaceName = "myNamespace";
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            Location location = Location.EastUS2;
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(location))).Value;
+            AzureLocation location = AzureLocation.EastUS2;
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
             #endregion
         }
 
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await serviceBusNamespace.DeleteAsync();
+            await serviceBusNamespace.DeleteAsync(true);
             #endregion
         }
     }

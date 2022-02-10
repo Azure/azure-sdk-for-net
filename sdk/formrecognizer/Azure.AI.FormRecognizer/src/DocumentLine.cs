@@ -11,6 +11,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentLine
     {
         /// <summary>
+        /// Initializes a new instance of DocumentLine. Used by the <see cref="DocumentAnalysisModelFactory"/>.
+        /// </summary>
+        internal DocumentLine(string content, BoundingBox boundingBox, IReadOnlyList<DocumentSpan> spans)
+        {
+            Content = content;
+            BoundingBox = boundingBox;
+            Spans = spans;
+        }
+
+        /// <summary>
         /// The quadrilateral bounding box that outlines the content of this line. Units are in pixels for
         /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
         /// at <see cref="DocumentPage.Unit"/>.

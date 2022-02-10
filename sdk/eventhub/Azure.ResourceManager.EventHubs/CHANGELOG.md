@@ -105,6 +105,7 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.Core;
 
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
@@ -113,7 +114,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
-EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
+EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
     Sku = new Models.Sku(SkuName.Standard)
     {
@@ -123,7 +124,7 @@ EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
 EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(namespaceName, parameters).Value;
+EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(true, namespaceName, parameters).Value;
 
 //create eventhub
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -148,7 +149,7 @@ EventHubData eventHubData = new EventHubData()
         SkipEmptyArchives = true
     }
 };
-EventHub eventHub = eventHubCollection.CreateOrUpdate(eventhubName, eventHubData).Value;
+EventHub eventHub = eventHubCollection.CreateOrUpdate(true, eventhubName, eventHubData).Value;
 ```
 
 #### Object Model Changes

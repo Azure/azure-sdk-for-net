@@ -3,11 +3,11 @@
 // license information.
 // 
 
+using System.Collections.Generic;
+using ApiManagementManagement.Tests.Helpers;
 using Microsoft.Azure.Management.ApiManagement.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
 using Xunit;
-using ApiManagementManagement.Tests.Helpers;
 
 namespace ApiManagement.Tests.ResourceProviderTests
 {
@@ -22,7 +22,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
             string expectedPublisherEmail,
             string expectedPublisherName,
             string expectedSkuName,
-            Dictionary<string, string> expectedTags)
+            Dictionary<string, string> expectedTags,
+            string platformVersion)
         {
             Assert.NotNull(service);
 
@@ -46,6 +47,15 @@ namespace ApiManagement.Tests.ResourceProviderTests
             }
             Assert.Equal(expectedPublisherName, service.PublisherName);
             Assert.Equal(expectedPublisherEmail, service.PublisherEmail);
+            Assert.Equal(platformVersion, service.PlatformVersion);
+            Assert.Equal("Enabled", service.PublicNetworkAccess);
+            Assert.NotNull(service.SystemData);
+            Assert.NotNull(service.SystemData.CreatedAt);
+            Assert.NotNull(service.SystemData.CreatedBy);
+            Assert.Equal("Application", service.SystemData.CreatedByType);
+            Assert.NotNull(service.SystemData.LastModifiedAt);
+            Assert.NotNull(service.SystemData.LastModifiedBy);
+            Assert.Equal("Application", service.SystemData.LastModifiedByType);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusReceivedMessage : MessageWithMetadata
+    public class ServiceBusReceivedMessage
     {
         /// <summary>
         /// Creates a new message from the specified payload.
@@ -67,17 +67,6 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the body of the message.
         /// </summary>
         public BinaryData Body => AmqpMessage.GetBody();
-
-        /// <summary>
-        /// Hidden property that shadows the <see cref="Body"/> property. This is added
-        /// in order to inherit from <see cref="MessageWithMetadata"/>.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override BinaryData Data
-        {
-            get => Body;
-            set => throw new NotImplementedException("Data cannot be set on a ServiceBusReceivedMessage");
-        }
 
         /// <summary>
         /// Gets the MessageId to identify the message.
@@ -178,19 +167,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Optionally describes the payload of the message, with a descriptor following the format of
         ///   RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public override string ContentType
-        {
-            get => AmqpMessage.Properties.ContentType;
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            set => throw new NotImplementedException("Content type cannot be set on a ServiceBusReceivedMessage");
-        }
-
-        /// <summary>
-        /// Hidden property that indicates that the <see cref="ServiceBusReceivedMessage"/> is read-only. This is part of
-        /// the <see cref="MessageWithMetadata"/> abstraction.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool IsReadOnly => true;
+        public string ContentType => AmqpMessage.Properties.ContentType;
 
         /// <summary>Gets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>

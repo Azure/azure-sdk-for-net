@@ -14,7 +14,7 @@ namespace Azure.Analytics.Purview.Catalog
         internal PurviewRelationships(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri endpoint)
         {
             _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
         }
     }

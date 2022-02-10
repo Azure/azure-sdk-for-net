@@ -25,5 +25,46 @@ directive:
   - rename-model:
       from: Host
       to: VMwareHost
-
+  - from: swagger-document
+    where: "$.definitions.OsType"
+    transform: >
+      $["x-ms-enum"] = {
+        "modelAsString": true,
+        "name": "OSType"
+      }
+  - from: swagger-document
+    where: "$.definitions.VirtualMachineTemplateInventoryItem.properties.numCPUs"
+    transform: >
+      $["x-ms-client-name"] = "numCpus";
+  - from: swagger-document
+    where: "$.definitions.HardwareProfile.properties.numCPUs"
+    transform: >
+      $["x-ms-client-name"] = "numCpus";
+  - from: swagger-document
+    where: "$.definitions.VirtualMachineTemplateProperties.properties.numCPUs"
+    transform: >
+      $["x-ms-client-name"] = "numCpus";
+  - from: swagger-document
+    where: "$.definitions.VirtualMachineTemplateProperties.properties.osType"
+    transform: >
+      $["x-ms-client-name"] = "OSType";
+  - from: swagger-document
+    where: "$.definitions.VirtualMachineTemplateProperties.properties.osName"
+    transform: >
+      $["x-ms-client-name"] = "OSName";
+  - from: swagger-document
+    where: "$.definitions.OsProfile.properties.osType"
+    transform: >
+      $["x-ms-client-name"] = "OSType";
+  - from: swagger-document
+    where: "$.definitions.OsProfile.properties.osName"
+    transform: >
+      $["x-ms-client-name"] = "OSName";
+  - rename-model:
+      from: OsProfile
+      to: OSProfile
+  - from: swagger-document
+    where: "$.definitions.VirtualMachineProperties.properties.osProfile"
+    transform: >
+      $["x-ms-client-name"] = "OSProfile";
 ```

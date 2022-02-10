@@ -6,19 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the MachineExtension data model. </summary>
-    public partial class MachineExtensionData : TrackedResource
+    public partial class MachineExtensionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public MachineExtensionData(Location location) : base(location)
+        public MachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
@@ -26,9 +25,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="systemData"> The system data. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="typePropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
@@ -38,9 +37,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine extension instance view. </param>
-        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SystemData systemData, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView) : base(id, name, type, tags, location)
+        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, object settings, object protectedSettings, string provisioningState, MachineExtensionPropertiesInstanceView instanceView) : base(id, name, type, systemData, tags, location)
         {
-            SystemData = systemData;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             TypePropertiesType = typePropertiesType;
@@ -52,8 +50,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             InstanceView = instanceView;
         }
 
-        /// <summary> The system data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>

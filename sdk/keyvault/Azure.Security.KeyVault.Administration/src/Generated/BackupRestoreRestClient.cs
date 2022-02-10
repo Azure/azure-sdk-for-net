@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. This operation is supported only by the Managed HSM service. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. This operation is supported only by the Managed HSM service. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

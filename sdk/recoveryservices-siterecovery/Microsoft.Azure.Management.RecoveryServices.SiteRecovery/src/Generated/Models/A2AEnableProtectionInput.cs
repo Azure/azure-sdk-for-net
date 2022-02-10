@@ -56,6 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// information (for two pass flows).</param>
         /// <param name="recoveryAvailabilityZone">The recovery availability
         /// zone.</param>
+        /// <param name="recoveryExtendedLocation">The recovery extended
+        /// location.</param>
         /// <param name="recoveryAzureNetworkId">The recovery Azure virtual
         /// network ARM id.</param>
         /// <param name="recoverySubnetName">The recovery subnet name.</param>
@@ -63,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// scale set Id.</param>
         /// <param name="recoveryCapacityReservationGroupId">The recovery
         /// capacity reservation group Id.</param>
-        public A2AEnableProtectionInput(string fabricObjectId, string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string recoveryProximityPlacementGroupId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string multiVmGroupId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), string recoveryAzureNetworkId = default(string), string recoverySubnetName = default(string), string recoveryVirtualMachineScaleSetId = default(string), string recoveryCapacityReservationGroupId = default(string))
+        public A2AEnableProtectionInput(string fabricObjectId, string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string recoveryProximityPlacementGroupId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string multiVmGroupId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), ExtendedLocation recoveryExtendedLocation = default(ExtendedLocation), string recoveryAzureNetworkId = default(string), string recoverySubnetName = default(string), string recoveryVirtualMachineScaleSetId = default(string), string recoveryCapacityReservationGroupId = default(string))
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
             RecoveryAvailabilityZone = recoveryAvailabilityZone;
+            RecoveryExtendedLocation = recoveryExtendedLocation;
             RecoveryAzureNetworkId = recoveryAzureNetworkId;
             RecoverySubnetName = recoverySubnetName;
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
@@ -171,6 +174,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryAvailabilityZone { get; set; }
 
         /// <summary>
+        /// Gets or sets the recovery extended location.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryExtendedLocation")]
+        public ExtendedLocation RecoveryExtendedLocation { get; set; }
+
+        /// <summary>
         /// Gets or sets the recovery Azure virtual network ARM id.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAzureNetworkId")]
@@ -225,6 +234,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (RecoveryExtendedLocation != null)
+            {
+                RecoveryExtendedLocation.Validate();
             }
         }
     }

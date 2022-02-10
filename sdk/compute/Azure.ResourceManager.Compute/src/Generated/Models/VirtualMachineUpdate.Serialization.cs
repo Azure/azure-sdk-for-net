@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile");
-                writer.WriteObjectValue(OsProfile);
+                writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -147,6 +147,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("userData");
                 writer.WriteStringValue(UserData);
+            }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation");
+                writer.WriteObjectValue(CapacityReservation);
+            }
+            if (Optional.IsDefined(ApplicationProfile))
+            {
+                writer.WritePropertyName("applicationProfile");
+                writer.WriteObjectValue(ApplicationProfile);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -7,14 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerAutomaticTuning data model. </summary>
-    public partial class ServerAutomaticTuningData : Resource
+    public partial class ServerAutomaticTuningData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerAutomaticTuningData. </summary>
         public ServerAutomaticTuningData()
@@ -26,10 +25,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="desiredState"> Automatic tuning desired state. </param>
         /// <param name="actualState"> Automatic tuning actual state. </param>
         /// <param name="options"> Automatic tuning options definition. </param>
-        internal ServerAutomaticTuningData(ResourceIdentifier id, string name, ResourceType type, AutomaticTuningServerMode? desiredState, AutomaticTuningServerMode? actualState, IDictionary<string, AutomaticTuningServerOptions> options) : base(id, name, type)
+        internal ServerAutomaticTuningData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AutomaticTuningServerMode? desiredState, AutomaticTuningServerMode? actualState, IDictionary<string, AutomaticTuningServerOptions> options) : base(id, name, type, systemData)
         {
             DesiredState = desiredState;
             ActualState = actualState;

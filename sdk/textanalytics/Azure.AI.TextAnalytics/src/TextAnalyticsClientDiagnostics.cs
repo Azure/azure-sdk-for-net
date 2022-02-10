@@ -26,14 +26,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected override void ExtractFailureContent(
+        protected override ResponseError? ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
-            ref string? message,
-            ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
         {
             if (!string.IsNullOrEmpty(content))
@@ -46,8 +42,8 @@ namespace Azure.Core.Pipeline
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
                         TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
-                        message = error.Message;
-                        errorCode = error.ErrorCode.ToString();
+
+                        return new ResponseError(error.ErrorCode.ToString(), error.Message);
                     }
                 }
                 catch (JsonException)
@@ -56,6 +52,8 @@ namespace Azure.Core.Pipeline
                     // included verbatim in the detailed error message
                 }
             }
+
+            return null;
         }
     }
 }

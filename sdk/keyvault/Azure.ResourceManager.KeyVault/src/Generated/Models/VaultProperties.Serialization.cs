@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri");
-                writer.WriteStringValue(VaultUri);
+                writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EnabledForDeployment))
             {
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess);
+            }
             writer.WriteEndObject();
         }
 
@@ -94,7 +99,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Guid tenantId = default;
             Sku sku = default;
             Optional<IList<AccessPolicyEntry>> accessPolicies = default;
-            Optional<string> vaultUri = default;
+            Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
             Optional<bool> enabledForDiskEncryption = default;
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
+            Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
@@ -136,7 +142,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("vaultUri"))
                 {
-                    vaultUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hsmPoolResourceId"))
@@ -259,8 +270,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (property.NameEquals("publicNetworkAccess"))
+                {
+                    publicNetworkAccess = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections));
+            return new VaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri");
-                writer.WriteStringValue(StorageContainerUri);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
