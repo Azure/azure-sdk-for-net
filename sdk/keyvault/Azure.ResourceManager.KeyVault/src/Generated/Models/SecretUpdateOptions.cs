@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for patching a secret. </summary>
-    public partial class SecretPatchParameters
+    public partial class SecretUpdateOptions
     {
-        /// <summary> Initializes a new instance of SecretPatchParameters. </summary>
-        public SecretPatchParameters()
+        /// <summary> Initializes a new instance of SecretUpdateOptions. </summary>
+        public SecretUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

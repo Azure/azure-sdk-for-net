@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a vault. </summary>
-    public partial class VaultPatchParameters
+    public partial class VaultUpdateOptions
     {
-        /// <summary> Initializes a new instance of VaultPatchParameters. </summary>
-        public VaultPatchParameters()
+        /// <summary> Initializes a new instance of VaultUpdateOptions. </summary>
+        public VaultUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
