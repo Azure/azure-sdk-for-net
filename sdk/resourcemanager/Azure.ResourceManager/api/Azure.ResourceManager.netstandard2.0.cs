@@ -3,9 +3,9 @@ namespace Azure.ResourceManager
     public partial class ArmClient
     {
         protected ArmClient() { }
-        public ArmClient(Azure.Core.TokenCredential credential, Azure.ResourceManager.ArmClientOptions options = null) { }
-        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options = null) { }
-        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, System.Uri baseUri, Azure.ResourceManager.ArmClientOptions options = null) { }
+        public ArmClient(Azure.Core.TokenCredential credential) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T GetClient<T>(System.Func<T> ctor) where T : Azure.ResourceManager.Core.ArmResource { throw null; }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -41,8 +41,30 @@ namespace Azure.ResourceManager
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
-        public string Scope { get { throw null; } set { } }
+        public Azure.ResourceManager.ArmEnvironment Environment { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ArmEnvironment : System.IEquatable<Azure.ResourceManager.ArmEnvironment>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureChinaCloud;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureCloud;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureGermanCloud;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureUSGovernment;
+        public ArmEnvironment(System.Uri baseUri, string audience) { throw null; }
+        public string Audience { get { throw null; } }
+        public System.Uri BaseUri { get { throw null; } }
+        public string DefaultScope { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ArmEnvironment other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ArmEnvironment left, Azure.ResourceManager.ArmEnvironment right) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ArmEnvironment left, Azure.ResourceManager.ArmEnvironment right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class ArmOperation : Azure.Operation
     {
