@@ -714,6 +714,7 @@ namespace Azure.Storage.Files.Shares
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
@@ -729,6 +730,7 @@ namespace Azure.Storage.Files.Shares
                             fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
@@ -1319,6 +1321,7 @@ namespace Azure.Storage.Files.Shares
                         FileAttributes = smbProperties?.FileAttributes?.ToAttributesString(),
                         FileCreationTime = smbProperties?.FileCreatedOn.ToFileDateTimeString(),
                         FileLastWriteTime = smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        FileChangeTime = smbProperties?.FileChangedOn.ToFileDateTimeString(),
                         SetArchiveAttribute = setArchiveAttribute
                     };
 
@@ -3200,6 +3203,7 @@ namespace Azure.Storage.Files.Shares
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3214,6 +3218,7 @@ namespace Azure.Storage.Files.Shares
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
