@@ -118,7 +118,11 @@ namespace Azure.ResourceManager.Network
             return new HubRouteTableCollection(Client, Id);
         }
 
-        /// <summary> Retrieves the details of a VirtualHub. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualHub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualHub>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -138,7 +142,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualHub. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualHub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualHub> Get(CancellationToken cancellationToken = default)
         {
@@ -158,7 +166,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHub. </summary>
+        /// <summary>
+        /// Deletes a VirtualHub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -180,7 +192,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHub. </summary>
+        /// <summary>
+        /// Deletes a VirtualHub.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -202,7 +218,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates VirtualHub tags. </summary>
+        /// <summary>
+        /// Updates VirtualHub tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_UpdateTags
+        /// </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
@@ -227,7 +247,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates VirtualHub tags. </summary>
+        /// <summary>
+        /// Updates VirtualHub tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
+        /// Operation Id: VirtualHubs_UpdateTags
+        /// </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
@@ -252,7 +276,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
+        /// <summary>
+        /// Gets the effective routes configured for the Virtual Hub resource or the specified resource .
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/effectiveRoutes
+        /// Operation Id: VirtualHubs_GetEffectiveVirtualHubRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,7 +303,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
+        /// <summary>
+        /// Gets the effective routes configured for the Virtual Hub resource or the specified resource .
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/effectiveRoutes
+        /// Operation Id: VirtualHubs_GetEffectiveVirtualHubRoutes
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

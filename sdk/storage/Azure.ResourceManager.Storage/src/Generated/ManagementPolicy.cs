@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Gets the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Gets the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementPolicy> Get(CancellationToken cancellationToken = default)
         {
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -145,7 +157,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
+        /// <summary>
+        /// Deletes the managementpolicy associated with the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
+        /// <summary>
+        /// Sets the managementpolicy to the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,7 +216,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
+        /// <summary>
+        /// Sets the managementpolicy to the specified storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}
+        /// Operation Id: ManagementPolicies_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

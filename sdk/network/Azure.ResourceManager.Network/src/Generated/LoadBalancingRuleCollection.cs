@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified load balancer load balancing rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer load balancing rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
@@ -75,7 +79,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer load balancing rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer load balancing rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
@@ -100,7 +108,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the load balancing rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the load balancing rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules
+        /// Operation Id: LoadBalancerLoadBalancingRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadBalancingRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -138,7 +150,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the load balancing rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the load balancing rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules
+        /// Operation Id: LoadBalancerLoadBalancingRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadBalancingRule> GetAll(CancellationToken cancellationToken = default)
@@ -176,7 +192,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
@@ -199,7 +219,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
@@ -222,7 +246,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>
@@ -247,7 +275,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is empty. </exception>

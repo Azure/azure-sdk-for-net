@@ -90,7 +90,11 @@ namespace Azure.ResourceManager.Network
             return new RouteFilterRuleCollection(Client, Id);
         }
 
-        /// <summary> Gets the specified route filter. </summary>
+        /// <summary>
+        /// Gets the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<RouteFilter>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
@@ -111,7 +115,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified route filter. </summary>
+        /// <summary>
+        /// Gets the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RouteFilter> Get(string expand = null, CancellationToken cancellationToken = default)
@@ -132,7 +140,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified route filter. </summary>
+        /// <summary>
+        /// Deletes the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -154,7 +166,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified route filter. </summary>
+        /// <summary>
+        /// Deletes the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -176,7 +192,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a route filter. </summary>
+        /// <summary>
+        /// Updates tags of a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -201,7 +221,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates tags of a route filter. </summary>
+        /// <summary>
+        /// Updates tags of a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update route filter tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

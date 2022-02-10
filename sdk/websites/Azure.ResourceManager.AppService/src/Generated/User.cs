@@ -82,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: GetPublishingUser
-        /// <summary> Description for Gets publishing user. </summary>
+        /// <summary>
+        /// Description for Gets publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: GetPublishingUser
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -105,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: GetPublishingUser
-        /// <summary> Description for Gets publishing user. </summary>
+        /// <summary>
+        /// Description for Gets publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: GetPublishingUser
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<User> Get(CancellationToken cancellationToken = default)
         {
@@ -128,10 +130,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: UpdatePublishingUser
-        /// <summary> Description for Updates publishing user. </summary>
+        /// <summary>
+        /// Description for Updates publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: UpdatePublishingUser
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,10 +163,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/publishingUsers/web
-        /// ContextualPath: /providers/Microsoft.Web/publishingUsers/web
-        /// OperationId: UpdatePublishingUser
-        /// <summary> Description for Updates publishing user. </summary>
+        /// <summary>
+        /// Description for Updates publishing user
+        /// Request Path: /providers/Microsoft.Web/publishingUsers/web
+        /// Operation Id: UpdatePublishingUser
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="userDetails"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

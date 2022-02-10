@@ -123,10 +123,11 @@ namespace Azure.ResourceManager.AppService
             return new DeletedSiteCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceCertificateOrders_List
-        /// <summary> Description for List all certificate orders in a subscription. </summary>
+        /// <summary>
+        /// Description for List all certificate orders in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// Operation Id: AppServiceCertificateOrders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceCertificateOrder> GetAppServiceCertificateOrdersAsync(CancellationToken cancellationToken = default)
@@ -164,10 +165,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceCertificateOrders_List
-        /// <summary> Description for List all certificate orders in a subscription. </summary>
+        /// <summary>
+        /// Description for List all certificate orders in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
+        /// Operation Id: AppServiceCertificateOrders_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceCertificateOrder" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceCertificateOrder> GetAppServiceCertificateOrders(CancellationToken cancellationToken = default)
@@ -205,10 +207,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceCertificateOrders_ValidatePurchaseInformation
-        /// <summary> Description for Validate information for a certificate order. </summary>
+        /// <summary>
+        /// Description for Validate information for a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
+        /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
+        /// </summary>
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
@@ -227,10 +230,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceCertificateOrders_ValidatePurchaseInformation
-        /// <summary> Description for Validate information for a certificate order. </summary>
+        /// <summary>
+        /// Description for Validate information for a certificate order.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
+        /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
+        /// </summary>
         /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
@@ -249,10 +253,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_CheckAvailability
-        /// <summary> Description for Check if a domain is available for registration. </summary>
+        /// <summary>
+        /// Description for Check if a domain is available for registration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
+        /// Operation Id: Domains_CheckAvailability
+        /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityDomainAsync(NameIdentifier identifier, CancellationToken cancellationToken = default)
@@ -271,10 +276,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_CheckAvailability
-        /// <summary> Description for Check if a domain is available for registration. </summary>
+        /// <summary>
+        /// Description for Check if a domain is available for registration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
+        /// Operation Id: Domains_CheckAvailability
+        /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DomainAvailabilityCheckResult> CheckAvailabilityDomain(NameIdentifier identifier, CancellationToken cancellationToken = default)
@@ -293,10 +299,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_List
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary>
+        /// Description for Get all domains in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
+        /// Operation Id: Domains_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceDomain" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceDomain> GetAppServiceDomainsAsync(CancellationToken cancellationToken = default)
@@ -334,10 +341,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_List
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary>
+        /// Description for Get all domains in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
+        /// Operation Id: Domains_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceDomain" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceDomain> GetAppServiceDomains(CancellationToken cancellationToken = default)
@@ -375,10 +383,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_GetControlCenterSsoRequest
-        /// <summary> Description for Generate a single sign-on request for the domain management portal. </summary>
+        /// <summary>
+        /// Description for Generate a single sign-on request for the domain management portal.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
+        /// Operation Id: Domains_GetControlCenterSsoRequest
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestDomainAsync(CancellationToken cancellationToken = default)
         {
@@ -396,10 +405,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_GetControlCenterSsoRequest
-        /// <summary> Description for Generate a single sign-on request for the domain management portal. </summary>
+        /// <summary>
+        /// Description for Generate a single sign-on request for the domain management portal.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
+        /// Operation Id: Domains_GetControlCenterSsoRequest
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequestDomain(CancellationToken cancellationToken = default)
         {
@@ -417,10 +427,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_ListRecommendations
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary>
+        /// Description for Get domain name recommendations based on keywords.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
+        /// Operation Id: Domains_ListRecommendations
+        /// </summary>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
@@ -459,10 +470,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Domains_ListRecommendations
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary>
+        /// Description for Get domain name recommendations based on keywords.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
+        /// Operation Id: Domains_ListRecommendations
+        /// </summary>
         /// <param name="parameters"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NameIdentifier" /> that may take multiple service requests to iterate over. </returns>
@@ -501,10 +513,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceEnvironments_List
-        /// <summary> Description for Get all App Service Environments for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all App Service Environments for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
+        /// Operation Id: AppServiceEnvironments_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceEnvironment> GetAppServiceEnvironmentsAsync(CancellationToken cancellationToken = default)
@@ -542,10 +555,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServiceEnvironments_List
-        /// <summary> Description for Get all App Service Environments for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all App Service Environments for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
+        /// Operation Id: AppServiceEnvironments_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceEnvironment> GetAppServiceEnvironments(CancellationToken cancellationToken = default)
@@ -583,10 +597,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServicePlans_List
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
+        /// Operation Id: AppServicePlans_List
+        /// </summary>
         /// <param name="detailed">
         /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
         ///  Retrieval of all properties may increase the API latency.
@@ -628,10 +643,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: AppServicePlans_List
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
+        /// Operation Id: AppServicePlans_List
+        /// </summary>
         /// <param name="detailed">
         /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
         ///  Retrieval of all properties may increase the API latency.
@@ -673,10 +689,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Certificates_List
-        /// <summary> Description for Get all certificates for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all certificates for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
+        /// Operation Id: Certificates_List
+        /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Certificate" /> that may take multiple service requests to iterate over. </returns>
@@ -715,10 +732,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Certificates_List
-        /// <summary> Description for Get all certificates for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all certificates for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
+        /// Operation Id: Certificates_List
+        /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Certificate" /> that may take multiple service requests to iterate over. </returns>
@@ -757,10 +775,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription at location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
+        /// Operation Id: DeletedWebApps_ListByLocation
+        /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
@@ -799,10 +818,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_ListByLocation
-        /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
+        /// <summary>
+        /// Description for Get all deleted apps for a subscription at location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
+        /// Operation Id: DeletedWebApps_ListByLocation
+        /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSite" /> that may take multiple service requests to iterate over. </returns>
@@ -841,10 +861,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_GetDeletedWebAppByLocation
-        /// <summary> Description for Get deleted app for a subscription at location. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription at location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
+        /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
+        /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -864,10 +885,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DeletedWebApps_GetDeletedWebAppByLocation
-        /// <summary> Description for Get deleted app for a subscription at location. </summary>
+        /// <summary>
+        /// Description for Get deleted app for a subscription at location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
+        /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
+        /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -887,10 +909,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetSubscriptionOperationWithAsyncResponse
-        /// <summary> Description for Gets an operation in a subscription and given region. </summary>
+        /// <summary>
+        /// Description for Gets an operation in a subscription and given region
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
+        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
+        /// </summary>
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -910,10 +933,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Global_GetSubscriptionOperationWithAsyncResponse
-        /// <summary> Description for Gets an operation in a subscription and given region. </summary>
+        /// <summary>
+        /// Description for Gets an operation in a subscription and given region
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/operations/{operationId}
+        /// Operation Id: Global_GetSubscriptionOperationWithAsyncResponse
+        /// </summary>
         /// <param name="location"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -933,10 +957,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: KubeEnvironments_ListBySubscription
-        /// <summary> Description for Get all Kubernetes Environments for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all Kubernetes Environments for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubeEnvironment> GetKubeEnvironmentsAsync(CancellationToken cancellationToken = default)
@@ -974,10 +999,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: KubeEnvironments_ListBySubscription
-        /// <summary> Description for Get all Kubernetes Environments for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all Kubernetes Environments for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubeEnvironment> GetKubeEnvironments(CancellationToken cancellationToken = default)
@@ -1015,10 +1041,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Provider_GetAvailableStacksOnPrem
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacksOnPrem
+        /// </summary>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1057,10 +1084,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Provider_GetAvailableStacksOnPrem
-        /// <summary> Description for Get available application frameworks and their versions. </summary>
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
+        /// Operation Id: Provider_GetAvailableStacksOnPrem
+        /// </summary>
         /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1099,10 +1127,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_List
-        /// <summary> Description for List all recommendations for a subscription. </summary>
+        /// <summary>
+        /// Description for List all recommendations for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
+        /// Operation Id: Recommendations_List
+        /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1142,10 +1171,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_List
-        /// <summary> Description for List all recommendations for a subscription. </summary>
+        /// <summary>
+        /// Description for List all recommendations for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
+        /// Operation Id: Recommendations_List
+        /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1185,10 +1215,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_ResetAllFilters
-        /// <summary> Description for Reset all recommendation opt-out settings for a subscription. </summary>
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
+        /// Operation Id: Recommendations_ResetAllFilters
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> ResetAllFiltersRecommendationAsync(CancellationToken cancellationToken = default)
         {
@@ -1206,10 +1237,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_ResetAllFilters
-        /// <summary> Description for Reset all recommendation opt-out settings for a subscription. </summary>
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
+        /// Operation Id: Recommendations_ResetAllFilters
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ResetAllFiltersRecommendation(CancellationToken cancellationToken = default)
         {
@@ -1227,10 +1259,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_DisableRecommendationForSubscription
-        /// <summary> Description for Disables the specified rule so it will not apply to a subscription in the future. </summary>
+        /// <summary>
+        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
+        /// Operation Id: Recommendations_DisableRecommendationForSubscription
+        /// </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> DisableRecommendationForSubscriptionRecommendationAsync(string name, CancellationToken cancellationToken = default)
@@ -1249,10 +1282,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: Recommendations_DisableRecommendationForSubscription
-        /// <summary> Description for Disables the specified rule so it will not apply to a subscription in the future. </summary>
+        /// <summary>
+        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
+        /// Operation Id: Recommendations_DisableRecommendationForSubscription
+        /// </summary>
         /// <param name="name"> Rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DisableRecommendationForSubscriptionRecommendation(string name, CancellationToken cancellationToken = default)
@@ -1271,10 +1305,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceHealthMetadata_List
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
@@ -1312,10 +1347,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ResourceHealthMetadata_List
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
+        /// Operation Id: ResourceHealthMetadata_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteResourceHealthMetadata> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
@@ -1353,10 +1389,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListBillingMeters
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary>
+        /// Description for Gets a list of meters for a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
+        /// Operation Id: ListBillingMeters
+        /// </summary>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1396,10 +1433,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListBillingMeters
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary>
+        /// Description for Gets a list of meters for a given location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
+        /// Operation Id: ListBillingMeters
+        /// </summary>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1439,10 +1477,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
-        /// <summary> Description for Check if a resource name is available. </summary>
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
@@ -1463,10 +1502,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: CheckNameAvailability
-        /// <summary> Description for Check if a resource name is available. </summary>
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
+        /// Operation Id: CheckNameAvailability
+        /// </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
@@ -1487,10 +1527,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: GetSubscriptionDeploymentLocations
-        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <summary>
+        /// Description for Gets list of available geo regions plus ministamps
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
+        /// Operation Id: GetSubscriptionDeploymentLocations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
@@ -1508,10 +1549,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: GetSubscriptionDeploymentLocations
-        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <summary>
+        /// Description for Gets list of available geo regions plus ministamps
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
+        /// Operation Id: GetSubscriptionDeploymentLocations
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
         {
@@ -1529,10 +1571,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListGeoRegions
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary>
+        /// Description for Get a list of available geographical regions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
+        /// Operation Id: ListGeoRegions
+        /// </summary>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
@@ -1574,10 +1617,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListGeoRegions
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary>
+        /// Description for Get a list of available geographical regions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
+        /// Operation Id: ListGeoRegions
+        /// </summary>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
@@ -1619,10 +1663,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListSiteIdentifiersAssignedToHostName
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
@@ -1661,10 +1706,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListSiteIdentifiersAssignedToHostName
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary>
+        /// Description for List all apps that are assigned to a hostname.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
+        /// Operation Id: ListSiteIdentifiersAssignedToHostName
+        /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
@@ -1703,10 +1749,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListPremierAddOnOffers
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary>
+        /// Description for List all premier add-on offers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
+        /// Operation Id: ListPremierAddOnOffers
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(CancellationToken cancellationToken = default)
@@ -1744,10 +1791,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListPremierAddOnOffers
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary>
+        /// Description for List all premier add-on offers.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
+        /// Operation Id: ListPremierAddOnOffers
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PremierAddOnOffer> GetPremierAddOnOffers(CancellationToken cancellationToken = default)
@@ -1785,10 +1833,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListSkus
-        /// <summary> Description for List all SKUs. </summary>
+        /// <summary>
+        /// Description for List all SKUs.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
+        /// Operation Id: ListSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SkuInfos>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
@@ -1806,10 +1855,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: ListSkus
-        /// <summary> Description for List all SKUs. </summary>
+        /// <summary>
+        /// Description for List all SKUs.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
+        /// Operation Id: ListSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SkuInfos> GetSkus(CancellationToken cancellationToken = default)
         {
@@ -1827,10 +1877,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VerifyHostingEnvironmentVnet
-        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary>
+        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
+        /// Operation Id: VerifyHostingEnvironmentVnet
+        /// </summary>
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters parameters, CancellationToken cancellationToken = default)
@@ -1849,10 +1900,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: VerifyHostingEnvironmentVnet
-        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary>
+        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
+        /// Operation Id: VerifyHostingEnvironmentVnet
+        /// </summary>
         /// <param name="parameters"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetParameters parameters, CancellationToken cancellationToken = default)
@@ -1871,10 +1923,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: StaticSites_PreviewWorkflow
-        /// <summary> Description for Generates a preview workflow file for the static site. </summary>
+        /// <summary>
+        /// Description for Generates a preview workflow file for the static site
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
+        /// Operation Id: StaticSites_PreviewWorkflow
+        /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1894,10 +1947,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: StaticSites_PreviewWorkflow
-        /// <summary> Description for Generates a preview workflow file for the static site. </summary>
+        /// <summary>
+        /// Description for Generates a preview workflow file for the static site
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
+        /// Operation Id: StaticSites_PreviewWorkflow
+        /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
         /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1917,10 +1971,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: StaticSites_List
-        /// <summary> Description for Get all Static Sites for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all Static Sites for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
+        /// Operation Id: StaticSites_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(CancellationToken cancellationToken = default)
@@ -1958,10 +2013,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: StaticSites_List
-        /// <summary> Description for Get all Static Sites for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all Static Sites for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
+        /// Operation Id: StaticSites_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteARMResource> GetStaticSiteARMResources(CancellationToken cancellationToken = default)
@@ -1999,10 +2055,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: WebApps_List
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
+        /// Operation Id: WebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSite> GetWebSitesAsync(CancellationToken cancellationToken = default)
@@ -2040,10 +2097,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: WebApps_List
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary>
+        /// Description for Get all apps for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
+        /// Operation Id: WebApps_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSite" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSite> GetWebSites(CancellationToken cancellationToken = default)

@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<StorageQueue>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -102,7 +106,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Gets the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageQueue> Get(CancellationToken cancellationToken = default)
         {
@@ -122,7 +130,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Deletes the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Deletes the queue with the specified queue name, under the specified account if it exists. </summary>
+        /// <summary>
+        /// Deletes the queue with the specified queue name, under the specified account if it exists.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -166,7 +182,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Update
+        /// </summary>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
@@ -191,7 +211,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
+        /// <summary>
+        /// Creates a new queue with the specified queue name, under the specified account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
+        /// Operation Id: Queue_Update
+        /// </summary>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>

@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /tenants
-        /// ContextualPath: /
-        /// OperationId: Tenants_List
-        /// <summary> Gets the tenants for your account. </summary>
+        /// <summary>
+        /// Gets the tenants for your account.
+        /// Request Path: /tenants
+        /// Operation Id: Tenants_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Tenant" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Tenant> GetAllAsync(CancellationToken cancellationToken = default)
@@ -91,10 +92,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /tenants
-        /// ContextualPath: /
-        /// OperationId: Tenants_List
-        /// <summary> Gets the tenants for your account. </summary>
+        /// <summary>
+        /// Gets the tenants for your account.
+        /// Request Path: /tenants
+        /// Operation Id: Tenants_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Tenant" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Tenant> GetAll(CancellationToken cancellationToken = default)

@@ -109,7 +109,11 @@ namespace Azure.ResourceManager.WebPubSub
             return new SharedPrivateLinkCollection(Client, Id);
         }
 
-        /// <summary> Get the resource and its properties. </summary>
+        /// <summary>
+        /// Get the resource and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -129,7 +133,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the resource and its properties. </summary>
+        /// <summary>
+        /// Get the resource and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSub> Get(CancellationToken cancellationToken = default)
         {
@@ -149,7 +157,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to delete a resource. </summary>
+        /// <summary>
+        /// Operation to delete a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -171,7 +183,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to delete a resource. </summary>
+        /// <summary>
+        /// Operation to delete a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -193,7 +209,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to update an exiting resource. </summary>
+        /// <summary>
+        /// Operation to update an exiting resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,7 +242,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to update an exiting resource. </summary>
+        /// <summary>
+        /// Operation to update an exiting resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,7 +275,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the access keys of the resource. </summary>
+        /// <summary>
+        /// Get the access keys of the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/listKeys
+        /// Operation Id: WebPubSub_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
@@ -269,7 +297,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Get the access keys of the resource. </summary>
+        /// <summary>
+        /// Get the access keys of the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/listKeys
+        /// Operation Id: WebPubSub_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSubKeys> GetKeys(CancellationToken cancellationToken = default)
         {
@@ -287,7 +319,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <summary>
+        /// Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/regenerateKey
+        /// Operation Id: WebPubSub_RegenerateKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,7 +352,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
+        /// <summary>
+        /// Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/regenerateKey
+        /// Operation Id: WebPubSub_RegenerateKey
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -345,7 +385,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to restart a resource. </summary>
+        /// <summary>
+        /// Operation to restart a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/restart
+        /// Operation Id: WebPubSub_Restart
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ArmOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -367,7 +411,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Operation to restart a resource. </summary>
+        /// <summary>
+        /// Operation to restart a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/restart
+        /// Operation Id: WebPubSub_Restart
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(bool waitForCompletion, CancellationToken cancellationToken = default)
@@ -389,7 +437,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> List all available skus of the resource. </summary>
+        /// <summary>
+        /// List all available skus of the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus
+        /// Operation Id: WebPubSub_ListSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Sku> GetSkusAsync(CancellationToken cancellationToken = default)
@@ -412,7 +464,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List all available skus of the resource. </summary>
+        /// <summary>
+        /// List all available skus of the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/skus
+        /// Operation Id: WebPubSub_ListSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Sku> GetSkus(CancellationToken cancellationToken = default)
@@ -435,7 +491,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Get the private link resources that need to be created for a resource. </summary>
+        /// <summary>
+        /// Get the private link resources that need to be created for a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/privateLinkResources
+        /// Operation Id: WebPubSubPrivateLinkResources_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateLink> GetWebPubSubPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
@@ -473,7 +533,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get the private link resources that need to be created for a resource. </summary>
+        /// <summary>
+        /// Get the private link resources that need to be created for a resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/privateLinkResources
+        /// Operation Id: WebPubSubPrivateLinkResources_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateLink> GetWebPubSubPrivateLinkResources(CancellationToken cancellationToken = default)
@@ -511,7 +575,11 @@ namespace Azure.ResourceManager.WebPubSub
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -544,7 +612,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -577,7 +649,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -606,7 +682,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -635,7 +715,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -663,7 +747,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
+        /// Operation Id: WebPubSub_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
