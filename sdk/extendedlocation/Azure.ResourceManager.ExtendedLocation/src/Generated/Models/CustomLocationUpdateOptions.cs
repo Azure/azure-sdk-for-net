@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> The Custom Locations patchable resource definition. </summary>
-    public partial class PatchableCustomLocations
+    public partial class CustomLocationUpdateOptions
     {
-        /// <summary> Initializes a new instance of PatchableCustomLocations. </summary>
-        public PatchableCustomLocations()
+        /// <summary> Initializes a new instance of CustomLocationUpdateOptions. </summary>
+        public CustomLocationUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ClusterExtensionIds = new ChangeTrackingList<string>();
