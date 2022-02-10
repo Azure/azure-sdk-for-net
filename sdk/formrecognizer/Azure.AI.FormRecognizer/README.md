@@ -296,7 +296,7 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }
@@ -388,6 +388,56 @@ For more information and samples see [here][analyze_prebuilt_document].
 Analyze textual elements, such as page words and lines, styles, and text language information from documents using the prebuilt read model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
+string fileUri = "<fileUri>";
+
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeResult result = operation.Value;
+
+Console.WriteLine("Detected languages:");
+
+foreach (DocumentLanguage language in result.Languages)
+{
+    Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+}
+
+foreach (DocumentPage page in result.Pages)
+{
+    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
+    Console.WriteLine($"and {page.SelectionMarks.Count} selection mark(s).");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        DocumentLine line = page.Lines[i];
+        Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
+
+        Console.WriteLine($"    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+    }
+}
+
+foreach (DocumentStyle style in result.Styles)
+{
+    // Check the style and style confidence to see if text is handwritten.
+    // Note that value '0.8' is used as an example.
+
+    bool isHandwritten = style.IsHandwritten.HasValue && style.IsHandwritten == true;
+
+    if (isHandwritten && style.Confidence > 0.8)
+    {
+        Console.WriteLine($"Handwritten content found:");
+
+        foreach (DocumentSpan span in style.Spans)
+        {
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+        }
+    }
+}
 ```
 
 For more information and samples see [here][analyze_prebuilt_read].
@@ -460,11 +510,11 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.ValueType == DocumentFieldType.Double)
+                        if (itemAmountField.ValueType == DocumentFieldType.Currency)
                         {
-                            double itemAmount = itemAmountField.AsDouble();
+                            CurrencyValue itemAmount = itemAmountField.AsCurrency();
 
-                            Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                            Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                         }
                     }
                 }
@@ -474,31 +524,30 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.ValueType == DocumentFieldType.Double)
+        if (subTotalField.ValueType == DocumentFieldType.Currency)
         {
-            double subTotal = subTotalField.AsDouble();
-            Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+            CurrencyValue subTotal = subTotalField.AsCurrency();
+            Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.ValueType == DocumentFieldType.Double)
+        if (totalTaxField.ValueType == DocumentFieldType.Currency)
         {
-            double totalTax = totalTaxField.AsDouble();
-            Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
+            CurrencyValue totalTax = totalTaxField.AsCurrency();
+            Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.ValueType == DocumentFieldType.Double)
+        if (invoiceTotalField.ValueType == DocumentFieldType.Currency)
         {
-            double invoiceTotal = invoiceTotalField.AsDouble();
-            Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+            CurrencyValue invoiceTotal = invoiceTotalField.AsCurrency();
+            Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
-}
 ```
 
 You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:

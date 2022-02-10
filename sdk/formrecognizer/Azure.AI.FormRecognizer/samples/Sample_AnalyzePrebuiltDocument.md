@@ -34,7 +34,7 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }
@@ -138,7 +138,7 @@ Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }
