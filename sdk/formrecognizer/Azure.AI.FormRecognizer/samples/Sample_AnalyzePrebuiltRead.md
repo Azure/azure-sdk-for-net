@@ -1,6 +1,6 @@
-# Extract the layout of a document
+# Analyze with the prebuilt read model
 
-This sample demonstrates how to extract text, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample. 
+This sample demonstrates how to analyze textual elements, such as page words and lines, styles, and text language information from documents using the prebuilt read model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,18 +17,25 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 ```
 
-## Extract the layout of a document from a URI
+## Use the prebuilt read model to analyze a document from a URI
 
-To extract the layout from a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
+```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
 string fileUri = "<fileUri>";
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
 
 await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
+
+Console.WriteLine("Detected languages:");
+
+foreach (DocumentLanguage language in result.Languages)
+{
+    Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+}
 
 foreach (DocumentPage page in result.Pages)
 {
@@ -45,18 +52,6 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
         Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
         Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
-    }
-
-    for (int i = 0; i < page.SelectionMarks.Count; i++)
-    {
-        DocumentSelectionMark selectionMark = page.SelectionMarks[i];
-
-        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 
@@ -75,36 +70,30 @@ foreach (DocumentStyle style in result.Styles)
         {
             Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
-    }
-}
-
-Console.WriteLine("The following tables were extracted:");
-
-for (int i = 0; i < result.Tables.Count; i++)
-{
-    DocumentTable table = result.Tables[i];
-    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-
-    foreach (DocumentTableCell cell in table.Cells)
-    {
-        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
 ```
 
-## Extract the layout of a document from a file stream
+## Use the prebuilt read model to analyze a document from a file stream
 
-To extract the layout from a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-layout` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:FormRecognizerExtractLayoutFromFileAsync
+```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromFileAsync
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
 
 await operation.WaitForCompletionAsync();
 
 AnalyzeResult result = operation.Value;
+
+Console.WriteLine("Detected languages:");
+
+foreach (DocumentLanguage language in result.Languages)
+{
+    Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+}
 
 foreach (DocumentPage page in result.Pages)
 {
@@ -121,18 +110,6 @@ foreach (DocumentPage page in result.Pages)
         Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
         Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
         Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
-    }
-
-    for (int i = 0; i < page.SelectionMarks.Count; i++)
-    {
-        DocumentSelectionMark selectionMark = page.SelectionMarks[i];
-
-        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 
@@ -151,27 +128,13 @@ foreach (DocumentStyle style in result.Styles)
         {
             Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
         }
-    }
-}
-
-Console.WriteLine("The following tables were extracted:");
-
-for (int i = 0; i < result.Tables.Count; i++)
-{
-    DocumentTable table = result.Tables[i];
-    Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-
-    foreach (DocumentTableCell cell in table.Cells)
-    {
-        Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) has kind '{cell.Kind}' and content: '{cell.Content}'.");
     }
 }
 ```
 
 To see the full example source files, see:
 
-* [Extract layout from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromUriAsync.cs)
-* [Extract layout from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ExtractLayoutFromFileAsync.cs)
+* [Analyze with prebuilt read from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltReadFromUriAsync.cs)
+* [Analyze with prebuilt read from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_AnalyzePrebuiltReadFromFileAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[document_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_AnalyzePrebuiltDocument.md
