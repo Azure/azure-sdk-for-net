@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Template Spec Version properties to be updated (only tags are currently supported). </summary>
-    public partial class TemplateSpecVersionUpdateModel : Resource
+    public partial class TemplateSpecVersionUpdateModel : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecVersionUpdateModel. </summary>
         public TemplateSpecVersionUpdateModel()

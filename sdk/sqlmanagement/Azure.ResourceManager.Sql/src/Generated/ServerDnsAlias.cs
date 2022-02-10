@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Get
-        /// <summary> Gets a server DNS alias. </summary>
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ServerDnsAlias>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Get
-        /// <summary> Gets a server DNS alias. </summary>
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerDnsAlias> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +131,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Delete
-        /// <summary> Deletes the server DNS alias with the given name. </summary>
+        /// <summary>
+        /// Deletes the server DNS alias with the given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ServerDnsAliasDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAlias.Delete");
             scope.Start();
             try
             {
                 var response = await _serverDnsAliasRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerDnsAliasDeleteOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +157,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Delete
-        /// <summary> Deletes the server DNS alias with the given name. </summary>
+        /// <summary>
+        /// Deletes the server DNS alias with the given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ServerDnsAliasDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _serverDnsAliasClientDiagnostics.CreateScope("ServerDnsAlias.Delete");
             scope.Start();
             try
             {
                 var response = _serverDnsAliasRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ServerDnsAliasDeleteOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -179,15 +183,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}/acquire
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Acquire
-        /// <summary> Acquires server DNS alias from another server. </summary>
+        /// <summary>
+        /// Acquires server DNS alias from another server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}/acquire
+        /// Operation Id: ServerDnsAliases_Acquire
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServerDnsAliasAcquireOperation> AcquireAsync(bool waitForCompletion, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServerDnsAlias>> AcquireAsync(bool waitForCompletion, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -199,7 +204,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverDnsAliasRestClient.AcquireAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServerDnsAliasAcquireOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateAcquireRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerDnsAlias>(new ServerDnsAliasOperationSource(Client), _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateAcquireRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,15 +216,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}/acquire
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
-        /// OperationId: ServerDnsAliases_Acquire
-        /// <summary> Acquires server DNS alias from another server. </summary>
+        /// <summary>
+        /// Acquires server DNS alias from another server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}/acquire
+        /// Operation Id: ServerDnsAliases_Acquire
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ServerDnsAliasAcquireOperation Acquire(bool waitForCompletion, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerDnsAlias> Acquire(bool waitForCompletion, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -231,7 +237,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverDnsAliasRestClient.Acquire(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new ServerDnsAliasAcquireOperation(_serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateAcquireRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ServerDnsAlias>(new ServerDnsAliasOperationSource(Client), _serverDnsAliasClientDiagnostics, Pipeline, _serverDnsAliasRestClient.CreateAcquireRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

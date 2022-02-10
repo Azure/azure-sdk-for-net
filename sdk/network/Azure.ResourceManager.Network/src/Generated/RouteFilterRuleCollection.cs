@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RouteFilter.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a route in the specified route filter. </summary>
+        /// <summary>
+        /// Creates or updates a route in the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public async virtual Task<RouteFilterRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<RouteFilterRule>> CreateOrUpdateAsync(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (routeFilterRuleParameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeFilterRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(Client, _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<RouteFilterRule>(new RouteFilterRuleOperationSource(Client), _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a route in the specified route filter. </summary>
+        /// <summary>
+        /// Creates or updates a route in the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="routeFilterRuleParameters"/> is null. </exception>
-        public virtual RouteFilterRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RouteFilterRule> CreateOrUpdate(bool waitForCompletion, string ruleName, RouteFilterRuleData routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             if (routeFilterRuleParameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeFilterRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters, cancellationToken);
-                var operation = new RouteFilterRuleCreateOrUpdateOperation(Client, _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<RouteFilterRule>(new RouteFilterRuleOperationSource(Client), _routeFilterRuleClientDiagnostics, Pipeline, _routeFilterRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, routeFilterRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified rule from a route filter. </summary>
+        /// <summary>
+        /// Gets the specified rule from a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified rule from a route filter. </summary>
+        /// <summary>
+        /// Gets the specified rule from a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all RouteFilterRules in a route filter. </summary>
+        /// <summary>
+        /// Gets all RouteFilterRules in a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules
+        /// Operation Id: RouteFilterRules_ListByRouteFilter
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteFilterRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilterRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all RouteFilterRules in a route filter. </summary>
+        /// <summary>
+        /// Gets all RouteFilterRules in a route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules
+        /// Operation Id: RouteFilterRules_ListByRouteFilter
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteFilterRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilterRule> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -264,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -287,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>
@@ -312,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}
+        /// Operation Id: RouteFilterRules_Get
+        /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is empty. </exception>

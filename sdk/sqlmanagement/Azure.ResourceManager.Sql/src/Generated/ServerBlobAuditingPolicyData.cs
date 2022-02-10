@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerBlobAuditingPolicy data model. </summary>
-    public partial class ServerBlobAuditingPolicyData : Resource
+    public partial class ServerBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerBlobAuditingPolicyData. </summary>
         public ServerBlobAuditingPolicyData()

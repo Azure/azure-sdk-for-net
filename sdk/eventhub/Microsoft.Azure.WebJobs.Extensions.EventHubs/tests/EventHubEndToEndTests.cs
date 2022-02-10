@@ -136,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_ProducerClient()
         {
             var (jobHost, host) = BuildHost<EventHubTestClientDispatch>();
@@ -312,6 +313,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_PartitionKey()
         {
             var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
@@ -384,6 +386,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
             await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);

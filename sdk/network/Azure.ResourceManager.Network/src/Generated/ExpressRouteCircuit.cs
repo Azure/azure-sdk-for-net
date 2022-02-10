@@ -97,7 +97,11 @@ namespace Azure.ResourceManager.Network
             return new ExpressRouteCircuitPeeringCollection(Client, Id);
         }
 
-        /// <summary> Gets information about the specified express route circuit. </summary>
+        /// <summary>
+        /// Gets information about the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteCircuit>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -117,7 +121,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified express route circuit. </summary>
+        /// <summary>
+        /// Gets information about the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteCircuit> Get(CancellationToken cancellationToken = default)
         {
@@ -137,17 +145,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified express route circuit. </summary>
+        /// <summary>
+        /// Deletes the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCircuitDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuit.Delete");
             scope.Start();
             try
             {
                 var response = await _expressRouteCircuitRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitDeleteOperation(_expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,17 +171,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified express route circuit. </summary>
+        /// <summary>
+        /// Deletes the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCircuitDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuit.Delete");
             scope.Start();
             try
             {
                 var response = _expressRouteCircuitRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ExpressRouteCircuitDeleteOperation(_expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -181,7 +197,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates an express route circuit tags. </summary>
+        /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update express route circuit tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -206,7 +226,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates an express route circuit tags. </summary>
+        /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
         /// <param name="parameters"> Parameters supplied to update express route circuit tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -231,7 +255,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the stats from an express route circuit in a resource group. </summary>
+        /// <summary>
+        /// Gets all the stats from an express route circuit in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stats
+        /// Operation Id: ExpressRouteCircuits_GetStats
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ExpressRouteCircuitStats>> GetStatsAsync(CancellationToken cancellationToken = default)
         {
@@ -249,7 +277,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the stats from an express route circuit in a resource group. </summary>
+        /// <summary>
+        /// Gets all the stats from an express route circuit in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stats
+        /// Operation Id: ExpressRouteCircuits_GetStats
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRouteCircuitStats> GetStats(CancellationToken cancellationToken = default)
         {

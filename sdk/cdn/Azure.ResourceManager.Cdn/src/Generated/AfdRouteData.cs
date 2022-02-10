@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRoute data model. </summary>
-    public partial class AfdRouteData : Resource
+    public partial class AfdRouteData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         public AfdRouteData()

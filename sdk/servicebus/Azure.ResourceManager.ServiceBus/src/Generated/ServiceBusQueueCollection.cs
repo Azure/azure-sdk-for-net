@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -51,17 +50,18 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_CreateOrUpdate
-        /// <summary> Creates or updates a Service Bus queue. This operation is idempotent. </summary>
+        /// <summary>
+        /// Creates or updates a Service Bus queue. This operation is idempotent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ServiceBusQueueCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ServiceBusQueue>> CreateOrUpdateAsync(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (parameters == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusQueueQueuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusQueueCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<ServiceBusQueue>(Response.FromValue(new ServiceBusQueue(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,17 +86,18 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_CreateOrUpdate
-        /// <summary> Creates or updates a Service Bus queue. This operation is idempotent. </summary>
+        /// <summary>
+        /// Creates or updates a Service Bus queue. This operation is idempotent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ServiceBusQueueCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceBusQueue> CreateOrUpdate(bool waitForCompletion, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             if (parameters == null)
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusQueueQueuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, parameters, cancellationToken);
-                var operation = new ServiceBusQueueCreateOrUpdateOperation(Client, response);
+                var operation = new ServiceBusArmOperation<ServiceBusQueue>(Response.FromValue(new ServiceBusQueue(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,10 +122,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Returns a description for the specified queue. </summary>
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -149,10 +151,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Returns a description for the specified queue. </summary>
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -177,10 +180,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_ListByNamespace
-        /// <summary> Gets the queues within a namespace. </summary>
+        /// <summary>
+        /// Gets the queues within a namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
+        /// Operation Id: Queues_ListByNamespace
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,10 +224,11 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_ListByNamespace
-        /// <summary> Gets the queues within a namespace. </summary>
+        /// <summary>
+        /// Gets the queues within a namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
+        /// Operation Id: Queues_ListByNamespace
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -263,10 +268,11 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -289,10 +295,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -315,10 +322,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>
@@ -343,10 +351,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// OperationId: Queues_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is empty. </exception>

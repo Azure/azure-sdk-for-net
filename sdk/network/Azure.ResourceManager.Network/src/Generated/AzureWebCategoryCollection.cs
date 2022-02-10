@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified Azure Web Category. </summary>
+        /// <summary>
+        /// Gets the specified Azure Web Category.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,7 +81,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Azure Web Category. </summary>
+        /// <summary>
+        /// Gets the specified Azure Web Category.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,7 +111,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Web Categories in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
+        /// Operation Id: WebCategories_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureWebCategory> GetAllAsync(CancellationToken cancellationToken = default)
@@ -141,7 +153,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the Azure Web Categories in a subscription. </summary>
+        /// <summary>
+        /// Gets all the Azure Web Categories in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
+        /// Operation Id: WebCategories_ListBySubscription
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureWebCategory> GetAll(CancellationToken cancellationToken = default)
@@ -179,7 +195,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,7 +223,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -227,7 +251,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,7 +281,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
+        /// Operation Id: WebCategories_Get
+        /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

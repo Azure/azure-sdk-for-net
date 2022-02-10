@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.StoragePool.Models
 {
     /// <summary> Payload for iSCSI Target update requests. </summary>
-    public partial class IscsiTargetUpdate : Resource
+    public partial class IscsiTargetUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of IscsiTargetUpdate. </summary>
         public IscsiTargetUpdate()

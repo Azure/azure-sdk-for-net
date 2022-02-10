@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -83,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Get the specified tap configuration on a network interface. </summary>
+        /// <summary>
+        /// Get the specified tap configuration on a network interface.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// Operation Id: NetworkInterfaceTapConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified tap configuration on a network interface. </summary>
+        /// <summary>
+        /// Get the specified tap configuration on a network interface.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// Operation Id: NetworkInterfaceTapConfigurations_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkInterfaceTapConfiguration> Get(CancellationToken cancellationToken = default)
         {
@@ -123,17 +130,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified tap configuration from the NetworkInterface. </summary>
+        /// <summary>
+        /// Deletes the specified tap configuration from the NetworkInterface.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// Operation Id: NetworkInterfaceTapConfigurations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfaceTapConfigurationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = await _networkInterfaceTapConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_networkInterfaceTapConfigurationClientDiagnostics, Pipeline, _networkInterfaceTapConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_networkInterfaceTapConfigurationClientDiagnostics, Pipeline, _networkInterfaceTapConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,17 +156,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified tap configuration from the NetworkInterface. </summary>
+        /// <summary>
+        /// Deletes the specified tap configuration from the NetworkInterface.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}
+        /// Operation Id: NetworkInterfaceTapConfigurations_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfaceTapConfigurationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = _networkInterfaceTapConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkInterfaceTapConfigurationDeleteOperation(_networkInterfaceTapConfigurationClientDiagnostics, Pipeline, _networkInterfaceTapConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_networkInterfaceTapConfigurationClientDiagnostics, Pipeline, _networkInterfaceTapConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -51,17 +50,18 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_CreateOrUpdate
-        /// <summary> Creates a new database or updates an existing database. </summary>
+        /// <summary>
+        /// Creates a new database or updates an existing database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ManagedDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (parameters == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedDatabaseCreateOrUpdateOperation(Client, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,17 +86,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_CreateOrUpdate
-        /// <summary> Creates a new database or updates an existing database. </summary>
+        /// <summary>
+        /// Creates a new database or updates an existing database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, ManagedDatabaseData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (parameters == null)
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters, cancellationToken);
-                var operation = new ManagedDatabaseCreateOrUpdateOperation(Client, _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedDatabase>(new ManagedDatabaseOperationSource(Client), _managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,10 +122,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Gets a managed database. </summary>
+        /// <summary>
+        /// Gets a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -149,10 +151,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Gets a managed database. </summary>
+        /// <summary>
+        /// Gets a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -177,10 +180,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListByInstance
-        /// <summary> Gets a list of managed databases. </summary>
+        /// <summary>
+        /// Gets a list of managed databases.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// Operation Id: ManagedDatabases_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabase> GetAllAsync(CancellationToken cancellationToken = default)
@@ -218,10 +222,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_ListByInstance
-        /// <summary> Gets a list of managed databases. </summary>
+        /// <summary>
+        /// Gets a list of managed databases.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases
+        /// Operation Id: ManagedDatabases_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabase> GetAll(CancellationToken cancellationToken = default)
@@ -259,10 +264,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -285,10 +291,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -311,10 +318,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -339,10 +347,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedDatabases_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
+        /// Operation Id: ManagedDatabases_Get
+        /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceThroughputSetting throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToAutoscaleAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToAutoscaleAsync(true)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceThroughputSetting throughput = await keyspace.GetDatabaseAccountCassandraKeyspaceThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToManualThroughputAsync(true)).Value;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraKeyspaceToManualThroughputAsync(true)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

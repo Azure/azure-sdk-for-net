@@ -18,7 +18,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -56,17 +55,18 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_CreateOrUpdate
-        /// <summary> Creates or updates a failover group. </summary>
+        /// <summary>
+        /// Creates or updates a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InstanceFailoverGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<InstanceFailoverGroup>> CreateOrUpdateAsync(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
             if (parameters == null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _instanceFailoverGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(Client, _instanceFailoverGroupClientDiagnostics, Pipeline, _instanceFailoverGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<InstanceFailoverGroup>(new InstanceFailoverGroupOperationSource(Client), _instanceFailoverGroupClientDiagnostics, Pipeline, _instanceFailoverGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,17 +91,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_CreateOrUpdate
-        /// <summary> Creates or updates a failover group. </summary>
+        /// <summary>
+        /// Creates or updates a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="parameters"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual InstanceFailoverGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InstanceFailoverGroup> CreateOrUpdate(bool waitForCompletion, string failoverGroupName, InstanceFailoverGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
             if (parameters == null)
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _instanceFailoverGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters, cancellationToken);
-                var operation = new InstanceFailoverGroupCreateOrUpdateOperation(Client, _instanceFailoverGroupClientDiagnostics, Pipeline, _instanceFailoverGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response);
+                var operation = new SqlArmOperation<InstanceFailoverGroup>(new InstanceFailoverGroupOperationSource(Client), _instanceFailoverGroupClientDiagnostics, Pipeline, _instanceFailoverGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, failoverGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,10 +127,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Gets a failover group. </summary>
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
@@ -154,10 +156,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Gets a failover group. </summary>
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
@@ -182,10 +185,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_ListByLocation
-        /// <summary> Lists the failover groups in a location. </summary>
+        /// <summary>
+        /// Lists the failover groups in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups
+        /// Operation Id: InstanceFailoverGroups_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InstanceFailoverGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InstanceFailoverGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -223,10 +227,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_ListByLocation
-        /// <summary> Lists the failover groups in a location. </summary>
+        /// <summary>
+        /// Lists the failover groups in a location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups
+        /// Operation Id: InstanceFailoverGroups_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InstanceFailoverGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InstanceFailoverGroup> GetAll(CancellationToken cancellationToken = default)
@@ -264,10 +269,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
@@ -290,10 +296,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
@@ -316,10 +323,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>
@@ -344,10 +352,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: InstanceFailoverGroups_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is empty. </exception>

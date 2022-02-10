@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnWebApplicationFirewallPolicy data model. </summary>
-    public partial class CdnWebApplicationFirewallPolicyData : TrackedResource
+    public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
         /// <param name="location"> The location. </param>

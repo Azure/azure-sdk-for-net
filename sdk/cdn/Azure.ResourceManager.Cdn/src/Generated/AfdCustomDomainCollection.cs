@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Profile.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a new domain within the specified profile. </summary>
+        /// <summary>
+        /// Creates a new domain within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="customDomain"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public async virtual Task<AfdCustomDomainCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdCustomDomain>> CreateOrUpdateAsync(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomain == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Creates a new domain within the specified profile. </summary>
+        /// <summary>
+        /// Creates a new domain within the specified profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="customDomain"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="customDomain"/> is null. </exception>
-        public virtual AfdCustomDomainCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdCustomDomain> CreateOrUpdate(bool waitForCompletion, string customDomainName, AfdCustomDomainData customDomain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             if (customDomain == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain, cancellationToken);
-                var operation = new AfdCustomDomainCreateOrUpdateOperation(Client, _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response);
+                var operation = new CdnArmOperation<AfdCustomDomain>(new AfdCustomDomainOperationSource(Client), _afdCustomDomainClientDiagnostics, Pipeline, _afdCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, customDomain).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists existing AzureFrontDoor domains. </summary>
+        /// <summary>
+        /// Lists existing AzureFrontDoor domains.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains
+        /// Operation Id: AfdCustomDomains_ListByProfile
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AfdCustomDomain" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AfdCustomDomain> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +222,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists existing AzureFrontDoor domains. </summary>
+        /// <summary>
+        /// Lists existing AzureFrontDoor domains.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains
+        /// Operation Id: AfdCustomDomains_ListByProfile
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AfdCustomDomain" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AfdCustomDomain> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
@@ -264,7 +291,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
@@ -287,7 +318,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>
@@ -312,7 +347,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is empty. </exception>

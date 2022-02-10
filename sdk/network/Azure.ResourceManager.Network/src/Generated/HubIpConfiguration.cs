@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -83,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Ip configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<HubIpConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Ip configuration. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Ip configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HubIpConfiguration> Get(CancellationToken cancellationToken = default)
         {
@@ -123,17 +130,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHubIpConfiguration. </summary>
+        /// <summary>
+        /// Deletes a VirtualHubIpConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<HubIpConfigurationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = await _hubIpConfigurationVirtualHubIpConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HubIpConfigurationDeleteOperation(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,17 +156,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a VirtualHubIpConfiguration. </summary>
+        /// <summary>
+        /// Deletes a VirtualHubIpConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual HubIpConfigurationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIpConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = _hubIpConfigurationVirtualHubIpConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HubIpConfigurationDeleteOperation(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_hubIpConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIpConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

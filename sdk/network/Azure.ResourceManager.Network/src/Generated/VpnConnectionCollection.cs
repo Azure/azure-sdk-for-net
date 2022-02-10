@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnGateway.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection. </summary>
+        /// <summary>
+        /// Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public async virtual Task<VpnConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VpnConnection>> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (vpnConnectionParameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _vpnConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VpnConnectionCreateOrUpdateOperation(Client, _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response);
+                var operation = new NetworkArmOperation<VpnConnection>(new VpnConnectionOperationSource(Client), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection. </summary>
+        /// <summary>
+        /// Creates a vpn connection to a scalable vpn gateway if it doesn&apos;t exist else updates the existing connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="vpnConnectionParameters"/> is null. </exception>
-        public virtual VpnConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnConnection> CreateOrUpdate(bool waitForCompletion, string connectionName, VpnConnectionData vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             if (vpnConnectionParameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _vpnConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters, cancellationToken);
-                var operation = new VpnConnectionCreateOrUpdateOperation(Client, _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response);
+                var operation = new NetworkArmOperation<VpnConnection>(new VpnConnectionOperationSource(Client), _vpnConnectionClientDiagnostics, Pipeline, _vpnConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, vpnConnectionParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a vpn connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a vpn connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a vpn connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a vpn connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves all vpn connections for a particular virtual wan vpn gateway. </summary>
+        /// <summary>
+        /// Retrieves all vpn connections for a particular virtual wan vpn gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections
+        /// Operation Id: VpnConnections_ListByVpnGateway
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnConnection> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +222,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves all vpn connections for a particular virtual wan vpn gateway. </summary>
+        /// <summary>
+        /// Retrieves all vpn connections for a particular virtual wan vpn gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections
+        /// Operation Id: VpnConnections_ListByVpnGateway
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnConnection> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
@@ -264,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
@@ -287,7 +318,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
@@ -312,7 +347,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}
+        /// Operation Id: VpnConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>

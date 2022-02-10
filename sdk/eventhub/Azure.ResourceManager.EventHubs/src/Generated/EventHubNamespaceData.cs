@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the EventHubNamespace data model. </summary>
-    public partial class EventHubNamespaceData : TrackedResource
+    public partial class EventHubNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
         /// <param name="location"> The location. </param>

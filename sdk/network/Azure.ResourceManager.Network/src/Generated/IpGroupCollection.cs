@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -52,14 +51,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates an ipGroups in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<IpGroupCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<IpGroup>> CreateOrUpdateAsync(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             if (parameters == null)
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _ipGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new IpGroupCreateOrUpdateOperation(Client, _ipGroupClientDiagnostics, Pipeline, _ipGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
+                var operation = new NetworkArmOperation<IpGroup>(new IpGroupOperationSource(Client), _ipGroupClientDiagnostics, Pipeline, _ipGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,14 +87,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
+        /// <summary>
+        /// Creates or updates an ipGroups in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual IpGroupCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IpGroup> CreateOrUpdate(bool waitForCompletion, string ipGroupsName, IpGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             if (parameters == null)
@@ -104,7 +111,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _ipGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken);
-                var operation = new IpGroupCreateOrUpdateOperation(Client, _ipGroupClientDiagnostics, Pipeline, _ipGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response);
+                var operation = new NetworkArmOperation<IpGroup>(new IpGroupOperationSource(Client), _ipGroupClientDiagnostics, Pipeline, _ipGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,7 +123,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified ipGroups. </summary>
+        /// <summary>
+        /// Gets the specified ipGroups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,7 +153,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified ipGroups. </summary>
+        /// <summary>
+        /// Gets the specified ipGroups.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all IpGroups in a resource group. </summary>
+        /// <summary>
+        /// Gets all IpGroups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups
+        /// Operation Id: IpGroups_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IpGroup> GetAllAsync(CancellationToken cancellationToken = default)
@@ -206,7 +225,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all IpGroups in a resource group. </summary>
+        /// <summary>
+        /// Gets all IpGroups in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups
+        /// Operation Id: IpGroups_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IpGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IpGroup> GetAll(CancellationToken cancellationToken = default)
@@ -244,7 +267,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,7 +295,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,7 +323,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,7 +353,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
+        /// Operation Id: IpGroups_Get
+        /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

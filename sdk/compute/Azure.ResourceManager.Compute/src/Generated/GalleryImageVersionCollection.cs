@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GalleryImage.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update a gallery image version. </summary>
+        /// <summary>
+        /// Create or update a gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
-        public async virtual Task<GalleryImageVersionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GalleryImageVersion>> CreateOrUpdateAsync(bool waitForCompletion, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
             if (galleryImageVersion == null)
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _galleryImageVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GalleryImageVersionCreateOrUpdateOperation(Client, _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
+                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionOperationSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +87,18 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Create or update a gallery image version. </summary>
+        /// <summary>
+        /// Create or update a gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
-        public virtual GalleryImageVersionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GalleryImageVersion> CreateOrUpdate(bool waitForCompletion, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
             if (galleryImageVersion == null)
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _galleryImageVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken);
-                var operation = new GalleryImageVersionCreateOrUpdateOperation(Client, _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
+                var operation = new ComputeArmOperation<GalleryImageVersion>(new GalleryImageVersionOperationSource(Client), _galleryImageVersionClientDiagnostics, Pipeline, _galleryImageVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Retrieves information about a gallery image version. </summary>
+        /// <summary>
+        /// Retrieves information about a gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +153,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Retrieves information about a gallery image version. </summary>
+        /// <summary>
+        /// Retrieves information about a gallery image version.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List gallery image versions in a gallery image definition. </summary>
+        /// <summary>
+        /// List gallery image versions in a gallery image definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions
+        /// Operation Id: GalleryImageVersions_ListByGalleryImage
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GalleryImageVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryImageVersion> GetAllAsync(CancellationToken cancellationToken = default)
@@ -205,7 +225,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List gallery image versions in a gallery image definition. </summary>
+        /// <summary>
+        /// List gallery image versions in a gallery image definition.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions
+        /// Operation Id: GalleryImageVersions_ListByGalleryImage
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GalleryImageVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryImageVersion> GetAll(CancellationToken cancellationToken = default)
@@ -243,7 +267,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +295,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +323,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +353,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: GalleryImageVersions_Get
+        /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

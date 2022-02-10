@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes a managed rule set definition. </summary>
-    public partial class ManagedRuleSetDefinition : Resource
+    public partial class ManagedRuleSetDefinition : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
         public ManagedRuleSetDefinition()

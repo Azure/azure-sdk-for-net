@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AfdEndpoint.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public async virtual Task<AfdRouteCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AfdRoute>> CreateOrUpdateAsync(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _afdRouteRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route, cancellationToken).ConfigureAwait(false);
-                var operation = new AfdRouteCreateOrUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response);
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="route"> Route properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
-        public virtual AfdRouteCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AfdRoute> CreateOrUpdate(bool waitForCompletion, string routeName, AfdRouteData route, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             if (route == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _afdRouteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route, cancellationToken);
-                var operation = new AfdRouteCreateOrUpdateOperation(Client, _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response);
+                var operation = new CdnArmOperation<AfdRoute>(new AfdRouteOperationSource(Client), _afdRouteClientDiagnostics, Pipeline, _afdRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, route).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
+        /// <summary>
+        /// Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists all of the existing origins within a profile. </summary>
+        /// <summary>
+        /// Lists all of the existing origins within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes
+        /// Operation Id: AfdRoutes_ListByEndpoint
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AfdRoute> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +222,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all of the existing origins within a profile. </summary>
+        /// <summary>
+        /// Lists all of the existing origins within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes
+        /// Operation Id: AfdRoutes_ListByEndpoint
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AfdRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AfdRoute> GetAll(CancellationToken cancellationToken = default)
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.Cdn
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -264,7 +291,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -287,7 +318,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>
@@ -312,7 +347,11 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}
+        /// Operation Id: AfdRoutes_Get
+        /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeName"/> is empty. </exception>

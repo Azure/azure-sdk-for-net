@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public async virtual Task<InboundNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<InboundNatRule>> CreateOrUpdateAsync(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
             if (inboundNatRuleParameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _inboundNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Client, _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<InboundNatRule>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public virtual InboundNatRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InboundNatRule> CreateOrUpdate(bool waitForCompletion, string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
             if (inboundNatRuleParameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _inboundNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Client, _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
+                var operation = new NetworkArmOperation<InboundNatRule>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +152,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +182,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InboundNatRule> GetAllAsync(CancellationToken cancellationToken = default)
@@ -205,7 +224,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InboundNatRule> GetAll(CancellationToken cancellationToken = default)
@@ -243,7 +266,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +294,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +322,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +352,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

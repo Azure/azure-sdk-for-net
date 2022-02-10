@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -83,10 +82,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_GetPrivateAccessSlot
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_GetPrivateAccessSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SiteSlotPrivateAccess>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +106,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_GetPrivateAccessSlot
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_GetPrivateAccessSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotPrivateAccess> Get(CancellationToken cancellationToken = default)
         {
@@ -129,15 +130,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_PutPrivateAccessVnetSlot
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_PutPrivateAccessVnetSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public async virtual Task<SiteSlotPrivateAccessCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SiteSlotPrivateAccess>> CreateOrUpdateAsync(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, access, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotPrivateAccessCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotPrivateAccess>(Response.FromValue(new SiteSlotPrivateAccess(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,15 +163,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
-        /// OperationId: WebApps_PutPrivateAccessVnetSlot
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary>
+        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks
+        /// Operation Id: WebApps_PutPrivateAccessVnetSlot
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="access"> The information for the private access. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="access"/> is null. </exception>
-        public virtual SiteSlotPrivateAccessCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotPrivateAccess> CreateOrUpdate(bool waitForCompletion, PrivateAccessData access, CancellationToken cancellationToken = default)
         {
             if (access == null)
             {
@@ -181,7 +184,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, access, cancellationToken);
-                var operation = new SiteSlotPrivateAccessCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SiteSlotPrivateAccess>(Response.FromValue(new SiteSlotPrivateAccess(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

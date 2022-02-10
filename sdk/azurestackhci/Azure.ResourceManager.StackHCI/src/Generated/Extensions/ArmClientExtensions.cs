@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.StackHCI
         }
         #endregion
 
-        #region HCICluster
-        /// <summary> Gets an object representing a HCICluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region HciCluster
+        /// <summary> Gets an object representing a HciCluster along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HCICluster" /> object. </returns>
-        public static HCICluster GetHCICluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciCluster" /> object. </returns>
+        public static HciCluster GetHciCluster(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HCICluster.ValidateResourceId(id);
-                return new HCICluster(client, id);
+                HciCluster.ValidateResourceId(id);
+                return new HciCluster(client, id);
             }
             );
         }

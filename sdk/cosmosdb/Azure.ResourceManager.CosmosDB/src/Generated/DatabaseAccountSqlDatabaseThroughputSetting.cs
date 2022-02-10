@@ -84,7 +84,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DatabaseAccountSqlDatabaseThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -104,7 +108,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatabaseAccountSqlDatabaseThroughputSetting> Get(CancellationToken cancellationToken = default)
         {
@@ -124,12 +132,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update RUs per second of an Azure Cosmos DB SQL database. </summary>
+        /// <summary>
+        /// Update RUs per second of an Azure Cosmos DB SQL database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_UpdateSqlDatabaseThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -141,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.UpdateSqlDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -153,12 +165,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Update RUs per second of an Azure Cosmos DB SQL database. </summary>
+        /// <summary>
+        /// Update RUs per second of an Azure Cosmos DB SQL database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_UpdateSqlDatabaseThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="updateThroughputParameters"> The parameters to provide for the RUs per second of the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
         {
             if (updateThroughputParameters == null)
             {
@@ -170,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.UpdateSqlDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingCreateOrUpdateOperation(Client, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -182,17 +198,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale
+        /// Operation Id: SqlResources_MigrateSqlDatabaseToAutoscale
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToAutoscaleOperation> MigrateSqlDatabaseToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>> MigrateSqlDatabaseToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseThroughputSetting.MigrateSqlDatabaseToAutoscale");
             scope.Start();
             try
             {
                 var response = await _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.MigrateSqlDatabaseToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToAutoscaleOperation(_databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -204,17 +224,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale
+        /// Operation Id: SqlResources_MigrateSqlDatabaseToAutoscale
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToAutoscaleOperation MigrateSqlDatabaseToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting> MigrateSqlDatabaseToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseThroughputSetting.MigrateSqlDatabaseToAutoscale");
             scope.Start();
             try
             {
                 var response = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.MigrateSqlDatabaseToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToAutoscaleOperation(_databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,17 +250,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput
+        /// Operation Id: SqlResources_MigrateSqlDatabaseToManualThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToManualThroughputOperation> MigrateSqlDatabaseToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>> MigrateSqlDatabaseToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseThroughputSetting.MigrateSqlDatabaseToManualThroughput");
             scope.Start();
             try
             {
                 var response = await _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.MigrateSqlDatabaseToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToManualThroughputOperation(_databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,17 +276,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput. </summary>
+        /// <summary>
+        /// Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput
+        /// Operation Id: SqlResources_MigrateSqlDatabaseToManualThroughput
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToManualThroughputOperation MigrateSqlDatabaseToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountSqlDatabaseThroughputSetting> MigrateSqlDatabaseToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics.CreateScope("DatabaseAccountSqlDatabaseThroughputSetting.MigrateSqlDatabaseToManualThroughput");
             scope.Start();
             try
             {
                 var response = _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.MigrateSqlDatabaseToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new DatabaseAccountSqlDatabaseThroughputSettingMigrateSqlDatabaseToManualThroughputOperation(_databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response);
+                var operation = new CosmosDBArmOperation<DatabaseAccountSqlDatabaseThroughputSetting>(new DatabaseAccountSqlDatabaseThroughputSettingOperationSource(Client), _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -270,7 +302,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,7 +339,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -336,7 +376,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -365,7 +409,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -394,7 +442,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -422,7 +474,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default
+        /// Operation Id: SqlResources_GetSqlDatabaseThroughput
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

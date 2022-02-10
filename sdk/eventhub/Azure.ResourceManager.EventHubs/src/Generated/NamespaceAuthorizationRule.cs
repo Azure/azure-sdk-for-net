@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
+        /// <summary>
+        /// Gets an AuthorizationRule for a Namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: Namespaces_GetAuthorizationRule
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<NamespaceAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
+        /// <summary>
+        /// Gets an AuthorizationRule for a Namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: Namespaces_GetAuthorizationRule
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NamespaceAuthorizationRule> Get(CancellationToken cancellationToken = default)
         {
@@ -123,17 +131,21 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
+        /// <summary>
+        /// Deletes an AuthorizationRule for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: Namespaces_DeleteAuthorizationRule
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NamespaceAuthorizationRuleDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _namespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NamespaceAuthorizationRule.Delete");
             scope.Start();
             try
             {
                 var response = await _namespaceAuthorizationRuleNamespacesRestClient.DeleteAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceAuthorizationRuleDeleteOperation(response);
+                var operation = new EventHubsArmOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,17 +157,21 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Deletes an AuthorizationRule for a Namespace. </summary>
+        /// <summary>
+        /// Deletes an AuthorizationRule for a Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: Namespaces_DeleteAuthorizationRule
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NamespaceAuthorizationRuleDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _namespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NamespaceAuthorizationRule.Delete");
             scope.Start();
             try
             {
                 var response = _namespaceAuthorizationRuleNamespacesRestClient.DeleteAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NamespaceAuthorizationRuleDeleteOperation(response);
+                var operation = new EventHubsArmOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
+        /// <summary>
+        /// Gets the primary and secondary connection strings for the Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys
+        /// Operation Id: Namespaces_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
@@ -185,7 +205,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets the primary and secondary connection strings for the Namespace. </summary>
+        /// <summary>
+        /// Gets the primary and secondary connection strings for the Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys
+        /// Operation Id: Namespaces_ListKeys
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
@@ -203,7 +227,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Regenerates the primary or secondary connection strings for the specified Namespace. </summary>
+        /// <summary>
+        /// Regenerates the primary or secondary connection strings for the specified Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys
+        /// Operation Id: Namespaces_RegenerateKeys
+        /// </summary>
         /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -228,7 +256,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Regenerates the primary or secondary connection strings for the specified Namespace. </summary>
+        /// <summary>
+        /// Regenerates the primary or secondary connection strings for the specified Namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/regenerateKeys
+        /// Operation Id: Namespaces_RegenerateKeys
+        /// </summary>
         /// <param name="parameters"> Parameters required to regenerate the connection string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>

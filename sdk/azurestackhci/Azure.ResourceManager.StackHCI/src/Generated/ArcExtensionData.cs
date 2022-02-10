@@ -14,7 +14,7 @@ using Azure.ResourceManager.StackHCI.Models;
 namespace Azure.ResourceManager.StackHCI
 {
     /// <summary> A class representing the ArcExtension data model. </summary>
-    public partial class ArcExtensionData : Resource
+    public partial class ArcExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>
         public ArcExtensionData()

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ConnectionMonitor data model. </summary>
-    public partial class ConnectionMonitorData : ResourceManager.Models.Resource
+    public partial class ConnectionMonitorData : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         internal ConnectionMonitorData()

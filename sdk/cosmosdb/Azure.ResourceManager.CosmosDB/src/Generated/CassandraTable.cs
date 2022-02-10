@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -91,7 +90,11 @@ namespace Azure.ResourceManager.CosmosDB
             return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
-        /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the Cassandra table under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<CassandraTable>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -111,7 +114,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the Cassandra table under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CassandraTable> Get(CancellationToken cancellationToken = default)
         {
@@ -131,17 +138,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Deletes an existing Azure Cosmos DB Cassandra table. </summary>
+        /// <summary>
+        /// Deletes an existing Azure Cosmos DB Cassandra table.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_DeleteCassandraTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CassandraTableDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTable.Delete");
             scope.Start();
             try
             {
                 var response = await _cassandraTableCassandraResourcesRestClient.DeleteCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CassandraTableDeleteOperation(_cassandraTableCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableCassandraResourcesRestClient.CreateDeleteCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_cassandraTableCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableCassandraResourcesRestClient.CreateDeleteCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -153,17 +164,21 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Deletes an existing Azure Cosmos DB Cassandra table. </summary>
+        /// <summary>
+        /// Deletes an existing Azure Cosmos DB Cassandra table.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_DeleteCassandraTable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CassandraTableDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTable.Delete");
             scope.Start();
             try
             {
                 var response = _cassandraTableCassandraResourcesRestClient.DeleteCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CassandraTableDeleteOperation(_cassandraTableCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableCassandraResourcesRestClient.CreateDeleteCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new CosmosDBArmOperation(_cassandraTableCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableCassandraResourcesRestClient.CreateDeleteCassandraTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -175,7 +190,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,7 +227,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -241,7 +264,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -270,7 +297,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -299,7 +330,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -327,7 +362,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}
+        /// Operation Id: CassandraResources_GetCassandraTable
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

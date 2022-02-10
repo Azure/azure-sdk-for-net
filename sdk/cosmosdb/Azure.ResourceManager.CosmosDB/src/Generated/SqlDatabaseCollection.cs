@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update an Azure Cosmos DB SQL database. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_CreateUpdateSqlDatabase
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateSqlDatabaseParameters == null)
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateOrUpdateOperation(Client, _sqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _sqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _sqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +87,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Create or update an Azure Cosmos DB SQL database. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_CreateUpdateSqlDatabase
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateSqlDatabaseParameters"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateSqlDatabaseParameters"/> is null. </exception>
-        public virtual SqlDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, SqlDatabaseCreateUpdateOptions createUpdateSqlDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateSqlDatabaseParameters == null)
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters, cancellationToken);
-                var operation = new SqlDatabaseCreateOrUpdateOperation(Client, _sqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _sqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _sqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateSqlDatabaseParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the SQL database under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL database under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the SQL database under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the SQL databases under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the SQL databases under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases
+        /// Operation Id: SqlResources_ListSqlDatabases
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabase> GetAllAsync(CancellationToken cancellationToken = default)
@@ -188,7 +208,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists the SQL databases under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the SQL databases under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases
+        /// Operation Id: SqlResources_ListSqlDatabases
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabase> GetAll(CancellationToken cancellationToken = default)
@@ -211,7 +235,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -234,7 +262,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -257,7 +289,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -282,7 +318,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}
+        /// Operation Id: SqlResources_GetSqlDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>

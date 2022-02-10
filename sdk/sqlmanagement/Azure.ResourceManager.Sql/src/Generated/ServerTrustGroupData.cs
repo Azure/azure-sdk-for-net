@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerTrustGroup data model. </summary>
-    public partial class ServerTrustGroupData : Resource
+    public partial class ServerTrustGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerTrustGroupData. </summary>
         public ServerTrustGroupData()

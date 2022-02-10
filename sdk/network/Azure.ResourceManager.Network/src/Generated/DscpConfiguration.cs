@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -83,7 +82,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a DSCP Configuration. </summary>
+        /// <summary>
+        /// Gets a DSCP Configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
+        /// Operation Id: DscpConfiguration_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DscpConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -103,7 +106,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a DSCP Configuration. </summary>
+        /// <summary>
+        /// Gets a DSCP Configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
+        /// Operation Id: DscpConfiguration_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DscpConfiguration> Get(CancellationToken cancellationToken = default)
         {
@@ -123,17 +130,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a DSCP Configuration. </summary>
+        /// <summary>
+        /// Deletes a DSCP Configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
+        /// Operation Id: DscpConfiguration_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DscpConfigurationDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = await _dscpConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DscpConfigurationDeleteOperation(_dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,17 +156,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes a DSCP Configuration. </summary>
+        /// <summary>
+        /// Deletes a DSCP Configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
+        /// Operation Id: DscpConfiguration_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DscpConfigurationDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfiguration.Delete");
             scope.Start();
             try
             {
                 var response = _dscpConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DscpConfigurationDeleteOperation(_dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new NetworkArmOperation(_dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

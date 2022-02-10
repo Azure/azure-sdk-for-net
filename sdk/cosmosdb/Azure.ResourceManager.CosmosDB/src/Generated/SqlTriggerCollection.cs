@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlContainer.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update an Azure Cosmos DB SQL trigger. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL trigger
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_CreateUpdateSqlTrigger
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async virtual Task<SqlTriggerCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlTrigger>> CreateOrUpdateAsync(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             if (createUpdateSqlTriggerParameters == null)
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlTriggerCreateOrUpdateOperation(Client, _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +87,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Create or update an Azure Cosmos DB SQL trigger. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB SQL trigger
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_CreateUpdateSqlTrigger
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public virtual SqlTriggerCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlTrigger> CreateOrUpdate(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateOptions createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             if (createUpdateSqlTriggerParameters == null)
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken);
-                var operation = new SqlTriggerCreateOrUpdateOperation(Client, _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response);
+                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers
+        /// Operation Id: SqlResources_ListSqlTriggers
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlTrigger" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlTrigger> GetAllAsync(CancellationToken cancellationToken = default)
@@ -188,7 +208,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists the SQL trigger under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers
+        /// Operation Id: SqlResources_ListSqlTriggers
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlTrigger" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlTrigger> GetAll(CancellationToken cancellationToken = default)
@@ -211,7 +235,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
@@ -234,7 +262,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
@@ -257,7 +289,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>
@@ -282,7 +318,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is empty. </exception>

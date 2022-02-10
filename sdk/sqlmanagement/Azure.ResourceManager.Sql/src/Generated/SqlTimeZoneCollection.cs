@@ -55,10 +55,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Gets a managed instance time zone. </summary>
+        /// <summary>
+        /// Gets a managed instance time zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
@@ -83,10 +84,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Gets a managed instance time zone. </summary>
+        /// <summary>
+        /// Gets a managed instance time zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
@@ -111,10 +113,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_ListByLocation
-        /// <summary> Gets a list of managed instance time zones by location. </summary>
+        /// <summary>
+        /// Gets a list of managed instance time zones by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
+        /// Operation Id: TimeZones_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlTimeZone" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlTimeZone> GetAllAsync(CancellationToken cancellationToken = default)
@@ -152,10 +155,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_ListByLocation
-        /// <summary> Gets a list of managed instance time zones by location. </summary>
+        /// <summary>
+        /// Gets a list of managed instance time zones by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones
+        /// Operation Id: TimeZones_ListByLocation
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlTimeZone" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlTimeZone> GetAll(CancellationToken cancellationToken = default)
@@ -193,10 +197,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
@@ -219,10 +224,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
@@ -245,10 +251,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>
@@ -273,10 +280,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: TimeZones_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
+        /// Operation Id: TimeZones_Get
+        /// </summary>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="timeZoneId"/> is empty. </exception>

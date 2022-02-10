@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -48,17 +47,18 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_AddPremierAddOn
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary>
+        /// Description for Updates a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_AddPremierAddOn
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public async virtual Task<SitePremierAddonCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SitePremierAddon>> CreateOrUpdateAsync(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             if (premierAddOn == null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _sitePremierAddonWebAppsRestClient.AddPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, premierAddOn, cancellationToken).ConfigureAwait(false);
-                var operation = new SitePremierAddonCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SitePremierAddon>(Response.FromValue(new SitePremierAddon(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,17 +83,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_AddPremierAddOn
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary>
+        /// Description for Updates a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_AddPremierAddOn
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public virtual SitePremierAddonCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SitePremierAddon> CreateOrUpdate(bool waitForCompletion, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             if (premierAddOn == null)
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _sitePremierAddonWebAppsRestClient.AddPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, premierAddOn, cancellationToken);
-                var operation = new SitePremierAddonCreateOrUpdateOperation(Client, response);
+                var operation = new AppServiceArmOperation<SitePremierAddon>(Response.FromValue(new SitePremierAddon(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -118,10 +119,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary>
+        /// Description for Gets a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
@@ -146,10 +148,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary>
+        /// Description for Gets a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
@@ -174,10 +177,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
@@ -200,10 +204,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
@@ -226,10 +231,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>
@@ -254,10 +260,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetPremierAddOn
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is empty. </exception>

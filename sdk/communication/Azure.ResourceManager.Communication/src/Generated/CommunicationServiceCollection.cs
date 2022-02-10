@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -52,14 +51,18 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public async virtual Task<CommunicationServiceCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CommunicationService>> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _communicationServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationServiceCreateOrUpdateOperation(Client, _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response);
+                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceOperationSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -80,14 +83,18 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public virtual CommunicationServiceCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommunicationService> CreateOrUpdate(bool waitForCompletion, string communicationServiceName, CommunicationServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _communicationServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters, cancellationToken);
-                var operation = new CommunicationServiceCreateOrUpdateOperation(Client, _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response);
+                var operation = new CommunicationArmOperation<CommunicationService>(new CommunicationServiceOperationSource(Client), _communicationServiceClientDiagnostics, Pipeline, _communicationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -108,7 +115,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
@@ -133,7 +144,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Get the CommunicationService and its properties. </summary>
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
@@ -158,7 +173,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunicationService> GetAllAsync(CancellationToken cancellationToken = default)
@@ -196,7 +215,11 @@ namespace Azure.ResourceManager.Communication
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Handles requests to list all resources in a resource group. </summary>
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices
+        /// Operation Id: CommunicationService_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunicationService> GetAll(CancellationToken cancellationToken = default)
@@ -234,7 +257,11 @@ namespace Azure.ResourceManager.Communication
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
@@ -257,7 +284,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
@@ -280,7 +311,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>
@@ -305,7 +340,11 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is empty. </exception>

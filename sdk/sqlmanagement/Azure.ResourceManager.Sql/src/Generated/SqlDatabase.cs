@@ -252,10 +252,11 @@ namespace Azure.ResourceManager.Sql
             return new LedgerDigestUploadsCollection(Client, Id);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Gets a database. </summary>
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<SqlDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -275,10 +276,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Gets a database. </summary>
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlDatabase> Get(CancellationToken cancellationToken = default)
         {
@@ -298,20 +300,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Delete
-        /// <summary> Deletes the database. </summary>
+        /// <summary>
+        /// Deletes the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlDatabaseDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseDeleteOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -323,20 +326,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Delete
-        /// <summary> Deletes the database. </summary>
+        /// <summary>
+        /// Deletes the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Delete
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlDatabaseDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Delete");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseDeleteOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -348,15 +352,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Update
-        /// <summary> Updates an existing database. </summary>
+        /// <summary>
+        /// Updates an existing database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseUpdateOperation> UpdateAsync(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlDatabase>> UpdateAsync(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -368,7 +373,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseUpdateOperation(Client, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -380,15 +385,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Update
-        /// <summary> Updates an existing database. </summary>
+        /// <summary>
+        /// Updates an existing database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Update
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The requested database resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlDatabaseUpdateOperation Update(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDatabase> Update(bool waitForCompletion, DatabaseUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -400,7 +406,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseUpdateOperation(Client, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -412,10 +418,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metrics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_ListMetrics
-        /// <summary> Returns database metrics. </summary>
+        /// <summary>
+        /// Returns database metrics.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metrics
+        /// Operation Id: Databases_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -445,10 +452,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metrics
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_ListMetrics
-        /// <summary> Returns database metrics. </summary>
+        /// <summary>
+        /// Returns database metrics.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metrics
+        /// Operation Id: Databases_ListMetrics
+        /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
@@ -478,10 +486,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metricDefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_ListMetricDefinitions
-        /// <summary> Returns database metric definitions. </summary>
+        /// <summary>
+        /// Returns database metric definitions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metricDefinitions
+        /// Operation Id: Databases_ListMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
@@ -504,10 +513,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metricDefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_ListMetricDefinitions
-        /// <summary> Returns database metric definitions. </summary>
+        /// <summary>
+        /// Returns database metric definitions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/metricDefinitions
+        /// Operation Id: Databases_ListMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
@@ -530,21 +540,22 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Failover
-        /// <summary> Failovers a database. </summary>
+        /// <summary>
+        /// Failovers a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/failover
+        /// Operation Id: Databases_Failover
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlDatabaseFailoverOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> FailoverAsync(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseFailoverOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -556,21 +567,22 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/failover
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Failover
-        /// <summary> Failovers a database. </summary>
+        /// <summary>
+        /// Failovers a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/failover
+        /// Operation Id: Databases_Failover
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlDatabaseFailoverOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Failover(bool waitForCompletion, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Failover");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType, cancellationToken);
-                var operation = new SqlDatabaseFailoverOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -582,20 +594,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/pause
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Pause
-        /// <summary> Pauses a database. </summary>
+        /// <summary>
+        /// Pauses a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/pause
+        /// Operation Id: Databases_Pause
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlDatabasePauseOperation> PauseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlDatabase>> PauseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabasePauseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -607,20 +620,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/pause
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Pause
-        /// <summary> Pauses a database. </summary>
+        /// <summary>
+        /// Pauses a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/pause
+        /// Operation Id: Databases_Pause
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlDatabasePauseOperation Pause(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDatabase> Pause(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Pause");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabasePauseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -632,20 +646,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/resume
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Resume
-        /// <summary> Resumes a database. </summary>
+        /// <summary>
+        /// Resumes a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/resume
+        /// Operation Id: Databases_Resume
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlDatabaseResumeOperation> ResumeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<SqlDatabase>> ResumeAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseResumeOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -657,20 +672,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/resume
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Resume
-        /// <summary> Resumes a database. </summary>
+        /// <summary>
+        /// Resumes a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/resume
+        /// Operation Id: Databases_Resume
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlDatabaseResumeOperation Resume(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlDatabase> Resume(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.Resume");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseResumeOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<SqlDatabase>(new SqlDatabaseOperationSource(Client), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -682,20 +698,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/upgradeDataWarehouse
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_UpgradeDataWarehouse
-        /// <summary> Upgrades a data warehouse. </summary>
+        /// <summary>
+        /// Upgrades a data warehouse.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/upgradeDataWarehouse
+        /// Operation Id: Databases_UpgradeDataWarehouse
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SqlDatabaseUpgradeDataWarehouseOperation> UpgradeDataWarehouseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> UpgradeDataWarehouseAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -707,20 +724,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/upgradeDataWarehouse
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_UpgradeDataWarehouse
-        /// <summary> Upgrades a data warehouse. </summary>
+        /// <summary>
+        /// Upgrades a data warehouse.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/upgradeDataWarehouse
+        /// Operation Id: Databases_UpgradeDataWarehouse
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SqlDatabaseUpgradeDataWarehouseOperation UpgradeDataWarehouse(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpgradeDataWarehouse(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabase.UpgradeDataWarehouse");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.UpgradeDataWarehouse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlDatabaseUpgradeDataWarehouseOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateUpgradeDataWarehouseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -732,10 +750,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Rename
-        /// <summary> Renames a database. </summary>
+        /// <summary>
+        /// Renames a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
+        /// Operation Id: Databases_Rename
+        /// </summary>
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -760,10 +779,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Rename
-        /// <summary> Renames a database. </summary>
+        /// <summary>
+        /// Renames a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
+        /// Operation Id: Databases_Rename
+        /// </summary>
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -788,15 +808,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/import
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Import
-        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <summary>
+        /// Imports a bacpac into a new database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/import
+        /// Operation Id: Databases_Import
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseImportOperation> ImportAsync(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ImportExportOperationResult>> ImportAsync(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -808,7 +829,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ImportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseImportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -820,15 +841,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/import
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Import
-        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <summary>
+        /// Imports a bacpac into a new database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/import
+        /// Operation Id: Databases_Import
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlDatabaseImportOperation Import(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImportExportOperationResult> Import(bool waitForCompletion, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -840,7 +862,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Import(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseImportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -852,15 +874,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Export
-        /// <summary> Exports a database. </summary>
+        /// <summary>
+        /// Exports a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
+        /// Operation Id: Databases_Export
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseExportOperation> ExportAsync(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ImportExportOperationResult>> ExportAsync(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -872,7 +895,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseExportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -884,15 +907,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Export
-        /// <summary> Exports a database. </summary>
+        /// <summary>
+        /// Exports a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
+        /// Operation Id: Databases_Export
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlDatabaseExportOperation Export(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImportExportOperationResult> Export(bool waitForCompletion, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -904,7 +928,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseExportOperation(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -916,10 +940,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseColumns_ListByDatabase
-        /// <summary> List database columns. </summary>
+        /// <summary>
+        /// List database columns
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
+        /// Operation Id: DatabaseColumns_ListByDatabase
+        /// </summary>
         /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
         /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
         /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
@@ -962,10 +987,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseColumns_ListByDatabase
-        /// <summary> List database columns. </summary>
+        /// <summary>
+        /// List database columns
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
+        /// Operation Id: DatabaseColumns_ListByDatabase
+        /// </summary>
         /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
         /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
         /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
@@ -1008,15 +1034,16 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: RestorePoints_Create
-        /// <summary> Creates a restore point for a data warehouse. </summary>
+        /// <summary>
+        /// Creates a restore point for a data warehouse.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// Operation Id: RestorePoints_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The definition for creating the restore point of this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseCreateRestorePointOperation> CreateRestorePointAsync(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<RestorePoint>> CreateRestorePointAsync(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1028,7 +1055,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _restorePointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateRestorePointOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<RestorePoint>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1040,15 +1067,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: RestorePoints_Create
-        /// <summary> Creates a restore point for a data warehouse. </summary>
+        /// <summary>
+        /// Creates a restore point for a data warehouse.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints
+        /// Operation Id: RestorePoints_Create
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="parameters"> The definition for creating the restore point of this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual SqlDatabaseCreateRestorePointOperation CreateRestorePoint(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RestorePoint> CreateRestorePoint(bool waitForCompletion, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1060,7 +1088,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _restorePointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                var operation = new SqlDatabaseCreateRestorePointOperation(_restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new SqlArmOperation<RestorePoint>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1072,10 +1100,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_ListCurrentByDatabase
-        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -1116,10 +1145,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_ListCurrentByDatabase
-        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -1160,10 +1190,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_Update
-        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <summary>
+        /// Update sensitivity labels of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_Update
+        /// </summary>
         /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -1188,10 +1219,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_Update
-        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <summary>
+        /// Update sensitivity labels of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_Update
+        /// </summary>
         /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -1216,10 +1248,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_ListRecommendedByDatabase
-        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -1260,10 +1293,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_ListRecommendedByDatabase
-        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -1304,10 +1338,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_UpdateRecommended
-        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <summary>
+        /// Update recommended sensitivity labels states of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_UpdateRecommended
+        /// </summary>
         /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -1332,10 +1367,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SensitivityLabels_UpdateRecommended
-        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <summary>
+        /// Update recommended sensitivity labels states of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_UpdateRecommended
+        /// </summary>
         /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -1360,17 +1396,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseExtensions_CreateOrUpdate
-        /// <summary> Perform a database extension operation, like polybase import. </summary>
+        /// <summary>
+        /// Perform a database extension operation, like polybase import
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions/{extensionName}
+        /// Operation Id: DatabaseExtensions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SqlDatabaseCreateOrUpdateDatabaseExtensionOperation> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ImportExportExtensionsOperationResult>> CreateOrUpdateDatabaseExtensionAsync(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
@@ -1383,7 +1420,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1395,17 +1432,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions/{extensionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseExtensions_CreateOrUpdate
-        /// <summary> Perform a database extension operation, like polybase import. </summary>
+        /// <summary>
+        /// Perform a database extension operation, like polybase import
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions/{extensionName}
+        /// Operation Id: DatabaseExtensions_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="extensionName"> The String to use. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SqlDatabaseCreateOrUpdateDatabaseExtensionOperation CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImportExportExtensionsOperationResult> CreateOrUpdateDatabaseExtension(bool waitForCompletion, string extensionName, DatabaseExtensions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             if (parameters == null)
@@ -1418,7 +1456,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters, cancellationToken);
-                var operation = new SqlDatabaseCreateOrUpdateDatabaseExtensionOperation(_databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1430,10 +1468,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseExtensions_ListByDatabase
-        /// <summary> List database extension. This will return an empty list as it is not supported. </summary>
+        /// <summary>
+        /// List database extension. This will return an empty list as it is not supported.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions
+        /// Operation Id: DatabaseExtensions_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(CancellationToken cancellationToken = default)
@@ -1471,10 +1510,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseExtensions_ListByDatabase
-        /// <summary> List database extension. This will return an empty list as it is not supported. </summary>
+        /// <summary>
+        /// List database extension. This will return an empty list as it is not supported.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/extensions
+        /// Operation Id: DatabaseExtensions_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImportExportExtensionsOperationResult> GetDatabaseExtensions(CancellationToken cancellationToken = default)
@@ -1512,10 +1552,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseOperations_Cancel
-        /// <summary> Cancels the asynchronous operation on the database. </summary>
+        /// <summary>
+        /// Cancels the asynchronous operation on the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel
+        /// Operation Id: DatabaseOperations_Cancel
+        /// </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> CancelDatabaseOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
@@ -1534,10 +1575,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseOperations_Cancel
-        /// <summary> Cancels the asynchronous operation on the database. </summary>
+        /// <summary>
+        /// Cancels the asynchronous operation on the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel
+        /// Operation Id: DatabaseOperations_Cancel
+        /// </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelDatabaseOperation(Guid operationId, CancellationToken cancellationToken = default)
@@ -1556,10 +1598,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseOperations_ListByDatabase
-        /// <summary> Gets a list of operations performed on the database. </summary>
+        /// <summary>
+        /// Gets a list of operations performed on the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations
+        /// Operation Id: DatabaseOperations_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseOperation> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
@@ -1597,10 +1640,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseOperations_ListByDatabase
-        /// <summary> Gets a list of operations performed on the database. </summary>
+        /// <summary>
+        /// Gets a list of operations performed on the database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations
+        /// Operation Id: DatabaseOperations_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseOperation> GetDatabaseOperations(CancellationToken cancellationToken = default)
@@ -1638,10 +1682,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseUsages_ListByDatabase
-        /// <summary> Gets database usages. </summary>
+        /// <summary>
+        /// Gets database usages.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/usages
+        /// Operation Id: DatabaseUsages_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseUsage> GetDatabaseUsagesAsync(CancellationToken cancellationToken = default)
@@ -1679,10 +1724,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: DatabaseUsages_ListByDatabase
-        /// <summary> Gets database usages. </summary>
+        /// <summary>
+        /// Gets database usages.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/usages
+        /// Operation Id: DatabaseUsages_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseUsage> GetDatabaseUsages(CancellationToken cancellationToken = default)
@@ -1720,10 +1766,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1756,10 +1803,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1792,10 +1840,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -1824,10 +1873,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
@@ -1856,10 +1906,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1887,10 +1938,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: Databases_Get
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>

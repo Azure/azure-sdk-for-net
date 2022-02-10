@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.StackHCI
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of HCIClusters in the HCICluster. </summary>
-        /// <returns> An object representing collection of HCIClusters and their operations over a HCICluster. </returns>
-        public virtual HCIClusterCollection GetHCIClusters()
+        /// <summary> Gets a collection of HciClusters in the HciCluster. </summary>
+        /// <returns> An object representing collection of HciClusters and their operations over a HciCluster. </returns>
+        public virtual HciClusterCollection GetHciClusters()
         {
-            return new HCIClusterCollection(Client, Id);
+            return new HciClusterCollection(Client, Id);
         }
     }
 }

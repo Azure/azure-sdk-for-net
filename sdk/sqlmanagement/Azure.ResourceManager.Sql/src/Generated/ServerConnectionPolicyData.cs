@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerConnectionPolicy data model. </summary>
-    public partial class ServerConnectionPolicyData : Resource
+    public partial class ServerConnectionPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerConnectionPolicyData. </summary>
         public ServerConnectionPolicyData()

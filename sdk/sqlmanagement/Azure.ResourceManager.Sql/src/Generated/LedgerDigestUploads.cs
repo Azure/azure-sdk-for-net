@@ -83,10 +83,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// OperationId: LedgerDigestUploads_Get
-        /// <summary> Gets the current ledger digest upload configuration for a database. </summary>
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
+        /// Operation Id: LedgerDigestUploads_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<LedgerDigestUploads>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -106,10 +107,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// OperationId: LedgerDigestUploads_Get
-        /// <summary> Gets the current ledger digest upload configuration for a database. </summary>
+        /// <summary>
+        /// Gets the current ledger digest upload configuration for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
+        /// Operation Id: LedgerDigestUploads_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LedgerDigestUploads> Get(CancellationToken cancellationToken = default)
         {
@@ -129,20 +131,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// OperationId: LedgerDigestUploads_Disable
-        /// <summary> Disables uploading ledger digests to an Azure Storage account or an Azure Confidential Ledger instance. </summary>
+        /// <summary>
+        /// Disables uploading ledger digests to an Azure Storage account or an Azure Confidential Ledger instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}/disable
+        /// Operation Id: LedgerDigestUploads_Disable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LedgerDigestUploadsDisableOperation> DisableAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LedgerDigestUploads>> DisableAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploads.Disable");
             scope.Start();
             try
             {
                 var response = await _ledgerDigestUploadsLedgerDigestUploadsRestClient.DisableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LedgerDigestUploadsDisableOperation(_ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateDisableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<LedgerDigestUploads>(new LedgerDigestUploadsOperationSource(Client), _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateDisableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -154,20 +157,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}/disable
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
-        /// OperationId: LedgerDigestUploads_Disable
-        /// <summary> Disables uploading ledger digests to an Azure Storage account or an Azure Confidential Ledger instance. </summary>
+        /// <summary>
+        /// Disables uploading ledger digests to an Azure Storage account or an Azure Confidential Ledger instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}/disable
+        /// Operation Id: LedgerDigestUploads_Disable
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LedgerDigestUploadsDisableOperation Disable(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LedgerDigestUploads> Disable(bool waitForCompletion, CancellationToken cancellationToken = default)
         {
             using var scope = _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploads.Disable");
             scope.Start();
             try
             {
                 var response = _ledgerDigestUploadsLedgerDigestUploadsRestClient.Disable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LedgerDigestUploadsDisableOperation(_ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateDisableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SqlArmOperation<LedgerDigestUploads>(new LedgerDigestUploadsOperationSource(Client), _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics, Pipeline, _ledgerDigestUploadsLedgerDigestUploadsRestClient.CreateDisableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

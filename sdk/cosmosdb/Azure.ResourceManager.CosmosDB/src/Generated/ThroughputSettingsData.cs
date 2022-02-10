@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the ThroughputSettings data model. </summary>
-    public partial class ThroughputSettingsData : TrackedResource
+    public partial class ThroughputSettingsData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ThroughputSettingsData. </summary>
         /// <param name="location"> The location. </param>

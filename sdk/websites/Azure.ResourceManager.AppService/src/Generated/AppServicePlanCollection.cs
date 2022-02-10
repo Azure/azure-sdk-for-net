@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
@@ -52,17 +51,18 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_CreateOrUpdate
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary>
+        /// Description for Creates or updates an App Service Plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="appServicePlan"/> is null. </exception>
-        public async virtual Task<AppServicePlanCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<AppServicePlan>> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (appServicePlan == null)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServicePlanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServicePlanCreateOrUpdateOperation(Client, _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
+                var operation = new AppServiceArmOperation<AppServicePlan>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,17 +87,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_CreateOrUpdate
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary>
+        /// Description for Creates or updates an App Service Plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="appServicePlan"/> is null. </exception>
-        public virtual AppServicePlanCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServicePlan> CreateOrUpdate(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             if (appServicePlan == null)
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServicePlanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken);
-                var operation = new AppServicePlanCreateOrUpdateOperation(Client, _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response);
+                var operation = new AppServiceArmOperation<AppServicePlan>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,10 +123,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Description for Get an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -150,10 +152,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Description for Get an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -178,10 +181,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_ListByResourceGroup
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms
+        /// Operation Id: AppServicePlans_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePlan" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePlan> GetAllAsync(CancellationToken cancellationToken = default)
@@ -219,10 +223,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_ListByResourceGroup
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary>
+        /// Description for Get all App Service plans in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms
+        /// Operation Id: AppServicePlans_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePlan" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePlan> GetAll(CancellationToken cancellationToken = default)
@@ -260,10 +265,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -286,10 +292,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -312,10 +319,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>
@@ -340,10 +348,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: AppServicePlans_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
+        /// Operation Id: AppServicePlans_Get
+        /// </summary>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is empty. </exception>

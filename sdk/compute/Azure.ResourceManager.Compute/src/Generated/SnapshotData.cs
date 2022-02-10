@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Snapshot data model. </summary>
-    public partial class SnapshotData : TrackedResource
+    public partial class SnapshotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SnapshotData. </summary>
         /// <param name="location"> The location. </param>

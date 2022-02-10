@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ExtendedLocation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocation
@@ -52,17 +51,18 @@ namespace Azure.ResourceManager.ExtendedLocation
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_CreateOrUpdate
-        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
+        /// <summary>
+        /// Creates or updates a Custom Location in the specified Subscription and Resource Group
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<CustomLocationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<CustomLocation>> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             if (parameters == null)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             try
             {
                 var response = await _customLocationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomLocationCreateOrUpdateOperation(Client, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,17 +87,18 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_CreateOrUpdate
-        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
+        /// <summary>
+        /// Creates or updates a Custom Location in the specified Subscription and Resource Group
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="parameters"> Parameters supplied to create or update a Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual CustomLocationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CustomLocation> CreateOrUpdate(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             if (parameters == null)
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             try
             {
                 var response = _customLocationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new CustomLocationCreateOrUpdateOperation(Client, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
+                var operation = new ExtendedLocationArmOperation<CustomLocation>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,10 +123,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
@@ -150,10 +152,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
@@ -178,10 +181,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_ListByResourceGroup
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocation> GetAllAsync(CancellationToken cancellationToken = default)
@@ -219,10 +223,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_ListByResourceGroup
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocation> GetAll(CancellationToken cancellationToken = default)
@@ -260,10 +265,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
@@ -286,10 +292,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
@@ -312,10 +319,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
@@ -340,10 +348,11 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>

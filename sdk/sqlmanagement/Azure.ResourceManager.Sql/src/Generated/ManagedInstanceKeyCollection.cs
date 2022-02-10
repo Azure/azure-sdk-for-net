@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -51,17 +50,18 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_CreateOrUpdate
-        /// <summary> Creates or updates a managed instance key. </summary>
+        /// <summary>
+        /// Creates or updates a managed instance key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="keyName"> The name of the managed instance key to be operated on (updated or created). </param>
         /// <param name="parameters"> The requested managed instance key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceKeyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ManagedInstanceKey>> CreateOrUpdateAsync(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Client, _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedInstanceKey>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,17 +86,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_CreateOrUpdate
-        /// <summary> Creates or updates a managed instance key. </summary>
+        /// <summary>
+        /// Creates or updates a managed instance key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="keyName"> The name of the managed instance key to be operated on (updated or created). </param>
         /// <param name="parameters"> The requested managed instance key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceKeyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedInstanceKey> CreateOrUpdate(bool waitForCompletion, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             if (parameters == null)
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new ManagedInstanceKeyCreateOrUpdateOperation(Client, _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response);
+                var operation = new SqlArmOperation<ManagedInstanceKey>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,10 +122,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Gets a managed instance key. </summary>
+        /// <summary>
+        /// Gets a managed instance key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
@@ -149,10 +151,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Gets a managed instance key. </summary>
+        /// <summary>
+        /// Gets a managed instance key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
@@ -177,10 +180,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_ListByInstance
-        /// <summary> Gets a list of managed instance keys. </summary>
+        /// <summary>
+        /// Gets a list of managed instance keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys
+        /// Operation Id: ManagedInstanceKeys_ListByInstance
+        /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceKey" /> that may take multiple service requests to iterate over. </returns>
@@ -219,10 +223,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_ListByInstance
-        /// <summary> Gets a list of managed instance keys. </summary>
+        /// <summary>
+        /// Gets a list of managed instance keys.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys
+        /// Operation Id: ManagedInstanceKeys_ListByInstance
+        /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceKey" /> that may take multiple service requests to iterate over. </returns>
@@ -261,10 +266,11 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
@@ -287,10 +293,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
@@ -313,10 +320,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>
@@ -341,10 +349,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceKeys_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/keys/{keyName}
+        /// Operation Id: ManagedInstanceKeys_Get
+        /// </summary>
         /// <param name="keyName"> The name of the managed instance key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is empty. </exception>

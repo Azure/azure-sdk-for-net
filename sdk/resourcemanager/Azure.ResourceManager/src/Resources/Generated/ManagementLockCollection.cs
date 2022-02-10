@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -41,17 +40,18 @@ namespace Azure.ResourceManager.Resources
             _managementLockRestClient = new ManagementLocksRestOperations(_managementLockClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_CreateOrUpdateByScope
-        /// <summary> Create or update a management lock by scope. </summary>
+        /// <summary>
+        /// Create or update a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_CreateOrUpdateByScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagementLockCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ManagementLock>> CreateOrUpdateAsync(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
             if (parameters == null)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementLockCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<ManagementLock>(Response.FromValue(new ManagementLock(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -76,17 +76,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_CreateOrUpdateByScope
-        /// <summary> Create or update a management lock by scope. </summary>
+        /// <summary>
+        /// Create or update a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_CreateOrUpdateByScope
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagementLockCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementLock> CreateOrUpdate(bool waitForCompletion, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
             if (parameters == null)
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ManagementLockCreateOrUpdateOperation(Client, response);
+                var operation = new ResourcesArmOperation<ManagementLock>(Response.FromValue(new ManagementLock(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -111,10 +112,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
@@ -139,10 +141,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Get a management lock by scope. </summary>
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
@@ -167,10 +170,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_ListByScope
-        /// <summary> Gets all the management locks for a scope. </summary>
+        /// <summary>
+        /// Gets all the management locks for a scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks
+        /// Operation Id: ManagementLocks_ListByScope
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
@@ -209,10 +213,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_ListByScope
-        /// <summary> Gets all the management locks for a scope. </summary>
+        /// <summary>
+        /// Gets all the management locks for a scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks
+        /// Operation Id: ManagementLocks_ListByScope
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
@@ -251,10 +256,11 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
@@ -277,10 +283,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
@@ -303,10 +310,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>
@@ -331,10 +339,11 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
-        /// ContextualPath: /{scope}
-        /// OperationId: ManagementLocks_GetByScope
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is empty. </exception>

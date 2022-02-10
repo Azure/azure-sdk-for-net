@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareCollection shareCollection = fileService.GetFileShares();
             FileShareData shareData = new FileShareData();
             shareData.ShareQuota = 5200;
-            FileShareCreateOrUpdateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
+            ArmOperation<FileShare> fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(false, fileShareName, shareData);
             FileShare share = await fileShareCreateOperation.WaitForCompletionAsync();
             Assert.AreEqual(share.Data.ShareQuota, shareData.ShareQuota);
         }

@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -52,14 +51,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a Virtual Network Tap. </summary>
+        /// <summary>
+        /// Creates or updates a Virtual Network Tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkTapCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualNetworkTap>> CreateOrUpdateAsync(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
             if (parameters == null)
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualNetworkTapRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Client, _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkTap>(new VirtualNetworkTapOperationSource(Client), _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,14 +87,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a Virtual Network Tap. </summary>
+        /// <summary>
+        /// Creates or updates a Virtual Network Tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkTapCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualNetworkTap> CreateOrUpdate(bool waitForCompletion, string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
             if (parameters == null)
@@ -104,7 +111,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualNetworkTapRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters, cancellationToken);
-                var operation = new VirtualNetworkTapCreateOrUpdateOperation(Client, _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response);
+                var operation = new NetworkArmOperation<VirtualNetworkTap>(new VirtualNetworkTapOperationSource(Client), _virtualNetworkTapClientDiagnostics, Pipeline, _virtualNetworkTapRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, tapName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,7 +123,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified virtual network tap. </summary>
+        /// <summary>
+        /// Gets information about the specified virtual network tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
@@ -141,7 +152,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified virtual network tap. </summary>
+        /// <summary>
+        /// Gets information about the specified virtual network tap.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
@@ -166,7 +181,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkTap> GetAllAsync(CancellationToken cancellationToken = default)
@@ -204,7 +223,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all the VirtualNetworkTaps in a subscription. </summary>
+        /// <summary>
+        /// Gets all the VirtualNetworkTaps in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps
+        /// Operation Id: VirtualNetworkTaps_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkTap" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkTap> GetAll(CancellationToken cancellationToken = default)
@@ -242,7 +265,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
@@ -265,7 +292,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
@@ -288,7 +319,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>
@@ -313,7 +348,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
+        /// Operation Id: VirtualNetworkTaps_Get
+        /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is empty. </exception>

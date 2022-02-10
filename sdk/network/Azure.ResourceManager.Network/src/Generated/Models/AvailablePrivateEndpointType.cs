@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The information of an AvailablePrivateEndpointType. </summary>
-    public partial class AvailablePrivateEndpointType : ResourceManager.Models.Resource
+    public partial class AvailablePrivateEndpointType : ResourceData
     {
         /// <summary> Initializes a new instance of AvailablePrivateEndpointType. </summary>
         internal AvailablePrivateEndpointType()

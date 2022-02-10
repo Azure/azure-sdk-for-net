@@ -51,7 +51,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkWatcher.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update a connection monitor. </summary>
+        /// <summary>
+        /// Create or update a connection monitor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ConnectionMonitorCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<ConnectionMonitor>> CreateOrUpdateAsync(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
             if (parameters == null)
@@ -72,7 +76,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _connectionMonitorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Client, _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var operation = new NetworkArmOperation<ConnectionMonitor>(new ConnectionMonitorOperationSource(Client), _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,7 +88,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Create or update a connection monitor. </summary>
+        /// <summary>
+        /// Create or update a connection monitor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
@@ -92,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ConnectionMonitorCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectionMonitor> CreateOrUpdate(bool waitForCompletion, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
             if (parameters == null)
@@ -105,7 +113,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _connectionMonitorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate, cancellationToken);
-                var operation = new ConnectionMonitorCreateOrUpdateOperation(Client, _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response);
+                var operation = new NetworkArmOperation<ConnectionMonitor>(new ConnectionMonitorOperationSource(Client), _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, parameters, migrate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -117,7 +125,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a connection monitor by name. </summary>
+        /// <summary>
+        /// Gets a connection monitor by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
@@ -142,7 +154,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a connection monitor by name. </summary>
+        /// <summary>
+        /// Gets a connection monitor by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
@@ -167,7 +183,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
+        /// <summary>
+        /// Lists all connection monitors for the specified Network Watcher.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors
+        /// Operation Id: ConnectionMonitors_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionMonitor> GetAllAsync(CancellationToken cancellationToken = default)
@@ -190,7 +210,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
+        /// <summary>
+        /// Lists all connection monitors for the specified Network Watcher.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors
+        /// Operation Id: ConnectionMonitors_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionMonitor> GetAll(CancellationToken cancellationToken = default)
@@ -213,7 +237,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
@@ -236,7 +264,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
@@ -259,7 +291,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>
@@ -284,7 +320,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        /// Operation Id: ConnectionMonitors_Get
+        /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is empty. </exception>

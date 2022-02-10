@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -51,17 +50,18 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironment.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_CreateOrUpdateWorkerPool
-        /// <summary> Description for Create or update a worker pool. </summary>
+        /// <summary>
+        /// Description for Create or update a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_CreateOrUpdateWorkerPool
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public async virtual Task<HostingEnvironmentWorkerPoolCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<HostingEnvironmentWorkerPool>> CreateOrUpdateAsync(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
             if (workerPoolEnvelope == null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateOrUpdateWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new HostingEnvironmentWorkerPoolCreateOrUpdateOperation(Client, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateWorkerPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<HostingEnvironmentWorkerPool>(new HostingEnvironmentWorkerPoolOperationSource(Client), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateWorkerPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -86,17 +86,18 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_CreateOrUpdateWorkerPool
-        /// <summary> Description for Create or update a worker pool. </summary>
+        /// <summary>
+        /// Description for Create or update a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_CreateOrUpdateWorkerPool
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="workerPoolEnvelope"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="workerPoolEnvelope"/> is null. </exception>
-        public virtual HostingEnvironmentWorkerPoolCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostingEnvironmentWorkerPool> CreateOrUpdate(bool waitForCompletion, string workerPoolName, WorkerPoolResourceData workerPoolEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
             if (workerPoolEnvelope == null)
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateOrUpdateWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope, cancellationToken);
-                var operation = new HostingEnvironmentWorkerPoolCreateOrUpdateOperation(Client, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateWorkerPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope).Request, response);
+                var operation = new AppServiceArmOperation<HostingEnvironmentWorkerPool>(new HostingEnvironmentWorkerPoolOperationSource(Client), _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateWorkerPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, workerPoolEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,10 +122,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Description for Get properties of a worker pool. </summary>
+        /// <summary>
+        /// Description for Get properties of a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
@@ -149,10 +151,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Description for Get properties of a worker pool. </summary>
+        /// <summary>
+        /// Description for Get properties of a worker pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
@@ -177,10 +180,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListWorkerPools
-        /// <summary> Description for Get all worker pools of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all worker pools of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
+        /// Operation Id: AppServiceEnvironments_ListWorkerPools
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostingEnvironmentWorkerPool" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentWorkerPool> GetAllAsync(CancellationToken cancellationToken = default)
@@ -218,10 +222,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_ListWorkerPools
-        /// <summary> Description for Get all worker pools of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get all worker pools of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
+        /// Operation Id: AppServiceEnvironments_ListWorkerPools
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostingEnvironmentWorkerPool" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentWorkerPool> GetAll(CancellationToken cancellationToken = default)
@@ -259,10 +264,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
@@ -285,10 +291,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
@@ -311,10 +318,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>
@@ -339,10 +347,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// OperationId: AppServiceEnvironments_GetWorkerPool
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
+        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is empty. </exception>

@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Network
             return new ApplicationGatewaySslPredefinedPolicyCollection(Client, Id);
         }
 
-        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ApplicationGatewayAvailableSslOptions>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -109,7 +113,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
+        /// <summary>
+        /// Lists available Ssl options for configuring Ssl policy.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+        /// Operation Id: ApplicationGateways_ListAvailableSslOptions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationGatewayAvailableSslOptions> Get(CancellationToken cancellationToken = default)
         {

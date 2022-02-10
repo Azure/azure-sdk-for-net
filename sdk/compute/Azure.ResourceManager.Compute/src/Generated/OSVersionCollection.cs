@@ -55,7 +55,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
         }
 
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
@@ -80,7 +84,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
@@ -105,7 +113,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
+        /// <summary>
+        /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
+        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OSVersion> GetAllAsync(CancellationToken cancellationToken = default)
@@ -143,7 +155,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
+        /// <summary>
+        /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
+        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OSVersion> GetAll(CancellationToken cancellationToken = default)
@@ -181,7 +197,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
@@ -204,7 +224,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
@@ -227,7 +251,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
@@ -252,7 +280,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>

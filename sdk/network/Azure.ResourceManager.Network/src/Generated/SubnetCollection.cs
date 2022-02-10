@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualNetwork.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
+        /// <summary>
+        /// Creates or updates a subnet in the specified virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<Subnet>> CreateOrUpdateAsync(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _subnetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SubnetCreateOrUpdateOperation(Client, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new NetworkArmOperation<Subnet>(new SubnetOperationSource(Client), _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
+        /// <summary>
+        /// Creates or updates a subnet in the specified virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Subnet> CreateOrUpdate(bool waitForCompletion, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
             if (subnetParameters == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _subnetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
-                var operation = new SubnetCreateOrUpdateOperation(Client, _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new NetworkArmOperation<Subnet>(new SubnetOperationSource(Client), _subnetClientDiagnostics, Pipeline, _subnetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +152,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
+        /// <summary>
+        /// Gets the specified subnet by virtual network and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +182,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all subnets in a virtual network. </summary>
+        /// <summary>
+        /// Gets all subnets in a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets
+        /// Operation Id: Subnets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Subnet> GetAllAsync(CancellationToken cancellationToken = default)
@@ -205,7 +224,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all subnets in a virtual network. </summary>
+        /// <summary>
+        /// Gets all subnets in a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets
+        /// Operation Id: Subnets_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Subnet> GetAll(CancellationToken cancellationToken = default)
@@ -243,7 +266,11 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,7 +294,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,7 +322,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +352,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
+        /// Operation Id: Subnets_Get
+        /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

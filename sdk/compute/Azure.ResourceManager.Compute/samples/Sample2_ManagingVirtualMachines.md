@@ -28,7 +28,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -104,7 +104,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         }
     }
 };
-VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
+ArmOperation<VirtualMachine> lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
 VirtualMachine vm = lro.Value;
 ```
 

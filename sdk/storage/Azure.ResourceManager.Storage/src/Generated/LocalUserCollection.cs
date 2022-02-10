@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageAccount.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
+        /// <summary>
+        /// Create or update the properties of a local user associated with the storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="properties"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<LocalUserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<LocalUser>> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
             if (properties == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _localUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<LocalUser>(Response.FromValue(new LocalUser(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
+        /// <summary>
+        /// Create or update the properties of a local user associated with the storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="properties"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public virtual LocalUserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LocalUser> CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
             if (properties == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _localUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
+                var operation = new StorageArmOperation<LocalUser>(Response.FromValue(new LocalUser(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
@@ -140,7 +151,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
@@ -165,7 +180,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> List the local users associated with the storage account. </summary>
+        /// <summary>
+        /// List the local users associated with the storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers
+        /// Operation Id: LocalUsers_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalUser" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalUser> GetAllAsync(CancellationToken cancellationToken = default)
@@ -188,7 +207,11 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List the local users associated with the storage account. </summary>
+        /// <summary>
+        /// List the local users associated with the storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers
+        /// Operation Id: LocalUsers_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalUser" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalUser> GetAll(CancellationToken cancellationToken = default)
@@ -211,7 +234,11 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
@@ -234,7 +261,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
@@ -257,7 +288,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
@@ -282,7 +317,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>

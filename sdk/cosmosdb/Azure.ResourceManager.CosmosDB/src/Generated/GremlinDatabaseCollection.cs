@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update an Azure Cosmos DB Gremlin database. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinDatabase
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public async virtual Task<GremlinDatabaseCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<GremlinDatabase>> CreateOrUpdateAsync(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateGremlinDatabaseParameters == null)
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _gremlinDatabaseGremlinResourcesRestClient.CreateUpdateGremlinDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GremlinDatabaseCreateOrUpdateOperation(Client, _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseGremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters).Request, response);
+                var operation = new CosmosDBArmOperation<GremlinDatabase>(new GremlinDatabaseOperationSource(Client), _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseGremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +87,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Create or update an Azure Cosmos DB Gremlin database. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinDatabase
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="createUpdateGremlinDatabaseParameters"> The parameters to provide for the current Gremlin database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="createUpdateGremlinDatabaseParameters"/> is null. </exception>
-        public virtual GremlinDatabaseCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GremlinDatabase> CreateOrUpdate(bool waitForCompletion, string databaseName, GremlinDatabaseCreateUpdateOptions createUpdateGremlinDatabaseParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             if (createUpdateGremlinDatabaseParameters == null)
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _gremlinDatabaseGremlinResourcesRestClient.CreateUpdateGremlinDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters, cancellationToken);
-                var operation = new GremlinDatabaseCreateOrUpdateOperation(Client, _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseGremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters).Request, response);
+                var operation = new CosmosDBArmOperation<GremlinDatabase>(new GremlinDatabaseOperationSource(Client), _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseGremlinResourcesRestClient.CreateCreateUpdateGremlinDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, createUpdateGremlinDatabaseParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +123,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -140,7 +152,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name. </summary>
+        /// <summary>
+        /// Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -165,7 +181,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the Gremlin databases under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the Gremlin databases under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases
+        /// Operation Id: GremlinResources_ListGremlinDatabases
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GremlinDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GremlinDatabase> GetAllAsync(CancellationToken cancellationToken = default)
@@ -188,7 +208,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists the Gremlin databases under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the Gremlin databases under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases
+        /// Operation Id: GremlinResources_ListGremlinDatabases
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GremlinDatabase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GremlinDatabase> GetAll(CancellationToken cancellationToken = default)
@@ -211,7 +235,11 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -234,7 +262,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -257,7 +289,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>
@@ -282,7 +318,11 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}
+        /// Operation Id: GremlinResources_GetGremlinDatabase
+        /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is empty. </exception>

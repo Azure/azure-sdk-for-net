@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -51,14 +50,18 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSetVm.ResourceType), nameof(id));
         }
 
-        /// <summary> The operation to create or update the VMSS VM run command. </summary>
+        /// <summary>
+        /// The operation to create or update the VMSS VM run command.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="runCommand"> Parameters supplied to the Create Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>> CreateOrUpdateAsync(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             if (runCommand == null)
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation(Client, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update the VMSS VM run command. </summary>
+        /// <summary>
+        /// The operation to create or update the VMSS VM run command.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_CreateOrUpdate
+        /// </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="runCommand"> Parameters supplied to the Create Virtual Machine RunCommand operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
-        public virtual VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand> CreateOrUpdate(bool waitForCompletion, string runCommandName, VirtualMachineRunCommandData runCommand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             if (runCommand == null)
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand, cancellationToken);
-                var operation = new VirtualMachineScaleSetVirtualMachineRunCommandCreateOrUpdateOperation(Client, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response);
+                var operation = new ComputeArmOperation<VirtualMachineScaleSetVirtualMachineRunCommand>(new VirtualMachineScaleSetVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +122,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the VMSS VM run command. </summary>
+        /// <summary>
+        /// The operation to get the VMSS VM run command.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +152,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get the VMSS VM run command. </summary>
+        /// <summary>
+        /// The operation to get the VMSS VM run command.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +182,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to get all run commands of an instance in Virtual Machine Scaleset. </summary>
+        /// <summary>
+        /// The operation to get all run commands of an instance in Virtual Machine Scaleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> that may take multiple service requests to iterate over. </returns>
@@ -206,7 +225,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> The operation to get all run commands of an instance in Virtual Machine Scaleset. </summary>
+        /// <summary>
+        /// The operation to get all run commands of an instance in Virtual Machine Scaleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_List
+        /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> that may take multiple service requests to iterate over. </returns>
@@ -245,7 +268,11 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,7 +296,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,7 +324,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -319,7 +354,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}
+        /// Operation Id: VirtualMachineScaleSetVMRunCommands_Get
+        /// </summary>
         /// <param name="runCommandName"> The name of the virtual machine run command. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
