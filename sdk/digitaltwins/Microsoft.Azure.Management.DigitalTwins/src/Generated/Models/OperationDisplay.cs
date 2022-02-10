@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
         /// <param name="provider">Service provider: Microsoft
-        /// DigitalTwins</param>
-        /// <param name="resource">Resource Type: DigitalTwinsInstances</param>
-        /// <param name="operation">Name of the operation</param>
+        /// DigitalTwins.</param>
+        /// <param name="resource">Resource Type:
+        /// DigitalTwinsInstances.</param>
+        /// <param name="operation">Name of the operation.</param>
         /// <param name="description">Friendly description for the
-        /// operation,</param>
+        /// operation.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -50,25 +51,25 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service provider: Microsoft DigitalTwins
+        /// Gets service provider: Microsoft DigitalTwins.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets resource Type: DigitalTwinsInstances
+        /// Gets resource Type: DigitalTwinsInstances.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets name of the operation
+        /// Gets name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets friendly description for the operation,
+        /// Gets friendly description for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }

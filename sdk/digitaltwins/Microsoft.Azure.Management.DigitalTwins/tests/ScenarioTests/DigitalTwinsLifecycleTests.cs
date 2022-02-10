@@ -100,7 +100,7 @@ namespace DigitalTwins.Tests.ScenarioTests
                     // Test other operations
 
                     // Register Operation
-                   var registerOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/register"));
+                    var registerOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/register"));
                     registerOperations.Count().Should().BeGreaterThan(0);
 
                     // Twin Operations
@@ -114,6 +114,170 @@ namespace DigitalTwins.Tests.ScenarioTests
                     // Model operations
                     var modelOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/models"));
                     modelOperations.Count().Should().BeGreaterThan(0);
+                }
+                finally
+                {
+                    // Delete instance
+                    DigitalTwinsDescription deleteOp = await DigitalTwinsClient.DigitalTwins.BeginDeleteAsync(
+                        rg.Name,
+                        dtInstance.Name);
+                    deleteOp.ProvisioningState.Should().Be(ProvisioningState.Deleting);
+                }
+            }
+            finally
+            {
+                await ResourcesClient.ResourceGroups.DeleteAsync(rg.Name);
+            }
+        }
+
+        [Fact]
+        [Trait("Type", "E2E")]
+        public async Task TestDigitalTwinsWithIdentityLifecycle()
+        {
+            using var context = MockContext.Start(GetType());
+
+            Initialize(context);
+
+            // Create Resource Group
+            ResourceGroup rg = await ResourcesClient.ResourceGroups.CreateOrUpdateAsync(
+                DefaultResourceGroupName,
+                new ResourceGroup
+                {
+                    Location = DefaultLocation,
+                });
+
+            try
+            {
+                // Create DigitalTwins resource with managed identity
+                var dtInstance = await DigitalTwinsClient.DigitalTwins.CreateOrUpdateAsync(
+                    rg.Name,
+                    DefaultInstanceName,
+                    new DigitalTwinsDescription
+                    {
+                        Location = DefaultLocation,
+                        Identity = new DigitalTwinsIdentity
+                        {
+                            Type = "SystemAssigned"
+                        },
+                    });
+
+                dtInstance.Should().NotBeNull();
+                dtInstance.Name.Should().Be(DefaultInstanceName);
+                dtInstance.Location.Should().Be(DefaultLocation);
+                dtInstance.Identity.Should().NotBeNull();
+                dtInstance.Identity.Type.Should().Be("SystemAssigned");
+
+                // Delete instance
+                DigitalTwinsDescription deleteOp = await DigitalTwinsClient.DigitalTwins.BeginDeleteAsync(
+                    rg.Name,
+                    dtInstance.Name);
+                deleteOp.ProvisioningState.Should().Be(ProvisioningState.Deleting);
+            }
+            finally
+            {
+                await ResourcesClient.ResourceGroups.DeleteAsync(rg.Name);
+            }
+        }
+
+        [Fact]
+        [Trait("Type", "E2E")]
+        public async Task TestDigitalTwinsWithTimeSeriesDatabaseLifecycle()
+        {
+            using var context = MockContext.Start(GetType());
+
+            Initialize(context);
+
+            // Create Resource Group
+            ResourceGroup rg = await ResourcesClient.ResourceGroups.CreateOrUpdateAsync(
+                DefaultResourceGroupName,
+                new ResourceGroup
+                {
+                    Location = DefaultLocation,
+                });
+
+            try
+            {
+                // Create DigitalTwins resource with managed identity
+                var dtInstance = await DigitalTwinsClient.DigitalTwins.CreateOrUpdateAsync(
+                    rg.Name,
+                    DefaultInstanceName,
+                    new DigitalTwinsDescription
+                    {
+                        Location = DefaultLocation,
+                        Identity = new DigitalTwinsIdentity
+                        {
+                            Type = "SystemAssigned"
+                        },
+                    });
+
+                try
+                {
+                    dtInstance.Should().NotBeNull();
+
+                    // Create a time series database connection
+                    var tsdbConnection = await DigitalTwinsClient.TimeSeriesDatabaseConnections.BeginCreateOrUpdateAsync(
+                        rg.Name,
+                        DefaultInstanceName,
+                        DefaultTsdbConnectionName,
+                        new AzureDataExplorerConnectionProperties
+                        {
+                            AdxDatabaseName = DefaultAdxDatabaseName,
+                            AdxEndpointUri = DefaultAdxEndpointUri,
+                            AdxResourceId = DefaultAdxResourceId,
+                            AdxTableName = DefaultAdxTableName,
+                            EventHubEndpointUri = DefaultEventHubEndpointUri,
+                            EventHubEntityPath = DefaultEventHubName,
+                            EventHubNamespaceResourceId = DefaultEventHubNamespaceResourceId,
+                        });
+
+                    tsdbConnection.Should().NotBeNull();
+                    tsdbConnection.Properties.Should().NotBeNull();
+                    tsdbConnection.Properties.ProvisioningState.Should().Be(TimeSeriesDatabaseConnectionState.Provisioning);
+
+                    // Attempting to create another time series database connection should fail
+                    Func<Task> createAction = async () => await DigitalTwinsClient.TimeSeriesDatabaseConnections.CreateOrUpdateAsync(
+                        rg.Name,
+                        DefaultInstanceName,
+                        "OtherConnection",
+                        new AzureDataExplorerConnectionProperties
+                        {
+                            AdxDatabaseName = DefaultAdxDatabaseName,
+                            AdxEndpointUri = DefaultAdxEndpointUri,
+                            AdxResourceId = DefaultAdxResourceId,
+                            AdxTableName = DefaultAdxTableName,
+                            EventHubEndpointUri = DefaultEventHubEndpointUri,
+                            EventHubEntityPath = DefaultEventHubName,
+                            EventHubNamespaceResourceId = DefaultEventHubNamespaceResourceId,
+                        });
+                    createAction.Should().Throw<ErrorResponseException>();
+
+                    // Get time series database connection
+                    var retrievedTsdbConnection = await DigitalTwinsClient.TimeSeriesDatabaseConnections.GetAsync(
+                        rg.Name,
+                        DefaultInstanceName,
+                        DefaultTsdbConnectionName);
+
+                    retrievedTsdbConnection.Should().NotBeNull();
+                    retrievedTsdbConnection.Name.Should().Be(DefaultTsdbConnectionName);
+
+                    // List time series database connections
+                    var tsdbConnectionsList = await DigitalTwinsClient.TimeSeriesDatabaseConnections.ListAsync(
+                        rg.Name,
+                        DefaultInstanceName);
+
+                    tsdbConnectionsList.Should().NotBeNull();
+                    tsdbConnectionsList.Should().ContainSingle();
+                    tsdbConnectionsList.First().Name.Should().Be(DefaultTsdbConnectionName);
+
+                    // Delete time series database connection
+                    var deletedTsdbConnection = await DigitalTwinsClient.TimeSeriesDatabaseConnections.BeginDeleteAsync(
+                        rg.Name,
+                        DefaultInstanceName,
+                        DefaultTsdbConnectionName);
+
+                    deletedTsdbConnection.Should().NotBeNull();
+                    deletedTsdbConnection.Properties.Should().NotBeNull();
+                    deletedTsdbConnection.Properties.ProvisioningState.Should().Be(TimeSeriesDatabaseConnectionState.Deleting);
                 }
                 finally
                 {
