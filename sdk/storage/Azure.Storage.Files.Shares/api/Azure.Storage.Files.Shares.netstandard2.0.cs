@@ -796,6 +796,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileRenameOptions
     {
         public ShareFileRenameOptions() { }
+        public string ContentType { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
         public string FilePermission { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
