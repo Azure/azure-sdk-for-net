@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs.Specialized
                     null,
                     new StorageClientDiagnostics(options),
                     options.Version,
-                    null,
+                    options.CustomerProvidedKey,
                     null));
         }
 
