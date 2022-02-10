@@ -126,8 +126,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                         Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
                     }
                 }
-                #endregion
             }
+            #endregion
         }
     }
 }
