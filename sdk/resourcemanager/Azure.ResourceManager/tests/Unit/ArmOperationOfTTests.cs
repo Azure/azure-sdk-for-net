@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests
             var operation = new TestPollingOperation<int>(count);
             await operation.WaitForCompletionAsync();
             var duration = DateTimeOffset.Now - start;
-            Assert.AreEqual(totalSeconds, (int)duration.TotalSeconds);
+            Assert.That(duration.TotalSeconds, Is.EqualTo(totalSeconds).Within(1));
         }
 
         [TestCase(1, 0)]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
             var operation = new TestPollingOperation<int>(count, 5);
             await operation.WaitForCompletionAsync();
             var duration = DateTimeOffset.Now - start;
-            Assert.AreEqual(totalSeconds, (int)duration.TotalSeconds);
+            Assert.That(duration.TotalSeconds, Is.EqualTo(totalSeconds).Within(1));
         }
 
         private class TestPollingOperation<T> : ArmOperation<T>
