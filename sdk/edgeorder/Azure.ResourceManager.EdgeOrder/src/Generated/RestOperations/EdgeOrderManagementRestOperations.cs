@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch)
+        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceUpdateOptions options, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addressUpdateParameter);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -968,11 +968,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
+        /// <param name="options"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="addressUpdateParameter"/> is null. </exception>
-        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -986,12 +986,12 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 throw new ArgumentNullException(nameof(addressName));
             }
-            if (addressUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(addressUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch);
+            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, options, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1007,11 +1007,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
+        /// <param name="options"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="addressUpdateParameter"/> is null. </exception>
-        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/>, or <paramref name="options"/> is null. </exception>
+        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1025,12 +1025,12 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 throw new ArgumentNullException(nameof(addressName));
             }
-            if (addressUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(addressUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch);
+            using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, options, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch)
+        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceUpdateOptions options, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1656,7 +1656,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(orderItemUpdateParameter);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -1666,11 +1666,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemUpdateParameter"> order item update parameters from request body. </param>
+        /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1684,12 +1684,12 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 throw new ArgumentNullException(nameof(orderItemName));
             }
-            if (orderItemUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(orderItemUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch);
+            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, options, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1705,11 +1705,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemUpdateParameter"> order item update parameters from request body. </param>
+        /// <param name="options"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/>, or <paramref name="options"/> is null. </exception>
+        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1723,12 +1723,12 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 throw new ArgumentNullException(nameof(orderItemName));
             }
-            if (orderItemUpdateParameter == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(orderItemUpdateParameter));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch);
+            using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, options, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

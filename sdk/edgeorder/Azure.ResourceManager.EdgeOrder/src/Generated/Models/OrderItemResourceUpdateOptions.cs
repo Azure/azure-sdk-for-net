@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Updates order item parameters. </summary>
-    public partial class OrderItemUpdateParameter
+    public partial class OrderItemResourceUpdateOptions
     {
-        /// <summary> Initializes a new instance of OrderItemUpdateParameter. </summary>
-        public OrderItemUpdateParameter()
+        /// <summary> Initializes a new instance of OrderItemResourceUpdateOptions. </summary>
+        public OrderItemResourceUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             NotificationEmailList = new ChangeTrackingList<string>();

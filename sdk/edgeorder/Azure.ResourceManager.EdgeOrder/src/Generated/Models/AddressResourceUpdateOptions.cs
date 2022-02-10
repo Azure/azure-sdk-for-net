@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> The Address update parameters. </summary>
-    public partial class AddressUpdateParameter
+    public partial class AddressResourceUpdateOptions
     {
-        /// <summary> Initializes a new instance of AddressUpdateParameter. </summary>
-        public AddressUpdateParameter()
+        /// <summary> Initializes a new instance of AddressResourceUpdateOptions. </summary>
+        public AddressResourceUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
