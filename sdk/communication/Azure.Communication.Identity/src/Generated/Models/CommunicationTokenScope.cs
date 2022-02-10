@@ -24,9 +24,12 @@ namespace Azure.Communication.Identity
 
         private const string ChatValue = "chat";
         private const string VoIPValue = "voip";
+        private const string EmailValue = "email";
 
         /// <summary> chat. </summary>
         public static CommunicationTokenScope Chat { get; } = new CommunicationTokenScope(ChatValue);
+        /// <summary> email. </summary>
+        public static CommunicationTokenScope Email { get; } = new CommunicationTokenScope(EmailValue);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are the same. </summary>
         public static bool operator ==(CommunicationTokenScope left, CommunicationTokenScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are not the same. </summary>

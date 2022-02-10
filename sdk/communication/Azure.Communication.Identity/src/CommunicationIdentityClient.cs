@@ -291,7 +291,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(teamsUserAadToken, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = RestClient.GetTeamsUserAccessToken(teamsUserAadToken, cancellationToken);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -310,7 +310,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(teamsUserAadToken, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await RestClient.GetTeamsUserAccessTokenAsync(teamsUserAadToken, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
