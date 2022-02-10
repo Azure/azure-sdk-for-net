@@ -170,22 +170,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="options"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<ArmOperation<Snapshot>> UpdateAsync(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<Snapshot>> UpdateAsync(bool waitForCompletion, SnapshotUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (snapshot == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(snapshot));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Update");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
+                var response = await _snapshotRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -199,22 +199,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a snapshot. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="options"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public virtual ArmOperation<Snapshot> Update(bool waitForCompletion, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<Snapshot> Update(bool waitForCompletion, SnapshotUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (snapshot == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(snapshot));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("Snapshot.Update");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
-                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshot).Request, response, OperationFinalStateVia.Location);
+                var response = _snapshotRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<Snapshot>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

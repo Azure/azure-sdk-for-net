@@ -170,22 +170,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a disk. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="options"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public async virtual Task<ArmOperation<Disk>> UpdateAsync(bool waitForCompletion, DiskUpdate disk, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<Disk>> UpdateAsync(bool waitForCompletion, DiskUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (disk == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(disk));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var response = await _diskRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -199,22 +199,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a disk. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="options"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public virtual ArmOperation<Disk> Update(bool waitForCompletion, DiskUpdate disk, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<Disk> Update(bool waitForCompletion, DiskUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (disk == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(disk));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _diskClientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
-                var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk, cancellationToken);
-                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, disk).Request, response, OperationFinalStateVia.Location);
+                var response = _diskRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

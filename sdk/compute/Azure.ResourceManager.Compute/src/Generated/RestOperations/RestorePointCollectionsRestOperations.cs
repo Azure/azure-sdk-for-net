@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointGroupUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RestorePointGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response<RestorePointGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
-        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<RestorePointGroupData> Update(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="options"/> is null. </exception>
+        public Response<RestorePointGroupData> Update(string subscriptionId, string resourceGroupName, string restorePointCollectionName, RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(restorePointCollectionName));
             }
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

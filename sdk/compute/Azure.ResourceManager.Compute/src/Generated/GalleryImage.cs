@@ -177,22 +177,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Update a gallery image definition. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryImage"/> is null. </exception>
-        public async virtual Task<ArmOperation<GalleryImage>> UpdateAsync(bool waitForCompletion, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<GalleryImage>> UpdateAsync(bool waitForCompletion, GalleryImageUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (galleryImage == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryImage));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImage.Update");
             scope.Start();
             try
             {
-                var response = await _galleryImageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
+                var response = await _galleryImageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,22 +206,22 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Update a gallery image definition. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="galleryImage"> Parameters supplied to the update gallery image operation. </param>
+        /// <param name="options"> Parameters supplied to the update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryImage"/> is null. </exception>
-        public virtual ArmOperation<GalleryImage> Update(bool waitForCompletion, GalleryImageUpdate galleryImage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<GalleryImage> Update(bool waitForCompletion, GalleryImageUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (galleryImage == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(galleryImage));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImage.Update");
             scope.Start();
             try
             {
-                var response = _galleryImageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImage).Request, response, OperationFinalStateVia.Location);
+                var response = _galleryImageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var operation = new ComputeArmOperation<GalleryImage>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

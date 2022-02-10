@@ -178,21 +178,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update capacity reservation Group operation. </param>
+        /// <param name="options"> Parameters supplied to the Update capacity reservation Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CapacityReservationGroup>> UpdateAsync(CapacityReservationGroupUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<CapacityReservationGroup>> UpdateAsync(CapacityReservationGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroup.Update");
             scope.Start();
             try
             {
-                var response = await _capacityReservationGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _capacityReservationGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CapacityReservationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified. </summary>
-        /// <param name="parameters"> Parameters supplied to the Update capacity reservation Group operation. </param>
+        /// <param name="options"> Parameters supplied to the Update capacity reservation Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CapacityReservationGroup> Update(CapacityReservationGroupUpdate parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<CapacityReservationGroup> Update(CapacityReservationGroupUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroup.Update");
             scope.Start();
             try
             {
-                var response = _capacityReservationGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _capacityReservationGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return Response.FromValue(new CapacityReservationGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
