@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_CPK_Http()
         {
             // Arrange
-            Models.CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            Models.DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeClientOptions dataLakeClientOptions = new DataLakeClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey
@@ -382,7 +382,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
@@ -531,7 +531,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 
@@ -896,7 +896,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient sourceFile = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await sourceFile.CreateAsync();
             string destFileName = GetNewFileName();
@@ -1186,7 +1186,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 
@@ -1270,7 +1270,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 
@@ -1402,7 +1402,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 
@@ -1631,7 +1631,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var constants = TestConstants.Create(this);
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory
                 .GetFileClient(GetNewFileName())
                 .WithCustomerProvidedKey(customerProvidedKey));
@@ -1881,7 +1881,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 
@@ -2090,7 +2090,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
             await file.CreateAsync();
 

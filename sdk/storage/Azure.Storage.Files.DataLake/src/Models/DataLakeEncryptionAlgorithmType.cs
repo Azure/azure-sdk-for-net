@@ -7,7 +7,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256".
     /// Must be provided if the x-ms-encryption-key header is provided.
     /// </summary>
-    public enum EncryptionAlgorithmType
+    public enum DataLakeEncryptionAlgorithmType
     {
         /// <summary>
         /// AES256

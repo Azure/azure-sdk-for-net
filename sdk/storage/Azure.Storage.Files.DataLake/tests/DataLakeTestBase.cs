@@ -134,11 +134,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        public CustomerProvidedKey GetCustomerProvidedKey()
+        public DataLakeCustomerProvidedKey GetCustomerProvidedKey()
         {
             var bytes = new byte[32];
             Recording.Random.NextBytes(bytes);
-            return new CustomerProvidedKey(bytes);
+            return new DataLakeCustomerProvidedKey(bytes);
         }
 
         public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)

@@ -862,7 +862,7 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.CustomerProvidedKey? dataLakeCustomerProvidedKey)
+        internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.DataLakeCustomerProvidedKey? dataLakeCustomerProvidedKey)
         {
             if (dataLakeCustomerProvidedKey == null)
             {

@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
         /// </summary>
-        public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+        public DataLakeCustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeClientOptions"/>

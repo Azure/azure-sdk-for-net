@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.DataLake
                 exception,
                 continuationToken);
 
-        internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
+        internal static void VerifyHttpsCustomerProvidedKey(Uri uri, DataLakeCustomerProvidedKey? customerProvidedKey)
         {
             if (customerProvidedKey.HasValue && !string.Equals(uri.Scheme, Constants.Https, StringComparison.OrdinalIgnoreCase))
             {

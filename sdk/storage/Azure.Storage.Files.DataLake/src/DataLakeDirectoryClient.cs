@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// Pass null to remove the customer provide key in the returned <see cref="DataLakeDirectoryClient"/>.
         /// </remarks>
-        public new DataLakeDirectoryClient WithCustomerProvidedKey(Models.CustomerProvidedKey? customerProvidedKey)
+        public new DataLakeDirectoryClient WithCustomerProvidedKey(Models.DataLakeCustomerProvidedKey? customerProvidedKey)
         {
             DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
             newClientConfiguration.CustomerProvidedKey = customerProvidedKey;

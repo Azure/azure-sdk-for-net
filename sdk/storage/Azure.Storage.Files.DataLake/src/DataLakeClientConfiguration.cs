@@ -11,14 +11,14 @@ namespace Azure.Storage.Files.DataLake
     {
         public DataLakeClientOptions.ServiceVersion Version { get; internal set; }
 
-        public virtual CustomerProvidedKey? CustomerProvidedKey { get; internal set; }
+        public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions.ServiceVersion version,
-            CustomerProvidedKey? customerProvidedKey)
+            DataLakeCustomerProvidedKey? customerProvidedKey)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;

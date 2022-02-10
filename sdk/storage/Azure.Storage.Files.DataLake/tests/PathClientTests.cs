@@ -164,7 +164,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_CPK_Http()
         {
             // Arrange
-            Models.CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            Models.DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             DataLakeClientOptions dataLakeClientOptions = new DataLakeClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey
