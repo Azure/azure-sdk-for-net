@@ -3,7 +3,9 @@ namespace Azure.ResourceManager
     public partial class ArmClient
     {
         protected ArmClient() { }
-        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId = null, Azure.ResourceManager.ArmClientOptions options = null) { }
+        public ArmClient(Azure.Core.TokenCredential credential) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
+        public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T GetClient<T>(System.Func<T> ctor) where T : Azure.ResourceManager.Core.ArmResource { throw null; }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
