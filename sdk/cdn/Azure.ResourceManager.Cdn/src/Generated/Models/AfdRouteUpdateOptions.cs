@@ -12,10 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The domain JSON object required for domain creation or update. </summary>
-    public partial class RouteUpdateOptions
+    public partial class AfdRouteUpdateOptions
     {
-        /// <summary> Initializes a new instance of RouteUpdateOptions. </summary>
-        public RouteUpdateOptions()
+        /// <summary> Initializes a new instance of AfdRouteUpdateOptions. </summary>
+        public AfdRouteUpdateOptions()
         {
             CustomDomains = new ChangeTrackingList<WritableSubResource>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();

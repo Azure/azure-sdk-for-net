@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to create or update an endpoint. </summary>
-    public partial class EndpointUpdateOptions
+    public partial class CdnEndpointUpdateOptions
     {
-        /// <summary> Initializes a new instance of EndpointUpdateOptions. </summary>
-        public EndpointUpdateOptions()
+        /// <summary> Initializes a new instance of CdnEndpointUpdateOptions. </summary>
+        public CdnEndpointUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentTypesToCompress = new ChangeTrackingList<string>();

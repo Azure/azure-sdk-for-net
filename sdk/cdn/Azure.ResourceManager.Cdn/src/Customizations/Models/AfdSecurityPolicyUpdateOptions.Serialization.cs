@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyProperties : IUtf8JsonSerializable
+    public partial class AfdSecurityPolicyUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

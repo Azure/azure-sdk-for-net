@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>
-    public partial class CdnWebApplicationFirewallPolicyPatchOptions
+    public partial class CdnWebApplicationFirewallPolicyUpdateOptions
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyPatchOptions. </summary>
-        public CdnWebApplicationFirewallPolicyPatchOptions()
+        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyUpdateOptions. </summary>
+        public CdnWebApplicationFirewallPolicyUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

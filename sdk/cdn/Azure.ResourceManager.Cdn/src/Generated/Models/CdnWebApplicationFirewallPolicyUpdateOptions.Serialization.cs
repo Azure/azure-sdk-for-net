@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnWebApplicationFirewallPolicyPatchOptions : IUtf8JsonSerializable
+    public partial class CdnWebApplicationFirewallPolicyUpdateOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
