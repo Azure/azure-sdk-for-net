@@ -263,22 +263,22 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
+        /// <param name="options"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<DatabaseAccount>> UpdateAsync(bool waitForCompletion, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (updateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(updateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Update");
             scope.Start();
             try
             {
-                var response = await _databaseAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _databaseAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -292,22 +292,22 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Updates the properties of an existing Azure Cosmos DB database account. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
+        /// <param name="options"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateParameters"/> is null. </exception>
-        public virtual ArmOperation<DatabaseAccount> Update(bool waitForCompletion, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<DatabaseAccount> Update(bool waitForCompletion, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (updateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(updateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _databaseAccountClientDiagnostics.CreateScope("DatabaseAccount.Update");
             scope.Start();
             try
             {
-                var response = _databaseAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _databaseAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new CosmosDBArmOperation<DatabaseAccount>(new DatabaseAccountOperationSource(Client), _databaseAccountClientDiagnostics, Pipeline, _databaseAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

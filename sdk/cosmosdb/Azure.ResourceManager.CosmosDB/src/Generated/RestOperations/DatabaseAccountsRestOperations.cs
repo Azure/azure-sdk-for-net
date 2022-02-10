@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateParameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
+        /// <param name="options"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="options"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (updateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(updateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, updateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="updateParameters"> The parameters to provide for the current database account. </param>
+        /// <param name="options"> The parameters to provide for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="updateParameters"/> is null. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions updateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="options"/> is null. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, DatabaseAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (updateParameters == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(updateParameters));
+                throw new ArgumentNullException(nameof(options));
             }
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, updateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
