@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
             string afdHostName = "customdomain4afd-4.azuretest.net";
             AfdCustomDomain afdCustomDomain = await CreateAfdCustomDomain(afdProfile, afdCustomDomainName, afdHostName);
-            await afdCustomDomain.DeleteAsync();
+            await afdCustomDomain.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdCustomDomain.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                     MinimumTlsVersion = AfdMinimumTlsVersion.TLS12
                 },
             };
-            var lro = await afdCustomDomain.UpdateAsync(updateOptions);
+            var lro = await afdCustomDomain.UpdateAsync(true, updateOptions);
             AfdCustomDomain updatedAfdCustomDomain = lro.Value;
             ResourceDataHelper.AssertAfdDomainUpdate(updatedAfdCustomDomain, updateOptions);
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             AfdCustomDomain afdCustomDomain = await afdProfile.GetAfdCustomDomains().GetAsync("customdomain4afd-azuretest-net");
-            Assert.ThrowsAsync<RequestFailedException>(async () => await afdCustomDomain.RefreshValidationTokenAsync());
+            Assert.ThrowsAsync<RequestFailedException>(async () => await afdCustomDomain.RefreshValidationTokenAsync(true));
         }
     }
 }

@@ -28,8 +28,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Colletion, we can create a new resource group with an specific name
 string rgName = "myRgName";
-Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+AzureLocation location = AzureLocation.WestUS2;
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true,rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the WebPubSub inside this resource group.
@@ -56,7 +56,7 @@ List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
 {
     new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
 };
-WebPubSubData data = new WebPubSubData(Location.WestUS2)
+WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
 {
     Sku = new WebPubSubSku("Standard_S1"),
     LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
@@ -64,7 +64,7 @@ WebPubSubData data = new WebPubSubData(Location.WestUS2)
     ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
 };
 
-WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
+WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(false, webPubSubName, data)).WaitForCompletionAsync();
 ```
 
 ***Get a WebPubSub***
@@ -94,5 +94,5 @@ await foreach (WebPubSub WebPubSub in response)
 WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
 WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
-await webPubSub.DeleteAsync();
+await webPubSub.DeleteAsync(true);
 ```

@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServerBlobAuditingPolicy data model. </summary>
-    public partial class ServerBlobAuditingPolicyData : Resource
+    public partial class ServerBlobAuditingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerBlobAuditingPolicyData. </summary>
         public ServerBlobAuditingPolicyData()
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal ServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType type, bool? isDevopsAuditEnabled, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type)
+        internal ServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? isDevopsAuditEnabled, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type, systemData)
         {
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
             RetentionDays = retentionDays;

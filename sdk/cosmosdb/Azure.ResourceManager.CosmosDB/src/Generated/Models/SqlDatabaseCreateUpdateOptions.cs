@@ -7,20 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update Cosmos DB SQL database. </summary>
-    public partial class SqlDatabaseCreateUpdateOptions : TrackedResource
+    public partial class SqlDatabaseCreateUpdateOptions : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlDatabaseCreateUpdateOptions. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public SqlDatabaseCreateUpdateOptions(Location location, SqlDatabaseResource resource) : base(location)
+        public SqlDatabaseCreateUpdateOptions(AzureLocation location, SqlDatabaseResource resource) : base(location)
         {
             if (resource == null)
             {
@@ -34,11 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal SqlDatabaseCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, SqlDatabaseResource resource, CreateUpdateOptions options) : base(id, name, type, tags, location)
+        internal SqlDatabaseCreateUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlDatabaseResource resource, CreateUpdateOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

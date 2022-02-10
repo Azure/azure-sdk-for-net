@@ -6,19 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the CassandraKeyspace data model. </summary>
-    public partial class CassandraKeyspaceData : TrackedResource
+    public partial class CassandraKeyspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
         /// <param name="location"> The location. </param>
-        public CassandraKeyspaceData(Location location) : base(location)
+        public CassandraKeyspaceData(AzureLocation location) : base(location)
         {
         }
 
@@ -26,11 +25,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, tags, location)
+        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, type, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

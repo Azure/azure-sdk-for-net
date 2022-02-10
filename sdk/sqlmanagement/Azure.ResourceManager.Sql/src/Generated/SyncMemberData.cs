@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SyncMember data model. </summary>
-    public partial class SyncMemberData : Resource
+    public partial class SyncMemberData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncMemberData. </summary>
         public SyncMemberData()
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseType"> Database type of the sync member. </param>
         /// <param name="syncAgentId"> ARM resource id of the sync agent in the sync member. </param>
         /// <param name="sqlServerDatabaseId"> SQL Server database id of the sync member. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType type, SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, type)
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, type, systemData)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;

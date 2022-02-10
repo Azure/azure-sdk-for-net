@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
-            await policyDefinition.DeleteAsync();
+            await policyDefinition.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -21,13 +22,13 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
-            await templateSpec.DeleteAsync();
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
+            await templateSpec.DeleteAsync(true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpec.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

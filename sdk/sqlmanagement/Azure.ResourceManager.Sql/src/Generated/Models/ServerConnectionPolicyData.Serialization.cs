@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ServerConnectionType> connectionType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,6 +64,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerConnectionPolicyData(id, name, type, location.Value, kind.Value, Optional.ToNullable(connectionType));
+            return new ServerConnectionPolicyData(id, name, type, systemData, location.Value, kind.Value, Optional.ToNullable(connectionType));
         }
     }
 }

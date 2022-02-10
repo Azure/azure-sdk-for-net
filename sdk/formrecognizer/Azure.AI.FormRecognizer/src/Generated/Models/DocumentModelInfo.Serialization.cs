@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,6 +19,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string modelId = default;
             Optional<string> description = default;
             DateTimeOffset createdDateTime = default;
+            Optional<string> apiVersion = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"))
@@ -35,8 +38,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new DocumentModelInfo(modelId, description.Value, createdDateTime);
+            return new DocumentModelInfo(modelId, description.Value, createdDateTime, apiVersion.Value, Optional.ToDictionary(tags));
         }
     }
 }

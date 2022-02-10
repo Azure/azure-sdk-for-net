@@ -1,12 +1,12 @@
 # Release History
 
-## 5.7.0-beta.2 (Unreleased)
+## 5.7.0-beta.3 (2022-02-09)
 
 ### Features Added
 
-### Breaking Changes
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events dispatched for processing.
 
-### Bugs Fixed
+## 5.7.0-beta.2 (2022-01-13)
 
 ### Other Changes
 

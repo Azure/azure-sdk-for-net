@@ -19,9 +19,8 @@ namespace Azure.Analytics.Purview.Catalog
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
-
+        internal ClientDiagnostics ClientDiagnostics { get; }
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -94,12 +93,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -172,12 +173,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Create(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -250,12 +253,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -328,12 +333,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Update(RequestContent content, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -387,12 +394,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -446,12 +455,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetPurviewRelationshipRequest(guid, extendedInfo, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -478,12 +489,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -510,12 +523,14 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Response Delete(string guid, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(guid, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

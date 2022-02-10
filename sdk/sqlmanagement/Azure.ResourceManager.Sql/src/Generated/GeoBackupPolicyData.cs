@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the GeoBackupPolicy data model. </summary>
-    public partial class GeoBackupPolicyData : Resource
+    public partial class GeoBackupPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of GeoBackupPolicyData. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>
@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Backup policy location. </param>
         /// <param name="state"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
-        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType type, string kind, string location, GeoBackupPolicyState state, string storageType) : base(id, name, type)
+        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, GeoBackupPolicyState state, string storageType) : base(id, name, type, systemData)
         {
             Kind = kind;
             Location = location;
