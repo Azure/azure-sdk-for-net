@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             }
         }
 
-        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, TagUpdateOptions updateParameters)
+        public static void AssertInstanceUpdate(DeviceUpdateInstance updatedInstance, DeviceUpdateInstanceUpdateOptions updateParameters)
         {
             foreach (var kv in updatedInstance.Data.Tags)
             {

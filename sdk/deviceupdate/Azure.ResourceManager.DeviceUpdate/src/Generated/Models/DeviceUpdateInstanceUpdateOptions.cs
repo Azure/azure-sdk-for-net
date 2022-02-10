@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Request payload used to update an existing resource&apos;s tags. </summary>
-    public partial class TagUpdateOptions
+    public partial class DeviceUpdateInstanceUpdateOptions
     {
-        /// <summary> Initializes a new instance of TagUpdateOptions. </summary>
-        public TagUpdateOptions()
+        /// <summary> Initializes a new instance of DeviceUpdateInstanceUpdateOptions. </summary>
+        public DeviceUpdateInstanceUpdateOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

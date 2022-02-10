@@ -184,21 +184,21 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
         /// OperationId: Instances_Update
         /// <summary> Updates instance&apos;s tags. </summary>
-        /// <param name="tagUpdatePayload"> Updated tags. </param>
+        /// <param name="options"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateInstance>> UpdateAsync(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<Response<DeviceUpdateInstance>> UpdateAsync(DeviceUpdateInstanceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (tagUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(tagUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstance.Update");
             scope.Start();
             try
             {
-                var response = await _deviceUpdateInstanceInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceUpdateInstanceInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,21 +212,21 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/instances/{instanceName}
         /// OperationId: Instances_Update
         /// <summary> Updates instance&apos;s tags. </summary>
-        /// <param name="tagUpdatePayload"> Updated tags. </param>
+        /// <param name="options"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagUpdatePayload"/> is null. </exception>
-        public virtual Response<DeviceUpdateInstance> Update(TagUpdateOptions tagUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<DeviceUpdateInstance> Update(DeviceUpdateInstanceUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (tagUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(tagUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstance.Update");
             scope.Start();
             try
             {
-                var response = _deviceUpdateInstanceInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagUpdatePayload, cancellationToken);
+                var response = _deviceUpdateInstanceInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
                 return Response.FromValue(new DeviceUpdateInstance(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

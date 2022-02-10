@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Now we can get the instance with GetAsync()
             DeviceUpdateInstance instance = await instanceCollection.GetAsync("myInstance");
             // With UpdateAsync(), we can update the instance
-            TagUpdateOptions updateOptions = new TagUpdateOptions();
+            DeviceUpdateInstanceUpdateOptions updateOptions = new DeviceUpdateInstanceUpdateOptions();
             updateOptions.Tags.Add("newTag", "newValue");
             instance = await instance.UpdateAsync(updateOptions);
             #endregion Snippet:Managing_Instances_UpdateAnInstance

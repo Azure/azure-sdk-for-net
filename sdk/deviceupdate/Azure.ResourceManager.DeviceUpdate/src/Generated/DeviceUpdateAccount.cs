@@ -213,22 +213,22 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// OperationId: Accounts_Update
         /// <summary> Updates account&apos;s patchable properties. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="accountUpdatePayload"> Updated Account. </param>
+        /// <param name="options"> Updated Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountUpdatePayload"/> is null. </exception>
-        public async virtual Task<ArmOperation<DeviceUpdateAccount>> UpdateAsync(bool waitForCompletion, DeviceUpdateAccountUpdateOptions accountUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public async virtual Task<ArmOperation<DeviceUpdateAccount>> UpdateAsync(bool waitForCompletion, DeviceUpdateAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (accountUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(accountUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccount.Update");
             scope.Start();
             try
             {
-                var response = await _deviceUpdateAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accountUpdatePayload, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accountUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _deviceUpdateAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,22 +245,22 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// OperationId: Accounts_Update
         /// <summary> Updates account&apos;s patchable properties. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="accountUpdatePayload"> Updated Account. </param>
+        /// <param name="options"> Updated Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountUpdatePayload"/> is null. </exception>
-        public virtual ArmOperation<DeviceUpdateAccount> Update(bool waitForCompletion, DeviceUpdateAccountUpdateOptions accountUpdatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual ArmOperation<DeviceUpdateAccount> Update(bool waitForCompletion, DeviceUpdateAccountUpdateOptions options, CancellationToken cancellationToken = default)
         {
-            if (accountUpdatePayload == null)
+            if (options == null)
             {
-                throw new ArgumentNullException(nameof(accountUpdatePayload));
+                throw new ArgumentNullException(nameof(options));
             }
 
             using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccount.Update");
             scope.Start();
             try
             {
-                var response = _deviceUpdateAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accountUpdatePayload, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accountUpdatePayload).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _deviceUpdateAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
