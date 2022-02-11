@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingUpdateOperationTypes.
+    /// Defines values for GalleryExtendedLocationType.
     /// </summary>
-    public static class SharingUpdateOperationTypes
+    public static class GalleryExtendedLocationType
     {
-        public const string Add = "Add";
-        public const string Remove = "Remove";
-        public const string Reset = "Reset";
-        public const string EnableCommunity = "EnableCommunity";
+        public const string EdgeZone = "EdgeZone";
+        public const string Unknown = "Unknown";
     }
 }

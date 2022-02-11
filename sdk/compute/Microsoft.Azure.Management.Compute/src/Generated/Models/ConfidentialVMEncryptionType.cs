@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingUpdateOperationTypes.
+    /// Defines values for ConfidentialVMEncryptionType.
     /// </summary>
-    public static class SharingUpdateOperationTypes
+    public static class ConfidentialVMEncryptionType
     {
-        public const string Add = "Add";
-        public const string Remove = "Remove";
-        public const string Reset = "Reset";
-        public const string EnableCommunity = "EnableCommunity";
+        public const string EncryptedVMGuestStateOnlyWithPmk = "EncryptedVMGuestStateOnlyWithPmk";
+        public const string EncryptedWithPmk = "EncryptedWithPmk";
+        public const string EncryptedWithCmk = "EncryptedWithCmk";
     }
 }

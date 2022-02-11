@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingUpdateOperationTypes.
+    /// Defines values for SharingState.
     /// </summary>
-    public static class SharingUpdateOperationTypes
+    public static class SharingState
     {
-        public const string Add = "Add";
-        public const string Remove = "Remove";
-        public const string Reset = "Reset";
-        public const string EnableCommunity = "EnableCommunity";
+        public const string Succeeded = "Succeeded";
+        public const string InProgress = "InProgress";
+        public const string Failed = "Failed";
+        public const string Unknown = "Unknown";
     }
 }
