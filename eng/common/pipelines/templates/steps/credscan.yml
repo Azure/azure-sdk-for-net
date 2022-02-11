@@ -12,15 +12,17 @@ steps:
       $changedFiles | ForEach-Object { Add-Content -Path "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$_"}
     }
     else {
-      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/sdk/${{ parameters.ServiceDirectory }}"
+      $scanFolder = ""
+      if ("${{ parameters.ServiceDirectory }}" -ne '') {
+        $scanFolder = "sdk/${{ parameters.ServiceDirectory }}"
+      }
+      Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanFolder"
     }
     Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
   displayName: CredScan setup
-- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
   inputs:
-    toolMajorVersion: V2
-    toolVersion: latest
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
