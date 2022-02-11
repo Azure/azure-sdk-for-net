@@ -13,7 +13,7 @@ steps:
     }
     else {
       $scanFolder = ""
-      if (${{parameters.ServiceDirectory}}) {
+      if ("${{ parameters.ServiceDirectory }}" -ne '') {
         $scanFolder = sdk/${{ parameters.ServiceDirectory }}
       }
       Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanFolder"
