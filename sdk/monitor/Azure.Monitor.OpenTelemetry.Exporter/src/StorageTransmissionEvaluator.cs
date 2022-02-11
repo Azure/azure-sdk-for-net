@@ -7,6 +7,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class StorageTransmissionEvaluator
     {
+        private int _sampleSize;
         private double[] _transmissionDurationsInSeconds;
         private double[] _exportIntervalsInSeconds;
         private int _transmissionDurationIndex = -1;
@@ -17,10 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private double _runningTransmissionDurationSum;
         private bool _enoughSampleSize;
 
-        internal StorageTransmissionEvaluator(int transmissionSampleSize, int exportIntervalSampleSize)
+        internal StorageTransmissionEvaluator(int sampleSize)
         {
-            _transmissionDurationsInSeconds = new double[transmissionSampleSize];
-            _exportIntervalsInSeconds = new double[exportIntervalSampleSize];
+            _sampleSize = sampleSize;
+            _transmissionDurationsInSeconds = new double[sampleSize];
+            _exportIntervalsInSeconds = new double[sampleSize];
         }
 
         internal void UpdateTransmissionDuration(double currentExportDuration)
@@ -76,8 +78,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // otherwise, simply return 0.
             if (_enoughSampleSize)
             {
-                double avgDurationPerExport = CalculateAverage(_runningTransmissionDurationSum, _transmissionDurationsInSeconds.Length);
-                double avgExportInterval = CalculateAverage(_runningExportIntervalSum, _exportIntervalsInSeconds.Length);
+                double avgDurationPerExport = CalculateAverage(_runningTransmissionDurationSum, _sampleSize);
+                double avgExportInterval = CalculateAverage(_runningExportIntervalSum, _sampleSize);
                 if (avgExportInterval > _currentBatchExportDuration)
                 {
                     // remove currentBatchExportDuration from avg ExportInterval first
