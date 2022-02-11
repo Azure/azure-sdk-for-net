@@ -282,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
 
-                if (actions.IsReleaseSession)
+                if (actions.ShouldReleaseSession)
                 {
                     args.ReleaseSession();
                 }
@@ -396,7 +396,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                         if (_isSessionsEnabled)
                         {
-                            if (((ServiceBusSessionMessageActions)actions).IsReleaseSession)
+                            if (((ServiceBusSessionMessageActions)actions).ShouldReleaseSession)
                             {
                                 // Use CancellationToken.None to attempt to close the receiver even when shutting down
                                 await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);

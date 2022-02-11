@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessSessionMessageEventArgs _eventArgs;
         private readonly ServiceBusSessionReceiver _receiver;
 
-        internal bool IsReleaseSession { get; set; }
+        internal bool ShouldReleaseSession { get; set; }
 
         internal ServiceBusSessionMessageActions(ProcessSessionMessageEventArgs eventArgs) : base(eventArgs)
         {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <inheritdoc cref="ProcessSessionMessageEventArgs.ReleaseSession()"/>
         public virtual void ReleaseSession()
         {
-            IsReleaseSession = true;
+            ShouldReleaseSession = true;
         }
     }
 }
