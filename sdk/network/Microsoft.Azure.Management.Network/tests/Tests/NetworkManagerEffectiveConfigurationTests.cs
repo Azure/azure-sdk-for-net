@@ -29,7 +29,7 @@ namespace Networks.Tests
 
         [Fact(Skip = "Disable tests")]
         public void NetworkManagerEffectiveSecurityAdminConfigurationTest()
-        {    
+        {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
@@ -67,14 +67,8 @@ namespace Networks.Tests
                                     'properties': {
                                         'displayName': '',
                                         'description': '',
-                                        'groupMembers': [
-                                            {
-                                                'resourceId': '/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet3'
-                                            }
-                                        ],
-                                        'conditionalMembership': '',
-                                        'provisioningState': 'Succeeded',
-                                        'resourceGuid': '9d362b43-3824-46f4-8dcb-bd159567b78b'
+                                        'memberType': 'Microsoft.Network/virtualNetworks',
+                                        'provisioningState': 'Succeeded'
                                     }
                                 }
                             ]
@@ -112,14 +106,8 @@ namespace Networks.Tests
                                     'properties': {
                                         'displayName': '',
                                         'description': '',
-                                        'groupMembers': [
-                                            {
-                                                'resourceId': '/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet3'
-                                            }
-                                        ],
-                                        'conditionalMembership': '',
-                                        'provisioningState': 'Succeeded',
-                                        'resourceGuid': '9d362b43-3824-46f4-8dcb-bd159567b78b'
+                                        'memberType': 'Microsoft.Network/virtualNetworks',
+                                        'provisioningState': 'Succeeded'
                                     }
                                 }
                             ]
@@ -131,11 +119,11 @@ namespace Networks.Tests
             string resourceGroupName = "ANMRG3495";
             string vnetName = "testVnet";
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-                
+
             var networkManagementClient = GetResourceManagementClient(handler);
-               
+
             var parameter = new QueryRequestOptions();
-            var effectiveResponse = networkManagementClient.NetworkManagerEffectiveSecurityAdminRules.List(resourceGroupName, vnetName, parameter);
+            var effectiveResponse = networkManagementClient.ListNetworkManagerEffectiveSecurityAdminRules(parameter, resourceGroupName, vnetName);
 
             Assert.Equal(2, effectiveResponse.Value.Count);
             Assert.Equal("fake Skip Token", effectiveResponse.SkipToken);
@@ -210,13 +198,7 @@ namespace Networks.Tests
                                 'properties': {
                                   'displayName': 'My Network Group',
                                   'description': 'A group for all test Virtual Networks',
-                                  'memberType': 'VirtualNetwork',
-                                  'groupMembers': [
-                                    {
-                                      'resourceId': '/subscriptions/subscriptionC/resourceGroup/rg1/providers/Microsoft.Network/virtualnetwork/vnet1'
-                                    }
-                                  ],
-                                  'conditionalMembership': '',
+                                  'memberType': 'Microsoft.Network/virtualNetworks',
                                   'provisioningState': 'Succeeded'
                                 }
                               }
@@ -234,7 +216,7 @@ namespace Networks.Tests
             var networkManagementClient = GetResourceManagementClient(handler);
 
             var parameter = new QueryRequestOptions();
-            var effectiveResponse = networkManagementClient.EffectiveConnectivityConfigurations.List(resourceGroupName, vnetName, parameter);
+            var effectiveResponse = networkManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations(parameter, resourceGroupName, vnetName);
 
             Assert.Equal(1, effectiveResponse.Value.Count);
             Assert.Equal("FakeSkipTokenCode", effectiveResponse.SkipToken);
@@ -245,7 +227,7 @@ namespace Networks.Tests
             Assert.Equal("Microsoft.Network/virtualNetworks", effectiveConnectivityConfig.Hubs[0].ResourceType);
             Assert.Equal(1, effectiveConnectivityConfig.ConfigurationGroups.Count);
             Assert.Equal(
-                "/subscriptions/subscriptionA/resourceGroup/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/group1", 
+                "/subscriptions/subscriptionA/resourceGroup/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/group1",
                 effectiveConnectivityConfig.ConfigurationGroups[0].Id);
             Assert.Equal(1, effectiveConnectivityConfig.AppliesToGroups.Count);
             Assert.Equal(

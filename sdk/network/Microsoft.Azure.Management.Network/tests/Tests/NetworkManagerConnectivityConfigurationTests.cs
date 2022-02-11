@@ -61,19 +61,28 @@ namespace Networks.Tests
                 Assert.Equal("Succeeded", putNMResponse.ProvisioningState);
 
                 string groupName = TestUtilities.GenerateName("ANMNG");
-                List<GroupMembersItem> groupMember = new List<GroupMembersItem>();
-                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet";
-                GroupMembersItem groupMembersItem = new GroupMembersItem(vnetId);
-                groupMember.Add(groupMembersItem);
                 var networkManagerGroup = new NetworkGroup()
                 {
-                    GroupMembers = groupMember,
+                    MemberType = "Microsoft.Network/virtualNetworks"
                 };
 
                 // Put NetworkManagerGroup
                 var putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
                 Assert.Equal(groupName, putNmGroupResponse.Name);
                 Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
+
+
+                string staticMemberName = TestUtilities.GenerateName("ANMStatMem");
+                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/SDKTestResources/providers/Microsoft.Network/virtualNetworks/SDKTestVnet";
+                var staticMember = new StaticMember()
+                {
+                    ResourceId = vnetId,
+                };
+
+                // Put NetworkManagerStaticMember
+                var putStaticMemberResponse = networkManagementClient.StaticMembers.CreateOrUpdate(staticMember, resourceGroupName, networkManagerName, groupName, staticMemberName);
+                Assert.Equal(staticMemberName, putStaticMemberResponse.Name);
+                Assert.Equal(vnetId, putStaticMemberResponse.ResourceId);
 
                 string ngId = $"/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{groupName}";
                 ConnectivityGroupItem sgItem = new ConnectivityGroupItem(ngId, useHubGateway: "true", groupConnectivity: "None");
@@ -82,7 +91,7 @@ namespace Networks.Tests
 
                 string connectivityPolicyName = TestUtilities.GenerateName("ANMConn");
                 Hub hub = new Hub();
-                hub.ResourceId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/hub";
+                hub.ResourceId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/SDKTestResources/providers/Microsoft.Network/virtualNetworks/SDKTestHub";
                 hub.ResourceType = "Microsoft.Network/virtualNetworks";
                 List<Hub> hubList = new List<Hub>();
                 hubList.Add(hub);
@@ -123,13 +132,13 @@ namespace Networks.Tests
                 commit.TargetLocations.Add(location);
                 networkManagementClient.NetworkManagerCommits.Post(commit, resourceGroupName, networkManagerName);
 
-                Thread.Sleep(50000);
+                Thread.Sleep(100000);
 
                 // Active Connective Configuration Check
                 ActiveConfigurationParameter activeConfigurationParameter = new ActiveConfigurationParameter();
                 activeConfigurationParameter.Regions = new List<string>();
                 activeConfigurationParameter.Regions.Add(location);
-                var activeConnectiveConfigrautionsResponse = networkManagementClient.ActiveConnectivityConfigurations.List(resourceGroupName, networkManagerName, activeConfigurationParameter);
+                var activeConnectiveConfigrautionsResponse = networkManagementClient.ListActiveConnectivityConfigurations(activeConfigurationParameter, resourceGroupName, networkManagerName);
 
                 Assert.Single(activeConnectiveConfigrautionsResponse.Value);
                 Assert.Equal(getNmccResponse.Id, activeConnectiveConfigrautionsResponse.Value.First().Id);
@@ -146,20 +155,26 @@ namespace Networks.Tests
                 unCommit.TargetLocations.Add(location);
                 networkManagementClient.NetworkManagerCommits.Post(unCommit, resourceGroupName, networkManagerName);
 
-                Thread.Sleep(30000);
+                Thread.Sleep(100000);
 
                 // Delete NetworkManagerConnectivityConfiguration
-                networkManagementClient.ConnectivityConfigurations.Delete(resourceGroupName, networkManagerName, connectivityPolicyName);
+                networkManagementClient.ConnectivityConfigurations.Delete(resourceGroupName, networkManagerName, connectivityPolicyName, true);
 
                 // List NetworkManagerConnectivityConfiguration
                 listNmccResponse = networkManagementClient.ConnectivityConfigurations.List(resourceGroupName, networkManagerName);
                 Assert.Empty(listNmccResponse);
+
+                // Delete NetworkManager StaticMember
+                networkManagementClient.StaticMembers.Delete(resourceGroupName, networkManagerName, groupName, staticMemberName);
 
                 // Delete NetworkManager NetworkGroup
                 networkManagementClient.NetworkGroups.Delete(resourceGroupName, networkManagerName, groupName);
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                //Delete ResourceGroup 
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }

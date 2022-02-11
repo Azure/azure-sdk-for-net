@@ -83,8 +83,10 @@ namespace Networks.Tests
                 // List networkManager
                 listNMResponse = networkManagementClient.NetworkManagers.List(resourceGroupName);
                 Assert.Empty(listNMResponse);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
-
     }
 }

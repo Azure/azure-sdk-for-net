@@ -57,37 +57,22 @@ namespace Networks.Tests
                 var putNMResponse = networkManagementClient.NetworkManagers.CreateOrUpdate(networkManager, resourceGroupName, networkManagerName);
                 Assert.Equal(networkManagerName, putNMResponse.Name);
 
-                string groupName = TestUtilities.GenerateName("aznmng");
-                List<GroupMembersItem> groupMember = new List<GroupMembersItem>();
-
-                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/ANMRG3495/providers/Microsoft.Network/virtualNetworks/testvnet";
-                GroupMembersItem groupMembersItem = new GroupMembersItem()
-                {
-                    ResourceId = vnetId,
-                };
-
-                groupMember.Add(groupMembersItem);
+                string groupName = TestUtilities.GenerateName("ANMNG");
+                string memberType = "Microsoft.Network/virtualNetworks";
                 var networkManagerGroup = new NetworkGroup()
                 {
-                    GroupMembers = groupMember,
+                    MemberType = memberType
                 };
-
-                networkManagerGroup.ConditionalMembership = "fakeconditional";
 
                 // Put NetworkManagerGroup
                 var putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
                 Assert.Equal(groupName, putNmGroupResponse.Name);
+                Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
 
                 // Get NetworkManagerGroup
                 var getNmGroupResponse = networkManagementClient.NetworkGroups.Get(resourceGroupName, networkManagerName, groupName);
                 Assert.Equal(groupName, getNmGroupResponse.Name);
-                Assert.Equal(networkManagerGroup.ConditionalMembership, getNmGroupResponse.ConditionalMembership);
-                Assert.Equal(1, getNmGroupResponse.GroupMembers.Count);
-                Assert.Equal(vnetId, getNmGroupResponse.GroupMembers.First().ResourceId);
-
-                // Put NetworkManagerGroup
-                putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
-                Assert.Equal(groupName, putNmGroupResponse.Name);
+                Assert.Equal("Succeeded", getNmGroupResponse.ProvisioningState);
 
                 // List NetworkManagerGroup
                 var listNmGroupResponse = networkManagementClient.NetworkGroups.List(resourceGroupName, networkManagerName);
@@ -103,6 +88,115 @@ namespace Networks.Tests
 
                 // Delete NetworkManager
                 networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                // List networkManager
+                var listNMResponse = networkManagementClient.NetworkManagers.List(resourceGroupName);
+                Assert.Empty(listNMResponse);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void NetworkManagerStaticMembersTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkManagers");
+                var location = "eastus2euap";
+                string resourceGroupName = TestUtilities.GenerateName("ANMGROUPRG");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                NetworkManagerPropertiesNetworkManagerScopes scope = new NetworkManagerPropertiesNetworkManagerScopes();
+                string subscriptionId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52";
+                List<string> subList = new List<string>();
+                subList.Add(subscriptionId);
+                scope.Subscriptions = subList;
+
+                IList<string> networkManagerScopeAccesses = new List<string>();
+                networkManagerScopeAccesses.Add("SecurityAdmin");
+
+                var networkManager = new NetworkManager()
+                {
+                    Location = location,
+                    NetworkManagerScopes = scope,
+                    NetworkManagerScopeAccesses = networkManagerScopeAccesses
+                };
+
+                string networkManagerName = TestUtilities.GenerateName("ANM");
+
+                // Put networkManager
+                var putNMResponse = networkManagementClient.NetworkManagers.CreateOrUpdate(networkManager, resourceGroupName, networkManagerName);
+                Assert.Equal(networkManagerName, putNMResponse.Name);
+
+                string groupName = TestUtilities.GenerateName("ANMNG");
+                string memberType = "Microsoft.Network/virtualNetworks";
+                var networkManagerGroup = new NetworkGroup()
+                {
+                    MemberType = memberType
+                };
+
+                // Put NetworkManagerGroup
+                var putNmGroupResponse = networkManagementClient.NetworkGroups.CreateOrUpdate(networkManagerGroup, resourceGroupName, networkManagerName, groupName);
+                Assert.Equal(groupName, putNmGroupResponse.Name);
+                Assert.Equal("Succeeded", putNmGroupResponse.ProvisioningState);
+
+
+                string staticMemberName = TestUtilities.GenerateName("ANMStatMem");
+                string vnetId = "/subscriptions/08615b4b-bc9c-4a70-be1b-2ea10bc97b52/resourceGroups/SDKTestResources/providers/Microsoft.Network/virtualNetworks/SDKTestVnet";
+                var staticMember = new StaticMember()
+                {
+                    ResourceId = vnetId,
+                };
+
+                // Put NetworkManagerStaticMember
+                var putStaticMemberResponse = networkManagementClient.StaticMembers.CreateOrUpdate(staticMember, resourceGroupName, networkManagerName, groupName, staticMemberName);
+                Assert.Equal(staticMemberName, putStaticMemberResponse.Name);
+                Assert.Equal(vnetId, putStaticMemberResponse.ResourceId);
+
+                // Get NetworkManagerStaticMember
+                var getStaticMemberResponse = networkManagementClient.StaticMembers.Get(resourceGroupName, networkManagerName, groupName, staticMemberName);
+                Assert.Equal(staticMemberName, getStaticMemberResponse.Name);
+                Assert.Equal(vnetId, getStaticMemberResponse.ResourceId);
+
+                // List NetworkManagerStaticMember
+                var listStaticMemberResponse = networkManagementClient.StaticMembers.List(resourceGroupName, networkManagerName, groupName);
+                Assert.Equal(staticMemberName, listStaticMemberResponse.First().Name);
+                Assert.Equal(vnetId, listStaticMemberResponse.First().ResourceId);
+
+                // Delete NetworkManagerStaticMember
+                networkManagementClient.StaticMembers.Delete(resourceGroupName, networkManagerName, groupName, staticMemberName);
+
+                // List NetworkManagerStaticMember
+                listStaticMemberResponse = networkManagementClient.StaticMembers.List(resourceGroupName, networkManagerName, groupName);
+                Assert.Empty(listStaticMemberResponse);
+
+                // Delete NetworkManagerGroup
+                networkManagementClient.NetworkGroups.Delete(resourceGroupName, networkManagerName, groupName);
+
+                // List NetworkManagerGroup
+                var listNmGroupResponse = networkManagementClient.NetworkGroups.List(resourceGroupName, networkManagerName);
+                Assert.Empty(listNmGroupResponse);
+
+                // Delete NetworkManager
+                networkManagementClient.NetworkManagers.Delete(resourceGroupName, networkManagerName);
+
+                // List networkManager
+                var listNMResponse = networkManagementClient.NetworkManagers.List(resourceGroupName);
+                Assert.Empty(listNMResponse);
+
+                // Delete Resource Group
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
             }
         }
     }
