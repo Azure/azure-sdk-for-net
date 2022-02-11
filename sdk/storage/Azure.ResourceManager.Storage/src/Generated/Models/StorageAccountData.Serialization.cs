@@ -22,7 +22,14 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions
+                {
+                    Converters =
+                    {
+                        ManagedServiceIdentityType.ManagedServiceIdentityTypeV3Converter.Default
+                    }
+                };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -202,7 +209,14 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    var serializeOptions = new JsonSerializerOptions
+                    {
+                        Converters =
+                        {
+                            ManagedServiceIdentityType.ManagedServiceIdentityTypeV3Converter.Default
+                        }
+                    };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
@@ -139,6 +140,38 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
+
+        private async Task<GenericResource> CreateUserAssignedIdentityAsync()
+        {
+            string userAssignedIdentityName = Recording.GenerateAssetName("testMsi-");
+            ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
+            var input = new GenericResourceData(DefaultLocation);
+            var response = await Client.GetGenericResources().CreateOrUpdateAsync(true, userIdentityId, input);
+            return response.Value;
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateAccountWithManagedIdentity()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+
+            //create a LRS storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
+            identity.UserAssignedIdentities.Add(userAssignedIdentity.Id.ToString(), new UserAssignedIdentity());
+            var param = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), identity: identity);
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, param)).Value;
+            Assert.AreEqual(accountName, account1.Id.Name);
+            VerifyAccountProperties(account1, false);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, account1.Data.Identity.Type);
+            Assert.Greater(account1.Data.Identity.UserAssignedIdentities.Count, 0);
+            Assert.NotNull(account1.Data.Identity.PrincipalId);
+            Assert.NotNull(account1.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id.ToString()].PrincipalId);
+        }
+
         [Test]
         [RecordedTest]
         public async Task CreateStandardAccount()

@@ -34,8 +34,20 @@ namespace Azure.ResourceManager.Models
             }
         }
 
-        internal partial class ManagedServiceIdentityTypeV3Converter : JsonConverter<ManagedServiceIdentityType>
+        /// <summary> JsonConverter for managed service identity type v3. </summary>
+#pragma warning disable AZC0014
+        public partial class ManagedServiceIdentityTypeV3Converter : JsonConverter<ManagedServiceIdentityType>
         {
+            /// <summary> JsonConverter for managed service identity type v3. </summary>
+            public static ManagedServiceIdentityTypeV3Converter Default
+            {
+                get;
+            } = new ManagedServiceIdentityTypeV3Converter();
+
+            /// <summary> Serialize managed service identity type to v3 format. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The ManagedServiceIdentityType model which is v4. </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentityType model, JsonSerializerOptions options)
             {
                 writer.WritePropertyName("type");
@@ -49,6 +61,10 @@ namespace Azure.ResourceManager.Models
                 }
             }
 
+            /// <summary> Deserialize managed service identity type from v3 format. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert </param>
+            /// <param name="options"> The options for JsonSerializer. </param>
             public override ManagedServiceIdentityType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
@@ -65,4 +81,5 @@ namespace Azure.ResourceManager.Models
             }
         }
     }
+#pragma warning restore AZC0014
 }
