@@ -281,7 +281,29 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task GetMetrics_IgnoresDeferredOrScheduledMessagesUntilItFindsAndActive()
+        public async Task GetMetrics_PeeksOneFromHeadAndTenWithBatching()
+        {
+            var deferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
+            var activeMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)), sequenceNumber: 2);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(0, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(deferredMessage);
+
+            _mockMessageReceiver.Setup(x => x.PeekMessagesAsync(10, It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<ServiceBusReceivedMessage> { activeMessage, activeMessage });
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
+            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_IgnoresDeferredOrScheduledMessagesUntilItFindsAnActive()
         {
             var firstDeferredMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Deferred);
             var secondScheduledMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(serviceBusMessageState: ServiceBusMessageState.Scheduled);

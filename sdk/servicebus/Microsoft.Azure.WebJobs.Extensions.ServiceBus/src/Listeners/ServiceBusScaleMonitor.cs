@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     // ignore it. The Get[Queue|Topic]MetricsAsync methods deal with activeMessage being null
                 }
-                else if (MessageWasNotScheduledOrDeferred(peekedMessage))
+                else if (MessageIsActive(peekedMessage))
                 {
                     activeMessage = peekedMessage;
                 }
@@ -78,14 +78,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     var peekedMessages  = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: peekedMessage.SequenceNumber).ConfigureAwait(false);
                     foreach (var receivedMessage in peekedMessages )
                     {
-                        if (MessageWasNotScheduledOrDeferred(receivedMessage))
+                        if (MessageIsActive(receivedMessage))
                         {
                             activeMessage = receivedMessage;
                             break;
                         }
                     }
 
-                    // There were messages but no active ones so let's log this.
+                    // Batch contains messages but none are active in the peeked batch
                     if (peekedMessages.Count > 0 && activeMessage == null)
                     {
                         _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but no active ones.");
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             };
         }
 
-        private static bool MessageWasNotScheduledOrDeferred(ServiceBusReceivedMessage message)
+        private static bool MessageIsActive(ServiceBusReceivedMessage message)
         {
             return message.State == ServiceBusMessageState.Active;
         }
