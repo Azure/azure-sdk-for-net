@@ -26,7 +26,10 @@ namespace Azure.Analytics.Purview.Scanning
         private readonly string _dataSourceName;
         private readonly string _scanName;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
