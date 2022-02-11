@@ -18,9 +18,11 @@ namespace Azure.Messaging.EventGrid
 {
     internal partial class EventGridRestClient
     {
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of EventGridRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -29,8 +31,8 @@ namespace Azure.Messaging.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public EventGridRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
         {
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -43,7 +45,7 @@ namespace Azure.Messaging.EventGrid
             uri.AppendRaw("https://", false);
             uri.AppendRaw(topicHostname, false);
             uri.AppendPath("/api/events", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -80,7 +82,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -107,7 +109,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -120,7 +122,7 @@ namespace Azure.Messaging.EventGrid
             uri.AppendRaw("https://", false);
             uri.AppendRaw(topicHostname, false);
             uri.AppendPath("/api/events", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/cloudevents-batch+json; charset=utf-8");
             var content = new Utf8JsonRequestContent();
@@ -157,7 +159,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -184,7 +186,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -197,7 +199,7 @@ namespace Azure.Messaging.EventGrid
             uri.AppendRaw("https://", false);
             uri.AppendRaw(topicHostname, false);
             uri.AppendPath("/api/events", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -234,7 +236,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -261,7 +263,7 @@ namespace Azure.Messaging.EventGrid
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -1,12 +1,10 @@
 # Release History
 
-## 7.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.7.0 (2022-02-11)
 
 ### Bugs Fixed
+
+- Fixed name of ServiceBusAdministrationClient extension method.
 
 ### Other Changes
 

@@ -17,9 +17,11 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal partial class ContainerRegistryBlobRestClient
     {
-        private string url;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _url;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ContainerRegistryBlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -28,8 +30,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ContainerRegistryBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            this.url = url ?? throw new ArgumentNullException(nameof(url));
-            _clientDiagnostics = clientDiagnostics;
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
@@ -39,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/", false);
@@ -78,7 +80,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -111,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -121,7 +123,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/", false);
@@ -156,7 +158,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -185,7 +187,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 307:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -195,7 +197,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/", false);
@@ -232,7 +234,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -263,7 +265,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -273,7 +275,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/uploads/", false);
@@ -313,7 +315,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -346,7 +348,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -356,7 +358,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(location, false);
             request.Uri = uri;
@@ -383,7 +385,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -406,7 +408,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -416,7 +418,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(location, false);
             request.Uri = uri;
@@ -450,7 +452,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -478,7 +480,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -488,7 +490,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(location, false);
             uri.AppendQuery("digest", digest, true);
@@ -527,7 +529,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -556,7 +558,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -566,7 +568,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(location, false);
             request.Uri = uri;
@@ -592,7 +594,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -614,7 +616,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -624,7 +626,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/uploads/", false);
@@ -652,7 +654,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -675,7 +677,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -685,7 +687,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/", false);
@@ -728,7 +730,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -764,7 +766,7 @@ namespace Azure.Containers.ContainerRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -774,7 +776,7 @@ namespace Azure.Containers.ContainerRegistry
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/v2/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/blobs/", false);
@@ -814,7 +816,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -847,7 +849,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

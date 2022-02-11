@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -372,6 +373,7 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             using Stream source = result.Content;
 
             await source.CopyToAsync(
@@ -386,9 +388,12 @@ namespace Azure.Storage.Blobs
             Stream destination,
             CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
-            result.Content.Dispose();
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            using Stream source = result.Content;
+
+            source.CopyTo(
+                destination,
+                Constants.DefaultDownloadCopyBufferSize);
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

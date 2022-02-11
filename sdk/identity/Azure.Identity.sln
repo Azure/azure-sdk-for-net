@@ -3,23 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "src\Azure.Identity.csproj", "{8A856C05-8CC7-4A1A-A3DC-DD628ECD3E2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "Azure.Identity\src\Azure.Identity.csproj", "{8A856C05-8CC7-4A1A-A3DC-DD628ECD3E2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "tests\Azure.Identity.Tests.csproj", "{CD0BE1AA-F99E-48E7-9FFD-F1B288E62B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "Azure.Identity\tests\Azure.Identity.Tests.csproj", "{CD0BE1AA-F99E-48E7-9FFD-F1B288E62B4F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F748B65-7779-4A71-B2EC-9BA8B9526AB0}"
-	ProjectSection(SolutionItems) = preProject
-		CHANGELOG.md = CHANGELOG.md
-		..\ci.yml = ..\ci.yml
-		README.md = README.md
-		..\tests.yml = ..\tests.yml
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{DBE8A141-33F2-489A-A228-B2C919E10C03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{DBE8A141-33F2-489A-A228-B2C919E10C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Perf", "Azure.Identity\perf\Azure.Identity.Perf.csproj", "{94123C93-FB92-4D05-AA7B-45E1896696FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Perf", "perf\Azure.Identity.Perf.csproj", "{94123C93-FB92-4D05-AA7B-45E1896696FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{D181301A-2FA4-420D-963F-529445E61409}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{D181301A-2FA4-420D-963F-529445E61409}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication", "Azure.Identity.BrokeredAuthentication\src\Azure.Identity.BrokeredAuthentication.csproj", "{2337B615-724F-4ED7-8929-B1AF89815D30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication.Tests", "Azure.Identity.BrokeredAuthentication\tests\Azure.Identity.BrokeredAuthentication.Tests.csproj", "{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +27,6 @@ Global
 		{8A856C05-8CC7-4A1A-A3DC-DD628ECD3E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A856C05-8CC7-4A1A-A3DC-DD628ECD3E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A856C05-8CC7-4A1A-A3DC-DD628ECD3E2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A2D1187-6EC5-4B03-A8A1-68DADC20BA83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A2D1187-6EC5-4B03-A8A1-68DADC20BA83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A2D1187-6EC5-4B03-A8A1-68DADC20BA83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A2D1187-6EC5-4B03-A8A1-68DADC20BA83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD0BE1AA-F99E-48E7-9FFD-F1B288E62B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD0BE1AA-F99E-48E7-9FFD-F1B288E62B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD0BE1AA-F99E-48E7-9FFD-F1B288E62B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,9 +43,20 @@ Global
 		{D181301A-2FA4-420D-963F-529445E61409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D181301A-2FA4-420D-963F-529445E61409}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D181301A-2FA4-420D-963F-529445E61409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2337B615-724F-4ED7-8929-B1AF89815D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2337B615-724F-4ED7-8929-B1AF89815D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2337B615-724F-4ED7-8929-B1AF89815D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2337B615-724F-4ED7-8929-B1AF89815D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2EEEF646-3DE6-401B-891B-8E916AAF5215} = {8F748B65-7779-4A71-B2EC-9BA8B9526AB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36982DAA-E15D-4703-BA9D-A78417EE15E8}

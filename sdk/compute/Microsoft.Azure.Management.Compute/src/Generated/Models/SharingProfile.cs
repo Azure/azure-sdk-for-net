@@ -36,10 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt;
         /// **Groups**. Possible values include: 'Private', 'Groups'</param>
         /// <param name="groups">A list of sharing profile groups.</param>
-        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>))
+        /// <param name="communityGalleryInfo">Information of community gallery
+        /// if current gallery is shared to community.</param>
+        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>), object communityGalleryInfo = default(object))
         {
             Permissions = permissions;
             Groups = groups;
+            CommunityGalleryInfo = communityGalleryInfo;
             CustomInit();
         }
 
@@ -63,6 +66,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "groups")]
         public IList<SharingProfileGroup> Groups { get; private set; }
+
+        /// <summary>
+        /// Gets or sets information of community gallery if current gallery is
+        /// shared to community.
+        /// </summary>
+        [JsonProperty(PropertyName = "communityGalleryInfo")]
+        public object CommunityGalleryInfo { get; set; }
 
     }
 }
