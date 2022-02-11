@@ -847,6 +847,69 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task UpdatesWhenByteArrayMutated()
+        {
+            // Arrange
+            var bytes = new byte[] { 1, 2, 3, 4 };
+            var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = bytes
+            },TableUpdateMode.Replace);
+
+            // Act
+            await CallAsync(
+                typeof(ByteArrayProgram),
+                nameof(ByteArrayProgram.PocoTableEntityChangesValue));
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreNotEqual(response.Headers.ETag, entity.ETag);
+            entity.TryGetValue("Value", out var value);
+            Assert.AreEqual(new byte[] { 1, 2, 3, 5 }, value);
+        }
+
+        [RecordedTest]
+        public async Task SkipsUpdateWhenByteArrayValuesUnchanged()
+        {
+            // Arrange
+            var bytes = new byte[] { 1, 2, 3, 4 };
+            var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = bytes
+            },TableUpdateMode.Replace);
+
+            // Act
+            await CallAsync(
+                typeof(ByteArrayProgram),
+                nameof(ByteArrayProgram.PocoTableEntityChangesReferenceToSameValue));
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreEqual(response.Headers.ETag, entity.ETag);
+            entity.TryGetValue("Value", out var value);
+            Assert.AreEqual(new byte[] { 1, 2, 3, 4 }, value);
+        }
+
+        private class ByteArrayProgram
+        {
+            public static void PocoTableEntityChangesValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
+            {
+                Assert.NotNull(entity);
+                entity.Value[3] = 5;
+            }
+
+            public static void PocoTableEntityChangesReferenceToSameValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
+            {
+                Assert.NotNull(entity);
+                var copy = new byte[entity.Value.Length];
+                Array.Copy(entity.Value, copy, entity.Value.Length);
+                entity.Value = copy;
+            }
+        }
+
         // Invalidate the entity ETag so the Replace call fails if we try to update the entity
         private class NoEntityUpdateProgram<T>
         {
